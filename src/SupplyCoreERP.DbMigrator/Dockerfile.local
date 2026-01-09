@@ -1,0 +1,6 @@
+  FROM mcr.microsoft.com/dotnet/aspnet:10.0
+  USER $APP_UID
+
+  COPY bin/Release/net10.0/publish/ app/
+  WORKDIR /app
+  ENTRYPOINT ["dotnet", "SupplyCoreERP.DbMigrator.dll"]

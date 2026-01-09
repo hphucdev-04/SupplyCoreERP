@@ -1,0 +1,104 @@
+{
+  "template": "app",
+  "imports": {
+    "Volo.Abp.LeptonXLiteTheme": {
+      "version": "5.0.1",
+      "isInstalled": true,
+      "creationTime": "01/09/2026 08:35:39 +00:00"
+    },
+    "Volo.Abp.Account": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/09/2026 08:35:39 +00:00"
+    },
+    "Volo.Abp.OpenIddict": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/09/2026 08:35:39 +00:00"
+    },
+    "Volo.Abp.Identity": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/09/2026 08:35:39 +00:00"
+    },
+    "Volo.Abp.SettingManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/09/2026 08:35:39 +00:00"
+    },
+    "Volo.Abp.PermissionManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/09/2026 08:35:39 +00:00"
+    },
+    "Volo.Abp.FeatureManagement": {
+      "version": "10.0.1",
+      "isInstalled": true,
+      "creationTime": "01/09/2026 08:35:39 +00:00"
+    }
+  },
+  "folders": {
+    "items": {
+      "src": {},
+      "test": {}
+    }
+  },
+  "packages": {
+    "SupplyCoreERP.Application": {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERP.Application.abppkg",
+      "folder": "src"
+    },
+    "SupplyCoreERP.Application.Tests": {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.abppkg",
+      "folder": "test"
+    },
+    "SupplyCoreERP.Domain.Shared": {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.abppkg",
+      "folder": "src"
+    },
+    "SupplyCoreERP.Application.Contracts": {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.abppkg",
+      "folder": "src"
+    },
+    "SupplyCoreERP.HttpApi": {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg",
+      "folder": "src"
+    },
+    "SupplyCoreERP.HttpApi.Client": {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.abppkg",
+      "folder": "src"
+    },
+    "SupplyCoreERP.EntityFrameworkCore.Tests": {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.abppkg",
+      "folder": "test"
+    },
+    "SupplyCoreERP.EntityFrameworkCore": {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/SupplyCoreERP.EntityFrameworkCore.abppkg",
+      "folder": "src"
+    },
+    "SupplyCoreERP.TestBase": {
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERP.TestBase.abppkg",
+      "folder": "test"
+    },
+    "SupplyCoreERP.Domain.Tests": {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.abppkg",
+      "folder": "test"
+    },
+    "SupplyCoreERP.HttpApi.Client.ConsoleTestApp": {
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERP.HttpApi.Client.ConsoleTestApp.abppkg",
+      "folder": "test"
+    },
+    "SupplyCoreERP.DbMigrator": {
+      "path": "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.abppkg",
+      "folder": "src"
+    },
+    "SupplyCoreERP.HttpApi.Host": {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.abppkg",
+      "folder": "src"
+    },
+    "SupplyCoreERP.Domain": {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg",
+      "folder": "src"
+    }
+  }
+}

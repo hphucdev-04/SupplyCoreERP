@@ -1,0 +1,23 @@
+<Solution>
+    <Configurations>
+        <Platform Name="Any CPU" />
+    </Configurations>
+    <Folder Name="/src/">
+        <Project Path="src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.csproj" />
+        <Project Path="src/SupplyCoreERP.Application/SupplyCoreERP.Application.csproj" />
+        <Project Path="src/SupplyCoreERP.EntityFrameworkCore/SupplyCoreERP.EntityFrameworkCore.csproj" />
+        <Project Path="src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.csproj" />
+        <Project Path="src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.csproj" />
+        <Project Path="src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.csproj" />
+        <Project Path="src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.csproj" />
+        <Project Path="src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj" />
+        <Project Path="src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.csproj" />
+    </Folder>
+    <Folder Name="/test/">
+        <Project Path="test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.csproj" />
+        <Project Path="test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj" />
+        <Project Path="test/SupplyCoreERP.TestBase/SupplyCoreERP.TestBase.csproj" />
+        <Project Path="test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.csproj" />
+        <Project Path="test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERP.HttpApi.Client.ConsoleTestApp.csproj" />
+    </Folder>
+</Solution>
