@@ -6,6 +6,7 @@ export const APP_ROUTES: Routes = [
     path: '',
     pathMatch: 'full',
     loadComponent: () => import('./home/home.component').then(c => c.HomeComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'account',

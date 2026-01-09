@@ -3,17 +3,7 @@
     <div class="card h-lg-100 w-100 overflow-hidden">
       <div class="card-body">
         <div class="starting-content pe-5">
-          @if(!hasLoggedIn){
-          <h3>Welcome</h3>
-          <p class="lead text-muted mb-2">
-            {{ '::LongWelcomeMessage' | abpLocalization }}
-          </p>
-          <a (click)="login()" class="px-4 btn btn-primary mb-4" role="button">
-            <i class="fa fa-sign-in"></i>
-            {{ 'AbpAccount::Login' | abpLocalization }}
-          </a>
-          }
-
+          
           <h4>Getting Started</h4>
           <p class="lead text-muted mb-2">
             Learn how to create and run a new web application using the application startup
