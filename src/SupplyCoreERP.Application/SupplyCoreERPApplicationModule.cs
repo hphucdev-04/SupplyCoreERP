@@ -2,10 +2,9 @@
 using Volo.Abp.SettingManagement;
 using Volo.Abp.Account;
 using Volo.Abp.Identity;
-using Volo.Abp.Mapperly;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Modularity;
-using Microsoft.Extensions.DependencyInjection;
+using Volo.Abp.AutoMapper;
 
 namespace SupplyCoreERP;
 
@@ -20,5 +19,11 @@ namespace SupplyCoreERP;
     )]
 public class SupplyCoreERPApplicationModule : AbpModule
 {
-
+    public override void ConfigureServices(ServiceConfigurationContext context)
+    {
+        Configure<AbpAutoMapperOptions>(options =>
+        {
+            options.AddMaps<SupplyCoreERPApplicationModule>();
+        });
+    }
 }
