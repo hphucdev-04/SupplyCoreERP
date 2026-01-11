@@ -1,4 +1,6 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.Categories;
+using SupplyCoreERP.Medicines;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
@@ -9,9 +11,9 @@ using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
-using Volo.Abp.OpenIddict.EntityFrameworkCore;
 
 namespace SupplyCoreERP.EntityFrameworkCore;
 
@@ -47,9 +49,15 @@ public class SupplyCoreERPDbContext :
     public DbSet<IdentityUserDelegation> UserDelegations { get; set; }
     public DbSet<IdentitySession> Sessions { get; set; }
 
-    #endregion
+	// Category
+	public DbSet<Category> Categories { get; set; }
+	// Medicine
+	public DbSet<Medicine> Medicines { get; set; }
+	public DbSet<MedicineUnit> MedicineUnits { get; set; }
 
-    public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
+	#endregion
+
+	public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
         : base(options)
     {
 
@@ -69,14 +77,63 @@ public class SupplyCoreERPDbContext :
         builder.ConfigureIdentity();
         builder.ConfigureOpenIddict();
         builder.ConfigureBlobStoring();
-        
-        /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "YourEntities", SupplyCoreERPConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
-    }
+		/* Configure your own tables/entities inside here */
+
+		//builder.Entity<YourEntity>(b =>
+		//{
+		//    b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "YourEntities", SupplyCoreERPConsts.DbSchema);
+		//    b.ConfigureByConvention(); //auto configure for the base class props
+		//    //...
+		//});
+
+		//Bảng AppCategories
+		builder.Entity<Category>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Categories", SupplyCoreERPConsts.DbSchema);
+
+			b.ConfigureByConvention(); 
+
+			b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+			b.Property(x => x.Name).IsRequired().HasMaxLength(255);
+
+			b.HasIndex(x => x.Code).IsUnique();
+		});
+
+		//Bảng AppMedicines
+		builder.Entity<Medicine>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Medicines", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+			b.Property(x => x.Name).IsRequired().HasMaxLength(255);
+			b.Property(x => x.BaseUnit).IsRequired().HasMaxLength(50);
+			b.HasIndex(x => x.Code).IsUnique();
+
+			b.HasOne(x => x.Category)      
+			 .WithMany()                   
+			 .HasForeignKey(x => x.CategoryId) 
+			 .IsRequired()
+			 .OnDelete(DeleteBehavior.Restrict); // Khi có thuốc không đươc xóa category
+
+			b.HasMany(x => x.Units)
+			 .WithOne(x => x.Medicine)
+			 .HasForeignKey(x => x.MedicineId)
+			 .IsRequired()
+			 .OnDelete(DeleteBehavior.Cascade); // Xóa Thuốc thì xóa luôn unit
+		});
+
+		//Bảng AppMedicineUnits
+		builder.Entity<MedicineUnit>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "MedicineUnits", SupplyCoreERPConsts.DbSchema);
+
+			b.ConfigureByConvention();
+
+			b.Property(x => x.UnitName).IsRequired().HasMaxLength(50);
+
+			b.HasIndex(x => x.MedicineId);
+		});
+	}
 }

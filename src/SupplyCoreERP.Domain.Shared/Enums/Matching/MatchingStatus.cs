@@ -1,4 +1,4 @@
-﻿namespace SupplyCoreERP.Enums.Finance
+﻿namespace SupplyCoreERP.Enums.Matching
 {
 	public enum MatchingStatus { 
 		Pending = 0, // Chưa đối soát

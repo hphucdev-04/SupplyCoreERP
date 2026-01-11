@@ -1,4 +1,4 @@
-﻿namespace SupplyCoreERP.Enums.Finance
+﻿namespace SupplyCoreERP.Enums.Invoice
 {
 	public enum InvoiceStatus { 
 		Unpaid = 0, // Chưa thanh toán
