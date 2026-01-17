@@ -1,4 +1,4 @@
-﻿namespace SupplyCoreERP.Enums.Medicines
+﻿namespace SupplyCoreERP.Enums.Products
 {
 	public enum ProductType { 
 		Medicine = 1, //Thuốc

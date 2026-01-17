@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupplyCoreERP.Products;
+using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
@@ -9,28 +10,21 @@ namespace SupplyCoreERP.Categories
 	public class CategoryManager : DomainService
 	{
 		private readonly IRepository<Category, Guid> _categoryRepository;
-
-		public CategoryManager(IRepository<Category, Guid> categoryRepository)
+		private readonly IRepository<Product, Guid> _productRepository;
+		public CategoryManager(
+			IRepository<Category, Guid> categoryRepository,
+			IRepository<Product, Guid> productRepository)
 		{
 			_categoryRepository = categoryRepository;
+			_productRepository = productRepository;
 		}
 
-		public async Task<Category> CreateAsync(string code, string name, string description = null)
+		public async Task<Category> CreateAsync(string name)
 		{
-			Check.NotNullOrWhiteSpace(code, nameof(code));
 			Check.NotNullOrWhiteSpace(name, nameof(name));
-
-			//Mã viết hoa, cắt khoảng trắng
-			var normalizedCode = code.Trim().ToUpper();
 			var normalizedName = name.Trim();
 
-			// Check 1: Kiểm tra trùng Mã 
-			if (await _categoryRepository.AnyAsync(x => x.Code == normalizedCode))
-			{
-				throw new UserFriendlyException($"Mã nhóm '{code}' đã tồn tại trong hệ thống!");
-			}
-
-			// Check 2: Kiểm tra trùng Tên 
+			// Check: Kiểm tra trùng Tên 
 			if (await _categoryRepository.AnyAsync(x => x.Name == normalizedName))
 			{
 				throw new UserFriendlyException($"Tên nhóm '{name}' đã tồn tại!");
@@ -38,25 +32,16 @@ namespace SupplyCoreERP.Categories
 
 			return new Category(
 				GuidGenerator.Create(),
-				code,
-				name,
-				description
+				name
 			);
 		}
 
-		public async Task UpdateAsync(Category category, string newName, string newDescription)
+		public async Task UpdateAsync(Category category, string newName)
 		{
 			Check.NotNull(category, nameof(category));
 			Check.NotNullOrWhiteSpace(newName, nameof(newName));
 
 			var normalizedName = newName.Trim();
-
-			// Nếu tên không đổi thì không cần check, chỉ update mô tả
-			if (category.Name == normalizedName)
-			{
-				category.SetDescription(newDescription);
-				return;
-			}
 
 			//  Kiểm tra trùng tên với nhóm khác
 			var isDuplicateName = await _categoryRepository.AnyAsync(x =>
@@ -70,7 +55,24 @@ namespace SupplyCoreERP.Categories
 			}
 
 			category.SetName(newName);
-			category.SetDescription(newDescription);
 		}
+
+		public async Task DeleteAsync(Category category)
+		{
+			Check.NotNull(category, nameof(category));
+
+			//Check sản phẩm thuộc nhóm
+			var isInUse = await _productRepository.AnyAsync(x => x.CategoryId == category.Id);
+
+			if (isInUse)
+			{
+				//Có - chặn
+				throw new UserFriendlyException($"Không thể xóa nhóm '{category.Name}' vì đang có sản phẩm thuộc nhóm này!");
+			}
+
+			//Không - xóa
+			await _categoryRepository.DeleteAsync(category);
+		}
+
 	}
 }

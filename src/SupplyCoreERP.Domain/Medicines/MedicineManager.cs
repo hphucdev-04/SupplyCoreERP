@@ -1,5 +1,9 @@
-﻿using SupplyCoreERP.Categories;
-using SupplyCoreERP.Enums.Medicines;
+﻿using SupplyCoreERP.ActiveIngredients;
+using SupplyCoreERP.BaseUnits;
+using SupplyCoreERP.Categories;
+using SupplyCoreERP.DosageForms;
+using SupplyCoreERP.MasterData;
+using SupplyCoreERP.Products;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -10,104 +14,111 @@ namespace SupplyCoreERP.Medicines
 {
 	public class MedicineManager : DomainService
 	{
-		private readonly IRepository<Medicine, Guid> _medicineRepository;
+		private readonly ProductManager _productManager;
 		private readonly IRepository<Category, Guid> _categoryRepository;
+		private readonly IRepository<Manufacturer, Guid> _manufacturerRepository;
+		private readonly IRepository<BaseUnit, Guid> _unitRepository; 
+		private readonly IRepository<DosageForm, Guid> _dosageFormRepository;
+		private readonly IRepository<ActiveIngredient, Guid> _activeIngredientRepository;
 
 		public MedicineManager(
-			IRepository<Medicine, Guid> medicineRepository,
-			IRepository<Category, Guid> categoryRepository)
+			ProductManager productManager,
+			IRepository<Category, Guid> categoryRepository,
+			IRepository<Manufacturer, Guid> manufacturerRepository,
+			IRepository<BaseUnit, Guid> unitRepository,
+			IRepository<DosageForm, Guid> dosageFormRepository,
+			IRepository<ActiveIngredient, Guid> activeIngredientRepository)
 		{
-			_medicineRepository = medicineRepository;
+			_productManager = productManager;
 			_categoryRepository = categoryRepository;
+			_manufacturerRepository = manufacturerRepository;
+			_unitRepository = unitRepository;
+			_dosageFormRepository = dosageFormRepository;
+			_activeIngredientRepository = activeIngredientRepository;
 		}
 
 		public async Task<Medicine> CreateAsync(
-			string code,
-			string name,
-			Guid categoryId,
-			string baseUnit,
-			ProductType type)
+			string code, string name, Guid categoryId, Guid manufacturerId, Guid baseUnitId, Guid dosageFormId, string regNumber)
 		{
-			// Check 1: Nhóm thuốc có tồn tại không
+			//Check category
 			if (!await _categoryRepository.AnyAsync(x => x.Id == categoryId))
-			{
-				throw new UserFriendlyException("Nhóm thuốc không tồn tại!");
-			}
+				throw new UserFriendlyException("Nhóm hàng không tồn tại.");
 
-			// Check 2: Trùng Mã
-			var normalizedCode = code?.Trim().ToUpper();
-			if (await _medicineRepository.AnyAsync(x => x.Code == normalizedCode))
-			{
-				throw new UserFriendlyException($"Mã thuốc '{code}' đã tồn tại trong hệ thống!");
-			}
+			//Check manufacturer
+			if (!await _manufacturerRepository.AnyAsync(x => x.Id == manufacturerId))
+				throw new UserFriendlyException("Nhà sản xuất không tồn tại.");
 
-			// Check 3: Trùng Tên
-			var normalizedName = name?.Trim();
-			if (await _medicineRepository.AnyAsync(x => x.Name == normalizedName))
-			{
-				throw new UserFriendlyException($"Tên thuốc '{name}' đã tồn tại trong hệ thống!");
-			}
+			//Check baseUnit
+			if (!await _unitRepository.AnyAsync(x => x.Id == baseUnitId))
+				throw new UserFriendlyException("Đơn vị tính không tồn tại.");
+
+			if (!await _dosageFormRepository.AnyAsync(x => x.Id == dosageFormId))
+				throw new UserFriendlyException("Dạng bào chế không tồn tại.");
+
+			//Check trùng Code/Name 
+			await _productManager.CheckCodeAndNameAsync(code, name);
 
 			return new Medicine(
 				GuidGenerator.Create(),
 				categoryId,
+				manufacturerId,
 				code,
 				name,
-				baseUnit,
-				type
+				baseUnitId,
+				dosageFormId,
+				regNumber
 			);
 		}
 
-		public async Task ChangeCodeAsync(Medicine medicine, string newCode)
+		public async Task UpdateAsync(
+			Medicine medicine,
+			string name,
+			Guid categoryId,
+			Guid manufacturerId,
+			Guid dosageFormId,
+			string regNumber)
 		{
 			Check.NotNull(medicine, nameof(medicine));
-			Check.NotNullOrWhiteSpace(newCode, nameof(newCode));
 
-			var normalizedCode = newCode.Trim().ToUpper();
+			// Validate khóa ngoại mới 
+			await ValidateForeignKeysAsync(categoryId, manufacturerId, medicine.BaseUnitId, dosageFormId);
 
-			// Nếu mã không đổi thì thoát
-			if (medicine.Code == normalizedCode) return;
+			// Check trùng tên
+			await _productManager.CheckCodeAndNameAsync(medicine.Code, name, excludeId: medicine.Id);
 
-			// Kiểm tra trùng với các thuốc khác
-			if (await _medicineRepository.AnyAsync(x => x.Code == normalizedCode && x.Id != medicine.Id))
-			{
-				throw new UserFriendlyException($"Mã thuốc '{newCode}' đã bị sử dụng bởi thuốc khác!");
-			}
+			//Update data
+			medicine.UpdateInfo(name, categoryId, manufacturerId);
 
-			medicine.SetCode(newCode);
+			//Update thông tin riêng 
+			medicine.UpdatePharmaInfo(dosageFormId, regNumber, medicine.UsageRoute, medicine.StorageCondition, medicine.IsPrescriptionDrug);
 		}
 
-		public async Task ChangeNameAsync(Medicine medicine, string newName)
+		private async Task ValidateForeignKeysAsync(Guid catId, Guid manuId, Guid unitId, Guid dosageId)
 		{
-			Check.NotNull(medicine, nameof(medicine));
-			Check.NotNullOrWhiteSpace(newName, nameof(newName));
-
-			var normalizedName = newName.Trim();
-
-			// Nếu tên không đổi thì thoát
-			if (medicine.Name == normalizedName) return;
-
-			// Kiểm tra trùng với các thuốc khác
-			if (await _medicineRepository.AnyAsync(x => x.Name == normalizedName && x.Id != medicine.Id))
-			{
-				throw new UserFriendlyException($"Tên thuốc '{newName}' đã bị trùng!");
-			}
-
-			medicine.SetName(newName);
+			if (!await _categoryRepository.AnyAsync(x => x.Id == catId)) throw new UserFriendlyException("Nhóm hàng không tồn tại.");
+			if (!await _manufacturerRepository.AnyAsync(x => x.Id == manuId)) throw new UserFriendlyException("Nhà sản xuất không tồn tại.");
+			if (!await _unitRepository.AnyAsync(x => x.Id == unitId)) throw new UserFriendlyException("Đơn vị tính không tồn tại.");
+			if (!await _dosageFormRepository.AnyAsync(x => x.Id == dosageId)) throw new UserFriendlyException("Dạng bào chế không tồn tại.");
 		}
 
-		public async Task ChangeCategoryAsync(Medicine medicine, Guid newCategoryId)
+		public async Task AddIngredientAsync(Medicine medicine, Guid activeIngredientId)
 		{
 			Check.NotNull(medicine, nameof(medicine));
 
-			if (medicine.CategoryId == newCategoryId) return;
-
-			if (!await _categoryRepository.AnyAsync(x => x.Id == newCategoryId))
+			// Check tồn tại
+			if (!await _activeIngredientRepository.AnyAsync(x => x.Id == activeIngredientId))
 			{
-				throw new UserFriendlyException("Nhóm thuốc mới không tồn tại!");
+				throw new UserFriendlyException("Hoạt chất không tồn tại trong danh mục!");
 			}
 
-			medicine.SetCategory(newCategoryId);
+			medicine.AddIngredient(activeIngredientId);
+		}
+
+		public async Task RemoveIngredientAsync(Medicine medicine, Guid activeIngredientId)
+		{
+			Check.NotNull(medicine, nameof(medicine));
+			medicine.RemoveIngredient(activeIngredientId);
+			await Task.CompletedTask;
 		}
 	}
 }
