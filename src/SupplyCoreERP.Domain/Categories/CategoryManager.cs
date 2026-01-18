@@ -25,7 +25,7 @@ namespace SupplyCoreERP.Categories
 			var normalizedName = name.Trim();
 
 			// Check: Kiểm tra trùng Tên 
-			if (await _categoryRepository.AnyAsync(x => x.Name == normalizedName))
+			if (await _categoryRepository.AnyAsync(x => x.Name.ToLower() == normalizedName.ToLower()))
 			{
 				throw new UserFriendlyException($"Tên nhóm '{name}' đã tồn tại!");
 			}
