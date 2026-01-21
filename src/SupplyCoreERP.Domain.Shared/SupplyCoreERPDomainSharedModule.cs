@@ -12,6 +12,7 @@ using Volo.Abp.SettingManagement;
 using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.OpenIddict;
 using Volo.Abp.BlobStoring.Database;
+using Localization.Resources.AbpUi;
 
 namespace SupplyCoreERP;
 
@@ -43,14 +44,15 @@ public class SupplyCoreERPDomainSharedModule : AbpModule
         Configure<AbpLocalizationOptions>(options =>
         {
             options.Resources
-                .Add<SupplyCoreERPResource>("vi")
+                .Add<SupplyCoreERPResource>("en")
                 .AddBaseTypes(typeof(AbpValidationResource))
-                .AddVirtualJson("/Localization/SupplyCoreERP");
+				.AddBaseTypes(typeof(AbpUiResource))
+				.AddVirtualJson("/Localization/SupplyCoreERP");
 
             options.DefaultResourceType = typeof(SupplyCoreERPResource);
-            
-            options.Languages.Add(new LanguageInfo("vi", "vi", "Vietnamese")); 
-            options.Languages.Add(new LanguageInfo("en", "en", "English")); 
+
+			options.Languages.Add(new LanguageInfo("en", "en", "English"));
+			options.Languages.Add(new LanguageInfo("vi", "vi", "Vietnamese")); 
 
         });
         

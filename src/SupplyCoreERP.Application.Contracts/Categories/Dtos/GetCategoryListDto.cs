@@ -5,9 +5,8 @@ using Volo.Abp.Application.Dtos;
 
 namespace SupplyCoreERP.Categories.Dtos
 {
-	public class CategoryDto : AuditedEntityDto<Guid>
+	public class GetCategoryListDto : PagedAndSortedResultRequestDto
 	{
-		public string Name { get; set; }
-		public int ProductCount { get; set; }
+		public string? Filter { get; set; }
 	}
 }

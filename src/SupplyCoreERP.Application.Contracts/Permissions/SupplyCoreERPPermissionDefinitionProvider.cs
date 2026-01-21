@@ -9,13 +9,40 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
 {
     public override void Define(IPermissionDefinitionContext context)
     {
-        var myGroup = context.AddGroup(SupplyCoreERPPermissions.GroupName);
+		var catalogPermission = CreateGroupPermission(context, SupplyCoreERPPermissions.Catalog.GroupNameCatalog);
+		AddCrudPermissions(catalogPermission, "Catalog", "Category");
+		AddCrudPermissions(catalogPermission, "Catalog", "Medicine");
 
-        //Define your own permissions here. Example:
-        //myGroup.AddPermission(SupplyCoreERPPermissions.MyPermission1, L("Permission:MyPermission1"));
-    }
+	}
 
-    private static LocalizableString L(string name)
+	private void AddCrudPermissions(PermissionDefinition parent, string groupName, string entityName)
+	{
+		var basePermission = $"{groupName}.{entityName}";
+
+		var entityPermission = parent.AddChild(
+			basePermission,
+			L($"Permission:{groupName}.{entityName}"));
+
+		entityPermission.AddChild(
+			$"{basePermission}.Create",
+			L($"Permission:{groupName}.{entityName}.Create"));
+
+		entityPermission.AddChild(
+			$"{basePermission}.Update",
+			L($"Permission:{groupName}.{entityName}.Update"));
+
+		entityPermission.AddChild(
+			$"{basePermission}.Delete",
+			L($"Permission:{groupName}.{entityName}.Delete"));
+	}
+
+	private PermissionDefinition CreateGroupPermission(IPermissionDefinitionContext context, string groupName)
+	{
+		var group = context.AddGroup(groupName, L($"Permission:{groupName}"));
+		return group.AddPermission(groupName, L($"Permission:{groupName}"));
+	}
+
+	private static LocalizableString L(string name)
     {
         return LocalizableString.Create<SupplyCoreERPResource>(name);
     }

@@ -15,6 +15,7 @@ import { provideRouter } from '@angular/router';
 import { environment } from '../environments/environment';
 import { APP_ROUTES } from './app.routes';
 import { APP_ROUTE_PROVIDER } from './route.provider';
+import { registerLocales } from './common/locale.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -24,7 +25,7 @@ export const appConfig: ApplicationConfig = {
     provideAbpCore(
       withOptions({
         environment,
-        registerLocaleFn: registerLocaleForEsBuild(),
+         registerLocaleFn: registerLocales(), 
       }),
     ),
     provideAbpOAuth(),
