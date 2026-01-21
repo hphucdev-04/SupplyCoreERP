@@ -20,4 +20,8 @@ export const APP_ROUTES: Routes = [
     path: 'setting-management',
     loadChildren: () => import('@abp/ng.setting-management').then(c => c.createRoutes()),
   },
+  {
+    path: 'catalog', 
+    loadChildren: () => import('./catalogs/catalogs-module').then(m => m.CatalogsModule),
+  },
 ];
