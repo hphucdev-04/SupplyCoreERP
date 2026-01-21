@@ -4,6 +4,12 @@
     "AppName": "SupplyCoreERP",
     "Menu:Home": "Home",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
-    "Welcome": "Welcome"
+    "Welcome": "Welcome",
+
+    "Permission:Catalog": "Danh mục",
+    "Permission:Catalog.Category": "Phân loại",
+    "Permission:Catalog.Category.Create": "Tạo phân loại",
+    "Permission:Catalog.Category.Update": "Cập nhật phân loại",
+    "Permission:Catalog.Category.Delete": "Xóa phân loại"
   }
 }

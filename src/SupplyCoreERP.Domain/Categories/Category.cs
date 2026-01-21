@@ -1,4 +1,6 @@
-﻿using System;
+﻿using SupplyCoreERP.Products;
+using System;
+using System.Collections.Generic;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -7,6 +9,7 @@ namespace SupplyCoreERP.Categories
 	public class Category : FullAuditedAggregateRoot<Guid>
 	{
 		public string Name { get; private set; }
+		public virtual ICollection<Product> Products { get; set; }
 
 		private Category() { }
 
