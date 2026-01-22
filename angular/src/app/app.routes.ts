@@ -22,6 +22,6 @@ export const APP_ROUTES: Routes = [
   },
   {
     path: 'catalog', 
-    loadChildren: () => import('./catalogs/catalogs-module').then(m => m.CatalogsModule),
+    loadChildren: () => import('./catalogs/catalogs.module').then(m => m.CatalogsModule),
   },
 ];

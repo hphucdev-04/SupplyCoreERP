@@ -1,20 +1,32 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { LocalizationPipe } from '@abp/ng.core';
+import { CoreModule } from '@abp/ng.core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { PageModule } from '@abp/ng.components/page';
+import { NgxDatatableModule } from '@swimlane/ngx-datatable';
+import { ThemeSharedModule } from '@abp/ng.theme.shared';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
-  imports: [
+ imports: [
     CommonModule,
-    LocalizationPipe,
+    ThemeSharedModule,
+    CoreModule,
     FormsModule,
     ReactiveFormsModule,
+    PageModule,
+    NgbModule,
+    NgxDatatableModule 
   ],
   exports: [
     CommonModule,
-    LocalizationPipe,
+    ThemeSharedModule,
+    CoreModule, 
     FormsModule,
     ReactiveFormsModule,
+    PageModule,
+    NgbModule,
+    NgxDatatableModule 
   ]
 })
 export class SharedModule { }

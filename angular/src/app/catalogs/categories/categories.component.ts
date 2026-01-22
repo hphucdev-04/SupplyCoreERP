@@ -1,0 +1,98 @@
+import { ListService, PagedResultDto } from '@abp/ng.core';
+import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { CategoryService } from 'src/app/proxy/categories';
+import { CategoryDto, GetCategoryListDto } from 'src/app/proxy/categories/dtos';
+
+@Component({
+  standalone: false,
+  selector: 'app-categories',
+  templateUrl: './categories.component.html',
+  styleUrl: './categories.component.scss',
+  providers: [ListService],
+})
+export class CategoriesComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+  category = { items: [], totalCount: 0 } as PagedResultDto<CategoryDto>;
+  isDrawerOpen = false;
+  form: FormGroup;
+  selectedCategory = {} as CategoryDto;
+
+  constructor(
+    public readonly list: ListService<GetCategoryListDto>,
+    private categoryService: CategoryService,
+    private fb: FormBuilder,
+    private confirmation: ConfirmationService
+  ) {
+    this.form = this.fb.group({
+      name: ['', Validators.required],
+    });
+  }
+ ngOnInit(): void {
+    const categoryStreamCreator = (query) => this.categoryService.getList(query);
+    this.list.maxResultCount = 10;
+    this.list.hookToQuery(categoryStreamCreator).subscribe((response) => {
+      this.category = response;
+    });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  createCategory(): void {
+    this.selectedCategory = {} as CategoryDto;
+    this.buildForm();
+    this.isDrawerOpen = true;
+  }
+
+  editCategory(id: string): void {
+    this.categoryService.get(id).subscribe((category) => {
+      this.selectedCategory = category;
+      this.buildForm();
+      this.isDrawerOpen = true;
+    });
+  }
+
+  buildForm(): void {
+    this.form = this.fb.group({
+      name: [this.selectedCategory.name || '', Validators.required],
+    });
+  }
+
+  closeDrawer(): void {
+    this.isDrawerOpen = false;
+    this.form.reset();
+  }
+
+  save(): void {
+    if (this.form.invalid) {
+      return;
+    }
+
+    const request = this.selectedCategory.id
+      ? this.categoryService.update(this.selectedCategory.id, this.form.value)
+      : this.categoryService.create(this.form.value);
+
+    request.subscribe(() => {
+      this.closeDrawer();
+      this.list.get();
+    });
+  }
+
+  deleteCategory(id: string): void {
+    this.confirmation
+      .warn('::AreYouSureToDelete', '::AreYouSure')
+      .subscribe((status) => {
+        if (status === Confirmation.Status.confirm) {
+          this.categoryService.delete(id).subscribe(() => {
+            this.list.get();
+          });
+        }
+      });
+  }
+
+}
