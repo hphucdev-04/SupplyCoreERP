@@ -3,11 +3,11 @@ import { Routes } from '@angular/router';
 export const CATALOGS_ROUTES: Routes = [
   {
     path: 'categories',
-    loadChildren: () => import('./categories/categories.routes').then(m => m.CATEGORIES_ROUTES),
+    loadComponent: () => import('./categories/categories.component').then(m => m.CategoriesComponent),
   },
   // {
   //   path: 'medicines',
-  //   loadChildren: () => import('./medicines/medicines.routes').then(m => m.MEDICINES_ROUTES),
+  //   loadComponent: () => import('./medicines/medicines.component').then(m => m.MedicinesComponent),
   // },
-  // ... các routes khác
+  // ... Thêm route catalog/...
 ];
