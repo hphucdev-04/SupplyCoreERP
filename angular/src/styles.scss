@@ -6,35 +6,21 @@
   --lpx-theme-dim-bg: url('assets/images/login/login-bg-img-dim.svg');
   --lpx-theme-dark-bg: url('assets/images/login/login-bg-img-dark.svg');
 
-  --lpx-logo-icon: url('assets/images/logo/icon-lite.svg');
+  --lpx-logo-icon: url('assets/images/logo/icon.png');
   --lpx-logo-url: var(--lpx-logo-icon);
   --lpx-logo: var(--lpx-logo-icon);
 
   .abp-logo {
     background-repeat: no-repeat;
   }
+  .lpx-nav-menu .lpx-menu-item-link.selected .lpx-menu-item-icon,
+  .lpx-nav-menu .lpx-menu-item-link.selected .dd-icon,
+  .lpx-nav-menu .lpx-menu-item-link.expanded .lpx-menu-item-icon,
+  .lpx-nav-menu .lpx-menu-item-link.expanded .dd-icon,
+  .lpx-nav-menu .lpx-menu-item-link:hover .lpx-menu-item-icon,
+  .lpx-nav-menu .lpx-menu-item-link:hover .dd-icon {
+    color: #00B37E;
+    opacity: 1;
+}
 
-  .abp-support {
-    width: 178px;
-    height: 30px;
-    background-image: url('assets/images/getting-started/abp-support.svg');
-  }
-
-  .abp-community {
-    width: 215px;
-    height: 30px;
-    background-image: url('assets/images/getting-started/abp-community.svg');
-  }
-
-  .abp-blog {
-    width: 142px;
-    height: 30px;
-    background-image: url('assets/images/getting-started/abp-blog.svg');
-  }
-
-  .logo-x {
-    width: 20px;
-    height: 20px;
-    background-image: url('assets/images/getting-started/x.svg');
-  }
 }

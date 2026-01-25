@@ -1,0 +1,14 @@
+{
+  "Culture": "en",
+  "Texts": {
+    "Permission:Catalog": "Catalog management",
+    "Permission:Catalog.Category": "Category management",
+    "Permission:Catalog.Category.Create": "Create",
+    "Permission:Catalog.Category.Update": "Update",
+    "Permission:Catalog.Category.Delete": "Delete",
+    "Permission:Catalog.Medicine": "Medicine management",
+    "Permission:Catalog.Medicine.Create": "Create",
+    "Permission:Catalog.Medicine.Update": "Update",
+    "Permission:Catalog.Medicine.Delete": "Delete"
+  }
+}

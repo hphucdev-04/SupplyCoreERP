@@ -38,17 +38,23 @@ function createMenuGroup(
 export const APP_ROUTES = [
   {
     path: '/',
-    name: '::Menu:DashBoard',
-    iconClass: 'fas fa-chart-pie',
+    name: '::Menu:Dashboard',
+    iconClass: 'fas fa-chart-line',
     order: 1,
     layout: eLayoutType.application,
   },
 
-  ...createMenuGroup('Catalog', 'fas fa-map-marked-alt', 2, [
-    { name: 'Categories', icon: 'fas fa-globe' },
-    { name: 'Medicines', icon: 'fas fa-flag' },
-    { name: 'Medicine Units', icon: 'fas fa-city' },
-    { name: 'Active Ingredients', icon: 'fas fa-map-pin' },
-    { name: 'Dosage Forms', icon: 'fas fa-map-pin' },
+ ...createMenuGroup('Catalog', 'fas fa-layer-group', 2, [
+    { name: 'Categories', icon: 'fas fa-sitemap' },
+    { name: 'Medicines', icon: 'fas fa-pills' },
+    { name: 'Units', icon: 'fas fa-ruler-combined' },
+    { name: 'Ingredients', icon: 'fas fa-flask' },
+    { name: 'DosageForm', icon: 'fas fa-capsules' },
+    { name: 'Manufacturer', icon: 'fas fa-industry' },
   ], 'Catalog'),
+
+  ...createMenuGroup('Partner', 'fas fa-handshake', 3, [
+    { name: 'Suppliers', icon: 'fas fa-truck' },
+    { name: 'Customers', icon: 'fas fa-user-friends' },
+  ], ),
 ];
