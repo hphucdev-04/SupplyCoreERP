@@ -80,55 +80,33 @@
   </div>
 </div>
 
-<!-- Drawer for Create/Edit Category -->
-<div class="drawer-overlay" *ngIf="isDrawerOpen" (click)="closeDrawer()"></div>
-<div class="drawer" [class.drawer-open]="isDrawerOpen">
-  <div class="drawer-header">
-    <h5>
-      {{
-        selectedCategory.id
-          ? ('::EditCategory' | abpLocalization)
-          : ('::NewCategory' | abpLocalization)
-      }}
-    </h5>
-    <button type="button" class="btn-close" (click)="closeDrawer()"></button>
-  </div>
-
-  <div class="drawer-body">
-    <form [formGroup]="form" (ngSubmit)="save()">
-      <div class="mb-3">
-        <label for="category-name" class="form-label">
-          {{ '::Name' | abpLocalization }}
-          <span class="text-danger">*</span>
-        </label>
-        <input
-          type="text"
-          id="category-name"
-          class="form-control"
-          formControlName="name"
-          autofocus
-        />
-        <div
-          class="invalid-feedback d-block"
-          *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
-        >
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
+<app-drawer
+  [isOpen]="isDrawerOpen"
+  [title]="selectedCategory.id ? '::EditCategory' : '::NewCategory'"
+  [width]="'md'"
+  [saveDisabled]="form.invalid"
+  (close)="closeDrawer()"
+  (save)="save()"
+>
+  <form [formGroup]="form">
+    <div class="mb-3">
+      <label for="category-name" class="form-label">
+        {{ '::Name' | abpLocalization }}
+        <span class="text-danger">*</span>
+      </label>
+      <input
+        type="text"
+        id="category-name"
+        class="form-control"
+        formControlName="name"
+        autofocus
+      />
+      <div
+        class="invalid-feedback d-block"
+        *ngIf="form.get('name')?.invalid && form.get('name')?.touched"
+      >
+        {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
-    </form>
-  </div>
-
-  <div class="drawer-footer">
-    <button type="button" class="btn btn-secondary" (click)="closeDrawer()">
-      {{ '::Cancel' | abpLocalization }}
-    </button>
-    <button
-      type="button"
-      class="btn btn-primary"
-      (click)="save()"
-      [disabled]="form.invalid"
-    >
-      {{ '::Save' | abpLocalization }}
-    </button>
-  </div>
-</div>
+    </div>
+  </form>
+</app-drawer>

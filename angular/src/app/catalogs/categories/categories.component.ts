@@ -5,9 +5,11 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { CategoryService } from 'src/app/proxy/categories';
 import { CategoryDto, GetCategoryListDto } from 'src/app/proxy/categories/dtos';
+import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  standalone: false,
+  imports:[SharedModule, DrawerComponent],
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
