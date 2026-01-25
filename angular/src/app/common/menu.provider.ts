@@ -45,10 +45,10 @@ export const APP_ROUTES = [
   },
 
   ...createMenuGroup('Catalog', 'fas fa-map-marked-alt', 2, [
-    { name: 'Category', icon: 'fas fa-globe' },
-    { name: 'Medicine', icon: 'fas fa-flag' },
-    { name: 'Medicine Unit', icon: 'fas fa-city' },
-    { name: 'Active Ingredient', icon: 'fas fa-map-pin' },
-    { name: 'Dosage Form', icon: 'fas fa-map-pin' },
+    { name: 'Categories', icon: 'fas fa-globe' },
+    { name: 'Medicines', icon: 'fas fa-flag' },
+    { name: 'Medicine Units', icon: 'fas fa-city' },
+    { name: 'Active Ingredients', icon: 'fas fa-map-pin' },
+    { name: 'Dosage Forms', icon: 'fas fa-map-pin' },
   ], 'Catalog'),
 ];
