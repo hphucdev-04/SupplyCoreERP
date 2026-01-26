@@ -873,6 +873,322 @@
       "rootPath": "app",
       "remoteServiceName": "Default",
       "controllers": {
+        "SupplyCoreERP.BaseUnits.BaseUnitAppService": {
+          "controllerName": "BaseUnit",
+          "controllerGroupName": "BaseUnit",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "SupplyCoreERP.BaseUnits.BaseUnitAppService",
+          "interfaces": [
+            {
+              "type": "SupplyCoreERP.BaseUnits.IBaseUnitAppService",
+              "name": "IBaseUnitAppService",
+              "methods": [
+                {
+                  "name": "GetAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto",
+                    "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto"
+                  }
+                },
+                {
+                  "name": "GetListAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto",
+                      "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto>"
+                  }
+                },
+                {
+                  "name": "CreateAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                      "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto",
+                    "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto"
+                  }
+                },
+                {
+                  "name": "UpdateAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                      "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto",
+                    "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto"
+                  }
+                },
+                {
+                  "name": "DeleteAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "CreateAsyncByInput": {
+              "uniqueName": "CreateAsyncByInput",
+              "name": "CreateAsync",
+              "httpMethod": "POST",
+              "url": "api/app/base-unit",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                  "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                  "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto",
+                "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto,SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto>"
+            },
+            "UpdateAsyncByIdAndInput": {
+              "uniqueName": "UpdateAsyncByIdAndInput",
+              "name": "UpdateAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/base-unit/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                  "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                  "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto",
+                "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto,System.Guid,SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto>"
+            },
+            "DeleteAsyncById": {
+              "uniqueName": "DeleteAsyncById",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/base-unit/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+            },
+            "GetAsyncById": {
+              "uniqueName": "GetAsyncById",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/app/base-unit/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto",
+                "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto,SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto,System.Guid,SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto>"
+            },
+            "GetListAsyncByInput": {
+              "uniqueName": "GetListAsyncByInput",
+              "name": "GetListAsync",
+              "httpMethod": "GET",
+              "url": "api/app/base-unit",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto",
+                  "typeSimple": "SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "Filter",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto,SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto,System.Guid,SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto>"
+            }
+          }
+        },
         "SupplyCoreERP.Categories.CategoryAppService": {
           "controllerName": "Category",
           "controllerGroupName": "Category",
@@ -3432,6 +3748,93 @@
     }
   },
   "types": {
+    "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto": {
+      "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Guid>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Code",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.BaseUnits.Dtos.CreateUpdateBaseUnitDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Code",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": 0,
+          "maxLength": 50,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": 0,
+          "maxLength": 100,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.BaseUnits.Dtos.GetBaseUnitListDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Filter",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.Categories.Dtos.CategoryDto": {
       "baseType": "Volo.Abp.Application.Dtos.AuditedEntityDto<System.Guid>",
       "isEnum": false,
@@ -3478,7 +3881,7 @@
           "type": "System.String",
           "typeSimple": "string",
           "isRequired": true,
-          "minLength": null,
+          "minLength": 0,
           "maxLength": 100,
           "minimum": null,
           "maximum": null,
@@ -4324,6 +4727,53 @@
           "maxLength": null,
           "minimum": "0",
           "maximum": "2147483647",
+          "regex": null
+        }
+      ]
+    },
+    "Volo.Abp.Application.Dtos.FullAuditedEntityDto<T0>": {
+      "baseType": "Volo.Abp.Application.Dtos.AuditedEntityDto<TPrimaryKey>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": [
+        "TPrimaryKey"
+      ],
+      "properties": [
+        {
+          "name": "IsDeleted",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DeleterId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DeletionTime",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
           "regex": null
         }
       ]

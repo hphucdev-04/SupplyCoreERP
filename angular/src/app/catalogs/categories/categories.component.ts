@@ -28,9 +28,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService
   ) {
-    this.form = this.fb.group({
-      name: ['', Validators.required],
-    });
+    this.buildForm()
   }
  ngOnInit(): void {
     const categoryStreamCreator = (query) => this.categoryService.getList(query);
@@ -61,7 +59,10 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      name: [this.selectedCategory.name || '', Validators.required],
+      name: [
+        this.selectedCategory.name || '', 
+        [Validators.required, Validators.maxLength(100)] 
+      ],
     });
   }
 
