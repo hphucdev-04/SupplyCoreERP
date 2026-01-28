@@ -49,8 +49,8 @@ export const APP_ROUTES = [
     { name: 'Medicines', icon: 'fas fa-pills' },
     { name: 'Units', icon: 'fas fa-ruler-combined' },
     { name: 'Ingredients', icon: 'fas fa-flask' },
-    { name: 'DosageForm', icon: 'fas fa-capsules' },
-    { name: 'Manufacturer', icon: 'fas fa-industry' },
+    { name: 'DosageForms', icon: 'fas fa-capsules' },
+    { name: 'Manufacturers', icon: 'fas fa-industry' },
   ], 'Catalog'),
 
   ...createMenuGroup('Partner', 'fas fa-handshake', 3, [

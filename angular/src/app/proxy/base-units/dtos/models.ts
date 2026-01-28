@@ -1,4 +1,4 @@
-import type { FullAuditedEntityDto } from '@abp/ng.core';
+import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 
 export interface BaseUnitDto extends FullAuditedEntityDto<string> {
   code?: string;
@@ -10,6 +10,6 @@ export interface CreateUpdateBaseUnitDto {
   name: string;
 }
 
-export interface GetBaseUnitListDto {
+export interface GetBaseUnitListDto extends PagedAndSortedResultRequestDto {
   filter?: string;
 }

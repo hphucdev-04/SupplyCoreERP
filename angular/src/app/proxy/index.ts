@@ -1,3 +1,4 @@
 import * as BaseUnits from './base-units';
 import * as Categories from './categories';
-export { BaseUnits, Categories };
+import * as DosageForms from './dosage-forms';
+export { BaseUnits, Categories, DosageForms };

@@ -3,39 +3,39 @@ import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
-import { BaseUnitService } from 'src/app/proxy/base-units';
-import { BaseUnitDto, GetBaseUnitListDto } from 'src/app/proxy/base-units/dtos';
+import { DosageFormService } from 'src/app/proxy/dosage-forms';
+import { DosageFormDto, GetDosageFormListDto } from 'src/app/proxy/dosage-forms/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  selector: 'app-units',
+  selector: 'app-dosageforms',
   imports: [SharedModule, DrawerComponent],
-  templateUrl: './units.component.html',
-  styleUrl: './units.component.scss',
+  templateUrl: './dosageforms.component.html',
+  styleUrl: './dosageforms.component.scss',
   providers: [ListService]
 })
-export class UnitsComponent implements OnInit, OnDestroy{
+export class DosageformsComponent implements OnInit , OnDestroy{
   private destroy$ = new Subject<void>();
-  unit = { items: [], totalCount: 0 } as PagedResultDto<BaseUnitDto>;
+  dosage = {items: [], totalCount: 0 } as PagedResultDto<DosageFormDto>;
   isDrawerOpen = false;
   form: FormGroup;
-  selectedUnit = {} as BaseUnitDto;
+  selectedDosage = {} as DosageFormDto;
 
   constructor(
-    public readonly list: ListService<GetBaseUnitListDto>,
-    private unitService: BaseUnitService,
+    public readonly list: ListService<GetDosageFormListDto>,
+    private dosageService: DosageFormService,
     private fb: FormBuilder,
     private confirmation: ConfirmationService
-  ) {
-    this.buildForm();
+  ){
+     this.buildForm()
   }
 
   ngOnInit(): void {
-    const unitStreamCreator = (query) => this.unitService.getList(query);
+    const dosageStreamCreator = (query) => this.dosageService.getList(query);
     this.list.maxResultCount = 10;
-    this.list.hookToQuery(unitStreamCreator).subscribe((response) => {
-      this.unit = response;
+    this.list.hookToQuery(dosageStreamCreator).subscribe((response) => {
+    this.dosage = response;
     });
   }
 
@@ -44,40 +44,40 @@ export class UnitsComponent implements OnInit, OnDestroy{
     this.destroy$.complete();
   }
 
-  createUnit(): void {
-    this.selectedUnit = {} as BaseUnitDto;
-    this.buildForm(); 
-    this.isDrawerOpen = true;
-  }
-
-  editUnit(id: string): void {
-    this.unitService.get(id).subscribe((res) => {
-      this.selectedUnit = res;
+   createDosage(): void {
+      this.selectedDosage = {} as DosageFormDto;
       this.buildForm(); 
       this.isDrawerOpen = true;
-    });
-  }
-
-  deleteUnit(id: string): void {
-    this.confirmation
-      .warn('::AreYouSureToDelete', '::AreYouSure')
-      .subscribe((status) => {
-        if (status === Confirmation.Status.confirm) {
-          this.unitService.delete(id).subscribe(() => {
-            this.list.get();
-          });
-        }
+    }
+  
+    editDosage(id: string): void {
+      this.dosageService.get(id).subscribe((res) => {
+        this.selectedDosage = res;
+        this.buildForm(); 
+        this.isDrawerOpen = true;
       });
-  }
+    }
+  
+    deleteDosage(id: string): void {
+      this.confirmation
+        .warn('::AreYouSureToDelete', '::AreYouSure')
+        .subscribe((status) => {
+          if (status === Confirmation.Status.confirm) {
+            this.dosageService.delete(id).subscribe(() => {
+              this.list.get();
+            });
+          }
+        });
+    }
 
-  buildForm(): void {
+    buildForm(): void {
     this.form = this.fb.group({
-      code: [this.selectedUnit.code || '', [Validators.required, Validators.maxLength(50)]],
-      name: [this.selectedUnit.name || '', [Validators.required, Validators.maxLength(100)]],
+      code: [this.selectedDosage.code || '', [Validators.required, Validators.maxLength(50)]],
+      name: [this.selectedDosage.name || '', [Validators.required, Validators.maxLength(100)]],
     });
 
     //Logic sinh code khi tạo
-    if (!this.selectedUnit.id) {
+    if (!this.selectedDosage.id) {
       this.form.get('name')?.valueChanges
         .pipe(takeUntil(this.destroy$)) // Tự hủy khi component bị hủy
         .subscribe((value) => {
@@ -109,9 +109,9 @@ export class UnitsComponent implements OnInit, OnDestroy{
   save(): void {
     if (this.form.invalid) return;
 
-    const request = this.selectedUnit.id
-      ? this.unitService.update(this.selectedUnit.id, this.form.value)
-      : this.unitService.create(this.form.value);
+    const request = this.selectedDosage.id
+      ? this.dosageService.update(this.selectedDosage.id, this.form.value)
+      : this.dosageService.create(this.form.value);
 
     request.subscribe(() => {
       this.closeDrawer();

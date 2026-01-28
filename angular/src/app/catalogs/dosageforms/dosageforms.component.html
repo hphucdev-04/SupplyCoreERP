@@ -3,20 +3,20 @@
     <div class="row">
       <div class="col col-md-6">
         <h5 class="card-title">
-          {{ '::Menu:Units' | abpLocalization }}
+          {{ '::Menu:DosageForms' | abpLocalization }}
         </h5>
       </div>
       <div class="col col-md-6 text-end">
-        <button class="btn btn-primary" type="button" (click)="createUnit()">
+        <button class="btn btn-primary" type="button" (click)="createDosage()">
           <i class="fa fa-plus me-1"></i>
-          <span>{{ '::NewUnit' | abpLocalization }}</span>
+          <span>{{ '::NewDosage' | abpLocalization }}</span>
         </button>
       </div>
     </div>
   </div>
 
   <div class="card-body">
-    <ngx-datatable [rows]="unit.items" [count]="unit.totalCount" [list]="list" default>
+    <ngx-datatable [rows]="dosage.items" [count]="dosage.totalCount" [list]="list" default>
       
       <ngx-datatable-column
         [name]="'::Actions' | abpLocalization"
@@ -28,10 +28,10 @@
               <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
-              <button ngbDropdownItem (click)="editUnit(row.id)">
+              <button ngbDropdownItem (click)="editDosage(row.id)">
                 <i class="fa fa-edit me-1"></i>{{ '::Edit' | abpLocalization }}
               </button>
-              <button ngbDropdownItem (click)="deleteUnit(row.id)">
+              <button ngbDropdownItem (click)="deleteDosage(row.id)">
                 <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
               </button>
             </div>
@@ -58,7 +58,7 @@
 
 <app-drawer
   [isOpen]="isDrawerOpen"
-  [title]="selectedUnit.id ? '::EditUnit' : '::NewUnit'"
+  [title]="selectedDosage.id ? '::EditDosage' : '::NewDosage'"
   [width]="'md'"
   [saveDisabled]="form.invalid"
   (close)="closeDrawer()"
@@ -76,7 +76,6 @@
         class="form-control"
         formControlName="name"
         autofocus
-        placeholder="Ví dụ: Hộp, Viên, Vỉ..."
       />
       <div class="invalid-feedback d-block" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
         {{ '::ThisFieldIsRequired' | abpLocalization }}
@@ -92,9 +91,8 @@
           id="unit-code"
           class="form-control text-uppercase" 
           formControlName="code"
-          placeholder="Ví dụ: HOP, VIEN..."
         />
-        <div class="form-text text-muted" *ngIf="!selectedUnit.id">
+        <div class="form-text text-muted" *ngIf="!selectedDosage.id">
             Mã được tự động gợi ý từ tên. Bạn có thể sửa lại.
         </div>
         <div class="invalid-feedback d-block" *ngIf="form.get('code')?.invalid && form.get('code')?.touched">
