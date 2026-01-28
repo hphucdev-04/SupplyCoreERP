@@ -1,5 +1,4 @@
-import { Component, inject } from '@angular/core';
-import { AuthService } from '@abp/ng.core';
+import { Component } from '@angular/core';
 import { SharedModule } from '../shared/shared.module';
 
 @Component({

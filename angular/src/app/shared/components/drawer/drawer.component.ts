@@ -4,7 +4,7 @@ import { Component, EventEmitter, Input, Output, ContentChild, TemplateRef, Afte
 @Component({
   standalone: true,
   selector: 'app-drawer',
-  imports:[CoreModule],
+  imports: [CoreModule],
   templateUrl: './drawer.component.html',
   styleUrls: ['./drawer.component.scss']
 })

@@ -34,4 +34,9 @@
     <Content Remove="Localization\SupplyCoreERP\*.json" />
   </ItemGroup>
 
+  <ItemGroup>
+    <EmbeddedResource Include="Localization\Permission\en.json" />
+    <EmbeddedResource Include="Localization\Permission\vi.json" />
+  </ItemGroup>
+
 </Project>

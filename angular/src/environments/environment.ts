@@ -15,7 +15,7 @@ export const environment = {
   production: false,
   application: {
     baseUrl,
-    name: 'SupplyCoreERP',
+    name: 'RxLogistics',
   },
   oAuthConfig,
   apis: {

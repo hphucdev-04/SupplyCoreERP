@@ -1,6 +1,6 @@
-import type { AuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
+import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 
-export interface CategoryDto extends AuditedEntityDto<string> {
+export interface CategoryDto extends FullAuditedEntityDto<string> {
   name?: string;
   productCount?: number;
 }

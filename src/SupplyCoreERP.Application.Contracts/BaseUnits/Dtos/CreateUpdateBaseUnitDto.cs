@@ -3,11 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace SupplyCoreERP.Categories.Dtos
+namespace SupplyCoreERP.BaseUnits.Dtos
 {
-	public class CreateUpdateCategoryDto
+	public class CreateUpdateBaseUnitDto
 	{
-		[Required(ErrorMessage = "Tên danh mục là bắt buộc")]
+		[Required]
+		[StringLength(50)]
+		public string Code { get; set; }
+
+		[Required]
 		[StringLength(100)]
 		public string Name { get; set; }
 	}

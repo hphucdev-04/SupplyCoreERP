@@ -1,0 +1,14 @@
+{
+  "Culture": "vi",
+  "Texts": {
+    "Permission:Catalog": "Quản lý danh mục",
+    "Permission:Catalog.Category": "Quản lý Nhóm thuốc",
+    "Permission:Catalog.Category.Create": "Tạo",
+    "Permission:Catalog.Category.Update": "Sửa",
+    "Permission:Catalog.Category.Delete": "Xóa",
+    "Permission:Catalog.Medicine": "Quản lý Thuốc",
+    "Permission:Catalog.Medicine.Create": "Tạo",
+    "Permission:Catalog.Medicine.Update": "Sửa",
+    "Permission:Catalog.Medicine.Delete": "Xóa"
+  }
+}

@@ -1,15 +1,26 @@
 {
   "Culture": "vi",
   "Texts": {
-    "AppName": "SupplyCoreERP",
-    "Menu:Home": "Home",
+    "AppName": "RxLogistics",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
     "Welcome": "Welcome",
 
-    "Permission:Catalog": "Danh mục",
-    "Permission:Catalog.Category": "Phân loại",
-    "Permission:Catalog.Category.Create": "Tạo phân loại",
-    "Permission:Catalog.Category.Update": "Cập nhật phân loại",
-    "Permission:Catalog.Category.Delete": "Xóa phân loại"
+    //Menus
+    "Menu:Dashboard": "Tổng quan",
+    "Menu:Catalog": "Danh mục",
+    "Menu:Categories": "Nhóm thuốc",
+    "Menu:Medicines": "Thuốc",
+    "Menu:Units": "Đơn vị tính",
+    "Menu:Ingredients": "Thành phần",
+    "Menu:DosageForm": "Dạng bào chế",
+    "Menu:Partner": "Đối tác",
+    "Menu:Suppliers": "Nhà cung cấp",
+    "Menu:Customers": "Khách hàng",
+
+    //Properties
+    "Name": "Tên",
+    "CreationTime": "Ngày tạo",
+    "ProductCount": "Số sản phẩm",
+    "NewCategory": "Thêm nhóm thuốc mới"
   }
 }
