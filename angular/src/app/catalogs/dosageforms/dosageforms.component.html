@@ -16,6 +16,28 @@
   </div>
 
   <div class="card-body">
+    
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <div class="search-wrapper position-relative">
+          <input
+            type="text"
+            class="form-control"
+            [placeholder]="'::Search' | abpLocalization"
+            [ngModel]="filterText"
+            (ngModelChange)="onFilterChange($event)"
+          />
+          <button 
+            class="btn-clear-search" 
+            type="button" 
+            (click)="clearSearch()"
+            *ngIf="filterText">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
     <ngx-datatable [rows]="dosage.items" [count]="dosage.totalCount" [list]="list" default>
       
       <ngx-datatable-column
