@@ -6,18 +6,18 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DosageFormService } from 'src/app/proxy/dosage-forms';
 import { DosageFormDto, GetDosageFormListDto } from 'src/app/proxy/dosage-forms/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-dosageforms',
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   templateUrl: './dosageforms.component.html',
   styleUrl: './dosageforms.component.scss',
   providers: [ListService]
 })
 export class DosageformsComponent implements OnInit , OnDestroy{
   private destroy$ = new Subject<void>();
-  private filterSubject$ = new Subject<string>();
   dosage = {items: [], totalCount: 0 } as PagedResultDto<DosageFormDto>;
   isDrawerOpen = false;
   form: FormGroup;
@@ -39,17 +39,6 @@ export class DosageformsComponent implements OnInit , OnDestroy{
     this.list.hookToQuery(dosageStreamCreator).subscribe((response) => {
     this.dosage = response;
     });
-
-    this.filterSubject$
-      .pipe(
-        debounceTime(800),
-        distinctUntilChanged(),
-        takeUntil(this.destroy$)
-      )
-      .subscribe((filterValue) => {
-        this.filterText = filterValue;
-        this.list.get();
-      });
   }
 
   ngOnDestroy(): void {
@@ -57,15 +46,11 @@ export class DosageformsComponent implements OnInit , OnDestroy{
     this.destroy$.complete();
   }
 
-  onFilterChange(value: string): void {
-    this.filterSubject$.next(value);
+  onSearch(searchValue: string): void {
+    this.filterText = searchValue;
+    this.list.get();
   }
 
-  clearSearch(): void {
-    this.filterText = '';
-    this.filterSubject$.next('');
-  }
-  
   createDosage(): void {
     this.selectedDosage = {} as DosageFormDto;
     this.buildForm(); 

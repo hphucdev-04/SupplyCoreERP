@@ -1,0 +1,30 @@
+.search-wrapper {
+  .form-control {
+    padding-right: 35px;
+  }
+
+  .btn-clear-search {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 4px 8px;
+    line-height: 1;
+    
+    &:hover {
+      color: #495057;
+    }
+
+    &:focus {
+      outline: none;
+    }
+
+    i {
+      font-size: 14px;
+    }
+  }
+}

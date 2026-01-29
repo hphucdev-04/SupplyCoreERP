@@ -6,11 +6,12 @@ import { Subject, takeUntil } from 'rxjs';
 import { BaseUnitService } from 'src/app/proxy/base-units';
 import { BaseUnitDto, GetBaseUnitListDto } from 'src/app/proxy/base-units/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-units',
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   templateUrl: './units.component.html',
   styleUrl: './units.component.scss',
   providers: [ListService]
@@ -21,7 +22,7 @@ export class UnitsComponent implements OnInit, OnDestroy{
   isDrawerOpen = false;
   form: FormGroup;
   selectedUnit = {} as BaseUnitDto;
-
+  filterText = ''
   constructor(
     public readonly list: ListService<GetBaseUnitListDto>,
     private unitService: BaseUnitService,
@@ -32,7 +33,7 @@ export class UnitsComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    const unitStreamCreator = (query) => this.unitService.getList(query);
+    const unitStreamCreator = (query) => this.unitService.getList({...query, filter: this.filterText});
     this.list.maxResultCount = 10;
     this.list.hookToQuery(unitStreamCreator).subscribe((response) => {
       this.unit = response;
@@ -42,6 +43,11 @@ export class UnitsComponent implements OnInit, OnDestroy{
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  onSearch(searchValue: string): void {
+    this.filterText = searchValue;
+    this.list.get();
   }
 
   createUnit(): void {

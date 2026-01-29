@@ -6,10 +6,11 @@ import { Subject } from 'rxjs';
 import { CategoryService } from 'src/app/proxy/categories';
 import { CategoryDto, GetCategoryListDto } from 'src/app/proxy/categories/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
-  imports:[SharedModule, DrawerComponent],
+  imports:[SharedModule, DrawerComponent, SearchComponent],
   selector: 'app-categories',
   templateUrl: './categories.component.html',
   styleUrl: './categories.component.scss',
@@ -21,6 +22,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   isDrawerOpen = false;
   form: FormGroup;
   selectedCategory = {} as CategoryDto;
+  filterText = '';
 
   constructor(
     public readonly list: ListService<GetCategoryListDto>,
@@ -31,7 +33,7 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     this.buildForm()
   }
  ngOnInit(): void {
-    const categoryStreamCreator = (query) => this.categoryService.getList(query);
+    const categoryStreamCreator = (query) => this.categoryService.getList({...query, filter: this.filterText});
     this.list.maxResultCount = 10;
     this.list.hookToQuery(categoryStreamCreator).subscribe((response) => {
       this.category = response;
@@ -41,6 +43,11 @@ export class CategoriesComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
+  }
+
+  onSearch(searchValue: string): void {
+    this.filterText = searchValue;
+    this.list.get();
   }
 
   createCategory(): void {
