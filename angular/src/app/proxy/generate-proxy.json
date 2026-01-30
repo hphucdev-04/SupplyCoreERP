@@ -873,6 +873,358 @@
       "rootPath": "app",
       "remoteServiceName": "Default",
       "controllers": {
+        "SupplyCoreERP.ActiveIngredients.ActiveIngredientAppService": {
+          "controllerName": "ActiveIngredient",
+          "controllerGroupName": "ActiveIngredient",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "SupplyCoreERP.ActiveIngredients.ActiveIngredientAppService",
+          "interfaces": [
+            {
+              "type": "SupplyCoreERP.ActiveIngredients.IActiveIngredientAppService",
+              "name": "IActiveIngredientAppService",
+              "methods": [
+                {
+                  "name": "GetAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto",
+                    "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto"
+                  }
+                },
+                {
+                  "name": "GetListAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto",
+                      "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto>"
+                  }
+                },
+                {
+                  "name": "CreateAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                      "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto",
+                    "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto"
+                  }
+                },
+                {
+                  "name": "UpdateAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                      "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto",
+                    "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto"
+                  }
+                },
+                {
+                  "name": "DeleteAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "CreateAsyncByInput": {
+              "uniqueName": "CreateAsyncByInput",
+              "name": "CreateAsync",
+              "httpMethod": "POST",
+              "url": "api/app/active-ingredient",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                  "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                  "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto",
+                "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.ICreateAppService<SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto,SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto>"
+            },
+            "UpdateAsyncByIdAndInput": {
+              "uniqueName": "UpdateAsyncByIdAndInput",
+              "name": "UpdateAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/active-ingredient/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                  "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                  "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto",
+                "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IUpdateAppService<SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto,System.Guid,SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto>"
+            },
+            "DeleteAsyncById": {
+              "uniqueName": "DeleteAsyncById",
+              "name": "DeleteAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/active-ingredient/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IDeleteAppService<System.Guid>"
+            },
+            "GetAsyncById": {
+              "uniqueName": "GetAsyncById",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/app/active-ingredient/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto",
+                "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto,SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto,System.Guid,SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto>"
+            },
+            "GetListAsyncByInput": {
+              "uniqueName": "GetListAsyncByInput",
+              "name": "GetListAsync",
+              "httpMethod": "GET",
+              "url": "api/app/active-ingredient",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto",
+                  "typeSimple": "SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "Filter",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sorting",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "SkipCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "MaxResultCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "Volo.Abp.Application.Services.IReadOnlyAppService<SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto,SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto,System.Guid,SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto>"
+            }
+          }
+        },
         "SupplyCoreERP.BaseUnits.BaseUnitAppService": {
           "controllerName": "BaseUnit",
           "controllerGroupName": "BaseUnit",
@@ -4136,6 +4488,93 @@
     }
   },
   "types": {
+    "SupplyCoreERP.ActiveIngredients.Dtos.ActiveIngredientDto": {
+      "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Guid>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Code",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.ActiveIngredients.Dtos.CreateUpdateActiveIngredientDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Code",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": 0,
+          "maxLength": 50,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": 0,
+          "maxLength": 255,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.ActiveIngredients.Dtos.GetActiveIngredientListDto": {
+      "baseType": "Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Filter",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.BaseUnits.Dtos.BaseUnitDto": {
       "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Guid>",
       "isEnum": false,

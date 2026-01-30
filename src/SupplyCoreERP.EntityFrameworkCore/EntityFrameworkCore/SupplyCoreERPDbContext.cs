@@ -175,8 +175,6 @@ public class SupplyCoreERPDbContext :
 			// Mapping Location (Restrict: Xóa location không được xóa Manufacturer)
 			b.HasOne(x => x.Continent).WithMany().HasForeignKey(x => x.ContinentId).OnDelete(DeleteBehavior.Restrict);
 			b.HasOne(x => x.Country).WithMany().HasForeignKey(x => x.CountryId).OnDelete(DeleteBehavior.Restrict);
-			b.HasOne(x => x.City).WithMany().HasForeignKey(x => x.CityId).OnDelete(DeleteBehavior.Restrict);
-			b.HasOne(x => x.Area).WithMany().HasForeignKey(x => x.AreaId).OnDelete(DeleteBehavior.Restrict);
 		});
 
 		// ActiveIngredient
@@ -229,6 +227,13 @@ public class SupplyCoreERPDbContext :
 
 			// Link ActiveIngredient (Danh mục) -> RESTRICT
 			b.HasOne(x => x.ActiveIngredient).WithMany().HasForeignKey(x => x.ActiveIngredientId).OnDelete(DeleteBehavior.Restrict);
+		});
+
+		// Dosage Form
+		builder.Entity<DosageForm>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "DosageForms", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+			b.HasIndex(x => x.Code).IsUnique();
 		});
 	}
 }

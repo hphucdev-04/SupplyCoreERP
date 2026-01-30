@@ -1,0 +1,16 @@
+<div class="search-wrapper position-relative">
+  <input
+    type="text"
+    class="form-control"
+    [placeholder]="placeholder"
+    [ngModel]="value"
+    (ngModelChange)="onInputChange($event)"
+  />
+  <button 
+    class="btn-clear-search" 
+    type="button" 
+    (click)="clearSearch()"
+    *ngIf="value">
+    <i class="fa fa-times"></i>
+  </button>
+</div>

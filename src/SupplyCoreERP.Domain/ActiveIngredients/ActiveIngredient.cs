@@ -30,7 +30,7 @@ namespace SupplyCoreERP.ActiveIngredients
 		}
 		private void SetName(string name) 
 		{ 
-			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 500).Trim(); 
+			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim(); 
 		}
 	}
 }

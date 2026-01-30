@@ -2,15 +2,16 @@ import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
 import { DosageFormService } from 'src/app/proxy/dosage-forms';
 import { DosageFormDto, GetDosageFormListDto } from 'src/app/proxy/dosage-forms/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
   selector: 'app-dosageforms',
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   templateUrl: './dosageforms.component.html',
   styleUrl: './dosageforms.component.scss',
   providers: [ListService]
@@ -21,6 +22,7 @@ export class DosageformsComponent implements OnInit , OnDestroy{
   isDrawerOpen = false;
   form: FormGroup;
   selectedDosage = {} as DosageFormDto;
+  filterText = '';
 
   constructor(
     public readonly list: ListService<GetDosageFormListDto>,
@@ -32,7 +34,7 @@ export class DosageformsComponent implements OnInit , OnDestroy{
   }
 
   ngOnInit(): void {
-    const dosageStreamCreator = (query) => this.dosageService.getList(query);
+    const dosageStreamCreator = (query) => this.dosageService.getList({...query , filter: this.filterText});
     this.list.maxResultCount = 10;
     this.list.hookToQuery(dosageStreamCreator).subscribe((response) => {
     this.dosage = response;
@@ -44,30 +46,35 @@ export class DosageformsComponent implements OnInit , OnDestroy{
     this.destroy$.complete();
   }
 
-   createDosage(): void {
-      this.selectedDosage = {} as DosageFormDto;
+  onSearch(searchValue: string): void {
+    this.filterText = searchValue;
+    this.list.get();
+  }
+
+  createDosage(): void {
+    this.selectedDosage = {} as DosageFormDto;
+    this.buildForm(); 
+    this.isDrawerOpen = true;
+  }
+  
+  editDosage(id: string): void {
+    this.dosageService.get(id).subscribe((res) => {
+      this.selectedDosage = res;
       this.buildForm(); 
       this.isDrawerOpen = true;
-    }
+    });
+  }
   
-    editDosage(id: string): void {
-      this.dosageService.get(id).subscribe((res) => {
-        this.selectedDosage = res;
-        this.buildForm(); 
-        this.isDrawerOpen = true;
+  deleteDosage(id: string): void {
+    this.confirmation
+      .warn('::AreYouSureToDelete', '::AreYouSure')
+      .subscribe((status) => {
+        if (status === Confirmation.Status.confirm) {
+          this.dosageService.delete(id).subscribe(() => {
+            this.list.get();
+          });
+        }
       });
-    }
-  
-    deleteDosage(id: string): void {
-      this.confirmation
-        .warn('::AreYouSureToDelete', '::AreYouSure')
-        .subscribe((status) => {
-          if (status === Confirmation.Status.confirm) {
-            this.dosageService.delete(id).subscribe(() => {
-              this.list.get();
-            });
-          }
-        });
     }
 
     buildForm(): void {

@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace SupplyCoreERP.Categories.Dtos
 {
-	public class CategoryDto : AuditedEntityDto<Guid>
+	public class CategoryDto : FullAuditedEntityDto<Guid>
 	{
 		public string Name { get; set; }
 		public int ProductCount { get; set; }

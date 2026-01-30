@@ -19,12 +19,5 @@
     <PackageReference Include="Volo.Abp.Identity.Application.Contracts" Version="10.0.1" />
     <PackageReference Include="Volo.Abp.Account.Application.Contracts" Version="10.0.1" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <Folder Include="Locations\Continents\" />
-    <Folder Include="Locations\Countries\" />
-    <Folder Include="Locations\Cities\" />
-    <Folder Include="Locations\Areas\" />
-  </ItemGroup>
 
 </Project>

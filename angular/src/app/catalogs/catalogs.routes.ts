@@ -13,5 +13,9 @@ export const CATALOGS_ROUTES: Routes = [
     path: 'dosageforms',
     loadComponent: () => import('./dosageforms/dosageforms.component').then(m => m.DosageformsComponent),
   },
+   {
+    path: 'ingredients',
+    loadComponent: () => import('./ingredients/ingredients.component').then(m => m.IngredientsComponent),
+  },
   // ... Thêm route catalog/...
 ];

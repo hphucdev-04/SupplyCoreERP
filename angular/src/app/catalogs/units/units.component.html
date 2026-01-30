@@ -16,6 +16,18 @@
   </div>
 
   <div class="card-body">
+    
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <app-search
+          [placeholder]="'::Search' | abpLocalization"
+          [(value)]="filterText"
+          [debounceTime]= "800"
+          (search)="onSearch($event)">
+        </app-search>
+      </div>
+    </div>
+
     <ngx-datatable [rows]="unit.items" [count]="unit.totalCount" [list]="list" default>
       
       <ngx-datatable-column
