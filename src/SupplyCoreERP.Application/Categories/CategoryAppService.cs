@@ -42,7 +42,7 @@ namespace SupplyCoreERP.Categories
 
 			if (!input.Filter.IsNullOrWhiteSpace())
 			{
-				query = query.Where(x => x.Name.Contains(input.Filter));
+				query = query.Where(x => x.Name.ToLower().Contains(input.Filter.ToLower()));
 			}
 
 			return query;

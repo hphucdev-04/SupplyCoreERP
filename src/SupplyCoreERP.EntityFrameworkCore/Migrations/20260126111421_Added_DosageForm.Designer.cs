@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SupplyCoreERP.EntityFrameworkCore;
@@ -12,9 +13,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace SupplyCoreERP.Migrations
 {
     [DbContext(typeof(SupplyCoreERPDbContext))]
-    partial class SupplyCoreERPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260126111421_Added_DosageForm")]
+    partial class Added_DosageForm
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -527,6 +530,16 @@ namespace SupplyCoreERP.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Address")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<Guid>("AreaId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("CityId")
+                        .HasColumnType("uuid");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -580,6 +593,10 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("AreaId");
+
+                    b.HasIndex("CityId");
 
                     b.HasIndex("ContinentId");
 
@@ -2564,6 +2581,18 @@ namespace SupplyCoreERP.Migrations
 
             modelBuilder.Entity("SupplyCoreERP.MasterData.Manufacturer", b =>
                 {
+                    b.HasOne("SupplyCoreERP.Locations.Areas.Area", "Area")
+                        .WithMany()
+                        .HasForeignKey("AreaId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.Locations.Cities.City", "City")
+                        .WithMany()
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.HasOne("SupplyCoreERP.Locations.Continents.Continent", "Continent")
                         .WithMany()
                         .HasForeignKey("ContinentId")
@@ -2575,6 +2604,10 @@ namespace SupplyCoreERP.Migrations
                         .HasForeignKey("CountryId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("Area");
+
+                    b.Navigation("City");
 
                     b.Navigation("Continent");
 

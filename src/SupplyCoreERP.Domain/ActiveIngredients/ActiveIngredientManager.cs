@@ -1,12 +1,10 @@
 ﻿using SupplyCoreERP.Medicines;
 using System;
-using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
-using Volo.Abp.Guids;
+
 
 namespace SupplyCoreERP.ActiveIngredients
 {
@@ -14,6 +12,7 @@ namespace SupplyCoreERP.ActiveIngredients
 	{
 		private readonly IRepository<ActiveIngredient, Guid> _repository;
 		private readonly IRepository<MedicineIngredient, Guid> _medIngredientRepo;
+
 
 		public ActiveIngredientManager(
 			IRepository<ActiveIngredient, Guid> repository,
