@@ -7,7 +7,7 @@ using System.Net;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace SupplyCoreERP.MasterData
+namespace SupplyCoreERP.Manufacturers
 {
 	public class Manufacturer : FullAuditedAggregateRoot<Guid>
 	{

@@ -95,16 +95,27 @@ export class IngredientsComponent implements OnInit, OnDestroy {
       });
     }
   }
-  private generateCode(str: string): string {
-    if (!str) return '';
-    return str
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Bỏ dấu tiếng Việt
-      .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-      .replace(/[^a-zA-Z0-9 ]/g, '') // Bỏ ký tự đặc biệt
-      .trim()
-      .replace(/\s+/g, '_') // Thay khoảng trắng bằng _
-      .toUpperCase(); // Chuyển thành CHỮ HOA
-  }
+ private generateCode(name: string): string {
+  if (!name) return '';
+
+  const normalizedName = name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '') 
+    .replace(/đ/g, 'd')
+    .replace(/Đ/g, 'D')
+    .replace(/[^a-zA-Z0-9 ]/g, '')
+    .trim()
+    .replace(/\s+/g, '_')
+    .toUpperCase();
+
+  // Sinh hash ngắn
+  const randomHash = Math.random()
+    .toString(36)
+    .substring(2, 6)
+    .toUpperCase();
+
+  return `AI_${normalizedName}_${randomHash}`;
+}
 
   closeDrawer(): void {
     this.isDrawerOpen = false;

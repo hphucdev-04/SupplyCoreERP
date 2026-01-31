@@ -1,12 +1,8 @@
 ﻿
 
-using AutoMapper.Internal.Mappers;
-using SupplyCoreERP.DosageForms;
-using SupplyCoreERP.DosageForms.Dtos;
 using SupplyCoreERP.Locations.Continents;
 using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Manufacturers.Dtos;
-using SupplyCoreERP.MasterData;
 using System;
 using System.Collections.Generic;
 using System.Linq;

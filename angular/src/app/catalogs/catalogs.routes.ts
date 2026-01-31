@@ -13,9 +13,13 @@ export const CATALOGS_ROUTES: Routes = [
     path: 'dosageforms',
     loadComponent: () => import('./dosageforms/dosageforms.component').then(m => m.DosageformsComponent),
   },
-   {
+  {
     path: 'ingredients',
     loadComponent: () => import('./ingredients/ingredients.component').then(m => m.IngredientsComponent),
+  },
+  {
+    path: 'manufacturers',
+    loadComponent: () => import('./manufacturers/manufacturers.component').then(m => m.ManufacturersComponent),
   },
   // ... Thêm route catalog/...
 ];

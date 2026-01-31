@@ -5,10 +5,11 @@ function createMenuGroup(
   icon: string,
   order: number,
   children?: {name: string; icon: string, requiredPolicy?: string}[],
-  policy?: string,
+  policy?: string, 
 ) {
   const parentName = `::Menu:${name}`;
   const parentPath = `/${name.toLowerCase()}`;
+  
   const parent = {
     path: parentPath,
     name: parentName,
@@ -31,10 +32,11 @@ function createMenuGroup(
         iconClass: c.icon,
         order: i + 1,
         layout: eLayoutType.application,
-        requiredPolicy: c.requiredPolicy || policy,
+        requiredPolicy: c.requiredPolicy || policy, 
     })),
   ];
 }
+
 export const APP_ROUTES = [
   {
     path: '/',
@@ -44,17 +46,17 @@ export const APP_ROUTES = [
     layout: eLayoutType.application,
   },
 
- ...createMenuGroup('Catalog', 'fas fa-layer-group', 2, [
-    { name: 'Categories', icon: 'fas fa-sitemap' },
-    { name: 'Medicines', icon: 'fas fa-pills' },
-    { name: 'Units', icon: 'fas fa-ruler-combined' },
-    { name: 'Ingredients', icon: 'fas fa-flask' },
-    { name: 'DosageForms', icon: 'fas fa-capsules' },
-    { name: 'Manufacturers', icon: 'fas fa-industry' },
-  ], 'Catalog'),
+  ...createMenuGroup('Catalog', 'fas fa-layer-group', 2, [
+    { name: 'Categories', icon: 'fas fa-sitemap', requiredPolicy: 'Catalog.Category' },
+    { name: 'Medicines', icon: 'fas fa-pills', requiredPolicy: 'Catalog.Medicine' },
+    { name: 'Units', icon: 'fas fa-ruler-combined', requiredPolicy: 'Catalog.BaseUnit' },
+    { name: 'Ingredients', icon: 'fas fa-flask', requiredPolicy: 'Catalog.ActiveIngredient' },
+    { name: 'DosageForms', icon: 'fas fa-capsules', requiredPolicy: 'Catalog.DosageForm' },
+    { name: 'Manufacturers', icon: 'fas fa-industry', requiredPolicy: 'Catalog.Manufacturer' },
+  ]), 
 
   ...createMenuGroup('Partner', 'fas fa-handshake', 3, [
     { name: 'Suppliers', icon: 'fas fa-truck' },
     { name: 'Customers', icon: 'fas fa-user-friends' },
-  ], ),
+  ]),
 ];

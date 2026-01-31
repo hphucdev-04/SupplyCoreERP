@@ -1,13 +1,11 @@
 ﻿using SupplyCoreERP.Locations.Continents;
 using SupplyCoreERP.Locations.Countries;
-using SupplyCoreERP.MasterData;
 using SupplyCoreERP.Medicines;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
-using Volo.Abp.Guids;
 
 namespace SupplyCoreERP.Manufacturers
 {
@@ -16,7 +14,6 @@ namespace SupplyCoreERP.Manufacturers
 		private readonly IRepository<Manufacturer, Guid> _repository;
 		private readonly IRepository<Continent, Guid> _continentRepository;
 		private readonly IRepository<Country, Guid> _countryRepository;
-		// Inject Repository của Medicine để check ràng buộc
 		private readonly IRepository<Medicine, Guid> _medicineRepository;
 
 		public ManufacturerManager(
