@@ -7,7 +7,7 @@ using SupplyCoreERP.Locations.Areas;
 using SupplyCoreERP.Locations.Cities;
 using SupplyCoreERP.Locations.Continents;
 using SupplyCoreERP.Locations.Countries;
-using SupplyCoreERP.MasterData;
+using SupplyCoreERP.Manufacturers;
 using SupplyCoreERP.Medicines;
 using SupplyCoreERP.Products;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -215,6 +215,9 @@ public class SupplyCoreERPDbContext :
 
 			// Link DosageForm -> RESTRICT
 			b.HasOne(x => x.DosageForm).WithMany().HasForeignKey(x => x.DosageFormId).OnDelete(DeleteBehavior.Restrict);
+
+			//Link OriginCountry(Xuất xứ) -> RESTRICT
+			b.HasOne(x => x.OriginCountry).WithMany().HasForeignKey(x => x.OriginCountryId).OnDelete(DeleteBehavior.Restrict);
 
 			// Cascade: Xóa Medicine -> Xóa luôn Ingredients
 			b.HasMany(x => x.Ingredients).WithOne().HasForeignKey(x => x.MedicineId).OnDelete(DeleteBehavior.Cascade);

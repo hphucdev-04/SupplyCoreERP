@@ -1,7 +1,7 @@
 ﻿using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Categories;
 using SupplyCoreERP.Enums.Products;
-using SupplyCoreERP.MasterData;
+using SupplyCoreERP.Manufacturers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
