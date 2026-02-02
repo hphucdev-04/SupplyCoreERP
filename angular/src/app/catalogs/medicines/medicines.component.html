@@ -1,0 +1,166 @@
+<div class="card">
+  <div class="card-header">
+    <div class="row">
+      <div class="col col-md-6">
+        <h5 class="card-title">
+          {{ '::Menu:Medicnes' | abpLocalization }}
+        </h5>
+      </div>
+      <div class="col col-md-6 text-end">
+        <button class="btn btn-primary" type="button" (click)="createMedicine()">
+          <i class="fa fa-plus me-1"></i>
+          <span>{{ '::NewMedicine' | abpLocalization }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="card-body">
+
+    <div class="row mb-3">
+      <div class="col-md-12">
+        <app-search
+          [placeholder]="'::Search' | abpLocalization"
+          [(value)]="filterText"
+          [debounceTime]= "800"
+          (search)="onSearch($event)">
+        </app-search>
+      </div>
+    </div>
+    
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+      <ngx-datatable-column
+        [name]="'::Actions' | abpLocalization"
+        [maxWidth]="150"
+        [sortable]="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+              <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
+            </button>
+            <div ngbDropdownMenu>
+                <button ngbDropdownItem (click)="viewDetail(row.id)">
+                    <i class="fa fa-eye me-1"></i>{{ '::View' | abpLocalization }}
+                </button>
+                <button ngbDropdownItem (click)="editMedicine(row.id)">
+                    <i class="fa fa-edit me-1"></i>{{ '::Edit' | abpLocalization }}
+                </button>
+                <button ngbDropdownItem (click)="deleteMedicine(row.id)">
+                    <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
+                </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+    
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Category' | abpLocalization" prop="categoryName"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Manufacturer' | abpLocalization" prop="manufacturerName"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::BaseUnit' | abpLocalization" prop="baseUnitName"></ngx-datatable-column>
+      
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="isActive">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <span class="badge" [ngClass]="value ? 'bg-success' : 'bg-secondary'">
+            {{ (value ? '::Active' : '::Inactive') | abpLocalization }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+    </ngx-datatable>
+  </div>
+</div>
+
+<app-drawer
+  [isOpen]="isDrawerOpen"
+  [title]="(selectedMedicine.id ? '::Edit' : '::NewMedicine') | abpLocalization"
+  [width]="'lg'"
+  [saveDisabled]="form.invalid"
+  (close)="closeDrawer()"
+  (save)="save()">
+
+  <form [formGroup]="form">
+    
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-semibold">{{ '::Code' | abpLocalization }} <span class="text-danger">*</span></label>
+            <input type="text" class="form-control form-control-sm" formControlName="code">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-semibold">{{ '::Name' | abpLocalization }} <span class="text-danger">*</span></label>
+            <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
+            <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)" class="text-danger small">
+                 {{ '::ThisFieldIsRequired' | abpLocalization }}
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-semibold">{{ '::RegistrationNumber' | abpLocalization }}</label>
+            <input type="text" class="form-control form-control-sm" formControlName="registrationNumber">
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-semibold">{{ '::Category' | abpLocalization }} <span class="text-danger">*</span></label>
+            <select class="form-select form-select-sm" formControlName="categoryId">
+              <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+              <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+         <div class="col-md-6 mb-3">
+            <label class="form-label small fw-semibold">{{ '::Manufacturer' | abpLocalization }} <span class="text-danger">*</span></label>
+            <select class="form-select form-select-sm" formControlName="manufacturerId">
+              <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+              <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
+            </select>
+        </div>
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-semibold">{{ '::OriginCountry' | abpLocalization }} <span class="text-danger">*</span></label>
+            <select class="form-select form-select-sm" formControlName="originCountryId">
+              <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+              <option *ngFor="let item of countries" [ngValue]="item.id">{{ item.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-6 mb-3">
+            <label class="form-label small fw-semibold">{{ '::BaseUnit' | abpLocalization }} <span class="text-danger">*</span></label>
+            <select class="form-select form-select-sm" formControlName="baseUnitId">
+              <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+              <option *ngFor="let item of units" [ngValue]="item.id">{{ item.name }}</option>
+            </select>
+        </div>
+         <div class="col-md-6 mb-3">
+            <label class="form-label small fw-semibold">{{ '::DosageForm' | abpLocalization }} <span class="text-danger">*</span></label>
+            <select class="form-select form-select-sm" formControlName="dosageFormId">
+              <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+              <option *ngFor="let item of dosageForms" [ngValue]="item.id">{{ item.name }}</option>
+            </select>
+        </div>
+    </div>
+
+    <div class="border rounded p-2 d-flex justify-content-between align-items-center bg-light-subtle">
+      <div>
+        <label class="fw-bold mb-0 text-dark medium" for="chkActive">
+          {{ '::Active' | abpLocalization }}
+        </label>
+        <small class="d-block text-muted small">
+          {{ '::AvailableForPrescriptionAndSales' | abpLocalization }}
+        </small>
+      </div>
+      <div class="form-check form-switch m-0">
+        <input 
+          class="form-check-input" 
+          type="checkbox" 
+          role="switch" 
+          id="chkActive" 
+          formControlName="isActive"
+          style="width: 3em; height: 1.5em; cursor: pointer;">
+      </div>
+    </div>
+
+  </form>
+</app-drawer>
