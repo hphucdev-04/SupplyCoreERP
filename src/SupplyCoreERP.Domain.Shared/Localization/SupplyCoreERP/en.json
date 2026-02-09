@@ -17,19 +17,6 @@
     "Menu:Partner": "Partner",
     "Menu:Suppliers": "Suppliers",
     "Menu:Customers": "Customers",
-
-    //Properties
-    "ThisFieldIsRequired": "This Field Is Required",
-    "Name": "Name",
-    "CreationTime": "Creation Time",
-    "ProductCount": "Product Count",
-    "NewCategory": "New category",
-    "EditCategory": "Edit Category",
-    "NewUnit": "New Unit",
-    "EditUnit": "Edit Unit",
-    "NewDosage": "New Dosage",
-    "EditDosage": "Edit Dosage",
-    "NewIngredient": "New Ingredient",
-    "EditIngredient": "Edit Ingredient"
+    "Menu:Medicnes": "Medicnes"
   }
 }

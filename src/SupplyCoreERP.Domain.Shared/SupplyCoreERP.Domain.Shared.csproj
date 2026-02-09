@@ -35,8 +35,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <EmbeddedResource Include="Localization\Permission\en.json" />
-    <EmbeddedResource Include="Localization\Permission\vi.json" />
+    <EmbeddedResource Include="Localization\Permissions\en.json" />
+    <EmbeddedResource Include="Localization\Permissions\vi.json" />
+    <EmbeddedResource Include="Localization\Properties\en.json" />
+    <EmbeddedResource Include="Localization\Properties\vi.json" />
   </ItemGroup>
 
 </Project>

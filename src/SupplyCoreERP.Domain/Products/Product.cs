@@ -76,7 +76,7 @@ namespace SupplyCoreERP.Products
 			SetCode(newCode);
 		}
 
-		public void AddUnit(Guid id, Guid unitId, int conversionFactor, int level, decimal salePrice, string? barcode)
+		public void AddUnit(Guid id, Guid unitId, int conversionFactor, int level)
 		{
 			if (unitId == BaseUnitId)
 				throw new BusinessException("SupplyCoreERP:Error", "Không được thêm đơn vị trùng với Đơn vị gốc.");
@@ -87,15 +87,18 @@ namespace SupplyCoreERP.Products
 			if (conversionFactor <= 1)
 				throw new BusinessException("SupplyCoreERP:Error", "Hệ số quy đổi phải lớn hơn 1.");
 
-			Units.Add(new ProductUnit(id, Id, unitId, conversionFactor, level, salePrice, barcode));
+			if (level < 1)
+				throw new BusinessException("SupplyCoreERP:Error", "Cấp độ quy đổi (Level) phải từ 1 trở lên.");
+
+			Units.Add(new ProductUnit(id, Id, unitId, conversionFactor, level));
 		}
 
-		public void UpdateUnit(Guid unitId, int conversionFactor, decimal salePrice, string? barcode)
+		public void UpdateUnit(Guid unitId, int conversionFactor, int level)
 		{
 			var unit = Units.FirstOrDefault(u => u.UnitId == unitId);
 			if (unit == null) throw new UserFriendlyException("Đơn vị không tồn tại.");
 
-			unit.UpdateInternal(unitId, conversionFactor, unit.Level, salePrice, barcode);
+			unit.UpdateStats(conversionFactor, level);
 		}
 
 		public void RemoveUnit(Guid unitId)

@@ -48,9 +48,10 @@ public class SupplyCoreERPDomainSharedModule : AbpModule
                 .AddBaseTypes(typeof(AbpValidationResource))
 				.AddBaseTypes(typeof(AbpUiResource))
 				.AddVirtualJson("/Localization/SupplyCoreERP")
-                .AddVirtualJson("/Localization/Permission");
+                .AddVirtualJson("/Localization/Permissions")
+                .AddVirtualJson("/Localization/Properties");
 
-            options.DefaultResourceType = typeof(SupplyCoreERPResource);
+			options.DefaultResourceType = typeof(SupplyCoreERPResource);
 
 			options.Languages.Add(new LanguageInfo("en", "en", "English"));
 			options.Languages.Add(new LanguageInfo("vi", "vi", "Vietnamese")); 

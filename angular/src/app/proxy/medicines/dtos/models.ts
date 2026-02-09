@@ -1,6 +1,7 @@
 import type { UsageRoute } from '../../enums/medicines/usage-route.enum';
 import type { StorageCondition } from '../../enums/medicines/storage-condition.enum';
 import type { EntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
+import type { MedicineStatus } from '../../enums/medicines/medicine-status.enum';
 
 export interface CreateUpdateMedicineDto {
   code: string;
@@ -9,7 +10,6 @@ export interface CreateUpdateMedicineDto {
   manufacturerId: string;
   baseUnitId: string;
   dosageFormId: string;
-  originCountryId: string;
   registrationNumber?: string;
   usageRoute?: UsageRoute;
   storageCondition?: StorageCondition;
@@ -31,7 +31,7 @@ export interface GetMedicineListDto extends PagedAndSortedResultRequestDto {
   filter?: string;
   categoryId?: string;
   manufacturerId?: string;
-  status?: number;
+  status?: MedicineStatus;
   isActive?: boolean;
 }
 
@@ -57,7 +57,7 @@ export interface MedicineDto extends EntityDto<string> {
   baseUnitName?: string;
   dosageFormName?: string;
   originCountryName?: string;
-  status?: number;
+  status?: MedicineStatus;
   isActive?: boolean;
   creationTime?: string;
 }
