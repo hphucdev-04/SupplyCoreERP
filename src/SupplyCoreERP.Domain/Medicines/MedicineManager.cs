@@ -46,14 +46,13 @@ namespace SupplyCoreERP.Medicines
 			string code,
 			string name,
 			Guid categoryId,
-			Guid manufacturerId,
-			Guid originCountryId, 
+			Guid manufacturerId, 
 			Guid baseUnitId,
 			Guid dosageFormId,
 			string regNumber)
 		{
 			//Validate các khóa ngoại
-			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId, originCountryId); 
+			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId); 
 
 			//Check trùng Code/Name
 			await _productManager.CheckCodeAndNameAsync(code, name);
@@ -62,7 +61,6 @@ namespace SupplyCoreERP.Medicines
 				GuidGenerator.Create(),
 				categoryId,
 				manufacturerId,
-				originCountryId, 
 				code,
 				name,
 				baseUnitId,
@@ -75,15 +73,14 @@ namespace SupplyCoreERP.Medicines
 			Medicine medicine,
 			string name,
 			Guid categoryId,
-			Guid manufacturerId,
-			Guid originCountryId, 
+			Guid manufacturerId, 
 			Guid dosageFormId,
 			string regNumber)
 		{
 			Check.NotNull(medicine, nameof(medicine));
 
 			//Validate khóa ngoại mới
-			await ValidateForeignKeysAsync(categoryId, manufacturerId, medicine.BaseUnitId, dosageFormId, originCountryId);
+			await ValidateForeignKeysAsync(categoryId, manufacturerId, medicine.BaseUnitId, dosageFormId);
 
 			//Check trùng tên
 			await _productManager.CheckCodeAndNameAsync(medicine.Code, name, excludeId: medicine.Id);
@@ -94,7 +91,6 @@ namespace SupplyCoreERP.Medicines
 			//Update thông tin riêng (Medicine)
 			medicine.UpdatePharmaInfo(
 				dosageFormId,
-				originCountryId, 
 				regNumber,
 				medicine.UsageRoute,
 				medicine.StorageCondition,
@@ -102,7 +98,7 @@ namespace SupplyCoreERP.Medicines
 			);
 		}
 
-		private async Task ValidateForeignKeysAsync(Guid catId, Guid manuId, Guid unitId, Guid dosageId, Guid countryId)
+		private async Task ValidateForeignKeysAsync(Guid catId, Guid manuId, Guid unitId, Guid dosageId)
 		{
 			if (!await _categoryRepository.AnyAsync(x => x.Id == catId))
 				throw new UserFriendlyException("Nhóm hàng không tồn tại.");
@@ -116,9 +112,6 @@ namespace SupplyCoreERP.Medicines
 			if (!await _dosageFormRepository.AnyAsync(x => x.Id == dosageId))
 				throw new UserFriendlyException("Dạng bào chế không tồn tại.");
 
-			//Check Quốc gia xuất xứ
-			if (!await _countryRepository.AnyAsync(x => x.Id == countryId))
-				throw new UserFriendlyException("Quốc gia xuất xứ không tồn tại.");
 		}
 
 		public async Task AddIngredientAsync(Medicine medicine, Guid activeIngredientId)

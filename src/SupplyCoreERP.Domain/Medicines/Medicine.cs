@@ -15,9 +15,6 @@ namespace SupplyCoreERP.Medicines
 		public Guid DosageFormId { get; private set; }
 		public virtual DosageForm DosageForm { get; private set; }
 
-		public Guid OriginCountryId { get; private set; }
-		public virtual Country OriginCountry { get; private set; }
-
 		public bool IsActive { get; private set; }
 		public string RegistrationNumber { get; private set; }
 		public UsageRoute UsageRoute { get; private set; }
@@ -33,7 +30,6 @@ namespace SupplyCoreERP.Medicines
 			Guid id,
 			Guid categoryId,
 			Guid manufacturerId,
-			Guid originCountryId, 
 			string code,
 			string name,
 			Guid baseUnitId,
@@ -45,7 +41,6 @@ namespace SupplyCoreERP.Medicines
 			IsActive = true;
 			Status = MedicineStatus.Pending;
 			DosageFormId = dosageFormId;
-			OriginCountryId = originCountryId; 
 			RegistrationNumber = regNumber;
 			Ingredients = new List<MedicineIngredient>();
 		}
@@ -59,14 +54,12 @@ namespace SupplyCoreERP.Medicines
 
 		public void UpdatePharmaInfo(
 			Guid dosageFormId,
-			Guid originCountryId, 
 			string regNumber,
 			UsageRoute route,
 			StorageCondition storage,
 			bool isRx)
 		{
 			DosageFormId = dosageFormId;
-			OriginCountryId = originCountryId;
 			RegistrationNumber = regNumber;
 			UsageRoute = route;
 			StorageCondition = storage;

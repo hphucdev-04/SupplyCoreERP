@@ -16,20 +16,6 @@
     "Menu:Manufacturers": "Nhà sản xuất",
     "Menu:Partner": "Đối tác",
     "Menu:Suppliers": "Nhà cung cấp",
-    "Menu:Customers": "Khách hàng",
-
-    //Properties
-    "ThisFieldIsRequired": "Trường bắt buộc nhập",
-    "Name": "Tên",
-    "CreationTime": "Ngày tạo",
-    "ProductCount": "Số sản phẩm",
-    "NewCategory": "Thêm nhóm thuốc",
-    "EditCategory": "Chỉnh sửa nhóm thuốc",
-    "NewUnit": "Thêm đơn vị tính",
-    "EditUnit": "Chỉnh sửa đơn vị tính",
-    "NewDosage": "Thêm dạng bào chế",
-    "EditDosage": "Chỉnh sửa dạng bào chế",
-    "NewIngredient": "Thêm hoạt chất",
-    "EditIngredient": "Sửa hoạt chất"
+    "Menu:Customers": "Khách hàng"
   }
 }

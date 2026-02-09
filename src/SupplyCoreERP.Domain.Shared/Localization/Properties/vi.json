@@ -1,0 +1,70 @@
+{
+  "Culture": "vi",
+  "Texts": {
+    //Table
+    "View": "Xem",
+    "Name": "Tên",
+    "Code": "Mã",
+    "CreationTime": "Ngày tạo",
+    "ProductCount": "Số lượng sản phẩm",
+    "Category": "Danh mục",
+    "Status": "Trạng thái",
+    "Active": "Hoạt động",
+    "Approve": "Duyệt",
+    "Reject": "Từ chối",
+    "Manufacturer": "Nhà sản xuất",
+    "BaseUnit": "Đơn vị cơ bản",
+    "OriginCountry": "Xuất xứ",
+    "RegistrationNumber": "Số đăng ký",
+    "DosageForm": "Dạng bào chế",
+    "UsageRoute": "Đường dùng",
+    "StorageCondition": "Điều kiện bảo quản",
+    "IsPrescriptionDrug": "Thuốc kê đơn",
+    "PrescriptionRequiredDescription": "Mô tả yêu cầu kê đơn",
+    "AvailableForPrescriptionAndSales": "Có thể bán và kê đơn",
+    "GeneralInformation": "Thông tin chung",
+    "ProductType": "Loại sản phẩm",
+    "ClinicalAndRegulatory": "Lâm sàng và pháp lý",
+    "ActiveIngredients": "Hoạt chất",
+    "ProductUnits": "Đơn vị sản phẩm",
+    "Unit": "Đơn vị",
+    "Factor": "Hệ số quy đổi",
+    "SystemData": "Dữ liệu hệ thống",
+    "Pricing": "Giá bán",
+    "Add": "Thêm",
+    "PriceList": "Bảng giá",
+    "Price": "Giá",
+    "NoPriceConfigured": "Chưa cấu hình giá",
+    "Select": "Chọn",
+
+    //Button
+    "NewCategory": "Thêm danh mục",
+    "EditCategory": "Chỉnh sửa danh mục",
+    "NewUnit": "Thêm đơn vị",
+    "EditUnit": "Chỉnh sửa đơn vị",
+    "NewDosage": "Thêm dạng bào chế",
+    "EditDosage": "Chỉnh sửa dạng bào chế",
+    "NewIngredient": "Thêm hoạt chất",
+    "EditIngredient": "Chỉnh sửa hoạt chất",
+    "NewMedicine": "Thêm thuốc",
+    "EditMedicine": "Chỉnh sửa thuốc",
+
+    //Enum
+    "Enum:MedicineStatus.Pending": "Chờ duyệt",
+    "Enum:MedicineStatus.Approved": "Đã duyệt",
+    "Enum:MedicineStatus.Rejected": "Bị từ chối",
+
+    "Enum:StorageCondition.Normal": "Bảo quản thường",
+    "Enum:StorageCondition.Cool": "Bảo quản mát",
+    "Enum:StorageCondition.Cold": "Bảo quản lạnh",
+    "Enum:StorageCondition.Frozen": "Đông lạnh",
+
+    "Enum:UsageRoute.Oral": "Đường uống",
+    "Enum:UsageRoute.Injection": "Tiêm",
+    "Enum:UsageRoute.External": "Dùng ngoài",
+    "Enum:UsageRoute.Other": "Khác",
+
+    //Validation
+    "ThisFieldIsRequired": "Trường này là bắt buộc"
+  }
+}

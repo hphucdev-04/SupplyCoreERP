@@ -9,6 +9,7 @@ using SupplyCoreERP.Locations.Continents;
 using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Manufacturers;
 using SupplyCoreERP.Medicines;
+using SupplyCoreERP.Prices;
 using SupplyCoreERP.Products;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
@@ -82,7 +83,9 @@ public class SupplyCoreERPDbContext :
 	// Medicine
 	public DbSet<Medicine> Medicines { get; set; }
 	public DbSet<MedicineIngredient> MedicineIngredients { get; set; }
-
+	// Price
+	public DbSet<PriceList> PriceLists { get; set; }
+	public DbSet<ProductPrice> ProductPrices { get; set; }
 
 	#endregion
 
@@ -216,9 +219,6 @@ public class SupplyCoreERPDbContext :
 			// Link DosageForm -> RESTRICT
 			b.HasOne(x => x.DosageForm).WithMany().HasForeignKey(x => x.DosageFormId).OnDelete(DeleteBehavior.Restrict);
 
-			//Link OriginCountry(Xuất xứ) -> RESTRICT
-			b.HasOne(x => x.OriginCountry).WithMany().HasForeignKey(x => x.OriginCountryId).OnDelete(DeleteBehavior.Restrict);
-
 			// Cascade: Xóa Medicine -> Xóa luôn Ingredients
 			b.HasMany(x => x.Ingredients).WithOne().HasForeignKey(x => x.MedicineId).OnDelete(DeleteBehavior.Cascade);
 		});
@@ -237,6 +237,50 @@ public class SupplyCoreERPDbContext :
 			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "DosageForms", SupplyCoreERPConsts.DbSchema);
 			b.ConfigureByConvention();
 			b.HasIndex(x => x.Code).IsUnique();
+		});
+
+		// PriceList
+		builder.Entity<PriceList>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PriceLists", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention(); 
+
+			b.Property(x => x.Code).IsRequired().HasMaxLength(20);
+			b.HasIndex(x => x.Code).IsUnique();
+
+			b.Property(x => x.Name).IsRequired().HasMaxLength(100);
+
+			b.HasIndex(x => x.IsBase);
+		});
+		// ProductPrice
+		builder.Entity<ProductPrice>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "ProductPrices", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.Property(x => x.Price).HasColumnType("decimal(18,2)").IsRequired();
+
+			//Link tới Bảng giá (Xóa Bảng giá -> Xóa luôn chi tiết giá)
+			b.HasOne(x => x.PriceList)
+			 .WithMany()
+			 .HasForeignKey(x => x.PriceListId)
+			 .OnDelete(DeleteBehavior.Cascade);
+
+			//Link tới Đơn vị tính (BaseUnit)
+			b.HasOne(x => x.Unit)
+			 .WithMany()
+			 .HasForeignKey(x => x.UnitId)
+			 .OnDelete(DeleteBehavior.Restrict); // Không cho xóa Unit nếu đang có giá gán vào
+
+			// 3. Link tới Sản phẩm (Product)
+			b.HasOne<Product>()
+			 .WithMany()
+			 .HasForeignKey(x => x.ProductId)
+			 .OnDelete(DeleteBehavior.Cascade); // Xóa sản phẩm -> Xóa hết giá
+
+			// Trong 1 Bảng giá, 1 Sản phẩm, 1 Đơn vị, 1 Mức số lượng -> Chỉ có 1 dòng giá.
+			b.HasIndex(x => new { x.PriceListId, x.ProductId, x.UnitId, x.MinQuantity })
+			 .IsUnique();
 		});
 	}
 }

@@ -1,0 +1,31 @@
+{
+  "Culture": "vi",
+  "Texts": {
+    "Permission:Catalog": "Quản lý danh mục",
+    "Permission:Catalog.Category": "Quản lý Nhóm thuốc",
+    "Permission:Catalog.Category.Create": "Tạo",
+    "Permission:Catalog.Category.Update": "Sửa",
+    "Permission:Catalog.Category.Delete": "Xóa",
+    "Permission:Catalog.Medicine": "Quản lý Thuốc",
+    "Permission:Catalog.Medicine.Create": "Tạo",
+    "Permission:Catalog.Medicine.Update": "Sửa",
+    "Permission:Catalog.Medicine.Delete": "Xóa",
+    "Permission:Catalog.Medicine.Approve": "Duyệt",
+    "Permission:Catalog.BaseUnit": "Quản lý đơn vị tính",
+    "Permission:Catalog.BaseUnit.Create": "Tạo",
+    "Permission:Catalog.BaseUnit.Update": "Sửa",
+    "Permission:Catalog.BaseUnit.Delete": "Xóa",
+    "Permission:Catalog.DosageForm": "Quản lý dạng bào chế",
+    "Permission:Catalog.DosageForm.Create": "Tạo",
+    "Permission:Catalog.DosageForm.Update": "Sửa",
+    "Permission:Catalog.DosageForm.Delete": "Xóa",
+    "Permission:Catalog.ActiveIngredient": "Quản lý hoạt chất",
+    "Permission:Catalog.ActiveIngredient.Create": "Tạo",
+    "Permission:Catalog.ActiveIngredient.Update": "Sửa",
+    "Permission:Catalog.ActiveIngredient.Delete": "Xóa",
+    "Permission:Catalog.Manufacturer": "Quản lý nhà sản xuất",
+    "Permission:Catalog.Manufacturer.Create": "Tạo",
+    "Permission:Catalog.Manufacturer.Update": "Sửa",
+    "Permission:Catalog.Manufacturer.Delete": "Xóa"
+  }
+}
