@@ -30,5 +30,9 @@ namespace SupplyCoreERP.Medicines
 
 		//Export Excel
 		Task<IRemoteStreamContent> GetListAsExcelFileAsync(GetMedicineListDto input);
+
+		//Import Excel
+		Task ImportExcelAsync(IRemoteStreamContent file);
+		Task<IRemoteStreamContent> GetImportTemplateAsync();
 	}
 }

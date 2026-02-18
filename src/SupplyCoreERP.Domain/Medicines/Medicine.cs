@@ -95,5 +95,10 @@ namespace SupplyCoreERP.Medicines
 		{
 			IsActive = isActive;
 		}
+
+		public void SetStatus(MedicineStatus status)
+		{
+			Status = status;
+		}
 	}
 }

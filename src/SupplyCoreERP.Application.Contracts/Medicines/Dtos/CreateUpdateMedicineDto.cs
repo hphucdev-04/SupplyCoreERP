@@ -26,7 +26,6 @@ namespace SupplyCoreERP.Medicines.Dtos
 		public UsageRoute UsageRoute { get; set; } = UsageRoute.Oral;
 		public StorageCondition StorageCondition { get; set; } = StorageCondition.Normal;
 		public bool IsPrescriptionDrug { get; set; }
-
 		public bool IsActive { get; set; } = true;
 	}
 }
