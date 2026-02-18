@@ -1,10 +1,10 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
+import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { CategoryService } from 'src/app/proxy/categories';
-import { CategoryDto, GetCategoryListDto } from 'src/app/proxy/categories/dtos';
+import { CategoryDto, CreateUpdateCategoryDto, GetCategoryListDto } from 'src/app/proxy/categories/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -28,12 +28,13 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     public readonly list: ListService<GetCategoryListDto>,
     private categoryService: CategoryService,
     private fb: FormBuilder,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private toaster: ToasterService,
   ) {
     this.buildForm()
   }
  ngOnInit(): void {
-    const categoryStreamCreator = (query) => this.categoryService.getList({...query, filter: this.filterText});
+    const categoryStreamCreator = (query: GetCategoryListDto) => this.categoryService.getList({...query, filter: this.filterText});
     this.list.maxResultCount = 10;
     this.list.hookToQuery(categoryStreamCreator).subscribe((response) => {
       this.category = response;
@@ -82,14 +83,17 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
-
+    const payload = this.form.getRawValue() as CreateUpdateCategoryDto
     const request = this.selectedCategory.id
-      ? this.categoryService.update(this.selectedCategory.id, this.form.value)
-      : this.categoryService.create(this.form.value);
+      ? this.categoryService.update(this.selectedCategory.id, payload)
+      : this.categoryService.create(payload);
 
     request.subscribe(() => {
       this.closeDrawer();
       this.list.get();
+      this.toaster.success(
+        this.selectedCategory.id ? '::UpdateSuccess' : '::CreateSuccess','::Success'
+      );
     });
   }
 
@@ -100,9 +104,9 @@ export class CategoriesComponent implements OnInit, OnDestroy {
         if (status === Confirmation.Status.confirm) {
           this.categoryService.delete(id).subscribe(() => {
             this.list.get();
+            this.toaster.success('::DeleteSuccess', '::Success');
           });
         }
       });
   }
-
 }

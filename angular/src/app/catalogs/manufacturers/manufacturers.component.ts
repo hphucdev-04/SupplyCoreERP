@@ -86,8 +86,7 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
       .subscribe((res) => {
         this.selectedManufacturer = res;
         this.buildForm();
-        
-        // Trigger lọc quốc gia khi mở form sửa
+  
         this.onContinentChange(res.continentId);
         this.isDrawerOpen = true;
       });
@@ -160,9 +159,8 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
         this.closeDrawer();
         this.list.get();
         this.toaster.success(
-        this.selectedManufacturer.id ? '::UpdateSuccess' : '::CreateSuccess',
-        '::Success'
-      );
+          this.selectedManufacturer.id ? '::UpdateSuccess' : '::CreateSuccess','::Success'
+        );
       });
   }
 }
