@@ -10,11 +10,15 @@
       
       <div class="col col-md-8 text-end">
         <div class="d-flex justify-content-end gap-1">
+            <button class="btn btn-warning btn-sm" type="button" (click)="openImport()">
+              <i class="fa fa-file-import me-1"></i>
+              <span>{{ '::Import' | abpLocalization }}</span>
+            </button>
             <button class="btn btn-success btn-sm" (click)=" exportToExcel()">
               <i class="fa fa-file-excel me-1"></i>
-              <span>{{ '::ExportExcel' | abpLocalization }}</span>
+              <span>{{ '::Export' | abpLocalization }}</span>
             </button>
-            <button class="btn btn-primary btn-sm" type="button" (click)="createMedicine()">
+            <button class="btn btn-primary btn-sm" type="button" (click)="createMedicine()" *abpPermission="'Catalog.Medicine.Create'">
               <i class="fa fa-plus me-1"></i>
               <span>{{ '::NewMedicine' | abpLocalization }}</span>
             </button>
@@ -24,39 +28,46 @@
   </div>
   <div class="card-body">
 
-    <div class="row mb-3 align-items-center">
-      <div class="col-md-6">
-        <app-search
-          [placeholder]="'::Search' | abpLocalization"
-          [(value)]="filterText"
-          [debounceTime]= "800"
-          (search)="onSearch($event)">
-        </app-search>
-      </div>
-      <div class="col-md-6">
-    <div class="d-flex gap-1 justify-content-end">
-      <select class="form-select form-select-sm" style="max-width: 140px;"
-              [(ngModel)]="filterCategoryId" (change)="onFilterChange()">
-        <option [ngValue]="null">{{ '::Category' | abpLocalization }}</option>
-        <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
-      </select>
+ <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
 
-      <select class="form-select form-select-sm" style="max-width: 140px;"
-              [(ngModel)]="filterManufacturerId" (change)="onFilterChange()">
-        <option [ngValue]="null">{{ '::Manufacturer' | abpLocalization }}</option>
-        <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
-      </select>
+  <!-- Search -->
+  <div style="min-width: 250px; flex: 1;">
+    <app-search
+      [placeholder]="'::Search' | abpLocalization"
+      [(value)]="filterText"
+      [debounceTime]="800"
+      (search)="onSearch($event)">
+    </app-search>
+  </div>
 
-      <select class="form-select form-select-sm" style="max-width: 120px;"
-              [(ngModel)]="filterStatus" (change)="onFilterChange()">
-        <option [ngValue]="null">{{ '::Status' | abpLocalization }}</option>
-        <option [ngValue]="1">{{ '::Enum:MedicineStatus.Pending' | abpLocalization }}</option>
-        <option [ngValue]="2">{{ '::Enum:MedicineStatus.Approved' | abpLocalization }}</option>
-        <option [ngValue]="3">{{ '::Enum:MedicineStatus.Rejected' | abpLocalization }}</option>
-      </select>
-    </div>
+  <!-- Filters -->
+  <div class="d-flex flex-wrap gap-1 justify-content-end">
+    
+    <select class="form-select form-select-sm" style="width: 140px;"
+            [(ngModel)]="filterCategoryId" (change)="onFilterChange()">
+      <option [ngValue]="null">{{ '::Category' | abpLocalization }}</option>
+      <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
+    </select>
+
+    <select class="form-select form-select-sm" style="width: 140px;"
+            [(ngModel)]="filterManufacturerId" (change)="onFilterChange()">
+      <option [ngValue]="null">{{ '::Manufacturer' | abpLocalization }}</option>
+      <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
+    </select>
+
+    <select class="form-select form-select-sm" style="width: 120px;"
+            [(ngModel)]="filterStatus"
+            (change)="onFilterChange()"
+            *abpPermission="'Catalog.Medicine.Approve'">
+      <option [ngValue]="null">{{ '::Status' | abpLocalization }}</option>
+      <option [ngValue]="1">{{ '::Enum:MedicineStatus.Pending' | abpLocalization }}</option>
+      <option [ngValue]="2">{{ '::Enum:MedicineStatus.Approved' | abpLocalization }}</option>
+      <option [ngValue]="3">{{ '::Enum:MedicineStatus.Rejected' | abpLocalization }}</option>
+    </select>
+
   </div>
-  </div>
+</div>
+
     
     <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
       <ngx-datatable-column
@@ -286,4 +297,18 @@
   </form>
 </app-drawer>
 <!-- #endregion -->
+
+<!-- #region Detail Modal -->
 <app-medicine-detail #detailModal></app-medicine-detail>
+<!-- #endregion -->
+
+<!-- #region Import Excel -->
+<app-import-modal
+    [(visible)]="isImportOpen"
+    [title]="'::ImportMedicines'"
+    [templateName]="'Template_Import_Medicine.xlsx'"
+    [importFn]="importFn"
+    [templateFn]="templateFn"
+    (success)="onImportSuccess()">
+</app-import-modal>
+<!-- #endregion -->

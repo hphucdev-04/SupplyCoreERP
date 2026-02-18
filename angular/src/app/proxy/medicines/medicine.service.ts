@@ -62,6 +62,15 @@ export class MedicineService {
     { apiName: this.apiName,...config });
   
 
+  getImportTemplate = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, Blob>({
+      method: 'GET',
+      responseType: 'blob',
+      url: '/api/app/medicine/import-template',
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (input: GetMedicineListDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<MedicineDto>>({
       method: 'GET',
@@ -77,6 +86,15 @@ export class MedicineService {
       responseType: 'blob',
       url: '/api/app/medicine/as-excel-file',
       params: { filter: input.filter, categoryId: input.categoryId, manufacturerId: input.manufacturerId, status: input.status, isActive: input.isActive, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  importExcel = (file: FormData, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: '/api/app/medicine/import-excel',
+      body: file,
     },
     { apiName: this.apiName,...config });
   

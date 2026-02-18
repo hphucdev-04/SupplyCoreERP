@@ -29,11 +29,9 @@
 
   <ng-template #abpBody>
     <div class="container-fluid p-0" *ngIf="medicine">
-      
       <div class="row g-2">
-        
         <div class="col-lg-7">
-          
+          <!-- #region Information -->
           <div class="card border shadow-sm">
             <div class="card-header py-3">
               <h6 class="text-primary fw-bold mb-0"><i class="fa fa-info-circle me-2"></i> {{ '::GeneralInformation' | abpLocalization }}</h6>
@@ -70,7 +68,8 @@
                </div>
             </div>
           </div>
-    
+          <!-- #endregion -->
+          <!-- #region Regulatory -->
           <div class="card border mt-2 shadow-sm">
             <div class="card-header py-3">
               <h6 class="text-primary fw-bold mb-0"><i class="fa fa-gavel me-2"></i> {{ '::ClinicalAndRegulatory' | abpLocalization }}</h6>
@@ -114,11 +113,11 @@
                </div>
             </div>
           </div>
-    
+          <!-- #endregion -->
         </div>
-    
+        
         <div class="col-lg-5">
-          
+          <!-- #region Ingredient -->
           <div class="card border mb-4 shadow-sm">
             <div class="card-header py-3 d-flex justify-content-between align-items-center border-bottom">
                <h6 class="text-primary fw-bold mb-0"><i class="fa fa-flask me-2"></i> {{ '::ActiveIngredients' | abpLocalization }}</h6>
@@ -157,7 +156,8 @@
               </div>
             </div>
           </div>
-    
+          <!-- #endregion -->
+          <!-- #region Unit -->
           <div class="card border mb-4 shadow-sm">
             <div class="card-header py-3 d-flex justify-content-between align-items-center border-bottom">
                <h6 class="text-primary fw-bold mb-0"><i class="fa fa-boxes-stacked me-2"></i> {{ '::ProductUnits' | abpLocalization }}</h6>
@@ -204,7 +204,8 @@
               </div>
             </div>
           </div>
-      
+          <!-- #endregion -->
+          <!-- #region System -->
           <div class="card border shadow-sm">
              <div class="card-header py-3">
               <h6 class="text-primary fw-bold mb-0"><i class="fa fa-clock-rotate-left me-2"></i> {{ '::SystemData' | abpLocalization }}</h6>
@@ -216,10 +217,10 @@
                  </div>
              </div>
           </div>
-    
+          <!-- #endregion -->
         </div>
       </div>
-
+      <!-- #Price -->
       <div class="row mt-4">
          <div class="col-12">
             <div class="card border shadow-sm">
@@ -236,23 +237,31 @@
                         <table class="table table-hover mb-0 align-middle">
                             <thead class="bg-light">
                                 <tr>
+                                    <th class="ps-4 py-2 text-muted small fw-semibold">{{ '::PriceCode' | abpLocalization }}</th>
                                     <th class="ps-4 py-2 text-muted small fw-semibold">{{ '::PriceList' | abpLocalization }}</th>
                                     <th class="py-2 text-muted small fw-semibold">{{ '::Unit' | abpLocalization }}</th>
                                     <th class="py-2 text-muted small fw-semibold text-end pe-5">{{ '::Price' | abpLocalization }}</th>
+                                    <th class="py-2 text-muted small fw-semibold text-end pe-4">{{ '::Currency' | abpLocalization }}</th>
                                     <th class="py-2 text-muted small fw-semibold text-end pe-4">{{ '::Actions' | abpLocalization }}</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr *ngFor="let p of productPrices">
+                                   <td class="ps-4 py-3">
+                                        <div class="fw-bold text-dark">{{ p.priceListCode }}</div>
+                                    </td>
                                     <td class="ps-4 py-3">
                                         <div class="fw-bold text-dark">{{ p.priceListName }}</div>
-                                        <small class="text-muted" *ngIf="p.minQuantity > 1">Min Qty: {{ p.minQuantity }}</small>
+                                        <small class="text-muted" *ngIf="p.minQuantity > 1">Min MinQuantity: {{ p.minQuantity }}</small>
                                     </td>
                                     <td class="py-3">
                                         <span class="badge bg-light text-dark border">{{ p.unitName }}</span>
                                     </td>
                                     <td class="py-3 text-end pe-5">
                                         <span class="fw-bold text-success fs-6">{{ p.price | number:'1.0-0' }} ₫</span>
+                                    </td>
+                                    <td class="py-3 text-end pe-5">
+                                        <span class="fw-bold text-primary fs-6">{{ (getEnumName(CurrencyType, p.currency)) }}</span>
                                     </td>
                                     <td class="text-end pe-4">
                                         <div class="dropdown" ngbDropdown container="body">
@@ -282,7 +291,7 @@
             </div>
          </div>
       </div>
-
+      <!-- #endregion -->
     </div>
   </ng-template>
 
@@ -366,7 +375,7 @@
             <div class="col-6 mb-3">
                 <label class="form-label small fw-semibold">{{ '::Price' | abpLocalization }} <span class="text-danger">*</span></label>
                 <div class="input-group">
-                    <input type="number" class="form-control fw-bold text-success" formControlName="price" placeholder="0">
+                    <input type="text" class="form-control fw-bold text-success" formControlName="price" placeholder="0" appCurrencyFormat>
                     <span class="input-group-text small">₫</span>
                 </div>
             </div>

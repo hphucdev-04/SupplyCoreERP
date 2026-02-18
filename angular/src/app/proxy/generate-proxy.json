@@ -3096,6 +3096,31 @@
                     "type": "Volo.Abp.Content.IRemoteStreamContent",
                     "typeSimple": "Volo.Abp.Content.IRemoteStreamContent"
                   }
+                },
+                {
+                  "name": "ImportExcelAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "file",
+                      "typeAsString": "Volo.Abp.Content.IRemoteStreamContent, Volo.Abp.Core",
+                      "type": "Volo.Abp.Content.IRemoteStreamContent",
+                      "typeSimple": "Volo.Abp.Content.IRemoteStreamContent",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "GetImportTemplateAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "Volo.Abp.Content.IRemoteStreamContent",
+                    "typeSimple": "Volo.Abp.Content.IRemoteStreamContent"
+                  }
                 }
               ]
             }
@@ -3920,6 +3945,58 @@
                   "descriptorName": "input"
                 }
               ],
+              "returnValue": {
+                "type": "Volo.Abp.Content.IRemoteStreamContent",
+                "typeSimple": "Volo.Abp.Content.IRemoteStreamContent"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Medicines.IMedicineAppService"
+            },
+            "ImportExcelAsyncByFile": {
+              "uniqueName": "ImportExcelAsyncByFile",
+              "name": "ImportExcelAsync",
+              "httpMethod": "POST",
+              "url": "api/app/medicine/import-excel",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "file",
+                  "typeAsString": "Volo.Abp.Content.IRemoteStreamContent, Volo.Abp.Core",
+                  "type": "Volo.Abp.Content.IRemoteStreamContent",
+                  "typeSimple": "Volo.Abp.Content.IRemoteStreamContent",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "file",
+                  "name": "file",
+                  "jsonName": null,
+                  "type": "Volo.Abp.Content.IRemoteStreamContent",
+                  "typeSimple": "Volo.Abp.Content.IRemoteStreamContent",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "FormFile",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Medicines.IMedicineAppService"
+            },
+            "GetImportTemplateAsync": {
+              "uniqueName": "GetImportTemplateAsync",
+              "name": "GetImportTemplateAsync",
+              "httpMethod": "GET",
+              "url": "api/app/medicine/import-template",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
               "returnValue": {
                 "type": "Volo.Abp.Content.IRemoteStreamContent",
                 "typeSimple": "Volo.Abp.Content.IRemoteStreamContent"

@@ -1,5 +1,5 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
+import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -37,7 +37,8 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
     private manufacturerService: ManufacturerService,
     private locationService: LocationService,
     private fb: FormBuilder,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private toaster: ToasterService
   ) {
     this.buildForm();
   }
@@ -88,7 +89,6 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
         
         // Trigger lọc quốc gia khi mở form sửa
         this.onContinentChange(res.continentId);
-        
         this.isDrawerOpen = true;
       });
   }
@@ -102,6 +102,7 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
               this.list.get();
+              this.toaster.success('::DeleteSuccess', '::Success');
             });
         }
       });
@@ -158,6 +159,10 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
       .subscribe(() => {
         this.closeDrawer();
         this.list.get();
+        this.toaster.success(
+        this.selectedManufacturer.id ? '::UpdateSuccess' : '::CreateSuccess',
+        '::Success'
+      );
       });
   }
 }
