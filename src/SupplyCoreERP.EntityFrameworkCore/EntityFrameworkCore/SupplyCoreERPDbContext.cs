@@ -273,10 +273,10 @@ public class SupplyCoreERPDbContext :
 			 .OnDelete(DeleteBehavior.Restrict); // Không cho xóa Unit nếu đang có giá gán vào
 
 			// 3. Link tới Sản phẩm (Product)
-			b.HasOne<Product>()
+			b.HasOne(x => x.Product)
 			 .WithMany()
 			 .HasForeignKey(x => x.ProductId)
-			 .OnDelete(DeleteBehavior.Cascade); // Xóa sản phẩm -> Xóa hết giá
+			 .OnDelete(DeleteBehavior.Cascade);// Xóa sản phẩm - xóa hết giá
 
 			// Trong 1 Bảng giá, 1 Sản phẩm, 1 Đơn vị, 1 Mức số lượng -> Chỉ có 1 dòng giá.
 			b.HasIndex(x => new { x.PriceListId, x.ProductId, x.UnitId, x.MinQuantity })
