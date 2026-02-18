@@ -12,11 +12,13 @@ import { UsageRoute, StorageCondition } from 'src/app/proxy/enums/medicines';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
 import { PriceService } from 'src/app/proxy/prices';
+import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
+import { CurrencyType } from 'src/app/proxy/enums';
 
 @Component({
   selector: 'app-medicine-detail',
   standalone: true,
-  imports: [SharedModule, ReactiveFormsModule, CommonModule, DrawerComponent],
+  imports: [SharedModule, ReactiveFormsModule, CommonModule, DrawerComponent, CurrencyFormatDirective],
   templateUrl: 'medicice-details.component.html',
   styleUrl: 'medicice-details.component.scss',
 })
@@ -62,6 +64,7 @@ export class MedicineDetailComponent {
   // --- ENUMS ---
   UsageRoute = UsageRoute;
   StorageCondition = StorageCondition;
+  CurrencyType = CurrencyType
 
   constructor(
     private medicineService: MedicineService,
@@ -298,7 +301,7 @@ export class MedicineDetailComponent {
   }
 
   getEnumName(enumObj: any, value: number): string {
-  return enumObj[value];
-}
+    return enumObj[value];
+  }
 
 }

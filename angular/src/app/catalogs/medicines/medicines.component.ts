@@ -14,12 +14,13 @@ import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.compone
 import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MedicineDetailComponent } from './medicice-details/medicice-details.component';
+import { ImportModalComponent } from 'src/app/shared/components/import-modal/import-modal.component';
 
 
 @Component({
   selector: 'app-medicines',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, MedicineDetailComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, MedicineDetailComponent, ImportModalComponent],
   templateUrl: './medicines.component.html',
   styleUrl: './medicines.component.scss',
   providers: [ListService]
@@ -53,6 +54,27 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   // State cho Modal Detail
   isDetailModalOpen = false;
   detailId = '';
+
+  // State Modal Import
+  isImportOpen = false;
+  importFn = (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file); 
+    return this.medicineService.importExcel(formData);
+  };
+
+  // 2. Hàm Template: Gọi service -> Trả về Observable Blob
+  templateFn = () => this.medicineService.getImportTemplate();
+
+  openImport() {
+    this.isImportOpen = true;
+  }
+
+  // Hàm callback khi import thành công (Reload lại lưới dữ liệu)
+  onImportSuccess() {
+    this.list.get();
+  }
+
   @ViewChild('detailModal') detailModal: MedicineDetailComponent;
   constructor(
     public readonly list: ListService,
