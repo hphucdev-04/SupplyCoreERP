@@ -1,9 +1,22 @@
 {
   "Culture": "en",
   "Texts": {
-    "AppName": "SupplyCoreERP",
-    "Menu:Home": "Home",
+    "AppName": "RxLogistics",
     "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
-    "Welcome": "Welcome"
+    "Welcome": "Welcome",
+
+    //Menus
+    "Menu:Dashboard": "Dashboard",
+    "Menu:Catalog": "Catalog",
+    "Menu:Categories": "Categories",
+    "Menu:Medicines": "Medicines",
+    "Menu:Units": "Units",
+    "Menu:Ingredients": "Ingredients",
+    "Menu:DosageForms": "Dosage Form",
+    "Menu:Manufacturers": "Manufacturers",
+    "Menu:Partner": "Partner",
+    "Menu:Suppliers": "Suppliers",
+    "Menu:Customers": "Customers",
+    "Menu:Medicnes": "Medicnes"
   }
 }

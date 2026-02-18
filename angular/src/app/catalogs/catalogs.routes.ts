@@ -1,0 +1,33 @@
+import { Routes } from '@angular/router';
+
+export const CATALOGS_ROUTES: Routes = [
+  {
+    path: 'categories',
+    loadComponent: () => import('./categories/categories.component').then(m => m.CategoriesComponent),
+  },
+  {
+    path: 'units',
+    loadComponent: () => import('./units/units.component').then(m => m.UnitsComponent),
+  },
+  {
+    path: 'dosageforms',
+    loadComponent: () => import('./dosageforms/dosageforms.component').then(m => m.DosageformsComponent),
+  },
+  {
+    path: 'ingredients',
+    loadComponent: () => import('./ingredients/ingredients.component').then(m => m.IngredientsComponent),
+  },
+  {
+    path: 'manufacturers',
+    loadComponent: () => import('./manufacturers/manufacturers.component').then(m => m.ManufacturersComponent),
+  },
+  {
+    path: 'medicines',
+    loadComponent: () => import('./medicines/medicines.component').then(m => m.MedicinesComponent),
+  },
+  {
+    path: 'medicines/details/:id',
+    loadComponent: () => import('./medicines/medicice-details/medicice-details.component').then(m => m.MedicineDetailComponent),
+  },
+  // ... Thêm route catalog/...
+];

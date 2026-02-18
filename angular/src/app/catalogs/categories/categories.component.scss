@@ -1,0 +1,24 @@
+.search-wrapper {
+  .form-control {
+    padding-right: 35px;
+  }
+
+  .btn-clear-search {
+    position: absolute;
+    right: 8px;
+    top: 8px;
+    border: none;
+    background: transparent;
+    color: #6c757d;
+    cursor: pointer;
+    padding: 4px 8px;
+    
+    &:hover {
+      color: #495057;
+    }
+
+    i {
+      font-size: 14px;
+    }
+  }
+}

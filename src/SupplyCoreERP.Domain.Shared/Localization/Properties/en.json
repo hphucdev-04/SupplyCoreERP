@@ -1,0 +1,70 @@
+{
+  "Culture": "en",
+  "Texts": {
+    //Table
+    "View": "View",
+    "Name": "Name",
+    "Code": "Code",
+    "CreationTime": "Creation Time",
+    "ProductCount": "Product Count",
+    "Category": "Category",
+    "Status": "Status",
+    "Active": "Active",
+    "Approve": "Approve",
+    "Reject": "Reject",
+    "Manufacturer": "Manufacturer",
+    "BaseUnit": "Base Unit",
+    "OriginCountry": "Origin Country",
+    "RegistrationNumber": "Registration Number",
+    "DosageForm": "Dosage Form",
+    "UsageRoute": "Usage Route",
+    "StorageCondition": "Storage Condition",
+    "IsPrescriptionDrug": "Prescription Drug",
+    "PrescriptionRequiredDescription": "Prescription Required Description",
+    "AvailableForPrescriptionAndSales": "Available For Prescription And Sales",
+    "GeneralInformation": "General Information",
+    "ProductType": "Product Type",
+    "ClinicalAndRegulatory": "Clinical And Regulatory",
+    "ActiveIngredients": "Active Ingredients",
+    "ProductUnits": "Product Units",
+    "Unit": "Unit",
+    "Factor": "Conversion Factor",
+    "SystemData": "System Data",
+    "Pricing": "Pricing",
+    "Add": "Add",
+    "PriceList": "Price List",
+    "Price": "Price",
+    "NoPriceConfigured": "No price configured",
+    "Select": "Select",
+
+    //Button
+    "NewCategory": "New Category",
+    "EditCategory": "Edit Category",
+    "NewUnit": "New Unit",
+    "EditUnit": "Edit Unit",
+    "NewDosage": "New Dosage",
+    "EditDosage": "Edit Dosage",
+    "NewIngredient": "New Ingredient",
+    "EditIngredient": "Edit Ingredient",
+    "NewMedicine": "New Medicine",
+    "EditMedicine": "Edit Medicine",
+
+    //Enum
+    "Enum:MedicineStatus.Pending": "Pending",
+    "Enum:MedicineStatus.Approved": "Approved",
+    "Enum:MedicineStatus.Rejected": "Rejected",
+
+    "Enum:StorageCondition.Normal": "Normal",
+    "Enum:StorageCondition.Cool": "Cool",
+    "Enum:StorageCondition.Cold": "Cold",
+    "Enum:StorageCondition.Frozen": "Frozen",
+
+    "Enum:UsageRoute.Oral": "Oral",
+    "Enum:UsageRoute.Injection": "Injection",
+    "Enum:UsageRoute.External": "External",
+    "Enum:UsageRoute.Other": "Other",
+
+    //Validation
+    "ThisFieldIsRequired": "This field is required"
+  }
+}

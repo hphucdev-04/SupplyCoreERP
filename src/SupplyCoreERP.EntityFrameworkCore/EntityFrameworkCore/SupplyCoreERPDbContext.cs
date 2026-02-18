@@ -1,4 +1,16 @@
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.ActiveIngredients;
+using SupplyCoreERP.BaseUnits;
+using SupplyCoreERP.Categories;
+using SupplyCoreERP.DosageForms;
+using SupplyCoreERP.Locations.Areas;
+using SupplyCoreERP.Locations.Cities;
+using SupplyCoreERP.Locations.Continents;
+using SupplyCoreERP.Locations.Countries;
+using SupplyCoreERP.Manufacturers;
+using SupplyCoreERP.Medicines;
+using SupplyCoreERP.Prices;
+using SupplyCoreERP.Products;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
@@ -9,9 +21,9 @@ using Volo.Abp.EntityFrameworkCore.Modeling;
 using Volo.Abp.FeatureManagement.EntityFrameworkCore;
 using Volo.Abp.Identity;
 using Volo.Abp.Identity.EntityFrameworkCore;
+using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
-using Volo.Abp.OpenIddict.EntityFrameworkCore;
 
 namespace SupplyCoreERP.EntityFrameworkCore;
 
@@ -47,9 +59,37 @@ public class SupplyCoreERPDbContext :
     public DbSet<IdentityUserDelegation> UserDelegations { get; set; }
     public DbSet<IdentitySession> Sessions { get; set; }
 
-    #endregion
+	// Master Data
+	public DbSet<Category> Categories { get; set; }
+	public DbSet<BaseUnit> BaseUnits { get; set; }
+	// Dosage Form
+	public DbSet<DosageForm> DosageForms { get; set; }
+	// Active Ingredient
+	public DbSet<ActiveIngredient> ActiveIngredients { get; set; }
 
-    public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
+	// Manufacturer
+	public DbSet<Manufacturer> Manufacturers { get; set; }
+
+	// Location
+	public DbSet<Continent> Continents { get; set; }
+	public DbSet<Country> Countries { get; set; }
+	public DbSet<City> Cities { get; set; }
+	public DbSet<Area> Areas { get; set; }
+
+	// Product
+	public DbSet<Product> Products { get; set; }
+	public DbSet<ProductUnit> ProductUnits { get; set; }
+
+	// Medicine
+	public DbSet<Medicine> Medicines { get; set; }
+	public DbSet<MedicineIngredient> MedicineIngredients { get; set; }
+	// Price
+	public DbSet<PriceList> PriceLists { get; set; }
+	public DbSet<ProductPrice> ProductPrices { get; set; }
+
+	#endregion
+
+	public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
         : base(options)
     {
 
@@ -69,14 +109,178 @@ public class SupplyCoreERPDbContext :
         builder.ConfigureIdentity();
         builder.ConfigureOpenIddict();
         builder.ConfigureBlobStoring();
-        
-        /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "YourEntities", SupplyCoreERPConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
-    }
+		/* Configure your own tables/entities inside here */
+
+		//builder.Entity<YourEntity>(b =>
+		//{
+		//    b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "YourEntities", SupplyCoreERPConsts.DbSchema);
+		//    b.ConfigureByConvention(); //auto configure for the base class props
+		//    //...
+		//});
+
+		// Location
+		builder.Entity<Continent>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Continents", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+		});
+
+		builder.Entity<Country>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Countries", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+			b.HasIndex(x => x.ISO).IsUnique();
+
+			b.HasOne(x => x.Continent)
+			 .WithMany()
+			 .HasForeignKey(x => x.ContinentId)
+			 .OnDelete(DeleteBehavior.Restrict); //Chặn xóa Châu lục nếu còn Quốc gia
+		});
+
+		builder.Entity<City>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Cities", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.HasOne(x => x.Country)
+			 .WithMany()
+			 .HasForeignKey(x => x.CountryId)
+			 .OnDelete(DeleteBehavior.Restrict); //Chặn xóa Quốc gia nếu còn Thành phố
+		});
+
+		builder.Entity<Area>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Areas", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.HasOne(x => x.City)
+			 .WithMany()
+			 .HasForeignKey(x => x.CityId)
+			 .OnDelete(DeleteBehavior.Restrict); //Chặn xóa Thành phố nếu còn Quận/Huyện
+		});
+
+		// Category
+		builder.Entity<Category>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Categories", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+			b.HasIndex(x => x.Name).IsUnique(); // Tên nhóm hàng không trùng
+		});
+
+		// Base Unit
+		builder.Entity<BaseUnit>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "BaseUnits", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+			b.HasIndex(x => x.Code).IsUnique(); // Mã đơn vị duy nhất
+		});
+
+		// Manufacturer
+		builder.Entity<Manufacturer>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Manufacturers", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			// Mapping Location (Restrict: Xóa location không được xóa Manufacturer)
+			b.HasOne(x => x.Continent).WithMany().HasForeignKey(x => x.ContinentId).OnDelete(DeleteBehavior.Restrict);
+			b.HasOne(x => x.Country).WithMany().HasForeignKey(x => x.CountryId).OnDelete(DeleteBehavior.Restrict);
+		});
+
+		// ActiveIngredient
+		builder.Entity<ActiveIngredient>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "ActiveIngredients", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+			b.HasIndex(x => x.Code).IsUnique();
+		});
+
+		// Product
+		builder.Entity<Product>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Products", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.HasIndex(x => x.Code).IsUnique(); 
+
+			// Mapping khóa ngoại 
+			b.HasOne(x => x.Category).WithMany(x => x.Products).HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
+			b.HasOne(x => x.Manufacturer).WithMany().HasForeignKey(x => x.ManufacturerId).OnDelete(DeleteBehavior.Restrict);
+			b.HasOne(x => x.BaseUnit).WithMany().HasForeignKey(x => x.BaseUnitId).OnDelete(DeleteBehavior.Restrict);
+
+			// Cascade: Xóa Product -> Xóa luôn ProductUnits
+			b.HasMany(x => x.Units).WithOne(x => x.Product).HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Cascade);
+		});
+
+		// Product Unit
+		builder.Entity<ProductUnit>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "ProductUnits", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+			// Link tới BaseUnit (Danh mục) -> RESTRICT
+			b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).OnDelete(DeleteBehavior.Restrict);
+		});
+
+		// Medicine
+		builder.Entity<Medicine>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Medicines", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			// Link DosageForm -> RESTRICT
+			b.HasOne(x => x.DosageForm).WithMany().HasForeignKey(x => x.DosageFormId).OnDelete(DeleteBehavior.Restrict);
+
+			// Cascade: Xóa Medicine -> Xóa luôn Ingredients
+			b.HasMany(x => x.Ingredients).WithOne().HasForeignKey(x => x.MedicineId).OnDelete(DeleteBehavior.Cascade);
+		});
+
+		//MedicineIngredient
+		builder.Entity<MedicineIngredient>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "MedicineIngredients", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			// Link ActiveIngredient (Danh mục) -> RESTRICT
+			b.HasOne(x => x.ActiveIngredient).WithMany().HasForeignKey(x => x.ActiveIngredientId).OnDelete(DeleteBehavior.Restrict);
+		});
+
+		// Dosage Form
+		builder.Entity<DosageForm>(b => {
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "DosageForms", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+			b.HasIndex(x => x.Code).IsUnique();
+		});
+
+		// PriceList
+		builder.Entity<PriceList>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PriceLists", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention(); 
+
+			b.Property(x => x.Code).IsRequired().HasMaxLength(20);
+			b.HasIndex(x => x.Code).IsUnique();
+
+			b.Property(x => x.Name).IsRequired().HasMaxLength(100);
+
+			b.HasIndex(x => x.IsBase);
+		});
+		// ProductPrice
+		builder.Entity<ProductPrice>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "ProductPrices", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.Property(x => x.Price).HasColumnType("decimal(18,2)").IsRequired();
+
+			//Link tới Bảng giá (Xóa Bảng giá -> Xóa luôn chi tiết giá)
+			b.HasOne(x => x.PriceList)
+			 .WithMany()
+			 .HasForeignKey(x => x.PriceListId)
+			 .OnDelete(DeleteBehavior.Cascade);
+
+			//Link tới Đơn vị tính (BaseUnit)
+			b.HasOne(x => x.Unit)
+			 .WithMany()
+			 .HasForeignKey(x => x.UnitId)
+			 .OnDelete(DeleteBehavior.Restrict); // Không cho xóa Unit nếu đang có giá gán vào
+
+			// 3. Link tới Sản phẩm (Product)
+			b.HasOne(x => x.Product)
+			 .WithMany()
+			 .HasForeignKey(x => x.ProductId)
+			 .OnDelete(DeleteBehavior.Cascade);// Xóa sản phẩm - xóa hết giá
+
+			// Trong 1 Bảng giá, 1 Sản phẩm, 1 Đơn vị, 1 Mức số lượng -> Chỉ có 1 dòng giá.
+			b.HasIndex(x => new { x.PriceListId, x.ProductId, x.UnitId, x.MinQuantity })
+			 .IsUnique();
+		});
+	}
 }

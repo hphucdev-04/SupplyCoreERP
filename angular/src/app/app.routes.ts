@@ -6,6 +6,7 @@ export const APP_ROUTES: Routes = [
     path: '',
     pathMatch: 'full',
     loadComponent: () => import('./home/home.component').then(c => c.HomeComponent),
+    canActivate: [authGuard],
   },
   {
     path: 'account',
@@ -18,5 +19,9 @@ export const APP_ROUTES: Routes = [
   {
     path: 'setting-management',
     loadChildren: () => import('@abp/ng.setting-management').then(c => c.createRoutes()),
+  },
+   {
+    path: 'catalog',
+    loadChildren: () => import('./catalogs/catalogs.routes').then(m => m.CATALOGS_ROUTES),
   },
 ];
