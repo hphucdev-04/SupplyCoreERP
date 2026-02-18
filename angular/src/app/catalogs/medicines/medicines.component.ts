@@ -1,5 +1,5 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
+import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil, forkJoin } from 'rxjs'; 
@@ -9,7 +9,7 @@ import { DosageFormService } from 'src/app/proxy/dosage-forms';
 import { MedicineStatus, StorageCondition, UsageRoute } from 'src/app/proxy/enums/medicines';
 import { ManufacturerService } from 'src/app/proxy/manufacturers';
 import { MedicineService } from 'src/app/proxy/medicines';
-import { MedicineDetailDto, MedicineDto } from 'src/app/proxy/medicines/dtos';
+import { CreateUpdateMedicineDto, GetMedicineListDto, MedicineDetailDto, MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -57,23 +57,6 @@ export class MedicinesComponent implements OnInit, OnDestroy {
 
   // State Modal Import
   isImportOpen = false;
-  importFn = (file: File) => {
-    const formData = new FormData();
-    formData.append('file', file); 
-    return this.medicineService.importExcel(formData);
-  };
-
-  // 2. Hàm Template: Gọi service -> Trả về Observable Blob
-  templateFn = () => this.medicineService.getImportTemplate();
-
-  openImport() {
-    this.isImportOpen = true;
-  }
-
-  // Hàm callback khi import thành công (Reload lại lưới dữ liệu)
-  onImportSuccess() {
-    this.list.get();
-  }
 
   @ViewChild('detailModal') detailModal: MedicineDetailComponent;
   constructor(
@@ -85,6 +68,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     private manufacturerService: ManufacturerService,
     private unitService: BaseUnitService,
     private dosageFormService: DosageFormService,
+    private toaster: ToasterService,
   ) {
     this.buildForm();
   }
@@ -95,7 +79,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
 
     this.loadLookups(); 
 
-   const streamCreator = (query) => this.medicineService.getList({ 
+   const streamCreator = (query: GetMedicineListDto) => this.medicineService.getList({ 
       ...query, 
       filter: this.filterText,
       categoryId: this.filterCategoryId,      
@@ -115,7 +99,6 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     this.destroy$.complete();
   }
 
-  //LOOKUP DATA
   loadLookups() {
     // Sử dụng forkJoin để load song song các dropdown
     forkJoin({
@@ -172,6 +155,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
             .pipe(takeUntil(this.destroy$))  
             .subscribe(() => {
                 this.list.get();
+                this.toaster.success('::DeleteSuccess', ':Success')
             });
         }
       });
@@ -243,18 +227,23 @@ export class MedicinesComponent implements OnInit, OnDestroy {
 
   save(): void {
     if (this.form.invalid) return;
-
+    const payload = this.form.getRawValue() as CreateUpdateMedicineDto
     const request = this.selectedMedicine.id
-      ? this.medicineService.update(this.selectedMedicine.id, this.form.value)
-      : this.medicineService.create(this.form.value);
+      ? this.medicineService.update(this.selectedMedicine.id, payload)
+      : this.medicineService.create(payload);
 
     request
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
             this.closeDrawer();
             this.list.get();
+            this.toaster.success(
+              this.selectedMedicine.id? '::UpdateSuccess' : '::CreateSuccess', '::Success'
+            );
         });
   }
+
+  //Export
   exportToExcel(): void {
     this.medicineService.getListAsExcelFile({
       filter: this.filterText,
@@ -265,6 +254,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     }).subscribe((fileResult: any) => {
        // Logic tải file xuống trình duyệt
        this.downloadBlob(fileResult, `Medicines_Export_${new Date().getTime()}.xlsx`);
+       this.toaster.success('::ExportSuccess', '::Success');
     });
   }
   private downloadBlob(blob: Blob, fileName: string) {
@@ -277,18 +267,40 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     document.body.removeChild(a);
     window.URL.revokeObjectURL(url);
   }
+
+  //Import
+  importFn = (file: File) => {
+    const formData = new FormData();
+    formData.append('file', file); 
+    return this.medicineService.importExcel(formData);
+  };
+
+  // 2. Hàm Template: Gọi service -> Trả về Observable Blob
+  templateFn = () => this.medicineService.getImportTemplate();
+
+  openImport() {
+    this.isImportOpen = true;
+  }
+
+  // Hàm callback khi import thành công (Reload lại lưới dữ liệu)
+  onImportSuccess() {
+    this.list.get();
+  }
+
   approveMedicine(id: string): void {
     this.confirmation.warn('::AreYouSureToApprove', '::Approve').subscribe((status) => {
         if (status === Confirmation.Status.confirm) {
             this.medicineService.approve(id).subscribe(() => this.list.get());
+            this.toaster.success('::ApproveSuccess', '::Success')
         }
     });
   }
-
+  
   rejectMedicine(id: string): void {
     this.confirmation.warn('::AreYouSureToReject', '::Reject').subscribe((status) => {
         if (status === Confirmation.Status.confirm) {
             this.medicineService.reject(id).subscribe(() => this.list.get());
+            this.toaster.success('::RejectSuccess', '::Success')
         }
     });
   }
@@ -301,7 +313,11 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     ).subscribe((status) => {
         if (status === Confirmation.Status.confirm) {
             this.medicineService.toggleActive(row.id).subscribe(() => this.list.get());
+            this.toaster.success(
+              row.isActive? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
+            );
         } else {
+            this.toaster.error('::Error');
             event.target.checked = row.isActive; 
         }
     });

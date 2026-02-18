@@ -1,5 +1,5 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
+import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
@@ -28,7 +28,8 @@ export class DosageformsComponent implements OnInit , OnDestroy{
     public readonly list: ListService<GetDosageFormListDto>,
     private dosageService: DosageFormService,
     private fb: FormBuilder,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private toaster: ToasterService,
   ){
      this.buildForm()
   }
@@ -72,6 +73,7 @@ export class DosageformsComponent implements OnInit , OnDestroy{
         if (status === Confirmation.Status.confirm) {
           this.dosageService.delete(id).subscribe(() => {
             this.list.get();
+            this.toaster.success('::DeleteSuccess','::Success')
           });
         }
       });
@@ -123,6 +125,9 @@ export class DosageformsComponent implements OnInit , OnDestroy{
     request.subscribe(() => {
       this.closeDrawer();
       this.list.get();
+      this.toaster.success(
+        this.selectedDosage.id ? '::UpdateSuccess' : '::CreateSuccess', ':Success'
+      );
     });
   }
 }

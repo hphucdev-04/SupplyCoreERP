@@ -6,8 +6,8 @@ import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { ActiveIngredientService } from 'src/app/proxy/active-ingredients';
 import { BaseUnitService } from 'src/app/proxy/base-units';
-import { MedicineDetailDto } from 'src/app/proxy/medicines/dtos';
-import { ProductPriceDto, PriceListDto } from 'src/app/proxy/prices/dtos'; 
+import { CreateUpdateMedicineIngredientDto, CreateUpdateMedicineUnitDto, MedicineDetailDto, MedicineUnitDto } from 'src/app/proxy/medicines/dtos';
+import { ProductPriceDto, PriceListDto, CreateUpdateProductPriceDto } from 'src/app/proxy/prices/dtos'; 
 import { UsageRoute, StorageCondition } from 'src/app/proxy/enums/medicines';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
@@ -24,44 +24,43 @@ import { CurrencyType } from 'src/app/proxy/enums';
 })
 export class MedicineDetailComponent {
   
-  // --- STATE MODAL ---
+  // STATE MODAL
   isVisible = false;
   id = '';
   medicine: MedicineDetailDto;
   
-  // --- STATE DATA KHÁC ---
   // List này gộp BaseUnit + Các Unit quy đổi -> Dùng để chọn khi set giá
   availableUnitsForPrice: any[] = []; 
   
-  // Danh sách giá hiện tại của thuốc
+  //Danh sách giá hiện tại của thuốc
   productPrices: ProductPriceDto[] = []; 
   
-  // Danh sách bảng giá (Bán lẻ, Bán buôn...) để dropdown
+  //Danh sách bảng giá
   priceLists: PriceListDto[] = [];
 
-  // --- DRAWER STATES ---
+  //DRAWER STATES
   isIngrDrawerOpen = false;
   isUnitDrawerOpen = false;
-  isPriceDrawerOpen = false; // <--- MỚI
+  isPriceDrawerOpen = false; 
 
   // --- FORMS ---
   ingrForm: FormGroup;
   unitForm: FormGroup;
-  priceForm: FormGroup; // <--- MỚI
+  priceForm: FormGroup; 
 
-  // --- DROPDOWN DATA (Cho Ingr/Unit Tab) ---
+  //DROPDOWN DATA (Cho Ingr/Unit Tab)
   allIngredients: any[] = [];
   allUnits: any[] = []; // List đơn vị toàn hệ thống (đã lọc)
 
-  // --- TRẠNG THÁI EDIT UNIT ---
+  // TRẠNG THÁI EDIT UNIT 
   isEditingUnit = false;
   editingUnitId: string | null = null;
   
-  // --- TRẠNG THÁI EDIT PRICE (MỚI) ---
+  // --- TRẠNG THÁI EDIT PRICE 
   isEditingPrice = false; 
   editingPriceId: string | null = null;
 
-  // --- ENUMS ---
+  // ENUMS
   UsageRoute = UsageRoute;
   StorageCondition = StorageCondition;
   CurrencyType = CurrencyType
@@ -77,7 +76,6 @@ export class MedicineDetailComponent {
     this.initForms();
   }
 
-  // --- MAIN OPEN/LOAD ---
   open(id: string) {
     this.id = id;
     this.medicine = null; 
@@ -92,13 +90,12 @@ export class MedicineDetailComponent {
   loadData() {
     this.medicineService.get(this.id).subscribe(res => {
       this.medicine = res;
-      this.prepareUnitsForPrice(); // [MỚI] Tạo list đơn vị để chọn giá
+      this.prepareUnitsForPrice(); 
       this.loadLookups(res); 
-      this.loadPrices(); // [MỚI] Tải danh sách giá
+      this.loadPrices(); 
     });
   }
 
-  // [MỚI] Hàm tạo danh sách đơn vị cho Dropdown Giá (Base + Quy đổi)
   prepareUnitsForPrice() {
     if (!this.medicine) return;
     
@@ -110,7 +107,6 @@ export class MedicineDetailComponent {
     ];
   }
 
-  // [MỚI] Load danh sách giá
   loadPrices() {
     this.priceService.getByProduct(this.id).subscribe(res => {
         this.productPrices = res;
@@ -169,14 +165,13 @@ export class MedicineDetailComponent {
     });
   }
 
-  // =========================================================
-  // LOGIC INGREDIENT
-  // =========================================================
+  //Ingredient
   openIngrDrawer() { this.ingrForm.reset(); this.isIngrDrawerOpen = true; }
   
   saveIngr() {
     if (this.ingrForm.invalid) return;
-    this.medicineService.addIngredient(this.id, this.ingrForm.value).subscribe(() => {
+    const payload = this.ingrForm.getRawValue() as CreateUpdateMedicineIngredientDto
+    this.medicineService.addIngredient(this.id, payload).subscribe(() => {
       this.isIngrDrawerOpen = false;
       this.loadData(); 
     });
@@ -190,9 +185,7 @@ export class MedicineDetailComponent {
     });
   }
 
-  // =========================================================
-  // LOGIC UNIT
-  // =========================================================
+  // Unit
   openUnitDrawer() {
     this.isEditingUnit = false;
     this.editingUnitId = null;
@@ -202,8 +195,7 @@ export class MedicineDetailComponent {
     this.isUnitDrawerOpen = true;
   }
 
-  //Hàm sửa unit 
-  editUnit(unit: any) { // unit là MedicineUnitDto
+  editUnit(unit: MedicineUnitDto) { 
       this.isEditingUnit = true;
       this.editingUnitId = unit.unitId;
       this.unitForm.patchValue({
@@ -217,15 +209,15 @@ export class MedicineDetailComponent {
 
   saveUnit() {
     if (this.unitForm.invalid) return;
-    const formValue = this.unitForm.getRawValue();
+    const payload = this.unitForm.getRawValue() as CreateUpdateMedicineUnitDto
 
     if (this.isEditingUnit) {
-        this.medicineService.updateUnit(this.id, this.editingUnitId!, formValue).subscribe(() => {
+        this.medicineService.updateUnit(this.id, this.editingUnitId!, payload).subscribe(() => {
             this.isUnitDrawerOpen = false;
             this.loadData();
         });
     } else {
-        this.medicineService.addUnit(this.id, formValue).subscribe(() => {
+        this.medicineService.addUnit(this.id, payload).subscribe(() => {
             this.isUnitDrawerOpen = false;
             this.loadData();
         });
@@ -240,10 +232,7 @@ export class MedicineDetailComponent {
     });
   }
 
-  // =========================================================
-  // [MỚI] LOGIC PRICE (QUẢN LÝ GIÁ)
-  // =========================================================
-
+  //Price
   openPriceDrawer() {
       this.isEditingPrice = false;
       this.editingPriceId = null;
@@ -274,17 +263,17 @@ export class MedicineDetailComponent {
 
   savePrice() {
       if (this.priceForm.invalid) return;
-      const formValue = this.priceForm.getRawValue();
+      const payload = this.priceForm.getRawValue() as CreateUpdateProductPriceDto
 
       if (this.isEditingPrice) {
           // Update
-          this.priceService.update(this.editingPriceId!, formValue).subscribe(() => {
+          this.priceService.update(this.editingPriceId!, payload).subscribe(() => {
               this.isPriceDrawerOpen = false;
               this.loadPrices();
           });
       } else {
           // Create (Cần thêm ProductId vào DTO)
-          const createDto = { ...formValue, productId: this.id };
+          const createDto = { ...payload, productId: this.id };
           this.priceService.create(createDto).subscribe(() => {
               this.isPriceDrawerOpen = false;
               this.loadPrices();
@@ -303,5 +292,4 @@ export class MedicineDetailComponent {
   getEnumName(enumObj: any, value: number): string {
     return enumObj[value];
   }
-
 }

@@ -1,5 +1,5 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
+import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -28,7 +28,8 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     public readonly list: ListService<GetActiveIngredientListDto>,
     private ingredientService: ActiveIngredientService,
     private fb: FormBuilder,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private toaster: ToasterService,
   ){
     this.buildForm();
   }
@@ -72,6 +73,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
         if (status === Confirmation.Status.confirm) {
           this.ingredientService.delete(id).subscribe(() => {
             this.list.get();
+            this.toaster.success('::DeleteSuccess', '::Success')
         });
       }
     });
@@ -108,7 +110,6 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     .replace(/\s+/g, '_')
     .toUpperCase();
 
-  // Sinh hash ngắn
   const randomHash = Math.random()
     .toString(36)
     .substring(2, 6)
@@ -131,6 +132,9 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     request.subscribe(() => {
       this.closeDrawer();
       this.list.get();
+      this.toaster.success(
+        this.selectedIngredient.id ? '::UpdateSuccess' : 'CreateSuccess', '::Success'
+      );
     });
   }
 }

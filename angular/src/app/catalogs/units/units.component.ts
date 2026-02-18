@@ -1,5 +1,5 @@
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
+import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
@@ -27,7 +27,8 @@ export class UnitsComponent implements OnInit, OnDestroy{
     public readonly list: ListService<GetBaseUnitListDto>,
     private unitService: BaseUnitService,
     private fb: FormBuilder,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private toaster: ToasterService,
   ) {
     this.buildForm();
   }
@@ -71,6 +72,7 @@ export class UnitsComponent implements OnInit, OnDestroy{
         if (status === Confirmation.Status.confirm) {
           this.unitService.delete(id).subscribe(() => {
             this.list.get();
+            this.toaster.success('::DeleteSuccess', '::Success')
           });
         }
       });
@@ -122,6 +124,9 @@ export class UnitsComponent implements OnInit, OnDestroy{
     request.subscribe(() => {
       this.closeDrawer();
       this.list.get();
+      this.toaster.success(
+        this.selectedUnit.id? '::UpdateSuccess' : '::CreateSuccess', '::Success'
+      );
     });
   }
 }
