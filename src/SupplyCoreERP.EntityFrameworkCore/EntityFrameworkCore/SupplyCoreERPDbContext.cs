@@ -2,6 +2,7 @@
 using SupplyCoreERP.ActiveIngredients;
 using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Categories;
+using SupplyCoreERP.Customers;
 using SupplyCoreERP.DosageForms;
 using SupplyCoreERP.Locations.Areas;
 using SupplyCoreERP.Locations.Cities;
@@ -11,6 +12,7 @@ using SupplyCoreERP.Manufacturers;
 using SupplyCoreERP.Medicines;
 using SupplyCoreERP.Prices;
 using SupplyCoreERP.Products;
+using SupplyCoreERP.Suppliers;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
@@ -87,6 +89,10 @@ public class SupplyCoreERPDbContext :
 	public DbSet<PriceList> PriceLists { get; set; }
 	public DbSet<ProductPrice> ProductPrices { get; set; }
 
+	// Customer
+	public DbSet<Customer> Customers { get; set; }
+	// Supplier
+	public DbSet<Supplier> Suppliers { get; set; }
 	#endregion
 
 	public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
@@ -282,5 +288,34 @@ public class SupplyCoreERPDbContext :
 			b.HasIndex(x => new { x.PriceListId, x.ProductId, x.UnitId, x.MinQuantity })
 			 .IsUnique();
 		});
+
+		// Supplier
+		builder.Entity<Supplier>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Suppliers", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.HasOne(x => x.Country).WithMany().HasForeignKey(x => x.CountryId).IsRequired(false);
+			b.HasOne(x => x.City).WithMany().HasForeignKey(x => x.CityId).IsRequired(false);
+			b.HasOne(x => x.Area).WithMany().HasForeignKey(x => x.AreaId).IsRequired(false);
+
+			b.HasIndex(x => x.Code).IsUnique();
+		});
+
+		// Customer
+		builder.Entity<Customer>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Customers", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.HasOne(x => x.Country).WithMany().HasForeignKey(x => x.CountryId).IsRequired(false);
+			b.HasOne(x => x.City).WithMany().HasForeignKey(x => x.CityId).IsRequired(false);
+			b.HasOne(x => x.Area).WithMany().HasForeignKey(x => x.AreaId).IsRequired(false);
+
+			b.HasIndex(x => x.Code).IsUnique();
+			b.HasIndex(x => x.PhoneNumber).IsUnique().HasFilter("\"PhoneNumber\" IS NOT NULL AND \"PhoneNumber\" != ''");
+			// HasFilter để cho phép nhiều dòng null, chỉ bắt trùng với những dòng có dữ liệu
+		});
+
 	}
 }
