@@ -12,7 +12,6 @@ namespace SupplyCoreERP.Suppliers
 	public class SupplierManager : DomainService
 	{
 		private readonly IRepository<Supplier, Guid> _supplierRepository;
-		// Inject Repo của Location
 		private readonly IRepository<Country, Guid> _countryRepo;
 		private readonly IRepository<City, Guid> _cityRepo;
 		private readonly IRepository<Area, Guid> _areaRepo;
@@ -30,35 +29,49 @@ namespace SupplyCoreERP.Suppliers
 		}
 
 		public async Task<Supplier> CreateAsync(
-			string code, string name, string taxCode, string phoneNumber, string email,
-			string representativeName, string note,
-			string address, Guid? countryId, Guid? cityId, Guid? areaId)
+			string code, string name, string? taxCode, string? phoneNumber, string? email,
+			string? representativeName, string? note,
+			string? address, Guid? countryId, Guid? cityId, Guid? areaId,
+			decimal debtLimit = 0, int paymentTermDays = 0)
 		{
 			await CheckCodeExistsAsync(code);
-
-			//Validate địa lý
 			await ValidateLocationAsync(countryId, cityId, areaId);
 
 			return new Supplier(
 				GuidGenerator.Create(),
 				code, name, taxCode, phoneNumber, email, representativeName, note,
-				address, countryId, cityId, areaId
+				address, countryId, cityId, areaId, debtLimit, paymentTermDays
 			);
 		}
 
 		public async Task UpdateAsync(
 			Supplier supplier,
-			string name, string taxCode, string phoneNumber, string email,
-			string representativeName, string note,
-			string address, Guid? countryId, Guid? cityId, Guid? areaId)
+			string name, string? taxCode, string? phoneNumber, string? email,
+			string? representativeName, string? note,
+			string? address, Guid? countryId, Guid? cityId, Guid? areaId,
+			decimal debtLimit = 0, int paymentTermDays = 0)
 		{
 			Check.NotNull(supplier, nameof(supplier));
-
-			// Validate địa lý 
 			await ValidateLocationAsync(countryId, cityId, areaId);
 
 			supplier.UpdateInfo(name, taxCode, phoneNumber, email, representativeName, note);
 			supplier.SetLocation(address, countryId, cityId, areaId);
+			supplier.SetDebtInfo(debtLimit, paymentTermDays);
+		}
+
+		public async Task DeleteAsync(Guid id)
+		{
+			var supplier = await _supplierRepository.GetAsync(id);
+
+			// Logic nghiệp vụ: Không được xóa nếu đang còn nợ tiền
+			if (supplier.CurrentDebt > 0)
+			{
+				throw new UserFriendlyException($"Không thể xóa nhà cung cấp '{supplier.Name}' vì vẫn còn dư nợ ({supplier.CurrentDebt:N0}) chưa thanh toán!");
+			}
+
+			// Có thể kiểm tra thêm: Đã có đơn hàng nào chưa? (Nếu có thì ko cho xóa, chỉ cho chuyển IsActive = false)
+
+			await _supplierRepository.DeleteAsync(supplier);
 		}
 
 		private async Task CheckCodeExistsAsync(string code)
@@ -69,26 +82,21 @@ namespace SupplyCoreERP.Suppliers
 
 		private async Task ValidateLocationAsync(Guid? countryId, Guid? cityId, Guid? areaId)
 		{
-			//Check Country
 			if (countryId.HasValue && !await _countryRepo.AnyAsync(x => x.Id == countryId))
 				throw new UserFriendlyException("Quốc gia không tồn tại!");
 
-			//Check City và quan hệ City -> Country
 			if (cityId.HasValue)
 			{
 				var city = await _cityRepo.FindAsync(cityId.Value);
 				if (city == null) throw new UserFriendlyException("Tỉnh/Thành phố không tồn tại!");
-
 				if (countryId.HasValue && city.CountryId != countryId)
 					throw new UserFriendlyException($"Thành phố '{city.Name}' không thuộc quốc gia đã chọn!");
 			}
 
-			//Check Area và quan hệ Area -> City
 			if (areaId.HasValue)
 			{
 				var area = await _areaRepo.FindAsync(areaId.Value);
 				if (area == null) throw new UserFriendlyException("Khu vực (Quận/Huyện) không tồn tại!");
-
 				if (cityId.HasValue && area.CityId != cityId)
 					throw new UserFriendlyException($"Khu vực '{area.Name}' không thuộc Tỉnh/Thành phố đã chọn!");
 			}
