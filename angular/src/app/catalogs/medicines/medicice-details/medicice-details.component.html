@@ -11,7 +11,7 @@
           <h3 class="modal-title fw-bold mb-1 d-flex align-items-center gap-2">
             {{ medicine.name }}
             <span class="badge rounded-pill fs-6 border" 
-                  [ngClass]="medicine.isActive ? 'bg-success text-white border-success' : 'bg-secondary text-white border-secondary'">
+                  [ngClass]="medicine.isActive ? 'bg-success text-white border-success' : 'bg-danger text-white border-secondary'">
               {{ (medicine.isActive ? '::Active' : '::Inactive') | abpLocalization }}
             </span>
           </h3>
@@ -211,11 +211,30 @@
               <h6 class="text-primary fw-bold mb-0"><i class="fa fa-clock-rotate-left me-2"></i> {{ '::SystemData' | abpLocalization }}</h6>
             </div>
              <div class="card-body py-3">
-                 <div class="d-flex justify-content-between align-items-center p-3">
-                     <span class="small text-muted fw-semibold">{{ '::CreationTime' | abpLocalization }}</span>
-                     <span class="small fw-medium">{{ medicine.creationTime | date:'mediumDate' }}</span>
-                 </div>
-             </div>
+
+              <!-- Creation Time -->
+              <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                <span class="small text-muted fw-semibold">
+                  {{ '::CreationTime' | abpLocalization }}
+                </span>
+                <span class="small fw-medium">
+                  {{ medicine.creationTime | date:'dd/MM/yyyy HH:mm' }}
+                </span>
+              </div>
+
+              <!-- Last Modification Time -->
+              <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
+                <span class="small text-muted fw-semibold">
+                  {{ '::LastModificationTime' | abpLocalization }}
+                </span>
+                <span class="small fw-medium">
+                  {{ medicine.lastModificationTime 
+                      ? (medicine.lastModificationTime | date:'dd/MM/yyyy HH:mm') 
+                      : 'N/A' }}
+                </span>
+              </div>
+
+            </div>
           </div>
           <!-- #endregion -->
         </div>
