@@ -28,21 +28,21 @@ import { ImportModalComponent } from 'src/app/shared/components/import-modal/imp
 export class MedicinesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   
-  // Data Grid
+  //Data
   data = { items: [], totalCount: 0 } as PagedResultDto<MedicineDto>;
   
-  // Drawer & Form State
+  //Drawer state
   isDrawerOpen = false;
   form: FormGroup;
   selectedMedicine = {} as MedicineDetailDto;
 
-  // Filter
+  //Filter
   filterText = '';
   filterCategoryId: string = null;
   filterManufacturerId: string = null;
   filterStatus: number = null;
 
-  // Dropdown Data
+  //Dropdown Data
   categories: any[] = [];
   manufacturers: any[] = [];
   units: any[] = [];
@@ -51,14 +51,14 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   storageConditionOptions: any[] = [];
   MedicineStatus = MedicineStatus;
 
-  // State cho Modal Detail
+  //Modal detail state
   isDetailModalOpen = false;
   detailId = '';
 
-  // State Modal Import
+  //Modal import state
   isImportOpen = false;
-
   @ViewChild('detailModal') detailModal: MedicineDetailComponent;
+
   constructor(
     public readonly list: ListService,
     private medicineService: MedicineService,
@@ -116,7 +116,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     });
   }
 
-  //ACTIONS
+  //Action
   onSearch(searchValue: string): void {
     this.filterText = searchValue;
     this.list.get();
@@ -161,8 +161,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       });
   }
 
-  //FORM HANDLING
-
+  //Form Handling
   buildForm(): void {
     this.form = this.fb.group({
       code: [this.selectedMedicine.code || '', [Validators.required, Validators.maxLength(50)]],
@@ -177,40 +176,35 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       isPrescriptionDrug: [this.selectedMedicine.isPrescriptionDrug || false],
       isActive: [this.selectedMedicine.isActive !== false] // Default true
     });
-
-    if (!this.selectedMedicine.id) {
-      this.form.get('name')?.valueChanges
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((value) => {
-          if (value) {
-            const generatedCode = this.generateCode(value);
-            this.form.get('code')?.setValue(generatedCode, { emitEvent: false });
-          }
-        });
-    }
   }
 
-  private generateCode(name: string): string {
-    if (!name) return '';
+  //Auto generate code function
+  generateCode(): void {
+  const name = this.form.get('name')?.value || '';
+  
+  const normalized = name
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+    .replace(/[^a-zA-Z0-9 ]/g, '')
+    .trim()
+    .replace(/\s+/g, '_')
+    .toUpperCase()
+    .substring(0, 20);
 
-    const normalizedName = name
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/đ/g, 'd')
-      .replace(/Đ/g, 'D')
-      .replace(/[^a-zA-Z0-9 ]/g, '')
-      .trim()
-      .replace(/\s+/g, '_')
-      .toUpperCase();
+  // Crypto random — 4 bytes -> 8 ký tự hex, đủ 4 tỷ khả năng
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  const cryptoHex = array[0].toString(16).toUpperCase().padStart(8, '0');
 
-    const randomHash = Math.random()
-      .toString(36)
-      .substring(2, 6)
-      .toUpperCase();
+  const code = normalized
+    ? `MED_${normalized}_${cryptoHex}`   // MED_PANADOL_3F2A1B4C
+    : `MED_${cryptoHex}`;
 
-    return `MED_${normalizedName}_${randomHash}`; 
-  }
+  this.form.get('code')?.setValue(code);
+}
 
+  //Map enum to dropdown
   private mapEnumToOptions(enumType: any): any[] {
   return Object.keys(enumType)
     .filter(key => !isNaN(Number(key)))
@@ -257,6 +251,8 @@ export class MedicinesComponent implements OnInit, OnDestroy {
        this.toaster.success('::ExportSuccess', '::Success');
     });
   }
+
+  // Download file function
   private downloadBlob(blob: Blob, fileName: string) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -275,14 +271,14 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     return this.medicineService.importExcel(formData);
   };
 
-  // 2. Hàm Template: Gọi service -> Trả về Observable Blob
+  //Template: Gọi service -> Trả về Observable Blob
   templateFn = () => this.medicineService.getImportTemplate();
 
   openImport() {
     this.isImportOpen = true;
   }
 
-  // Hàm callback khi import thành công (Reload lại lưới dữ liệu)
+  //Callback khi import thành công 
   onImportSuccess() {
     this.list.get();
   }

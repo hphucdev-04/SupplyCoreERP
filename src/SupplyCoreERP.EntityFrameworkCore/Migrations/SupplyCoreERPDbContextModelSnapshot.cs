@@ -248,9 +248,6 @@ namespace SupplyCoreERP.Migrations
                     b.Property<decimal>("CurrentDebt")
                         .HasColumnType("numeric");
 
-                    b.Property<DateTime?>("DateOfBirth")
-                        .HasColumnType("timestamp without time zone");
-
                     b.Property<decimal>("DebtLimit")
                         .HasColumnType("numeric");
 
@@ -294,10 +291,16 @@ namespace SupplyCoreERP.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<string>("Note")
+                        .HasColumnType("text");
+
                     b.Property<int>("PaymentTermDays")
                         .HasColumnType("integer");
 
                     b.Property<string>("PhoneNumber")
+                        .HasColumnType("text");
+
+                    b.Property<string>("RepresentativeName")
                         .HasColumnType("text");
 
                     b.Property<string>("TaxCode")
@@ -1043,6 +1046,9 @@ namespace SupplyCoreERP.Migrations
                         .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("ExtraProperties");
+
+                    b.Property<int?>("Gender")
+                        .HasColumnType("integer");
 
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");

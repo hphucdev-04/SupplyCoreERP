@@ -17,7 +17,7 @@ namespace SupplyCoreERP.Customers.Dtos
 
 		public string? PhoneNumber { get; set; }
 		public string? Email { get; set; }
-		public DateTime? DateOfBirth { get; set; }
+		public string? RepresentativeName { get; set; }
 		public Gender? Gender { get; set; }
 		public CustomerType Type { get; set; }
 		public string? TaxCode { get; set; }
@@ -26,9 +26,12 @@ namespace SupplyCoreERP.Customers.Dtos
 		public Guid? CountryId { get; set; }
 		public Guid? CityId { get; set; }
 		public Guid? AreaId { get; set; }
+		
 
+		public string? Note { get; set; }
 		public decimal DebtLimit { get; set; }
 		public int PaymentTermDays { get; set; }
 
+		public bool IsActive { get; set; } = true;
 	}
 }

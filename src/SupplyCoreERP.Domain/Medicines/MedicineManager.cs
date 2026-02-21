@@ -75,7 +75,8 @@ namespace SupplyCoreERP.Medicines
 			Guid categoryId,
 			Guid manufacturerId, 
 			Guid dosageFormId,
-			string regNumber)
+			string regNumber,
+			string code)
 		{
 			Check.NotNull(medicine, nameof(medicine));
 
@@ -84,6 +85,8 @@ namespace SupplyCoreERP.Medicines
 
 			//Check trùng tên
 			await _productManager.CheckCodeAndNameAsync(medicine.Code, name, excludeId: medicine.Id);
+
+			medicine.UpdateCode(medicine.Code);
 
 			//Update thông tin chung (Product)
 			medicine.UpdateInfo(name, categoryId, manufacturerId);

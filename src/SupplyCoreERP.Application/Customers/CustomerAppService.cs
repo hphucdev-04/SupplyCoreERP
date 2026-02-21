@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
-
+using Volo.Abp.Domain.Entities;
 
 namespace SupplyCoreERP.Customers
 {
@@ -25,14 +25,29 @@ namespace SupplyCoreERP.Customers
 			_customerManager = customerManager;
 		}
 
+		public async Task<CustomerDetailDto> GetAsync(Guid id)
+		{
+			var query = await _customerRepository.GetQueryableAsync();
+			var customer = await query
+				.Include(x => x.Country)
+				.Include(x => x.City)
+				.Include(x => x.Area)
+				.FirstOrDefaultAsync(x => x.Id == id);
+
+			if (customer == null)
+			{
+				throw new EntityNotFoundException(typeof(Customer), id);
+			}
+
+			return ObjectMapper.Map<Customer, CustomerDetailDto>(customer);
+		}
+
 		public async Task<PagedResultDto<CustomerDto>> GetListAsync(GetCustomerListDto input)
 		{
 			var query = await _customerRepository.GetQueryableAsync();
 
 			query = query
-				.Include(x => x.Country)
-				.Include(x => x.City)
-				.Include(x => x.Area)
+				.Include(x => x.City) // List chỉ cần City
 				.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
 					x.Name.Contains(input.Filter) ||
 					x.Code.Contains(input.Filter) ||
@@ -52,32 +67,34 @@ namespace SupplyCoreERP.Customers
 			);
 		}
 
-		public async Task<CustomerDto> CreateAsync(CreateUpdateCustomerDto input)
+		public async Task<CustomerDetailDto> CreateAsync(CreateUpdateCustomerDto input)
 		{
 			var customer = await _customerManager.CreateAsync(
 				input.Code, input.Name, input.PhoneNumber, input.Email,
-				input.DateOfBirth, input.Gender, input.Type, input.TaxCode,
+				input.RepresentativeName, input.Gender, input.Type, input.TaxCode,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
-				input.DebtLimit, input.PaymentTermDays
+				input.Note,input.DebtLimit, input.PaymentTermDays
 			);
+			customer.SetActive(input.IsActive);
 
 			await _customerRepository.InsertAsync(customer);
-			return ObjectMapper.Map<Customer, CustomerDto>(customer);
+			return ObjectMapper.Map<Customer, CustomerDetailDto>(customer);
 		}
 
-		public async Task<CustomerDto> UpdateAsync(Guid id, CreateUpdateCustomerDto input)
+		public async Task<CustomerDetailDto> UpdateAsync(Guid id, CreateUpdateCustomerDto input)
 		{
 			var customer = await _customerRepository.GetAsync(id);
 
 			await _customerManager.UpdateAsync(
-				customer, input.Name, input.PhoneNumber, input.Email,
-				input.DateOfBirth, input.Gender, input.Type, input.TaxCode,
+				customer, input.Code, input.Name, input.PhoneNumber, input.Email,
+				input.RepresentativeName, input.Gender, input.Type, input.TaxCode,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
-				input.DebtLimit, input.PaymentTermDays
+				input.Note,input.DebtLimit, input.PaymentTermDays
 			);
 
+			customer.SetActive(input.IsActive);
 			await _customerRepository.UpdateAsync(customer);
-			return ObjectMapper.Map<Customer, CustomerDto>(customer);
+			return ObjectMapper.Map<Customer, CustomerDetailDto>(customer);
 		}
 
 		public async Task DeleteAsync(Guid id)

@@ -44,12 +44,12 @@ namespace SupplyCoreERP.Products
 			Units = new List<ProductUnit>();
 		}
 
-		public void SetName(string name) 
+		private void SetName(string name) 
 		{ 
 			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim(); 
 		}
 
-		public void SetCode(string code) 
+		private void SetCode(string code) 
 		{ 
 			Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper(); 
 		}

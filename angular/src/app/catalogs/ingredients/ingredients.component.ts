@@ -2,7 +2,7 @@ import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs';
+import { Subject } from 'rxjs';
 import { ActiveIngredientService } from 'src/app/proxy/active-ingredients';
 import { ActiveIngredientDto, GetActiveIngredientListDto } from 'src/app/proxy/active-ingredients/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
@@ -84,38 +84,29 @@ export class IngredientsComponent implements OnInit, OnDestroy {
       code: [this.selectedIngredient.code || '', [Validators.required, Validators.maxLength(50)]] ,
       name: [this.selectedIngredient.name || '', [Validators.required, Validators.maxLength(255)]],
     })
-
-    if(!this.selectedIngredient.id){
-      this.form.get('name')?.valueChanges
-        .pipe(takeUntil(this.destroy$)) // Tự hủy khi component bị hủy
-        .subscribe((value) => {
-          if (value) {
-            const generatedCode = this.generateCode(value);
-            // set value cho ô Code, emitEvent: false để tránh vòng lặp vô tận
-            this.form.get('code')?.setValue(generatedCode, { emitEvent: false });
-          }
-      });
-    }
   }
- private generateCode(name: string): string {
-  if (!name) return '';
+generateCode(): void {
+  const name = this.form.get('name')?.value || '';
 
-  const normalizedName = name
+  const normalized = name
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') 
-    .replace(/đ/g, 'd')
-    .replace(/Đ/g, 'D')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
     .replace(/[^a-zA-Z0-9 ]/g, '')
     .trim()
     .replace(/\s+/g, '_')
-    .toUpperCase();
+    .toUpperCase()
+    .substring(0, 20);
 
-  const randomHash = Math.random()
-    .toString(36)
-    .substring(2, 6)
-    .toUpperCase();
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  const cryptoHex = array[0].toString(16).toUpperCase().padStart(8, '0');
 
-  return `AI_${normalizedName}_${randomHash}`;
+  const code = normalized
+    ? `AI_${normalized}_${cryptoHex}`
+    : `AI_${cryptoHex}`;
+
+  this.form.get('code')?.setValue(code);
 }
 
   closeDrawer(): void {

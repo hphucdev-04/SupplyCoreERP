@@ -1,3 +1,4 @@
+<!-- #region Table -->
 <div class="card">
   <div class="card-header">
     <div class="row">
@@ -67,7 +68,9 @@
     </ngx-datatable>
   </div>
 </div>
+<!-- #endregion -->
 
+<!-- #region Drawer -->
 <app-drawer
   [isOpen]="isDrawerOpen"
   [title]="selectedIngredient.id ? '::EditIngredient' : '::NewIngredient'"
@@ -77,6 +80,26 @@
   (save)="save()">
   
   <form [formGroup]="form" *ngIf="form">
+   <div class="mb-3">
+    <label for="unit-code" class="form-label">
+      {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
+    </label>
+    <div class="input-group">
+      <input
+        type="text"
+        id="unit-code"
+        class="form-control text-uppercase"
+        formControlName="code"
+      />
+      <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
+              [title]="'::GenerateCode' | abpLocalization">
+        <i class="fa fa-magic"></i>
+      </button>
+    </div>
+    <div class="invalid-feedback d-block" *ngIf="form.get('code')?.invalid && form.get('code')?.touched">
+      {{ '::ThisFieldIsRequired' | abpLocalization }}
+    </div>
+  </div>
     
     <div class="mb-3">
       <label for="unit-name" class="form-label">
@@ -93,24 +116,6 @@
         {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
-
-    <div class="mb-3">
-        <label for="unit-code" class="form-label">
-          {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
-        </label>
-        <input
-          type="text"
-          id="unit-code"
-          class="form-control text-uppercase" 
-          formControlName="code"
-        />
-        <div class="form-text text-muted" *ngIf="!selectedIngredient.id">
-            Mã được tự động gợi ý từ tên. Bạn có thể sửa lại.
-        </div>
-        <div class="invalid-feedback d-block" *ngIf="form.get('code')?.invalid && form.get('code')?.touched">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
-      </div>
-
   </form>
 </app-drawer>
+<!-- #endregion -->
