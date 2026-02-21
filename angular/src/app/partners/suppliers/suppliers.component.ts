@@ -11,11 +11,12 @@ import { SearchComponent } from 'src/app/shared/components/search/search.compone
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SupplierDetailsComponent } from './supplier-details/supplier-details.component';
 import { Gender } from 'src/app/proxy/enums/partner/gender.enum';
+import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
 
 @Component({
   selector: 'app-suppliers',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, SupplierDetailsComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, SupplierDetailsComponent, CurrencyFormatDirective],
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.scss',
   providers: [ListService]
@@ -269,7 +270,7 @@ export class SuppliersComponent implements OnInit, OnDestroy {
 
     this.form.get('code')?.setValue(code);
   }
-  
+
   closeDrawer(): void {
     this.isDrawerOpen = false;
     this.form.reset();

@@ -28,7 +28,21 @@
     bottom: auto !important;
     left: auto !important;
   }
+  .ngx-datatable .ellipsis-cell {
+    overflow: hidden !important;
+  }
 
+  .ngx-datatable .ellipsis-cell .datatable-body-cell-label {
+    display: block;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  /* fix flex layout */
+  .ngx-datatable .datatable-body-cell {
+    overflow: hidden;
+  }
 //  .lpx-footbar{
 //   display: none !important;
 //  }

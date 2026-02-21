@@ -106,13 +106,13 @@
         </ng-template>
       </ngx-datatable-column>
     
-      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Category' | abpLocalization" prop="categoryName"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" cellClass="ellipsis-cell" [width]="200"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="180"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Category' | abpLocalization" prop="categoryName" [width]="180"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::Manufacturer' | abpLocalization" prop="manufacturerName"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::BaseUnit' | abpLocalization" prop="baseUnitName"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::OriginCountry' | abpLocalization" prop="originCountryName"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="120">
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="140">
          <ng-template let-value="value" ngx-datatable-cell-template>
             <span *ngIf="value === MedicineStatus.Pending" class="badge bg-warning text-dark">
                 <i class="fa fa-clock me-1"></i>{{ '::Enum:MedicineStatus.Pending' | abpLocalization }}
