@@ -64,6 +64,12 @@
     "Enum:UsageRoute.External": "Dùng ngoài",
     "Enum:UsageRoute.Other": "Khác",
 
+    "Enum:Gender.Male": "Nam",
+    "Enum:Gender.Female": "Nữ",
+
+    "Enum:CustomerType.Individual": "Cái nhân",
+    "Enum:CustomerType.Organization": "Doanh nghiệp",
+
     //Validation
     "ThisFieldIsRequired": "Trường này là bắt buộc"
   }

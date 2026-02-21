@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Domain.Entities;
 
 namespace SupplyCoreERP.Suppliers
 {
@@ -22,14 +23,29 @@ namespace SupplyCoreERP.Suppliers
 			_supplierManager = supplierManager;
 		}
 
+		public async Task<SupplierDetailDto> GetAsync(Guid id)
+		{
+			var query = await _supplierRepository.GetQueryableAsync();
+			var supplier = await query
+				.Include(x => x.Country)
+				.Include(x => x.City)
+				.Include(x => x.Area)
+				.FirstOrDefaultAsync(x => x.Id == id);
+
+			if (supplier == null)
+			{
+				throw new EntityNotFoundException(typeof(Supplier), id);
+			}
+
+			return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
+		}
+
 		public async Task<PagedResultDto<SupplierDto>> GetListAsync(GetSupplierListDto input)
 		{
 			var query = await _supplierRepository.GetQueryableAsync();
 
 			query = query
-				.Include(x => x.Country)
-				.Include(x => x.City)
-				.Include(x => x.Area)
+				.Include(x => x.City) 
 				.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
 					x.Name.Contains(input.Filter) ||
 					x.Code.Contains(input.Filter) ||
@@ -49,32 +65,34 @@ namespace SupplyCoreERP.Suppliers
 			);
 		}
 
-		public async Task<SupplierDto> CreateAsync(CreateUpdateSupplierDto input)
+		public async Task<SupplierDetailDto> CreateAsync(CreateUpdateSupplierDto input)
 		{
 			var supplier = await _supplierManager.CreateAsync(
 				input.Code, input.Name, input.TaxCode, input.PhoneNumber, input.Email,
-				input.RepresentativeName, input.Note,
+				input.RepresentativeName, input.Gender ,input.Note,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
 				input.DebtLimit, input.PaymentTermDays
 			);
+			supplier.SetActive(input.IsActive);
 
 			await _supplierRepository.InsertAsync(supplier);
-			return ObjectMapper.Map<Supplier, SupplierDto>(supplier);
+			return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
 		}
 
-		public async Task<SupplierDto> UpdateAsync(Guid id, CreateUpdateSupplierDto input)
+		public async Task<SupplierDetailDto> UpdateAsync(Guid id, CreateUpdateSupplierDto input)
 		{
 			var supplier = await _supplierRepository.GetAsync(id);
 
 			await _supplierManager.UpdateAsync(
-				supplier, input.Name, input.TaxCode, input.PhoneNumber, input.Email,
-				input.RepresentativeName, input.Note,
+				supplier, input.Name, input.Code, input.TaxCode, input.PhoneNumber, input.Email,
+				input.RepresentativeName, input.Gender, input.Note,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
 				input.DebtLimit, input.PaymentTermDays
 			);
 
+			supplier.SetActive(input.IsActive);
 			await _supplierRepository.UpdateAsync(supplier);
-			return ObjectMapper.Map<Supplier, SupplierDto>(supplier);
+			return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
 		}
 
 		public async Task DeleteAsync(Guid id)

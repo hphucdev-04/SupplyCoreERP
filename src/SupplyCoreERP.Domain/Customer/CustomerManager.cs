@@ -34,7 +34,7 @@ namespace SupplyCoreERP.Customers
 			string name,
 			string? phoneNumber,
 			string? email,
-			DateTime? dob,
+			string? representativeName,
 			Gender? gender,
 			CustomerType type,
 			string? taxCode,
@@ -42,26 +42,29 @@ namespace SupplyCoreERP.Customers
 			Guid? countryId,
 			Guid? cityId,
 			Guid? areaId,
+			string? note,
 			decimal debtLimit = 0,
 			int paymentTermDays = 0)
 		{
-			await CheckCodeExistsAsync(code);
+			await CheckCodeAndNameAsync(code, name);
 			await CheckPhoneNumberExistsAsync(phoneNumber);
 			await ValidateLocationAsync(countryId, cityId, areaId);
 
+
 			return new Customer(
 				GuidGenerator.Create(),
-				code, name, phoneNumber, email, dob, gender, type, taxCode,
-				address, countryId, cityId, areaId, debtLimit, paymentTermDays
+				code, name, phoneNumber, email, representativeName, gender, type, taxCode,
+				address, countryId, cityId, areaId, note, debtLimit, paymentTermDays
 			);
 		}
 
 		public async Task UpdateAsync(
 			Customer customer,
+			string code,
 			string name,
 			string? phoneNumber,
 			string? email,
-			DateTime? dob,
+			string? representativeName,
 			Gender? gender,
 			CustomerType type,
 			string? taxCode,
@@ -69,10 +72,12 @@ namespace SupplyCoreERP.Customers
 			Guid? countryId,
 			Guid? cityId,
 			Guid? areaId,
+			string? note,
 			decimal debtLimit = 0,
 			int paymentTermDays = 0)
 		{
 			Check.NotNull(customer, nameof(customer));
+			await CheckCodeAndNameAsync(code, name, customer.Id);
 
 			if (customer.PhoneNumber != phoneNumber)
 			{
@@ -81,7 +86,8 @@ namespace SupplyCoreERP.Customers
 
 			await ValidateLocationAsync(countryId, cityId, areaId);
 
-			customer.UpdateInfo(name, phoneNumber, email, dob, gender, type, taxCode);
+			customer.UpdateCode(code);
+			customer.UpdateInfo(name, phoneNumber, email, representativeName, gender, type, taxCode, note);
 			customer.SetLocation(address, countryId, cityId, areaId);
 			customer.SetDebtInfo(debtLimit, paymentTermDays);
 		}
@@ -97,14 +103,6 @@ namespace SupplyCoreERP.Customers
 			}
 
 			await _customerRepository.DeleteAsync(customer);
-		}
-
-		private async Task CheckCodeExistsAsync(string code)
-		{
-			if (await _customerRepository.AnyAsync(x => x.Code == code))
-			{
-				throw new UserFriendlyException($"Mã khách hàng '{code}' đã tồn tại!");
-			}
 		}
 
 		private async Task CheckPhoneNumberExistsAsync(string? phoneNumber)
@@ -136,6 +134,29 @@ namespace SupplyCoreERP.Customers
 				if (area == null) throw new UserFriendlyException("Khu vực (Quận/Huyện) không tồn tại!");
 				if (cityId.HasValue && area.CityId != cityId)
 					throw new UserFriendlyException($"Khu vực '{area.Name}' không thuộc Tỉnh/Thành phố đã chọn!");
+			}
+		}
+
+		public async Task CheckCodeAndNameAsync(string code, string name, Guid? excludeId = null)
+		{
+			Check.NotNullOrWhiteSpace(code, nameof(code));
+			Check.NotNullOrWhiteSpace(name, nameof(name));
+
+			var normalizedCode = code.Trim().ToUpper();
+			var normalizedName = name.Trim();
+
+			if (await _customerRepository.AnyAsync(x =>
+				x.Code == normalizedCode &&
+				(!excludeId.HasValue || x.Id != excludeId.Value)))
+			{
+				throw new UserFriendlyException($"Mã nhà cung cấp '{code}' đã tồn tại!");
+			}
+
+			if (await _customerRepository.AnyAsync(x =>
+				x.Name == normalizedName &&
+				(!excludeId.HasValue || x.Id != excludeId.Value)))
+			{
+				throw new UserFriendlyException($"Tên nhà cung cấp '{name}' đã tồn tại!");
 			}
 		}
 	}

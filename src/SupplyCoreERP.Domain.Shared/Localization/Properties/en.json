@@ -64,6 +64,13 @@
     "Enum:UsageRoute.External": "External",
     "Enum:UsageRoute.Other": "Other",
 
+    "Enum:Gender.Male": "Male",
+    "Enum:Gender.Female": "Female",
+
+    "Enum:CustomerType.Individual": "Individual",
+    "Enum:CustomerType.Organization": "Organization",
+
+
     //Validation
     "ThisFieldIsRequired": "This field is required"
   }

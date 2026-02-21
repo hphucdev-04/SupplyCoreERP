@@ -14,11 +14,13 @@ namespace SupplyCoreERP.Customers
 		public string Name { get; private set; }
 		public string? PhoneNumber { get; private set; }
 		public string? Email { get; private set; }
-		public DateTime? DateOfBirth { get; private set; }
+		public string? RepresentativeName { get; private set; }
 		public Gender? Gender { get; private set; }
 		public CustomerType Type { get; private set; }
 		public string? TaxCode { get; private set; }
+		public string? Note { get; private set; }
 		public bool IsActive { get; private set; }
+
 
 		public string? Address { get; private set; }
 		public Guid? CountryId { get; private set; }
@@ -40,7 +42,7 @@ namespace SupplyCoreERP.Customers
 			string name,
 			string? phoneNumber,
 			string? email,
-			DateTime? dob,
+			string? representativeName,
 			Gender? gender,
 			CustomerType type,
 			string? taxCode,
@@ -48,6 +50,7 @@ namespace SupplyCoreERP.Customers
 			Guid? countryId,
 			Guid? cityId,
 			Guid? areaId,
+			string? note,
 			decimal debtLimit = 0,
 			int paymentTermDays = 0)
 			: base(id)
@@ -56,10 +59,11 @@ namespace SupplyCoreERP.Customers
 			SetName(name);
 			PhoneNumber = phoneNumber;
 			Email = email;
-			DateOfBirth = dob;
+			RepresentativeName = representativeName;
 			Gender = gender;
 			Type = type;
 			TaxCode = taxCode;
+			Note = note;
 			IsActive = true;
 
 			SetLocation(address, countryId, cityId, areaId);
@@ -70,18 +74,20 @@ namespace SupplyCoreERP.Customers
 			string name,
 			string? phoneNumber,
 			string? email,
-			DateTime? dob,
+			string? representativeName,
 			Gender? gender,
 			CustomerType type,
-			string? taxCode)
+			string? taxCode,
+			string? note)
 		{
 			SetName(name);
 			PhoneNumber = phoneNumber;
 			Email = email;
-			DateOfBirth = dob;
+			RepresentativeName = representativeName;
 			Gender = gender;
 			Type = type;
 			TaxCode = taxCode;
+			Note = note;
 		}
 
 		public void SetLocation(string? address, Guid? countryId, Guid? cityId, Guid? areaId)
@@ -124,5 +130,10 @@ namespace SupplyCoreERP.Customers
 		public void SetActive(bool isActive) => IsActive = isActive;
 		private void SetCode(string code) => Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper();
 		private void SetName(string name) => Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim();
+
+		public void UpdateCode(string newCode)
+		{
+			SetCode(newCode);
+		}
 	}
 }

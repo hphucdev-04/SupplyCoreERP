@@ -1,9 +1,10 @@
-﻿using System;
+﻿using SupplyCoreERP.Enums.Partner;
+using SupplyCoreERP.Locations.Areas;
+using SupplyCoreERP.Locations.Cities;
+using SupplyCoreERP.Locations.Countries;
+using System;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
-using SupplyCoreERP.Locations.Countries;
-using SupplyCoreERP.Locations.Cities;
-using SupplyCoreERP.Locations.Areas;
 
 namespace SupplyCoreERP.Suppliers
 {
@@ -15,6 +16,7 @@ namespace SupplyCoreERP.Suppliers
 		public string? PhoneNumber { get; private set; }
 		public string? Email { get; private set; }
 		public string? RepresentativeName { get; private set; }
+		public Gender? Gender { get; private set; }
 		public string? Note { get; private set; }
 		public bool IsActive { get; private set; }
 		public string? Address { get; private set; }
@@ -47,6 +49,7 @@ namespace SupplyCoreERP.Suppliers
 			Guid? countryId,
 			Guid? cityId,
 			Guid? areaId,
+			Gender? gender,
 			decimal debtLimit = 0,
 			int paymentTermDays = 0)
 			: base(id)
@@ -59,6 +62,7 @@ namespace SupplyCoreERP.Suppliers
 			RepresentativeName = representativeName;
 			Note = note;
 			IsActive = true;
+			Gender = gender;
 
 			SetLocation(address, countryId, cityId, areaId);
 			SetDebtInfo(debtLimit, paymentTermDays);
@@ -66,6 +70,7 @@ namespace SupplyCoreERP.Suppliers
 
 		public void UpdateInfo(
 			string name,
+			Gender? gender,
 			string? taxCode,
 			string? phoneNumber,
 			string? email,
@@ -78,6 +83,7 @@ namespace SupplyCoreERP.Suppliers
 			Email = email;
 			RepresentativeName = representativeName;
 			Note = note;
+			Gender = gender;
 		}
 
 		public void SetLocation(string? address, Guid? countryId, Guid? cityId, Guid? areaId)
@@ -111,5 +117,10 @@ namespace SupplyCoreERP.Suppliers
 		public void SetActive(bool isActive) => IsActive = isActive;
 		private void SetCode(string code) => Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper();
 		private void SetName(string name) => Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim();
+
+		public void UpdateCode(string newCode)
+		{
+			SetCode(newCode);
+		}
 	}
 }

@@ -155,10 +155,9 @@ namespace SupplyCoreERP.Medicines
 
 			await _medicineManager.UpdateAsync(
 				entity, input.Name, input.CategoryId, input.ManufacturerId,
-				input.DosageFormId, input.RegistrationNumber
+				input.DosageFormId, input.RegistrationNumber, input.Code
 			);
 
-			entity.UpdateCode(input.Code);
 			entity.SetPharmaInfo(input.UsageRoute, input.StorageCondition, input.IsPrescriptionDrug);
 			entity.SetActive(input.IsActive);
 

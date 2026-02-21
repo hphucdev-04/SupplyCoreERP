@@ -6,6 +6,7 @@ using Volo.Abp.Domain.Services;
 using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Locations.Cities;
 using SupplyCoreERP.Locations.Areas;
+using SupplyCoreERP.Enums.Partner;
 
 namespace SupplyCoreERP.Suppliers
 {
@@ -30,31 +31,34 @@ namespace SupplyCoreERP.Suppliers
 
 		public async Task<Supplier> CreateAsync(
 			string code, string name, string? taxCode, string? phoneNumber, string? email,
-			string? representativeName, string? note,
+			string? representativeName, Gender? gender, string? note,
 			string? address, Guid? countryId, Guid? cityId, Guid? areaId,
 			decimal debtLimit = 0, int paymentTermDays = 0)
 		{
-			await CheckCodeExistsAsync(code);
+			await CheckCodeAndNameAsync(code, name);
 			await ValidateLocationAsync(countryId, cityId, areaId);
 
 			return new Supplier(
 				GuidGenerator.Create(),
 				code, name, taxCode, phoneNumber, email, representativeName, note,
-				address, countryId, cityId, areaId, debtLimit, paymentTermDays
+				address, countryId, cityId, areaId, gender, debtLimit, paymentTermDays
 			);
 		}
 
 		public async Task UpdateAsync(
 			Supplier supplier,
+			string code,
 			string name, string? taxCode, string? phoneNumber, string? email,
-			string? representativeName, string? note,
+			string? representativeName, Gender? gender, string? note,
 			string? address, Guid? countryId, Guid? cityId, Guid? areaId,
 			decimal debtLimit = 0, int paymentTermDays = 0)
 		{
 			Check.NotNull(supplier, nameof(supplier));
+			await CheckCodeAndNameAsync(supplier.Code, name, supplier.Id);
 			await ValidateLocationAsync(countryId, cityId, areaId);
 
-			supplier.UpdateInfo(name, taxCode, phoneNumber, email, representativeName, note);
+			supplier.UpdateCode(code);
+			supplier.UpdateInfo(name, gender, taxCode, phoneNumber, email, representativeName, note);
 			supplier.SetLocation(address, countryId, cityId, areaId);
 			supplier.SetDebtInfo(debtLimit, paymentTermDays);
 		}
@@ -74,12 +78,7 @@ namespace SupplyCoreERP.Suppliers
 			await _supplierRepository.DeleteAsync(supplier);
 		}
 
-		private async Task CheckCodeExistsAsync(string code)
-		{
-			if (await _supplierRepository.AnyAsync(x => x.Code == code))
-				throw new UserFriendlyException($"Mã nhà cung cấp '{code}' đã tồn tại!");
-		}
-
+		
 		private async Task ValidateLocationAsync(Guid? countryId, Guid? cityId, Guid? areaId)
 		{
 			if (countryId.HasValue && !await _countryRepo.AnyAsync(x => x.Id == countryId))
@@ -99,6 +98,29 @@ namespace SupplyCoreERP.Suppliers
 				if (area == null) throw new UserFriendlyException("Khu vực (Quận/Huyện) không tồn tại!");
 				if (cityId.HasValue && area.CityId != cityId)
 					throw new UserFriendlyException($"Khu vực '{area.Name}' không thuộc Tỉnh/Thành phố đã chọn!");
+			}
+		}
+
+		public async Task CheckCodeAndNameAsync(string code, string name, Guid? excludeId = null)
+		{
+			Check.NotNullOrWhiteSpace(code, nameof(code));
+			Check.NotNullOrWhiteSpace(name, nameof(name));
+
+			var normalizedCode = code.Trim().ToUpper();
+			var normalizedName = name.Trim();
+
+			if (await _supplierRepository.AnyAsync(x =>
+				x.Code == normalizedCode &&
+				(!excludeId.HasValue || x.Id != excludeId.Value)))
+			{
+				throw new UserFriendlyException($"Mã nhà cung cấp '{code}' đã tồn tại!");
+			}
+
+			if (await _supplierRepository.AnyAsync(x =>
+				x.Name == normalizedName &&
+				(!excludeId.HasValue || x.Id != excludeId.Value)))
+			{
+				throw new UserFriendlyException($"Tên nhà cung cấp '{name}' đã tồn tại!");
 			}
 		}
 	}
