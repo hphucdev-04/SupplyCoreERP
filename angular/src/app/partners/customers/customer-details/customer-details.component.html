@@ -1,0 +1,136 @@
+<!-- #region Modal -->
+<abp-modal [(visible)]="isVisible" [options]="{ size: 'xl' }">
+  
+  <ng-template #abpHeader>
+    <div class="d-flex align-items-center justify-content-between w-100 pe-3" *ngIf="customer">
+      <div class="d-flex align-items-center gap-3">
+        <div class="bg-primary-subtle text-primary rounded p-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+          <i class="fa fa-user fa-2x"></i>
+        </div>
+        <div>
+          <h3 class="modal-title fw-bold mb-1 d-flex align-items-center gap-2">
+            {{ customer.name }}
+            <span class="badge rounded-pill fs-6 border" 
+                  [ngClass]="customer.isActive ? 'bg-success text-white border-success' : 'bg-secondary text-white border-secondary'">
+              {{ (customer.isActive ? '::Active' : '::Inactive') | abpLocalization }}
+            </span>
+          </h3>
+          <div class="text-muted small d-flex gap-3">
+            <span> {{ '::Code' | abpLocalization }}: <strong>{{ customer.code }}</strong></span>
+            <span *ngIf="customer.phoneNumber"> {{ '::PhoneNumber' | abpLocalization }}: <strong>{{ customer.phoneNumber }}</strong></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <div class="container-fluid p-0" *ngIf="customer">
+      <div class="row g-3">
+        
+        <div class="col-lg-7">
+          <div class="card border shadow-sm h-100">
+            <div class="card-header py-3 bg-light">
+              <h6 class="text-primary fw-bold mb-0"><i class="fa fa-address-card me-2"></i> {{ '::PersonalAndContactInfo' | abpLocalization }}</h6>
+            </div>
+            <div class="card-body">
+               <div class="row g-3">
+                  <div class="col-md-6">
+                     <small class="text-muted text-uppercase fw-semibold">{{ '::CustomerType' | abpLocalization }}</small>
+                     <div class="fw-medium fs-6">
+                         {{ ('::Enum:CustomerType.' + getEnumName(CustomerType, customer.type)) | abpLocalization }}
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                     <small class="text-muted text-uppercase fw-semibold">{{ '::RepresentativeName' | abpLocalization }}</small>
+                     <div class="fw-medium fs-6"><i class="fa fa-user-tie text-muted me-2"></i>{{ supplier.representativeName || 'N/A' }}</div>
+                  </div>
+                  <div class="col-md-6">
+                     <small class="text-muted text-uppercase fw-semibold">{{ '::Gender' | abpLocalization }}</small>
+                     <div class="fw-medium fs-6" *ngIf="customer.gender !== null">
+                         {{ ('::Enum:Gender.' + getEnumName(Gender, customer.gender)) | abpLocalization }}
+                     </div>
+                     <div class="fw-medium fs-6" *ngIf="customer.gender === null">N/A</div>
+                  </div>
+                  <div class="col-md-6">
+                     <small class="text-muted text-uppercase fw-semibold">{{ '::TaxCode' | abpLocalization }}</small>
+                     <div class="fw-medium fs-6">{{ customer.taxCode || 'N/A' }}</div>
+                  </div>
+                  <div class="col-md-6">
+                     <small class="text-muted text-uppercase fw-semibold">{{ '::Email' | abpLocalization }}</small>
+                     <div class="fw-medium fs-6"><i class="fa fa-envelope text-muted me-2"></i>{{ customer.email || 'N/A' }}</div>
+                  </div>
+                  <div class="col-md-6">
+                     <small class="text-muted text-uppercase fw-semibold">{{ '::Location' | abpLocalization }}</small>
+                     <div class="fw-medium fs-6">
+                        {{ customer.countryName ? customer.countryName : '' }}
+                        <span *ngIf="customer.cityName"> - {{ customer.cityName }}</span>
+                        <span *ngIf="customer.areaName"> - {{ customer.areaName }}</span>
+                     </div>
+                  </div>
+                  <div class="col-12">
+                     <small class="text-muted text-uppercase fw-semibold">{{ '::Address' | abpLocalization }}</small>
+                     <div class="fw-medium fs-6"><i class="fa fa-map-marker-alt text-muted me-2"></i>{{ customer.address || 'N/A' }}</div>
+                  </div>
+                   <div class="col-12" *ngIf="supplier.note">
+                     <small class="text-muted text-uppercase fw-semibold">{{ '::Note' | abpLocalization }}</small>
+                     <div class="fw-medium fs-6 fst-italic text-secondary bg-light p-2 rounded border">{{ supplier.note }}</div>
+                  </div>
+               </div>
+            </div>
+          </div>
+        </div>
+        
+        <div class="col-lg-5">
+          <div class="card border shadow-sm">
+            <div class="card-header py-3 bg-light">
+               <h6 class="text-primary fw-bold mb-0"><i class="fa fa-file-invoice-dollar me-2"></i> {{ '::FinancialInfo' | abpLocalization }}</h6>
+            </div>
+            <div class="card-body p-0">
+              <ul class="list-group list-group-flush">
+                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                  <span class="text-muted fw-semibold">{{ '::CurrentDebt' | abpLocalization }}</span>
+                  <span class="fs-5 fw-bold" [ngClass]="{'text-danger': customer.currentDebt > 0, 'text-success': customer.currentDebt <= 0}">
+                    {{ customer.currentDebt | number:'1.0-0' }} ₫
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                  <span class="text-muted fw-semibold">{{ '::DebtLimit' | abpLocalization }}</span>
+                  <span class="fw-medium">
+                    <span *ngIf="customer.debtLimit > 0">{{ customer.debtLimit | number:'1.0-0' }} ₫</span>
+                    <span *ngIf="customer.debtLimit === 0" class="badge bg-secondary">{{ '::Unlimited' | abpLocalization }}</span>
+                  </span>
+                </li>
+                <li class="list-group-item d-flex justify-content-between align-items-center py-3">
+                  <span class="text-muted fw-semibold">{{ '::PaymentTermDays' | abpLocalization }}</span>
+                  <span class="fw-medium">{{ customer.paymentTermDays }} {{ '::Days' | abpLocalization }}</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+          
+          <div class="card border mt-3 shadow-sm">
+             <div class="card-header py-3 bg-light">
+              <h6 class="text-primary fw-bold mb-0"><i class="fa fa-clock-rotate-left me-2"></i> {{ '::SystemData' | abpLocalization }}</h6>
+            </div>
+             <div class="card-body py-3">
+                 <div class="d-flex justify-content-between align-items-center p-2">
+                     <span class="small text-muted fw-semibold">{{ '::CreationTime' | abpLocalization }}</span>
+                     <span class="small fw-medium">{{ customer.creationTime | date:'mediumDate' }}</span>
+                 </div>
+             </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn btn-secondary" (click)="close()">
+      {{ '::Close' | abpLocalization }}
+    </button>
+  </ng-template>
+
+</abp-modal>
+<!-- #endregion -->

@@ -1,3 +1,4 @@
+<!-- #region Table -->
 <div class="card">
   <div class="card-header">
     <div class="row">
@@ -67,7 +68,9 @@
     </ngx-datatable>
   </div>
 </div>
+<!-- #endregion -->
 
+<!-- #region Drawer -->
 <app-drawer
   [isOpen]="isDrawerOpen"
   [title]="selectedDosage.id ? '::EditDosage' : '::NewDosage'"
@@ -77,23 +80,6 @@
   (save)="save()">
   
   <form [formGroup]="form" *ngIf="form">
-    
-    <div class="mb-3">
-      <label for="unit-name" class="form-label">
-        {{ '::Name' | abpLocalization }} <span class="text-danger">*</span>
-      </label>
-      <input
-        type="text"
-        id="unit-name"
-        class="form-control"
-        formControlName="name"
-        autofocus
-      />
-      <div class="invalid-feedback d-block" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
-        {{ '::ThisFieldIsRequired' | abpLocalization }}
-      </div>
-    </div>
-
     <div class="mb-3">
         <label for="unit-code" class="form-label">
           {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
@@ -111,6 +97,22 @@
           {{ '::ThisFieldIsRequired' | abpLocalization }}
         </div>
       </div>
+        <div class="mb-3">
+      <label for="unit-name" class="form-label">
+        {{ '::Name' | abpLocalization }} <span class="text-danger">*</span>
+      </label>
+      <input
+        type="text"
+        id="unit-name"
+        class="form-control"
+        formControlName="name"
+        autofocus
+      />
+      <div class="invalid-feedback d-block" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
+        {{ '::ThisFieldIsRequired' | abpLocalization }}
+      </div>
+    </div>
 
   </form>
 </app-drawer>
+<!-- #endregion -->

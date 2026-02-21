@@ -1,5 +1,6 @@
+<!-- #region Table -->
 <div class="card">
-<div class="card-header">
+  <div class="card-header">
     <div class="row align-items-center">
       
       <div class="col col-md-4">
@@ -43,19 +44,19 @@
   <!-- Filters -->
   <div class="d-flex flex-wrap gap-1 justify-content-end">
     
-    <select class="form-select form-select-sm" style="width: 140px;"
+    <select class="form-select form-select-md" style="width: 140px;"
             [(ngModel)]="filterCategoryId" (change)="onFilterChange()">
       <option [ngValue]="null">{{ '::Category' | abpLocalization }}</option>
       <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
     </select>
 
-    <select class="form-select form-select-sm" style="width: 140px;"
+    <select class="form-select form-select-md" style="width: 140px;"
             [(ngModel)]="filterManufacturerId" (change)="onFilterChange()">
       <option [ngValue]="null">{{ '::Manufacturer' | abpLocalization }}</option>
       <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
     </select>
 
-    <select class="form-select form-select-sm" style="width: 120px;"
+    <select class="form-select form-select-md" style="width: 120px;"
             [(ngModel)]="filterStatus"
             (change)="onFilterChange()"
             *abpPermission="'Catalog.Medicine.Approve'">
@@ -139,6 +140,8 @@
     </ngx-datatable>
   </div>
 </div>
+<!-- #endregion -->
+
 <!-- #region Drawer -->
 <app-drawer
   [isOpen]="isDrawerOpen"
@@ -152,12 +155,21 @@
     
     <div class="row">
         <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::Code' | abpLocalization }} <span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-sm" formControlName="code">
-             <div *ngIf="form.get('usageRoute').invalid && (form.get('usageRoute').dirty || form.get('usageRoute').touched)" class="text-danger small">
-                {{ '::ThisFieldIsRequired' | abpLocalization }}
+            <label class="form-label small fw-semibold">
+              {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
+            </label>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" formControlName="code">
+              <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
+                      [title]="'::GenerateCode' | abpLocalization">
+                <i class="fa fa-magic"></i>
+              </button>
             </div>
-        </div>
+            <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
+                class="text-danger small">
+              {{ '::ThisFieldIsRequired' | abpLocalization }}
+            </div>
+          </div>
         <div class="col-md-6 mb-3">
             <label class="form-label small fw-semibold">{{ '::Name' | abpLocalization }} <span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
@@ -171,8 +183,9 @@
         <div class="col-md-6 mb-3">
             <label class="form-label small fw-semibold">{{ '::RegistrationNumber' | abpLocalization }} <span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-sm" formControlName="registrationNumber">
-            <div *ngIf="form.get('usageRoute').invalid && (form.get('usageRoute').dirty || form.get('usageRoute').touched)" class="text-danger small">
-                {{ '::ThisFieldIsRequired' | abpLocalization }}
+            <div *ngIf="form.get('registrationNumber').invalid && (form.get('registrationNumber').dirty || form.get('registrationNumber').touched)"
+                class="text-danger small">
+              {{ '::ThisFieldIsRequired' | abpLocalization }}
             </div>
         </div>
         <div class="col-md-6 mb-3">
@@ -181,8 +194,9 @@
               <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
               <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
             </select>
-             <div *ngIf="form.get('usageRoute').invalid && (form.get('usageRoute').dirty || form.get('usageRoute').touched)" class="text-danger small">
-                {{ '::ThisFieldIsRequired' | abpLocalization }}
+             <div *ngIf="form.get('categoryId').invalid && (form.get('categoryId').dirty || form.get('categoryId').touched)"
+                class="text-danger small">
+              {{ '::ThisFieldIsRequired' | abpLocalization }}
             </div>
         </div>
     </div>
@@ -194,8 +208,9 @@
               <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
               <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
             </select>
-             <div *ngIf="form.get('usageRoute').invalid && (form.get('usageRoute').dirty || form.get('usageRoute').touched)" class="text-danger small">
-                {{ '::ThisFieldIsRequired' | abpLocalization }}
+             <div *ngIf="form.get('manufacturerId').invalid && (form.get('manufacturerId').dirty || form.get('manufacturerId').touched)"
+                class="text-danger small">
+              {{ '::ThisFieldIsRequired' | abpLocalization }}
             </div>
         </div>
         <div class="col-md-6 mb-3">
@@ -204,8 +219,9 @@
               <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
               <option *ngFor="let item of units" [ngValue]="item.id">{{ item.name }}</option>
             </select>
-             <div *ngIf="form.get('usageRoute').invalid && (form.get('usageRoute').dirty || form.get('usageRoute').touched)" class="text-danger small">
-                {{ '::ThisFieldIsRequired' | abpLocalization }}
+             <div *ngIf="form.get('baseUnitId').invalid && (form.get('baseUnitId').dirty || form.get('baseUnitId').touched)"
+                class="text-danger small">
+              {{ '::ThisFieldIsRequired' | abpLocalization }}
             </div>
         </div>
     </div>
@@ -217,8 +233,9 @@
               <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
               <option *ngFor="let item of dosageForms" [ngValue]="item.id">{{ item.name }}</option>
             </select>
-             <div *ngIf="form.get('usageRoute').invalid && (form.get('usageRoute').dirty || form.get('usageRoute').touched)" class="text-danger small">
-                {{ '::ThisFieldIsRequired' | abpLocalization }}
+            <div *ngIf="form.get('dosageFormId').invalid && (form.get('dosageFormId').dirty || form.get('dosageFormId').touched)"
+                class="text-danger small">
+              {{ '::ThisFieldIsRequired' | abpLocalization }}
             </div>
         </div>
         <div class="col-md-6 mb-3">

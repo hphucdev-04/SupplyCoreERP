@@ -7,6 +7,6 @@ export const PARTNERS_ROUTES: Routes = [
     },
     {
         path: 'suppliers',
-        loadChildren: () => import('./suppliers/suppliers.component').then(m => m.SuppliersComponent),
+        loadComponent: () => import('./suppliers/suppliers.component').then(m => m.SuppliersComponent),
     }
 ]
