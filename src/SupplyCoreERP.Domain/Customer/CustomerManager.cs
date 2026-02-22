@@ -149,14 +149,14 @@ namespace SupplyCoreERP.Customers
 				x.Code == normalizedCode &&
 				(!excludeId.HasValue || x.Id != excludeId.Value)))
 			{
-				throw new UserFriendlyException($"Mã nhà cung cấp '{code}' đã tồn tại!");
+				throw new UserFriendlyException($"Mã khách hàng cấp '{code}' đã tồn tại!");
 			}
 
 			if (await _customerRepository.AnyAsync(x =>
 				x.Name == normalizedName &&
 				(!excludeId.HasValue || x.Id != excludeId.Value)))
 			{
-				throw new UserFriendlyException($"Tên nhà cung cấp '{name}' đã tồn tại!");
+				throw new UserFriendlyException($"Tên khách hàng '{name}' đã tồn tại!");
 			}
 		}
 	}

@@ -84,7 +84,7 @@ namespace SupplyCoreERP.Suppliers
 			var supplier = await _supplierRepository.GetAsync(id);
 
 			await _supplierManager.UpdateAsync(
-				supplier, input.Name, input.Code, input.TaxCode, input.PhoneNumber, input.Email,
+				supplier, input.Code, input.Name, input.TaxCode, input.PhoneNumber, input.Email,
 				input.RepresentativeName, input.Gender, input.Note,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
 				input.DebtLimit, input.PaymentTermDays

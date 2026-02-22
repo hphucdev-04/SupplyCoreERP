@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SupplyCoreERP.Enums.Partner;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -8,6 +9,7 @@ namespace SupplyCoreERP.Suppliers.Dtos
 	{
 		public string? TaxCode { get; set; }
 		public string? RepresentativeName { get; set; }
+		public Gender? Gender { get; set; }
 		public string? Note { get; set; }
 
 		public string? Address { get; set; }
