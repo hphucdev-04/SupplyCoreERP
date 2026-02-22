@@ -49,26 +49,31 @@
             </button>
             <div ngbDropdownMenu>
                 <button ngbDropdownItem (click)="viewDetail(row.id)">
-                    <i class="fa fa-eye me-1 text-info"></i>{{ '::View' | abpLocalization }}
+                    <i class="fa fa-eye me-1"></i>{{ '::View' | abpLocalization }}
                 </button>
                 <button ngbDropdownItem (click)="editCustomer(row.id)">
-                    <i class="fa fa-edit me-1 text-primary"></i>{{ '::Edit' | abpLocalization }}
+                    <i class="fa fa-edit me-1"></i>{{ '::Edit' | abpLocalization }}
                 </button>
                 <button ngbDropdownItem (click)="deleteCustomer(row.id)">
-                    <i class="fa fa-trash me-1 text-danger"></i>{{ '::Delete' | abpLocalization }}
+                    <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
                 </button>
             </div>
           </div>
         </ng-template>
       </ngx-datatable-column>
     
-      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="120"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="180" cellClass="ellipsis-cell"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="320"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::PhoneNumber' | abpLocalization" prop="phoneNumber" [width]="150"></ngx-datatable-column>
       
       <ngx-datatable-column [name]="'::CustomerType' | abpLocalization" prop="type" [width]="150">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          {{ ('::Enum:CustomerType.' + getEnumName(CustomerType, value)) | abpLocalization }}
+          <span *ngIf="value === CustomerType.Individual" class="badge bg-warning text-dark">
+                {{ '::Enum:CustomerType.Individual' | abpLocalization }}
+            </span>
+            <span *ngIf="value === CustomerType.Organization" class="badge bg-success">
+                {{ '::Enum:CustomerType.Organization' | abpLocalization }}
+            </span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -110,12 +115,25 @@
     
     <div class="row">
         <div class="col-md-4 mb-3">
-            <label class="form-label small fw-semibold">{{ '::Code' | abpLocalization }} <span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-sm" formControlName="code">
+            <label class="form-label small fw-semibold">
+              {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
+            </label>
+            <div class="input-group input-group-sm">
+              <input type="text" class="form-control" formControlName="code">
+              <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
+                      [title]="'::GenerateCode' | abpLocalization">
+                <i class="fa fa-magic"></i>
+              </button>
+            </div>
+            <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
+                class="text-danger small">
+              {{ '::ThisFieldIsRequired' | abpLocalization }}
+            </div>
         </div>
         <div class="col-md-4 mb-3">
             <label class="form-label small fw-semibold">{{ '::CustomerType' | abpLocalization }} <span class="text-danger">*</span></label>
             <select class="form-select form-select-sm" formControlName="type">
+              <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
               <option *ngFor="let item of customerTypes" [ngValue]="item.value">
                 {{ ('::Enum:CustomerType.' + item.name) | abpLocalization }}
               </option>
@@ -165,7 +183,7 @@
         <div class="col-md-6 mb-3">
             <label class="form-label small fw-semibold">{{ '::DebtLimit' | abpLocalization }} <span class="text-danger">*</span></label>
             <div class="input-group input-group-sm">
-                <input type="number" class="form-control fw-bold text-danger" formControlName="debtLimit">
+                <input type="number" class="form-control fw-bold text-success" formControlName="debtLimit" appCurrencyFormat>
                 <span class="input-group-text">₫</span>
             </div>
             <small class="text-muted d-block mt-1">{{ '::SetZeroForUnlimited' | abpLocalization }}</small>

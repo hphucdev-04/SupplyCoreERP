@@ -27,6 +27,7 @@ export interface GetSupplierListDto extends PagedAndSortedResultRequestDto {
 export interface SupplierDetailDto extends SupplierDto {
   taxCode?: string;
   representativeName?: string;
+  gender?: Gender;
   note?: string;
   address?: string;
   countryId?: string;
@@ -36,7 +37,6 @@ export interface SupplierDetailDto extends SupplierDto {
   areaName?: string;
   debtLimit?: number;
   paymentTermDays?: number;
-  gender?: Gender;
 }
 
 export interface SupplierDto extends FullAuditedEntityDto<string> {

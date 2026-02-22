@@ -11,12 +11,13 @@ import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.compone
 import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
+import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
 
 
 @Component({
   selector: 'app-customers',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, CustomerDetailsComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, CustomerDetailsComponent, CurrencyFormatDirective],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
   providers: [ListService]
@@ -222,7 +223,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
       email: [this.selectedCustomer.email || '', [Validators.email, Validators.maxLength(128)]],
       representativeName: [this.selectedCustomer.representativeName || '', Validators.maxLength(255)],
       gender: [this.selectedCustomer.gender ?? null],
-      type: [this.selectedCustomer.type ?? CustomerType.Individual, Validators.required],
+      type: [this.selectedCustomer.type ?? null, Validators.required],
       taxCode: [this.selectedCustomer.taxCode || '', Validators.maxLength(50)],
 
       note: [this.selectedCustomer.note || '', Validators.maxLength(1000)],
@@ -235,6 +236,37 @@ export class CustomersComponent implements OnInit, OnDestroy {
       address: [this.selectedCustomer.address || '', Validators.maxLength(500)],
       isActive: [this.selectedCustomer.isActive !== false] // Default true
     });
+  }
+
+  generateCode(): void {
+    const name = this.form.get('name')?.value || '';
+
+    // Normalize tiếng Việt
+    const normalized = name
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/đ/g, 'd').replace(/Đ/g, 'D')
+      .replace(/[^a-zA-Z0-9 ]/g, '')
+      .trim();
+
+    // Lấy chữ cái đầu mỗi từ, tối đa 8 ký tự
+    // "Cong ty Co phan Duoc pham Imexpharm" -> "CTCPDPI" (7 ký tự)
+    const initials = normalized
+      .split(/\s+/)
+      .map(word => word.charAt(0))
+      .join('')
+      .toUpperCase()
+      .substring(0, 8);
+
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    const cryptoHex = array[0].toString(16).toUpperCase().padStart(8, '0');
+
+    const code = initials
+      ? `CUS_${initials}_${cryptoHex}`   // CUS_CTCPDPI_3F2A1B4C
+      : `CUS_${cryptoHex}`;
+
+    this.form.get('code')?.setValue(code);
   }
 
   closeDrawer(): void {
