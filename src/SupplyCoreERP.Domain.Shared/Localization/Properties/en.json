@@ -73,6 +73,9 @@
     "EditSupplier": "Edit Supplier",
     "NewCustomer": "New Customer",
     "EditCustomer": "Edit Customer",
+    "NewWarehouse": "New Warehouse",
+    "EditWarehouse": "Edit Warehouse",
+    "EditInventory": "Edit Inventoty",
 
 
     //Enum
@@ -80,10 +83,16 @@
     "Enum:MedicineStatus.Approved": "Approved",
     "Enum:MedicineStatus.Rejected": "Rejected",
 
+    "Enum:ApprovalStatus.Draft": "Draft",
+    "Enum:ApprovalStatus.Pending": "Pending",
+    "Enum:ApprovalStatus.Approved": "Approved",
+    "Enum:ApprovalStatus.Rejected": "Rejected",
+
     "Enum:StorageCondition.Normal": "Normal",
     "Enum:StorageCondition.Cool": "Cool",
     "Enum:StorageCondition.Cold": "Cold",
     "Enum:StorageCondition.Frozen": "Frozen",
+    "Enum:StorageCondition.Other": "Other",
 
     "Enum:UsageRoute.Oral": "Oral",
     "Enum:UsageRoute.Injection": "Injection",
@@ -96,6 +105,12 @@
     "Enum:CustomerType.Individual": "Individual",
     "Enum:CustomerType.Organization": "Organization",
 
+    "Enum:ZoneType.Storage": "Storage",
+    "Enum:ZoneType.Inbound": "Inbound",
+    "Enum:ZoneType.Outbound": "Outbound",
+    "Enum:ZoneType.Staging": "Staging",
+    "Enum:ZoneType.Quarantine": "Quarantine",
+    "Enum:ZoneType.ForkliftParking": "Forklift Parking",
 
     //Validation
     "ThisFieldIsRequired": "This field is required"

@@ -1,0 +1,24 @@
+﻿using AutoMapper;
+using SupplyCoreERP.Inventories.Warehouses;
+using SupplyCoreERP.Warehouses.Dtos;
+
+namespace SupplyCoreERP.Warehouses
+{
+	public class WarehouseAutoMapperProfile : Profile
+	{
+		public WarehouseAutoMapperProfile() 
+		{
+			// Warehouse mappings
+			CreateMap<Warehouse, WarehouseDto>()
+				.ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.City != null ? src.City.Name : null))
+				.ForMember(dest => dest.AreaName, opt => opt.MapFrom(src => src.Area != null ? src.Area.Name : null));
+
+			// Zone mappings
+			CreateMap<Zone, ZoneDto>();
+
+			// Bin mappings
+			CreateMap<Bin, BinDto>()
+				.ForMember(dest => dest.ZoneName, opt => opt.MapFrom(src => src.Zone != null ? src.Zone.Name : null));
+		}
+	}
+}
