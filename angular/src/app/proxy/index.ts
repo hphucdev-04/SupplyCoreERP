@@ -1,5 +1,7 @@
 import * as ActiveIngredients from './active-ingredients';
+import * as Balances from './balances';
 import * as BaseUnits from './base-units';
+import * as Batches from './batches';
 import * as Categories from './categories';
 import * as Customers from './customers';
 import * as DosageForms from './dosage-forms';
@@ -9,4 +11,7 @@ import * as Manufacturers from './manufacturers';
 import * as Medicines from './medicines';
 import * as Prices from './prices';
 import * as Suppliers from './suppliers';
-export { ActiveIngredients, BaseUnits, Categories, Customers, DosageForms, Enums, Locations, Manufacturers, Medicines, Prices, Suppliers };
+import * as Tickes from './tickes';
+import * as Tickets from './tickets';
+import * as Warehouses from './warehouses';
+export { ActiveIngredients, Balances, BaseUnits, Batches, Categories, Customers, DosageForms, Enums, Locations, Manufacturers, Medicines, Prices, Suppliers, Tickes, Tickets, Warehouses };

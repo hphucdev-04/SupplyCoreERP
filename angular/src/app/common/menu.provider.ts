@@ -59,4 +59,11 @@ export const APP_ROUTES = [
     { name: 'Suppliers', icon: 'fas fa-truck' },
     { name: 'Customers', icon: 'fas fa-user-friends' },
   ]),
+
+  ...createMenuGroup('Inventory', 'fas fa-warehouse', 4, [
+    { name: 'Warehouses', icon: 'fas fa-building' },        // Quản lý Kho & Kệ
+    { name: 'Batches', icon: 'fas fa-boxes' },              // Quản lý Lô & HSD
+    { name: 'Tickets', icon: 'fas fa-file-invoice' },       // Phiếu Nhập/Xuất
+    { name: 'Balances', icon: 'fas fa-clipboard-list' },    // Xem tồn kho
+  ]),
 ];

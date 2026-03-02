@@ -2,12 +2,13 @@ import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ActiveIngredientService } from 'src/app/proxy/active-ingredients';
 import { ActiveIngredientDto, GetActiveIngredientListDto } from 'src/app/proxy/active-ingredients/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
 
 @Component({
   selector: 'app-ingredient',
@@ -30,9 +31,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-  ){
-    this.buildForm();
-  }
+  ){}
 
   ngOnInit(): void {
       const ingredientStreamCreator = (query) => this.ingredientService.getList({...query, filter: this.filterText});
@@ -40,6 +39,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
       this.list.hookToQuery(ingredientStreamCreator).subscribe((response) => {
         this.ingredient = response;
       })
+      this.buildForm();
   }
 
   ngOnDestroy(): void {
@@ -52,18 +52,20 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     this.list.get();
   }
 
-  createIngredient():void {
+  createIngredient(): void {
     this.selectedIngredient = {} as ActiveIngredientDto;
-    this.buildForm(); 
+    this.form.reset();
     this.isDrawerOpen = true;
   }
 
-  editIngredient(id: string):void {
-    this.ingredientService.get(id).subscribe((res)=>{
-      this.selectedIngredient = res;
-      this.buildForm();
-      this.isDrawerOpen = true;
-    })
+  editIngredient(id: string): void {
+    this.ingredientService.get(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.selectedIngredient = res;
+        this.form.patchValue(res);
+        this.isDrawerOpen = true;
+      });
   }
 
   deleteIngredient(id: string): void {
@@ -81,33 +83,15 @@ export class IngredientsComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      code: [this.selectedIngredient.code || '', [Validators.required, Validators.maxLength(50)]] ,
-      name: [this.selectedIngredient.name || '', [Validators.required, Validators.maxLength(255)]],
-    })
+      code: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
+    });
   }
-generateCode(): void {
-  const name = this.form.get('name')?.value || '';
-
-  const normalized = name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-    .replace(/[^a-zA-Z0-9 ]/g, '')
-    .trim()
-    .replace(/\s+/g, '_')
-    .toUpperCase()
-    .substring(0, 20);
-
-  const array = new Uint32Array(1);
-  crypto.getRandomValues(array);
-  const cryptoHex = array[0].toString(16).toUpperCase().padStart(8, '0');
-
-  const code = normalized
-    ? `AI_${normalized}_${cryptoHex}`
-    : `AI_${cryptoHex}`;
-
-  this.form.get('code')?.setValue(code);
-}
+ generateCode(): void {
+    const name = this.form.get('name')?.value || '';
+    const code = CodeGeneratorUtil.generate(name, 'AI');
+    this.form.get('code')?.setValue(code);
+  }
 
   closeDrawer(): void {
     this.isDrawerOpen = false;

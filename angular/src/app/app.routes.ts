@@ -28,4 +28,8 @@ export const APP_ROUTES: Routes = [
     path: 'partner',
     loadChildren: () => import('./partners/partner.routes').then(m => m.PARTNERS_ROUTES),
   },
+  {
+    path: 'inventory',
+    loadChildren: () => import('./inventories/inventories.routes').then(m => m.INVENTORIES_ROUTES),
+  }
 ];

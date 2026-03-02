@@ -14,6 +14,7 @@ import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.compone
 import { PriceService } from 'src/app/proxy/prices';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
 import { CurrencyType } from 'src/app/proxy/enums';
+import { enumName } from 'src/app/shared/utils/enum.util';
 
 @Component({
   selector: 'app-medicine-detail',
@@ -75,6 +76,8 @@ export class MedicineDetailComponent {
   ) {
     this.initForms();
   }
+
+  readonly enumName = enumName;
 
   open(id: string) {
     this.id = id;
@@ -287,9 +290,5 @@ export class MedicineDetailComponent {
             this.priceService.delete(id).subscribe(() => this.loadPrices());
         }
     });
-  }
-
-  getEnumName(enumObj: any, value: number): string {
-    return enumObj[value];
   }
 }

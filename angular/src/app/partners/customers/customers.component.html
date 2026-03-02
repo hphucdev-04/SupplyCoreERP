@@ -135,7 +135,7 @@
             <select class="form-select form-select-sm" formControlName="type">
               <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
               <option *ngFor="let item of customerTypes" [ngValue]="item.value">
-                {{ ('::Enum:CustomerType.' + item.name) | abpLocalization }}
+                {{ ('::Enum:CustomerType.' + item.key) | abpLocalization }}
               </option>
             </select>
         </div>
@@ -162,7 +162,7 @@
             <select class="form-select form-select-sm" formControlName="gender">
               <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
               <option *ngFor="let item of genders" [ngValue]="item.value">
-                {{ ('::Enum:Gender.' + item.name) | abpLocalization }}
+                {{ ('::Enum:Gender.' + item.key) | abpLocalization }}
               </option>
             </select>
         </div>

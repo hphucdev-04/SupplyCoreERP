@@ -76,7 +76,7 @@
   
   <form [formGroup]="form" *ngIf="form">
    <div class="mb-3">
-    <label for="unit-code" class="form-label">
+    <label for="unit-code" class="form-label small fw-semibold">
       {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
     </label>
     <div class="input-group">
@@ -97,7 +97,7 @@
   </div>
     
     <div class="mb-3">
-      <label for="unit-name" class="form-label">
+      <label for="unit-name" class="form-label small fw-semibold">
         {{ '::Name' | abpLocalization }} <span class="text-danger">*</span>
       </label>
       <input
