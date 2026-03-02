@@ -54,7 +54,7 @@ namespace SupplyCoreERP.Suppliers
 			decimal debtLimit = 0, int paymentTermDays = 0)
 		{
 			Check.NotNull(supplier, nameof(supplier));
-			await CheckCodeAndNameAsync(supplier.Code, name, supplier.Id);
+			await CheckCodeAndNameAsync(code, name, supplier.Id);
 			await ValidateLocationAsync(countryId, cityId, areaId);
 
 			supplier.UpdateCode(code);

@@ -6,7 +6,7 @@ import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { BaseUnitService } from 'src/app/proxy/base-units';
 import { CategoryService } from 'src/app/proxy/categories';
 import { DosageFormService } from 'src/app/proxy/dosage-forms';
-import { MedicineStatus, StorageCondition, UsageRoute } from 'src/app/proxy/enums/medicines';
+import { MedicineStatus, medicineStatusOptions, StorageCondition, storageConditionOptions, UsageRoute, usageRouteOptions } from 'src/app/proxy/enums/medicines';
 import { ManufacturerService } from 'src/app/proxy/manufacturers';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { CreateUpdateMedicineDto, GetMedicineListDto, MedicineDetailDto, MedicineDto } from 'src/app/proxy/medicines/dtos';
@@ -15,6 +15,8 @@ import { SearchComponent } from 'src/app/shared/components/search/search.compone
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MedicineDetailComponent } from './medicice-details/medicice-details.component';
 import { ImportModalComponent } from 'src/app/shared/components/import-modal/import-modal.component';
+import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
+import { enumName } from 'src/app/shared/utils/enum.util';
 
 
 @Component({
@@ -47,8 +49,9 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   manufacturers: any[] = [];
   units: any[] = [];
   dosageForms: any[] = [];
-  usageRouteOptions: any[] = [];
-  storageConditionOptions: any[] = [];
+  usageRouteOptions = usageRouteOptions;
+  storageConditionOptions = storageConditionOptions;
+  medicineStatusOptions = medicineStatusOptions;
   MedicineStatus = MedicineStatus;
 
   //Modal detail state
@@ -58,7 +61,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   //Modal import state
   isImportOpen = false;
   @ViewChild('detailModal') detailModal: MedicineDetailComponent;
-
+  readonly enumName = enumName;
   constructor(
     public readonly list: ListService,
     private medicineService: MedicineService,
@@ -69,16 +72,11 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     private unitService: BaseUnitService,
     private dosageFormService: DosageFormService,
     private toaster: ToasterService,
-  ) {
-    this.buildForm();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.usageRouteOptions = this.mapEnumToOptions(UsageRoute);
-    this.storageConditionOptions = this.mapEnumToOptions(StorageCondition);
-
     this.loadLookups(); 
-
+    this.buildForm();
    const streamCreator = (query: GetMedicineListDto) => this.medicineService.getList({ 
       ...query, 
       filter: this.filterText,
@@ -132,18 +130,18 @@ export class MedicinesComponent implements OnInit, OnDestroy {
 
   createMedicine(): void {
     this.selectedMedicine = {} as MedicineDetailDto;
-    this.buildForm();
+    this.form.reset({ isPrescriptionDrug: false, isActive: true });
     this.isDrawerOpen = true;
   }
 
   editMedicine(id: string): void {
     this.medicineService.get(id)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
-            this.selectedMedicine = res;
-            this.buildForm();
-            this.isDrawerOpen = true;
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.selectedMedicine = res;
+        this.form.patchValue(res);
+        this.isDrawerOpen = true;
+      });
   }
 
   deleteMedicine(id: string): void {
@@ -164,59 +162,30 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   //Form Handling
   buildForm(): void {
     this.form = this.fb.group({
-      code: [this.selectedMedicine.code || '', [Validators.required, Validators.maxLength(50)]],
-      name: [this.selectedMedicine.name || '', [Validators.required, Validators.maxLength(255)]],
-      categoryId: [this.selectedMedicine.categoryId || null, Validators.required],
-      manufacturerId: [this.selectedMedicine.manufacturerId || null, Validators.required],
-      baseUnitId: [this.selectedMedicine.baseUnitId || null, Validators.required],
-      dosageFormId: [this.selectedMedicine.dosageFormId || null, Validators.required],
-      registrationNumber: [this.selectedMedicine.registrationNumber || '', Validators.maxLength(50)],
-      usageRoute: [this.selectedMedicine.usageRoute ?? null, Validators.required], 
-      storageCondition: [this.selectedMedicine.storageCondition ?? null, Validators.required],
-      isPrescriptionDrug: [this.selectedMedicine.isPrescriptionDrug || false],
-      isActive: [this.selectedMedicine.isActive !== false] // Default true
+      code: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
+      categoryId: [null, Validators.required],
+      manufacturerId: [null, Validators.required],
+      baseUnitId: [null, Validators.required],
+      dosageFormId: [null, Validators.required],
+      registrationNumber: ['', Validators.maxLength(50)],
+      usageRoute: [null, Validators.required],
+      storageCondition: [null, Validators.required],
+      isPrescriptionDrug: [false],
+      isActive: [true],
     });
   }
 
   //Auto generate code function
   generateCode(): void {
-  const name = this.form.get('name')?.value || '';
-  
-  const normalized = name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-    .replace(/[^a-zA-Z0-9 ]/g, '')
-    .trim()
-    .replace(/\s+/g, '_')
-    .toUpperCase()
-    .substring(0, 20);
-
-  // Crypto random — 4 bytes -> 8 ký tự hex, đủ 4 tỷ khả năng
-  const array = new Uint32Array(1);
-  crypto.getRandomValues(array);
-  const cryptoHex = array[0].toString(16).toUpperCase().padStart(8, '0');
-
-  const code = normalized
-    ? `MED_${normalized}_${cryptoHex}`   // MED_PANADOL_3F2A1B4C
-    : `MED_${cryptoHex}`;
-
-  this.form.get('code')?.setValue(code);
-}
-
-  //Map enum to dropdown
-  private mapEnumToOptions(enumType: any): any[] {
-  return Object.keys(enumType)
-    .filter(key => !isNaN(Number(key)))
-    .map(key => ({
-      value: Number(key),
-      name: enumType[key]   
-    }));
-  }
+     const name = this.form.get('name')?.value || '';
+     const code = CodeGeneratorUtil.generate(name, 'MED');
+     this.form.get('code')?.setValue(code);
+   }
 
   closeDrawer(): void {
     this.isDrawerOpen = false;
-    this.form.reset();
+    this.form.reset({ isPrescriptionDrug: false, isActive: true });
   }
 
   save(): void {

@@ -16,6 +16,8 @@
     "Menu:Manufacturers": "Nhà sản xuất",
     "Menu:Partner": "Đối tác",
     "Menu:Suppliers": "Nhà cung cấp",
-    "Menu:Customers": "Khách hàng"
+    "Menu:Customers": "Khách hàng",
+    "Menu:Warehouses": "Kho",
+    "Menu:Inventory": "Tồn kho"
   }
 }

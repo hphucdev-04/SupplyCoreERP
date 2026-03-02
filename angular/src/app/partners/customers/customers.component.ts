@@ -5,25 +5,27 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil, forkJoin } from 'rxjs'; 
 import { CustomerService } from 'src/app/proxy/customers';
 import { CustomerDto, CustomerDetailDto, CreateUpdateCustomerDto, GetCustomerListDto } from 'src/app/proxy/customers/dtos';
-import { Gender, CustomerType } from 'src/app/proxy/enums/partner';
+import { Gender, CustomerType, genderOptions, customerTypeOptions } from 'src/app/proxy/enums/partner';
 import { LocationService } from 'src/app/proxy/locations';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
+import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
+import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
+import { enumName } from 'src/app/shared/utils/enum.util';
 
 
 @Component({
   selector: 'app-customers',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, CustomerDetailsComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, CustomerDetailsComponent, CurrencyFormatDirective],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
   providers: [ListService]
 })
 export class CustomersComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  
   // Data Grid
   data = { items: [], totalCount: 0 } as PagedResultDto<CustomerDto>;
   
@@ -40,8 +42,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
   countries: any[] = [];
   cities: any[] = [];
   areas: any[] = [];
-  genders: any[] = [];
-  customerTypes: any[] = [];
+  genders = genderOptions
+  customerTypes = customerTypeOptions
 
   Gender = Gender;
   CustomerType = CustomerType;
@@ -56,15 +58,11 @@ export class CustomersComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-  ) {
-    this.buildForm();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.genders = this.mapEnumToOptions(Gender);
-    this.customerTypes = this.mapEnumToOptions(CustomerType);
+    this.buildForm(); 
     this.loadInitialLookups(); 
-
     const streamCreator = (query: GetCustomerListDto) => this.customerService.getList({ 
       ...query, 
       filter: this.filterText,
@@ -141,35 +139,51 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   createCustomer(): void {
-    this.selectedCustomer = {} as CustomerDetailDto;
-    this.buildForm();
+    this.selectedCustomer = {} as CustomerDto;
     this.cities = [];
     this.areas = [];
+    this.form.reset({
+      debtLimit: 0,
+      paymentTermDays: 0,
+      isActive: true,
+    });
     this.isDrawerOpen = true;
   }
 
-  editCustomer(id: string): void {
+ editCustomer(id: string): void {
     this.customerService.get(id)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
-            this.selectedCustomer = res;
-            this.buildForm();
-            
-            if (res.countryId) {
-                this.locationService.getCitiesByCountry(res.countryId).subscribe(cityRes => {
-                    this.cities = cityRes.items;
-                });
-            } else { this.cities = []; }
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.selectedCustomer = res;
 
-            if (res.cityId) {
-                this.locationService.getAreasByCity(res.cityId).subscribe(areaRes => {
-                    this.areas = areaRes.items;
-                });
-            } else { this.areas = []; }
+        // Patch data vào form (tách biệt với buildForm)
+        this.form.patchValue(res);
 
-            this.isDrawerOpen = true;
-        });
+        // Load cascading dropdowns nếu có sẵn
+        if (res.countryId) {
+          this.locationService.getCitiesByCountry(res.countryId)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(cityRes => {
+              this.cities = cityRes.items;
+            });
+        } else {
+          this.cities = [];
+        }
+
+        if (res.cityId) {
+          this.locationService.getAreasByCity(res.cityId)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(areaRes => {
+              this.areas = areaRes.items;
+            });
+        } else {
+          this.areas = [];
+        }
+
+        this.isDrawerOpen = true;
+      });
   }
+
 
   deleteCustomer(id: string): void {
     this.confirmation
@@ -208,55 +222,59 @@ export class CustomersComponent implements OnInit, OnDestroy {
     });
   }
 
-  getEnumName(enumObj: any, value: number): string {
-    return enumObj[value];
-  }
-
   // --- FORM HANDLING ---
   buildForm(): void {
-
     this.form = this.fb.group({
-      code: [this.selectedCustomer.code || '', [Validators.required, Validators.maxLength(50)]],
-      name: [this.selectedCustomer.name || '', [Validators.required, Validators.maxLength(255)]],
-      phoneNumber: [this.selectedCustomer.phoneNumber || '', Validators.maxLength(20)],
-      email: [this.selectedCustomer.email || '', [Validators.email, Validators.maxLength(128)]],
-      representativeName: [this.selectedCustomer.representativeName || '', Validators.maxLength(255)],
-      gender: [this.selectedCustomer.gender ?? null],
-      type: [this.selectedCustomer.type ?? CustomerType.Individual, Validators.required],
-      taxCode: [this.selectedCustomer.taxCode || '', Validators.maxLength(50)],
-
-      note: [this.selectedCustomer.note || '', Validators.maxLength(1000)],
-      debtLimit: [this.selectedCustomer.debtLimit || 0, [Validators.required, Validators.min(0)]],
-      paymentTermDays: [this.selectedCustomer.paymentTermDays || 0, [Validators.required, Validators.min(0)]],
-      
-      countryId: [this.selectedCustomer.countryId || null],
-      cityId: [this.selectedCustomer.cityId || null],
-      areaId: [this.selectedCustomer.areaId || null],
-      address: [this.selectedCustomer.address || '', Validators.maxLength(500)],
-      isActive: [this.selectedCustomer.isActive !== false] // Default true
+      code: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
+      phoneNumber: ['', Validators.maxLength(20)],
+      email: ['', [Validators.email, Validators.maxLength(128)]],
+      representativeName: ['', Validators.maxLength(255)],
+      gender: [null],
+      type: [null, Validators.required],
+      taxCode: ['', Validators.maxLength(50)],
+      note: ['', Validators.maxLength(1000)],
+      debtLimit: [0, [Validators.required, Validators.min(0)]],
+      paymentTermDays: [0, [Validators.required, Validators.min(0)]],
+      countryId: [null],
+      cityId: [null],
+      areaId: [null],
+      address: ['', Validators.maxLength(500)],
+      isActive: [true],
     });
   }
 
-  closeDrawer(): void {
+  generateCode(): void {
+    const name = this.form.get('name')?.value || '';
+    const code = CodeGeneratorUtil.generate(name, 'CUS');
+    this.form.get('code')?.setValue(code);
+  }
+
+ closeDrawer(): void {
     this.isDrawerOpen = false;
-    this.form.reset();
+    this.form.reset({
+      debtLimit: 0,
+      paymentTermDays: 0,
+      isActive: true,
+    });
   }
 
   save(): void {
     if (this.form.invalid) return;
+
     const payload = this.form.getRawValue() as CreateUpdateCustomerDto;
-    const request = this.selectedCustomer.id
+    const request = this.selectedCustomer?.id
       ? this.customerService.update(this.selectedCustomer.id, payload)
       : this.customerService.create(payload);
 
     request
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-            this.closeDrawer();
-            this.list.get();
-            this.toaster.success(
-              this.selectedCustomer.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
-            );
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.closeDrawer();
+        this.list.get();
+        this.toaster.success(
+          this.selectedCustomer?.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
+        );
+      });
   }
 }

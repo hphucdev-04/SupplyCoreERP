@@ -84,9 +84,9 @@ namespace SupplyCoreERP.Medicines
 			await ValidateForeignKeysAsync(categoryId, manufacturerId, medicine.BaseUnitId, dosageFormId);
 
 			//Check trùng tên
-			await _productManager.CheckCodeAndNameAsync(medicine.Code, name, excludeId: medicine.Id);
+			await _productManager.CheckCodeAndNameAsync(code, name, excludeId: medicine.Id);
 
-			medicine.UpdateCode(medicine.Code);
+			medicine.UpdateCode(code);
 
 			//Update thông tin chung (Product)
 			medicine.UpdateInfo(name, categoryId, manufacturerId);

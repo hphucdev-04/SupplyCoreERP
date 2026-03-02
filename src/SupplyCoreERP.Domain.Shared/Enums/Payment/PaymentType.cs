@@ -1,8 +1,8 @@
 ﻿namespace SupplyCoreERP.Enums.Finance
 {
 	public enum PaymentType { 
-		Receipt = 1, // Phieu thu
-		Payment = 2 // Phieu chi
+		Receipt = 0, // Phieu thu
+		Payment = 1 // Phieu chi
 	}
 
 }

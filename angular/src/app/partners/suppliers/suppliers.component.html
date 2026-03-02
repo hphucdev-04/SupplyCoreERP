@@ -117,7 +117,7 @@
                 class="text-danger small">
               {{ '::ThisFieldIsRequired' | abpLocalization }}
             </div>
-          </div>
+        </div>
         <div class="col-md-8 mb-3">
             <label class="form-label small fw-semibold">{{ '::Name' | abpLocalization }} <span class="text-danger">*</span></label>
             <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
@@ -144,8 +144,8 @@
           <label class="form-label small fw-semibold">{{ '::Gender' | abpLocalization }}</label>
           <select class="form-select form-select-sm" formControlName="gender">
             <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-            <option *ngFor="let item of genders" [ngValue]="item.value">
-              {{ ('::Enum:Gender.' + item.name) | abpLocalization }}
+            <option *ngFor="let item of gender" [ngValue]="item.value">
+              {{ ('::Enum:Gender.' + item.key) | abpLocalization }}
             </option>
           </select>
       </div>

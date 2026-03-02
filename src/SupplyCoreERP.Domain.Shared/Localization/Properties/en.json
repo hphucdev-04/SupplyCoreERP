@@ -10,6 +10,7 @@
     "Category": "Category",
     "Status": "Status",
     "Active": "Active",
+    "Inactive": "Inactive",
     "Approve": "Approve",
     "Reject": "Reject",
     "Manufacturer": "Manufacturer",
@@ -36,6 +37,26 @@
     "Price": "Price",
     "NoPriceConfigured": "No price configured",
     "Select": "Select",
+    "AllStatuses": "All Statuses",
+    "GenerateCode": "Generate Code",
+    "CustomerType": "Customer Type",
+    "TaxCode": "Tax Code",
+    "RepresentativeName": "Representative Name",
+    "Gender": "Gender",
+    "PhoneNumber": "Phone Number",
+    "Email": "Email",
+    "CurrentDebt": "Current Debt",
+    "PaymentTermDays": "PaymentTerm Days",
+    "Days": "Days",
+    "Note": "Note",
+    "Partners": "Partners",
+    "Customers": "Customers",
+    "Suppliers": "Suppliers",
+    "LegalName": "Legal Name",
+    "FinancialTerms": "Financial Terms",
+    "CreditLimit": "CreditLimit",
+    "Unlimited": "Unlimited",
+    "ContactPersons": "Contact Person",
 
     //Button
     "NewCategory": "New Category",
@@ -48,16 +69,30 @@
     "EditIngredient": "Edit Ingredient",
     "NewMedicine": "New Medicine",
     "EditMedicine": "Edit Medicine",
+    "NewSupplier": "New Supplier",
+    "EditSupplier": "Edit Supplier",
+    "NewCustomer": "New Customer",
+    "EditCustomer": "Edit Customer",
+    "NewWarehouse": "New Warehouse",
+    "EditWarehouse": "Edit Warehouse",
+    "EditInventory": "Edit Inventoty",
+
 
     //Enum
     "Enum:MedicineStatus.Pending": "Pending",
     "Enum:MedicineStatus.Approved": "Approved",
     "Enum:MedicineStatus.Rejected": "Rejected",
 
+    "Enum:ApprovalStatus.Draft": "Draft",
+    "Enum:ApprovalStatus.Pending": "Pending",
+    "Enum:ApprovalStatus.Approved": "Approved",
+    "Enum:ApprovalStatus.Rejected": "Rejected",
+
     "Enum:StorageCondition.Normal": "Normal",
     "Enum:StorageCondition.Cool": "Cool",
     "Enum:StorageCondition.Cold": "Cold",
     "Enum:StorageCondition.Frozen": "Frozen",
+    "Enum:StorageCondition.Other": "Other",
 
     "Enum:UsageRoute.Oral": "Oral",
     "Enum:UsageRoute.Injection": "Injection",
@@ -70,6 +105,12 @@
     "Enum:CustomerType.Individual": "Individual",
     "Enum:CustomerType.Organization": "Organization",
 
+    "Enum:ZoneType.Storage": "Storage",
+    "Enum:ZoneType.Inbound": "Inbound",
+    "Enum:ZoneType.Outbound": "Outbound",
+    "Enum:ZoneType.Staging": "Staging",
+    "Enum:ZoneType.Quarantine": "Quarantine",
+    "Enum:ZoneType.ForkliftParking": "Forklift Parking",
 
     //Validation
     "ThisFieldIsRequired": "This field is required"

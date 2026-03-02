@@ -86,7 +86,7 @@
   <form [formGroup]="form" *ngIf="form">
     
     <div class="mb-3">
-      <label for="manu-name" class="form-label">
+      <label for="manu-name" class="form-label small fw-semibold">
         {{ '::Name' | abpLocalization }} <span class="text-danger">*</span>
       </label>
       <input
@@ -102,7 +102,7 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Châu lục <span class="text-danger">*</span></label>
+        <label class="form-label small fw-semibold">Châu lục <span class="text-danger">*</span></label>
         <select class="form-select" formControlName="continentId">
           <option [ngValue]="null">-- Chọn Châu lục --</option>
           <option *ngFor="let c of continents" [value]="c.id">{{ c.name }}</option>
@@ -113,7 +113,7 @@
       </div>
   
       <div class="mb-3">
-        <label class="form-label">Quốc gia <span class="text-danger">*</span></label>
+        <label class="form-label small fw-semibold">Quốc gia <span class="text-danger">*</span></label>
         <select class="form-select" formControlName="countryId">
           <option [ngValue]="null">-- Chọn Quốc gia --</option>
           <option *ngFor="let c of filteredCountries" [value]="c.id">{{ c.name }}</option>

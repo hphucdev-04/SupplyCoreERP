@@ -83,7 +83,7 @@
                   <div class="col-md-6">
                      <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::UsageRoute' | abpLocalization }}</small>
                      <div class="fw-medium fs-6">
-                       {{ ('::Enum:UsageRoute.' + getEnumName(UsageRoute, medicine.usageRoute)) | abpLocalization }}
+                      {{ enumName(UsageRoute, medicine.usageRoute, '::Enum:UsageRoute') | abpLocalization }}
                      </div>
                   </div>
                   <div class="col-md-6">

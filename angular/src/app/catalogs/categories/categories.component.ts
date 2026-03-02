@@ -2,7 +2,7 @@ import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { CategoryService } from 'src/app/proxy/categories';
 import { CategoryDto, CreateUpdateCategoryDto, GetCategoryListDto } from 'src/app/proxy/categories/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
@@ -30,15 +30,14 @@ export class CategoriesComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-  ) {
-    this.buildForm()
-  }
+  ) {}
  ngOnInit(): void {
     const categoryStreamCreator = (query: GetCategoryListDto) => this.categoryService.getList({...query, filter: this.filterText});
     this.list.maxResultCount = 10;
     this.list.hookToQuery(categoryStreamCreator).subscribe((response) => {
       this.category = response;
     });
+    this.buildForm()
   }
 
   ngOnDestroy(): void {
@@ -53,24 +52,23 @@ export class CategoriesComponent implements OnInit, OnDestroy {
 
   createCategory(): void {
     this.selectedCategory = {} as CategoryDto;
-    this.buildForm();
+    this.form.reset();
     this.isDrawerOpen = true;
   }
 
   editCategory(id: string): void {
-    this.categoryService.get(id).subscribe((category) => {
-      this.selectedCategory = category;
-      this.buildForm();
-      this.isDrawerOpen = true;
-    });
+    this.categoryService.get(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.selectedCategory = res;
+        this.form.patchValue(res);
+        this.isDrawerOpen = true;
+      });
   }
 
   buildForm(): void {
     this.form = this.fb.group({
-      name: [
-        this.selectedCategory.name || '', 
-        [Validators.required, Validators.maxLength(100)] 
-      ],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
     });
   }
 

@@ -48,6 +48,8 @@
     "EditIngredient": "Chỉnh sửa hoạt chất",
     "NewMedicine": "Thêm thuốc",
     "EditMedicine": "Chỉnh sửa thuốc",
+    "NewWarehouse": "Thêm kho",
+    "EditWarehouse": "Chỉnh sửa kho",
 
     //Enum
     "Enum:MedicineStatus.Pending": "Chờ duyệt",
@@ -58,6 +60,7 @@
     "Enum:StorageCondition.Cool": "Bảo quản mát",
     "Enum:StorageCondition.Cold": "Bảo quản lạnh",
     "Enum:StorageCondition.Frozen": "Đông lạnh",
+    "Enum:StorageCondition.Other": "Khác",
 
     "Enum:UsageRoute.Oral": "Đường uống",
     "Enum:UsageRoute.Injection": "Tiêm",
@@ -69,6 +72,13 @@
 
     "Enum:CustomerType.Individual": "Cái nhân",
     "Enum:CustomerType.Organization": "Doanh nghiệp",
+
+    "Enum:ZoneType.Storage": "Kho chứa",
+    "Enum:ZoneType.Inbound": "Nhập hàng",
+    "Enum:ZoneType.Outbound": "Xuất hàng",
+    "Enum:ZoneType.Staging": "Khu trung chuyển",
+    "Enum:ZoneType.Quarantine": "Kiểm dịch",
+    "Enum:ZoneType.ForkliftParking": "Đỗ xe nâng",
 
     //Validation
     "ThisFieldIsRequired": "Trường này là bắt buộc"

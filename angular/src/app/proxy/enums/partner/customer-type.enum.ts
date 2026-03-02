@@ -1,8 +1,8 @@
 import { mapEnumToOptions } from '@abp/ng.core';
 
 export enum CustomerType {
-  Individual = 1,
-  Organization = 2,
+  Individual = 0,
+  Organization = 1,
 }
 
 export const customerTypeOptions = mapEnumToOptions(CustomerType);

@@ -23,9 +23,10 @@ export interface CreateUpdateCustomerDto {
 
 export interface CustomerDetailDto extends CustomerDto {
   email?: string;
-  dateOfBirth?: string;
+  representativeName?: string;
   gender?: Gender;
   taxCode?: string;
+  note?: string;
   address?: string;
   countryId?: string;
   countryName?: string;
@@ -34,8 +35,6 @@ export interface CustomerDetailDto extends CustomerDto {
   areaName?: string;
   debtLimit?: number;
   paymentTermDays?: number;
-  representativeName?: string;
-  note?: string;
 }
 
 export interface CustomerDto extends FullAuditedEntityDto<string> {
