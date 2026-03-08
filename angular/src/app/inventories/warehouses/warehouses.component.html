@@ -39,7 +39,7 @@
             </button>
             <div ngbDropdownMenu>
               <button ngbDropdownItem (click)="manageLocations(row.id)">
-                <i class="fa fa-map me-1 text-primary"></i> {{ '::ManageLocations' | abpLocalization }}
+                <i class="fa fa-map me-1"></i> {{ '::ManageLocations' | abpLocalization }}
               </button>
               
               <button ngbDropdownItem (click)="editWarehouse(row.id)">
@@ -47,19 +47,13 @@
               </button>
               
               <button *ngIf="row.status === approvalStatus.Pending" ngbDropdownItem (click)="approve(row.id)">
-                <span class="text-success"><i class="fa fa-check me-1"></i> {{ '::Approve' | abpLocalization }}</span>
+                <i class="fa fa-check me-1"></i> {{ '::Approve' | abpLocalization }}
               </button>
               <button *ngIf="row.status === approvalStatus.Pending" ngbDropdownItem (click)="reject(row.id)">
-                <span class="text-danger"><i class="fa fa-times me-1"></i> {{ '::Reject' | abpLocalization }}</span>
+                <i class="fa fa-times me-1"></i> {{ '::Reject' | abpLocalization }}
               </button>
-
-              <button ngbDropdownItem (click)="toggleActive(row.id)">
-                <i class="fa" [ngClass]="row.isActive ? 'fa-lock text-warning' : 'fa-unlock text-success'"></i>
-                {{ row.isActive ? ('::Deactivate' | abpLocalization) : ('::Activate' | abpLocalization) }}
-              </button>
-
               <button ngbDropdownItem (click)="delete(row.id, row.name)">
-                <span class="text-danger"><i class="fa fa-trash me-1"></i> {{ '::Delete' | abpLocalization }}</span>
+                <i class="fa fa-trash me-1"></i> {{ '::Delete' | abpLocalization }}
               </button>
             </div>
           </div>
@@ -141,23 +135,23 @@
     <div class="row">
       <div class="col-md-12 mb-3">
         <label class="form-label small fw-semibold" for="warehouse-name">{{ '::Name' | abpLocalization }} <span class="text-danger">*</span></label>
-        <input type="text" id="warehouse-name" class="form-control" formControlName="name" />
+        <input type="text" id="warehouse-name" class="form-control form-control-sm" formControlName="name" />
       </div>
     </div>
 
     <div class="row">
       <div class="col-md-6 mb-3">
         <label class="form-label small fw-semibold" for="city-id">{{ '::City' | abpLocalization }}</label>
-        <select class="form-select" id="city-id" formControlName="cityId" (change)="onCityChange($event.target.value)">
-          <option [ngValue]="null">--- {{ '::SelectCity' | abpLocalization }} ---</option>
+        <select class="form-select form-select-sm" id="city-id" formControlName="cityId" (change)="onCityChange($event.target.value)">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
           <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
         </select>
       </div>
 
       <div class="col-md-6 mb-3">
         <label class="form-label small fw-semibold" for="area-id">{{ '::Area' | abpLocalization }}</label>
-        <select class="form-select" id="area-id" formControlName="areaId" [disabled]="!areas.length">
-          <option [ngValue]="null">--- {{ '::SelectArea' | abpLocalization }} ---</option>
+        <select class="form-select form-select-sm" id="area-id" formControlName="areaId" [disabled]="!areas.length">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
           <option *ngFor="let area of areas" [value]="area.id">{{ area.name }}</option>
         </select>
       </div>
@@ -173,13 +167,13 @@
     
     <div class="row">
       <div class="col-md-6 mb-3">
-        <label class="form-label small fw-semibold" for="map-width">Chiều Rộng / Width (Mét) <span class="text-danger">*</span></label>
-        <input type="number" step="0.5" id="map-width" class="form-control" formControlName="mapWidth" />
+        <label class="form-label small fw-semibold" for="map-width">{{ '::Width' | abpLocalization }}<span class="text-danger">*</span></label>
+        <input type="number" step="0.5" id="map-width" class="form-control form-control-sm" formControlName="mapWidth" />
         <small class="text-muted">Min: 5m, Max: 500m</small>
       </div>
       <div class="col-md-6 mb-3">
-        <label class="form-label small fw-semibold" for="map-length">Chiều Dài / Length (Mét) <span class="text-danger">*</span></label>
-        <input type="number" step="0.5" id="map-length" class="form-control" formControlName="mapLength" />
+        <label class="form-label small fw-semibold" for="map-length">{{ '::Length' | abpLocalization }}<span class="text-danger">*</span></label>
+        <input type="number" step="0.5" id="map-length" class="form-control form-control-sm" formControlName="mapLength" />
         <small class="text-muted">Min: 5m, Max: 500m</small>
       </div>
     </div>

@@ -5961,8 +5961,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Tickes.Dtos.InventoryTicketDto>",
-                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Tickes.Dtos.InventoryTicketDto>"
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Tickets.Dtos.InventoryTicketDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Tickets.Dtos.InventoryTicketDto>"
                   }
                 },
                 {
@@ -5978,8 +5978,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto",
-                    "typeSimple": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto"
+                    "type": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto",
+                    "typeSimple": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto"
                   }
                 },
                 {
@@ -5995,8 +5995,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto",
-                    "typeSimple": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto"
+                    "type": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto",
+                    "typeSimple": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto"
                   }
                 },
                 {
@@ -6020,8 +6020,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto",
-                    "typeSimple": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto"
+                    "type": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto",
+                    "typeSimple": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto"
                   }
                 },
                 {
@@ -6042,7 +6042,7 @@
                   }
                 },
                 {
-                  "name": "AddDetailAsync",
+                  "name": "CreateTicketDetailAsync",
                   "parametersOnMethod": [
                     {
                       "name": "ticketId",
@@ -6062,8 +6062,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto",
-                    "typeSimple": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto"
+                    "type": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto",
+                    "typeSimple": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto"
                   }
                 },
                 {
@@ -6315,8 +6315,8 @@
                 }
               ],
               "returnValue": {
-                "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Tickes.Dtos.InventoryTicketDto>",
-                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Tickes.Dtos.InventoryTicketDto>"
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Tickets.Dtos.InventoryTicketDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Tickets.Dtos.InventoryTicketDto>"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
@@ -6352,8 +6352,8 @@
                 }
               ],
               "returnValue": {
-                "type": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto",
-                "typeSimple": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto"
+                "type": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto",
+                "typeSimple": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
@@ -6389,8 +6389,8 @@
                 }
               ],
               "returnValue": {
-                "type": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto",
-                "typeSimple": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto"
+                "type": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto",
+                "typeSimple": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
@@ -6446,8 +6446,8 @@
                 }
               ],
               "returnValue": {
-                "type": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto",
-                "typeSimple": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto"
+                "type": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto",
+                "typeSimple": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
@@ -6489,11 +6489,11 @@
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
             },
-            "AddDetailAsyncByTicketIdAndInput": {
-              "uniqueName": "AddDetailAsyncByTicketIdAndInput",
-              "name": "AddDetailAsync",
+            "CreateTicketDetailAsyncByTicketIdAndInput": {
+              "uniqueName": "CreateTicketDetailAsyncByTicketIdAndInput",
+              "name": "CreateTicketDetailAsync",
               "httpMethod": "POST",
-              "url": "api/app/inventory-ticket/detail/{ticketId}",
+              "url": "api/app/inventory-ticket/ticket-detail/{ticketId}",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
@@ -6540,8 +6540,8 @@
                 }
               ],
               "returnValue": {
-                "type": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto",
-                "typeSimple": "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto"
+                "type": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto",
+                "typeSimple": "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
@@ -13366,111 +13366,6 @@
         }
       ]
     },
-    "SupplyCoreERP.Tickes.Dtos.InventoryTicketDto": {
-      "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Guid>",
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": null,
-      "properties": [
-        {
-          "name": "TicketNumber",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Type",
-          "jsonName": null,
-          "type": "SupplyCoreERP.Enums.Warehouses.TicketType",
-          "typeSimple": "enum",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Status",
-          "jsonName": null,
-          "type": "SupplyCoreERP.Enums.Warehouses.ApprovalStatus",
-          "typeSimple": "enum",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "WarehouseId",
-          "jsonName": null,
-          "type": "System.Guid",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "WarehouseName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ReferenceDocumentId",
-          "jsonName": null,
-          "type": "System.Guid?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Note",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Details",
-          "jsonName": null,
-          "type": "[SupplyCoreERP.Tickets.Dtos.InventoryTicketDetailDto]",
-          "typeSimple": "[SupplyCoreERP.Tickets.Dtos.InventoryTicketDetailDto]",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
     "SupplyCoreERP.Tickets.Dtos.AddTicketDetailDto": {
       "baseType": null,
       "isEnum": false,
@@ -13738,6 +13633,111 @@
           "jsonName": null,
           "type": "System.Decimal",
           "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Tickets.Dtos.InventoryTicketDto": {
+      "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Guid>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "TicketNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Type",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Warehouses.TicketType",
+          "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Status",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Warehouses.ApprovalStatus",
+          "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "WarehouseId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "WarehouseName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReferenceDocumentId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Note",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Details",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Tickets.Dtos.InventoryTicketDetailDto]",
+          "typeSimple": "[SupplyCoreERP.Tickets.Dtos.InventoryTicketDetailDto]",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
