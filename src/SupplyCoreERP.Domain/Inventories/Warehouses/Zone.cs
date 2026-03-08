@@ -1,4 +1,4 @@
-﻿using SupplyCoreERP.Enums.Medicines; // Import Enum Thuốc
+﻿using SupplyCoreERP.Enums.Medicines; 
 using SupplyCoreERP.Enums.Warehouses;
 using System;
 using Volo.Abp;

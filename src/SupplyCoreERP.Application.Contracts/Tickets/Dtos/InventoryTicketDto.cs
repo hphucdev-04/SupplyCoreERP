@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using Volo.Abp.Application.Dtos;
 
-namespace SupplyCoreERP.Tickes.Dtos
+namespace SupplyCoreERP.Tickets.Dtos
 {
 	public class InventoryTicketDto : FullAuditedEntityDto<Guid>
 	{

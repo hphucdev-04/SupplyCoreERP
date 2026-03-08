@@ -1,5 +1,4 @@
-﻿using SupplyCoreERP.Tickes.Dtos;
-using SupplyCoreERP.Tickets.Dtos;
+﻿using SupplyCoreERP.Tickets.Dtos;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
@@ -16,7 +15,7 @@ namespace SupplyCoreERP.Tickets
 		Task DeleteAsync(Guid id);
 		
 		// Detail
-		Task<InventoryTicketDto> AddDetailAsync(Guid ticketId, AddTicketDetailDto input);
+		Task<InventoryTicketDto> CreateTicketDetailAsync(Guid ticketId, AddTicketDetailDto input);
 		Task UpdateDetailQuantityAsync(Guid detailId, decimal actualQuantity);
 		Task RemoveDetailAsync(Guid ticketId, Guid detailId);
 

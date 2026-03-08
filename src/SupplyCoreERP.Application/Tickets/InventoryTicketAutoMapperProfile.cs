@@ -1,6 +1,5 @@
 ﻿using AutoMapper;
 using SupplyCoreERP.Inventories.Tickets;
-using SupplyCoreERP.Tickes.Dtos;
 using SupplyCoreERP.Tickets.Dtos;
 
 namespace SupplyCoreERP.Tickets
