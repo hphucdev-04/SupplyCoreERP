@@ -1,8 +1,7 @@
-import type { AddTicketDetailDto, CreateInventoryTicketDto, GetInventoryTicketListDto, UpdateInventoryTicketDto } from './dtos/models';
+import type { AddTicketDetailDto, CreateInventoryTicketDto, GetInventoryTicketListDto, InventoryTicketDto, UpdateInventoryTicketDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
-import type { InventoryTicketDto } from '../tickes/dtos/models';
 
 @Injectable({
   providedIn: 'root',
@@ -10,15 +9,6 @@ import type { InventoryTicketDto } from '../tickes/dtos/models';
 export class InventoryTicketService {
   private restService = inject(RestService);
   apiName = 'Default';
-  
-
-  addDetail = (ticketId: string, input: AddTicketDetailDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, InventoryTicketDto>({
-      method: 'POST',
-      url: `/api/app/inventory-ticket/detail/${ticketId}`,
-      body: input,
-    },
-    { apiName: this.apiName,...config });
   
 
   allocateFEFO = (id: string, productId: string, requiredQuantity: number, config?: Partial<Rest.Config>) =>
@@ -34,6 +24,15 @@ export class InventoryTicketService {
     this.restService.request<any, InventoryTicketDto>({
       method: 'POST',
       url: '/api/app/inventory-ticket',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  createTicketDetail = (ticketId: string, input: AddTicketDetailDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, InventoryTicketDto>({
+      method: 'POST',
+      url: `/api/app/inventory-ticket/ticket-detail/${ticketId}`,
       body: input,
     },
     { apiName: this.apiName,...config });

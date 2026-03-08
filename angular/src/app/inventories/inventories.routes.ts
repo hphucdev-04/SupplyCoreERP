@@ -11,6 +11,10 @@ export const INVENTORIES_ROUTES: Routes = [
         path: 'warehouses/:id/locations',
         loadComponent: () => import('./warehouses/storage-locations/storage-locations.component').then(m => m.StorageLocationsComponent),
     },
+    {
+        path: 'tickets',
+        loadComponent: () => import('./tickets/tickets.component').then(m => m.TicketsComponent),
+    }
     // {
     //     // Path thực tế sẽ là: /warehouse/batches
     //     path: 'batches',

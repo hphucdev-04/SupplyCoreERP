@@ -23,10 +23,6 @@ export interface GetInventoryTicketListDto extends PagedAndSortedResultRequestDt
   warehouseId?: string;
 }
 
-export interface UpdateInventoryTicketDto {
-  note?: string;
-}
-
 export interface InventoryTicketDetailDto extends FullAuditedEntityDto<string> {
   ticketId?: string;
   productId?: string;
@@ -36,4 +32,19 @@ export interface InventoryTicketDetailDto extends FullAuditedEntityDto<string> {
   binId?: string;
   binCode?: string;
   quantity?: number;
+}
+
+export interface InventoryTicketDto extends FullAuditedEntityDto<string> {
+  ticketNumber?: string;
+  type?: TicketType;
+  status?: ApprovalStatus;
+  warehouseId?: string;
+  warehouseName?: string;
+  referenceDocumentId?: string;
+  note?: string;
+  details?: InventoryTicketDetailDto[];
+}
+
+export interface UpdateInventoryTicketDto {
+  note?: string;
 }

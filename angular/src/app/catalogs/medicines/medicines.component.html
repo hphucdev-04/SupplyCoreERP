@@ -60,8 +60,9 @@
             [(ngModel)]="filterStatus"
             (change)="onFilterChange()"
             *abpPermission="'Catalog.Medicine.Approve'">
+            <option [ngValue]="null">{{ '::Status' | abpLocalization }}</option>
       <option *ngFor="let item of medicineStatusOptions" [ngValue]="item.value">
-        {{ 'Enum:MedicineStatus.' + item.key | abpLocalization }}
+        {{ '::Enum:MedicineStatus.' + item.key | abpLocalization }}
       </option>
     </select>
 
