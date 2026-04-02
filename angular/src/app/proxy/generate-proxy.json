@@ -1253,6 +1253,23 @@
                     "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Balances.Dtos.InventoryBalanceDto>",
                     "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Balances.Dtos.InventoryBalanceDto>"
                   }
+                },
+                {
+                  "name": "GetAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Balances.Dtos.InventoryBalanceDetailDto",
+                    "typeSimple": "SupplyCoreERP.Balances.Dtos.InventoryBalanceDetailDto"
+                  }
                 }
               ]
             }
@@ -1387,6 +1404,43 @@
               "returnValue": {
                 "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Balances.Dtos.InventoryBalanceDto>",
                 "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Balances.Dtos.InventoryBalanceDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Balances.IInventoryBalanceAppService"
+            },
+            "GetAsyncById": {
+              "uniqueName": "GetAsyncById",
+              "name": "GetAsync",
+              "httpMethod": "GET",
+              "url": "api/app/inventory-balance/{id}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Balances.Dtos.InventoryBalanceDetailDto",
+                "typeSimple": "SupplyCoreERP.Balances.Dtos.InventoryBalanceDetailDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Balances.IInventoryBalanceAppService"
@@ -6195,7 +6249,7 @@
                       "defaultValue": null
                     },
                     {
-                      "name": "requiredQuantity",
+                      "name": "requiredBaseQuantity",
                       "typeAsString": "System.Decimal, System.Private.CoreLib",
                       "type": "System.Decimal",
                       "typeSimple": "number",
@@ -6791,8 +6845,8 @@
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
             },
-            "AllocateFEFOAsyncByIdAndProductIdAndRequiredQuantity": {
-              "uniqueName": "AllocateFEFOAsyncByIdAndProductIdAndRequiredQuantity",
+            "AllocateFEFOAsyncByIdAndProductIdAndRequiredBaseQuantity": {
+              "uniqueName": "AllocateFEFOAsyncByIdAndProductIdAndRequiredBaseQuantity",
               "name": "AllocateFEFOAsync",
               "httpMethod": "POST",
               "url": "api/app/inventory-ticket/{id}/allocate-fEFO/{productId}",
@@ -6815,7 +6869,7 @@
                   "defaultValue": null
                 },
                 {
-                  "name": "requiredQuantity",
+                  "name": "requiredBaseQuantity",
                   "typeAsString": "System.Decimal, System.Private.CoreLib",
                   "type": "System.Decimal",
                   "typeSimple": "number",
@@ -6849,8 +6903,8 @@
                   "descriptorName": ""
                 },
                 {
-                  "nameOnMethod": "requiredQuantity",
-                  "name": "requiredQuantity",
+                  "nameOnMethod": "requiredBaseQuantity",
+                  "name": "requiredBaseQuantity",
                   "jsonName": null,
                   "type": "System.Decimal",
                   "typeSimple": "number",
@@ -6867,6 +6921,210 @@
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
+            }
+          }
+        },
+        "SupplyCoreERP.Transactions.InventoryTransactionAppService": {
+          "controllerName": "InventoryTransaction",
+          "controllerGroupName": "InventoryTransaction",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "SupplyCoreERP.Transactions.InventoryTransactionAppService",
+          "interfaces": [
+            {
+              "type": "SupplyCoreERP.Transactions.IInventoryTransactionAppService",
+              "name": "IInventoryTransactionAppService",
+              "methods": [
+                {
+                  "name": "GetListAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Transactions.Dtos.GetInventoryTransactionListDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Transactions.Dtos.GetInventoryTransactionListDto",
+                      "typeSimple": "SupplyCoreERP.Transactions.Dtos.GetInventoryTransactionListDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Transactions.Dtos.InventoryTransactionDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Transactions.Dtos.InventoryTransactionDto>"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "GetListAsyncByInput": {
+              "uniqueName": "GetListAsyncByInput",
+              "name": "GetListAsync",
+              "httpMethod": "GET",
+              "url": "api/app/inventory-transaction",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Transactions.Dtos.GetInventoryTransactionListDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Transactions.Dtos.GetInventoryTransactionListDto",
+                  "typeSimple": "SupplyCoreERP.Transactions.Dtos.GetInventoryTransactionListDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "Filter",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "ProductId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "ProductBatchId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "BinId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "ReferenceDocumentId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "TransactionType",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Enums.Warehouses.InventoryTransactionType?",
+                  "typeSimple": "enum?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "FromDate",
+                  "jsonName": null,
+                  "type": "System.DateTime?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "ToDate",
+                  "jsonName": null,
+                  "type": "System.DateTime?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sorting",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "SkipCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "MaxResultCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Transactions.Dtos.InventoryTransactionDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Transactions.Dtos.InventoryTransactionDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Transactions.IInventoryTransactionAppService"
             }
           }
         },
@@ -10433,6 +10691,99 @@
         }
       ]
     },
+    "SupplyCoreERP.Balances.Dtos.InventoryBalanceDetailDto": {
+      "baseType": "SupplyCoreERP.Balances.Dtos.InventoryBalanceDto",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "WarehouseAddress",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "CityName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "AreaName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ManufacturingDate",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ExpiryDate",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SupplierName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.Balances.Dtos.InventoryBalanceDto": {
       "baseType": "Volo.Abp.Application.Dtos.FullAuditedEntityDto<System.Guid>",
       "isEnum": false,
@@ -10529,18 +10880,6 @@
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ExpiryDate",
-          "jsonName": null,
-          "type": "System.DateTime?",
-          "typeSimple": "string?",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -11694,6 +12033,36 @@
       "genericArguments": null,
       "properties": null
     },
+    "SupplyCoreERP.Enums.Warehouses.InventoryTransactionType": {
+      "baseType": "System.Enum",
+      "isEnum": true,
+      "enumNames": [
+        "PurchaseReceipt",
+        "SaleDelivery",
+        "ReturnInward",
+        "ReturnOutward",
+        "RecallReceipt",
+        "Disposal",
+        "AdjustmentIn",
+        "AdjustmentOut",
+        "TransferIn",
+        "TransferOut"
+      ],
+      "enumValues": [
+        0,
+        1,
+        2,
+        3,
+        4,
+        5,
+        6,
+        7,
+        8,
+        9
+      ],
+      "genericArguments": null,
+      "properties": null
+    },
     "SupplyCoreERP.Enums.Warehouses.TicketType": {
       "baseType": "System.Enum",
       "isEnum": true,
@@ -12562,6 +12931,18 @@
           "minimum": null,
           "maximum": null,
           "regex": null
+        },
+        {
+          "name": "StorageCondition",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Medicines.StorageCondition",
+          "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
         }
       ]
     },
@@ -13410,6 +13791,30 @@
           "regex": null
         },
         {
+          "name": "UnitId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ConversionFactor",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "1",
+          "maximum": "2147483647",
+          "regex": null
+        },
+        {
           "name": "Quantity",
           "jsonName": null,
           "type": "System.Decimal",
@@ -13459,6 +13864,18 @@
           "jsonName": null,
           "type": "System.Guid?",
           "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReferenceDocumentNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -13581,6 +13998,30 @@
           "regex": null
         },
         {
+          "name": "ProductCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BaseUnitName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "ProductBatchId",
           "jsonName": null,
           "type": "System.Guid",
@@ -13597,6 +14038,18 @@
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ExpiryDate",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -13629,7 +14082,55 @@
           "regex": null
         },
         {
+          "name": "UnitId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "UnitName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ConversionFactor",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BaseQuantity",
           "jsonName": null,
           "type": "System.Decimal",
           "typeSimple": "number",
@@ -13768,6 +14269,312 @@
         }
       ]
     },
+    "SupplyCoreERP.Transactions.Dtos.GetInventoryTransactionListDto": {
+      "baseType": "Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Filter",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "WarehouseId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductBatchId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BinId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReferenceDocumentId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TransactionType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Warehouses.InventoryTransactionType?",
+          "typeSimple": "enum?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "FromDate",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ToDate",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Transactions.Dtos.InventoryTransactionDto": {
+      "baseType": "Volo.Abp.Application.Dtos.CreationAuditedEntityDto<System.Guid>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "WarehouseId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "WarehouseName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductBatchId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BatchNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BinId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BinCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TransactionType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Warehouses.InventoryTransactionType",
+          "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BalanceAfterTransaction",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReferenceDocumentId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReferenceDocumentNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Note",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.Warehouses.Dtos.BinDto": {
       "baseType": "Volo.Abp.Application.Dtos.EntityDto<System.Guid>",
       "isEnum": false,
@@ -13804,6 +14611,18 @@
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ZoneStorageCondition",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Medicines.StorageCondition",
+          "typeSimple": "enum",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -14013,9 +14832,9 @@
           "regex": null
         },
         {
-          "name": "MaxWeight",
+          "name": "MaxSKU",
           "jsonName": null,
-          "type": "System.Decimal",
+          "type": "System.Int32",
           "typeSimple": "number",
           "isRequired": false,
           "minLength": null,

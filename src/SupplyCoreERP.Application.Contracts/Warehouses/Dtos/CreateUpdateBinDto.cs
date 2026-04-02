@@ -26,7 +26,7 @@ namespace SupplyCoreERP.Warehouses.Dtos
 
 		public float Rotation { get; set; }
 
-		public decimal MaxWeight { get; set; }
+		public int MaxSKU { get; set; }
 		public bool IsBlocked { get; set; }
 	}
 }

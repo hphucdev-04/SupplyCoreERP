@@ -9,6 +9,16 @@ export interface GetInventoryBalanceListDto extends PagedAndSortedResultRequestD
   hideZeroQuantity?: boolean;
 }
 
+export interface InventoryBalanceDetailDto extends InventoryBalanceDto {
+  warehouseAddress?: string;
+  cityName?: string;
+  areaName?: string;
+  productCode?: string;
+  manufacturingDate?: string;
+  expiryDate?: string;
+  supplierName?: string;
+}
+
 export interface InventoryBalanceDto extends FullAuditedEntityDto<string> {
   warehouseId?: string;
   warehouseName?: string;
@@ -18,7 +28,6 @@ export interface InventoryBalanceDto extends FullAuditedEntityDto<string> {
   productName?: string;
   productBatchId?: string;
   batchNumber?: string;
-  expiryDate?: string;
   quantity?: number;
   lockedQuantity?: number;
   availableQuantity?: number;

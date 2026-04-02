@@ -16,7 +16,6 @@ namespace SupplyCoreERP.Balances.Dtos
 
 		public Guid ProductBatchId { get; set; }
 		public string? BatchNumber { get; set; }
-		public DateTime? ExpiryDate { get; set; }
 
 		public decimal Quantity { get; set; }
 		public decimal LockedQuantity { get; set; }

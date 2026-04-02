@@ -1,4 +1,4 @@
-import type { GetInventoryBalanceListDto, InventoryBalanceDto } from './dtos/models';
+import type { GetInventoryBalanceListDto, InventoryBalanceDetailDto, InventoryBalanceDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
@@ -9,6 +9,14 @@ import { Injectable, inject } from '@angular/core';
 export class InventoryBalanceService {
   private restService = inject(RestService);
   apiName = 'Default';
+  
+
+  get = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, InventoryBalanceDetailDto>({
+      method: 'GET',
+      url: `/api/app/inventory-balance/${id}`,
+    },
+    { apiName: this.apiName,...config });
   
 
   getList = (input: GetInventoryBalanceListDto, config?: Partial<Rest.Config>) =>

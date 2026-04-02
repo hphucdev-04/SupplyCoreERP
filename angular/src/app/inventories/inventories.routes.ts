@@ -14,20 +14,14 @@ export const INVENTORIES_ROUTES: Routes = [
     {
         path: 'tickets',
         loadComponent: () => import('./tickets/tickets.component').then(m => m.TicketsComponent),
-    }
-    // {
-    //     // Path thực tế sẽ là: /warehouse/batches
-    //     path: 'batches',
-    //     loadComponent: () => import('./batches/batches.component').then(m => m.BatchesComponent),
-    // },
-    // {
-    //     // Path thực tế sẽ là: /warehouse/tickets
-    //     path: 'tickets',
-    //     loadComponent: () => import('./tickets/tickets.component').then(m => m.TicketsComponent),
-    // },
-    // {
-    //     // Path thực tế sẽ là: /warehouse/balances
-    //     path: 'balances',
-    //     loadComponent: () => import('./balances/balances.component').then(m => m.BalancesComponent),
-    // }
+    },
+    {
+        path: 'batches',
+        loadComponent: () => import('./batches/batches.component').then(m => m.BatchesComponent),
+    },
+    {
+        path: 'balances',
+        loadComponent: () => import('./balances/balances.component').then(m => m.BalancesComponent),
+    },
+
 ];

@@ -14,6 +14,7 @@ namespace SupplyCoreERP.Tickets.Dtos
 		public Guid WarehouseId { get; set; }
 
 		public Guid? ReferenceDocumentId { get; set; }
+		public string? ReferenceDocumentNumber { get; set; }
 
 		[MaxLength(1000)]
 		public string? Note { get; set; }

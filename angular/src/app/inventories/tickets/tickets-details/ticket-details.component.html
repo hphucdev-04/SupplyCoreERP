@@ -1,0 +1,454 @@
+<ng-template #ticketDetailModal let-modal>
+
+  <!-- #region Modal header -->
+  <div class="modal-header d-flex justify-content-between align-items-center">
+    <h4 class="modal-title mb-0">
+      Phiếu kho: <span class="ticket-num">{{ ticket?.ticketNumber }}</span>
+    </h4>
+
+    <div class="d-flex align-items-center gap-3">
+      <span *ngIf="ticket" class="status-pill" [ngClass]="{
+        draft:    ticket.status === ApprovalStatus.Draft,
+        pending:  ticket.status === ApprovalStatus.Pending,
+        approved: ticket.status === ApprovalStatus.Approved,
+        rejected: ticket.status === ApprovalStatus.Rejected
+      }">
+        <i class="fa" [ngClass]="{
+          'fa-pencil':       ticket.status === ApprovalStatus.Draft,
+          'fa-clock-o':      ticket.status === ApprovalStatus.Pending,
+          'fa-check-circle': ticket.status === ApprovalStatus.Approved,
+          'fa-times-circle': ticket.status === ApprovalStatus.Rejected
+        }"></i>
+        {{ '::Enum:ApprovalStatus:' + ticket.status | abpLocalization }}
+      </span>
+      <button type="button" class="btn-close" (click)="closeModal()"></button>
+    </div>
+  </div>
+  <!-- #endregion -->
+
+  <!-- #region Modal body -->
+  <div class="modal-body" *ngIf="ticket">
+
+    <!-- Info grid -->
+    <div class="info-card">
+      <div class="info-item">
+        <div class="info-label">Loại phiếu</div>
+        <div class="info-value" [ngClass]="{ incoming: !isIssueTicket(), outgoing: isIssueTicket() }">
+          <i class="fa" [ngClass]="isIssueTicket() ? 'fa-arrow-circle-up' : 'fa-arrow-circle-down'"></i>
+          {{ '::Enum:TicketType:' + ticket.type | abpLocalization }}
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-label">Kho thực hiện</div>
+        <div class="info-value">
+          <i class="fa fa-building-o text-muted"></i>
+          {{ ticket.warehouse?.name }}
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-label">Ngày tạo</div>
+        <div class="info-value">
+          <i class="fa fa-calendar-o text-muted"></i>
+          {{ ticket.creationTime | date:'dd/MM/yyyy HH:mm' }}
+        </div>
+      </div>
+
+      <div class="info-item">
+        <div class="info-label">Ghi chú</div>
+        <div class="info-note" [title]="ticket.note">{{ ticket.note || '—' }}</div>
+      </div>
+    </div>
+
+    <!-- Action bar -->
+    <div class="action-bar">
+      <div class="action-group">
+        <ng-container *ngIf="ticket.status === ApprovalStatus.Draft">
+          <button class="btn-action-add" (click)="openAddDetailDrawer()">
+            <i class="fa fa-plus"></i> Thêm thuốc
+          </button>
+          <button *ngIf="isIssueTicket()" class="btn-action-fefo" (click)="openFefoDrawer()">
+            <i class="fa fa-magic"></i> Tự động FEFO
+          </button>
+        </ng-container>
+      </div>
+
+      <div class="action-group">
+        <button *ngIf="ticket.status === ApprovalStatus.Draft"
+                class="btn-action-send"
+                (click)="sendToApprove()">
+          <i class="fa fa-paper-plane"></i> Gửi duyệt
+        </button>
+
+        <button *ngIf="ticket.status === ApprovalStatus.Pending"
+                class="btn-action-reject"
+                (click)="reject()">
+          <i class="fa fa-times"></i> Từ chối
+        </button>
+
+        <button *ngIf="ticket.status === ApprovalStatus.Pending"
+                class="btn-action-approve"
+                (click)="execute()">
+          <i class="fa fa-check-square-o"></i> Thực thi & Ghi kho
+        </button>
+      </div>
+    </div>
+
+    <!-- Detail table -->
+    <div class="detail-card">
+      <div class="detail-card-header">
+        <i class="fa fa-medkit text-success"></i>
+        Danh sách hàng hóa
+        <span class="badge bg-light text-muted border ms-1" style="font-size: 0.7rem;">
+          {{ ticket.details?.length || 0 }} dòng
+        </span>
+      </div>
+
+      <ng-container *ngIf="ticket.details?.length; else emptyState">
+        <ngx-datatable
+          class="detail-table"
+          [rows]="ticket.details"
+          [count]="ticket.details?.length || 0"
+          default>
+
+          <!-- Delete action -->
+          <ngx-datatable-column name="" [maxWidth]="56" [sortable]="false"
+            *ngIf="ticket.status === ApprovalStatus.Draft">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <button class="btn-row-delete" (click)="removeDetail(row.id)" title="Xóa dòng">
+                <i class="fa fa-trash"></i>
+              </button>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Product name -->
+          <ngx-datatable-column name="Tên thuốc" [flexGrow]="2">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div>
+                <span class="fw-semibold" style="color: #0369a1; font-size: 0.8125rem;">
+                  {{ row.productName }}
+                </span>
+                <small class="d-block text-muted" style="font-size: 0.72rem;">
+                  {{ row.productCode }}
+                </small>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Batch -->
+          <ngx-datatable-column name="Số lô" [flexGrow]="1.2">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div>
+                <span class="batch-number">{{ row.batchNumber }}</span>
+                <span class="d-block expiry-text">
+                  HSD: {{ row.expiryDate | date:'dd/MM/yyyy' }}
+                </span>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Bin -->
+          <ngx-datatable-column name="Vị trí (Bin)" [maxWidth]="130">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <span class="bin-badge">{{ row.binCode }}</span>
+            </ng-template>
+          </ngx-datatable-column>
+
+          <!-- Quantity -->
+          <ngx-datatable-column name="Số lượng" [maxWidth]="160">
+            <ng-template let-row="row" ngx-datatable-cell-template>
+              <div>
+                <span class="qty-chip" [ngClass]="{ incoming: !isIssueTicket(), outgoing: isIssueTicket() }">
+                  {{ isIssueTicket() ? '−' : '+' }}{{ row.quantity | number }} {{ row.unitName }}
+                </span>
+                <span class="qty-base d-block" *ngIf="row.conversionFactor > 1">
+                  ≈ {{ row.baseQuantity | number }} {{ row.baseUnitName }}
+                </span>
+              </div>
+            </ng-template>
+          </ngx-datatable-column>
+
+        </ngx-datatable>
+      </ng-container>
+
+      <ng-template #emptyState>
+        <div class="empty-state">
+          <div class="empty-icon"><i class="fa fa-inbox"></i></div>
+          <h6>Phiếu chưa có hàng hóa</h6>
+          <p *ngIf="ticket.status === ApprovalStatus.Draft">
+            Bấm <strong>Thêm thuốc</strong> hoặc dùng <strong>Tự động FEFO</strong> để bắt đầu.
+          </p>
+          <p *ngIf="ticket.status !== ApprovalStatus.Draft">
+            Không có dữ liệu.
+          </p>
+        </div>
+      </ng-template>
+    </div>
+
+  </div>
+  <!-- #endregion -->
+
+  <!-- #region Modal footer -->
+  <div class="modal-footer">
+    <button type="button" class="btn btn-sm btn-outline-secondary" (click)="closeModal()">
+      <i class="fa fa-times me-1"></i> Đóng
+    </button>
+  </div>
+  <!-- #endregion -->
+
+</ng-template>
+
+
+<!-- ────────────────────────────────────────────────────────── -->
+<!-- #region Drawer: Thêm thuốc thủ công                       -->
+<!-- ────────────────────────────────────────────────────────── -->
+<app-drawer
+  [isOpen]="isAddDetailDrawerOpen"
+  title="Thêm thuốc vào phiếu"
+  width="md"
+  [saveDisabled]="detailForm?.invalid || isSavingDetail"
+  (close)="closeAddDetailDrawer()"
+  (save)="saveDetail()">
+
+  <form *ngIf="detailForm" [formGroup]="detailForm">
+
+    <div class="alert-soft info mb-4">
+      <i class="fa fa-info-circle me-1"></i>
+      Chọn thuốc → Chọn đơn vị → Chọn lô → Chọn vị trí → Nhập số lượng.
+    </div>
+
+    <!-- Thuốc -->
+    <div class="mb-3">
+      <label class="form-label">Tên thuốc <span class="text-danger">*</span></label>
+      <select class="form-select" formControlName="productId"
+              (change)="onMedicineChange($event.target.value)">
+        <option [ngValue]="null">— Chọn thuốc —</option>
+        <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
+      </select>
+    </div>
+
+    <!-- Đơn vị + số lượng -->
+    <div class="unit-row mb-3">
+      <div>
+        <label class="form-label">Đơn vị <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="unitId"
+                (change)="onUnitChange($event.target.value)"
+                [attr.disabled]="!units.length ? '' : null">
+          <option [ngValue]="null">— Chọn đơn vị —</option>
+          <option *ngFor="let u of units" [value]="u.unitId">
+            {{ u.unitName }} (×{{ u.conversionFactor }})
+          </option>
+        </select>
+        <div class="conversion-hint" *ngIf="selectedConversionFactor > 1">
+          1 {{ selectedUnitName }} = {{ selectedConversionFactor }} {{ baseUnitName }}
+        </div>
+      </div>
+
+      <div>
+        <label class="form-label">Số lượng <span class="text-danger">*</span></label>
+        <input type="number" step="1" min="1" class="form-control"
+               formControlName="quantity"
+               (input)="updateQuantityPreview()">
+      </div>
+    </div>
+
+    <!-- Preview BaseQuantity -->
+    <div class="quantity-preview mb-3" *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
+      <i class="fa fa-info-circle text-muted"></i>
+      <span>Tương đương: <strong>{{ quantityPreview | number }} {{ baseUnitName }}</strong> ghi vào tồn kho</span>
+    </div>
+
+    <!-- Số lô -->
+    <div class="mb-3">
+      <div class="d-flex justify-content-between align-items-center mb-1">
+        <label class="form-label mb-0">Số lô (Batch) <span class="text-danger">*</span></label>
+        <button type="button" class="btn-inline-create"
+                *ngIf="detailForm.get('productId').value && !isCreatingBatch"
+                (click)="openQuickBatchForm()">
+          <i class="fa fa-plus"></i> Tạo lô mới
+        </button>
+      </div>
+
+      <select class="form-select" formControlName="productBatchId"
+              [attr.disabled]="!batches.length && !isCreatingBatch ? '' : null">
+        <option [ngValue]="null">— Chọn lô —</option>
+        <option *ngFor="let b of batches" [value]="b.id">
+          {{ b.batchNumber }} · HSD: {{ b.expiryDate | date:'dd/MM/yyyy' }}
+          <ng-container *ngIf="b.status !== BatchQAStatus.Approved">
+            &nbsp;[{{ getBatchStatusLabel(b.status) }}]
+          </ng-container>
+        </option>
+      </select>
+
+      <!-- Hint: phiếu xuất bị ẩn lô chưa duyệt -->
+      <div class="batch-hint warning mt-1"
+           *ngIf="isIssueTicket() && hiddenBatchCount > 0">
+        <i class="fa fa-lock me-1"></i>
+        Đang ẩn {{ hiddenBatchCount }} lô chưa được QA duyệt (phiếu xuất chỉ dùng lô Approved).
+      </div>
+
+      <!-- Hint: không có lô nào -->
+      <div class="batch-hint empty mt-1"
+           *ngIf="detailForm.get('productId').value && !batches.length && !isCreatingBatch">
+        <i class="fa fa-exclamation-triangle me-1"></i>
+        <ng-container *ngIf="!isIssueTicket()">
+          Thuốc này chưa có lô. Bấm <strong>Tạo lô mới</strong> để tạo ngay.
+        </ng-container>
+        <ng-container *ngIf="isIssueTicket()">
+          Không có lô nào đủ điều kiện xuất (cần trạng thái Approved).
+        </ng-container>
+      </div>
+
+      <!-- Inline quick-create batch form -->
+      <div class="quick-batch-box mt-2" *ngIf="isCreatingBatch && quickBatchForm">
+        <div class="quick-batch-header">
+          <i class="fa fa-plus-circle me-1"></i> Tạo lô mới — sẽ ở trạng thái <strong>Chờ QA</strong>
+          <button type="button" class="btn-close-inline" (click)="cancelQuickBatch()">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
+
+        <form [formGroup]="quickBatchForm" class="quick-batch-body">
+          <div class="mb-2">
+            <label class="form-label">Số lô <span class="text-danger">*</span></label>
+            <input type="text" class="form-control form-control-sm text-uppercase"
+                   formControlName="batchNumber" placeholder="VD: LOT-2024-001">
+          </div>
+          <div class="quick-batch-dates">
+            <div>
+              <label class="form-label">Ngày sản xuất <span class="text-danger">*</span></label>
+              <input type="date" class="form-control form-control-sm" formControlName="manufacturingDate">
+            </div>
+            <div>
+              <label class="form-label">Hạn sử dụng <span class="text-danger">*</span></label>
+              <input type="date" class="form-control form-control-sm" formControlName="expiryDate">
+            </div>
+          </div>
+          <button type="button" class="btn-save-quick-batch mt-2"
+                  [disabled]="quickBatchForm.invalid || isSavingQuickBatch"
+                  (click)="saveQuickBatch()">
+            <i class="fa fa-check me-1"></i>
+            {{ isSavingQuickBatch ? 'Đang lưu...' : 'Lưu lô & chọn' }}
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <!-- #region Vị trí kho (Bin) -->
+    <div class="mb-3">
+      <label class="form-label">Vị trí kho (Bin) <span class="text-danger">*</span></label>
+
+      <select class="form-select" formControlName="binId"
+              [attr.disabled]="!detailForm.get('productId').value ? '' : null">
+        <option [ngValue]="null">— Chọn vị trí —</option>
+        <option *ngFor="let bin of filteredBins" [value]="bin.id">
+          {{ bin.code }}
+          <ng-container *ngIf="bin.maxSKU > 0"> · (tối đa {{ bin.maxSKU }} SKU)</ng-container>
+        </option>
+      </select>
+
+      <!-- Hint: chưa chọn thuốc -->
+      <div class="batch-hint empty mt-1"
+           *ngIf="!detailForm.get('productId').value">
+        <i class="fa fa-info-circle me-1"></i>
+        Vui lòng chọn thuốc trước để lọc vị trí phù hợp điều kiện bảo quản.
+      </div>
+
+      <!-- Hint: bị filter theo StorageCondition -->
+      <div class="batch-hint info mt-1"
+           *ngIf="detailForm.get('productId').value && hiddenBinCount > 0 && filteredBins.length > 0">
+        <i class="fa fa-filter me-1"></i>
+        Chỉ hiển thị {{ filteredBins.length }} vị trí có điều kiện bảo quản
+        <strong>{{ getStorageConditionLabel(selectedMedicineCondition) }}</strong>
+        (ẩn {{ hiddenBinCount }} vị trí không phù hợp).
+      </div>
+
+      <!-- Hint: không có bin nào phù hợp -->
+      <div class="batch-hint warning mt-1"
+           *ngIf="detailForm.get('productId').value && filteredBins.length === 0">
+        <i class="fa fa-exclamation-triangle me-1"></i>
+        Kho <strong>{{ ticket?.warehouse?.name }}</strong> chưa có vị trí nào phù hợp điều kiện
+        <strong>{{ getStorageConditionLabel(selectedMedicineCondition) }}</strong>.
+        Vui lòng tạo Zone và Bin phù hợp trước khi nhập hàng.
+      </div>
+
+      <!-- Hint: MaxSKU của bin đang chọn -->
+      <div class="batch-hint info mt-1"
+           *ngIf="getSelectedBin()?.maxSKU > 0">
+        <i class="fa fa-layer-group me-1"></i>
+        Vị trí <strong>{{ getSelectedBin().code }}</strong> giới hạn tối đa
+        <strong>{{ getSelectedBin().maxSKU }}</strong> SKU/Lô khác nhau.
+        Backend sẽ kiểm tra khi lưu.
+      </div>
+    </div>
+    <!-- #endregion -->
+
+  </form>
+</app-drawer>
+<!-- #endregion -->
+
+
+
+<!-- #region Drawer: FEFO tự động -->
+<app-drawer
+  [isOpen]="isFefoDrawerOpen"
+  title="Tự động lấy hàng theo FEFO"
+  width="md"
+  [saveDisabled]="fefoForm?.invalid || isRunningFefo"
+  (close)="closeFefoDrawer()"
+  (save)="runFefo()">
+
+  <form *ngIf="fefoForm" [formGroup]="fefoForm">
+
+    <div class="alert-soft warning mb-4">
+      <i class="fa fa-magic me-1"></i>
+      Hệ thống sẽ tự động chọn lô có <strong>Hạn sử dụng gần nhất</strong> (FEFO) trong kho
+      <strong>{{ ticket?.warehouse?.name }}</strong> và phân bổ vào các Bin phù hợp.
+      Chỉ lô đã <strong>QA duyệt</strong> mới được chọn.
+    </div>
+
+    <!-- Thuốc -->
+    <div class="mb-3">
+      <label class="form-label">Thuốc cần xuất <span class="text-danger">*</span></label>
+      <select class="form-select" formControlName="productId"
+              (change)="onFefoMedicineChange($event.target.value)">
+        <option [ngValue]="null">— Chọn thuốc —</option>
+        <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
+      </select>
+    </div>
+
+    <!-- Đơn vị FEFO -->
+    <div class="unit-row mb-3">
+      <div>
+        <label class="form-label">Đơn vị <span class="text-danger">*</span></label>
+        <select class="form-select" formControlName="unitId"
+                (change)="onFefoUnitChange($event.target.value)"
+                [attr.disabled]="!fefoUnits.length ? '' : null">
+          <option [ngValue]="null">— Chọn đơn vị —</option>
+          <option *ngFor="let u of fefoUnits" [value]="u.unitId">
+            {{ u.unitName }} (×{{ u.conversionFactor }})
+          </option>
+        </select>
+      </div>
+
+      <div>
+        <label class="form-label">Số lượng cần xuất <span class="text-danger">*</span></label>
+        <input type="number" step="1" min="1" class="form-control"
+               formControlName="requiredQuantity"
+               (input)="updateFefoPreview()">
+      </div>
+    </div>
+
+    <!-- Preview BaseQuantity cho FEFO -->
+    <div class="quantity-preview mb-3" *ngIf="fefoBaseQtyPreview > 0">
+      <i class="fa fa-info-circle text-muted"></i>
+      <span>
+        Hệ thống sẽ tìm: <strong>{{ fefoBaseQtyPreview | number }} {{ fefoBaseUnitName }}</strong>
+        (đã quy đổi về đơn vị gốc)
+      </span>
+    </div>
+
+  </form>
+</app-drawer>
+<!-- #endregion -->

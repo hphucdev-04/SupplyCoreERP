@@ -6,6 +6,8 @@ export interface AddTicketDetailDto {
   productId: string;
   productBatchId: string;
   binId: string;
+  unitId: string;
+  conversionFactor: number;
   quantity: number;
 }
 
@@ -13,6 +15,7 @@ export interface CreateInventoryTicketDto {
   type: TicketType;
   warehouseId: string;
   referenceDocumentId?: string;
+  referenceDocumentNumber?: string;
   note?: string;
 }
 
@@ -27,11 +30,18 @@ export interface InventoryTicketDetailDto extends FullAuditedEntityDto<string> {
   ticketId?: string;
   productId?: string;
   productName?: string;
+  productCode?: string;
+  baseUnitName?: string;
   productBatchId?: string;
   batchNumber?: string;
+  expiryDate?: string;
   binId?: string;
   binCode?: string;
+  unitId?: string;
+  unitName?: string;
   quantity?: number;
+  conversionFactor?: number;
+  baseQuantity?: number;
 }
 
 export interface InventoryTicketDto extends FullAuditedEntityDto<string> {

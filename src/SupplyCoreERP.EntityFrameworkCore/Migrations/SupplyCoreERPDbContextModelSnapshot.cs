@@ -469,72 +469,6 @@ namespace SupplyCoreERP.Migrations
                     b.ToTable("AppInventoryBalances", (string)null);
                 });
 
-            modelBuilder.Entity("SupplyCoreERP.Inventories.Balances.InventoryTransaction", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("BalanceAfterTransaction")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<Guid>("BinId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("ConcurrencyStamp")
-                        .IsConcurrencyToken()
-                        .IsRequired()
-                        .HasMaxLength(40)
-                        .HasColumnType("character varying(40)")
-                        .HasColumnName("ConcurrencyStamp");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<string>("ExtraProperties")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("ExtraProperties");
-
-                    b.Property<string>("Note")
-                        .HasMaxLength(1000)
-                        .HasColumnType("character varying(1000)");
-
-                    b.Property<Guid>("ProductBatchId")
-                        .HasColumnType("uuid");
-
-                    b.Property<Guid>("ProductId")
-                        .HasColumnType("uuid");
-
-                    b.Property<decimal>("QuantityChanged")
-                        .HasColumnType("decimal(18, 2)");
-
-                    b.Property<Guid?>("ReferenceDocumentId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("TransactionType")
-                        .HasColumnType("integer");
-
-                    b.Property<Guid>("WarehouseId")
-                        .HasColumnType("uuid");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("BinId");
-
-                    b.HasIndex("ProductBatchId");
-
-                    b.HasIndex("ProductId");
-
-                    b.HasIndex("WarehouseId", "ProductId", "CreationTime");
-
-                    b.ToTable("AppInventoryTransactions", (string)null);
-                });
-
             modelBuilder.Entity("SupplyCoreERP.Inventories.Batches.ProductBatch", b =>
                 {
                     b.Property<Guid>("Id")
@@ -665,6 +599,9 @@ namespace SupplyCoreERP.Migrations
                     b.Property<Guid?>("ReferenceDocumentId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("ReferenceDocumentNumber")
+                        .HasColumnType("text");
+
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
@@ -698,6 +635,9 @@ namespace SupplyCoreERP.Migrations
 
                     b.Property<Guid>("BinId")
                         .HasColumnType("uuid");
+
+                    b.Property<int>("ConversionFactor")
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp without time zone")
@@ -741,6 +681,9 @@ namespace SupplyCoreERP.Migrations
                     b.Property<Guid>("TicketId")
                         .HasColumnType("uuid");
 
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uuid");
+
                     b.HasKey("Id");
 
                     b.HasIndex("BinId");
@@ -751,7 +694,78 @@ namespace SupplyCoreERP.Migrations
 
                     b.HasIndex("TicketId");
 
+                    b.HasIndex("UnitId");
+
                     b.ToTable("AppInventoryTicketDetails", (string)null);
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Inventories.Transactions.InventoryTransaction", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("BalanceAfterTransaction")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<Guid>("BinId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<Guid>("ProductBatchId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("QuantityChanged")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<Guid?>("ReferenceDocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ReferenceDocumentNumber")
+                        .HasColumnType("text");
+
+                    b.Property<int>("TransactionType")
+                        .HasColumnType("integer");
+
+                    b.Property<Guid>("WarehouseId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BinId");
+
+                    b.HasIndex("ProductBatchId");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("WarehouseId", "ProductId", "CreationTime");
+
+                    b.ToTable("AppInventoryTransactions", (string)null);
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Inventories.Warehouses.Warehouse", b =>
@@ -1181,6 +1195,93 @@ namespace SupplyCoreERP.Migrations
                     b.ToTable("AppMedicineIngredients", (string)null);
                 });
 
+            modelBuilder.Entity("SupplyCoreERP.Orders.PurchaseOrder", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<DateTime?>("ExpectedDeliveryDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("ExtraProperties");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<string>("Note")
+                        .HasMaxLength(1000)
+                        .HasColumnType("character varying(1000)");
+
+                    b.Property<DateTime>("OrderDate")
+                        .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("SubTotal")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<Guid>("SupplierId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("TaxAmount")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<decimal>("TotalAmount")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SupplierId");
+
+                    b.ToTable("AppPurchaseOrders", (string)null);
+                });
+
             modelBuilder.Entity("SupplyCoreERP.Prices.PriceList", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1444,6 +1545,80 @@ namespace SupplyCoreERP.Migrations
                     b.ToTable("AppProductUnits", (string)null);
                 });
 
+            modelBuilder.Entity("SupplyCoreERP.Purchasing.Orders.PurchaseOrderDetail", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ConversionFactor")
+                        .HasColumnType("integer");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<Guid?>("DeleterId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("DeleterId");
+
+                    b.Property<DateTime?>("DeletionTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("DeletionTime");
+
+                    b.Property<bool>("IsDeleted")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false)
+                        .HasColumnName("IsDeleted");
+
+                    b.Property<DateTime?>("LastModificationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("LastModificationTime");
+
+                    b.Property<Guid?>("LastModifierId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("LastModifierId");
+
+                    b.Property<Guid>("ProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("PurchaseOrderId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("Quantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<decimal>("ReceivedQuantity")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.Property<decimal>("TaxRate")
+                        .HasPrecision(5, 2)
+                        .HasColumnType("numeric(5,2)");
+
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("UnitPrice")
+                        .HasPrecision(18, 4)
+                        .HasColumnType("numeric(18,4)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.HasIndex("PurchaseOrderId");
+
+                    b.HasIndex("UnitId");
+
+                    b.ToTable("AppPurchaseOrderDetails", (string)null);
+                });
+
             modelBuilder.Entity("SupplyCoreERP.Suppliers.Supplier", b =>
                 {
                     b.Property<Guid>("Id")
@@ -1613,8 +1788,8 @@ namespace SupplyCoreERP.Migrations
                     b.Property<int>("Length")
                         .HasColumnType("integer");
 
-                    b.Property<decimal>("MaxWeight")
-                        .HasColumnType("decimal(18, 2)");
+                    b.Property<int>("MaxSKU")
+                        .HasColumnType("integer");
 
                     b.Property<int>("PositionX")
                         .HasColumnType("integer");
@@ -3593,41 +3768,6 @@ namespace SupplyCoreERP.Migrations
                     b.Navigation("Warehouse");
                 });
 
-            modelBuilder.Entity("SupplyCoreERP.Inventories.Balances.InventoryTransaction", b =>
-                {
-                    b.HasOne("SupplyCoreERP.Warehouses.Bin", "Bin")
-                        .WithMany()
-                        .HasForeignKey("BinId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SupplyCoreERP.Inventories.Batches.ProductBatch", "ProductBatch")
-                        .WithMany()
-                        .HasForeignKey("ProductBatchId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SupplyCoreERP.Products.Product", "Product")
-                        .WithMany()
-                        .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.HasOne("SupplyCoreERP.Inventories.Warehouses.Warehouse", "Warehouse")
-                        .WithMany()
-                        .HasForeignKey("WarehouseId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
-                    b.Navigation("Bin");
-
-                    b.Navigation("Product");
-
-                    b.Navigation("ProductBatch");
-
-                    b.Navigation("Warehouse");
-                });
-
             modelBuilder.Entity("SupplyCoreERP.Inventories.Batches.ProductBatch", b =>
                 {
                     b.HasOne("SupplyCoreERP.Products.Product", "Product")
@@ -3674,13 +3814,19 @@ namespace SupplyCoreERP.Migrations
                     b.HasOne("SupplyCoreERP.Products.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("SupplyCoreERP.Inventories.Tickets.InventoryTicket", "Ticket")
                         .WithMany("Details")
                         .HasForeignKey("TicketId")
                         .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.BaseUnits.BaseUnit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("Bin");
@@ -3690,6 +3836,43 @@ namespace SupplyCoreERP.Migrations
                     b.Navigation("ProductBatch");
 
                     b.Navigation("Ticket");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Inventories.Transactions.InventoryTransaction", b =>
+                {
+                    b.HasOne("SupplyCoreERP.Warehouses.Bin", "Bin")
+                        .WithMany()
+                        .HasForeignKey("BinId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.Inventories.Batches.ProductBatch", "ProductBatch")
+                        .WithMany()
+                        .HasForeignKey("ProductBatchId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.Inventories.Warehouses.Warehouse", "Warehouse")
+                        .WithMany()
+                        .HasForeignKey("WarehouseId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Bin");
+
+                    b.Navigation("Product");
+
+                    b.Navigation("ProductBatch");
+
+                    b.Navigation("Warehouse");
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Inventories.Warehouses.Warehouse", b =>
@@ -3778,6 +3961,17 @@ namespace SupplyCoreERP.Migrations
                     b.Navigation("ActiveIngredient");
                 });
 
+            modelBuilder.Entity("SupplyCoreERP.Orders.PurchaseOrder", b =>
+                {
+                    b.HasOne("SupplyCoreERP.Suppliers.Supplier", "Supplier")
+                        .WithMany()
+                        .HasForeignKey("SupplierId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Supplier");
+                });
+
             modelBuilder.Entity("SupplyCoreERP.Prices.ProductPrice", b =>
                 {
                     b.HasOne("SupplyCoreERP.Prices.PriceList", "PriceList")
@@ -3847,6 +4041,33 @@ namespace SupplyCoreERP.Migrations
                         .IsRequired();
 
                     b.Navigation("Product");
+
+                    b.Navigation("Unit");
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Purchasing.Orders.PurchaseOrderDetail", b =>
+                {
+                    b.HasOne("SupplyCoreERP.Products.Product", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.Orders.PurchaseOrder", "PurchaseOrder")
+                        .WithMany("Details")
+                        .HasForeignKey("PurchaseOrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.BaseUnits.BaseUnit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("Product");
+
+                    b.Navigation("PurchaseOrder");
 
                     b.Navigation("Unit");
                 });
@@ -4063,6 +4284,11 @@ namespace SupplyCoreERP.Migrations
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Inventories.Tickets.InventoryTicket", b =>
+                {
+                    b.Navigation("Details");
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Orders.PurchaseOrder", b =>
                 {
                     b.Navigation("Details");
                 });

@@ -14,7 +14,6 @@ namespace SupplyCoreERP.Medicines.Dtos
 
 		public string RegistrationNumber { get; set; }
 		public UsageRoute UsageRoute { get; set; }
-		public StorageCondition StorageCondition { get; set; }
 		public bool IsPrescriptionDrug { get; set; }
 
 		public List<MedicineIngredientDto> Ingredients { get; set; }

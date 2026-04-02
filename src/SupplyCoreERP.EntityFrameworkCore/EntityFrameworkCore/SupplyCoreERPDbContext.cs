@@ -7,6 +7,7 @@ using SupplyCoreERP.DosageForms;
 using SupplyCoreERP.Inventories.Balances;
 using SupplyCoreERP.Inventories.Batches;
 using SupplyCoreERP.Inventories.Tickets;
+using SupplyCoreERP.Inventories.Transactions;
 using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Locations.Areas;
 using SupplyCoreERP.Locations.Cities;
@@ -14,8 +15,10 @@ using SupplyCoreERP.Locations.Continents;
 using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Manufacturers;
 using SupplyCoreERP.Medicines;
+using SupplyCoreERP.Orders;
 using SupplyCoreERP.Prices;
 using SupplyCoreERP.Products;
+using SupplyCoreERP.Purchasing.Orders;
 using SupplyCoreERP.Suppliers;
 using SupplyCoreERP.Warehouses;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -104,6 +107,10 @@ public class SupplyCoreERPDbContext :
 	public DbSet<InventoryTicketDetail> InventoryTicketDetails { get; set; }
 	public DbSet<InventoryBalance> InventoryBalances { get; set; }
 	public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
+
+	//Order
+	public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+	public DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
 	#endregion
 
 	public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
@@ -331,7 +338,7 @@ public class SupplyCoreERPDbContext :
 		// Warehouse
 		builder.Entity<Warehouse>(b =>
 		{
-			b.ToTable("AppWarehouses");
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Warehouses", SupplyCoreERPConsts.DbSchema);
 			b.ConfigureByConvention(); 
 
 			b.Property(x => x.Code).IsRequired().HasMaxLength(50);
@@ -348,7 +355,7 @@ public class SupplyCoreERPDbContext :
 		// Zone
 		builder.Entity<Zone>(b =>
 		{
-			b.ToTable("AppZones");
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Zones", SupplyCoreERPConsts.DbSchema);
 			b.ConfigureByConvention();
 
 			b.Property(x => x.Code).IsRequired().HasMaxLength(50);
@@ -368,7 +375,7 @@ public class SupplyCoreERPDbContext :
 		// ProductBatch
 		builder.Entity<ProductBatch>(b =>
 		{
-			b.ToTable("AppProductBatches");
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "ProductBatches", SupplyCoreERPConsts.DbSchema);
 			b.ConfigureByConvention();
 
 			b.Property(x => x.BatchNumber).IsRequired().HasMaxLength(100);
@@ -386,11 +393,10 @@ public class SupplyCoreERPDbContext :
 		// Bin
 		builder.Entity<Bin>(b =>
 		{
-			b.ToTable("AppBins");
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "Bins", SupplyCoreERPConsts.DbSchema);
 			b.ConfigureByConvention();
 
 			b.Property(x => x.Code).IsRequired().HasMaxLength(50);
-			b.Property(x => x.MaxWeight).HasColumnType("decimal(18, 2)");
 
 			// Unique Code trong 1 kho
 			b.HasIndex(x => new { x.WarehouseId, x.Code }).IsUnique();
@@ -405,7 +411,7 @@ public class SupplyCoreERPDbContext :
 		// InventoryTicket
 		builder.Entity<InventoryTicket>(b =>
 		{
-			b.ToTable("AppInventoryTickets");
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "InventoryTickets", SupplyCoreERPConsts.DbSchema);
 			b.ConfigureByConvention();
 
 			b.Property(x => x.TicketNumber).IsRequired().HasMaxLength(50);
@@ -422,8 +428,8 @@ public class SupplyCoreERPDbContext :
 		// InventoryTicketDetail
 		builder.Entity<InventoryTicketDetail>(b =>
         {
-            b.ToTable("AppInventoryTicketDetails");
-            b.ConfigureByConvention();
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "InventoryTicketDetails", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
 
             b.Property(x => x.Quantity).HasColumnType("decimal(18, 2)");
 
@@ -431,12 +437,14 @@ public class SupplyCoreERPDbContext :
             b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.ProductBatch).WithMany().HasForeignKey(x => x.ProductBatchId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Bin).WithMany().HasForeignKey(x => x.BinId).OnDelete(DeleteBehavior.Restrict);
-        });
+			b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.NoAction);
+			b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.NoAction);
+		});
 
 		// InventoryBalance
 		builder.Entity<InventoryBalance>(b =>
 		{
-			b.ToTable("AppInventoryBalances");
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "InventoryBalances", SupplyCoreERPConsts.DbSchema);
 			b.ConfigureByConvention();
 
 			b.Property(x => x.Quantity).HasColumnType("decimal(18, 2)");
@@ -454,7 +462,7 @@ public class SupplyCoreERPDbContext :
 		// InventoryTransaction
 		builder.Entity<InventoryTransaction>(b =>
 		{
-			b.ToTable("AppInventoryTransactions");
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "InventoryTransactions", SupplyCoreERPConsts.DbSchema);
 			b.ConfigureByConvention();
 
 			b.Property(x => x.QuantityChanged).HasColumnType("decimal(18, 2)");
@@ -467,6 +475,42 @@ public class SupplyCoreERPDbContext :
 			b.HasOne(x => x.Bin).WithMany().HasForeignKey(x => x.BinId).OnDelete(DeleteBehavior.Restrict);
 
 			b.HasIndex(x => new { x.WarehouseId, x.ProductId, x.CreationTime });
+		});
+
+		builder.Entity<PurchaseOrder>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseOrders", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			// Ràng buộc thuộc tính
+			b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+			b.Property(x => x.Note).HasMaxLength(1000);
+
+			b.Property(x => x.SubTotal).HasPrecision(18, 4);
+			b.Property(x => x.TaxAmount).HasPrecision(18, 4);
+			b.Property(x => x.TotalAmount).HasPrecision(18, 4);
+
+			b.HasOne(x => x.Supplier).WithMany().HasForeignKey(x => x.SupplierId).IsRequired();
+
+			b.HasMany(x => x.Details)
+			 .WithOne(x => x.PurchaseOrder)
+			 .HasForeignKey(x => x.PurchaseOrderId)
+			 .IsRequired()
+			 .OnDelete(DeleteBehavior.Cascade);
+		});
+
+		builder.Entity<PurchaseOrderDetail>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseOrderDetails", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.Property(x => x.Quantity).HasPrecision(18, 4);
+			b.Property(x => x.UnitPrice).HasPrecision(18, 4);
+			b.Property(x => x.TaxRate).HasPrecision(5, 2); // % thuế (VD: 99.99)
+			b.Property(x => x.ReceivedQuantity).HasPrecision(18, 4);
+
+			b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+			b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 		});
 	}
 }

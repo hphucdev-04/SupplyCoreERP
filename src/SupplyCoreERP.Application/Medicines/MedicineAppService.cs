@@ -17,7 +17,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Dynamic.Core; 
+using System.Linq.Dynamic.Core;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -26,6 +26,7 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Content;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
+using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SupplyCoreERP.Medicines
 {
@@ -65,7 +66,7 @@ namespace SupplyCoreERP.Medicines
 			_productPriceRepo = productPriceRepo;
 			_priceManager = priceManager;
 		}
-
+		#region Medicine
 		public async Task<PagedResultDto<MedicineDto>> GetListAsync(GetMedicineListDto input)
 		{
 			var isManager = await AuthorizationService.IsGrantedAsync(SupplyCoreERPPermissions.Catalog.Medicine.Approve);
@@ -117,7 +118,7 @@ namespace SupplyCoreERP.Medicines
 			var query = await _medicineRepo.GetQueryableAsync();
 
 			var entity = await query
-				.Include(x => x.Category)      
+				.Include(x => x.Category)
 				.Include(x => x.Manufacturer).ThenInclude(m => m.Country)
 				.Include(x => x.BaseUnit)
 				.Include(x => x.DosageForm)
@@ -134,18 +135,24 @@ namespace SupplyCoreERP.Medicines
 
 		public async Task<MedicineDetailDto> CreateAsync(CreateUpdateMedicineDto input)
 		{
-			// Gọi Manager 
 			var entity = await _medicineManager.CreateAsync(
-				input.Code, input.Name, input.CategoryId, input.ManufacturerId,
-				input.BaseUnitId, input.DosageFormId, input.RegistrationNumber
+				input.Code,
+				input.Name,
+				input.CategoryId,
+				input.ManufacturerId,
+				input.BaseUnitId,
+				input.DosageFormId,
+				input.RegistrationNumber,
+				input.UsageRoute,
+				input.StorageCondition,
+				input.IsPrescriptionDrug
 			);
 
-			entity.SetPharmaInfo(input.UsageRoute, input.StorageCondition, input.IsPrescriptionDrug);
+			// IsActive là tùy chọn của người dùng, không thuộc business logic tạo mới
 			entity.SetActive(input.IsActive);
 
 			await _medicineRepo.InsertAsync(entity);
 
-			// Map ngược lại DetailDto 
 			return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
 		}
 
@@ -154,11 +161,19 @@ namespace SupplyCoreERP.Medicines
 			var entity = await _medicineRepo.GetAsync(id);
 
 			await _medicineManager.UpdateAsync(
-				entity, input.Name, input.CategoryId, input.ManufacturerId,
-				input.DosageFormId, input.RegistrationNumber, input.Code
+				entity,
+				input.Code,
+				input.Name,
+				input.CategoryId,
+				input.ManufacturerId,
+				input.BaseUnitId,
+				input.DosageFormId,
+				input.RegistrationNumber,
+				input.UsageRoute,
+				input.StorageCondition,
+				input.IsPrescriptionDrug
 			);
 
-			entity.SetPharmaInfo(input.UsageRoute, input.StorageCondition, input.IsPrescriptionDrug);
 			entity.SetActive(input.IsActive);
 
 			await _medicineRepo.UpdateAsync(entity);
@@ -190,13 +205,14 @@ namespace SupplyCoreERP.Medicines
 			entity.SetActive(!entity.IsActive);
 			await _medicineRepo.UpdateAsync(entity);
 		}
+		#endregion
 
 		#region Ingredients
 		public async Task AddIngredientAsync(Guid id, CreateUpdateMedicineIngredientDto input)
 		{
 			var query = await _medicineRepo.GetQueryableAsync();
 			var medicine = await query
-				.Include(x => x.Ingredients) 
+				.Include(x => x.Ingredients)
 				.FirstOrDefaultAsync(x => x.Id == id);
 
 			if (medicine == null)
@@ -209,7 +225,14 @@ namespace SupplyCoreERP.Medicines
 
 		public async Task RemoveIngredientAsync(Guid id, Guid activeIngredientId)
 		{
-			var medicine = await _medicineRepo.GetAsync(id, includeDetails: true);
+			var query = await _medicineRepo.GetQueryableAsync();
+			var medicine = await query
+				.Include(x => x.Ingredients)
+				.FirstOrDefaultAsync(x => x.Id == id);
+
+			if (medicine == null)
+				throw new EntityNotFoundException(typeof(Medicine), id);
+
 			await _medicineManager.RemoveIngredientAsync(medicine, activeIngredientId);
 			await _medicineRepo.UpdateAsync(medicine);
 		}
@@ -236,7 +259,7 @@ namespace SupplyCoreERP.Medicines
 			var query = await _medicineRepo.GetQueryableAsync();
 
 			var medicine = await query
-				.Include(x => x.Units) 
+				.Include(x => x.Units)
 				.FirstOrDefaultAsync(x => x.Id == id);
 
 			if (medicine == null)
@@ -248,7 +271,15 @@ namespace SupplyCoreERP.Medicines
 
 		public async Task RemoveUnitAsync(Guid id, Guid unitId)
 		{
-			var medicine = await _medicineRepo.GetAsync(id, includeDetails: true);
+			var query = await _medicineRepo.GetQueryableAsync();
+
+			var medicine = await query
+				.Include(x => x.Units)          
+				.FirstOrDefaultAsync(x => x.Id == id);
+
+			if (medicine == null)
+				throw new EntityNotFoundException(typeof(Medicine), id);
+
 			medicine.RemoveUnit(unitId);
 			await _medicineRepo.UpdateAsync(medicine);
 		}
@@ -289,15 +320,15 @@ namespace SupplyCoreERP.Medicines
 				RegistrationNumber = x.RegistrationNumber,
 
 				//Enum
-				UsageRoute = x.UsageRoute switch 
-				{ 
+				UsageRoute = x.UsageRoute switch
+				{
 					UsageRoute.Oral => "Uống",
 					UsageRoute.Injection => "Tiêm",
 					UsageRoute.External => "Ngoài da",
-					UsageRoute.Other => "Khác"	
+					UsageRoute.Other => "Khác"
 				},
 				StorageCondition = x.StorageCondition switch
-				{ 
+				{
 					StorageCondition.Normal => "Bình thường",
 					StorageCondition.Cool => "Mát",
 					StorageCondition.Cold => "Lạnh",
@@ -335,9 +366,9 @@ namespace SupplyCoreERP.Medicines
 			var prices = await priceQuery
 				.Include(x => x.PriceList)
 				.Include(x => x.Unit)
-				.Include(x => x.Product) 
+				.Include(x => x.Product)
 				.Where(x => medicineIds.Contains(x.ProductId))
-				.OrderBy(x => x.Product.Name) 
+				.OrderBy(x => x.Product.Name)
 				.ThenBy(x => x.PriceList.Code)
 				.ToListAsync();
 
@@ -416,12 +447,16 @@ namespace SupplyCoreERP.Medicines
 					var baseUnitId = GetId(units, row.BaseUnit, $"Dòng {rowIndex}: Đơn vị '{row.BaseUnit}' không tồn tại");
 					var dosageId = GetId(dosages, row.DosageForm, $"Dòng {rowIndex}: Dạng bào chế '{row.DosageForm}' không tồn tại");
 
-					// Manger tạo entity
-					var medicine = await _medicineManager.CreateAsync(row.Code, row.Name, catId, manuId, baseUnitId, dosageId, row.RegistrationNumber);
+					// Manager tạo entity với đầy đủ thông tin ngay từ đầu
+					var medicine = await _medicineManager.CreateAsync(
+						row.Code, row.Name, catId, manuId, baseUnitId, dosageId,
+						row.RegistrationNumber,
+						ParseUsageRoute(row.UsageRoute),
+						ParseStorage(row.StorageCondition),
+						ParseBool(row.IsPrescriptionDrug)
+					);
 
-					// Set thông tin bổ sung
-					medicine.SetPharmaInfo(ParseUsageRoute(row.UsageRoute), ParseStorage(row.StorageCondition), ParseBool(row.IsPrescriptionDrug));
-					medicine.SetStatus(MedicineStatus.Pending); // Mặc định Chờ duyệt
+					medicine.SetStatus(MedicineStatus.Pending);
 					medicine.SetActive(true);
 
 					// Ingredients
@@ -522,31 +557,31 @@ namespace SupplyCoreERP.Medicines
 			var medicineSamples = new List<MedicineImportDto>
 			{
 				new MedicineImportDto {
-					Code = "MED_PANADOL_RWEV", 
-					Name = "Panadol", 
+					Code = "MED_PANADOL_RWEV",
+					Name = "Panadol",
 					Category = "Giảm đau - Hạ sốt",
-					Manufacturer = "Sterling Drug", 
+					Manufacturer = "Sterling Drug",
 					BaseUnit = "Viên",
-					DosageForm = "Viên nén", 
+					DosageForm = "Viên nén",
 					RegistrationNumber = "VD-29584-18",
-					UsageRoute = "Uống", 
-					StorageCondition = "Bình thường", 
+					UsageRoute = "Uống",
+					StorageCondition = "Bình thường",
 					IsPrescriptionDrug = "Không",
-					Ingredients = "Paracetamol", 
+					Ingredients = "Paracetamol",
 					Units = "Vỉ (x12)"
 				},
 				new MedicineImportDto {
-					Code = "MED_PANADOL_EXTRA_07HR", 
-					Name = "Panadol Extra", 
+					Code = "MED_PANADOL_EXTRA_07HR",
+					Name = "Panadol Extra",
 					Category = "Giảm đau - Hạ sốt",
-					Manufacturer = "Sterling Drug", 
+					Manufacturer = "Sterling Drug",
 					BaseUnit = "Viên",
-					DosageForm = "Viên nén", 
+					DosageForm = "Viên nén",
 					RegistrationNumber = "VD-21189-14",
-					UsageRoute = "Uống", 
-					StorageCondition = "Mát", 
+					UsageRoute = "Uống",
+					StorageCondition = "Mát",
 					IsPrescriptionDrug = "Không",
-					Ingredients = "Paracetamol; Caffeine", 
+					Ingredients = "Paracetamol; Caffeine",
 					Units = "Vỉ (x12); Hộp (x15)"
 				}
 			};
@@ -597,7 +632,7 @@ namespace SupplyCoreERP.Medicines
 				var cell = headerRow1.CreateCell(i);
 				cell.SetCellValue(headers1[i]);
 				cell.CellStyle = headerStyle;
-				sheetMain.SetColumnWidth(i, 5000); 
+				sheetMain.SetColumnWidth(i, 5000);
 			}
 
 			// Fill dữ liệu mẫu

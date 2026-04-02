@@ -21,18 +21,18 @@ namespace SupplyCoreERP.Warehouses
 		public int Length { get; private set; }
 		public float Rotation { get; private set; }
 
-		public decimal MaxWeight { get; private set; }
+		public int  MaxSKU { get; private set; }
 		public bool IsBlocked { get; private set; }
 
 		protected Bin() { }
 
 		public Bin(Guid id, Guid warehouseId, Guid zoneId, string code,
-				   int x, int y, int w, int l, float rotation, decimal maxWeight = 0) : base(id)
+				   int x, int y, int w, int l, float rotation, int maxSKU = 0) : base(id)
 		{
 			WarehouseId = warehouseId;
 			ZoneId = zoneId;
 			Code = Check.NotNullOrWhiteSpace(code, nameof(Code)).ToUpper();
-			MaxWeight = maxWeight;
+			MaxSKU = maxSKU;
 			SetCoordinates(x, y, w, l, rotation);
 		}
 
@@ -41,13 +41,26 @@ namespace SupplyCoreERP.Warehouses
 			PositionX = x; PositionY = y; Width = w; Length = l; Rotation = rotation;
 		}
 
-		public void UpdateInfo(Guid zoneId, decimal maxWeight, string code)
+		public void UpdateInfo(Guid zoneId, int maxSKU, string code)
 		{
 			ZoneId = zoneId;
-			MaxWeight = maxWeight;
+			MaxSKU = maxSKU;
 			Code = code;
 		}
 
 		public void ToggleBlock(bool isBlocked) => IsBlocked = isBlocked;
+
+		public void ValidateSKUCapacity(int usedSKUCount, bool isNewSKU)
+		{
+			if (IsBlocked)
+				throw new UserFriendlyException($"Vị trí '{Code}' đang bị khóa, không thể nhập hàng vào!");
+
+			if (MaxSKU <= 0) return; 
+
+			if (isNewSKU && usedSKUCount >= MaxSKU)
+				throw new UserFriendlyException(
+					$"Vị trí '{Code}' đã đạt giới hạn {MaxSKU} SKU/Lô!\n" +
+					$"Hiện đang chứa {usedSKUCount} loại. Vui lòng chọn vị trí khác hoặc tăng giới hạn.");
+		}
 	}
 }

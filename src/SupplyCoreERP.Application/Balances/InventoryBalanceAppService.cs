@@ -1,4 +1,4 @@
-﻿using SupplyCoreERP.Balances;
+﻿using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Balances.Dtos;
 using SupplyCoreERP.Inventories.Balances;
 using System;
@@ -48,6 +48,24 @@ namespace SupplyCoreERP.Balances
 			);
 
 			return new PagedResultDto<InventoryBalanceDto>(totalCount, ObjectMapper.Map<List<InventoryBalance>, List<InventoryBalanceDto>>(items));
+		}
+
+		public async Task<InventoryBalanceDetailDto> GetAsync(Guid id)
+		{
+			var query = await _balanceRepo.GetQueryableAsync();
+
+			// Nối sâu vào City, Area, và Supplier
+			query = query
+				.Include(x => x.Warehouse).ThenInclude(w => w.City)
+				.Include(x => x.Warehouse).ThenInclude(w => w.Area)
+				.Include(x => x.Bin)
+				.Include(x => x.Product)
+				.Include(x => x.ProductBatch).ThenInclude(b => b.Supplier);
+
+			var entity = await AsyncExecuter.FirstOrDefaultAsync(query.Where(x => x.Id == id));
+			if (entity == null) throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(InventoryBalance), id);
+
+			return ObjectMapper.Map<InventoryBalance, InventoryBalanceDetailDto>(entity);
 		}
 	}
 }

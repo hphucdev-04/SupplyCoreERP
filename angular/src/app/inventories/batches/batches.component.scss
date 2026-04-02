@@ -1,0 +1,75 @@
+// ========================================================================
+// BATCHES ENHANCED — Inline QA actions
+// ========================================================================
+
+// ── Stat cards (shared pattern) ──
+.stat-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  border-radius: 8px;
+  background: white;
+  border: 2px solid transparent;
+  transition: all 0.2s ease;
+
+  i {
+    font-size: 2rem;
+    opacity: 0.6;
+  }
+
+  .stat-value {
+    font-size: 1.75rem;
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    opacity: 0.7;
+  }
+
+  &.stat-warning  { border-color: #F59E0B; i { color: #F59E0B; } .stat-value { color: #D97706; } }
+  &.stat-success  { border-color: #10B981; i { color: #10B981; } .stat-value { color: #059669; } }
+  &.stat-danger   { border-color: #EF4444; i { color: #EF4444; } .stat-value { color: #DC2626; } }
+  &.stat-alert    { border-color: #F59E0B; background: #FFFBEB; i { color: #D97706; } .stat-value { color: #B45309; } }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+}
+
+// ── Row highlight classes (used via [rowClass]) ──
+::ng-deep {
+  .batch-expired {
+    background-color: #FEE2E2 !important;
+    opacity: 0.7;
+  }
+  .batch-expiring-soon {
+    background-color: #FEF3C7 !important;
+  }
+  .batch-recalled {
+    background-color: #E5E7EB !important;
+    .datatable-body-cell {
+      text-decoration: line-through;
+      opacity: 0.65;
+    }
+  }
+}
+
+// ── btn-xs utility ──
+.btn-xs {
+  padding: 0.2rem 0.55rem;
+  font-size: 0.72rem;
+  border-radius: 4px;
+  line-height: 1.4;
+}
+
+// ── Font monospace for batch numbers ──
+.font-monospace {
+  font-family: 'JetBrains Mono', 'Courier New', monospace;
+  letter-spacing: 0.02em;
+}

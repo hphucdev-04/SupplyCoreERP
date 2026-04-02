@@ -44,7 +44,6 @@ namespace SupplyCoreERP.Batches
 
 		public async Task<ProductBatchDto> GetAsync(Guid id)
 		{
-			// Lấy kèm bảng liên kết để AutoMapper không bị null tên Product/Supplier
 			var query = await _batchRepo.WithDetailsAsync(x => x.Product, x => x.Supplier);
 			var batch = await AsyncExecuter.FirstOrDefaultAsync(query.Where(x => x.Id == id));
 			return ObjectMapper.Map<ProductBatch, ProductBatchDto>(batch);
@@ -52,21 +51,37 @@ namespace SupplyCoreERP.Batches
 
 		public async Task<ProductBatchDto> CreateAsync(CreateUpdateProductBatchDto input)
 		{
-			var batch = await _batchManager.CreateAsync(input.ProductId, input.BatchNumber, input.ManufacturingDate, input.ExpiryDate, input.SupplierId);
+			var batch = await _batchManager.CreateAsync(
+				input.ProductId,
+				input.BatchNumber,
+				input.ManufacturingDate,
+				input.ExpiryDate,
+				input.SupplierId);
+
 			await _batchRepo.InsertAsync(batch);
+
 			return ObjectMapper.Map<ProductBatch, ProductBatchDto>(batch);
 		}
 
 		public async Task<ProductBatchDto> UpdateAsync(Guid id, CreateUpdateProductBatchDto input)
 		{
-			await _batchManager.UpdateAsync(id, input.ManufacturingDate, input.ExpiryDate, input.SupplierId);
 			var batch = await _batchRepo.GetAsync(id);
+
+			_batchManager.UpdateBatch(batch, input.ManufacturingDate, input.ExpiryDate, input.SupplierId);
+			await _batchRepo.UpdateAsync(batch);
+
 			return ObjectMapper.Map<ProductBatch, ProductBatchDto>(batch);
 		}
 
-		public async Task DeleteAsync(Guid id) => await _batchManager.DeleteAsync(id);
+		public async Task DeleteAsync(Guid id)
+		{
+			await _batchManager.ValidateDeleteAsync(id);
+			await _batchRepo.DeleteAsync(id);
+		}
 
+		// ==========================================
 		// CÁC HÀM DUYỆT QA (Thay đổi Status)
+		// ==========================================
 		public async Task ApproveQAAsync(Guid id)
 		{
 			var batch = await _batchRepo.GetAsync(id);
