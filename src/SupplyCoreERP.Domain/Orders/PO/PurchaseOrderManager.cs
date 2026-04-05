@@ -1,5 +1,4 @@
 ﻿using SupplyCoreERP.Enums.Orders;
-using SupplyCoreERP.Orders;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
 using System;
@@ -9,7 +8,7 @@ using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 
-namespace SupplyCoreERP.Purchasing.Orders
+namespace SupplyCoreERP.Orders.PO
 {
 	public class PurchaseOrderManager : DomainService
 	{

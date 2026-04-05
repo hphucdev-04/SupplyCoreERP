@@ -1,5 +1,4 @@
 ﻿using SupplyCoreERP.Enums.Orders;
-using SupplyCoreERP.Purchasing.Orders;
 using SupplyCoreERP.Suppliers;
 using System;
 using System.Collections.Generic;
@@ -7,7 +6,7 @@ using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace SupplyCoreERP.Orders
+namespace SupplyCoreERP.Orders.PO
 {
 	public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
 	{

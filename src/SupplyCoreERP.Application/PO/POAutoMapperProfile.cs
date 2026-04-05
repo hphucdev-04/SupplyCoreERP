@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
-using SupplyCoreERP.Orders;
+using SupplyCoreERP.Orders.PO;
 using SupplyCoreERP.PO.Dtos;
-using SupplyCoreERP.Purchasing.Orders;
 
 namespace SupplyCoreERP.PO
 {

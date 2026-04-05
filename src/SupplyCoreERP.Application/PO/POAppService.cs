@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Enums.Orders;
-using SupplyCoreERP.Orders;
+using SupplyCoreERP.Orders.PO;
 using SupplyCoreERP.PO;
 using SupplyCoreERP.PO.Dtos;
 using System;

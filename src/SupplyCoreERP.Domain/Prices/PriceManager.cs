@@ -19,12 +19,7 @@ namespace SupplyCoreERP.Prices
 			_priceListRepository = priceListRepository;
 		}
 
-		public async Task<ProductPrice> CreatePriceAsync(
-			Guid priceListId,
-			Guid productId,
-			Guid unitId,
-			decimal price,
-			int minQuantity = 1)
+		public async Task<ProductPrice> CreatePriceAsync(Guid priceListId, Guid productId, Guid unitId,decimal price,int minQuantity = 1)
 		{
 			//Validate price
 			if (price < 0)
@@ -61,5 +56,6 @@ namespace SupplyCoreERP.Prices
 				minQuantity
 			);
 		}
+
 	}
 }

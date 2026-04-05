@@ -1,10 +1,9 @@
 ﻿using SupplyCoreERP.BaseUnits;
-using SupplyCoreERP.Orders;
 using SupplyCoreERP.Products;
 using System;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace SupplyCoreERP.Purchasing.Orders
+namespace SupplyCoreERP.Orders.PO
 {
 	public class PurchaseOrderDetail : FullAuditedEntity<Guid>
 	{
