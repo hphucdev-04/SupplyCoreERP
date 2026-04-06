@@ -634,7 +634,7 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
       width:       [this.toM(bin?.width  || this.toPx(2)), [Validators.required, Validators.min(0.5)]], // 0.5m min
       length:      [this.toM(bin?.length || this.toPx(2)), [Validators.required, Validators.min(0.5)]],
       rotation:    [bin?.rotation || 0, [Validators.min(0), Validators.max(360)]],
-      maxWeight:   [bin?.maxWeight || 0],
+      maxSKU:      [bin?.maxWeight || 0, [Validators.min(0)]],
       isBlocked:   [bin?.isBlocked || false],
     });
 

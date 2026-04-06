@@ -32,6 +32,7 @@ namespace SupplyCoreERP.Customers
 				.Include(x => x.Country)
 				.Include(x => x.City)
 				.Include(x => x.Area)
+				.Include(x => x.PriceList) 
 				.FirstOrDefaultAsync(x => x.Id == id);
 
 			if (customer == null)
@@ -47,7 +48,8 @@ namespace SupplyCoreERP.Customers
 			var query = await _customerRepository.GetQueryableAsync();
 
 			query = query
-				.Include(x => x.City) // List chỉ cần City
+				.Include(x => x.City)
+				.Include(x => x.PriceList) 
 				.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
 					x.Name.Contains(input.Filter) ||
 					x.Code.Contains(input.Filter) ||
@@ -73,7 +75,8 @@ namespace SupplyCoreERP.Customers
 				input.Code, input.Name, input.PhoneNumber, input.Email,
 				input.RepresentativeName, input.Gender, input.Type, input.TaxCode,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
-				input.Note,input.DebtLimit, input.PaymentTermDays
+				input.Note, input.DebtLimit, input.PaymentTermDays,
+				input.PriceListId 
 			);
 			customer.SetActive(input.IsActive);
 
@@ -89,7 +92,8 @@ namespace SupplyCoreERP.Customers
 				customer, input.Code, input.Name, input.PhoneNumber, input.Email,
 				input.RepresentativeName, input.Gender, input.Type, input.TaxCode,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
-				input.Note,input.DebtLimit, input.PaymentTermDays
+				input.Note, input.DebtLimit, input.PaymentTermDays,
+				input.PriceListId 
 			);
 
 			customer.SetActive(input.IsActive);

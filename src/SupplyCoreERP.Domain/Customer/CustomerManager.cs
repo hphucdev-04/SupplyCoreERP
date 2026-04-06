@@ -2,6 +2,7 @@
 using SupplyCoreERP.Locations.Areas;
 using SupplyCoreERP.Locations.Cities;
 using SupplyCoreERP.Locations.Countries;
+using SupplyCoreERP.Prices; // <--- GỌI MODULE GIÁ VÀO ĐÂY
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -16,65 +17,45 @@ namespace SupplyCoreERP.Customers
 		private readonly IRepository<Country, Guid> _countryRepo;
 		private readonly IRepository<City, Guid> _cityRepo;
 		private readonly IRepository<Area, Guid> _areaRepo;
+		private readonly IRepository<PriceList, Guid> _priceListRepo; // <--- THÊM REPO NÀY
 
 		public CustomerManager(
 			IRepository<Customer, Guid> customerRepository,
 			IRepository<Country, Guid> countryRepo,
 			IRepository<City, Guid> cityRepo,
-			IRepository<Area, Guid> areaRepo)
+			IRepository<Area, Guid> areaRepo,
+			IRepository<PriceList, Guid> priceListRepo)
 		{
 			_customerRepository = customerRepository;
 			_countryRepo = countryRepo;
 			_cityRepo = cityRepo;
 			_areaRepo = areaRepo;
+			_priceListRepo = priceListRepo;
 		}
 
 		public async Task<Customer> CreateAsync(
-			string code,
-			string name,
-			string? phoneNumber,
-			string? email,
-			string? representativeName,
-			Gender? gender,
-			CustomerType type,
-			string? taxCode,
-			string? address,
-			Guid? countryId,
-			Guid? cityId,
-			Guid? areaId,
-			string? note,
-			decimal debtLimit = 0,
-			int paymentTermDays = 0)
+			string code, string name, string? phoneNumber, string? email,
+			string? representativeName, Gender? gender, CustomerType type, string? taxCode,
+			string? address, Guid? countryId, Guid? cityId, Guid? areaId, string? note,
+			decimal debtLimit = 0, int paymentTermDays = 0, Guid? priceListId = null) 
 		{
 			await CheckCodeAndNameAsync(code, name);
 			await CheckPhoneNumberExistsAsync(phoneNumber);
 			await ValidateLocationAsync(countryId, cityId, areaId);
-
+			await ValidatePriceListAsync(priceListId); 
 
 			return new Customer(
-				GuidGenerator.Create(),
-				code, name, phoneNumber, email, representativeName, gender, type, taxCode,
-				address, countryId, cityId, areaId, note, debtLimit, paymentTermDays
+				GuidGenerator.Create(), code, name, phoneNumber, email, representativeName,
+				gender, type, taxCode, address, countryId, cityId, areaId, note,
+				debtLimit, paymentTermDays, priceListId
 			);
 		}
 
 		public async Task UpdateAsync(
-			Customer customer,
-			string code,
-			string name,
-			string? phoneNumber,
-			string? email,
-			string? representativeName,
-			Gender? gender,
-			CustomerType type,
-			string? taxCode,
-			string? address,
-			Guid? countryId,
-			Guid? cityId,
-			Guid? areaId,
-			string? note,
-			decimal debtLimit = 0,
-			int paymentTermDays = 0)
+			Customer customer, string code, string name, string? phoneNumber, string? email,
+			string? representativeName, Gender? gender, CustomerType type, string? taxCode,
+			string? address, Guid? countryId, Guid? cityId, Guid? areaId, string? note,
+			decimal debtLimit = 0, int paymentTermDays = 0, Guid? priceListId = null) 
 		{
 			Check.NotNull(customer, nameof(customer));
 			await CheckCodeAndNameAsync(code, name, customer.Id);
@@ -85,18 +66,19 @@ namespace SupplyCoreERP.Customers
 			}
 
 			await ValidateLocationAsync(countryId, cityId, areaId);
+			await ValidatePriceListAsync(priceListId); 
 
 			customer.UpdateCode(code);
 			customer.UpdateInfo(name, phoneNumber, email, representativeName, gender, type, taxCode, note);
 			customer.SetLocation(address, countryId, cityId, areaId);
 			customer.SetDebtInfo(debtLimit, paymentTermDays);
+			customer.SetPriceList(priceListId); 
 		}
 
 		public async Task DeleteAsync(Guid id)
 		{
 			var customer = await _customerRepository.GetAsync(id);
 
-			// Logic nghiệp vụ: Không được xóa nếu khách hàng còn nợ tiền chưa trả
 			if (customer.CurrentDebt > 0)
 			{
 				throw new UserFriendlyException($"Không thể xóa khách hàng '{customer.Name}' vì vẫn còn khoản nợ ({customer.CurrentDebt:N0}) chưa thanh toán!");
@@ -137,6 +119,14 @@ namespace SupplyCoreERP.Customers
 			}
 		}
 
+		private async Task ValidatePriceListAsync(Guid? priceListId)
+		{
+			if (priceListId.HasValue && !await _priceListRepo.AnyAsync(x => x.Id == priceListId.Value))
+			{
+				throw new UserFriendlyException("Bảng giá được chọn không tồn tại trong hệ thống!");
+			}
+		}
+
 		public async Task CheckCodeAndNameAsync(string code, string name, Guid? excludeId = null)
 		{
 			Check.NotNullOrWhiteSpace(code, nameof(code));
@@ -145,16 +135,12 @@ namespace SupplyCoreERP.Customers
 			var normalizedCode = code.Trim().ToUpper();
 			var normalizedName = name.Trim();
 
-			if (await _customerRepository.AnyAsync(x =>
-				x.Code == normalizedCode &&
-				(!excludeId.HasValue || x.Id != excludeId.Value)))
+			if (await _customerRepository.AnyAsync(x => x.Code == normalizedCode && (!excludeId.HasValue || x.Id != excludeId.Value)))
 			{
 				throw new UserFriendlyException($"Mã khách hàng cấp '{code}' đã tồn tại!");
 			}
 
-			if (await _customerRepository.AnyAsync(x =>
-				x.Name == normalizedName &&
-				(!excludeId.HasValue || x.Id != excludeId.Value)))
+			if (await _customerRepository.AnyAsync(x => x.Name == normalizedName && (!excludeId.HasValue || x.Id != excludeId.Value)))
 			{
 				throw new UserFriendlyException($"Tên khách hàng '{name}' đã tồn tại!");
 			}

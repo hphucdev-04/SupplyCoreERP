@@ -86,7 +86,8 @@ namespace SupplyCoreERP.Inventories.Warehouses
 		#endregion
 
 		#region Bin
-		public async Task<Bin> CreateBinAsync(Guid warehouseId, Guid zoneId, string code, int x, int y, int w, int l, float rotation, decimal maxWeight)
+		public async Task<Bin> CreateBinAsync(Guid warehouseId, Guid zoneId, string code,
+			int x, int y, int w, int l, float rotation, int maxSKU)
 		{
 			var zone = await _zoneRepo.GetAsync(zoneId);
 			if (zone.WarehouseId != warehouseId)
@@ -95,10 +96,11 @@ namespace SupplyCoreERP.Inventories.Warehouses
 			if (await _binRepo.AnyAsync(b => b.WarehouseId == warehouseId && b.Code == code))
 				throw new UserFriendlyException($"Mã vị trí '{code}' đã tồn tại trong kho này!");
 
-			return new Bin(GuidGenerator.Create(), warehouseId, zoneId, code, x, y, w, l, rotation, maxWeight);
+			return new Bin(GuidGenerator.Create(), warehouseId, zoneId, code, x, y, w, l, rotation, maxSKU);
 		}
 
-		public async Task UpdateBinAsync(Bin bin, Guid zoneId, string code, int x, int y, int w, int l, float rotation, decimal maxWeight, bool isBlocked)
+		public async Task UpdateBinAsync(Bin bin, Guid zoneId, string code,
+			int x, int y, int w, int l, float rotation, int maxSKU, bool isBlocked)
 		{
 			if (bin.ZoneId != zoneId)
 			{
@@ -110,7 +112,16 @@ namespace SupplyCoreERP.Inventories.Warehouses
 			if (bin.Code != code && await _binRepo.AnyAsync(b => b.WarehouseId == bin.WarehouseId && b.Code == code && b.Id != bin.Id))
 				throw new UserFriendlyException($"Mã vị trí '{code}' đã tồn tại trong kho này!");
 
-			bin.UpdateInfo(zoneId, maxWeight, code);
+			// Nếu giảm MaxSKU xuống thấp hơn số SKU đang có → cảnh báo
+			if (maxSKU > 0)
+			{
+				int usedSKU = await _balanceRepo.CountAsync(b => b.BinId == bin.Id && b.Quantity > 0);
+				if (maxSKU < usedSKU)
+					throw new UserFriendlyException(
+						$"Không thể đặt giới hạn {maxSKU} SKU vì vị trí '{bin.Code}' đang chứa {usedSKU} loại hàng!");
+			}
+
+			bin.UpdateInfo(zoneId, maxSKU, code);
 			bin.SetCoordinates(x, y, w, l, rotation);
 			bin.ToggleBlock(isBlocked);
 		}
@@ -125,20 +136,23 @@ namespace SupplyCoreERP.Inventories.Warehouses
 		#endregion
 
 		#region Logic Validation
-		public void ValidateStorageCompatibility(Bin bin, StorageCondition productCondition)
+		public void ValidateStorageCompatibility(Bin bin, StorageCondition? productCondition)
 		{
 			if (bin.Zone == null)
-				throw new UserFriendlyException("Lỗi hệ thống: Không tải được thông tin Zone của vị trí này!");
+				throw new UserFriendlyException("Lỗi hệ thống: Không tải được thông tin Zone!");
 
-			if (bin.Zone.StorageCondition != productCondition)
+			if (productCondition.HasValue && bin.Zone.StorageCondition != productCondition.Value)
 				throw new UserFriendlyException(
 					$"SAI QUY ĐỊNH BẢO QUẢN!\n" +
 					$"Sản phẩm yêu cầu môi trường: '{productCondition}'.\n" +
-					$"Nhưng vị trí '{bin.Code}' thuộc Zone '{bin.Zone.Name}' là môi trường: '{bin.Zone.StorageCondition}'."
+					$"Nhưng vị trí '{bin.Code}' thuộc Zone '{bin.Zone.Name}' " +
+					$"là môi trường: '{bin.Zone.StorageCondition}'."
 				);
 
-			if (bin.Zone.Type == ZoneType.Inbound || bin.Zone.Type == ZoneType.Outbound || bin.Zone.Type == ZoneType.ForkliftParking)
-				throw new UserFriendlyException($"Không được phép lưu kho tại khu vực vận hành '{bin.Zone.Type}'!");
+			if (bin.Zone.Type == ZoneType.Inbound || bin.Zone.Type == ZoneType.Outbound
+				|| bin.Zone.Type == ZoneType.ForkliftParking)
+				throw new UserFriendlyException(
+					$"Không được phép lưu kho tại khu vực vận hành '{bin.Zone.Type}'!");
 		}
 		#endregion
 	}

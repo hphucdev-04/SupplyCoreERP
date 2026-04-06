@@ -31,6 +31,7 @@ namespace SupplyCoreERP.Customers.Dtos
 		public string? Note { get; set; }
 		public decimal DebtLimit { get; set; }
 		public int PaymentTermDays { get; set; }
+		public Guid? PriceListId { get; set; }
 
 		public bool IsActive { get; set; } = true;
 	}

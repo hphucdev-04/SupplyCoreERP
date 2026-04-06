@@ -112,6 +112,13 @@
     "Enum:ZoneType.Quarantine": "Quarantine",
     "Enum:ZoneType.ForkliftParking": "Forklift Parking",
 
+    "Enum:TicketType.GoodsReceipt": "GoodsReceipt",
+    "Enum:TicketType.GoodsIssue": "GoodsIssue",
+    "Enum:TicketType.ReturnInward": "ReturnInward",
+    "Enum:TicketType.ReturnOutward": "ReturnOutward",
+    "Enum:TicketType.RecallReceipt": "RecallReceipt",
+    "Enum:TicketType.DisposalIssue": "DisposalIssue",
+
     //Validation
     "ThisFieldIsRequired": "This field is required"
   }

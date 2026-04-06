@@ -15,6 +15,7 @@ namespace SupplyCoreERP.Medicines.Dtos
 		public string DosageFormName { get; set; }
 		public string OriginCountryName { get; set; }
 
+		public StorageCondition StorageCondition { get; set; }
 		public MedicineStatus Status { get; set; }
 		public bool IsActive { get; set; }
 		public DateTime CreationTime { get; set; }

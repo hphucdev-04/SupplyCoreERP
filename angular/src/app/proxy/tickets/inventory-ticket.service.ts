@@ -11,11 +11,11 @@ export class InventoryTicketService {
   apiName = 'Default';
   
 
-  allocateFEFO = (id: string, productId: string, requiredQuantity: number, config?: Partial<Rest.Config>) =>
+  allocateFEFO = (id: string, productId: string, requiredBaseQuantity: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',
       url: `/api/app/inventory-ticket/${id}/allocate-fEFO/${productId}`,
-      params: { requiredQuantity },
+      params: { requiredBaseQuantity },
     },
     { apiName: this.apiName,...config });
   

@@ -168,9 +168,7 @@ namespace SupplyCoreERP.Warehouses
 		{
 			var bin = await _warehouseManager.CreateBinAsync(
 				input.WarehouseId, input.ZoneId, input.Code,
-				input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation, input.MaxWeight);
-
-			bin.ToggleBlock(input.IsBlocked);
+				input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation, input.MaxSKU);
 
 			await _binRepo.InsertAsync(bin);
 
@@ -187,7 +185,7 @@ namespace SupplyCoreERP.Warehouses
 			await _warehouseManager.UpdateBinAsync(
 				bin, input.ZoneId, input.Code,
 				input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation,
-				input.MaxWeight, input.IsBlocked);
+				input.MaxSKU, input.IsBlocked);
 
 			await _binRepo.UpdateAsync(bin);
 

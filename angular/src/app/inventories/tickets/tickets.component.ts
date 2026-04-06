@@ -1,23 +1,25 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
-import { Subject } from 'rxjs';
+import { Subject, forkJoin } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
-import { TicketType } from 'src/app/proxy/enums/warehouses/ticket-type.enum';
-import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
+import { TicketType, ticketTypeOptions } from 'src/app/proxy/enums/warehouses/ticket-type.enum';
+import { ApprovalStatus, approvalStatusOptions } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
 import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { WarehouseService } from 'src/app/proxy/warehouses';
+import { enumName } from 'src/app/shared/utils/enum.util';
+import { TicketDetailsComponent } from './tickets-details/ticket-details.component';
 
 @Component({
   selector: 'app-inventory-tickets',
   standalone: true,
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, TicketDetailsComponent],
   providers: [ListService],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.scss']
@@ -25,40 +27,57 @@ import { WarehouseService } from 'src/app/proxy/warehouses';
 export class TicketsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  ticketData = { items: [], totalCount: 0 } as PagedResultDto<InventoryTicketDto>;
+  // Data
+  data = { items: [], totalCount: 0 } as PagedResultDto<InventoryTicketDto>;
   warehouses: WarehouseDto[] = [];
 
-  // Drawer & Form
+  // Drawer state
   isDrawerOpen = false;
   form: FormGroup;
   isSaving = false;
 
   // Filters
   filterText = '';
-  selectedType: TicketType | null = null;
-  selectedStatus: ApprovalStatus | null = null;
-  selectedWarehouseId: string | null = null;
+  filterType: number = null;
+  filterStatus: number = null;
+  filterWarehouseId: string = null;
 
-  // Expose Enums to HTML
+  // Dropdown Data & Enums
+  ticketTypeOptions = ticketTypeOptions;
+  approvalStatusOptions = approvalStatusOptions;
   TicketType = TicketType;
   ApprovalStatus = ApprovalStatus;
+  readonly enumName = enumName;
 
-  ticketTypes = Object.keys(TicketType).filter(k => !isNaN(Number(k))).map(k => Number(k));
-  approvalStatuses = Object.keys(ApprovalStatus).filter(k => !isNaN(Number(k))).map(k => Number(k));
+  // Modal detail state
+  @ViewChild('detailModal') detailModal: TicketDetailsComponent;
 
   constructor(
     public readonly list: ListService,
     private ticketService: InventoryTicketService,
     private warehouseService: WarehouseService,
     private confirmation: ConfirmationService,
-    private fb: FormBuilder,
-    private router: Router
+    private fb: FormBuilder
   ) {}
 
   ngOnInit(): void {
     this.buildForm();
-    this.loadWarehouses();
-    this.loadTickets();
+    this.loadLookups();
+
+    const streamCreator = (query: any) => this.ticketService.getList({
+      ...query,
+      filter: this.filterText,
+      type: this.filterType,
+      status: this.filterStatus,
+      warehouseId: this.filterWarehouseId
+    });
+
+    this.list.maxResultCount = 10;
+    this.list.hookToQuery(streamCreator)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response) => {
+        this.data = response;
+      });
   }
 
   ngOnDestroy(): void {
@@ -67,9 +86,9 @@ export class TicketsComponent implements OnInit, OnDestroy {
   }
 
   // ============================================================
-  // LOAD DATA & LIST SERVICE
+  // LOAD LOOKUPS
   // ============================================================
-  loadWarehouses() {
+  loadLookups() {
     this.warehouseService.getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
@@ -77,42 +96,50 @@ export class TicketsComponent implements OnInit, OnDestroy {
       });
   }
 
-  loadTickets() {
-    const streamCreator = (query: any) => this.ticketService.getList({
-      ...query,
-      filter: this.filterText,
-      type: this.selectedType,
-      status: this.selectedStatus,
-      warehouseId: this.selectedWarehouseId
-    });
+  // ============================================================
+  // ACTIONS & FILTERS
+  // ============================================================
+  onSearch(searchValue: string): void {
+    this.filterText = searchValue;
+    this.list.get();
+  }
 
-    this.list.hookToQuery(streamCreator)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(res => {
-        this.ticketData = res;
+  onFilterChange() {
+    this.list.get();
+  }
+
+  viewDetail(id: string): void {
+    this.detailModal.open(id);
+  }
+
+  onTicketSaved() {
+    this.list.get(); // Reload list after modal changes
+  }
+
+  deleteTicket(id: string, ticketNumber: string): void {
+    this.confirmation
+      .warn('::AreYouSureToDelete', '::AreYouSure', {
+        messageLocalizationParams: [ticketNumber]
+      })
+      .subscribe((status) => {
+        if (status === Confirmation.Status.confirm) {
+          this.ticketService.delete(id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => {
+              this.list.get();
+            });
+        }
       });
   }
 
-  applyFilters() {
-    this.list.get();
-  }
-
-  clearFilters() {
-    this.filterText = '';
-    this.selectedType = null;
-    this.selectedStatus = null;
-    this.selectedWarehouseId = null;
-    this.list.get();
-  }
-
   // ============================================================
-  // QUẢN LÝ FORM & CREATE
+  // FORM HANDLING
   // ============================================================
   buildForm() {
     this.form = this.fb.group({
-      type: [TicketType.GoodsReceipt, [Validators.required]],
+      type: [null, [Validators.required]],
       warehouseId: [null, [Validators.required]],
-      referenceDocumentId: [null], 
+      referenceDocumentId: [null],
       note: ['', [Validators.maxLength(1000)]]
     });
   }
@@ -127,49 +154,27 @@ export class TicketsComponent implements OnInit, OnDestroy {
     this.isDrawerOpen = true;
   }
 
-  closeDrawer() {
+  closeDrawer(): void {
     this.isDrawerOpen = false;
   }
 
-  save() {
+  save(): void {
     if (this.form.invalid) return;
     this.isSaving = true;
 
-    // Lúc này Backend (TicketManager) sẽ check Rule chống spam và tự sinh mã Phiếu
     this.ticketService.create(this.form.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (newTicket) => {
           this.isSaving = false;
           this.closeDrawer();
-          this.list.get(); 
-          // Tạo xong tự động chuyển hướng sang trang chi tiết để thêm hàng
-          this.goToDetail(newTicket.id);
+          this.list.get();
+          // Open Modal Detail directly after creation
+          this.viewDetail(newTicket.id);
         },
         error: () => {
           this.isSaving = false;
         }
       });
-  }
-
-  // ============================================================
-  // ACTIONS (DELETE, NAVIGATE)
-  // ============================================================
-  deleteTicket(id: string, ticketNumber: string) {
-    this.confirmation.warn('::TicketDeletionWarningMessage', '::AreYouSure', {
-      messageLocalizationParams: [ticketNumber]
-    }).subscribe((status) => {
-      if (status === Confirmation.Status.confirm) {
-        this.ticketService.delete(id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe(() => {
-            this.list.get();
-          });
-      }
-    });
-  }
-
-  goToDetail(id: string) {
-    this.router.navigate(['/inventory/tickets', id]);
   }
 }

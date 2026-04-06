@@ -1,12 +1,13 @@
 ﻿using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Batches;
+using SupplyCoreERP.Inventories.Tickets;
 using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Warehouses;
 using System;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace SupplyCoreERP.Inventories.Balances
+namespace SupplyCoreERP.Inventories.Transactions
 {
 	public class InventoryTransaction : CreationAuditedAggregateRoot<Guid>
 	{
@@ -23,11 +24,13 @@ namespace SupplyCoreERP.Inventories.Balances
 		public decimal QuantityChanged { get; private set; }
 		public decimal BalanceAfterTransaction { get; private set; }
 		public Guid? ReferenceDocumentId { get; private set; }
+		public string? ReferenceDocumentNumber { get; private set; }
+
 		public string? Note { get; private set; }
 
 		protected InventoryTransaction() { }
 
-		public InventoryTransaction(Guid id, Guid warehouseId, Guid binId, Guid prodId, Guid batchId, InventoryTransactionType type, decimal qtyChanged, decimal balanceAfter, Guid? refDocId, string? note) : base(id)
+		public InventoryTransaction(Guid id, Guid warehouseId, Guid binId, Guid prodId, Guid batchId, InventoryTransactionType type, decimal qtyChanged, decimal balanceAfter, Guid? refDocId, string? refDocNumber ,string? note) : base(id)
 		{
 			WarehouseId = warehouseId; 
 			BinId = binId;
@@ -36,7 +39,8 @@ namespace SupplyCoreERP.Inventories.Balances
 			TransactionType = type; 
 			QuantityChanged = qtyChanged; 
 			BalanceAfterTransaction = balanceAfter;
-			ReferenceDocumentId = refDocId; 
+			ReferenceDocumentId = refDocId;
+			ReferenceDocumentNumber = refDocNumber;
 			Note = note;
 		}
 	}

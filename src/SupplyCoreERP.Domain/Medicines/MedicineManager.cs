@@ -2,6 +2,7 @@
 using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Categories;
 using SupplyCoreERP.DosageForms;
+using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Manufacturers;
 using SupplyCoreERP.Products;
@@ -30,7 +31,7 @@ namespace SupplyCoreERP.Medicines
 			IRepository<BaseUnit, Guid> unitRepository,
 			IRepository<DosageForm, Guid> dosageFormRepository,
 			IRepository<ActiveIngredient, Guid> activeIngredientRepository,
-			IRepository<Country, Guid> countryRepository 
+			IRepository<Country, Guid> countryRepository
 			)
 		{
 			_productManager = productManager;
@@ -39,22 +40,22 @@ namespace SupplyCoreERP.Medicines
 			_unitRepository = unitRepository;
 			_dosageFormRepository = dosageFormRepository;
 			_activeIngredientRepository = activeIngredientRepository;
-			_countryRepository = countryRepository; 
+			_countryRepository = countryRepository;
 		}
 
 		public async Task<Medicine> CreateAsync(
 			string code,
 			string name,
 			Guid categoryId,
-			Guid manufacturerId, 
+			Guid manufacturerId,
 			Guid baseUnitId,
 			Guid dosageFormId,
-			string regNumber)
+			string regNumber,
+			UsageRoute usageRoute,
+			StorageCondition storageCondition,
+			bool isPrescriptionDrug)
 		{
-			//Validate các khóa ngoại
-			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId); 
-
-			//Check trùng Code/Name
+			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
 			await _productManager.CheckCodeAndNameAsync(code, name);
 
 			return new Medicine(
@@ -65,40 +66,40 @@ namespace SupplyCoreERP.Medicines
 				name,
 				baseUnitId,
 				dosageFormId,
-				regNumber
+				regNumber,
+				usageRoute,
+				storageCondition,
+				isPrescriptionDrug
 			);
 		}
 
 		public async Task UpdateAsync(
 			Medicine medicine,
+			string code,
 			string name,
 			Guid categoryId,
-			Guid manufacturerId, 
+			Guid manufacturerId,
+			Guid baseUnitId,
 			Guid dosageFormId,
 			string regNumber,
-			string code)
+			UsageRoute usageRoute,
+			StorageCondition storageCondition,
+			bool isPrescriptionDrug)
 		{
 			Check.NotNull(medicine, nameof(medicine));
 
-			//Validate khóa ngoại mới
-			await ValidateForeignKeysAsync(categoryId, manufacturerId, medicine.BaseUnitId, dosageFormId);
+			// Validate tất cả khóa ngoại bao gồm baseUnitId mới từ input
+			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
 
-			//Check trùng tên
+			// Check trùng Code/Name (loại trừ chính nó)
 			await _productManager.CheckCodeAndNameAsync(code, name, excludeId: medicine.Id);
 
+			// Update thông tin chung (Product)
 			medicine.UpdateCode(code);
+			medicine.UpdateInfo(name, categoryId, manufacturerId, baseUnitId);
 
-			//Update thông tin chung (Product)
-			medicine.UpdateInfo(name, categoryId, manufacturerId);
-
-			//Update thông tin riêng (Medicine)
-			medicine.UpdatePharmaInfo(
-				dosageFormId,
-				regNumber,
-				medicine.UsageRoute,
-				medicine.StorageCondition,
-				medicine.IsPrescriptionDrug
-			);
+			// Update toàn bộ thông tin pharma từ input thực sự, không truyền giá trị cũ
+			medicine.UpdatePharmaInfo(dosageFormId, regNumber, usageRoute, storageCondition, isPrescriptionDrug);
 		}
 
 		private async Task ValidateForeignKeysAsync(Guid catId, Guid manuId, Guid unitId, Guid dosageId)

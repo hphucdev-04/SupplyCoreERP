@@ -14,17 +14,19 @@ namespace SupplyCoreERP.Inventories.Tickets
 		public Guid WarehouseId { get; private set; }
 		public virtual Warehouse Warehouse { get; protected set; }
 		public Guid? ReferenceDocumentId { get; private set; }
+		public string? ReferenceDocumentNumber { get; private set; }
 		public string? Note { get; private set; }
 		public virtual ICollection<InventoryTicketDetail> Details { get; protected set; }
 
 		protected InventoryTicket() { Details = new List<InventoryTicketDetail>(); }
 
-		public InventoryTicket(Guid id, string ticketNumber, TicketType type, Guid warehouseId, Guid? refDocId, string? note) : base(id)
+		public InventoryTicket(Guid id, string ticketNumber, TicketType type, Guid warehouseId, Guid? refDocId, string? refDocNumber,string? note) : base(id)
 		{
 			TicketNumber = ticketNumber; 
 			Type = type; 
 			WarehouseId = warehouseId;
 			ReferenceDocumentId = refDocId; 
+			ReferenceDocumentNumber = refDocNumber;
 			Note = note; 
 			Status = ApprovalStatus.Draft;
 			Details = new List<InventoryTicketDetail>();

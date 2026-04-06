@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using NPOI;
 using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Warehouses.Dtos;
 
@@ -18,7 +19,8 @@ namespace SupplyCoreERP.Warehouses
 
 			// Bin mappings
 			CreateMap<Bin, BinDto>()
-				.ForMember(dest => dest.ZoneName, opt => opt.MapFrom(src => src.Zone != null ? src.Zone.Name : null));
+				.ForMember(dest => dest.ZoneName, opt => opt.MapFrom(src => src.Zone != null ? src.Zone.Name : null))
+				.ForMember(dest => dest.ZoneStorageCondition,opt => opt.MapFrom(src => src.Zone.StorageCondition));
 		}
 	}
 }

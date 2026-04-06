@@ -279,7 +279,10 @@
                 <div *ngIf="bin.zoneId === zone.id" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center ps-5 py-2" (click)="activeZone = zone; openBinDrawer(bin)">
                   <div class="overflow-hidden">
                     <span class="fw-semibold d-block text-truncate small">{{ bin.code }}</span>
-                    <small class="text-muted" style="font-size:10px;">{{ toM(bin.width) }}×{{ toM(bin.length) }}m</small>
+                    <small class="text-muted d-block" style="font-size:10px;">
+                      {{ toM(bin.width) }}×{{ toM(bin.length) }}m
+                      <span *ngIf="bin.maxSKU > 0" class="ms-1 text-info">· Max {{ bin.maxSKU }} SKU</span>
+                    </small>
                     <span *ngIf="bin.isBlocked" class="badge bg-danger ms-2" style="font-size:9px;">BLOCKED</span>
                   </div>
                   <div class="d-flex gap-1 flex-shrink-0">
@@ -371,7 +374,7 @@
     <div class="mb-3">
       <label class="form-label small fw-semibold">{{ '::Zone' | abpLocalization }} *</label>
       <select class="form-select form-select-sm" formControlName="zoneId">
-        <option [ngValue]="null">-- Chọn Zone --</option>
+        <option [ngValue]="null">{{ '::Sellect' | abpLocalization }}</option>
         <option *ngFor="let z of zones" [value]="z.id">{{ z.name }}</option>
       </select>
     </div>
@@ -390,9 +393,12 @@
       </div>
     </div>
     <div class="row gx-2">
-      <div class="col-6 mb-3">
-        <label class="form-label small fw-semibold">Width (m)</label>
-        <input type="number" step="0.1" class="form-control form-control-sm" formControlName="width">
+      <div class="mb-3">
+        <label class="form-label small fw-semibold">
+          Max SKU / Lô
+          <span class="text-muted fw-normal ms-1" style="font-size:11px;">( 0 = không giới hạn )</span>
+        </label>
+        <input type="number" min="0" step="1" class="form-control form-control-sm" formControlName="maxSKU">
       </div>
       <div class="col-6 mb-3">
         <label class="form-label small fw-semibold">Length (m)</label>

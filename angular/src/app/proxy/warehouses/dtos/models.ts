@@ -1,12 +1,13 @@
 import type { EntityDto, FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
-import type { ZoneType } from '../../enums/warehouses/zone-type.enum';
 import type { StorageCondition } from '../../enums/medicines/storage-condition.enum';
+import type { ZoneType } from '../../enums/warehouses/zone-type.enum';
 import type { ApprovalStatus } from '../../enums/warehouses/approval-status.enum';
 
 export interface BinDto extends EntityDto<string> {
   warehouseId?: string;
   zoneId?: string;
   zoneName?: string;
+  zoneStorageCondition?: StorageCondition;
   code?: string;
   positionX?: number;
   positionY?: number;
@@ -26,7 +27,7 @@ export interface CreateUpdateBinDto {
   width?: number;
   length?: number;
   rotation?: number;
-  maxWeight?: number;
+  maxSKU?: number;
   isBlocked?: boolean;
 }
 
