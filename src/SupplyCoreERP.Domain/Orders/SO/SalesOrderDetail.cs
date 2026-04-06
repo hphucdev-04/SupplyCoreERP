@@ -1,5 +1,4 @@
 ﻿using SupplyCoreERP.BaseUnits;
-using SupplyCoreERP.Orders.SO;
 using SupplyCoreERP.Products;
 using System;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -20,20 +19,17 @@ namespace SupplyCoreERP.Sales.Orders
 		public int ConversionFactor { get; private set; }
 		public decimal Quantity { get; private set; }
 		public decimal BaseQuantity => Quantity * ConversionFactor;
+		public decimal DeliveredQuantity { get; private set; }
 
 		public decimal UnitPrice { get; private set; }
-		public decimal DiscountRate { get; private set; } 
+		public decimal DiscountRate { get; private set; }
 		public decimal TaxRate { get; private set; }
-
 
 		public decimal TotalPrice => Quantity * UnitPrice;
 		public decimal DiscountAmount => TotalPrice * (DiscountRate / 100);
 		public decimal PriceAfterDiscount => TotalPrice - DiscountAmount;
 		public decimal TaxAmount => PriceAfterDiscount * (TaxRate / 100);
 		public decimal FinalPrice => PriceAfterDiscount + TaxAmount;
-
-		// Tiến độ giao hàng (Sau này Kho xuất hàng sẽ gọi ngược về đây)
-		public decimal DeliveredQuantity { get; private set; }
 
 		protected SalesOrderDetail() { }
 
@@ -61,9 +57,6 @@ namespace SupplyCoreERP.Sales.Orders
 			TaxRate = taxRate >= 0 ? taxRate : throw new ArgumentException("Thuế suất không được âm.");
 		}
 
-		public void AddDeliveredQuantity(decimal qty)
-		{
-			DeliveredQuantity += qty;
-		}
+		public void AddDeliveredQuantity(decimal qty) => DeliveredQuantity += qty;
 	}
 }

@@ -22,5 +22,7 @@ namespace SupplyCoreERP.Customers.Dtos
 
 		public decimal DebtLimit { get; set; }
 		public int PaymentTermDays { get; set; }
+		public Guid? PriceListId { get; set; }
+		public string? PriceName { get; set; }
 	}
 }

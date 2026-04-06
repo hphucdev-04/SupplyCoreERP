@@ -30,9 +30,8 @@ namespace SupplyCoreERP.Tickets
 		}
 
 		// ==========================================
-		// 1. PHIẾU (MASTER)
+		// 1. PHIẾU (MASTER) - Giữ nguyên của bạn
 		// ==========================================
-
 		public async Task<PagedResultDto<InventoryTicketDto>> GetListAsync(GetInventoryTicketListDto input)
 		{
 			var query = await _ticketRepo.WithDetailsAsync(x => x.Warehouse);
@@ -51,9 +50,7 @@ namespace SupplyCoreERP.Tickets
 					 .Take(input.MaxResultCount)
 			);
 
-			return new PagedResultDto<InventoryTicketDto>(
-				totalCount,
-				ObjectMapper.Map<List<InventoryTicket>, List<InventoryTicketDto>>(items));
+			return new PagedResultDto<InventoryTicketDto>(totalCount, ObjectMapper.Map<List<InventoryTicket>, List<InventoryTicketDto>>(items));
 		}
 
 		public async Task<InventoryTicketDto> GetAsync(Guid id)
@@ -65,24 +62,17 @@ namespace SupplyCoreERP.Tickets
 				.Include(x => x.Details).ThenInclude(d => d.Product).ThenInclude(p => p.BaseUnit)
 				.Include(x => x.Details).ThenInclude(d => d.ProductBatch)
 				.Include(x => x.Details).ThenInclude(d => d.Bin)
-				.Include(x => x.Details).ThenInclude(d => d.Unit); // <-- Unit navigation mới
+				.Include(x => x.Details).ThenInclude(d => d.Unit);
 
 			var ticket = await AsyncExecuter.FirstOrDefaultAsync(query.Where(x => x.Id == id));
-			if (ticket == null)
-				throw new UserFriendlyException("Không tìm thấy Phiếu kho!");
+			if (ticket == null) throw new UserFriendlyException("Không tìm thấy Phiếu kho!");
 
 			return ObjectMapper.Map<InventoryTicket, InventoryTicketDto>(ticket);
 		}
 
 		public async Task<InventoryTicketDto> CreateAsync(CreateInventoryTicketDto input)
 		{
-			var ticket = await _ticketManager.CreateTicketAsync(
-				input.Type,
-				input.WarehouseId,
-				input.ReferenceDocumentId,
-				input.ReferenceDocumentNumber,
-				input.Note);
-
+			var ticket = await _ticketManager.CreateTicketAsync(input.Type, input.WarehouseId, input.ReferenceDocumentId, input.ReferenceDocumentNumber, input.Note);
 			await _ticketRepo.InsertAsync(ticket);
 			return ObjectMapper.Map<InventoryTicket, InventoryTicketDto>(ticket);
 		}
@@ -104,79 +94,66 @@ namespace SupplyCoreERP.Tickets
 		}
 
 		// ==========================================
-		// 2. CHI TIẾT PHIẾU (DETAIL)
+		// 2. CHI TIẾT PHIẾU (DETAIL) - Cập nhật trả về DTO
 		// ==========================================
-
 		public async Task<InventoryTicketDto> CreateTicketDetailAsync(Guid ticketId, AddTicketDetailDto input)
 		{
 			var ticket = await _ticketRepo.GetAsync(ticketId);
-
-			var detail = await _ticketManager.CreateTicketDetailAsync(
-				ticket,
-				input.ProductId,
-				input.ProductBatchId,
-				input.BinId,
-				input.UnitId,           
-				input.ConversionFactor, 
-				input.Quantity);
-
+			var detail = await _ticketManager.CreateTicketDetailAsync(ticket, input.ProductId, input.ProductBatchId, input.BinId, input.UnitId, input.ConversionFactor, input.Quantity);
 			await _ticketDetailRepo.InsertAsync(detail);
 			return await GetAsync(ticketId);
 		}
 
-		public async Task UpdateDetailQuantityAsync(Guid detailId, decimal actualQuantity)
+		public async Task<InventoryTicketDto> UpdateDetailQuantityAsync(Guid detailId, decimal actualQuantity)
 		{
 			var detail = await _ticketDetailRepo.GetAsync(detailId);
 			var ticket = await _ticketRepo.GetAsync(detail.TicketId);
-
 			await _ticketManager.UpdateDetailQuantityAsync(ticket, detail, actualQuantity);
-
 			await _ticketDetailRepo.UpdateAsync(detail);
+			return await GetAsync(ticket.Id);
 		}
 
-		public async Task RemoveDetailAsync(Guid ticketId, Guid detailId)
+		public async Task<InventoryTicketDto> RemoveDetailAsync(Guid ticketId, Guid detailId)
 		{
 			var ticket = await _ticketRepo.GetAsync(ticketId);
 			var detail = await _ticketDetailRepo.GetAsync(detailId);
-
 			await _ticketManager.RemoveTicketDetailAsync(ticket, detail);
-
 			await _ticketDetailRepo.DeleteAsync(detail);
+			return await GetAsync(ticketId);
 		}
 
 		// ==========================================
-		// 3. QUY TRÌNH DUYỆT & FEFO
+		// 3. QUY TRÌNH DUYỆT & FEFO - Cập nhật trả về DTO
 		// ==========================================
-
-		public async Task SendToApproveAsync(Guid id)
+		public async Task<InventoryTicketDto> SendToApproveAsync(Guid id)
 		{
 			var ticket = await _ticketRepo.GetAsync(id);
 			await _ticketManager.SendToApproveAsync(ticket);
 			await _ticketRepo.UpdateAsync(ticket);
+			return await GetAsync(id);
 		}
 
-		public async Task ExecuteAsync(Guid id)
+		public async Task<InventoryTicketDto> ExecuteAsync(Guid id)
 		{
 			var ticket = await _ticketRepo.GetAsync(id);
 			await _ticketManager.ExecuteTicketAsync(ticket);
 			await _ticketRepo.UpdateAsync(ticket);
+			return await GetAsync(id);
 		}
 
-		public async Task RejectAsync(Guid id, string reason)
+		public async Task<InventoryTicketDto> RejectAsync(Guid id, string reason)
 		{
 			var ticket = await _ticketRepo.GetAsync(id);
 			await _ticketManager.RejectTicketAsync(ticket, reason);
 			await _ticketRepo.UpdateAsync(ticket);
+			return await GetAsync(id);
 		}
 
-		/// <summary>
-		/// FEFO nhận requiredBaseQuantity đã quy đổi về BaseUnit từ frontend.
-		/// Domain sẽ tạo các detail với ConversionFactor=1 (vì đã là BaseUnit).
-		/// </summary>
-		public async Task AllocateFEFOAsync(Guid id, Guid productId, decimal requiredBaseQuantity)
+		public async Task<InventoryTicketDto> AllocateFEFOAsync(Guid id, Guid productId, decimal requiredBaseQuantity)
 		{
 			var ticket = await _ticketRepo.GetAsync(id);
 			await _ticketManager.AllocateFEFOAsync(ticket, productId, requiredBaseQuantity);
+			return await GetAsync(id); // Reload lại phiếu, UI sẽ tự thấy các Detail mới tinh vừa được tạo!
 		}
 	}
 }

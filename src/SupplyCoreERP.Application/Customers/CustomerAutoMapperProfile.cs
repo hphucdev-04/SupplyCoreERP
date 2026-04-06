@@ -16,7 +16,8 @@ namespace SupplyCoreERP.Customers
 			CreateMap<Customer, CustomerDetailDto>()
 				.IncludeBase<Customer, CustomerDto>()
 				.ForMember(x => x.CountryName, opt => opt.MapFrom(c => c.Country != null ? c.Country.Name : null))
-				.ForMember(x => x.AreaName, opt => opt.MapFrom(c => c.Area != null ? c.Area.Name : null));
+				.ForMember(x => x.AreaName, opt => opt.MapFrom(c => c.Area != null ? c.Area.Name : null))
+				.ForMember(x => x.PriceName, opt => opt.MapFrom(c => c.PriceList != null ? c.PriceList.Name : null));
 
 			CreateMap<CreateUpdateCustomerDto, Customer>();
 		}

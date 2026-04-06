@@ -18,6 +18,7 @@ using SupplyCoreERP.Medicines;
 using SupplyCoreERP.Orders.PO;
 using SupplyCoreERP.Prices;
 using SupplyCoreERP.Products;
+using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.Suppliers;
 using SupplyCoreERP.Warehouses;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
@@ -106,10 +107,13 @@ public class SupplyCoreERPDbContext :
 	public DbSet<InventoryTicketDetail> InventoryTicketDetails { get; set; }
 	public DbSet<InventoryBalance> InventoryBalances { get; set; }
 	public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
+	public DbSet<InventoryReservation> InventoryReservations { get; set; }
 
 	//Order
 	public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
 	public DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+	public DbSet<SalesOrder> SalesOrders { get; set; } 
+	public DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
 	#endregion
 
 	public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
@@ -475,7 +479,19 @@ public class SupplyCoreERPDbContext :
 
 			b.HasIndex(x => new { x.WarehouseId, x.ProductId, x.CreationTime });
 		});
+		// InventoryReservation
+		builder.Entity<InventoryReservation>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "InventoryReservations", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
 
+			b.Property(x => x.ReferenceDocumentNumber).HasMaxLength(50);
+			b.Property(x => x.ReservedQuantity).HasColumnType("decimal(18, 4)");
+
+			b.HasIndex(x => new { x.ReferenceDocumentId, x.Status });
+		});
+
+		// PurchaseOrder
 		builder.Entity<PurchaseOrder>(b =>
 		{
 			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseOrders", SupplyCoreERPConsts.DbSchema);
@@ -498,6 +514,7 @@ public class SupplyCoreERPDbContext :
 			 .OnDelete(DeleteBehavior.Cascade);
 		});
 
+		// PurchaseOrderDetail
 		builder.Entity<PurchaseOrderDetail>(b =>
 		{
 			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseOrderDetails", SupplyCoreERPConsts.DbSchema);
@@ -511,5 +528,47 @@ public class SupplyCoreERPDbContext :
 			b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 			b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 		});
+
+		// SalesOrder
+		builder.Entity<SalesOrder>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "SalesOrders", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+			b.HasIndex(x => x.Code).IsUnique(); 
+
+			b.Property(x => x.Note).HasMaxLength(1000);
+
+			b.Property(x => x.SubTotal).HasPrecision(18, 4);
+			b.Property(x => x.DiscountAmount).HasPrecision(18, 4);
+			b.Property(x => x.TaxAmount).HasPrecision(18, 4);
+			b.Property(x => x.TotalAmount).HasPrecision(18, 4);
+
+			b.HasOne(x => x.Customer).WithMany().HasForeignKey(x => x.CustomerId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+
+			b.HasMany(x => x.Details)
+			 .WithOne(x => x.SalesOrder)
+			 .HasForeignKey(x => x.SalesOrderId)
+			 .IsRequired()
+			 .OnDelete(DeleteBehavior.Cascade);
+		});
+
+		// SalesOrderDetail
+		builder.Entity<SalesOrderDetail>(b =>
+		{
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "SalesOrderDetails", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention();
+
+			b.Property(x => x.Quantity).HasPrecision(18, 4);
+			b.Property(x => x.UnitPrice).HasPrecision(18, 4);
+			b.Property(x => x.DiscountRate).HasPrecision(5, 2); // Khống chế tỷ lệ phần trăm (VD: 99.99)
+			b.Property(x => x.TaxRate).HasPrecision(5, 2);
+			b.Property(x => x.DeliveredQuantity).HasPrecision(18, 4);
+
+			b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+			b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+		});
 	}
 }
+

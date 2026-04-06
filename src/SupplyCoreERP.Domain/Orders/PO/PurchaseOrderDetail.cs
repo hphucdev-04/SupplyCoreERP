@@ -20,8 +20,8 @@ namespace SupplyCoreERP.Orders.PO
 		public decimal Quantity { get; private set; }
 		public decimal BaseQuantity => Quantity * ConversionFactor;
 
-		public decimal UnitPrice { get; private set; } 
-		public decimal TaxRate { get; private set; }   
+		public decimal UnitPrice { get; private set; }
+		public decimal TaxRate { get; private set; }
 
 		public decimal TotalPrice => Quantity * UnitPrice;
 		public decimal TaxAmount => TotalPrice * (TaxRate / 100);

@@ -16,26 +16,29 @@ namespace SupplyCoreERP.Sales.Orders
 
 		public DateTime OrderDate { get; private set; }
 		public DateTime? ExpectedDeliveryDate { get; private set; }
+		public DateTime? DueDate { get; private set; }
 		public SalesOrderStatus Status { get; private set; }
 
-		// Tài chính
 		public decimal SubTotal { get; private set; }
 		public decimal DiscountAmount { get; private set; }
 		public decimal TaxAmount { get; private set; }
 		public decimal TotalAmount { get; private set; }
 
 		public string? Note { get; private set; }
+		public Guid WarehouseId { get; private set; }
 
 		public virtual ICollection<SalesOrderDetail> Details { get; private set; }
 
 		protected SalesOrder() { Details = new List<SalesOrderDetail>(); }
 
-		public SalesOrder(Guid id, string code, Guid customerId, DateTime orderDate, DateTime? expectedDeliveryDate, string? note) : base(id)
+		public SalesOrder(Guid id, string code, Guid customerId, Guid warehouseId, DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note) : base(id)
 		{
 			Code = code;
 			CustomerId = customerId;
+			WarehouseId = warehouseId;
 			OrderDate = orderDate;
 			ExpectedDeliveryDate = expectedDeliveryDate;
+			DueDate = dueDate;
 			Note = note;
 			Status = SalesOrderStatus.Draft;
 			SubTotal = 0;
@@ -45,21 +48,21 @@ namespace SupplyCoreERP.Sales.Orders
 			Details = new List<SalesOrderDetail>();
 		}
 
-		public void UpdateMaster(DateTime? expectedDeliveryDate, string? note)
+		public void UpdateMaster(Guid warehouseId, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
 		{
 			if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
 				throw new UserFriendlyException("Chỉ có thể sửa đơn bán khi đang ở trạng thái Nháp hoặc Chờ duyệt.");
 
+			WarehouseId = warehouseId;
 			ExpectedDeliveryDate = expectedDeliveryDate;
+			DueDate = dueDate;
 			Note = note;
 		}
 
-		public SalesOrderDetail AddDetail(
-			Guid id, Guid productId, Guid unitId, int conversionFactor,
-			decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
+		public SalesOrderDetail AddDetail(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
 		{
 			if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
-				throw new UserFriendlyException("Chỉ được thêm chi tiết khi đơn bán đang Nháp hoặc Chờ duyệt.");
+				throw new UserFriendlyException("Chỉ được thêm chi tiết khi đơn đang Nháp hoặc Chờ duyệt.");
 
 			var detail = new SalesOrderDetail(id, Id, productId, unitId, conversionFactor, quantity, unitPrice, discountRate, taxRate);
 			Details.Add(detail);
@@ -71,7 +74,7 @@ namespace SupplyCoreERP.Sales.Orders
 		public void UpdateDetail(Guid detailId, decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
 		{
 			if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
-				throw new UserFriendlyException("Không thể sửa chi tiết khi đơn bán đã duyệt.");
+				throw new UserFriendlyException("Không thể sửa chi tiết khi đơn đã duyệt.");
 
 			var detail = Details.FirstOrDefault(x => x.Id == detailId);
 			if (detail == null) throw new UserFriendlyException("Không tìm thấy dòng chi tiết.");
@@ -83,7 +86,7 @@ namespace SupplyCoreERP.Sales.Orders
 		public void RemoveDetail(Guid detailId)
 		{
 			if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
-				throw new UserFriendlyException("Không thể xóa chi tiết khi đơn bán đã duyệt.");
+				throw new UserFriendlyException("Không thể xóa chi tiết khi đơn đã duyệt.");
 
 			var detail = Details.FirstOrDefault(x => x.Id == detailId);
 			if (detail == null) throw new UserFriendlyException("Không tìm thấy dòng chi tiết.");
@@ -105,17 +108,14 @@ namespace SupplyCoreERP.Sales.Orders
 			if (!Details.Any()) throw new UserFriendlyException("Đơn bán hàng chưa có sản phẩm nào!");
 			Status = SalesOrderStatus.PendingApproval;
 		}
-
 		public void Approve() => Status = SalesOrderStatus.Approved;
 		public void StartDelivering() => Status = SalesOrderStatus.Delivering;
 		public void Complete() => Status = SalesOrderStatus.Completed;
 
 		public void Cancel()
 		{
-			if (Status == SalesOrderStatus.Completed) throw new UserFriendlyException("Đơn hàng đã giao xong, không thể hủy!");
-			if (Status == SalesOrderStatus.Delivering) throw new UserFriendlyException("Hàng đang trên đường giao, yêu cầu Kho thu hồi trước khi hủy!");
-			if (Status == SalesOrderStatus.Canceled) throw new UserFriendlyException("Đơn hàng này đã bị hủy!");
-
+			if (Status == SalesOrderStatus.Completed) throw new UserFriendlyException("Đơn đã giao xong, không thể hủy!");
+			if (Status == SalesOrderStatus.Delivering) throw new UserFriendlyException("Hàng đang giao, Kho phải thu hồi trước khi hủy!");
 			Status = SalesOrderStatus.Canceled;
 		}
 	}

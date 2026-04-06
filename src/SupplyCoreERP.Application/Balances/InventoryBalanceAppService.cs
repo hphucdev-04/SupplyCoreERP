@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Balances.Dtos;
+using SupplyCoreERP.Enums.Balances;
 using SupplyCoreERP.Inventories.Balances;
 using System;
 using System.Collections.Generic;
@@ -15,10 +16,12 @@ namespace SupplyCoreERP.Balances
 	public class InventoryBalanceAppService : ApplicationService, IInventoryBalanceAppService
 	{
 		private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
+		private readonly IRepository<InventoryReservation, Guid> _reservationRepo;
 
-		public InventoryBalanceAppService(IRepository<InventoryBalance, Guid> balanceRepo)
+		public InventoryBalanceAppService(IRepository<InventoryBalance, Guid> balanceRepo, IRepository<InventoryReservation, Guid> reservationRepo)
 		{
 			_balanceRepo = balanceRepo;
+			_reservationRepo = reservationRepo;
 		}
 
 		public async Task<PagedResultDto<InventoryBalanceDto>> GetListAsync(GetInventoryBalanceListDto input)
@@ -66,6 +69,19 @@ namespace SupplyCoreERP.Balances
 			if (entity == null) throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(InventoryBalance), id);
 
 			return ObjectMapper.Map<InventoryBalance, InventoryBalanceDetailDto>(entity);
+		}
+		public async Task<List<InventoryReservationDto>> GetActiveReservationsAsync(Guid id)
+		{
+			var balance = await _balanceRepo.GetAsync(id);
+
+			var activeReservations = await _reservationRepo.GetListAsync(x =>
+				x.WarehouseId == balance.WarehouseId &&
+				x.BinId == balance.BinId &&
+				x.ProductBatchId == balance.ProductBatchId &&
+				x.Status == ReservationStatus.Active
+			);
+
+			return ObjectMapper.Map<List<InventoryReservation>, List<InventoryReservationDto>>(activeReservations);
 		}
 	}
 }

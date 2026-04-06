@@ -26,6 +26,8 @@ namespace SupplyCoreERP.Balances
 				.ForMember(dest => dest.ExpiryDate, opt => opt.MapFrom(src => src.ProductBatch != null ? (DateTime?)src.ProductBatch.ExpiryDate : null))
 				.ForMember(dest => dest.ManufacturingDate, opt => opt.MapFrom(src => src.ProductBatch != null ? (DateTime?)src.ProductBatch.ManufacturingDate : null))
 				.ForMember(dest => dest.SupplierName, opt => opt.MapFrom(src => src.ProductBatch != null && src.ProductBatch.Supplier != null ? src.ProductBatch.Supplier.Name : null)); ;
+			
+			CreateMap<InventoryReservation, InventoryReservationDto>();
 		}
 	}
 }
