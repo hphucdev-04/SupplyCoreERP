@@ -62,5 +62,21 @@ namespace SupplyCoreERP.Transactions
 				ObjectMapper.Map<List<InventoryTransaction>, List<InventoryTransactionDto>>(items)
 			);
 		}
+
+		public async Task<InventoryTransactionDto> GetAsync(Guid id)
+		{
+			var query = await _transactionRepo.GetQueryableAsync();
+
+			var entity = await query
+				.Include(x => x.Warehouse)
+				.Include(x => x.Product)
+				.Include(x => x.ProductBatch)
+				.Include(x => x.Bin)
+				.FirstOrDefaultAsync(x => x.Id == id);
+
+			if (entity == null) throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(InventoryTransaction), id);
+
+			return ObjectMapper.Map<InventoryTransaction, InventoryTransactionDto>(entity);
+		}
 	}
 }

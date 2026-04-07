@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
+using SupplyCoreERP.Inventories.Warehouses;
 
 namespace SupplyCoreERP.Sales.Orders
 {
@@ -26,6 +27,7 @@ namespace SupplyCoreERP.Sales.Orders
 
 		public string? Note { get; private set; }
 		public Guid WarehouseId { get; private set; }
+		public virtual Warehouse Warehouse { get; private set; }
 
 		public virtual ICollection<SalesOrderDetail> Details { get; private set; }
 

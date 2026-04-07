@@ -10,6 +10,12 @@ namespace SupplyCoreERP.Balances.Dtos
 	{
 		public Guid ReferenceDocumentId { get; set; }
 		public string ReferenceDocumentNumber { get; set; }
+
+		public Guid WarehouseId { get; set; }
+		public Guid BinId { get; set; }
+		public Guid ProductId { get; set; }
+		public Guid ProductBatchId { get; set; }
+
 		public decimal ReservedQuantity { get; set; }
 		public ReservationStatus Status { get; set; }
 	}
