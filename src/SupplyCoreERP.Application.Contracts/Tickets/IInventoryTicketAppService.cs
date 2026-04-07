@@ -8,24 +8,19 @@ namespace SupplyCoreERP.Tickets
 {
 	public interface IInventoryTicketAppService : IApplicationService
 	{
-		// Ticket
 		Task<PagedResultDto<InventoryTicketDto>> GetListAsync(GetInventoryTicketListDto input);
 		Task<InventoryTicketDto> GetAsync(Guid id);
 		Task<InventoryTicketDto> CreateAsync(CreateInventoryTicketDto input);
 		Task<InventoryTicketDto> UpdateAsync(Guid id, UpdateInventoryTicketDto input);
 		Task DeleteAsync(Guid id);
 
-		// TicketDetail
-		Task<InventoryTicketDto> CreateTicketDetailAsync(Guid ticketId, AddTicketDetailDto input);
-		Task<InventoryTicketDto> UpdateDetailQuantityAsync(Guid detailId, decimal actualQuantity);
-		Task<InventoryTicketDto> RemoveDetailAsync(Guid ticketId, Guid detailId);
+		Task CreateTicketDetailAsync(Guid ticketId, AddTicketDetailDto input);
+		Task UpdateDetailQuantityAsync(Guid detailId, decimal actualQuantity);
+		Task RemoveDetailAsync(Guid ticketId, Guid detailId);
 
-		// TicketFlow
-		Task<InventoryTicketDto> SendToApproveAsync(Guid id);
-		Task<InventoryTicketDto> ExecuteAsync(Guid id);
-		Task<InventoryTicketDto> RejectAsync(Guid id, string reason);
-
-		// FEFO
-		Task<InventoryTicketDto> AllocateFEFOAsync(Guid id, Guid productId, decimal requiredBaseQuantity);
+		Task SendToApproveAsync(Guid id);
+		Task ExecuteAsync(Guid id);
+		Task RejectAsync(Guid id, string reason);
+		Task AllocateFEFOAsync(Guid id, Guid productId, decimal requiredBaseQuantity);
 	}
 }

@@ -11,5 +11,6 @@ namespace SupplyCoreERP.Transactions
 	public interface IInventoryTransactionAppService : IApplicationService
 	{
 		Task<PagedResultDto<InventoryTransactionDto>> GetListAsync(GetInventoryTransactionListDto input);
+		Task<InventoryTransactionDto> GetAsync(Guid id);
 	}
 }

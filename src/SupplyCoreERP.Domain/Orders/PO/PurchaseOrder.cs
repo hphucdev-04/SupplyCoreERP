@@ -1,4 +1,5 @@
 ﻿using SupplyCoreERP.Enums.Orders;
+using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Suppliers;
 using System;
 using System.Collections.Generic;
@@ -22,6 +23,7 @@ namespace SupplyCoreERP.Orders.PO
 		public decimal TotalAmount { get; private set; }
 		public string? Note { get; private set; }
 		public Guid WarehouseId { get; private set; }
+		public virtual Warehouse Warehouse { get; private set; }
 
 		public virtual ICollection<PurchaseOrderDetail> Details { get; private set; }
 
