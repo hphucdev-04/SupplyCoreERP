@@ -11,7 +11,7 @@
           <h3 class="modal-title fw-bold mb-1 d-flex align-items-center gap-2">
             {{ medicine.name }}
             <span class="badge rounded-pill fs-6 border" 
-                  [ngClass]="medicine.isActive ? 'bg-success text-white border-success' : 'bg-secondary text-white border-secondary'">
+                  [ngClass]="medicine.isActive ? 'bg-success text-white border-success' : 'bg-danger text-white border-secondary'">
               {{ (medicine.isActive ? '::Active' : '::Inactive') | abpLocalization }}
             </span>
           </h3>
@@ -83,7 +83,7 @@
                   <div class="col-md-6">
                      <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::UsageRoute' | abpLocalization }}</small>
                      <div class="fw-medium fs-6">
-                       {{ ('::Enum:UsageRoute.' + getEnumName(UsageRoute, medicine.usageRoute)) | abpLocalization }}
+                      {{ enumName(UsageRoute, medicine.usageRoute, '::Enum:UsageRoute') | abpLocalization }}
                      </div>
                   </div>
                   <div class="col-md-6">
@@ -104,7 +104,7 @@
                      <div class="mt-2 p-3 bg-info-subtle text-info-emphasis rounded border border-info-subtle d-flex align-items-start">
                         <i class="fa fa-temperature-low me-3 mt-1 fs-5"></i>
                         <div>
-                          <strong>{{ ('::Enum:StorageCondition.' + getEnumName(StorageCondition, medicine.storageCondition)) | abpLocalization }}</strong>
+                          <strong>{{ enumName(StorageCondition, medicine.storageCondition, '::Enum:StorageCondition') | abpLocalization }}</strong>
                           <br>
                           <small class="opacity-75">{{ '::StorageConditionDescription' | abpLocalization }}</small>
                         </div>
@@ -211,16 +211,35 @@
               <h6 class="text-primary fw-bold mb-0"><i class="fa fa-clock-rotate-left me-2"></i> {{ '::SystemData' | abpLocalization }}</h6>
             </div>
              <div class="card-body py-3">
-                 <div class="d-flex justify-content-between align-items-center p-3">
-                     <span class="small text-muted fw-semibold">{{ '::CreationTime' | abpLocalization }}</span>
-                     <span class="small fw-medium">{{ medicine.creationTime | date:'mediumDate' }}</span>
-                 </div>
-             </div>
+
+              <!-- Creation Time -->
+              <div class="d-flex justify-content-between align-items-center px-3 py-2">
+                <span class="small text-muted fw-semibold">
+                  {{ '::CreationTime' | abpLocalization }}
+                </span>
+                <span class="small fw-medium">
+                  {{ medicine.creationTime | date:'dd/MM/yyyy HH:mm' }}
+                </span>
+              </div>
+
+              <!-- Last Modification Time -->
+              <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
+                <span class="small text-muted fw-semibold">
+                  {{ '::LastModificationTime' | abpLocalization }}
+                </span>
+                <span class="small fw-medium">
+                  {{ medicine.lastModificationTime 
+                      ? (medicine.lastModificationTime | date:'dd/MM/yyyy HH:mm') 
+                      : 'N/A' }}
+                </span>
+              </div>
+
+            </div>
           </div>
           <!-- #endregion -->
         </div>
       </div>
-      <!-- #Price -->
+      <!-- #region Price -->
       <div class="row mt-4">
          <div class="col-12">
             <div class="card border shadow-sm">
@@ -261,7 +280,7 @@
                                         <span class="fw-bold text-success fs-6">{{ p.price | number:'1.0-0' }} ₫</span>
                                     </td>
                                     <td class="py-3 text-end pe-5">
-                                        <span class="fw-bold text-primary fs-6">{{ (getEnumName(CurrencyType, p.currency)) }}</span>
+                                        <span class="fw-bold text-primary fs-6">{{ enumName(CurrencyType, p.currency, '::Enum:CurrencyType') | abpLocalization }}</span>
                                     </td>
                                     <td class="text-end pe-4">
                                         <div class="dropdown" ngbDropdown container="body">
@@ -310,7 +329,7 @@
      <div class="mb-3">
         <label class="form-label small fw-semibold">{{ '::ActiveIngredient' | abpLocalization }} <span class="text-danger">*</span></label>
         <select class="form-select" formControlName="activeIngredientId">
-           <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+           <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
            <option *ngFor="let item of allIngredients" [ngValue]="item.id">{{ item.name }} ({{ item.code }})</option>
         </select>
      </div>
@@ -324,7 +343,7 @@
      <div class="mb-3">
         <label class="form-label small fw-semibold">{{ '::Unit' | abpLocalization }} <span class="text-danger">*</span></label>
         <select class="form-select" formControlName="unitId">
-           <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+           <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
            <option *ngFor="let item of allUnits" [ngValue]="item.id">{{ item.name }}</option>
         </select>
         <div *ngIf="isEditingUnit" class="form-text text-warning small"><i class="fa fa-lock"></i> {{ '::CannotChangeUnitId' | abpLocalization }}</div>
@@ -357,7 +376,7 @@
         <div class="mb-3">
             <label class="form-label small fw-semibold">{{ '::PriceList' | abpLocalization }} <span class="text-danger">*</span></label>
             <select class="form-select" formControlName="priceListId">
-                <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+                <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
                 <option *ngFor="let item of priceLists" [ngValue]="item.id">{{ item.name }} ({{ item.currency }})</option>
             </select>
             <div *ngIf="isEditingPrice" class="form-text text-warning small"><i class="fa fa-lock"></i> {{ '::CannotChangeKeyField' | abpLocalization }}</div>

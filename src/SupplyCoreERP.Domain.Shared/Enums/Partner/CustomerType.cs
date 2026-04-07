@@ -6,7 +6,7 @@ namespace SupplyCoreERP.Enums.Partner
 {
 	public enum CustomerType
 	{
-		Individual = 1,
-		Organization = 2,
+		Individual = 0,
+		Organization = 1,
 	}
 }

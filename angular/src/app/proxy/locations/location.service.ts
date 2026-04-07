@@ -11,6 +11,14 @@ export class LocationService {
   apiName = 'Default';
   
 
+  getAllCities = (config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ListResultDto<CityDto>>({
+      method: 'GET',
+      url: '/api/app/location/cities',
+    },
+    { apiName: this.apiName,...config });
+  
+
   getAllCountries = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, ListResultDto<CountryDto>>({
       method: 'GET',

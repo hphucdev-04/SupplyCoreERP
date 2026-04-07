@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
+using System.Linq;
 
 namespace SupplyCoreERP.Prices
 {
@@ -19,20 +20,13 @@ namespace SupplyCoreERP.Prices
 			_priceListRepository = priceListRepository;
 		}
 
-		public async Task<ProductPrice> CreatePriceAsync(
-			Guid priceListId,
-			Guid productId,
-			Guid unitId,
-			decimal price,
-			int minQuantity = 1)
+		public async Task<ProductPrice> CreatePriceAsync(Guid priceListId, Guid productId, Guid unitId,decimal price,int minQuantity = 1)
 		{
-			//Validate price
 			if (price < 0)
 			{
 				throw new UserFriendlyException("Giá bán không được nhỏ hơn 0!");
 			}
 
-			//Kiểm tra bảng giá có tồn tại?
 			var priceList = await _priceListRepository.FindAsync(priceListId);
 			if (priceList == null)
 			{
@@ -61,5 +55,40 @@ namespace SupplyCoreERP.Prices
 				minQuantity
 			);
 		}
+		public async Task<decimal> GetOfficialPriceAsync(Guid? appliedPriceListId, Guid productId, Guid unitId, decimal quantity)
+		{
+			var priceQuery = await _productPriceRepository.GetQueryableAsync();
+			var listQuery = await _priceListRepository.GetQueryableAsync();
+
+			var allPricesForProduct = (from p in priceQuery
+									   join l in listQuery on p.PriceListId equals l.Id
+									   where l.IsActive
+											 && p.ProductId == productId
+											 && p.UnitId == unitId
+									   select new { p.Price, p.MinQuantity, p.PriceListId, l.IsBase })
+									  .ToList();
+
+			// 1. TÌM TRONG BẢNG GIÁ ĐƯỢC CHỈ ĐỊNH (CỦA KHÁCH)
+			if (appliedPriceListId.HasValue)
+			{
+				var targetPrice = allPricesForProduct
+					.Where(x => x.PriceListId == appliedPriceListId.Value && x.MinQuantity <= quantity)
+					.OrderByDescending(x => x.MinQuantity)
+					.FirstOrDefault();
+
+				if (targetPrice != null) return targetPrice.Price;
+			}
+
+			// 2. FALLBACK - RỚT XUỐNG BẢNG GIÁ CHUẨN (IsBase = true)
+			var basePrice = allPricesForProduct
+				.Where(x => x.IsBase && x.MinQuantity <= quantity)
+				.OrderByDescending(x => x.MinQuantity)
+				.FirstOrDefault();
+
+			if (basePrice != null) return basePrice.Price;
+
+			throw new UserFriendlyException("Sản phẩm này chưa được thiết lập giá bán cho mức số lượng bạn chọn!");
+		}
+
 	}
 }

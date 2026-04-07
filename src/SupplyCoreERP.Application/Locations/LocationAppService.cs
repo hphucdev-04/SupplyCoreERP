@@ -77,6 +77,17 @@ namespace SupplyCoreERP.Locations
 			);
 		}
 
+		public async Task<ListResultDto<CityDto>> GetAllCitiesAsync()
+		{
+			var items = await _cityRepository.GetListAsync();
+
+			return new ListResultDto<CityDto>(
+				ObjectMapper.Map<List<City>, List<CityDto>>(
+					items.OrderBy(x => x.Name).ToList()
+				)
+			);
+		}
+
 		public async Task<ListResultDto<AreaDto>> GetAreasByCityAsync(Guid cityId)
 		{
 			var items = await _areaRepository.GetListAsync(x => x.CityId == cityId);

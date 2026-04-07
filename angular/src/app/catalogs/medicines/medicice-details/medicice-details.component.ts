@@ -14,53 +14,54 @@ import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.compone
 import { PriceService } from 'src/app/proxy/prices';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
 import { CurrencyType } from 'src/app/proxy/enums';
+import { enumName } from 'src/app/shared/utils/enum.util';
 
 @Component({
   selector: 'app-medicine-detail',
   standalone: true,
-  imports: [SharedModule, ReactiveFormsModule, CommonModule, DrawerComponent, CurrencyFormatDirective],
+  imports: [SharedModule, DrawerComponent, CurrencyFormatDirective],
   templateUrl: 'medicice-details.component.html',
   styleUrl: 'medicice-details.component.scss',
 })
 export class MedicineDetailComponent {
   
-  // STATE MODAL
+  //Modal State
   isVisible = false;
   id = '';
   medicine: MedicineDetailDto;
   
-  // List này gộp BaseUnit + Các Unit quy đổi -> Dùng để chọn khi set giá
+  //List này gộp BaseUnit + Các Unit quy đổi -> Dùng để chọn khi set giá
   availableUnitsForPrice: any[] = []; 
   
-  //Danh sách giá hiện tại của thuốc
+  //List price of medicine
   productPrices: ProductPriceDto[] = []; 
   
-  //Danh sách bảng giá
+  //List price
   priceLists: PriceListDto[] = [];
 
-  //DRAWER STATES
+  //Drawer state
   isIngrDrawerOpen = false;
   isUnitDrawerOpen = false;
   isPriceDrawerOpen = false; 
 
-  // --- FORMS ---
+  //Form
   ingrForm: FormGroup;
   unitForm: FormGroup;
   priceForm: FormGroup; 
 
-  //DROPDOWN DATA (Cho Ingr/Unit Tab)
+  //Dropdown data (Ingredient/Unit)
   allIngredients: any[] = [];
-  allUnits: any[] = []; // List đơn vị toàn hệ thống (đã lọc)
+  allUnits: any[] = []; 
 
-  // TRẠNG THÁI EDIT UNIT 
+  //Edit unit State
   isEditingUnit = false;
   editingUnitId: string | null = null;
   
-  // --- TRẠNG THÁI EDIT PRICE 
+  //Edit price state
   isEditingPrice = false; 
   editingPriceId: string | null = null;
 
-  // ENUMS
+  //Enum
   UsageRoute = UsageRoute;
   StorageCondition = StorageCondition;
   CurrencyType = CurrencyType
@@ -75,6 +76,8 @@ export class MedicineDetailComponent {
   ) {
     this.initForms();
   }
+
+  readonly enumName = enumName;
 
   open(id: string) {
     this.id = id;
@@ -100,9 +103,9 @@ export class MedicineDetailComponent {
     if (!this.medicine) return;
     
     this.availableUnitsForPrice = [
-        // 1. Đơn vị cơ bản
+        //Đơn vị cơ bản
         { id: this.medicine.baseUnitId, name: this.medicine.baseUnitName + ' (Base)' },
-        // 2. Các đơn vị quy đổi
+        //Các đơn vị quy đổi
         ...this.medicine.units.map(u => ({ id: u.unitId, name: u.unitName }))
     ];
   }
@@ -117,20 +120,20 @@ export class MedicineDetailComponent {
     forkJoin({
       ingrs: this.ingredientService.getList({ maxResultCount: 1000 }),
       units: this.unitService.getList({ maxResultCount: 1000 }),
-      priceLists: this.priceService.getPriceLists() // <--- Load danh sách bảng giá
+      priceLists: this.priceService.getPriceLists() 
     }).subscribe(res => {
-      // Logic lọc Ingredient
+      //Logic lọc Ingredient
       this.allIngredients = res.ingrs.items.filter(ingr => 
           !medicineData.ingredients.some(existing => existing.activeIngredientId === ingr.id)
       );
 
-      // Logic lọc Unit
+      //Logic lọc Unit
       const fullUnits = res.units.items;
       this.allUnits = fullUnits.filter(u => 
           u.id !== medicineData.baseUnitId && 
           !medicineData.units.some(existing => existing.unitId === u.id)
       );
-      // Nếu đang Edit Unit, push lại unit đó vào list để hiện tên
+      //Nếu đang Edit Unit, push lại unit đó vào list để hiện tên
       if (this.isEditingUnit && this.editingUnitId) {
          const currentUnit = fullUnits.find(u => u.id === this.editingUnitId);
          if (currentUnit && !this.allUnits.find(u => u.id === currentUnit.id)) {
@@ -138,25 +141,25 @@ export class MedicineDetailComponent {
          }
       }
 
-      // Lưu danh sách bảng giá
+      //Lưu danh sách bảng giá
       this.priceLists = res.priceLists;
     });
   }
 
   initForms() {
-    // Ingredients Form
+    //Ingredients Form
     this.ingrForm = this.fb.group({
       activeIngredientId: [null, Validators.required]
     });
 
-    // Units Form
+    //Units Form
     this.unitForm = this.fb.group({
       unitId: [null, Validators.required],
       conversionFactor: [null, [Validators.required, Validators.min(2)]],
       level: [null, [Validators.required, Validators.min(1)]]
     });
 
-    // Price Form
+    //Price Form
     this.priceForm = this.fb.group({
         priceListId: [null, Validators.required],
         unitId: [null, Validators.required],
@@ -287,9 +290,5 @@ export class MedicineDetailComponent {
             this.priceService.delete(id).subscribe(() => this.loadPrices());
         }
     });
-  }
-
-  getEnumName(enumObj: any, value: number): string {
-    return enumObj[value];
   }
 }

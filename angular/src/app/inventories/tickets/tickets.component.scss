@@ -1,0 +1,272 @@
+:host {
+  --c-border: #e2e8f0;
+  --c-bg: #f8fafc;
+  --c-surface: #ffffff;
+  --c-text: #0f172a;
+  --c-muted: #64748b;
+  --c-incoming: #059669;
+  --c-outgoing: #e11d48;
+  --c-primary: #0369a1;
+  --c-primary-light: #e0f2fe;
+  --c-pending: #b45309;
+  --c-pending-bg: #fef3c7;
+  --c-draft-bg: #f1f5f9;
+  --c-approved-bg: #d1fae5;
+  --c-rejected-bg: #ffe4e6;
+}
+
+// ── Page wrapper ──────────────────────────────────────────────
+.ticket-page {
+  background: var(--c-bg);
+  min-height: 100%;
+  padding: 1.5rem;
+}
+
+// ── Header card ───────────────────────────────────────────────
+.page-header {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  padding: 1.25rem 1.5rem;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+
+  .header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .page-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+    background: linear-gradient(135deg, #0369a1, #0ea5e9);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 1rem;
+    flex-shrink: 0;
+  }
+
+  .page-title {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: var(--c-text);
+    margin: 0;
+    letter-spacing: -0.01em;
+  }
+
+  .page-subtitle {
+    font-size: 0.75rem;
+    color: var(--c-muted);
+    margin: 0;
+  }
+}
+
+// ── Filter bar ────────────────────────────────────────────────
+.filter-bar {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  padding: 1rem 1.25rem;
+  margin-bottom: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.625rem;
+
+  .filter-search {
+    flex: 1;
+    min-width: 220px;
+  }
+
+}
+
+// ── Table card ────────────────────────────────────────────────
+.table-card {
+  background: var(--c-surface);
+  border: 1px solid var(--c-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+// ── Ticket number link ────────────────────────────────────────
+.ticket-link {
+  font-weight: 700;
+  font-size: 0.8125rem;
+  font-family: 'SFMono-Regular', Consolas, monospace;
+  color: var(--c-primary);
+  text-decoration: none;
+  letter-spacing: 0.01em;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+// ── Type badge ────────────────────────────────────────────────
+.type-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.25rem 0.625rem;
+  border-radius: 6px;
+
+  &.incoming {
+    color: var(--c-incoming);
+    background: var(--c-approved-bg);
+    border: 1px solid rgba(5, 150, 105, 0.2);
+  }
+
+  &.outgoing {
+    color: var(--c-outgoing);
+    background: var(--c-rejected-bg);
+    border: 1px solid rgba(225, 29, 72, 0.2);
+  }
+}
+
+// ── Status badge ──────────────────────────────────────────────
+.status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  padding: 0.2rem 0.6rem;
+  border-radius: 20px;
+  letter-spacing: 0.01em;
+
+  &.draft   { color: var(--c-muted);   background: var(--c-draft-bg);    }
+  &.pending { color: var(--c-pending); background: var(--c-pending-bg);  }
+  &.approved{ color: var(--c-incoming);background: var(--c-approved-bg); }
+  &.rejected{ color: var(--c-outgoing);background: var(--c-rejected-bg); }
+}
+
+// ── Action dropdown ───────────────────────────────────────────
+.btn-action {
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 0.3rem 0.625rem;
+  border-radius: 7px;
+  border: 1px solid var(--c-border);
+  background: var(--c-surface);
+  color: var(--c-text);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  transition: all 0.15s;
+
+  &:hover {
+    background: var(--c-bg);
+    border-color: #cbd5e1;
+  }
+}
+
+// ── New ticket button ─────────────────────────────────────────
+.btn-new-ticket {
+  height: 36px;
+  padding: 0 1rem;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  border-radius: 8px;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: linear-gradient(135deg, #0369a1, #0ea5e9);
+  border: none;
+  color: #fff;
+  transition: opacity 0.15s, transform 0.1s;
+
+  &:hover { opacity: 0.92; transform: translateY(-1px); }
+  &:active { transform: translateY(0); }
+}
+
+// ── ngx-datatable overrides ───────────────────────────────────
+::ng-deep .ticket-table {
+  .datatable-header {
+    background: #f8fafc !important;
+    border-bottom: 1px solid var(--c-border);
+
+    .datatable-header-cell {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      color: var(--c-muted);
+      padding: 0.75rem 1rem;
+    }
+  }
+
+  .datatable-body-row {
+    border-bottom: 1px solid #f1f5f9;
+    transition: background 0.1s;
+
+    &:hover { background: #f8fafc !important; }
+  }
+
+  .datatable-body-cell {
+    padding: 0.75rem 1rem;
+    font-size: 0.8125rem;
+    vertical-align: middle;
+    display: flex;
+    align-items: center;
+  }
+
+  .datatable-footer {
+    background: #f8fafc !important;
+    border-top: 1px solid var(--c-border);
+    font-size: 0.78rem;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
+
+// ── Warehouse cell ────────────────────────────────────────────
+.wh-name {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  color: var(--c-text);
+}
+
+.date-text {
+  font-size: 0.775rem;
+  color: var(--c-muted);
+  font-feature-settings: 'tnum';
+}
+
+// ── Drawer form styles ────────────────────────────────────────
+.form-label {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--c-text);
+  margin-bottom: 0.35rem;
+}
+
+.form-select,
+.form-control {
+  font-size: 0.8125rem;
+  border-color: var(--c-border);
+  border-radius: 8px;
+
+  &:focus {
+    border-color: #0ea5e9;
+    box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.12);
+  }
+}
+
+.alert-info-soft {
+  background: var(--c-primary-light);
+  border: none;
+  border-left: 3px solid var(--c-primary);
+  border-radius: 8px;
+  font-size: 0.78rem;
+  color: #0c4a6e;
+  padding: 0.625rem 0.875rem;
+}

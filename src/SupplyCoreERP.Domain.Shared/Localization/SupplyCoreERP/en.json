@@ -17,6 +17,9 @@
     "Menu:Partner": "Partner",
     "Menu:Suppliers": "Suppliers",
     "Menu:Customers": "Customers",
-    "Menu:Medicnes": "Medicnes"
+    "Menu:Medicnes": "Medicnes",
+    "Menu:Warehouses": "Warehouses",
+    "Menu:Inventory": "Inventory"
+
   }
 }

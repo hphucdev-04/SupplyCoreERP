@@ -24,6 +24,12 @@ namespace SupplyCoreERP.Medicines
 
 		public virtual ICollection<MedicineIngredient> Ingredients { get; private set; }
 
+		/// <summary>
+		/// Thuốc chỉ được nhập/xuất kho khi đã được duyệt (Approved) và đang hoạt động.
+		/// </summary>
+		public override bool IsAvailableForInventory => IsActive && Status == MedicineStatus.Approved;
+		public override StorageCondition? RequiredStorageCondition => StorageCondition;
+
 		private Medicine() { }
 
 		public Medicine(
@@ -34,44 +40,40 @@ namespace SupplyCoreERP.Medicines
 			string name,
 			Guid baseUnitId,
 			Guid dosageFormId,
-			string regNumber
-			)
+			string regNumber,
+			UsageRoute usageRoute,
+			StorageCondition storageCondition,
+			bool isPrescriptionDrug)
 			: base(id, categoryId, manufacturerId, code, name, baseUnitId, ProductType.Medicine)
 		{
 			IsActive = true;
 			Status = MedicineStatus.Pending;
 			DosageFormId = dosageFormId;
 			RegistrationNumber = regNumber;
+			UsageRoute = usageRoute;
+			StorageCondition = storageCondition;
+			IsPrescriptionDrug = isPrescriptionDrug;
 			Ingredients = new List<MedicineIngredient>();
-		}
-
-		public void SetPharmaInfo(UsageRoute route, StorageCondition storage, bool isRx)
-		{
-			UsageRoute = route;
-			StorageCondition = storage;
-			IsPrescriptionDrug = isRx;
 		}
 
 		public void UpdatePharmaInfo(
 			Guid dosageFormId,
 			string regNumber,
-			UsageRoute route,
-			StorageCondition storage,
-			bool isRx)
+			UsageRoute usageRoute,
+			StorageCondition storageCondition,
+			bool isPrescriptionDrug)
 		{
 			DosageFormId = dosageFormId;
 			RegistrationNumber = regNumber;
-			UsageRoute = route;
-			StorageCondition = storage;
-			IsPrescriptionDrug = isRx;
+			UsageRoute = usageRoute;
+			StorageCondition = storageCondition;
+			IsPrescriptionDrug = isPrescriptionDrug;
 		}
 
 		public void AddIngredient(Guid activeIngredientId)
 		{
 			if (Ingredients.Any(x => x.ActiveIngredientId == activeIngredientId))
-			{
 				throw new BusinessException("SupplyCoreERP:DuplicateIngredient", "Hoạt chất này đã có trong thuốc.");
-			}
 			Ingredients.Add(new MedicineIngredient(Id, activeIngredientId));
 		}
 
@@ -81,24 +83,9 @@ namespace SupplyCoreERP.Medicines
 			if (item != null) Ingredients.Remove(item);
 		}
 
-		public void Approve()
-		{
-			Status = MedicineStatus.Approved;
-		}
-
-		public void Reject()
-		{
-			Status = MedicineStatus.Rejected;
-		}
-
-		public void SetActive(bool isActive)
-		{
-			IsActive = isActive;
-		}
-
-		public void SetStatus(MedicineStatus status)
-		{
-			Status = status;
-		}
+		public void Approve() => Status = MedicineStatus.Approved;
+		public void Reject() => Status = MedicineStatus.Rejected;
+		public void SetActive(bool isActive) => IsActive = isActive;
+		public void SetStatus(MedicineStatus status) => Status = status;
 	}
 }

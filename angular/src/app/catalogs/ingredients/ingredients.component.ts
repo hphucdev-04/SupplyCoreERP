@@ -8,6 +8,7 @@ import { ActiveIngredientDto, GetActiveIngredientListDto } from 'src/app/proxy/a
 import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
 
 @Component({
   selector: 'app-ingredient',
@@ -30,9 +31,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-  ){
-    this.buildForm();
-  }
+  ){}
 
   ngOnInit(): void {
       const ingredientStreamCreator = (query) => this.ingredientService.getList({...query, filter: this.filterText});
@@ -40,6 +39,7 @@ export class IngredientsComponent implements OnInit, OnDestroy {
       this.list.hookToQuery(ingredientStreamCreator).subscribe((response) => {
         this.ingredient = response;
       })
+      this.buildForm();
   }
 
   ngOnDestroy(): void {
@@ -52,18 +52,20 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     this.list.get();
   }
 
-  createIngredient():void {
+  createIngredient(): void {
     this.selectedIngredient = {} as ActiveIngredientDto;
-    this.buildForm(); 
+    this.form.reset();
     this.isDrawerOpen = true;
   }
 
-  editIngredient(id: string):void {
-    this.ingredientService.get(id).subscribe((res)=>{
-      this.selectedIngredient = res;
-      this.buildForm();
-      this.isDrawerOpen = true;
-    })
+  editIngredient(id: string): void {
+    this.ingredientService.get(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.selectedIngredient = res;
+        this.form.patchValue(res);
+        this.isDrawerOpen = true;
+      });
   }
 
   deleteIngredient(id: string): void {
@@ -81,42 +83,15 @@ export class IngredientsComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      code: [this.selectedIngredient.code || '', [Validators.required, Validators.maxLength(50)]] ,
-      name: [this.selectedIngredient.name || '', [Validators.required, Validators.maxLength(255)]],
-    })
-
-    if(!this.selectedIngredient.id){
-      this.form.get('name')?.valueChanges
-        .pipe(takeUntil(this.destroy$)) // Tự hủy khi component bị hủy
-        .subscribe((value) => {
-          if (value) {
-            const generatedCode = this.generateCode(value);
-            // set value cho ô Code, emitEvent: false để tránh vòng lặp vô tận
-            this.form.get('code')?.setValue(generatedCode, { emitEvent: false });
-          }
-      });
-    }
+      code: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
+    });
   }
- private generateCode(name: string): string {
-  if (!name) return '';
-
-  const normalizedName = name
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '') 
-    .replace(/đ/g, 'd')
-    .replace(/Đ/g, 'D')
-    .replace(/[^a-zA-Z0-9 ]/g, '')
-    .trim()
-    .replace(/\s+/g, '_')
-    .toUpperCase();
-
-  const randomHash = Math.random()
-    .toString(36)
-    .substring(2, 6)
-    .toUpperCase();
-
-  return `AI_${normalizedName}_${randomHash}`;
-}
+ generateCode(): void {
+    const name = this.form.get('name')?.value || '';
+    const code = CodeGeneratorUtil.generate(name, 'AI');
+    this.form.get('code')?.setValue(code);
+  }
 
   closeDrawer(): void {
     this.isDrawerOpen = false;

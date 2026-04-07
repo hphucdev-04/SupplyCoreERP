@@ -6,7 +6,7 @@ import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { BaseUnitService } from 'src/app/proxy/base-units';
 import { CategoryService } from 'src/app/proxy/categories';
 import { DosageFormService } from 'src/app/proxy/dosage-forms';
-import { MedicineStatus, StorageCondition, UsageRoute } from 'src/app/proxy/enums/medicines';
+import { MedicineStatus, medicineStatusOptions, StorageCondition, storageConditionOptions, UsageRoute, usageRouteOptions } from 'src/app/proxy/enums/medicines';
 import { ManufacturerService } from 'src/app/proxy/manufacturers';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { CreateUpdateMedicineDto, GetMedicineListDto, MedicineDetailDto, MedicineDto } from 'src/app/proxy/medicines/dtos';
@@ -15,6 +15,8 @@ import { SearchComponent } from 'src/app/shared/components/search/search.compone
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MedicineDetailComponent } from './medicice-details/medicice-details.component';
 import { ImportModalComponent } from 'src/app/shared/components/import-modal/import-modal.component';
+import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
+import { enumName } from 'src/app/shared/utils/enum.util';
 
 
 @Component({
@@ -28,37 +30,38 @@ import { ImportModalComponent } from 'src/app/shared/components/import-modal/imp
 export class MedicinesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   
-  // Data Grid
+  //Data
   data = { items: [], totalCount: 0 } as PagedResultDto<MedicineDto>;
   
-  // Drawer & Form State
+  //Drawer state
   isDrawerOpen = false;
   form: FormGroup;
   selectedMedicine = {} as MedicineDetailDto;
 
-  // Filter
+  //Filter
   filterText = '';
   filterCategoryId: string = null;
   filterManufacturerId: string = null;
   filterStatus: number = null;
 
-  // Dropdown Data
+  //Dropdown Data
   categories: any[] = [];
   manufacturers: any[] = [];
   units: any[] = [];
   dosageForms: any[] = [];
-  usageRouteOptions: any[] = [];
-  storageConditionOptions: any[] = [];
+  usageRouteOptions = usageRouteOptions;
+  storageConditionOptions = storageConditionOptions;
+  medicineStatusOptions = medicineStatusOptions;
   MedicineStatus = MedicineStatus;
 
-  // State cho Modal Detail
+  //Modal detail state
   isDetailModalOpen = false;
   detailId = '';
 
-  // State Modal Import
+  //Modal import state
   isImportOpen = false;
-
   @ViewChild('detailModal') detailModal: MedicineDetailComponent;
+  readonly enumName = enumName;
   constructor(
     public readonly list: ListService,
     private medicineService: MedicineService,
@@ -69,16 +72,11 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     private unitService: BaseUnitService,
     private dosageFormService: DosageFormService,
     private toaster: ToasterService,
-  ) {
-    this.buildForm();
-  }
+  ) {}
 
   ngOnInit(): void {
-    this.usageRouteOptions = this.mapEnumToOptions(UsageRoute);
-    this.storageConditionOptions = this.mapEnumToOptions(StorageCondition);
-
     this.loadLookups(); 
-
+    this.buildForm();
    const streamCreator = (query: GetMedicineListDto) => this.medicineService.getList({ 
       ...query, 
       filter: this.filterText,
@@ -116,7 +114,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     });
   }
 
-  //ACTIONS
+  //Action
   onSearch(searchValue: string): void {
     this.filterText = searchValue;
     this.list.get();
@@ -132,18 +130,18 @@ export class MedicinesComponent implements OnInit, OnDestroy {
 
   createMedicine(): void {
     this.selectedMedicine = {} as MedicineDetailDto;
-    this.buildForm();
+    this.form.reset({ isPrescriptionDrug: false, isActive: true });
     this.isDrawerOpen = true;
   }
 
   editMedicine(id: string): void {
     this.medicineService.get(id)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
-            this.selectedMedicine = res;
-            this.buildForm();
-            this.isDrawerOpen = true;
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.selectedMedicine = res;
+        this.form.patchValue(res);
+        this.isDrawerOpen = true;
+      });
   }
 
   deleteMedicine(id: string): void {
@@ -161,68 +159,33 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       });
   }
 
-  //FORM HANDLING
-
+  //Form Handling
   buildForm(): void {
     this.form = this.fb.group({
-      code: [this.selectedMedicine.code || '', [Validators.required, Validators.maxLength(50)]],
-      name: [this.selectedMedicine.name || '', [Validators.required, Validators.maxLength(255)]],
-      categoryId: [this.selectedMedicine.categoryId || null, Validators.required],
-      manufacturerId: [this.selectedMedicine.manufacturerId || null, Validators.required],
-      baseUnitId: [this.selectedMedicine.baseUnitId || null, Validators.required],
-      dosageFormId: [this.selectedMedicine.dosageFormId || null, Validators.required],
-      registrationNumber: [this.selectedMedicine.registrationNumber || '', Validators.maxLength(50)],
-      usageRoute: [this.selectedMedicine.usageRoute ?? null, Validators.required], 
-      storageCondition: [this.selectedMedicine.storageCondition ?? null, Validators.required],
-      isPrescriptionDrug: [this.selectedMedicine.isPrescriptionDrug || false],
-      isActive: [this.selectedMedicine.isActive !== false] // Default true
+      code: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
+      categoryId: [null, Validators.required],
+      manufacturerId: [null, Validators.required],
+      baseUnitId: [null, Validators.required],
+      dosageFormId: [null, Validators.required],
+      registrationNumber: ['', Validators.maxLength(50)],
+      usageRoute: [null, Validators.required],
+      storageCondition: [null, Validators.required],
+      isPrescriptionDrug: [false],
+      isActive: [true],
     });
-
-    if (!this.selectedMedicine.id) {
-      this.form.get('name')?.valueChanges
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((value) => {
-          if (value) {
-            const generatedCode = this.generateCode(value);
-            this.form.get('code')?.setValue(generatedCode, { emitEvent: false });
-          }
-        });
-    }
   }
 
-  private generateCode(name: string): string {
-    if (!name) return '';
-
-    const normalizedName = name
-      .normalize('NFD')
-      .replace(/[\u0300-\u036f]/g, '')
-      .replace(/đ/g, 'd')
-      .replace(/Đ/g, 'D')
-      .replace(/[^a-zA-Z0-9 ]/g, '')
-      .trim()
-      .replace(/\s+/g, '_')
-      .toUpperCase();
-
-    const randomHash = Math.random()
-      .toString(36)
-      .substring(2, 6)
-      .toUpperCase();
-
-    return `MED_${normalizedName}_${randomHash}`; 
-  }
-
-  private mapEnumToOptions(enumType: any): any[] {
-  return Object.keys(enumType)
-    .filter(key => !isNaN(Number(key)))
-    .map(key => ({
-      value: Number(key),
-      name: enumType[key]   
-    }));
-  }
+  //Auto generate code function
+  generateCode(): void {
+     const name = this.form.get('name')?.value || '';
+     const code = CodeGeneratorUtil.generate(name, 'MED');
+     this.form.get('code')?.setValue(code);
+   }
 
   closeDrawer(): void {
     this.isDrawerOpen = false;
-    this.form.reset();
+    this.form.reset({ isPrescriptionDrug: false, isActive: true });
   }
 
   save(): void {
@@ -257,6 +220,8 @@ export class MedicinesComponent implements OnInit, OnDestroy {
        this.toaster.success('::ExportSuccess', '::Success');
     });
   }
+
+  // Download file function
   private downloadBlob(blob: Blob, fileName: string) {
     const url = window.URL.createObjectURL(blob);
     const a = document.createElement('a');
@@ -275,14 +240,14 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     return this.medicineService.importExcel(formData);
   };
 
-  // 2. Hàm Template: Gọi service -> Trả về Observable Blob
+  //Template: Gọi service -> Trả về Observable Blob
   templateFn = () => this.medicineService.getImportTemplate();
 
   openImport() {
     this.isImportOpen = true;
   }
 
-  // Hàm callback khi import thành công (Reload lại lưới dữ liệu)
+  //Callback khi import thành công 
   onImportSuccess() {
     this.list.get();
   }

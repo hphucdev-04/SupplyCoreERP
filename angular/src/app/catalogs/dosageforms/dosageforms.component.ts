@@ -30,9 +30,7 @@ export class DosageformsComponent implements OnInit , OnDestroy{
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-  ){
-     this.buildForm()
-  }
+  ){}
 
   ngOnInit(): void {
     const dosageStreamCreator = (query) => this.dosageService.getList({...query , filter: this.filterText});
@@ -40,6 +38,7 @@ export class DosageformsComponent implements OnInit , OnDestroy{
     this.list.hookToQuery(dosageStreamCreator).subscribe((response) => {
     this.dosage = response;
     });
+    this.buildForm()
   }
 
   ngOnDestroy(): void {
@@ -54,16 +53,19 @@ export class DosageformsComponent implements OnInit , OnDestroy{
 
   createDosage(): void {
     this.selectedDosage = {} as DosageFormDto;
-    this.buildForm(); 
+    this.form.reset();
     this.isDrawerOpen = true;
   }
+
   
   editDosage(id: string): void {
-    this.dosageService.get(id).subscribe((res) => {
-      this.selectedDosage = res;
-      this.buildForm(); 
-      this.isDrawerOpen = true;
-    });
+    this.dosageService.get(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.selectedDosage = res;
+        this.form.patchValue(res);
+        this.isDrawerOpen = true;
+      });
   }
   
   deleteDosage(id: string): void {
@@ -80,9 +82,9 @@ export class DosageformsComponent implements OnInit , OnDestroy{
     }
 
     buildForm(): void {
-    this.form = this.fb.group({
-      code: [this.selectedDosage.code || '', [Validators.required, Validators.maxLength(50)]],
-      name: [this.selectedDosage.name || '', [Validators.required, Validators.maxLength(100)]],
+      this.form = this.fb.group({
+        code: ['', [Validators.required, Validators.maxLength(50)]],
+        name: ['', [Validators.required, Validators.maxLength(100)]],
     });
 
     //Logic sinh code khi tạo

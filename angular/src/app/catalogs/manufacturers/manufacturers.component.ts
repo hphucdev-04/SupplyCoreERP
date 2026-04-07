@@ -39,19 +39,17 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService
-  ) {
-    this.buildForm();
-  }
+  ) {}
 
   ngOnInit(): void {
     const streamCreator = (query) => this.manufacturerService.getList({ ...query, filter: this.filterText });
-    
     this.list.maxResultCount = 10;
     this.list.hookToQuery(streamCreator).subscribe((response) => {
       this.data = response;
     });
-
+    this.buildForm();
     this.loadLookups();
+    this.setupContinentListener();
   }
 
   ngOnDestroy(): void {
@@ -76,7 +74,8 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
 
   createManufacturer(): void {
     this.selectedManufacturer = {} as ManufacturerDto;
-    this.buildForm();
+    this.filteredCountries = [];
+    this.form.reset();
     this.isDrawerOpen = true;
   }
 
@@ -85,9 +84,11 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.selectedManufacturer = res;
-        this.buildForm();
-  
-        this.onContinentChange(res.continentId);
+
+        // Cần filter countries trước khi patchValue để dropdown có data
+        this.filteredCountries = this.countries.filter(x => x.continentId === res.continentId);
+        this.form.patchValue(res);
+
         this.isDrawerOpen = true;
       });
   }
@@ -109,33 +110,23 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
 
   buildForm(): void {
     this.form = this.fb.group({
-      name: [this.selectedManufacturer.name || '', [Validators.required, Validators.maxLength(255)]],
-      continentId: [this.selectedManufacturer.continentId || null, [Validators.required]],
-      countryId: [this.selectedManufacturer.countryId || null, [Validators.required]],
+      name: ['', [Validators.required, Validators.maxLength(255)]],
+      continentId: [null, Validators.required],
+      countryId: [null, Validators.required],
     });
-
-    // Lắng nghe thay đổi Châu lục để lọc Quốc gia (Dùng takeUntil để tự hủy)
-    this.form.get('continentId')?.valueChanges
-      .pipe(takeUntil(this.destroy$)) 
-      .subscribe((val) => {
-        this.onContinentChange(val);
-      });
   }
 
-  onContinentChange(continentId: string) {
+ onContinentChange(continentId: string): void {
     if (!continentId) {
       this.filteredCountries = [];
       return;
     }
-    
-    // Lọc danh sách quốc gia
+
     this.filteredCountries = this.countries.filter(x => x.continentId === continentId);
-    
-    // Nếu quốc gia đang chọn không thuộc châu lục mới -> Reset ô quốc gia
+
+    // Chỉ reset countryId khi user thao tác (form dirty), không reset khi patchValue
     const currentCountryId = this.form.get('countryId')?.value;
     const isExists = this.filteredCountries.find(x => x.id === currentCountryId);
-    
-    // Chỉ reset khi user đang thao tác trên form (form dirty) hoặc khi tạo mới
     if (!isExists && this.form.get('continentId')?.dirty) {
       this.form.get('countryId')?.setValue(null);
     }
@@ -163,4 +154,11 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
         );
       });
   }
+
+  private setupContinentListener(): void {
+    this.form.get('continentId')?.valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((val) => this.onContinentChange(val));
+  }
+
 }

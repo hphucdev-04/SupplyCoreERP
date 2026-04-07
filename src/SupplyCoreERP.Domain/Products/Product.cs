@@ -1,5 +1,6 @@
 ﻿using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Categories;
+using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Enums.Products;
 using SupplyCoreERP.Manufacturers;
 using System;
@@ -18,10 +19,17 @@ namespace SupplyCoreERP.Products
 		public virtual Manufacturer Manufacturer { get; protected set; }
 		public string Code { get; protected set; }
 		public string Name { get; protected set; }
-		public Guid BaseUnitId { get; protected set; } // Đơn vị gốc (Cái/Viên)
+		public Guid BaseUnitId { get; protected set; }
 		public virtual BaseUnit BaseUnit { get; protected set; }
-		public ProductType ProductType { get; protected set; } 
+		public ProductType ProductType { get; protected set; }
 		public virtual ICollection<ProductUnit> Units { get; protected set; }
+
+		/// <summary>
+		/// Cho phép Inventory kiểm tra sản phẩm có đủ điều kiện nhập/xuất kho không.
+		/// Mặc định là true. Các subclass (Medicine...) override để thêm logic riêng.
+		/// </summary>
+		public virtual bool IsAvailableForInventory => true;
+		public virtual StorageCondition? RequiredStorageCondition => null;
 
 		protected Product() { }
 
@@ -31,7 +39,7 @@ namespace SupplyCoreERP.Products
 			Guid manufacturerId,
 			string code,
 			string name,
-			Guid baseUnitId, 
+			Guid baseUnitId,
 			ProductType productType)
 			: base(id)
 		{
@@ -44,37 +52,28 @@ namespace SupplyCoreERP.Products
 			Units = new List<ProductUnit>();
 		}
 
-		public void SetName(string name) 
-		{ 
-			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim(); 
+		private void SetName(string name)
+		{
+			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim();
 		}
 
-		public void SetCode(string code) 
-		{ 
-			Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper(); 
+		private void SetCode(string code)
+		{
+			Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper();
 		}
 
-		public void SetCategory(Guid id) 
-		{ 
-			CategoryId = id; 
-		}
+		public void SetCategory(Guid id) => CategoryId = id;
+		public void SetManufacturer(Guid id) => ManufacturerId = id;
 
-		public void SetManufacturer(Guid id) 
-		{ 
-			ManufacturerId = id; 
-		}
-
-		public void UpdateInfo(string name, Guid categoryId, Guid manufacturerId)
+		public void UpdateInfo(string name, Guid categoryId, Guid manufacturerId, Guid baseUnitId)
 		{
 			SetName(name);
 			CategoryId = categoryId;
 			ManufacturerId = manufacturerId;
+			BaseUnitId = baseUnitId;
 		}
 
-		public void UpdateCode(string newCode)
-		{
-			SetCode(newCode);
-		}
+		public void UpdateCode(string newCode) => SetCode(newCode);
 
 		public void AddUnit(Guid id, Guid unitId, int conversionFactor, int level)
 		{
@@ -97,7 +96,6 @@ namespace SupplyCoreERP.Products
 		{
 			var unit = Units.FirstOrDefault(u => u.UnitId == unitId);
 			if (unit == null) throw new UserFriendlyException("Đơn vị không tồn tại.");
-
 			unit.UpdateStats(conversionFactor, level);
 		}
 
@@ -106,6 +104,5 @@ namespace SupplyCoreERP.Products
 			var unit = Units.FirstOrDefault(u => u.UnitId == unitId);
 			if (unit != null) Units.Remove(unit);
 		}
-
 	}
 }

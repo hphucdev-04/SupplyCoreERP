@@ -30,7 +30,6 @@ export class UnitsComponent implements OnInit, OnDestroy{
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
   ) {
-    this.buildForm();
   }
 
   ngOnInit(): void {
@@ -39,6 +38,7 @@ export class UnitsComponent implements OnInit, OnDestroy{
     this.list.hookToQuery(unitStreamCreator).subscribe((response) => {
       this.unit = response;
     });
+    this.buildForm();
   }
 
   ngOnDestroy(): void {
@@ -51,18 +51,20 @@ export class UnitsComponent implements OnInit, OnDestroy{
     this.list.get();
   }
 
-  createUnit(): void {
+ createUnit(): void {
     this.selectedUnit = {} as BaseUnitDto;
-    this.buildForm(); 
+    this.form.reset();
     this.isDrawerOpen = true;
   }
 
   editUnit(id: string): void {
-    this.unitService.get(id).subscribe((res) => {
-      this.selectedUnit = res;
-      this.buildForm(); 
-      this.isDrawerOpen = true;
-    });
+    this.unitService.get(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.selectedUnit = res;
+        this.form.patchValue(res);
+        this.isDrawerOpen = true;
+      });
   }
 
   deleteUnit(id: string): void {
@@ -80,8 +82,8 @@ export class UnitsComponent implements OnInit, OnDestroy{
 
   buildForm(): void {
     this.form = this.fb.group({
-      code: [this.selectedUnit.code || '', [Validators.required, Validators.maxLength(50)]],
-      name: [this.selectedUnit.name || '', [Validators.required, Validators.maxLength(100)]],
+      code: ['', [Validators.required, Validators.maxLength(50)]],
+      name: ['', [Validators.required, Validators.maxLength(100)]],
     });
 
     //Logic sinh code khi tạo
@@ -109,7 +111,7 @@ export class UnitsComponent implements OnInit, OnDestroy{
       .toUpperCase(); // Chuyển thành CHỮ HOA
   }
 
-  closeDrawer(): void {
+   closeDrawer(): void {
     this.isDrawerOpen = false;
     this.form.reset();
   }
