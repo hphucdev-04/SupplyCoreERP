@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.Enums.Orders;
+using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Tickets;
+using SupplyCoreERP.Orders.PO;
+using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.Tickets.Dtos;
 using System;
 using System.Collections.Generic;
@@ -18,18 +22,25 @@ namespace SupplyCoreERP.Tickets
 	{
 		private readonly IRepository<InventoryTicket, Guid> _ticketRepo;
 		private readonly IRepository<InventoryTicketDetail, Guid> _ticketDetailRepo;
+		private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo; 
+		private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
 		private readonly TicketManager _ticketManager;
 
 		public InventoryTicketAppService(
-			IRepository<InventoryTicket, Guid> ticketRepo,
-			IRepository<InventoryTicketDetail, Guid> ticketDetailRepo,
-			TicketManager ticketManager)
+		IRepository<InventoryTicket, Guid> ticketRepo,
+		IRepository<InventoryTicketDetail, Guid> ticketDetailRepo,
+		IRepository<PurchaseOrder, Guid> purchaseOrderRepo,
+		IRepository<SalesOrder, Guid> salesOrderRepo,
+		TicketManager ticketManager)
 		{
 			_ticketRepo = ticketRepo;
 			_ticketDetailRepo = ticketDetailRepo;
+			_purchaseOrderRepo = purchaseOrderRepo;
+			_salesOrderRepo = salesOrderRepo;
 			_ticketManager = ticketManager;
 		}
 
+		#region Ticket
 		public async Task<PagedResultDto<InventoryTicketDto>> GetListAsync(GetInventoryTicketListDto input)
 		{
 			var query = await _ticketRepo.GetQueryableAsync();
@@ -97,8 +108,9 @@ namespace SupplyCoreERP.Tickets
 			await _ticketDetailRepo.DeleteAsync(x => x.TicketId == id);
 			await _ticketRepo.DeleteAsync(ticket);
 		}
+		#endregion
 
-
+		#region Ticket Detail
 		public async Task CreateTicketDetailAsync(Guid ticketId, AddTicketDetailDto input)
 		{
 			var ticket = await _ticketRepo.GetAsync(ticketId);
@@ -124,7 +136,9 @@ namespace SupplyCoreERP.Tickets
 			await _ticketManager.RemoveTicketDetailAsync(ticket, detail);
 			await _ticketDetailRepo.DeleteAsync(detail);
 		}
+		#endregion
 
+		#region Workflow
 		public async Task SendToApproveAsync(Guid id)
 		{
 			var ticket = await _ticketRepo.GetAsync(id);
@@ -134,9 +148,26 @@ namespace SupplyCoreERP.Tickets
 
 		public async Task ExecuteAsync(Guid id)
 		{
-			var ticket = await _ticketRepo.GetAsync(id);
-			await _ticketManager.ExecuteTicketAsync(ticket);
+			var ticketQuery = await _ticketRepo.GetQueryableAsync();
+			var ticket = await ticketQuery
+				.Include(x => x.Details)
+				.FirstOrDefaultAsync(x => x.Id == id)
+				?? throw new EntityNotFoundException(typeof(InventoryTicket), id);
+
+			var details = ticket.Details.ToList();
+
+			// Managerthực thi xuất/nhập kho (không Sync PO/SO)
+			await _ticketManager.ExecuteTicketAsync(ticket, details);
 			await _ticketRepo.UpdateAsync(ticket);
+
+			//Cross-aggregate sync 
+			if (ticket.ReferenceDocumentId.HasValue)
+			{
+				if (ticket.Type == TicketType.GoodsReceipt)
+					await SyncPurchaseOrderAsync(ticket, details);
+				else if (ticket.Type == TicketType.GoodsIssue)
+					await SyncSalesOrderAsync(ticket, details);
+			}
 		}
 
 		public async Task RejectAsync(Guid id, string reason)
@@ -145,11 +176,65 @@ namespace SupplyCoreERP.Tickets
 			await _ticketManager.RejectTicketAsync(ticket, reason);
 			await _ticketRepo.UpdateAsync(ticket);
 		}
+		#endregion
 
+		#region FEFO 
 		public async Task AllocateFEFOAsync(Guid id, Guid productId, decimal requiredBaseQuantity)
 		{
 			var ticket = await _ticketRepo.GetAsync(id);
-			await _ticketManager.AllocateFEFOAsync(ticket, productId, requiredBaseQuantity);
+
+			// Manager trả về list
+			var details = await _ticketManager.AllocateFEFOAsync(ticket, productId, requiredBaseQuantity);
+
+			if (details.Any())
+				await _ticketDetailRepo.InsertManyAsync(details);
 		}
+
+		#endregion
+
+		#region Sync 
+		private async Task SyncPurchaseOrderAsync(InventoryTicket ticket, IList<InventoryTicketDetail> details)
+		{
+			var poQuery = await _purchaseOrderRepo.GetQueryableAsync();
+			var po = await poQuery
+				.Include(x => x.Details)
+				.FirstOrDefaultAsync(x => x.Id == ticket.ReferenceDocumentId!.Value);
+
+			if (po == null) return;
+
+			// Cập nhật ReceivedQuantity theo ProductId
+			foreach (var d in details)
+			{
+				var poDetail = po.Details.FirstOrDefault(x => x.ProductId == d.ProductId);
+				poDetail?.AddReceivedQuantity(d.BaseQuantity);
+			}
+
+			if (po.Status == PurchaseOrderStatus.Approved)
+				po.StartReceiving();
+
+			await _purchaseOrderRepo.UpdateAsync(po);
+		}
+
+		private async Task SyncSalesOrderAsync(InventoryTicket ticket, IList<InventoryTicketDetail> details)
+		{
+			var soQuery = await _salesOrderRepo.GetQueryableAsync();
+			var so = await soQuery
+				.Include(x => x.Details)
+				.FirstOrDefaultAsync(x => x.Id == ticket.ReferenceDocumentId!.Value);
+
+			if (so == null) return;
+
+			foreach (var d in details)
+			{
+				var soDetail = so.Details.FirstOrDefault(x => x.ProductId == d.ProductId);
+				soDetail?.AddDeliveredQuantity(d.BaseQuantity);
+			}
+
+			if (so.Status == SalesOrderStatus.Approved)
+				so.StartDelivering();
+
+			await _salesOrderRepo.UpdateAsync(so);
+		}
+		#endregion
 	}
 }

@@ -1,11 +1,9 @@
 import { Component, OnDestroy } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
-
 import { InventoryBalanceService } from 'src/app/proxy/balances';
 import { InventoryBalanceDetailDto } from 'src/app/proxy/balances/dtos';
-import { TransactionsComponent } from 'src/app/shared/components/transactions/transactions.component';
-
+import { TransactionsComponent } from 'src/app/shared/components/transactions-component/transactions.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 

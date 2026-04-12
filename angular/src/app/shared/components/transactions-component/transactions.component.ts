@@ -9,7 +9,7 @@ import { InventoryTransactionDto } from 'src/app/proxy/transactions/dtos';
 import { InventoryTransactionType } from 'src/app/proxy/enums/warehouses';
 
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { enumName } from 'src/app/shared/utils/enum.util';
 
 @Component({

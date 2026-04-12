@@ -1,9 +1,12 @@
 ﻿using SupplyCoreERP.Enums.Balances;
+using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Balances;
 using SupplyCoreERP.Inventories.Batches;
 using SupplyCoreERP.Inventories.Warehouses;
+using SupplyCoreERP.Orders.PO;
 using SupplyCoreERP.Products;
+using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.Warehouses;
 using System;
 using System.Collections.Generic;
@@ -24,12 +27,10 @@ namespace SupplyCoreERP.Inventories.Tickets
 		private readonly IRepository<Warehouse, Guid> _warehouseRepo;
 		private readonly IRepository<Product, Guid> _productRepo;
 		private readonly WarehouseManager _warehouseManager;
-
-		// GỌI CHUYÊN GIA TỒN KHO (Tương tự như _transactionRepo và _reservationRepo đã bị bỏ đi)
 		private readonly InventoryBalanceManager _balanceManager;
-
-		// Vẫn giữ Repo này để TicketManager có thể read FEFO nhanh
 		private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
+		private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo;
+		private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
 
 		public TicketManager(
 			IRepository<InventoryTicket, Guid> ticketRepo,
@@ -40,7 +41,9 @@ namespace SupplyCoreERP.Inventories.Tickets
 			IRepository<Warehouse, Guid> warehouseRepo,
 			IRepository<Product, Guid> productRepo,
 			WarehouseManager warehouseManager,
-			InventoryBalanceManager balanceManager)
+			InventoryBalanceManager balanceManager,
+			IRepository<PurchaseOrder, Guid> purchaseOrderRepo, 
+			IRepository<SalesOrder, Guid> salesOrderRepo)      
 		{
 			_ticketRepo = ticketRepo;
 			_ticketDetailRepo = ticketDetailRepo;
@@ -51,6 +54,8 @@ namespace SupplyCoreERP.Inventories.Tickets
 			_productRepo = productRepo;
 			_warehouseManager = warehouseManager;
 			_balanceManager = balanceManager;
+			_purchaseOrderRepo = purchaseOrderRepo;
+			_salesOrderRepo = salesOrderRepo;      
 		}
 
 		#region Helpers
@@ -68,12 +73,10 @@ namespace SupplyCoreERP.Inventories.Tickets
 			if (bin == null) throw new UserFriendlyException("Không tìm thấy vị trí (Bin)!");
 
 			var product = await _productRepo.GetAsync(productId);
-
 			_warehouseManager.ValidateStorageCompatibility(bin, product.RequiredStorageCondition);
 
 			int usedSKUCount = await _balanceRepo.CountAsync(b => b.BinId == bin.Id && b.Quantity > 0);
 			bool isNewSKU = !await _balanceRepo.AnyAsync(b => b.BinId == bin.Id && b.ProductId == productId && b.ProductBatchId == productBatchId);
-
 			bin.ValidateSKUCapacity(usedSKUCount, isNewSKU);
 		}
 
@@ -106,6 +109,12 @@ namespace SupplyCoreERP.Inventories.Tickets
 				TicketType.DisposalIssue => InventoryTransactionType.Disposal,
 				_ => throw new ArgumentOutOfRangeException()
 			};
+		}
+
+		public async Task<bool> HasStatusAsync(Guid referenceId, ApprovalStatus status)
+		{
+			var ticket = await _ticketRepo.FirstOrDefaultAsync(x => x.ReferenceDocumentId == referenceId);
+			return ticket?.Status == status;
 		}
 		#endregion
 
@@ -152,11 +161,8 @@ namespace SupplyCoreERP.Inventories.Tickets
 			if (IsIssueTicket(ticket.Type)) await ValidateBatchForIssueAsync(productBatchId);
 
 			decimal baseQty = quantity * conversionFactor;
-
 			if (ticket.Status == ApprovalStatus.Pending && IsIssueTicket(ticket.Type))
-			{
 				await _balanceManager.AdjustLockAsync(ticket, binId, productId, productBatchId, baseQty);
-			}
 
 			return new InventoryTicketDetail(GuidGenerator.Create(), ticket.Id, productId, productBatchId, binId, unitId, conversionFactor, quantity);
 		}
@@ -180,9 +186,7 @@ namespace SupplyCoreERP.Inventories.Tickets
 			if (ticket.Status == ApprovalStatus.Approved) throw new UserFriendlyException("Không thể xóa chi tiết của Phiếu đã duyệt!");
 
 			if (ticket.Status == ApprovalStatus.Pending && IsIssueTicket(ticket.Type))
-			{
 				await _balanceManager.AdjustLockAsync(ticket, detail.BinId, detail.ProductId, detail.ProductBatchId, -detail.BaseQuantity);
-			}
 		}
 		#endregion
 
@@ -195,9 +199,7 @@ namespace SupplyCoreERP.Inventories.Tickets
 			if (!details.Any()) throw new UserFriendlyException("Phiếu kho chưa có hàng hóa!");
 
 			if (IsIssueTicket(ticket.Type))
-			{
 				await _balanceManager.LockStockAsync(ticket, details);
-			}
 
 			ticket.RequestApprove();
 		}
@@ -207,29 +209,28 @@ namespace SupplyCoreERP.Inventories.Tickets
 			if (ticket.Status != ApprovalStatus.Pending) throw new UserFriendlyException("Chỉ từ chối phiếu chờ duyệt!");
 
 			if (IsIssueTicket(ticket.Type))
-			{
 				await _balanceManager.UnlockStockAsync(ticket);
-			}
 
 			ticket.Reject();
 			ticket.UpdateNote($"[Từ chối: {rejectReason}] " + ticket.Note);
 		}
 
-		public async Task ExecuteTicketAsync(InventoryTicket ticket)
+		public async Task ExecuteTicketAsync(InventoryTicket ticket, IList<InventoryTicketDetail> details)
 		{
-			if (ticket.Status != ApprovalStatus.Pending) throw new UserFriendlyException("Chỉ thực thi phiếu chờ duyệt!");
+			if (ticket.Status != ApprovalStatus.Pending)
+				throw new UserFriendlyException("Chỉ thực thi phiếu chờ duyệt!");
 
-			var details = await _ticketDetailRepo.GetListAsync(x => x.TicketId == ticket.Id);
 			InventoryTransactionType transType = MapTicketToTransaction(ticket.Type);
-
 			await _balanceManager.ExecuteStockMovementAsync(ticket, details, transType, IsIssueTicket(ticket.Type));
 
 			ticket.Execute();
 		}
 		#endregion
 
+
+
 		#region FEFO
-		public async Task AllocateFEFOAsync(InventoryTicket ticket, Guid productId, decimal requiredBaseQuantity)
+		public async Task<IList<InventoryTicketDetail>> AllocateFEFOAsync(InventoryTicket ticket, Guid productId, decimal requiredBaseQuantity)
 		{
 			var product = await _productRepo.GetAsync(productId);
 			if (!product.IsAvailableForInventory)
@@ -238,52 +239,42 @@ namespace SupplyCoreERP.Inventories.Tickets
 			decimal remaining = requiredBaseQuantity;
 			DateTime now = DateTime.Now;
 
-			// 1. QUERY DUY NHẤT 1 LẦN (Đã tối ưu)
-			var query = from bal in await _balanceRepo.GetQueryableAsync()
-						join bat in await _batchRepo.GetQueryableAsync() on bal.ProductBatchId equals bat.Id
-						join bin in await _binRepo.GetQueryableAsync() on bal.BinId equals bin.Id
-						where bal.WarehouseId == ticket.WarehouseId
-						   && bal.ProductId == productId
-						   && (bal.Quantity - bal.LockedQuantity) > 0
-						   && bat.Status == BatchQAStatus.Approved
-						   && !bin.IsBlocked
-						   && bat.ExpiryDate > now
-						orderby bat.ExpiryDate ascending, (bal.Quantity - bal.LockedQuantity) ascending
-						select new { bal, bat, bin };
+			var query =
+				from bal in await _balanceRepo.GetQueryableAsync()
+				join bat in await _batchRepo.GetQueryableAsync() on bal.ProductBatchId equals bat.Id
+				join bin in await _binRepo.GetQueryableAsync() on bal.BinId equals bin.Id
+				where bal.WarehouseId == ticket.WarehouseId
+				   && bal.ProductId == productId
+				   && (bal.Quantity - bal.LockedQuantity) > 0
+				   && bat.Status == BatchQAStatus.Approved
+				   && !bin.IsBlocked
+				   && bat.ExpiryDate > now
+				orderby bat.ExpiryDate ascending, (bal.Quantity - bal.LockedQuantity) ascending
+				select new { bal, bat, bin };
 
-			var availableStocks = await AsyncExecuter.ToListAsync(query);
-			var detailsToInsert = new List<InventoryTicketDetail>();
+			var stocks = await AsyncExecuter.ToListAsync(query);
+			var detailsToReturn = new List<InventoryTicketDetail>();
 
-			// 2. VÒNG LẶP CHỈ TÍNH TOÁN TRÊN RAM (Không gọi Database)
-			foreach (var stock in availableStocks)
+			foreach (var stock in stocks)
 			{
 				if (remaining <= 0) break;
 
-				decimal availableQty = stock.bal.Quantity - stock.bal.LockedQuantity;
-				decimal takeQty = Math.Min(availableQty, remaining);
-
-				// Gom detail vào List
-				detailsToInsert.Add(new InventoryTicketDetail(
-					GuidGenerator.Create(), ticket.Id, productId, stock.bat.Id, stock.bin.Id, product.BaseUnitId, 1, takeQty));
-
-				remaining -= takeQty;
+				decimal take = Math.Min(stock.bal.Quantity - stock.bal.LockedQuantity, remaining);
+				detailsToReturn.Add(new InventoryTicketDetail(
+					GuidGenerator.Create(), ticket.Id, productId,
+					stock.bat.Id, stock.bin.Id, product.BaseUnitId, 1, take));
+				remaining -= take;
 			}
 
 			if (remaining > 0)
-				throw new UserFriendlyException($"Không đủ tồn kho để xuất! Còn thiếu {remaining:N0} {product.BaseUnit?.Name ?? "đơn vị"}.");
+				throw new UserFriendlyException(
+					$"Không đủ tồn kho! Còn thiếu {remaining:N0} {product.BaseUnit?.Name ?? "đơn vị"}.");
 
-			// 3. GỌI DATABASE ĐÚNG 1 LẦN SAU KHI TÍNH XONG
-			if (detailsToInsert.Any())
-			{
-				// Bulk Insert các dòng chi tiết phiếu
-				await _ticketDetailRepo.InsertManyAsync(detailsToInsert);
+			// Lock stock nếu ticket đã ở trạng thái Pending (gọi thủ công từ AppService)
+			if (detailsToReturn.Any() && ticket.Status == ApprovalStatus.Pending)
+				await _balanceManager.LockStockAsync(ticket, detailsToReturn);
 
-				// Nếu phiếu đang Pending, gọi hàm LockStockAsync (hàm này đã thiết kế chạy UpdateMany và InsertMany, KO bị N+1)
-				if (ticket.Status == ApprovalStatus.Pending)
-				{
-					await _balanceManager.LockStockAsync(ticket, detailsToInsert);
-				}
-			}
+			return detailsToReturn; // ✅ Không InsertManyAsync tại đây
 		}
 		#endregion
 	}

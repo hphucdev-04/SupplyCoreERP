@@ -1,153 +1,165 @@
 <!-- #region Modal -->
 <abp-modal [(visible)]="isVisible" [options]="{ size: 'xl', fullscreen: 'lg' }">
-  
+
   <ng-template #abpHeader>
     <div class="d-flex align-items-center justify-content-between w-100 pe-3" *ngIf="medicine">
       <div class="d-flex align-items-center gap-3">
-        <div class="bg-primary-subtle text-primary rounded p-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+        <div class="ph-icon-avatar ph-icon-avatar--lg">
           <i class="fa fa-pills fa-2x"></i>
         </div>
         <div>
-          <h3 class="modal-title fw-bold mb-1 d-flex align-items-center gap-2">
+          <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
             {{ medicine.name }}
-            <span class="badge rounded-pill fs-6 border" 
-                  [ngClass]="medicine.isActive ? 'bg-success text-white border-success' : 'bg-danger text-white border-secondary'">
+            <span class="ph-badge"
+                  [ngClass]="medicine.isActive ? 'ph-badge--active' : 'ph-badge--inactive'">
               {{ (medicine.isActive ? '::Active' : '::Inactive') | abpLocalization }}
             </span>
           </h3>
-          <div class="text-muted small d-flex gap-3">
-            <span> Code: <strong>{{ medicine.code }}</strong></span>
-            <span *ngIf="medicine.registrationNumber">Reg No: <strong>{{ medicine.registrationNumber }}</strong></span>
+          <div class="ph-text-muted d-flex gap-3">
+            <span>Code: <strong class="ph-text-body">{{ medicine.code }}</strong></span>
+            <span *ngIf="medicine.registrationNumber">Reg No: <strong class="ph-text-body">{{ medicine.registrationNumber }}</strong></span>
           </div>
         </div>
       </div>
       <div>
-        <button class="btn btn-outline-secondary btn-sm"><i class="fa fa-print me-1"></i> {{ '::PrintLabel' | abpLocalization }}</button>
+        <button class="btn btn-sm ph-btn-secondary">
+          <i class="fa fa-print"></i> {{ '::PrintLabel' | abpLocalization }}
+        </button>
       </div>
     </div>
   </ng-template>
 
   <ng-template #abpBody>
     <div class="container-fluid p-0" *ngIf="medicine">
-      <div class="row g-2">
+      <div class="row g-2 mt-2">
+
         <div class="col-lg-7">
           <!-- #region Information -->
-          <div class="card border shadow-sm">
-            <div class="card-header py-3">
-              <h6 class="text-primary fw-bold mb-0"><i class="fa fa-info-circle me-2"></i> {{ '::GeneralInformation' | abpLocalization }}</h6>
+          <div class="ph-card">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-info-circle"></i> {{ '::GeneralInformation' | abpLocalization }}
+              </h6>
             </div>
-            <div class="card-body py-4">
-               <div class="row g-2 p-3">
-                  <div class="col-md-6">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::Name' | abpLocalization }}</small>
-                     <div class="fw-medium fs-6">{{ medicine.name }}</div>
+            <div class="ph-card__body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::Name' | abpLocalization }}</span>
+                  <div class="ph-field-value">{{ medicine.name }}</div>
+                </div>
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::Manufacturer' | abpLocalization }}</span>
+                  <div class="ph-field-value ph-text-primary">{{ medicine.manufacturerName }}</div>
+                </div>
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::OriginCountry' | abpLocalization }}</span>
+                  <div class="ph-field-value d-flex align-items-center">
+                    <i class="fi fi-{{medicine.originCountryCode?.toLowerCase()}} me-2" *ngIf="medicine.originCountryCode"></i>
+                    {{ medicine.originCountryName || 'N/A' }}
                   </div>
-                  <div class="col-md-6">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::Manufacturer' | abpLocalization }}</small>
-                     <div class="fw-medium fs-6 text-primary">{{ medicine.manufacturerName }}</div>
-                  </div>
-                  <div class="col-md-6">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::OriginCountry' | abpLocalization }}</small>
-                     <div class="fw-medium fs-6 d-flex align-items-center">
-                        <i class="fi fi-{{medicine.originCountryCode?.toLowerCase()}} me-2" *ngIf="medicine.originCountryCode"></i>
-                        {{ medicine.originCountryName || 'N/A' }}
-                     </div>
-                  </div>
-                  <div class="col-md-6">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::Category' | abpLocalization }}</small>
-                     <div class="fw-medium fs-6">{{ medicine.categoryName }}</div>
-                  </div>
-                  <div class="col-md-6">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::ProductType' | abpLocalization }}</small>
-                    <div class="fw-medium fs-6">{{ '::FinishedProduct' | abpLocalization }}</div>
-                 </div>
-                  <div class="col-md-6">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::BaseUnit' | abpLocalization }}</small>
-                     <div class="fw-medium fs-6">{{ medicine.baseUnitName }}</div>
-                  </div>
-               </div>
+                </div>
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::Category' | abpLocalization }}</span>
+                  <div class="ph-field-value">{{ medicine.categoryName }}</div>
+                </div>
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::ProductType' | abpLocalization }}</span>
+                  <div class="ph-field-value">{{ '::FinishedProduct' | abpLocalization }}</div>
+                </div>
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::BaseUnit' | abpLocalization }}</span>
+                  <div class="ph-field-value">{{ medicine.baseUnitName }}</div>
+                </div>
+              </div>
             </div>
           </div>
           <!-- #endregion -->
+
           <!-- #region Regulatory -->
-          <div class="card border mt-2 shadow-sm">
-            <div class="card-header py-3">
-              <h6 class="text-primary fw-bold mb-0"><i class="fa fa-gavel me-2"></i> {{ '::ClinicalAndRegulatory' | abpLocalization }}</h6>
+          <div class="ph-card mt-2">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-gavel"></i> {{ '::ClinicalAndRegulatory' | abpLocalization }}
+              </h6>
             </div>
-            <div class="card-body py-4">
-               <div class="row g-2 p-3">
-                  <div class="col-md-6">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::DosageForm' | abpLocalization }}</small>
-                     <div class="fw-medium fs-6"><i class="fa fa-capsules text-secondary me-2"></i> {{ medicine.dosageFormName }}</div>
+            <div class="ph-card__body">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::DosageForm' | abpLocalization }}</span>
+                  <div class="ph-field-value">
+                    <i class="fa fa-capsules ph-text-muted me-2"></i>{{ medicine.dosageFormName }}
                   </div>
-                  <div class="col-md-6">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::UsageRoute' | abpLocalization }}</small>
-                     <div class="fw-medium fs-6">
-                      {{ enumName(UsageRoute, medicine.usageRoute, '::Enum:UsageRoute') | abpLocalization }}
-                     </div>
+                </div>
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::UsageRoute' | abpLocalization }}</span>
+                  <div class="ph-field-value">
+                    {{ enumName(UsageRoute, medicine.usageRoute, '::Enum:UsageRoute') | abpLocalization }}
                   </div>
-                  <div class="col-md-6">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::RegistrationNumber' | abpLocalization }}</small>
-                     <div class="fw-medium fs-6">{{ medicine.registrationNumber || 'N/A' }}</div>
+                </div>
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::RegistrationNumber' | abpLocalization }}</span>
+                  <div class="ph-field-value">{{ medicine.registrationNumber || 'N/A' }}</div>
+                </div>
+                <div class="col-md-6">
+                  <span class="ph-field-meta">{{ '::PrescriptionStatus' | abpLocalization }}</span>
+                  <div class="ph-field-value ph-text-danger" *ngIf="medicine.isPrescriptionDrug">
+                    <i class="fa fa-file-prescription me-1"></i> {{ '::IsPrescriptionDrug' | abpLocalization }} (Rx)
                   </div>
-                  <div class="col-md-6">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::PrescriptionStatus' | abpLocalization }}</small>
-                    <div class="fw-medium fs-6 text-danger" *ngIf="medicine.isPrescriptionDrug">
-                       <i class="fa fa-file-prescription me-1"></i> {{ '::IsPrescriptionDrug' | abpLocalization }} (Rx)
+                  <div class="ph-field-value ph-text-success" *ngIf="!medicine.isPrescriptionDrug">
+                    <i class="fa fa-check-circle me-1"></i> {{ '::OTC' | abpLocalization }} (Không kê đơn)
+                  </div>
+                </div>
+                <div class="col-12">
+                  <span class="ph-field-meta">{{ '::StorageCondition' | abpLocalization }}</span>
+                  <div class="ph-callout ph-callout--info mt-2">
+                    <i class="fa fa-temperature-low ph-callout__icon"></i>
+                    <div>
+                      <strong>{{ enumName(StorageCondition, medicine.storageCondition, '::Enum:StorageCondition') | abpLocalization }}</strong>
+                      <br>
+                      <small class="ph-text-muted">{{ '::StorageConditionDescription' | abpLocalization }}</small>
                     </div>
-                    <div class="fw-medium fs-6 text-success" *ngIf="!medicine.isPrescriptionDrug">
-                       <i class="fa fa-check-circle me-1"></i> {{ '::OTC' | abpLocalization }} (Không kê đơn)
-                    </div>
-                 </div>
-                  <div class="col-12">
-                     <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">{{ '::StorageCondition' | abpLocalization }}</small>
-                     <div class="mt-2 p-3 bg-info-subtle text-info-emphasis rounded border border-info-subtle d-flex align-items-start">
-                        <i class="fa fa-temperature-low me-3 mt-1 fs-5"></i>
-                        <div>
-                          <strong>{{ enumName(StorageCondition, medicine.storageCondition, '::Enum:StorageCondition') | abpLocalization }}</strong>
-                          <br>
-                          <small class="opacity-75">{{ '::StorageConditionDescription' | abpLocalization }}</small>
-                        </div>
-                     </div>
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
           </div>
           <!-- #endregion -->
         </div>
-        
+
         <div class="col-lg-5">
           <!-- #region Ingredient -->
-          <div class="card border mb-4 shadow-sm">
-            <div class="card-header py-3 d-flex justify-content-between align-items-center border-bottom">
-               <h6 class="text-primary fw-bold mb-0"><i class="fa fa-flask me-2"></i> {{ '::ActiveIngredients' | abpLocalization }}</h6>
-               <button class="btn btn-sm btn-outline-primary" (click)="openIngrDrawer()">
-                 <i class="fa fa-plus me-1"></i> {{ '::Add' | abpLocalization }}
-               </button>
+          <div class="ph-card mb-2">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-flask"></i> {{ '::ActiveIngredients' | abpLocalization }}
+              </h6>
+              <button class="btn btn-sm ph-btn-new" (click)="openIngrDrawer()">
+                <i class="fa fa-plus"></i> {{ '::Add' | abpLocalization }}
+              </button>
             </div>
-            <div class="card-body p-0">
+            <div class="ph-card__body--flush">
               <div class="table-responsive">
-                <table class="table table-hover mb-0 align-middle">
-                  <thead class="bg-light">
+                <table class="ph-table ph-table--flush">
+                  <thead>
                     <tr>
-                      <th class="ps-4 py-2 text-muted text-uppercase small fw-semibold">{{ '::Name' | abpLocalization }}</th>
-                      <th class="py-2 text-muted text-uppercase small fw-semibold text-end pe-4">{{ '::Actions' | abpLocalization }}</th>
+                      <th>{{ '::Name' | abpLocalization }}</th>
+                      <th class="text-end">{{ '::Actions' | abpLocalization }}</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let item of medicine.ingredients">
-                      <td class="ps-4 py-3">
-                        <div class="fw-bold text-dark">{{ item.activeIngredientName }}</div>
-                        <small class="text-muted">{{ item.activeIngredientCode }}</small>
+                      <td>
+                        <div class="ph-field-value">{{ item.activeIngredientName }}</div>
+                        <small class="ph-text-muted">{{ item.activeIngredientCode }}</small>
                       </td>
                       <td class="text-end pe-4">
-                        <button class="btn btn-sm btn-link text-danger p-0" (click)="removeIngr(item.activeIngredientId)" title="{{ '::Delete' | abpLocalization }}">
-                          <i class="fa fa-trash-alt"></i>
-                       </button>
+                        <button class="ph-btn-ghost btn btn-sm" (click)="removeIngr(item.activeIngredientId)" title="{{ '::Delete' | abpLocalization }}">
+                          <i class="fa fa-trash-alt ph-text-danger"></i>
+                        </button>
                       </td>
                     </tr>
                     <tr *ngIf="medicine.ingredients.length === 0">
-                      <td colspan="2" class="text-center text-muted py-4 small fst-italic">
+                      <td colspan="2" class="ph-empty-state">
                         {{ '::NoIngredients' | abpLocalization }}
                       </td>
                     </tr>
@@ -157,46 +169,51 @@
             </div>
           </div>
           <!-- #endregion -->
+
           <!-- #region Unit -->
-          <div class="card border mb-4 shadow-sm">
-            <div class="card-header py-3 d-flex justify-content-between align-items-center border-bottom">
-               <h6 class="text-primary fw-bold mb-0"><i class="fa fa-boxes-stacked me-2"></i> {{ '::ProductUnits' | abpLocalization }}</h6>
-               <button class="btn btn-sm btn-outline-primary" (click)="openUnitDrawer()">
-                 <i class="fa fa-plus me-1"></i> {{ '::Add' | abpLocalization }}
-               </button>
+          <div class="ph-card mb-2">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-boxes-stacked"></i> {{ '::ProductUnits' | abpLocalization }}
+              </h6>
+              <button class="btn btn-sm ph-btn-new" (click)="openUnitDrawer()">
+                <i class="fa fa-plus"></i> {{ '::Add' | abpLocalization }}
+              </button>
             </div>
-            <div class="card-body p-0">
+            <div class="ph-card__body--flush">
               <div class="table-responsive">
-                <table class="table table-hover mb-0 align-middle">
-                  <thead class="bg-light">
+                <table class="ph-table ph-table--flush">
+                  <thead>
                     <tr>
-                      <th class="ps-4 py-2 text-muted text-uppercase small fw-semibold">{{ '::Unit' | abpLocalization }}</th>
-                      <th class="py-2 text-muted text-uppercase small fw-semibold">{{ '::Factor' | abpLocalization }}</th>
-                      <th class="py-2 text-muted text-uppercase small fw-semibold text-end pe-4">{{ '::Actions' | abpLocalization }}</th>
+                      <th>{{ '::Unit' | abpLocalization }}</th>
+                      <th>{{ '::Factor' | abpLocalization }}</th>
+                      <th class="text-end">{{ '::Actions' | abpLocalization }}</th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr class="bg-light-subtle">
-                      <td class="ps-4 py-3">
-                        <div class="fw-bold text-dark">{{ medicine.baseUnitName }} <span class="badge bg-secondary ms-1">Base</span></div>
+                    <tr class="ph-bg-subtle">
+                      <td>
+                        <span class="ph-field-value">{{ medicine.baseUnitName }}</span>
+                        <span class="ph-badge ph-badge--neutral ms-2">Base</span>
                       </td>
-                      <td class="py-3"><span class="fw-bold">x 1</span></td>
-                      <td class="text-end pe-4"></td> </tr>
+                      <td><span class="ph-field-value">x 1</span></td>
+                      <td class="text-end pe-4"></td>
+                    </tr>
                     <tr *ngFor="let u of medicine.units">
-                      <td class="ps-4 py-3">
-                        <div class="fw-bold text-dark">{{ u.unitName }}</div>
-                        <small class="text-muted">Level {{ u.level }}</small>
+                      <td>
+                        <div class="ph-field-value">{{ u.unitName }}</div>
+                        <small class="ph-text-muted">Level {{ u.level }}</small>
                       </td>
-                      <td class="py-3">
-                        <span class="fw-bold text-primary">x {{ u.conversionFactor }}</span>
+                      <td>
+                        <span class="ph-field-value ph-text-primary">x {{ u.conversionFactor }}</span>
                       </td>
                       <td class="text-end pe-4">
-                        <button class="btn btn-sm btn-link text-primary p-0 me-2" (click)="editUnit(u)" title="{{ '::Edit' | abpLocalization }}">
-                           <i class="fa fa-pencil-alt"></i>
+                        <button class="ph-btn-ghost btn btn-sm me-1" (click)="editUnit(u)" title="{{ '::Edit' | abpLocalization }}">
+                          <i class="fa fa-pencil-alt ph-text-primary"></i>
                         </button>
-                        <button class="btn btn-sm btn-link text-danger p-0" (click)="removeUnit(u.unitId)" title="{{ '::Delete' | abpLocalization }}">
-                          <i class="fa fa-trash-alt"></i>
-                       </button>
+                        <button class="ph-btn-ghost btn btn-sm" (click)="removeUnit(u.unitId)" title="{{ '::Delete' | abpLocalization }}">
+                          <i class="fa fa-trash-alt ph-text-danger"></i>
+                        </button>
                       </td>
                     </tr>
                   </tbody>
@@ -205,117 +222,114 @@
             </div>
           </div>
           <!-- #endregion -->
+
           <!-- #region System -->
-          <div class="card border shadow-sm">
-             <div class="card-header py-3">
-              <h6 class="text-primary fw-bold mb-0"><i class="fa fa-clock-rotate-left me-2"></i> {{ '::SystemData' | abpLocalization }}</h6>
+          <div class="ph-card">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-clock-rotate-left"></i> {{ '::SystemData' | abpLocalization }}
+              </h6>
             </div>
-             <div class="card-body py-3">
-
-              <!-- Creation Time -->
-              <div class="d-flex justify-content-between align-items-center px-3 py-2">
-                <span class="small text-muted fw-semibold">
-                  {{ '::CreationTime' | abpLocalization }}
-                </span>
-                <span class="small fw-medium">
-                  {{ medicine.creationTime | date:'dd/MM/yyyy HH:mm' }}
-                </span>
+            <div class="ph-card__body">
+              <div class="d-flex justify-content-between align-items-center py-2">
+                <span class="ph-text-muted">{{ '::CreationTime' | abpLocalization }}</span>
+                <span class="ph-field-value">{{ medicine.creationTime | date:'dd/MM/yyyy HH:mm' }}</span>
               </div>
-
-              <!-- Last Modification Time -->
-              <div class="d-flex justify-content-between align-items-center px-3 py-2 border-top">
-                <span class="small text-muted fw-semibold">
-                  {{ '::LastModificationTime' | abpLocalization }}
-                </span>
-                <span class="small fw-medium">
-                  {{ medicine.lastModificationTime 
-                      ? (medicine.lastModificationTime | date:'dd/MM/yyyy HH:mm') 
+              <hr class="ph-divider my-1">
+              <div class="d-flex justify-content-between align-items-center py-2">
+                <span class="ph-text-muted">{{ '::LastModificationTime' | abpLocalization }}</span>
+                <span class="ph-field-value">
+                  {{ medicine.lastModificationTime
+                      ? (medicine.lastModificationTime | date:'dd/MM/yyyy HH:mm')
                       : 'N/A' }}
                 </span>
               </div>
-
             </div>
           </div>
           <!-- #endregion -->
         </div>
       </div>
+
       <!-- #region Price -->
-      <div class="row mt-4">
-         <div class="col-12">
-            <div class="card border shadow-sm">
-                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
-                    <h6 class="text-primary fw-bold mb-0">
-                        <i class="fa fa-tags me-2"></i> {{ '::Pricing' | abpLocalization }}
-                    </h6>
-                    <button class="btn btn-sm btn-outline-primary" (click)="openPriceDrawer()">
-                        <i class="fa fa-plus me-1"></i> {{ '::Add' | abpLocalization }}
-                    </button>
-                </div>
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0 align-middle">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th class="ps-4 py-2 text-muted small fw-semibold">{{ '::PriceCode' | abpLocalization }}</th>
-                                    <th class="ps-4 py-2 text-muted small fw-semibold">{{ '::PriceList' | abpLocalization }}</th>
-                                    <th class="py-2 text-muted small fw-semibold">{{ '::Unit' | abpLocalization }}</th>
-                                    <th class="py-2 text-muted small fw-semibold text-end pe-5">{{ '::Price' | abpLocalization }}</th>
-                                    <th class="py-2 text-muted small fw-semibold text-end pe-4">{{ '::Currency' | abpLocalization }}</th>
-                                    <th class="py-2 text-muted small fw-semibold text-end pe-4">{{ '::Actions' | abpLocalization }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let p of productPrices">
-                                   <td class="ps-4 py-3">
-                                        <div class="fw-bold text-dark">{{ p.priceListCode }}</div>
-                                    </td>
-                                    <td class="ps-4 py-3">
-                                        <div class="fw-bold text-dark">{{ p.priceListName }}</div>
-                                        <small class="text-muted" *ngIf="p.minQuantity > 1">Min MinQuantity: {{ p.minQuantity }}</small>
-                                    </td>
-                                    <td class="py-3">
-                                        <span class="badge bg-light text-dark border">{{ p.unitName }}</span>
-                                    </td>
-                                    <td class="py-3 text-end pe-5">
-                                        <span class="fw-bold text-success fs-6">{{ p.price | number:'1.0-0' }} ₫</span>
-                                    </td>
-                                    <td class="py-3 text-end pe-5">
-                                        <span class="fw-bold text-primary fs-6">{{ enumName(CurrencyType, p.currency, '::Enum:CurrencyType') | abpLocalization }}</span>
-                                    </td>
-                                    <td class="text-end pe-4">
-                                        <div class="dropdown" ngbDropdown container="body">
-                                            <button class="btn btn-link btn-sm p-0 text-muted" ngbDropdownToggle>
-                                                <i class="fa fa-ellipsis-v"></i>
-                                            </button>
-                                            <div ngbDropdownMenu class="dropdown-menu-end shadow-sm border-0">
-                                                <button ngbDropdownItem (click)="editPrice(p)">
-                                                    <i class="fa fa-pencil text-primary me-2"></i> {{ '::Edit' | abpLocalization }}
-                                                </button>
-                                                <button ngbDropdownItem (click)="removePrice(p.id)">
-                                                    <i class="fa fa-trash text-danger me-2"></i> {{ '::Delete' | abpLocalization }}
-                                                </button>
-                                            </div>
-                                        </div>
-                                    </td>
-                                </tr>
-                                <tr *ngIf="productPrices.length === 0">
-                                    <td colspan="4" class="text-center text-muted py-5 small fst-italic">
-                                        {{ '::NoPriceConfigured' | abpLocalization }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+      <div class="row mt-3">
+        <div class="col-12">
+          <div class="ph-card">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-tags"></i> {{ '::Pricing' | abpLocalization }}
+              </h6>
+              <button class="btn btn-sm ph-btn-new" (click)="openPriceDrawer()">
+                <i class="fa fa-plus"></i> {{ '::Add' | abpLocalization }}
+              </button>
             </div>
-         </div>
+            <div class="ph-card__body--flush">
+              <div class="table-responsive">
+                <table class="ph-table ph-table--flush">
+                  <thead>
+                    <tr>
+                      <th>{{ '::PriceCode' | abpLocalization }}</th>
+                      <th>{{ '::PriceList' | abpLocalization }}</th>
+                      <th>{{ '::Unit' | abpLocalization }}</th>
+                      <th class="text-end pe-5">{{ '::Price' | abpLocalization }}</th>
+                      <th class="text-end pe-4">{{ '::Currency' | abpLocalization }}</th>
+                      <th class="text-end pe-4">{{ '::Actions' | abpLocalization }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let p of productPrices">
+                      <td>
+                        <div class="ph-field-value">{{ p.priceListCode }}</div>
+                      </td>
+                      <td>
+                        <div class="ph-field-value">{{ p.priceListName }}</div>
+                        <small class="ph-text-muted" *ngIf="p.minQuantity > 1">Min: {{ p.minQuantity }}</small>
+                      </td>
+                      <td>
+                        <span class="ph-badge ph-badge--neutral">{{ p.unitName }}</span>
+                      </td>
+                      <td class="text-end pe-5">
+                        <span class="ph-field-value ph-text-success">{{ p.price | number:'1.0-0' }} ₫</span>
+                      </td>
+                      <td class="text-end pe-4">
+                        <span class="ph-field-value ph-text-primary">
+                          {{ enumName(CurrencyType, p.currency, '::Enum:CurrencyType') | abpLocalization }}
+                        </span>
+                      </td>
+                      <td class="text-end pe-4">
+                        <div ngbDropdown container="body">
+                          <button class="ph-btn-ghost btn btn-sm" ngbDropdownToggle>
+                            <i class="fa fa-ellipsis-v"></i>
+                          </button>
+                          <div ngbDropdownMenu class="dropdown-menu-end">
+                            <button ngbDropdownItem (click)="editPrice(p)">
+                              <i class="fa fa-pencil ph-text-primary me-2"></i> {{ '::Edit' | abpLocalization }}
+                            </button>
+                            <button ngbDropdownItem (click)="removePrice(p.id)">
+                              <i class="fa fa-trash ph-text-danger me-2"></i> {{ '::Delete' | abpLocalization }}
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                    </tr>
+                    <tr *ngIf="productPrices.length === 0">
+                      <td colspan="6" class="ph-empty-state">
+                        {{ '::NoPriceConfigured' | abpLocalization }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <!-- #endregion -->
+
     </div>
   </ng-template>
 
   <ng-template #abpFooter>
-    <button type="button" class="btn btn-secondary" (click)="close()">
+    <button type="button" class="btn ph-btn-secondary" (click)="close()">
       {{ '::Close' | abpLocalization }}
     </button>
   </ng-template>
@@ -326,13 +340,13 @@
 <!-- #region Ingredient Drawer -->
 <app-drawer [isOpen]="isIngrDrawerOpen" [title]="'::AddIngredient' | abpLocalization" [width]="'md'" [saveDisabled]="ingrForm.invalid" (close)="isIngrDrawerOpen = false" (save)="saveIngr()">
   <form [formGroup]="ingrForm">
-     <div class="mb-3">
-        <label class="form-label small fw-semibold">{{ '::ActiveIngredient' | abpLocalization }} <span class="text-danger">*</span></label>
-        <select class="form-select" formControlName="activeIngredientId">
-           <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-           <option *ngFor="let item of allIngredients" [ngValue]="item.id">{{ item.name }} ({{ item.code }})</option>
-        </select>
-     </div>
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::ActiveIngredient' | abpLocalization }}</label>
+      <select class="form-select" formControlName="activeIngredientId">
+        <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+        <option *ngFor="let item of allIngredients" [ngValue]="item.id">{{ item.name }} ({{ item.code }})</option>
+      </select>
+    </div>
   </form>
 </app-drawer>
 <!-- #endregion -->
@@ -340,69 +354,73 @@
 <!-- #region Unit Drawer -->
 <app-drawer [isOpen]="isUnitDrawerOpen" [title]="(isEditingUnit ? '::EditUnit' : '::AddUnit') | abpLocalization" [width]="'md'" [saveDisabled]="unitForm.invalid" (close)="isUnitDrawerOpen = false" (save)="saveUnit()">
   <form [formGroup]="unitForm">
-     <div class="mb-3">
-        <label class="form-label small fw-semibold">{{ '::Unit' | abpLocalization }} <span class="text-danger">*</span></label>
-        <select class="form-select" formControlName="unitId">
-           <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-           <option *ngFor="let item of allUnits" [ngValue]="item.id">{{ item.name }}</option>
-        </select>
-        <div *ngIf="isEditingUnit" class="form-text text-warning small"><i class="fa fa-lock"></i> {{ '::CannotChangeUnitId' | abpLocalization }}</div>
-     </div>
-     <div class="row">
-         <div class="col-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::ConversionFactor' | abpLocalization }} <span class="text-danger">*</span></label>
-            <input type="number" class="form-control" formControlName="conversionFactor" placeholder="Ex: 10">
-            <div class="form-text small">{{ '::BaseUnitConversionHint' | abpLocalization }}</div>
-         </div>
-         <div class="col-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::Level' | abpLocalization }} <span class="text-danger">*</span></label>
-            <input type="number" class="form-control" formControlName="level" placeholder="Ex: 1">
-         </div>
-     </div>
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label>
+      <select class="form-select" formControlName="unitId">
+        <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+        <option *ngFor="let item of allUnits" [ngValue]="item.id">{{ item.name }}</option>
+      </select>
+      <div *ngIf="isEditingUnit" class="ph-hint-warning">
+        <i class="fa fa-lock me-1"></i> {{ '::CannotChangeUnitId' | abpLocalization }}
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::ConversionFactor' | abpLocalization }}</label>
+        <input type="number" class="form-control" formControlName="conversionFactor" placeholder="Ex: 10">
+        <div class="ph-hint-msg">{{ '::BaseUnitConversionHint' | abpLocalization }}</div>
+      </div>
+      <div class="col-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::Level' | abpLocalization }}</label>
+        <input type="number" class="form-control" formControlName="level" placeholder="Ex: 1">
+      </div>
+    </div>
   </form>
 </app-drawer>
 <!-- #endregion -->
 
 <!-- #region Price Drawer -->
-<app-drawer 
-    [isOpen]="isPriceDrawerOpen" 
-    [title]="(isEditingPrice ? '::EditPrice' : '::AddPrice') | abpLocalization" 
-    [width]="'md'" 
-    [saveDisabled]="priceForm.invalid" 
-    (close)="isPriceDrawerOpen = false" 
+<app-drawer
+    [isOpen]="isPriceDrawerOpen"
+    [title]="(isEditingPrice ? '::EditPrice' : '::AddPrice') | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="priceForm.invalid"
+    (close)="isPriceDrawerOpen = false"
     (save)="savePrice()">
-    
-    <form [formGroup]="priceForm">
-        <div class="mb-3">
-            <label class="form-label small fw-semibold">{{ '::PriceList' | abpLocalization }} <span class="text-danger">*</span></label>
-            <select class="form-select" formControlName="priceListId">
-                <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-                <option *ngFor="let item of priceLists" [ngValue]="item.id">{{ item.name }} ({{ item.currency }})</option>
-            </select>
-            <div *ngIf="isEditingPrice" class="form-text text-warning small"><i class="fa fa-lock"></i> {{ '::CannotChangeKeyField' | abpLocalization }}</div>
-        </div>
 
-        <div class="mb-3">
-            <label class="form-label small fw-semibold">{{ '::Unit' | abpLocalization }} <span class="text-danger">*</span></label>
-            <select class="form-select" formControlName="unitId">
-                <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-                <option *ngFor="let item of availableUnitsForPrice" [ngValue]="item.id">{{ item.name }}</option>
-            </select>
-        </div>
+  <form [formGroup]="priceForm">
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::PriceList' | abpLocalization }}</label>
+      <select class="form-select" formControlName="priceListId">
+        <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+        <option *ngFor="let item of priceLists" [ngValue]="item.id">{{ item.name }} ({{ item.currency }})</option>
+      </select>
+      <div *ngIf="isEditingPrice" class="ph-hint-warning">
+        <i class="fa fa-lock me-1"></i> {{ '::CannotChangeKeyField' | abpLocalization }}
+      </div>
+    </div>
 
-        <div class="row">
-            <div class="col-6 mb-3">
-                <label class="form-label small fw-semibold">{{ '::Price' | abpLocalization }} <span class="text-danger">*</span></label>
-                <div class="input-group">
-                    <input type="text" class="form-control fw-bold text-success" formControlName="price" placeholder="0" appCurrencyFormat>
-                    <span class="input-group-text small">₫</span>
-                </div>
-            </div>
-            <div class="col-6 mb-3">
-                <label class="form-label small fw-semibold">{{ '::MinQuantity' | abpLocalization }} <span class="text-danger">*</span></label>
-                <input type="number" class="form-control" formControlName="minQuantity" placeholder="1">
-            </div>
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label>
+      <select class="form-select" formControlName="unitId">
+        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+        <option *ngFor="let item of availableUnitsForPrice" [ngValue]="item.id">{{ item.name }}</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <div class="col-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::Price' | abpLocalization }}</label>
+        <div class="input-group">
+          <input type="text" class="form-control ph-text-success" style="font-weight: 600;" formControlName="price" placeholder="0" appCurrencyFormat>
+          <span class="input-group-text">₫</span>
         </div>
-    </form>
+      </div>
+      <div class="col-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::MinQuantity' | abpLocalization }}</label>
+        <input type="number" class="form-control" formControlName="minQuantity" placeholder="1">
+      </div>
+    </div>
+  </form>
 </app-drawer>
 <!-- #endregion -->

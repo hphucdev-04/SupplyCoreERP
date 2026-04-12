@@ -110,9 +110,21 @@ namespace SupplyCoreERP.Sales.Orders
 			if (!Details.Any()) throw new UserFriendlyException("Đơn bán hàng chưa có sản phẩm nào!");
 			Status = SalesOrderStatus.PendingApproval;
 		}
-		public void Approve() => Status = SalesOrderStatus.Approved;
-		public void StartDelivering() => Status = SalesOrderStatus.Delivering;
-		public void Complete() => Status = SalesOrderStatus.Completed;
+		public void Approve()
+		{
+			Status = SalesOrderStatus.Approved;
+		}
+		public void StartDelivering()
+		{
+			if (Status != SalesOrderStatus.Approved)
+				throw new UserFriendlyException(
+					"Chỉ có thể bắt đầu giao hàng khi đơn đang ở trạng thái Đã duyệt!");
+			Status = SalesOrderStatus.Delivering;
+		}
+		public void Complete()
+		{
+			Status = SalesOrderStatus.Completed;
+		}
 
 		public void Cancel()
 		{

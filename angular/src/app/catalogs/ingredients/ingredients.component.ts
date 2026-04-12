@@ -5,8 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { ActiveIngredientService } from 'src/app/proxy/active-ingredients';
 import { ActiveIngredientDto, GetActiveIngredientListDto } from 'src/app/proxy/active-ingredients/dtos';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
 

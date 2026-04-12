@@ -7,8 +7,8 @@ import { LocationService } from 'src/app/proxy/locations';
 import { ContinentDto, CountryDto } from 'src/app/proxy/locations/dtos';
 import { ManufacturerService } from 'src/app/proxy/manufacturers';
 import { ManufacturerDto } from 'src/app/proxy/manufacturers/dtos';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({

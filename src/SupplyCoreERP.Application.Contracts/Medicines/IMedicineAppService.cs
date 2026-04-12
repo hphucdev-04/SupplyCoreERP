@@ -9,12 +9,15 @@ namespace SupplyCoreERP.Medicines
 {
 	public interface IMedicineAppService : IApplicationService
 	{
+		//Medicines
 		Task<PagedResultDto<MedicineDto>> GetListAsync(GetMedicineListDto input);
 		Task<MedicineDetailDto> GetAsync(Guid id);
 		Task<MedicineDetailDto> CreateAsync(CreateUpdateMedicineDto input);
 		Task<MedicineDetailDto> UpdateAsync(Guid id, CreateUpdateMedicineDto input);
 		Task DeleteAsync(Guid id);
+		Task<MedicineSummaryDto> GetSummaryAsync();
 
+		//Workflow
 		Task ApproveAsync(Guid id);
 		Task RejectAsync(Guid id);
 		Task ToggleActiveAsync(Guid id);

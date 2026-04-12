@@ -6,8 +6,8 @@ import { SharedModule } from '../../shared.module';
 
 @Component({
   selector: 'app-import-modal',
-  templateUrl: 'import-modal.component.html',
-  styleUrl: 'import-modal.component.scss',
+  templateUrl: 'import.component.html',
+  styleUrl: 'import.component.scss',
   imports: [SharedModule]
 })
 export class ImportModalComponent {

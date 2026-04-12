@@ -26,7 +26,6 @@ using Volo.Abp.Application.Services;
 using Volo.Abp.Content;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace SupplyCoreERP.Medicines
 {
@@ -204,6 +203,26 @@ namespace SupplyCoreERP.Medicines
 			var entity = await _medicineRepo.GetAsync(id);
 			entity.SetActive(!entity.IsActive);
 			await _medicineRepo.UpdateAsync(entity);
+		}
+
+		public async Task<MedicineSummaryDto> GetSummaryAsync()
+		{
+			var query = await _medicineRepo.GetQueryableAsync();
+
+			var summary = await query
+				.GroupBy(x => 1)
+				.Select(g => new MedicineSummaryDto
+				{
+					TotalCount = g.Count(),
+					TotalActive = g.Count(x => x.IsActive),
+					TotalInactive = g.Count(x => !x.IsActive),
+					TotalApproved = g.Count(x => x.Status == MedicineStatus.Approved),
+					TotalPending = g.Count(x => x.Status == MedicineStatus.Pending),
+					TotalRejected = g.Count(x => x.Status == MedicineStatus.Rejected)
+				})
+				.FirstOrDefaultAsync();
+
+			return summary ?? new MedicineSummaryDto();
 		}
 		#endregion
 

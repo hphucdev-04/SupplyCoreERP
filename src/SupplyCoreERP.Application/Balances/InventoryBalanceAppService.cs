@@ -70,18 +70,34 @@ namespace SupplyCoreERP.Balances
 
 			return ObjectMapper.Map<InventoryBalance, InventoryBalanceDetailDto>(entity);
 		}
-		public async Task<List<InventoryReservationDto>> GetActiveReservationsAsync(Guid id)
-		{
-			var balance = await _balanceRepo.GetAsync(id);
 
-			var activeReservations = await _reservationRepo.GetListAsync(x =>
-				x.WarehouseId == balance.WarehouseId &&
-				x.BinId == balance.BinId &&
-				x.ProductBatchId == balance.ProductBatchId &&
-				x.Status == ReservationStatus.Active
+		public async Task<PagedResultDto<InventoryReservationDto>> GetReservationListAsync(GetInventoryReservationListDto input)
+		{
+			var query = await _reservationRepo.GetQueryableAsync();
+
+			// Bộ lọc đa năng (Multi-dimensional Filter)
+			query = query
+				.WhereIf(input.ReferenceDocumentId.HasValue, x => x.ReferenceDocumentId == input.ReferenceDocumentId)
+				.WhereIf(!string.IsNullOrWhiteSpace(input.ReferenceDocumentNumber), x => x.ReferenceDocumentNumber.Contains(input.ReferenceDocumentNumber))
+				.WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
+				.WhereIf(input.BinId.HasValue, x => x.BinId == input.BinId)
+				.WhereIf(input.ProductId.HasValue, x => x.ProductId == input.ProductId)
+				.WhereIf(input.ProductBatchId.HasValue, x => x.ProductBatchId == input.ProductBatchId)
+				.WhereIf(input.Status.HasValue, x => x.Status == input.Status);
+
+			var totalCount = await AsyncExecuter.CountAsync(query);
+
+			var items = await AsyncExecuter.ToListAsync(
+				query.OrderBy(string.IsNullOrWhiteSpace(input.Sorting) ? "CreationTime DESC" : input.Sorting)
+					 .Skip(input.SkipCount)
+					 .Take(input.MaxResultCount)
 			);
 
-			return ObjectMapper.Map<List<InventoryReservation>, List<InventoryReservationDto>>(activeReservations);
+			return new PagedResultDto<InventoryReservationDto>(
+				totalCount,
+				ObjectMapper.Map<List<InventoryReservation>, List<InventoryReservationDto>>(items)
+			);
+
 		}
 	}
 }

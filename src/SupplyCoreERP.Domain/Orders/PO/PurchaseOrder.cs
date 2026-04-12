@@ -105,9 +105,21 @@ namespace SupplyCoreERP.Orders.PO
 			Status = PurchaseOrderStatus.PendingApproval;
 		}
 
-		public void Approve() => Status = PurchaseOrderStatus.Approved;
-		public void StartReceiving() => Status = PurchaseOrderStatus.Receiving;
-		public void Complete() => Status = PurchaseOrderStatus.Completed;
+		public void Approve()
+		{
+			Status = PurchaseOrderStatus.Approved;
+		}
+		public void StartReceiving()
+		{
+			if (Status != PurchaseOrderStatus.Approved)
+				throw new UserFriendlyException(
+					"Chỉ có thể bắt đầu nhận hàng khi đơn đang ở trạng thái Đã duyệt!");
+			Status = PurchaseOrderStatus.Receiving;
+		}
+		public void Complete()
+		{
+			Status = PurchaseOrderStatus.Completed;
+		}
 
 		public void Cancel()
 		{

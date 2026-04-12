@@ -10,7 +10,7 @@ import { CreateUpdateMedicineIngredientDto, CreateUpdateMedicineUnitDto, Medicin
 import { ProductPriceDto, PriceListDto, CreateUpdateProductPriceDto } from 'src/app/proxy/prices/dtos'; 
 import { UsageRoute, StorageCondition } from 'src/app/proxy/enums/medicines';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { PriceService } from 'src/app/proxy/prices';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
 import { CurrencyType } from 'src/app/proxy/enums';

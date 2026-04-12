@@ -10,11 +10,11 @@ import { MedicineStatus, medicineStatusOptions, StorageCondition, storageConditi
 import { ManufacturerService } from 'src/app/proxy/manufacturers';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { CreateUpdateMedicineDto, GetMedicineListDto, MedicineDetailDto, MedicineDto } from 'src/app/proxy/medicines/dtos';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MedicineDetailComponent } from './medicice-details/medicice-details.component';
-import { ImportModalComponent } from 'src/app/shared/components/import-modal/import-modal.component';
+import { ImportModalComponent } from 'src/app/shared/components/import-compoent/import.component';
 import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
 import { enumName } from 'src/app/shared/utils/enum.util';
 

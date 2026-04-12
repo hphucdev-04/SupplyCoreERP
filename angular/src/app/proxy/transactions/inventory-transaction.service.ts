@@ -11,6 +11,14 @@ export class InventoryTransactionService {
   apiName = 'Default';
   
 
+  get = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, InventoryTransactionDto>({
+      method: 'GET',
+      url: `/api/app/inventory-transaction/${id}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (input: GetInventoryTransactionListDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<InventoryTransactionDto>>({
       method: 'GET',

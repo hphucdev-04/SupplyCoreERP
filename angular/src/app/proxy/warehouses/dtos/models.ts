@@ -14,7 +14,7 @@ export interface BinDto extends EntityDto<string> {
   width?: number;
   length?: number;
   rotation?: number;
-  maxWeight?: number;
+  maxSKU?: number;
   isBlocked?: boolean;
 }
 

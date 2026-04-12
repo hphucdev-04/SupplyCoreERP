@@ -9,7 +9,7 @@ import { WarehouseService } from 'src/app/proxy/warehouses';
 import { MedicineService } from 'src/app/proxy/medicines';
 
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { BalanceDetailsComponent } from './balance-details/balance-details.component';
 
 

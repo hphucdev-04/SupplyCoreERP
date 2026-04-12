@@ -14,5 +14,6 @@ namespace SupplyCoreERP.Customers
 		Task<CustomerDetailDto> UpdateAsync(Guid id, CreateUpdateCustomerDto input);
 		Task DeleteAsync(Guid id);
 		Task ToggleActiveAsync(Guid id);
+		Task <CustomerSummaryDto> GetSummaryAsync();
 	}
 }
