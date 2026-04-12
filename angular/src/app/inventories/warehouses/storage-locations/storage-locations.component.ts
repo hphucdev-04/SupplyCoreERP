@@ -11,7 +11,7 @@ import { Subject, forkJoin, lastValueFrom } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
 import { DragDropModule, CdkDragEnd } from '@angular/cdk/drag-drop';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 
 
 type ResizeHandle = 'n' | 's' | 'e' | 'w' | 'nw' | 'ne' | 'sw' | 'se';
@@ -634,7 +634,7 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
       width:       [this.toM(bin?.width  || this.toPx(2)), [Validators.required, Validators.min(0.5)]], // 0.5m min
       length:      [this.toM(bin?.length || this.toPx(2)), [Validators.required, Validators.min(0.5)]],
       rotation:    [bin?.rotation || 0, [Validators.min(0), Validators.max(360)]],
-      maxSKU:      [bin?.maxWeight || 0, [Validators.min(0)]],
+      maxSKU:      [bin?.maxSKU || 0, [Validators.min(0)]],
       isBlocked:   [bin?.isBlocked || false],
     });
 

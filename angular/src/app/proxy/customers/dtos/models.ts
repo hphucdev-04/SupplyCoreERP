@@ -18,6 +18,7 @@ export interface CreateUpdateCustomerDto {
   note?: string;
   debtLimit?: number;
   paymentTermDays?: number;
+  priceListId?: string;
   isActive?: boolean;
 }
 
@@ -35,6 +36,8 @@ export interface CustomerDetailDto extends CustomerDto {
   areaName?: string;
   debtLimit?: number;
   paymentTermDays?: number;
+  priceListId?: string;
+  priceName?: string;
 }
 
 export interface CustomerDto extends FullAuditedEntityDto<string> {
@@ -45,6 +48,14 @@ export interface CustomerDto extends FullAuditedEntityDto<string> {
   cityName?: string;
   currentDebt?: number;
   isActive?: boolean;
+}
+
+export interface CustomerSummaryDto {
+  totalCount?: number;
+  totalActive?: number;
+  totalInactive?: number;
+  totalOrganization?: number;
+  totalIndividual?: number;
 }
 
 export interface GetCustomerListDto extends PagedAndSortedResultRequestDto {

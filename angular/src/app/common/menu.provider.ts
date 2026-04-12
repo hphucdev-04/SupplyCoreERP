@@ -66,4 +66,10 @@ export const APP_ROUTES = [
     { name: 'Tickets', icon: 'fas fa-file-invoice' },       // Phiếu Nhập/Xuất
     { name: 'Balances', icon: 'fas fa-clipboard-list' },    // Xem tồn kho
   ]),
+
+  ...createMenuGroup('Order', 'fas fa-warehouse', 5, [
+    { name: 'SaleOrders', icon: 'fas fa-building' },       
+    { name: 'PurchaseOrders', icon: 'fas fa-boxes' },             
+
+  ]),
 ];

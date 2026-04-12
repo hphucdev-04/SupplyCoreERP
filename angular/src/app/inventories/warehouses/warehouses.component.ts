@@ -10,8 +10,8 @@ import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.e
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { LocationService } from 'src/app/proxy/locations';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
 import { Router } from '@angular/router';
 import { enumName } from 'src/app/shared/utils/enum.util';

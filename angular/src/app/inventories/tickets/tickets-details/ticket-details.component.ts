@@ -10,14 +10,17 @@ import { StorageCondition } from 'src/app/proxy/enums/medicines';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
 import { BinDto } from 'src/app/proxy/warehouses/dtos';
 import { ProductBatchDto } from 'src/app/proxy/batches/dtos';
 import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { ProductBatchService } from 'src/app/proxy/batches';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { enumName } from 'src/app/shared/utils/enum.util';
+import { PurchaseOrderDetailsComponent } from 'src/app/orders/purchaseorders/purchaseorder-details/purchaseorder-details.component';
+import { SalesOrderDetailsComponent } from 'src/app/orders/saleorders/saleorder-details/saleorder-details.component';
 
 interface ProductUnitLookup {
   unitId: string;
@@ -29,42 +32,41 @@ interface ProductUnitLookup {
 @Component({
   selector: 'app-ticket-details',
   standalone: true,
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, PurchaseOrderDetailsComponent, SalesOrderDetailsComponent],
   templateUrl: './ticket-details.component.html',
   styleUrls: ['./ticket-details.component.scss']
 })
 export class TicketDetailsComponent implements OnDestroy {
-  @ViewChild('ticketDetailModal', { static: false }) ticketDetailModal: any;
+  @ViewChild('rejectReasonModal', { static: false }) rejectReasonModal: any;
+  @ViewChild('poDetailModal') poDetailModal: PurchaseOrderDetailsComponent;
+  @ViewChild('soDetailModal') soDetailModal: SalesOrderDetailsComponent;
+
   @Output() onSaved = new EventEmitter<void>();
 
   private destroy$ = new Subject<void>();
-  private modalRef: NgbModalRef;
 
+  isVisible = false;
   ticketId: string;
   ticket: InventoryTicketDto;
 
-  // Tất cả bins không bị blocked trong kho
-  bins: BinDto[] = [];
-  // Bins đã filter theo StorageCondition của thuốc đang chọn
-  filteredBins: BinDto[] = [];
-  // Số bins bị ẩn do không khớp StorageCondition
-  hiddenBinCount = 0;
-  // StorageCondition của thuốc đang chọn (để hiển thị hint)
-  selectedMedicineCondition: StorageCondition | null = null;
+  rejectReason = '';
+  showRejectError = false;
+  isRejecting = false;
 
+  bins: BinDto[] = [];
+  filteredBins: BinDto[] = [];
+  hiddenBinCount = 0;
+  selectedMedicineCondition: StorageCondition | null = null;
   medicines: MedicineDto[] = [];
 
-  // ── Batch state ───────────────────────────────────────────
   allBatches: ProductBatchDto[] = [];
   batches: ProductBatchDto[] = [];
   hiddenBatchCount = 0;
 
-  // ── Inline batch creation ─────────────────────────────────
   isCreatingBatch = false;
   quickBatchForm: FormGroup;
   isSavingQuickBatch = false;
 
-  // ── Add-detail drawer ─────────────────────────────────────
   isAddDetailDrawerOpen = false;
   detailForm: FormGroup;
   isSavingDetail = false;
@@ -75,7 +77,6 @@ export class TicketDetailsComponent implements OnDestroy {
   baseUnitName = '';
   quantityPreview = 0;
 
-  // ── FEFO drawer ───────────────────────────────────────────
   isFefoDrawerOpen = false;
   fefoForm: FormGroup;
   isRunningFefo = false;
@@ -85,20 +86,12 @@ export class TicketDetailsComponent implements OnDestroy {
   fefoBaseUnitName = '';
   private fefoConversionFactor = 1;
 
-  // ── Enums ─────────────────────────────────────────────────
   TicketType = TicketType;
   ApprovalStatus = ApprovalStatus;
   BatchQAStatus = BatchQAStatus;
   StorageCondition = StorageCondition;
 
-  // Label map cho StorageCondition
-  readonly storageConditionLabels: Record<number, string> = {
-    [StorageCondition.Normal]: 'Thường',
-    [StorageCondition.Cool]:   'Mát',
-    [StorageCondition.Cold]:   'Lạnh',
-    [StorageCondition.Frozen]: 'Đông lạnh',
-    [StorageCondition.Other]:  'Khác',
-  };
+  readonly enumName = enumName;
 
   constructor(
     private ticketService: InventoryTicketService,
@@ -123,14 +116,11 @@ export class TicketDetailsComponent implements OnDestroy {
     this.buildForms();
     this.loadTicketData();
     this.loadMasterData();
-    this.modalRef = this.modalService.open(
-      this.ticketDetailModal,
-      { size: 'xl', backdrop: 'static', scrollable: true }
-    );
+    this.isVisible = true;
   }
 
-  closeModal() {
-    this.modalRef?.close();
+  close() {
+    this.isVisible = false;
   }
 
   // ── Data loading ──────────────────────────────────────────
@@ -142,7 +132,7 @@ export class TicketDetailsComponent implements OnDestroy {
           this.ticket = res;
           this.loadBins(res.warehouseId);
         },
-        error: () => this.closeModal()
+        error: () => this.close()
       });
   }
 
@@ -157,12 +147,46 @@ export class TicketDetailsComponent implements OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.bins = res.filter(b => !b.isBlocked);
-        // Re-apply filter nếu đã có thuốc đang chọn
         this.applyBinFilter(this.selectedMedicineCondition);
       });
   }
 
-  // ── Bin filtering theo StorageCondition ──────────────────
+  // ✅ NEW: Open linked PO or SO from ticket's reference
+  openLinkedOrder() {
+    if (!this.ticket?.referenceDocumentId) return;
+
+    if (this.ticket.type === TicketType.GoodsReceipt || this.ticket.type === TicketType.ReturnOutward) {
+      // Linked to Purchase Order
+      this.poDetailModal?.open(this.ticket.referenceDocumentId);
+    } else if (this.ticket.type === TicketType.GoodsIssue || this.ticket.type === TicketType.ReturnInward) {
+      // Linked to Sales Order
+      this.soDetailModal?.open(this.ticket.referenceDocumentId);
+    }
+  }
+
+  // ── UX MỚI: Inline Edit ───────────────────────────────────
+  onInlineQuantityChange(row: any, newValue: string) {
+    const newQty = parseFloat(newValue);
+    if (isNaN(newQty) || newQty <= 0) {
+      this.toaster.error('::InvalidQuantity', '::Error');
+      this.loadTicketData();
+      return;
+    }
+    if (newQty === row.quantity) return;
+
+    this.ticketService.updateDetailQuantity(row.id, newQty)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: () => {
+          this.toaster.success('::UpdateSuccess', '::Success');
+          this.loadTicketData();
+          this.onSaved.emit();
+        },
+        error: () => this.loadTicketData()
+      });
+  }
+
+  // ── Bin filtering ─────────────────────────────────────────
   private applyBinFilter(condition: StorageCondition | null) {
     this.selectedMedicineCondition = condition;
     if (condition == null) {
@@ -172,30 +196,16 @@ export class TicketDetailsComponent implements OnDestroy {
       this.filteredBins = this.bins.filter(b => b.zoneStorageCondition === condition);
       this.hiddenBinCount = this.bins.length - this.filteredBins.length;
     }
-    // Reset bin đang chọn nếu không còn trong danh sách
     const currentBinId = this.detailForm?.get('binId')?.value;
     if (currentBinId && !this.filteredBins.find(b => b.id === currentBinId)) {
       this.detailForm?.patchValue({ binId: null });
     }
   }
 
-  getSelectedBin(): BinDto | null {
-    const binId = this.detailForm?.get('binId')?.value;
-    return this.filteredBins.find(b => b.id === binId) ?? null;
-  }
-
-  getStorageConditionLabel(condition: StorageCondition | null): string {
-    if (condition == null) return '';
-    return this.storageConditionLabels[condition] ?? String(condition);
-  }
-
   // ── Batch filtering ───────────────────────────────────────
   private filterBatchesByTicketType(all: ProductBatchDto[]): ProductBatchDto[] {
     if (!this.isIssueTicket()) {
-      return all.filter(b =>
-        b.status !== BatchQAStatus.Recalled &&
-        b.status !== BatchQAStatus.Expired
-      );
+      return all.filter(b => b.status !== BatchQAStatus.Recalled && b.status !== BatchQAStatus.Expired);
     } else {
       return all.filter(b => b.status === BatchQAStatus.Approved);
     }
@@ -226,7 +236,6 @@ export class TicketDetailsComponent implements OnDestroy {
       return;
     }
 
-    // Filter bin theo StorageCondition của thuốc
     const medicine = this.medicines.find(m => m.id === medicineId);
     this.applyBinFilter(medicine?.storageCondition ?? null);
 
@@ -249,9 +258,9 @@ export class TicketDetailsComponent implements OnDestroy {
   // ── Inline batch creation ─────────────────────────────────
   openQuickBatchForm() {
     this.quickBatchForm = this.fb.group({
-      batchNumber:       ['', [Validators.required, Validators.maxLength(50)]],
+      batchNumber: ['', [Validators.required, Validators.maxLength(50)]],
       manufacturingDate: [null, [Validators.required]],
-      expiryDate:        [null, [Validators.required]]
+      expiryDate: [null, [Validators.required]]
     });
     this.isCreatingBatch = true;
   }
@@ -267,7 +276,7 @@ export class TicketDetailsComponent implements OnDestroy {
     const mfg = new Date(this.quickBatchForm.value.manufacturingDate);
     const exp = new Date(this.quickBatchForm.value.expiryDate);
     if (exp <= mfg) {
-      this.toaster.error('Hạn sử dụng phải lớn hơn Ngày sản xuất!', 'Lỗi');
+      this.toaster.error('::ExpiryDateMustBeGreaterThanMfgDate', '::Error');
       return;
     }
 
@@ -284,7 +293,7 @@ export class TicketDetailsComponent implements OnDestroy {
           this.allBatches = [...this.allBatches, newBatch];
           this.applyBatchFilter(this.allBatches);
           this.detailForm.patchValue({ productBatchId: newBatch.id });
-          this.toaster.success(`Tạo lô "${newBatch.batchNumber}" thành công. Trạng thái: Chờ QA.`, 'Thành công');
+          this.toaster.success('::CreateSuccess', '::Success');
         },
         error: () => { this.isSavingQuickBatch = false; }
       });
@@ -306,7 +315,7 @@ export class TicketDetailsComponent implements OnDestroy {
     this.quantityPreview = qty * this.selectedConversionFactor;
   }
 
-  // ── FEFO medicine change ──────────────────────────────────
+  // ── FEFO ──────────────────────────────────────────────────
   onFefoMedicineChange(medicineId: string) {
     this.fefoForm.patchValue({ unitId: null, requiredQuantity: 1 });
     this.fefoUnits = [];
@@ -341,7 +350,7 @@ export class TicketDetailsComponent implements OnDestroy {
     this.fefoBaseQtyPreview = qty * this.fefoConversionFactor;
   }
 
-  // ── Load units ────────────────────────────────────────────
+  // ── Load units helper ─────────────────────────────────────
   private loadUnitsForProduct(
     medicineId: string,
     callback: (units: ProductUnitLookup[], baseUnitName: string) => void
@@ -375,19 +384,19 @@ export class TicketDetailsComponent implements OnDestroy {
   // ── Forms ─────────────────────────────────────────────────
   buildForms() {
     this.detailForm = this.fb.group({
-      productId:        [null, [Validators.required]],
-      productBatchId:   [null, [Validators.required]],
-      binId:            [null, [Validators.required]],
-      unitId:           [null, [Validators.required]],
-      conversionFactor: [1,    [Validators.required, Validators.min(1)]],
-      quantity:         [1,    [Validators.required, Validators.min(0.01)]]
+      productId: [null, [Validators.required]],
+      productBatchId: [null, [Validators.required]],
+      binId: [null, [Validators.required]],
+      unitId: [null, [Validators.required]],
+      conversionFactor: [1, [Validators.required, Validators.min(1)]],
+      quantity: [1, [Validators.required, Validators.min(0.01)]]
     });
 
     this.fefoForm = this.fb.group({
-      productId:        [null, [Validators.required]],
-      unitId:           [null, [Validators.required]],
-      conversionFactor: [1,    [Validators.required, Validators.min(1)]],
-      requiredQuantity: [1,    [Validators.required, Validators.min(0.01)]]
+      productId: [null, [Validators.required]],
+      unitId: [null, [Validators.required]],
+      conversionFactor: [1, [Validators.required, Validators.min(1)]],
+      requiredQuantity: [1, [Validators.required, Validators.min(0.01)]]
     });
   }
 
@@ -430,7 +439,7 @@ export class TicketDetailsComponent implements OnDestroy {
   }
 
   removeDetail(detailId: string) {
-    this.confirmation.warn('::DetailDeletionWarningMessage', '::AreYouSure')
+    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure')
       .subscribe(status => {
         if (status === Confirmation.Status.confirm) {
           this.ticketService.removeDetail(this.ticketId, detailId)
@@ -477,11 +486,11 @@ export class TicketDetailsComponent implements OnDestroy {
   // ── Ticket workflow ───────────────────────────────────────
   sendToApprove() {
     if (!this.ticket?.details?.length) {
-      this.confirmation.error('Phiếu chưa có hàng hóa, không thể gửi duyệt!', 'Lỗi');
+      this.confirmation.error('::NoDataError', '::Error');
       return;
     }
     this.confirmation
-      .info('Hệ thống sẽ khóa tồn kho với các phiếu xuất. Tiếp tục?', 'Gửi duyệt phiếu')
+      .info('::SendToApproveConfirmation', '::Confirm')
       .subscribe(status => {
         if (status !== Confirmation.Status.confirm) return;
         this.ticketService.sendToApprove(this.ticketId)
@@ -494,21 +503,38 @@ export class TicketDetailsComponent implements OnDestroy {
   }
 
   reject() {
-    const reason = prompt('Nhập lý do từ chối (bắt buộc):');
-    if (reason === null) return;
-    if (!reason.trim()) { alert('Vui lòng nhập lý do!'); return; }
+    this.rejectReason = '';
+    this.showRejectError = false;
+    this.isRejecting = false;
+    this.modalService.open(this.rejectReasonModal, { size: 'md', centered: true, backdrop: 'static' });
+  }
 
-    this.ticketService.reject(this.ticketId, reason)
+  confirmReject(modal: any) {
+    if (!this.rejectReason || !this.rejectReason.trim()) {
+      this.showRejectError = true;
+      return;
+    }
+
+    this.isRejecting = true;
+    this.ticketService.reject(this.ticketId, this.rejectReason.trim())
       .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.loadTicketData();
-        this.onSaved.emit();
+      .subscribe({
+        next: () => {
+          this.isRejecting = false;
+          modal.close();
+          this.toaster.success('::RejectSuccess', '::Success');
+          this.loadTicketData();
+          this.onSaved.emit();
+        },
+        error: () => {
+          this.isRejecting = false;
+        }
       });
   }
 
   execute() {
     this.confirmation
-      .success('Tồn kho sẽ chính thức được cộng/trừ và không thể hoàn tác.', 'Thực thi phiếu kho')
+      .success('::ExecuteConfirmation', '::Confirm')
       .subscribe(status => {
         if (status !== Confirmation.Status.confirm) return;
         this.ticketService.execute(this.ticketId)
@@ -525,16 +551,5 @@ export class TicketDetailsComponent implements OnDestroy {
     return this.ticket?.type === TicketType.GoodsIssue
         || this.ticket?.type === TicketType.DisposalIssue
         || this.ticket?.type === TicketType.ReturnOutward;
-  }
-
-  getBatchStatusLabel(status: BatchQAStatus): string {
-    const map: Record<number, string> = {
-      [BatchQAStatus.PendingQA]:  'Chờ QA',
-      [BatchQAStatus.Approved]:   'Đã duyệt',
-      [BatchQAStatus.Rejected]:   'Từ chối',
-      [BatchQAStatus.Recalled]:   'Thu hồi',
-      [BatchQAStatus.Expired]:    'Hết hạn',
-    };
-    return map[status] ?? String(status);
   }
 }

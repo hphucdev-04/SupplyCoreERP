@@ -1,0 +1,126 @@
+<div class="erp-filter-wrapper" (click)="$event.stopPropagation()">
+
+  <!-- Trigger Button -->
+  <button class="btn btn-sm erp-filter-btn"
+          type="button"
+          [class.active]="isOpen"
+          (click)="toggleOpen()">
+    <i class="fa fa-sliders-h me-1"></i>
+    <span>{{ '::Filters' | abpLocalization }}</span>
+    <span class="erp-filter-badge" *ngIf="getActiveCount() > 0">
+      {{ getActiveCount() }}
+    </span>
+  </button>
+
+  <!-- Filter Panel -->
+  <div class="erp-filter-panel" *ngIf="isOpen">
+
+    <!-- Panel Header -->
+    <div class="erp-filter-header">
+      <div class="d-flex align-items-center gap-2">
+        <i class="fa fa-filter text-primary"></i>
+        <span class="fw-semibold">{{ '::AdvancedFilter' | abpLocalization }}</span>
+        <span class="badge bg-primary rounded-pill ms-1" *ngIf="getActiveCount() > 0">
+          {{ getActiveCount() }}
+        </span>
+      </div>
+      <button class="btn btn-link btn-sm text-danger p-0 erp-clear-all"
+              type="button"
+              *ngIf="getActiveCount() > 0"
+              (click)="clearAll()">
+        <i class="fa fa-times me-1"></i>{{ '::ClearAll' | abpLocalization }}
+      </button>
+    </div>
+
+    <!-- Filter Body -->
+    <div class="erp-filter-body">
+      <ng-container *ngFor="let field of config; let last = last">
+
+        <!-- SEARCHABLE SELECT -->
+        <div class="erp-filter-field" *ngIf="field.type === 'searchable-select'">
+          <label class="erp-field-label">
+            <i class="fa fa-circle-dot me-1 text-primary" style="font-size:0.6rem"></i>
+            {{ field.label | abpLocalization }}
+          </label>
+          <div class="erp-searchable-select" [class.has-value]="field.value != null">
+            <div class="erp-select-search">
+              <i class="fa fa-search erp-select-icon"></i>
+              <input type="text"
+                     class="erp-select-input"
+                     [placeholder]="'::SearchOrSelect' | abpLocalization"
+                     [(ngModel)]="field._searchTerm"
+                     autocomplete="off">
+              <button type="button"
+                      class="erp-select-clear"
+                      *ngIf="field.value != null"
+                      (click)="clearField(field)">
+                <i class="fa fa-times"></i>
+              </button>
+            </div>
+            <div class="erp-selected-tag" *ngIf="field.value != null && !field._searchTerm">
+              <i class="fa fa-check-circle text-primary me-1"></i>
+              <span>{{ getSelectedLabel(field) }}</span>
+            </div>
+            <div class="erp-options-list" *ngIf="field._searchTerm || field.value == null">
+              <div class="erp-option erp-option-all"
+                   [class.active]="field.value == null"
+                   (click)="selectOption(field, null)">
+                <i class="fa fa-layer-group me-2 text-muted"></i>
+                {{ '::All' | abpLocalization }}
+                <i class="fa fa-check ms-auto text-primary" *ngIf="field.value == null"></i>
+              </div>
+              <div class="erp-options-divider"></div>
+              <ng-container *ngFor="let opt of getFilteredOptions(field)">
+                <div class="erp-option"
+                     [class.active]="field.value === opt.value"
+                     (click)="selectOption(field, opt.value)">
+                  <span class="erp-option-text">{{ opt.label | abpLocalization }}</span>
+                  <i class="fa fa-check ms-auto text-primary" *ngIf="field.value === opt.value"></i>
+                </div>
+              </ng-container>
+              <div class="erp-no-result"
+                   *ngIf="getFilteredOptions(field).length === 0 && field._searchTerm">
+                <i class="fa fa-search-minus me-2"></i>{{ '::NoResult' | abpLocalization }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- RADIO / BADGE GROUP -->
+        <div class="erp-filter-field" *ngIf="field.type === 'radio'">
+          <label class="erp-field-label">
+            <i class="fa fa-circle-dot me-1 text-primary" style="font-size:0.6rem"></i>
+            {{ field.label | abpLocalization }}
+          </label>
+          <div class="erp-badge-group">
+            <ng-container *ngFor="let opt of field.options">
+              <button type="button"
+                      class="erp-badge-option"
+                      [class.active]="field.value === opt.value"
+                      (click)="selectOption(field, opt.value)">
+                <span *ngIf="opt.color" class="erp-badge-dot" [style.background]="opt.color"></span>
+                {{ opt.label | abpLocalization }}
+              </button>
+            </ng-container>
+          </div>
+        </div>
+
+        <div class="erp-field-divider" *ngIf="!last"></div>
+
+      </ng-container>
+    </div>
+
+    <!-- Panel Footer -->
+    <div class="erp-filter-footer">
+      <button type="button" class="btn btn-sm btn-outline-secondary" (click)="close()">
+        {{ '::Cancel' | abpLocalization }}
+      </button>
+      <button type="button" class="btn btn-sm btn-primary erp-apply-btn" (click)="applyAndClose()">
+        <i class="fa fa-check me-1"></i>
+        {{ '::ApplyFilter' | abpLocalization }}
+        <span *ngIf="getActiveCount() > 0">({{ getActiveCount() }})</span>
+      </button>
+    </div>
+
+  </div>
+</div>

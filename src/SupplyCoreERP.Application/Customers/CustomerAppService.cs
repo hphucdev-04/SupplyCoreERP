@@ -9,6 +9,7 @@ using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Entities;
+using SupplyCoreERP.Enums.Partner;
 
 namespace SupplyCoreERP.Customers
 {
@@ -25,6 +26,7 @@ namespace SupplyCoreERP.Customers
 			_customerManager = customerManager;
 		}
 
+		#region Customer
 		public async Task<CustomerDetailDto> GetAsync(Guid id)
 		{
 			var query = await _customerRepository.GetQueryableAsync();
@@ -112,5 +114,25 @@ namespace SupplyCoreERP.Customers
 			customer.SetActive(!customer.IsActive);
 			await _customerRepository.UpdateAsync(customer);
 		}
+
+		public async Task<CustomerSummaryDto> GetSummaryAsync()
+		{
+			var query = await _customerRepository.GetQueryableAsync();
+
+			var summary = query
+				.GroupBy(x => 1)
+				.Select(g => new CustomerSummaryDto
+				{
+					TotalCount = g.Count(),
+					TotalActive = g.Count(x => x.IsActive),
+					TotalInactive = g.Count(x => !x.IsActive),
+					TotalOrganization = g.Count(x => x.Type == CustomerType.Organization),
+					TotalIndividual = g.Count(x => x.Type == CustomerType.Individual)
+				})
+				.FirstOrDefault();
+
+			return summary ?? new CustomerSummaryDto();
+		}
+		#endregion
 	}
 }

@@ -1,127 +1,119 @@
 <!-- #region Table -->
-<div class="card">
-  <div class="card-header">
-    <div class="row align-items-center">
-      
-      <div class="col col-md-4">
-        <h5 class="card-title">
-          {{ '::Menu:Medicines' | abpLocalization }}
-        </h5>
-      </div>
-      
-      <div class="col col-md-8 text-end">
-        <div class="d-flex justify-content-end gap-1">
-            <button class="btn btn-warning btn-sm" type="button" (click)="openImport()">
-              <i class="fa fa-file-import me-1"></i>
-              <span>{{ '::Import' | abpLocalization }}</span>
-            </button>
-            <button class="btn btn-success btn-sm" (click)=" exportToExcel()">
-              <i class="fa fa-file-excel me-1"></i>
-              <span>{{ '::Export' | abpLocalization }}</span>
-            </button>
-            <button class="btn btn-primary btn-sm" type="button" (click)="createMedicine()" *abpPermission="'Catalog.Medicine.Create'">
-              <i class="fa fa-plus me-1"></i>
-              <span>{{ '::NewMedicine' | abpLocalization }}</span>
-            </button>
-        </div>
-      </div>
+<div class="ph-card">
+  <div class="ph-card__header">
+    <h5 class="ph-card-title">
+      {{ '::Menu:Medicines' | abpLocalization }}
+    </h5>
+    <div class="ph-card__header-actions">
+      <button class="btn btn-sm ph-btn-import" type="button" (click)="openImport()">
+        <i class="fa fa-file-import"></i>
+        <span>{{ '::Import' | abpLocalization }}</span>
+      </button>
+      <button class="btn btn-sm ph-btn-export" type="button" (click)="exportToExcel()">
+        <i class="fa fa-file-excel"></i>
+        <span>{{ '::Export' | abpLocalization }}</span>
+      </button>
+      <button class="btn btn-sm ph-btn-new" type="button" (click)="createMedicine()"
+        *abpPermission="'Catalog.Medicine.Create'">
+        <i class="fa fa-plus"></i>
+        <span>{{ '::NewMedicine' | abpLocalization }}</span>
+      </button>
     </div>
   </div>
-  <div class="card-body">
 
- <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+  <div class="ph-card__body">
 
-  <!-- Search -->
-  <div style="min-width: 250px; flex: 1;">
-    <app-search
-      [placeholder]="'::Search' | abpLocalization"
-      [(value)]="filterText"
-      [debounceTime]="800"
-      (search)="onSearch($event)">
-    </app-search>
-  </div>
+    <div class="ph-filter-bar">
+      <!-- Search -->
+      <div class="ph-filter-bar__search">
+        <app-search [placeholder]="'::Search' | abpLocalization" [(value)]="filterText" [debounceTime]="800"
+          (search)="onSearch($event)">
+        </app-search>
+      </div>
 
-  <!-- Filters -->
-  <div class="d-flex flex-wrap gap-1 justify-content-end">
-    
-    <select class="form-select form-select-md" style="width: 140px;"
-            [(ngModel)]="filterCategoryId" (change)="onFilterChange()">
-      <option [ngValue]="null">{{ '::Category' | abpLocalization }}</option>
-      <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
-    </select>
+      <!-- Filters -->
+      <div class="ph-filter-bar__controls">
+        <select class="form-select form-select-sm" style="width: 140px;" [(ngModel)]="filterCategoryId"
+          (change)="onFilterChange()">
+          <option [ngValue]="null">{{ '::Category' | abpLocalization }}</option>
+          <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
+        </select>
 
-    <select class="form-select form-select-md" style="width: 140px;"
-            [(ngModel)]="filterManufacturerId" (change)="onFilterChange()">
-      <option [ngValue]="null">{{ '::Manufacturer' | abpLocalization }}</option>
-      <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
-    </select>
+        <select class="form-select form-select-sm" style="width: 140px;" [(ngModel)]="filterManufacturerId"
+          (change)="onFilterChange()">
+          <option [ngValue]="null">{{ '::Manufacturer' | abpLocalization }}</option>
+          <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
+        </select>
 
-    <select class="form-select form-select-md" style="width: 120px;"
-            [(ngModel)]="filterStatus"
-            (change)="onFilterChange()"
-            *abpPermission="'Catalog.Medicine.Approve'">
-            <option [ngValue]="null">{{ '::Status' | abpLocalization }}</option>
-      <option *ngFor="let item of medicineStatusOptions" [ngValue]="item.value">
-        {{ '::Enum:MedicineStatus.' + item.key | abpLocalization }}
-      </option>
-    </select>
+        <select class="form-select form-select-sm" style="width: 120px;" [(ngModel)]="filterStatus"
+          (change)="onFilterChange()" *abpPermission="'Catalog.Medicine.Approve'">
+          <option [ngValue]="null">{{ '::Status' | abpLocalization }}</option>
+          <option *ngFor="let item of medicineStatusOptions" [ngValue]="item.value">
+            {{ '::Enum:MedicineStatus.' + item.key | abpLocalization }}
+          </option>
+        </select>
+      </div>
+    </div>
 
-  </div>
-</div>
-
-    
     <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
-      <ngx-datatable-column
-        [name]="'::Actions' | abpLocalization"
-        [maxWidth]="150"
-        [sortable]="false">
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
-            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
-              <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
+            <button class="btn btn-sm ph-btn-actions dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              ngbDropdownToggle>
+              <i class="fa fa-cog"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
-                <button ngbDropdownItem (click)="viewDetail(row.id)">
-                    <i class="fa fa-eye me-1"></i>{{ '::View' | abpLocalization }}
+              <button ngbDropdownItem (click)="viewDetail(row.id)">
+                <i class="fa fa-eye me-1"></i>{{ '::View' | abpLocalization }}
+              </button>
+              <button ngbDropdownItem (click)="editMedicine(row.id)">
+                <i class="fa fa-edit me-1"></i>{{ '::Edit' | abpLocalization }}
+              </button>
+              <button ngbDropdownItem (click)="deleteMedicine(row.id)">
+                <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
+              </button>
+
+              <div *ngIf="row.status === MedicineStatus.Pending">
+                <button ngbDropdownItem (click)="approveMedicine(row.id)" class="text-success"
+                  *abpPermission="'Catalog.Medicine.Approve'">
+                  <i class="fa fa-check-circle me-1"></i>{{ '::Approve' | abpLocalization }}
                 </button>
-                <button ngbDropdownItem (click)="editMedicine(row.id)">
-                    <i class="fa fa-edit me-1"></i>{{ '::Edit' | abpLocalization }}
+              </div>
+              <div *ngIf="row.status === MedicineStatus.Pending">
+                <button ngbDropdownItem (click)="rejectMedicine(row.id)" class="text-danger"
+                  *abpPermission="'Catalog.Medicine.Approve'">
+                  <i class="fa fa-ban me-1"></i>{{ '::Reject' | abpLocalization }}
                 </button>
-                <button ngbDropdownItem (click)="deleteMedicine(row.id)">
-                    <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
-                </button>
-                 
-                <div *ngIf="row.status === MedicineStatus.Pending">
-                  <button ngbDropdownItem (click)="approveMedicine(row.id)" class="text-success" *abpPermission="'Catalog.Medicine.Approve'" >
-                    <i class="fa fa-check-circle me-1"></i>{{ '::Approve' | abpLocalization }}
-                  </button>
-                </div>
-                <div *ngIf="row.status === MedicineStatus.Pending">
-                  <button ngbDropdownItem (click)="rejectMedicine(row.id)" class="text-danger" *abpPermission="'Catalog.Medicine.Approve'" >
-                    <i class="fa fa-ban me-1"></i>{{ '::Reject' | abpLocalization }}
-                  </button>
-                </div>
+              </div>
             </div>
           </div>
         </ng-template>
       </ngx-datatable-column>
-    
-      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" cellClass="ellipsis-cell" [width]="200"></ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" cellClass="ellipsis-cell" [width]="200">
+        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+          <span class="ph-link" (click)="viewDetail(row.id)">
+            {{ value }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="180"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Category' | abpLocalization" prop="categoryName" [width]="180"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Category' | abpLocalization" prop="categoryName"
+        [width]="180"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::Manufacturer' | abpLocalization" prop="manufacturerName"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::BaseUnit' | abpLocalization" prop="baseUnitName"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::OriginCountry' | abpLocalization" prop="originCountryName"></ngx-datatable-column>
-     <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="140">
+      <ngx-datatable-column [name]="'::OriginCountry' | abpLocalization"
+        prop="originCountryName"></ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="140">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <span class="badge"
-            [ngClass]="{
-              'bg-warning text-dark': value === MedicineStatus.Pending,
-              'bg-success':           value === MedicineStatus.Approved,
-              'bg-danger':            value === MedicineStatus.Rejected
+          <span class="ph-badge" [ngClass]="{
+              'ph-badge--pending':  value === MedicineStatus.Pending,
+              'ph-badge--approved': value === MedicineStatus.Approved,
+              'ph-badge--rejected': value === MedicineStatus.Rejected
             }">
-            <i class="fa me-1"
-              [ngClass]="{
+            <i class="fa" [ngClass]="{
                 'fa-clock':        value === MedicineStatus.Pending,
                 'fa-check-circle': value === MedicineStatus.Approved,
                 'fa-ban':          value === MedicineStatus.Rejected
@@ -131,186 +123,151 @@
           </span>
         </ng-template>
       </ngx-datatable-column>
+
       <ngx-datatable-column [name]="'::Active' | abpLocalization" prop="isActive" [width]="80">
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           <div class="form-check form-switch d-flex justify-content-center">
-             <input 
-                class="form-check-input" 
-                type="checkbox" 
-                [checked]="value" 
-                (click)="onToggleActive(row, $event)"
-                style="cursor: pointer; transform: scale(1.2);">
+            <input class="form-check-input" type="checkbox" [checked]="value" (click)="onToggleActive(row, $event)"
+              style="cursor: pointer; transform: scale(1.2);">
           </div>
         </ng-template>
       </ngx-datatable-column>
     </ngx-datatable>
+
   </div>
 </div>
 <!-- #endregion -->
 
 <!-- #region Drawer -->
-<app-drawer
-  [isOpen]="isDrawerOpen"
-  [title]="(selectedMedicine.id ? '::EditMedicine' : '::NewMedicine') | abpLocalization"
-  [width]="'lg'"
-  [saveDisabled]="form.invalid"
-  (close)="closeDrawer()"
-  (save)="save()">
+<app-drawer [isOpen]="isDrawerOpen"
+  [title]="(selectedMedicine.id ? '::EditMedicine' : '::NewMedicine') | abpLocalization" [width]="'lg'"
+  [saveDisabled]="form.invalid" (close)="closeDrawer()" (save)="save()">
 
   <form [formGroup]="form">
-    
+
     <div class="row">
-        <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">
-              {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
-            </label>
-            <div class="input-group input-group-sm">
-              <input type="text" class="form-control" formControlName="code">
-              <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
-                      [title]="'::GenerateCode' | abpLocalization">
-                <i class="fa fa-magic"></i>
-              </button>
-            </div>
-            <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
-                class="text-danger small">
-              {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
-          </div>
-        <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::Name' | abpLocalization }} <span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
-            <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)" class="text-danger small">
-                 {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">
+          {{ '::Code' | abpLocalization }}
+        </label>
+        <div class="input-group input-group-sm">
+          <input type="text" class="form-control form-control-sm" formControlName="code">
+          <button class="btn btn-outline-secondary btn-sm" type="button" (click)="generateCode()">
+            <i class="fa fa-sync-alt"></i>
+          </button>
         </div>
+        <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
+          class="ph-error-msg">
+          {{ '::ThisFieldIsRequired' | abpLocalization }}
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::Name' | abpLocalization }}</label>
+        <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
+        <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)"
+          class="ph-error-msg">
+          {{ '::ThisFieldIsRequired' | abpLocalization }}
+        </div>
+      </div>
     </div>
 
     <div class="row">
-        <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::RegistrationNumber' | abpLocalization }} <span class="text-danger">*</span></label>
-            <input type="text" class="form-control form-control-sm" formControlName="registrationNumber">
-            <div *ngIf="form.get('registrationNumber').invalid && (form.get('registrationNumber').dirty || form.get('registrationNumber').touched)"
-                class="text-danger small">
-              {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::RegistrationNumber' | abpLocalization }}</label>
+        <input type="text" class="form-control form-control-sm" formControlName="registrationNumber">
+        <div
+          *ngIf="form.get('registrationNumber').invalid && (form.get('registrationNumber').dirty || form.get('registrationNumber').touched)"
+          class="ph-error-msg">
+          {{ '::ThisFieldIsRequired' | abpLocalization }}
         </div>
-        <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::Category' | abpLocalization }} <span class="text-danger">*</span></label>
-            <select class="form-select form-select-sm" formControlName="categoryId">
-              <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-              <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
-            </select>
-             <div *ngIf="form.get('categoryId').invalid && (form.get('categoryId').dirty || form.get('categoryId').touched)"
-                class="text-danger small">
-              {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
-        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::Category' | abpLocalization }}</label>
+        <select class="form-select form-select-sm" formControlName="categoryId">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+          <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
+        </select>
+      </div>
     </div>
 
     <div class="row">
-         <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::Manufacturer' | abpLocalization }} <span class="text-danger">*</span></label>
-            <select class="form-select form-select-sm" formControlName="manufacturerId">
-              <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-              <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
-            </select>
-             <div *ngIf="form.get('manufacturerId').invalid && (form.get('manufacturerId').dirty || form.get('manufacturerId').touched)"
-                class="text-danger small">
-              {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
-        </div>
-        <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::BaseUnit' | abpLocalization }} <span class="text-danger">*</span></label>
-            <select class="form-select form-select-sm" formControlName="baseUnitId">
-              <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-              <option *ngFor="let item of units" [ngValue]="item.id">{{ item.name }}</option>
-            </select>
-             <div *ngIf="form.get('baseUnitId').invalid && (form.get('baseUnitId').dirty || form.get('baseUnitId').touched)"
-                class="text-danger small">
-              {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
-        </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::Manufacturer' | abpLocalization }}</label>
+        <select class="form-select form-select-sm" formControlName="manufacturerId">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+          <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::BaseUnit' | abpLocalization }}</label>
+        <select class="form-select form-select-sm" formControlName="baseUnitId">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+          <option *ngFor="let item of units" [ngValue]="item.id">{{ item.name }}</option>
+        </select>
+      </div>
     </div>
 
     <div class="row">
-         <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::DosageForm' | abpLocalization }} <span class="text-danger">*</span></label>
-            <select class="form-select form-select-sm" formControlName="dosageFormId">
-              <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-              <option *ngFor="let item of dosageForms" [ngValue]="item.id">{{ item.name }}</option>
-            </select>
-            <div *ngIf="form.get('dosageFormId').invalid && (form.get('dosageFormId').dirty || form.get('dosageFormId').touched)"
-                class="text-danger small">
-              {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
-        </div>
-        <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::UsageRoute' | abpLocalization }} <span class="text-danger">*</span></label>
-            <select class="form-select form-select-sm" formControlName="usageRoute">
-              <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-              <option *ngFor="let item of usageRouteOptions" [ngValue]="item.value">
-                {{ '::Enum:UsageRoute.' + item.key | abpLocalization }}
-              </option>
-            </select>
-            <div *ngIf="form.get('usageRoute').invalid && (form.get('usageRoute').dirty || form.get('usageRoute').touched)" class="text-danger small">
-                {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 mb-3">
-            <label class="form-label small fw-semibold">{{ '::StorageCondition' | abpLocalization }} <span class="text-danger">*</span></label>
-            <select class="form-select form-select-sm" formControlName="storageCondition">
-              <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-              <option *ngFor="let item of storageConditionOptions" [ngValue]="item.value">
-                {{ '::Enum:StorageCondition.' + item.key | abpLocalization }}
-              </option>
-            </select>
-             <div *ngIf="form.get('storageCondition').invalid && (form.get('storageCondition').dirty || form.get('storageCondition').touched)" class="text-danger small">
-                {{ '::ThisFieldIsRequired' | abpLocalization }}
-            </div>
-        </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::DosageForm' | abpLocalization }}</label>
+        <select class="form-select form-select-sm" formControlName="dosageFormId">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+          <option *ngFor="let item of dosageForms" [ngValue]="item.id">{{ item.name }}</option>
+        </select>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::UsageRoute' | abpLocalization }}</label>
+        <select class="form-select form-select-sm" formControlName="usageRoute">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+          <option *ngFor="let item of usageRouteOptions" [ngValue]="item.value">
+            {{ '::Enum:UsageRoute.' + item.key | abpLocalization }}
+          </option>
+        </select>
+      </div>
     </div>
 
-   <div class="row">
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::StorageCondition' | abpLocalization }}</label>
+        <select class="form-select form-select-sm" formControlName="storageCondition">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+          <option *ngFor="let item of storageConditionOptions" [ngValue]="item.value">
+            {{ '::Enum:StorageCondition.' + item.key | abpLocalization }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-6">
-        <div class="border rounded p-2 d-flex justify-content-between align-items-center h-100 bg-light-subtle">
+        <div class="ph-field-toggle-card">
           <div>
-            <label class="fw-bold mb-0 text-dark" for="chkRx">
+            <label class="ph-field-toggle-card__label" for="chkRx">
               {{ '::IsPrescriptionDrug' | abpLocalization }}
             </label>
-            <small class="d-block text-muted">
+            <small class="ph-field-toggle-card__hint">
               {{ '::PrescriptionRequiredDescription' | abpLocalization }}
             </small>
           </div>
           <div class="form-check m-0">
-            <input 
-              class="form-check-input" 
-              type="checkbox" 
-              id="chkRx" 
-              formControlName="isPrescriptionDrug"
+            <input class="form-check-input" type="checkbox" id="chkRx" formControlName="isPrescriptionDrug"
               style="width: 1.5em; height: 1.5em; cursor: pointer;">
           </div>
         </div>
       </div>
 
       <div class="col-md-6">
-        <div class="border rounded p-2 d-flex justify-content-between align-items-center h-100 bg-light-subtle">
+        <div class="ph-field-toggle-card">
           <div>
-            <label class="fw-bold mb-0 text-dark" for="chkActive">
+            <label class="ph-field-toggle-card__label" for="chkActive">
               {{ '::Active' | abpLocalization }}
             </label>
-            <small class="d-block text-muted">
+            <small class="ph-field-toggle-card__hint">
               {{ '::AvailableForPrescriptionAndSales' | abpLocalization }}
             </small>
           </div>
           <div class="form-check form-switch m-0">
-            <input 
-              class="form-check-input" 
-              type="checkbox" 
-              role="switch"
-              id="chkActive" 
-              formControlName="isActive"
+            <input class="form-check-input" type="checkbox" role="switch" id="chkActive" formControlName="isActive"
               style="width: 3em; height: 1.5em; cursor: pointer;">
           </div>
         </div>
@@ -326,12 +283,8 @@
 <!-- #endregion -->
 
 <!-- #region Import Excel -->
-<app-import-modal
-    [(visible)]="isImportOpen"
-    [title]="'::ImportMedicines'"
-    [templateName]="'Template_Import_Medicine.xlsx'"
-    [importFn]="importFn"
-    [templateFn]="templateFn"
-    (success)="onImportSuccess()">
+<app-import-modal [(visible)]="isImportOpen" [title]="'::ImportMedicines'"
+  [templateName]="'Template_Import_Medicine.xlsx'" [importFn]="importFn" [templateFn]="templateFn"
+  (success)="onImportSuccess()">
 </app-import-modal>
 <!-- #endregion -->

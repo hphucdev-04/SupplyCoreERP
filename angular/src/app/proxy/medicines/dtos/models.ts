@@ -43,7 +43,6 @@ export interface MedicineDetailDto extends MedicineDto {
   originCountryId?: string;
   registrationNumber?: string;
   usageRoute?: UsageRoute;
-  storageCondition?: StorageCondition;
   isPrescriptionDrug?: boolean;
   ingredients?: MedicineIngredientDto[];
   units?: MedicineUnitDto[];
@@ -57,16 +56,25 @@ export interface MedicineDto extends EntityDto<string> {
   baseUnitName?: string;
   dosageFormName?: string;
   originCountryName?: string;
+  storageCondition?: StorageCondition;
   status?: MedicineStatus;
   isActive?: boolean;
   creationTime?: string;
-  storageCondition?: StorageCondition;
 }
 
 export interface MedicineIngredientDto {
   activeIngredientId?: string;
   activeIngredientName?: string;
   activeIngredientCode?: string;
+}
+
+export interface MedicineSummaryDto {
+  totalCount?: number;
+  totalActive?: number;
+  totalInactive?: number;
+  totalApproved?: number;
+  totalPending?: number;
+  totalRejected?: number;
 }
 
 export interface MedicineUnitDto {
