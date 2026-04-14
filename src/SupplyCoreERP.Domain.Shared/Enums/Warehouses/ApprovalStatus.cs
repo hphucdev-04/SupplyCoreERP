@@ -6,9 +6,9 @@ namespace SupplyCoreERP.Enums.Warehouses
 {
 	public enum ApprovalStatus
 	{
-		Draft = 0,       // Bản nháp (Đang soạn hoặc do hệ thống tự sinh ra)
+		Draft = 0,       // Bản nháp 
 		Pending = 1,     // Chờ duyệt
-		Approved = 2,    // Đã duyệt (Đối với Kho: Được hoạt động. Đối với Phiếu: Đã xuất/nhập thành công)
+		Approved = 2,    // Đã duyệt 
 		Rejected = 3     // Bị từ chối / Hủy bỏ
 	}
 }

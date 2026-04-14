@@ -274,7 +274,7 @@ namespace SupplyCoreERP.Inventories.Tickets
 			if (detailsToReturn.Any() && ticket.Status == ApprovalStatus.Pending)
 				await _balanceManager.LockStockAsync(ticket, detailsToReturn);
 
-			return detailsToReturn; // ✅ Không InsertManyAsync tại đây
+			return detailsToReturn; 
 		}
 		#endregion
 	}
