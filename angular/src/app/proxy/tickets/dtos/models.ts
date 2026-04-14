@@ -51,6 +51,7 @@ export interface InventoryTicketDto extends FullAuditedEntityDto<string> {
   warehouseId?: string;
   warehouseName?: string;
   referenceDocumentId?: string;
+  referenceDocumentCode?: string;
   note?: string;
   details?: InventoryTicketDetailDto[];
 }

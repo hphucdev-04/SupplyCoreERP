@@ -16,6 +16,7 @@ namespace SupplyCoreERP.Tickets.Dtos
 		public string? WarehouseName { get; set; }
 
 		public Guid? ReferenceDocumentId { get; set; }
+		public string? ReferenceDocumentNumber { get; set; }
 		public string? Note { get; set; }
 
 		public List<InventoryTicketDetailDto> Details { get; set; } = new List<InventoryTicketDetailDto>();
