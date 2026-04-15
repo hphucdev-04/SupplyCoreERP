@@ -1,8 +1,10 @@
 ﻿using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Tickets;
+using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
+using SupplyCoreERP.Utilities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -14,46 +16,54 @@ namespace SupplyCoreERP.Orders.PO
 {
 	public class PurchaseOrderManager : DomainService
 	{
-		private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
+        // Dependencies
+        private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
 		private readonly IRepository<Supplier, Guid> _supplierRepo;
 		private readonly IRepository<Product, Guid> _productRepo;
+		private readonly IRepository<Warehouse, Guid> _warehouseRepo;
 		private readonly TicketManager _ticketManager;
 
+		// DI
 		public PurchaseOrderManager(
 			IRepository<PurchaseOrder, Guid> orderRepo,
 			IRepository<Supplier, Guid> supplierRepo,
 			IRepository<Product, Guid> productRepo,
+			IRepository<Warehouse, Guid> warehouseRepo,
 			TicketManager ticketManager)
 		{
 			_orderRepo = orderRepo;
 			_supplierRepo = supplierRepo;
 			_productRepo = productRepo;
+			_warehouseRepo = warehouseRepo;
 			_ticketManager = ticketManager;
 		}
 
-		public async Task<PurchaseOrder> CreateOrderAsync(
-			Guid supplierId, Guid warehouseId, DateTime orderDate,
-			DateTime? expectedDeliveryDate, DateTime? inputDueDate, string? note)
-		{
-			var supplier = await _supplierRepo.GetAsync(supplierId);
-			if (!supplier.IsActive)
-				throw new UserFriendlyException($"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
+        #region PurchaseOrder
+        public async Task<PurchaseOrder> CreateOrderAsync(
+		 Guid supplierId, Guid warehouseId, DateTime orderDate,
+		 DateTime? expectedDeliveryDate, DateTime? inputDueDate, string? note)
+        {
+            await ValidateAsync(supplierId, warehouseId, orderDate, expectedDeliveryDate, inputDueDate);
 
-			string code = $"PO-{DateTime.Now:yyyyMMdd}-{GuidGenerator.Create().ToString()[..4].ToUpper()}";
+            var supplier = await _supplierRepo.GetAsync(supplierId);
+            if (!supplier.IsActive)
+                throw new UserFriendlyException($"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
 
-			DateTime? finalDueDate = inputDueDate
-				?? (supplier.PaymentTermDays > 0 ? orderDate.AddDays(supplier.PaymentTermDays) : null);
+            string code = Utility.Code.Generate("PO");
 
-			return new PurchaseOrder(GuidGenerator.Create(), code, supplierId, warehouseId,
-									 orderDate, expectedDeliveryDate, finalDueDate, note);
-		}
+            DateTime? finalDueDate = inputDueDate
+                ?? (supplier.PaymentTermDays > 0 ? orderDate.AddDays(supplier.PaymentTermDays) : null);
 
-		public Task UpdateOrderAsync(PurchaseOrder order, Guid warehouseId,
+            return new PurchaseOrder(GuidGenerator.Create(), code, supplierId, warehouseId,
+                                     orderDate, expectedDeliveryDate, finalDueDate, note);
+        }
+
+        public async Task UpdateOrderAsync(PurchaseOrder order, Guid warehouseId,
 			DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
 		{
-			order.UpdateMaster(warehouseId, expectedDeliveryDate, dueDate, note);
-			return Task.CompletedTask;
-		}
+            await ValidateAsync(order.SupplierId, warehouseId, order.OrderDate, expectedDeliveryDate, dueDate);
+            order.UpdateInfo(warehouseId, expectedDeliveryDate, dueDate, note);
+        }
 
 		public Task CheckBeforeDeleteAsync(PurchaseOrder order)
 		{
@@ -61,8 +71,10 @@ namespace SupplyCoreERP.Orders.PO
 				throw new UserFriendlyException("Chỉ có thể xóa đơn hàng đang ở trạng thái Nháp!");
 			return Task.CompletedTask;
 		}
+        #endregion
 
-		public async Task AddDetailAsync(PurchaseOrder order, Guid productId, Guid unitId,
+        #region PurchaseOrder Detials
+        public async Task AddDetailAsync(PurchaseOrder order, Guid productId, Guid unitId,
 			int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
 		{
 			var product = await _productRepo.GetAsync(productId);
@@ -79,13 +91,15 @@ namespace SupplyCoreERP.Orders.PO
 			return Task.CompletedTask;
 		}
 
-		public Task RemoveDetailAsync(PurchaseOrder order, Guid detailId)
+        public Task RemoveDetailAsync(PurchaseOrder order, Guid detailId)
 		{
 			order.RemoveDetail(detailId);
 			return Task.CompletedTask;
 		}
+        #endregion
 
-		public Task SendToApproveAsync(PurchaseOrder order)
+        #region Work flow
+        public Task SendToApproveAsync(PurchaseOrder order)
 		{
 			if (order.Status != PurchaseOrderStatus.Draft)
 				throw new UserFriendlyException("Chỉ có thể gửi duyệt đơn đang ở trạng thái Nháp!");
@@ -93,10 +107,7 @@ namespace SupplyCoreERP.Orders.PO
 			return Task.CompletedTask;
 		}
 
-		/// <summary>
-		/// Validate nghiệp vụ và tạo phiếu nhập kho chờ.
-		/// </summary>
-		/// <returns>InventoryTicket mới tạo — chưa được lưu DB. AppService gọi InsertAsync.</returns>
+
 		public async Task<InventoryTicket> ApproveAsync(PurchaseOrder order)
 		{
 			if (order.Status != PurchaseOrderStatus.PendingApproval)
@@ -161,9 +172,31 @@ namespace SupplyCoreERP.Orders.PO
 		public Task CancelAsync(PurchaseOrder order, string cancelReason)
 		{
 			order.Cancel();
-			order.UpdateMaster(order.WarehouseId, order.ExpectedDeliveryDate, order.DueDate,
+			order.UpdateInfo(order.WarehouseId, order.ExpectedDeliveryDate, order.DueDate,
 							   $"[Đã hủy: {cancelReason}] " + (order.Note ?? ""));
 			return Task.CompletedTask;
 		}
-	}
+        #endregion
+
+        #region Validate
+        private async Task ValidateAsync(Guid supplierId, Guid warehouseId,
+			DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate)
+        {
+            if (!await _supplierRepo.AnyAsync(x => x.Id == supplierId))
+                throw new UserFriendlyException("Nhà cung cấp không tồn tại.");
+
+            if (!await _warehouseRepo.AnyAsync(x => x.Id == warehouseId))
+                throw new UserFriendlyException("Kho hàng không tồn tại.");
+
+            if (orderDate.Date > DateTime.Now.Date)
+                throw new UserFriendlyException("Ngày đặt hàng không được ở tương lai.");
+
+            if (expectedDeliveryDate.HasValue && expectedDeliveryDate.Value.Date < orderDate.Date)
+                throw new UserFriendlyException("Ngày giao hàng dự kiến không được trước ngày đặt hàng.");
+
+            if (dueDate.HasValue && dueDate.Value.Date < orderDate.Date)
+                throw new UserFriendlyException("Ngày đáo hạn không được trước ngày đặt hàng.");
+        }
+        #endregion
+    }
 }

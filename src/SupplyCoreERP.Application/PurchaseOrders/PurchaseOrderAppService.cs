@@ -19,12 +19,15 @@ namespace SupplyCoreERP.PurchaseOrders
 {
 	public class PurchaseOrderAppService : ApplicationService, IPurchaseOrderAppService
 	{
-		private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
+        // Dependencies
+        private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
 		private readonly IRepository<InventoryTicket, Guid> _ticketRepo;   
 		private readonly IRepository<Supplier, Guid> _supplierRepo;
 		private readonly PurchaseOrderManager _orderManager;
+   
 
-		public PurchaseOrderAppService(
+		// DI
+        public PurchaseOrderAppService(
 		IRepository<PurchaseOrder, Guid> orderRepo,
 		IRepository<InventoryTicket, Guid> ticketRepo,
 		IRepository<Supplier, Guid> supplierRepo,
@@ -36,8 +39,8 @@ namespace SupplyCoreERP.PurchaseOrders
 			_orderManager = orderManager;
 		}
 
-		#region Purchase Order
-		public async Task<PagedResultDto<PurchaseOrderDto>> GetListAsync(GetPurchaseOrderListDto input)
+        #region Purchase Order
+        public async Task<PagedResultDto<PurchaseOrderDto>> GetListAsync(GetPurchaseOrderListDto input)
 		{
 			var query = await _orderRepo.GetQueryableAsync();
 
