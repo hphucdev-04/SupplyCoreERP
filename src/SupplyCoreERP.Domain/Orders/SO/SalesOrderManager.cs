@@ -3,8 +3,11 @@ using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Balances;
 using SupplyCoreERP.Inventories.Tickets;
+using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Prices;
 using SupplyCoreERP.Products;
+using SupplyCoreERP.Suppliers;
+using SupplyCoreERP.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,17 +20,21 @@ namespace SupplyCoreERP.Sales.Orders
 {
 	public class SalesOrderManager : DomainService
 	{
+		// Dependencies
 		private readonly IRepository<SalesOrder, Guid> _orderRepo;
 		private readonly IRepository<Customer, Guid> _customerRepo;
 		private readonly IRepository<Product, Guid> _productRepo;
+		private readonly IRepository<Warehouse, Guid> _warehouseRepo;
 		private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
 		private readonly PriceManager _priceManager;
 		private readonly TicketManager _ticketManager;
 
+		// DI
 		public SalesOrderManager(
 			IRepository<SalesOrder, Guid> orderRepo,
 			IRepository<Customer, Guid> customerRepo,
 			IRepository<Product, Guid> productRepo,
+			IRepository<Warehouse, Guid> warehouseRepo,
 			IRepository<InventoryBalance, Guid> balanceRepo,
 			PriceManager priceManager,
 			TicketManager ticketManager)
@@ -35,20 +42,23 @@ namespace SupplyCoreERP.Sales.Orders
 			_orderRepo = orderRepo;
 			_customerRepo = customerRepo;
 			_productRepo = productRepo;
+			_warehouseRepo = warehouseRepo;
 			_balanceRepo = balanceRepo;
 			_priceManager = priceManager;
 			_ticketManager = ticketManager;
 		}
 
-		public async Task<SalesOrder> CreateOrderAsync(
+        #region SaleOrder
+        public async Task<SalesOrder> CreateOrderAsync(
 			Guid customerId, Guid warehouseId, DateTime orderDate,
 			DateTime? expectedDeliveryDate, DateTime? inputDueDate, string? note)
 		{
-			var customer = await _customerRepo.GetAsync(customerId);
+            await ValidateAsync(customerId, warehouseId, orderDate, expectedDeliveryDate, inputDueDate);
+            var customer = await _customerRepo.GetAsync(customerId);
 			if (!customer.IsActive)
 				throw new UserFriendlyException($"Khách hàng '{customer.Name}' đang bị khóa!");
 
-			string code = $"SO-{DateTime.Now:yyyyMMdd}-{GuidGenerator.Create().ToString()[..4].ToUpper()}";
+			string code = Utility.Code.Generate("SO");
 
 			DateTime? finalDueDate = inputDueDate
 				?? (customer.PaymentTermDays > 0 ? orderDate.AddDays(customer.PaymentTermDays) : null);
@@ -57,11 +67,12 @@ namespace SupplyCoreERP.Sales.Orders
 								  orderDate, expectedDeliveryDate, finalDueDate, note);
 		}
 
-		public Task UpdateOrderAsync(SalesOrder order, Guid warehouseId,
+		public async Task UpdateOrderAsync(SalesOrder order, Guid warehouseId,
 			DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
 		{
-			order.UpdateMaster(warehouseId, expectedDeliveryDate, dueDate, note);
-			return Task.CompletedTask;
+            await ValidateAsync(order.CustomerId,  warehouseId, order.OrderDate, expectedDeliveryDate, dueDate);
+            order.UpdateInfo(warehouseId, expectedDeliveryDate, dueDate, note);
+			
 		}
 
 		public Task CheckBeforeDeleteAsync(SalesOrder order)
@@ -70,8 +81,10 @@ namespace SupplyCoreERP.Sales.Orders
 				throw new UserFriendlyException("Chỉ có thể xóa đơn bán đang ở trạng thái Nháp!");
 			return Task.CompletedTask;
 		}
+        #endregion
 
-		public async Task AddDetailAsync(SalesOrder order, Guid productId, Guid unitId,
+        #region SaleOrder Details
+        public async Task AddDetailAsync(SalesOrder order, Guid productId, Guid unitId,
 			int conversionFactor, decimal quantity, decimal discountRate, decimal taxRate)
 		{
 			var product = await _productRepo.GetAsync(productId);
@@ -102,8 +115,10 @@ namespace SupplyCoreERP.Sales.Orders
 			order.RemoveDetail(detailId);
 			return Task.CompletedTask;
 		}
+        #endregion
 
-		public Task SendToApproveAsync(SalesOrder order)
+        #region Workflow
+        public Task SendToApproveAsync(SalesOrder order)
 		{
 			order.SendToApprove();
 			return Task.CompletedTask;
@@ -199,9 +214,31 @@ namespace SupplyCoreERP.Sales.Orders
 		public Task CancelAsync(SalesOrder order, string cancelReason)
 		{
 			order.Cancel();
-			order.UpdateMaster(order.WarehouseId, order.ExpectedDeliveryDate, order.DueDate,
+			order.UpdateInfo(order.WarehouseId, order.ExpectedDeliveryDate, order.DueDate,
 							   $"[Đã hủy: {cancelReason}] " + (order.Note ?? ""));
 			return Task.CompletedTask;
 		}
-	}
+        #endregion
+
+        #region Validate
+        private async Task ValidateAsync(Guid customerId, Guid warehouseId,
+           DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate)
+        {
+            if (!await _customerRepo.AnyAsync(x => x.Id == customerId))
+                throw new UserFriendlyException("Khách hàng không tồn tại.");
+
+            if (!await _warehouseRepo.AnyAsync(x => x.Id == warehouseId))
+                throw new UserFriendlyException("Kho hàng không tồn tại.");
+
+            if (orderDate.Date > DateTime.Now.Date)
+                throw new UserFriendlyException("Ngày đặt hàng không được ở tương lai.");
+
+            if (expectedDeliveryDate.HasValue && expectedDeliveryDate.Value.Date < orderDate.Date)
+                throw new UserFriendlyException("Ngày giao hàng dự kiến không được trước ngày đặt hàng.");
+
+            if (dueDate.HasValue && dueDate.Value.Date < orderDate.Date)
+                throw new UserFriendlyException("Ngày đáo hạn không được trước ngày đặt hàng.");
+        }
+        #endregion
+    }
 }

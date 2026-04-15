@@ -19,12 +19,14 @@ namespace SupplyCoreERP.SalesOrders
 {
 	public class SalesOrderAppService : ApplicationService, ISalesOrderAppService
 	{
+		// Dependencies
 		private readonly IRepository<SalesOrder, Guid> _orderRepo;
 		private readonly IRepository<InventoryTicket, Guid> _ticketRepo;         
 		private readonly IRepository<InventoryTicketDetail, Guid> _ticketDetailRepo; 
 		private readonly IRepository<Customer, Guid> _customerRepo;
 		private readonly SalesOrderManager _orderManager;
 
+		// DI
 		public SalesOrderAppService(
 			IRepository<SalesOrder, Guid> orderRepo,
 			IRepository<InventoryTicket, Guid> ticketRepo,
@@ -39,7 +41,7 @@ namespace SupplyCoreERP.SalesOrders
 			_orderManager = orderManager;
 		}
 
-		#region Ticket
+		#region SaleOrder
 		public async Task<PagedResultDto<SalesOrderDto>> GetListAsync(GetSalesOrderListDto input)
 		{
 			var query = await _orderRepo.GetQueryableAsync();
@@ -114,7 +116,7 @@ namespace SupplyCoreERP.SalesOrders
 		}
 		#endregion
 
-		#region Ticket Detail
+		#region SaleOrder Details
 		public async Task AddDetailAsync(Guid orderId, AddSalesOrderDetailDto input)
 		{
 			var query = await _orderRepo.GetQueryableAsync();

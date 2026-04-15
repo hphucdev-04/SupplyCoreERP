@@ -20,12 +20,14 @@ namespace SupplyCoreERP.Tickets
 {
 	public class InventoryTicketAppService : ApplicationService, IInventoryTicketAppService
 	{
+		// Dependencies
 		private readonly IRepository<InventoryTicket, Guid> _ticketRepo;
 		private readonly IRepository<InventoryTicketDetail, Guid> _ticketDetailRepo;
 		private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo; 
 		private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
 		private readonly TicketManager _ticketManager;
 
+		// DI
 		public InventoryTicketAppService(
 		IRepository<InventoryTicket, Guid> ticketRepo,
 		IRepository<InventoryTicketDetail, Guid> ticketDetailRepo,
