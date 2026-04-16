@@ -10,13 +10,13 @@ import { debounceTime, distinctUntilChanged, Subject, takeUntil } from 'rxjs';
   styleUrl: './search.component.scss'
 })
 export class SearchComponent implements OnInit, OnDestroy {
-private destroy$ = new Subject<void>();
+  private destroy$ = new Subject<void>();
   private searchSubject$ = new Subject<string>();
 
   @Input() placeholder: string = 'Tìm kiếm...';
   @Input() debounceTime: number = 500;
   @Input() value: string = '';
-  
+
   @Output() valueChange = new EventEmitter<string>();
   @Output() search = new EventEmitter<string>();
 

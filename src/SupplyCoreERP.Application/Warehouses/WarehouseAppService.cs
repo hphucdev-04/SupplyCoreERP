@@ -11,7 +11,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Warehouses
 {
-	public class WarehouseAppService : ApplicationService, IWarehouseAppService
+	public class WarehouseAppService : SupplyCore, IWarehouseAppService
 	{
 		private readonly IRepository<Warehouse, Guid> _warehouseRepo;
 		private readonly IRepository<Zone, Guid> _zoneRepo;

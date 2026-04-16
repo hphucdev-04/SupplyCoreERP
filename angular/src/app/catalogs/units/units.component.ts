@@ -16,7 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrl: './units.component.scss',
   providers: [ListService]
 })
-export class UnitsComponent implements OnInit, OnDestroy{
+export class UnitsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   unit = { items: [], totalCount: 0 } as PagedResultDto<BaseUnitDto>;
   isDrawerOpen = false;
@@ -33,7 +33,7 @@ export class UnitsComponent implements OnInit, OnDestroy{
   }
 
   ngOnInit(): void {
-    const unitStreamCreator = (query) => this.unitService.getList({...query, filter: this.filterText});
+    const unitStreamCreator = (query) => this.unitService.getList({ ...query, filter: this.filterText });
     this.list.maxResultCount = 10;
     this.list.hookToQuery(unitStreamCreator).subscribe((response) => {
       this.unit = response;
@@ -51,7 +51,7 @@ export class UnitsComponent implements OnInit, OnDestroy{
     this.list.get();
   }
 
- createUnit(): void {
+  createUnit(): void {
     this.selectedUnit = {} as BaseUnitDto;
     this.form.reset();
     this.isDrawerOpen = true;
@@ -82,36 +82,11 @@ export class UnitsComponent implements OnInit, OnDestroy{
 
   buildForm(): void {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(100)]],
     });
-
-    //Logic sinh code khi tạo
-    if (!this.selectedUnit.id) {
-      this.form.get('name')?.valueChanges
-        .pipe(takeUntil(this.destroy$)) // Tự hủy khi component bị hủy
-        .subscribe((value) => {
-          if (value) {
-            const generatedCode = this.generateCode(value);
-            // set value cho ô Code, emitEvent: false để tránh vòng lặp vô tận
-            this.form.get('code')?.setValue(generatedCode, { emitEvent: false });
-          }
-        });
-    }
   }
 
-  private generateCode(str: string): string {
-    if (!str) return '';
-    return str
-      .normalize('NFD').replace(/[\u0300-\u036f]/g, '') // Bỏ dấu tiếng Việt
-      .replace(/đ/g, 'd').replace(/Đ/g, 'D')
-      .replace(/[^a-zA-Z0-9 ]/g, '') // Bỏ ký tự đặc biệt
-      .trim()
-      .replace(/\s+/g, '_') // Thay khoảng trắng bằng _
-      .toUpperCase(); // Chuyển thành CHỮ HOA
-  }
-
-   closeDrawer(): void {
+  closeDrawer(): void {
     this.isDrawerOpen = false;
     this.form.reset();
   }
@@ -127,7 +102,7 @@ export class UnitsComponent implements OnInit, OnDestroy{
       this.closeDrawer();
       this.list.get();
       this.toaster.success(
-        this.selectedUnit.id? '::UpdateSuccess' : '::CreateSuccess', '::Success'
+        this.selectedUnit.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
       );
     });
   }

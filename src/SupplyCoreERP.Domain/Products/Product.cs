@@ -73,8 +73,6 @@ namespace SupplyCoreERP.Products
 			BaseUnitId = baseUnitId;
 		}
 
-		public void UpdateCode(string newCode) => SetCode(newCode);
-
 		public void AddUnit(Guid id, Guid unitId, int conversionFactor, int level)
 		{
 			if (unitId == BaseUnitId)

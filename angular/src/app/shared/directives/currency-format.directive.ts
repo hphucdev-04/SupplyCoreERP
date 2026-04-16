@@ -14,7 +14,7 @@ export class CurrencyFormatDirective implements OnInit {
   constructor(
     private el: ElementRef<HTMLInputElement>,
     private ngControl: NgControl
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.formatValue(this.ngControl.value);

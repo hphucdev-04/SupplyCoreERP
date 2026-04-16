@@ -12,7 +12,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Transactions
 {
-	public class InventoryTransactionAppService : ApplicationService, IInventoryTransactionAppService
+	public class InventoryTransactionAppService : SupplyCore, IInventoryTransactionAppService
 	{
 		private readonly IRepository<InventoryTransaction, Guid> _transactionRepo;
 

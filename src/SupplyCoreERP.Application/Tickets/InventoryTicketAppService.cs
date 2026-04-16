@@ -18,7 +18,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Tickets
 {
-	public class InventoryTicketAppService : ApplicationService, IInventoryTicketAppService
+	public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
 	{
 		// Dependencies
 		private readonly IRepository<InventoryTicket, Guid> _ticketRepo;

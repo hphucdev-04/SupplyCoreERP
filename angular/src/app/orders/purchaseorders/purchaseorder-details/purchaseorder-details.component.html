@@ -4,7 +4,8 @@
   <ng-template #abpHeader>
     <div class="d-flex align-items-center justify-content-between w-100 pe-3" *ngIf="order">
       <div class="d-flex align-items-center gap-3">
-        <div class="bg-primary-subtle txt-primary rounded p-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+        <div class="bg-primary-subtle txt-primary rounded p-3 d-flex align-items-center justify-content-center"
+          style="width: 64px; height: 64px;">
           <i class="fa fa-shopping-cart fa-2x"></i>
         </div>
         <div>
@@ -17,7 +18,8 @@
           </h3>
           <div class="txt-muted txt-sm d-flex gap-3 flex-wrap">
             <span><i class="fa fa-building-o me-1"></i><strong>{{ order.supplierName }}</strong></span>
-            <span>{{ '::CreationTime' | abpLocalization }}: <strong class="txt-num">{{ order.creationTime | date:'dd/MM/yyyy HH:mm' }}</strong></span>
+            <span>{{ '::CreationTime' | abpLocalization }}: <strong class="txt-num">{{ order.creationTime |
+                date:'dd/MM/yyyy HH:mm' }}</strong></span>
           </div>
         </div>
       </div>
@@ -38,7 +40,7 @@
 
       <!-- Receiving alert -->
       <div class="alert alert-info d-flex align-items-center mb-3"
-           *ngIf="order.status === PurchaseOrderStatus.Receiving">
+        *ngIf="order.status === PurchaseOrderStatus.Receiving">
         <i class="fa fa-truck txt-xl me-3 txt-info"></i>
         <div>
           <strong>{{ '::ReceivingInProgress' | abpLocalization }}</strong><br>
@@ -48,7 +50,7 @@
 
       <!-- Completed alert -->
       <div class="alert alert-success d-flex align-items-center mb-3"
-           *ngIf="order.status === PurchaseOrderStatus.Completed">
+        *ngIf="order.status === PurchaseOrderStatus.Completed">
         <i class="fa fa-check-circle txt-xl me-3"></i>
         <strong>{{ '::POCompletedNote' | abpLocalization }}</strong>
       </div>
@@ -56,29 +58,35 @@
       <!-- ── General Info ─────────────────────────────────── -->
       <div class="card border shadow-sm mb-3">
         <div class="card-header py-3">
-          <h6 class="txt-primary fw-bold mb-0"><i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}</h6>
+          <h6 class="txt-primary fw-bold mb-0"><i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' |
+            abpLocalization }}</h6>
         </div>
         <div class="card-body py-3">
           <div class="row g-3">
             <div class="col-md-3">
               <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Supplier' | abpLocalization }}</div>
-              <div class="fw-bold txt-sm txt-main"><i class="fa fa-building-o txt-muted me-1"></i>{{ order.supplierName }}</div>
+              <div class="fw-bold txt-sm txt-main"><i class="fa fa-building-o txt-muted me-1"></i>{{ order.supplierName
+                }}</div>
             </div>
             <div class="col-md-3">
               <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Warehouse' | abpLocalization }}</div>
-              <div class="fw-medium txt-sm txt-main"><i class="fa fa-home txt-muted me-1"></i>{{ order.warehouseName }}</div>
+              <div class="fw-medium txt-sm txt-main"><i class="fa fa-home txt-muted me-1"></i>{{ order.warehouseName }}
+              </div>
             </div>
             <div class="col-md-2">
               <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::OrderDate' | abpLocalization }}</div>
               <div class="fw-medium txt-sm txt-num">{{ order.orderDate | date:'dd/MM/yyyy' }}</div>
             </div>
             <div class="col-md-2">
-              <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::ExpectedDelivery' | abpLocalization }}</div>
-              <div class="fw-medium txt-sm txt-num">{{ order.expectedDeliveryDate ? (order.expectedDeliveryDate | date:'dd/MM/yyyy') : '—' }}</div>
+              <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::ExpectedDelivery' | abpLocalization }}
+              </div>
+              <div class="fw-medium txt-sm txt-num">{{ order.expectedDeliveryDate ? (order.expectedDeliveryDate |
+                date:'dd/MM/yyyy') : '—' }}</div>
             </div>
             <div class="col-md-2">
               <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::DueDate' | abpLocalization }}</div>
-              <div class="fw-medium txt-sm txt-num" [class.txt-danger]="order.dueDate && (order.dueDate | date) < ('' | date)">
+              <div class="fw-medium txt-sm txt-num"
+                [class.txt-danger]="order.dueDate && (order.dueDate | date) < ('' | date)">
                 {{ order.dueDate ? (order.dueDate | date:'dd/MM/yyyy') : '—' }}
               </div>
             </div>
@@ -143,15 +151,16 @@
             <table class="table table-hover mb-0 align-middle">
               <thead class="bg-light">
                 <tr>
-                  <th class="py-2 px-3 txt-muted txt-sm fw-semibold" style="width:44px;"
-                      *ngIf="isEditable()"></th>
+                  <th class="py-2 px-3 txt-muted txt-sm fw-semibold" style="width:44px;" *ngIf="isEditable()"></th>
                   <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::Product' | abpLocalization }}</th>
                   <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::Unit' | abpLocalization }}</th>
                   <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::Quantity' | abpLocalization }}</th>
                   <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::UnitPrice' | abpLocalization }}</th>
                   <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::Tax' | abpLocalization }}%</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::FinalPrice' | abpLocalization }}</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold text-center" *ngIf="order.status !== PurchaseOrderStatus.Draft && order.status !== PurchaseOrderStatus.PendingApproval && order.status !== PurchaseOrderStatus.Canceled">
+                  <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::FinalPrice' | abpLocalization }}
+                  </th>
+                  <th class="py-2 txt-muted txt-sm fw-semibold text-center"
+                    *ngIf="order.status !== PurchaseOrderStatus.Draft && order.status !== PurchaseOrderStatus.PendingApproval && order.status !== PurchaseOrderStatus.Canceled">
                     {{ '::Received' | abpLocalization }}
                   </th>
                 </tr>
@@ -181,9 +190,8 @@
                   <td class="py-3 text-end pe-3">
                     <div *ngIf="isEditable()">
                       <input type="number" class="form-control form-control-sm text-end fw-bold txt-num"
-                             style="width: 90px; display:inline-block;"
-                             [value]="row.quantity" min="0.01" step="1"
-                             (change)="onInlineDetailChange(row, 'quantity', $event.target.value)">
+                        style="width: 90px; display:inline-block;" [value]="row.quantity" min="0.01" step="1"
+                        (change)="onInlineDetailChange(row, 'quantity', $event.target.value)">
                     </div>
                     <span *ngIf="!isEditable()" class="fw-bold txt-num">{{ row.quantity | number }}</span>
                     <div class="txt-muted txt-xs txt-num" *ngIf="row.baseQuantity !== row.quantity">
@@ -195,9 +203,8 @@
                   <td class="py-3 text-end pe-3">
                     <div *ngIf="isEditable()">
                       <input type="number" class="form-control form-control-sm text-end txt-num"
-                             style="width: 110px; display:inline-block;"
-                             [value]="row.unitPrice" min="0"
-                             (change)="onInlineDetailChange(row, 'unitPrice', $event.target.value)">
+                        style="width: 110px; display:inline-block;" [value]="row.unitPrice" min="0"
+                        (change)="onInlineDetailChange(row, 'unitPrice', $event.target.value)">
                     </div>
                     <span *ngIf="!isEditable()" class="txt-num">{{ row.unitPrice | number:'1.0-0' }}đ</span>
                   </td>
@@ -206,9 +213,8 @@
                   <td class="py-3 text-end pe-3">
                     <div *ngIf="isEditable()">
                       <input type="number" class="form-control form-control-sm text-end txt-num"
-                             style="width: 70px; display:inline-block;"
-                             [value]="row.taxRate ?? 0" min="0" max="100"
-                             (change)="onInlineDetailChange(row, 'taxRate', $event.target.value)">
+                        style="width: 70px; display:inline-block;" [value]="row.taxRate ?? 0" min="0" max="100"
+                        (change)="onInlineDetailChange(row, 'taxRate', $event.target.value)">
                     </div>
                     <span *ngIf="!isEditable()" class="txt-num txt-muted">{{ row.taxRate ?? 0 }}%</span>
                   </td>
@@ -222,20 +228,19 @@
                   </td>
 
                   <!-- Received progress -->
-                  <td class="py-3 text-center" *ngIf="order.status !== PurchaseOrderStatus.Draft && order.status !== PurchaseOrderStatus.PendingApproval && order.status !== PurchaseOrderStatus.Canceled">
+                  <td class="py-3 text-center"
+                    *ngIf="order.status !== PurchaseOrderStatus.Draft && order.status !== PurchaseOrderStatus.PendingApproval && order.status !== PurchaseOrderStatus.Canceled">
                     <div style="min-width: 110px;">
                       <div class="d-flex justify-content-between txt-xs mb-1">
                         <span class="txt-muted">{{ row.receivedQuantity | number }}</span>
                         <span class="fw-bold" [class.txt-success]="receiveProgress(row) >= 100"
-                              [class.txt-warning]="receiveProgress(row) > 0 && receiveProgress(row) < 100">
+                          [class.txt-warning]="receiveProgress(row) > 0 && receiveProgress(row) < 100">
                           {{ receiveProgress(row) | number:'1.0-0' }}%
                         </span>
                       </div>
                       <div class="progress" style="height: 5px;">
-                        <div class="progress-bar"
-                             [class.bg-success]="receiveProgress(row) >= 100"
-                             [class.bg-warning]="receiveProgress(row) < 100"
-                             [style.width.%]="receiveProgress(row)">
+                        <div class="progress-bar" [class.bg-success]="receiveProgress(row) >= 100"
+                          [class.bg-warning]="receiveProgress(row) < 100" [style.width.%]="receiveProgress(row)">
                         </div>
                       </div>
                     </div>
@@ -287,16 +292,12 @@
 </abp-modal>
 
 <!-- Edit Drawer -->
-<app-drawer
-  [isOpen]="isEditDrawerOpen"
-  [title]="'::EditPurchaseOrder' | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="editForm?.invalid || isSavingEdit"
-  (close)="closeEditDrawer()"
-  (save)="saveEdit()">
+<app-drawer [isOpen]="isEditDrawerOpen" [title]="'::EditPurchaseOrder' | abpLocalization" [width]="'md'"
+  [saveDisabled]="editForm?.invalid || isSavingEdit" (close)="closeEditDrawer()" (save)="saveEdit()">
   <form *ngIf="editForm" [formGroup]="editForm">
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Warehouse' | abpLocalization }} <span class="txt-danger">*</span></label>
+      <label class="form-label txt-sm fw-semibold">{{ '::Warehouse' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
       <select class="form-select form-select-sm" formControlName="warehouseId">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
@@ -320,18 +321,15 @@
 </app-drawer>
 
 <!-- Add Detail Drawer -->
-<app-drawer
-  [isOpen]="isAddDetailOpen"
-  [title]="'::AddProduct' | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="detailForm?.invalid || isSavingDetail"
-  (close)="closeAddDetailDrawer()"
-  (save)="saveDetail()">
+<app-drawer [isOpen]="isAddDetailOpen" [title]="'::AddProduct' | abpLocalization" [width]="'md'"
+  [saveDisabled]="detailForm?.invalid || isSavingDetail" (close)="closeAddDetailDrawer()" (save)="saveDetail()">
   <form *ngIf="detailForm" [formGroup]="detailForm">
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Product' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <select class="form-select form-select-sm" formControlName="productId" (change)="onMedicineChange($event.target.value)">
+      <label class="form-label txt-sm fw-semibold">{{ '::Product' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
+      <select class="form-select form-select-sm" formControlName="productId"
+        (change)="onMedicineChange($event.target.value)">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
       </select>
@@ -339,40 +337,43 @@
 
     <div class="row">
       <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::Unit' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <select class="form-select form-select-sm" formControlName="unitId"
-                [attr.disabled]="!units.length ? '' : null"
-                (change)="onUnitChange($event.target.value)">
+        <label class="form-label txt-sm fw-semibold">{{ '::Unit' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
+        <select class="form-select form-select-sm" formControlName="unitId" [attr.disabled]="!units.length ? '' : null"
+          (change)="onUnitChange($event.target.value)">
           <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
           <option *ngFor="let u of units" [value]="u.unitId">{{ u.unitName }} (×{{ u.conversionFactor }})</option>
         </select>
       </div>
       <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::Quantity' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <input type="number" step="1" min="1" class="form-control form-control-sm"
-               formControlName="quantity" (input)="updateQuantityPreview()">
+        <label class="form-label txt-sm fw-semibold">{{ '::Quantity' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
+        <input type="number" step="1" min="1" class="form-control form-control-sm" formControlName="quantity"
+          (input)="updateQuantityPreview()">
       </div>
     </div>
 
     <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm"
-         *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
-      <i class="fa fa-calculator me-1"></i> ≈ <strong class="txt-num">{{ quantityPreview | number }} {{ baseUnitName }}</strong>
+      *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
+      <i class="fa fa-calculator me-1"></i> ≈ <strong class="txt-num">{{ quantityPreview | number }} {{ baseUnitName
+        }}</strong>
     </div>
 
     <div class="row">
       <div class="col-7 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::UnitPrice' | abpLocalization }} <span class="txt-danger">*</span></label>
+        <label class="form-label txt-sm fw-semibold">{{ '::UnitPrice' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
         <div class="input-group input-group-sm">
-          <input type="number" class="form-control form-control-sm text-end txt-num"
-                 formControlName="unitPrice" min="0">
+          <input type="number" class="form-control form-control-sm text-end txt-num" formControlName="unitPrice"
+            min="0">
           <span class="input-group-text">đ</span>
         </div>
       </div>
       <div class="col-5 mb-3">
         <label class="form-label txt-sm fw-semibold">{{ '::TaxRate' | abpLocalization }}</label>
         <div class="input-group input-group-sm">
-          <input type="number" class="form-control form-control-sm text-end"
-                 formControlName="taxRate" min="0" max="100">
+          <input type="number" class="form-control form-control-sm text-end" formControlName="taxRate" min="0"
+            max="100">
           <span class="input-group-text">%</span>
         </div>
       </div>
@@ -391,19 +392,20 @@
   </div>
   <div class="modal-body pt-3">
     <div class="mb-2">
-      <label class="form-label txt-sm fw-semibold">{{ '::CancelReason' | abpLocalization }} <span class="txt-danger">*</span></label>
+      <label class="form-label txt-sm fw-semibold">{{ '::CancelReason' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
       <textarea class="form-control" [(ngModel)]="cancelReason" rows="3"
-                [placeholder]="'::EnterReason' | abpLocalization" autofocus></textarea>
+        [placeholder]="'::EnterReason' | abpLocalization" autofocus></textarea>
       <div *ngIf="showCancelError" class="txt-danger txt-sm mt-1">
         <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
   </div>
   <div class="modal-footer bg-light border-top-0" style="border-radius: 0 0 8px 8px;">
-    <button type="button" class="btn btn-outline-secondary btn-sm px-3"
-            (click)="modal.dismiss()" [disabled]="isCanceling">{{ '::Cancel' | abpLocalization }}</button>
-    <button type="button" class="btn btn-sm px-3 bg-danger border-danger text-white"
-            (click)="confirmCancel(modal)" [disabled]="isCanceling">
+    <button type="button" class="btn btn-outline-secondary btn-sm px-3" (click)="modal.dismiss()"
+      [disabled]="isCanceling">{{ '::Cancel' | abpLocalization }}</button>
+    <button type="button" class="btn btn-sm px-3 bg-danger border-danger text-white" (click)="confirmCancel(modal)"
+      [disabled]="isCanceling">
       <i class="fa" [ngClass]="isCanceling ? 'fa-spinner fa-spin' : 'fa-times'"></i>
       {{ '::ConfirmCancel' | abpLocalization }}
     </button>

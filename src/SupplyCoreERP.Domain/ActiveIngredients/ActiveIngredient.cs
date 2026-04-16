@@ -18,9 +18,8 @@ namespace SupplyCoreERP.ActiveIngredients
 			SetName(name);
 		}
 
-		public void Update(string code, string name)
+		public void Update(string name)
 		{
-			SetCode(code);
 			SetName(name);
 		}
 

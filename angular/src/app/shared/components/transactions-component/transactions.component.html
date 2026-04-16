@@ -1,5 +1,6 @@
-<div [class.card]="!isEmbedded" [class.border-0]="isEmbedded" [class.shadow-none]="isEmbedded" class="h-100 d-flex flex-column">
-  
+<div [class.card]="!isEmbedded" [class.border-0]="isEmbedded" [class.shadow-none]="isEmbedded"
+  class="h-100 d-flex flex-column">
+
   <div class="card-header py-2" *ngIf="!isEmbedded">
     <div class="row align-items-center">
       <div class="col-md-6">
@@ -17,32 +18,31 @@
   </div>
 
   <div class="card-body d-flex flex-column flex-grow-1" [class.p-0]="isEmbedded" [class.p-2]="!isEmbedded">
-    
+
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
       <div style="min-width: 200px; max-width: 350px; flex: 1;">
-        <app-search
-          [placeholder]="'::SearchTransaction' | abpLocalization"
-          [(value)]="filterText"
-          [debounceTime]="800"
+        <app-search [placeholder]="'::SearchTransaction' | abpLocalization" [(value)]="filterText" [debounceTime]="800"
           (search)="onSearch($event)">
         </app-search>
       </div>
 
       <div class="d-flex align-items-center gap-2">
         <span class="small fw-semibold text-muted">Từ:</span>
-        <input type="date" class="form-control form-control-sm w-auto" [(ngModel)]="fromDate" (change)="onFilterChange()">
-        
+        <input type="date" class="form-control form-control-sm w-auto" [(ngModel)]="fromDate"
+          (change)="onFilterChange()">
+
         <span class="small fw-semibold text-muted ms-1">Đến:</span>
         <input type="date" class="form-control form-control-sm w-auto" [(ngModel)]="toDate" (change)="onFilterChange()">
-        
-        <button *ngIf="fromDate || toDate" class="btn btn-sm btn-outline-danger ms-1 py-1 px-2" (click)="clearDateFilter()" title="Xóa bộ lọc ngày">
+
+        <button *ngIf="fromDate || toDate" class="btn btn-sm btn-outline-danger ms-1 py-1 px-2"
+          (click)="clearDateFilter()" title="Xóa bộ lọc ngày">
           <i class="fa fa-times"></i>
         </button>
       </div>
     </div>
 
     <ngx-datatable class="flex-grow-1" [rows]="data.items" [count]="data.totalCount" [list]="list" default>
-      
+
       <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime" [width]="130">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span class="small fw-medium text-muted">{{ row.creationTime | date:'dd/MM/yyyy HH:mm' }}</span>
@@ -52,27 +52,35 @@
       <ngx-datatable-column [name]="'::Document' | abpLocalization" prop="referenceDocumentNumber" [width]="180">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="lh-sm">
-            <a href="javascript:void(0)" class="fw-bold text-decoration-none small">{{ row.referenceDocumentNumber || '---' }}</a><br>
-            <span class="text-muted" style="font-size: 0.7rem;">{{ '::Enum:InventoryTransactionType.' + enumName(TransactionType, row.transactionType) | abpLocalization }}</span>
+            <a href="javascript:void(0)" class="fw-bold text-decoration-none small">{{ row.referenceDocumentNumber ||
+              '---' }}</a><br>
+            <span class="text-muted" style="font-size: 0.7rem;">{{ '::Enum:InventoryTransactionType.' +
+              enumName(TransactionType, row.transactionType) | abpLocalization }}</span>
           </div>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column *ngIf="!isEmbedded" [name]="'::Location' | abpLocalization" prop="warehouseName" [width]="160">
+      <ngx-datatable-column *ngIf="!isEmbedded" [name]="'::Location' | abpLocalization" prop="warehouseName"
+        [width]="160">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="lh-sm">
-            <span class="fw-semibold text-dark small"><i class="fa fa-warehouse text-muted me-1"></i>{{ row.warehouseName }}</span><br>
-            <span class="text-muted" style="font-size: 0.7rem;"><i class="fa fa-box text-secondary me-1"></i>{{ row.binCode }}</span>
+            <span class="fw-semibold text-dark small"><i class="fa fa-warehouse text-muted me-1"></i>{{
+              row.warehouseName }}</span><br>
+            <span class="text-muted" style="font-size: 0.7rem;"><i class="fa fa-box text-secondary me-1"></i>{{
+              row.binCode }}</span>
           </div>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column *ngIf="!isEmbedded" [name]="'::Medicine' | abpLocalization" prop="productName" [width]="250">
+      <ngx-datatable-column *ngIf="!isEmbedded" [name]="'::Medicine' | abpLocalization" prop="productName"
+        [width]="250">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="lh-sm">
-            <span class="fw-bold text-primary small text-truncate d-block" [title]="row.productName">{{ row.productName }}</span>
+            <span class="fw-bold text-primary small text-truncate d-block" [title]="row.productName">{{ row.productName
+              }}</span>
             <span class="text-muted" style="font-size: 0.7rem;">
-              {{ row.productCode }} <span class="mx-1 opacity-50">|</span> Lô: <strong class="text-danger">{{ row.batchNumber }}</strong>
+              {{ row.productCode }} <span class="mx-1 opacity-50">|</span> Lô: <strong class="text-danger">{{
+                row.batchNumber }}</strong>
             </span>
           </div>
         </ng-template>
@@ -80,8 +88,8 @@
 
       <ngx-datatable-column [name]="'::QuantityChanged' | abpLocalization" prop="quantity" [width]="130">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="badge px-2 py-1" 
-                [ngClass]="isIncrease(row.transactionType) ? 'text-success bg-success bg-opacity-10' : 'text-danger bg-danger bg-opacity-10'">
+          <span class="badge px-2 py-1"
+            [ngClass]="isIncrease(row.transactionType) ? 'text-success bg-success bg-opacity-10' : 'text-danger bg-danger bg-opacity-10'">
             <i class="fa" [ngClass]="isIncrease(row.transactionType) ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
             {{ isIncrease(row.transactionType) ? '+' : '-' }}{{ row.quantity | number }}
           </span>
@@ -96,7 +104,8 @@
 
       <ngx-datatable-column [name]="'::Note' | abpLocalization" prop="note" [width]="180">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="text-muted fst-italic text-truncate d-block" style="font-size: 0.75rem;" [title]="row.note">{{ row.note || '---' }}</span>
+          <span class="text-muted fst-italic text-truncate d-block" style="font-size: 0.75rem;" [title]="row.note">{{
+            row.note || '---' }}</span>
         </ng-template>
       </ngx-datatable-column>
 

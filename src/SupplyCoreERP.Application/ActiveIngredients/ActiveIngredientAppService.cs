@@ -1,6 +1,4 @@
 ﻿using SupplyCoreERP.ActiveIngredients.Dtos;
-using SupplyCoreERP.BaseUnits;
-using SupplyCoreERP.BaseUnits.Dtos;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,8 +26,8 @@ namespace SupplyCoreERP.ActiveIngredients
 
 		public override async Task<ActiveIngredientDto> CreateAsync(CreateUpdateActiveIngredientDto input)
 		{
-			//Mnager check và tạo entity
-			var ingredient = await _activeIngredientManager.CreateAsync(input.Code, input.Name);
+			//Manager check và tạo entity
+			var ingredient = await _activeIngredientManager.CreateAsync(input.Name);
 			//Repository save vào DB
 			await Repository.InsertAsync(ingredient);
 			return ObjectMapper.Map<ActiveIngredient, ActiveIngredientDto>(ingredient);
@@ -40,7 +38,7 @@ namespace SupplyCoreERP.ActiveIngredients
 			// Manager để đảm bảo tính hợp lệ của entity
 			var ingredient = await Repository.GetAsync(id);
 			//Repository update vào DB
-			await _activeIngredientManager.UpdateAsync(ingredient, input.Code, input.Name);
+			await _activeIngredientManager.UpdateAsync(ingredient, input.Name);
 			return ObjectMapper.Map<ActiveIngredient, ActiveIngredientDto>(ingredient);
 		}
 

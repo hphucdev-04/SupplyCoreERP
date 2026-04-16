@@ -19,12 +19,7 @@
       <button type="button" class="btn ph-btn-cancel" (click)="onClose()">
         {{ cancelButtonText | abpLocalization }}
       </button>
-      <button
-        type="button"
-        class="btn ph-btn-save"
-        (click)="onSave()"
-        [disabled]="saveDisabled"
-      >
+      <button type="button" class="btn ph-btn-save" (click)="onSave()" [disabled]="saveDisabled">
         {{ saveButtonText | abpLocalization }}
       </button>
     </ng-template>

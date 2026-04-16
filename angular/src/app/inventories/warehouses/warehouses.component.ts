@@ -12,53 +12,53 @@ import { LocationService } from 'src/app/proxy/locations';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
-import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
+import { CodeGeneratorUtil } from 'src/app/shared/untils/code-generator.util';
 import { Router } from '@angular/router';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 
 
 @Component({
   selector: 'app-warehouses',
   templateUrl: './warehouses.component.html',
   styleUrl: './warehouses.component.scss',
-  providers: [ListService], 
+  providers: [ListService],
   imports: [SharedModule, DrawerComponent, SearchComponent]
 })
 export class WarehousesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   warehouse = { items: [], totalCount: 0 } as PagedResultDto<WarehouseDto>;
-  
+
   isDrawerOpen = false;
   form: FormGroup;
   selectedWarehouse: WarehouseDto;
-  
-  filterText = ''; 
-  
-  cities: CityDto[] = []; 
-  areas: AreaDto[] = [];  
-  
-  approvalStatus = ApprovalStatus; 
+
+  filterText = '';
+
+  cities: CityDto[] = [];
+  areas: AreaDto[] = [];
+
+  approvalStatus = ApprovalStatus;
 
   // --- TỶ LỆ QUY ĐỔI (THỰC TẾ) ---
   // 1 mét (m) = 20 pixels (px) trên bản vẽ (Đồng bộ với Map Layout)
   readonly PX_PER_M = 20;
   readonly enumName = enumName;
-  
+
   constructor(
     public readonly list: ListService,
     private warehouseService: WarehouseService,
-    private locationService: LocationService, 
+    private locationService: LocationService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
-    private router: Router, 
+    private router: Router,
     private toaster: ToasterService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.buildForm();
     this.loadWarehouses();
-    this.loadCities(); 
+    this.loadCities();
   }
 
   ngOnDestroy(): void {
@@ -82,7 +82,7 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   loadWarehouses() {
     const streamCreator = (query) => this.warehouseService.getList({
       ...query,
-      filter: this.filterText 
+      filter: this.filterText
     });
 
     this.list.hookToQuery(streamCreator)
@@ -94,7 +94,7 @@ export class WarehousesComponent implements OnInit, OnDestroy {
 
   onSearch(searchValue: string): void {
     this.filterText = searchValue;
-    this.list.get(); 
+    this.list.get();
   }
 
   manageLocations(id: string): void {
@@ -113,9 +113,9 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   }
 
   onCityChange(cityId: string) {
-    this.form.get('areaId').setValue(null); 
+    this.form.get('areaId').setValue(null);
     this.areas = [];
-    
+
     if (cityId) {
       this.locationService.getAreasByCity(cityId)
         .pipe(takeUntil(this.destroy$))
@@ -153,7 +153,7 @@ export class WarehousesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.selectedWarehouse = res;
-        
+
         // Cần đổi từ Pixel (DB) sang Mét (Form) để hiển thị
         this.form.patchValue({
           ...res,
@@ -220,21 +220,21 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   }
 
   onToggleActive(row: WarehouseDto, event: any): void {
-      event.stopPropagation();
-      this.confirmation.warn(
-          row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
-          '::Confirm'
-      ).subscribe((status) => {
-          if (status === Confirmation.Status.confirm) {
-              this.warehouseService.toggleActive(row.id).subscribe(() => this.list.get());
-              this.toaster.success(
-                row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
-              );
-          } else {
-              event.target.checked = row.isActive; 
-          }
-      });
-    }
+    event.stopPropagation();
+    this.confirmation.warn(
+      row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
+      '::Confirm'
+    ).subscribe((status) => {
+      if (status === Confirmation.Status.confirm) {
+        this.warehouseService.toggleActive(row.id).subscribe(() => this.list.get());
+        this.toaster.success(
+          row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
+        );
+      } else {
+        event.target.checked = row.isActive;
+      }
+    });
+  }
 
   generateCode(): void {
     const name = this.form.get('name')?.value || '';

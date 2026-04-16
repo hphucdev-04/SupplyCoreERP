@@ -4,7 +4,6 @@ import type { EntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { MedicineStatus } from '../../enums/medicines/medicine-status.enum';
 
 export interface CreateUpdateMedicineDto {
-  code: string;
   name: string;
   categoryId: string;
   manufacturerId: string;

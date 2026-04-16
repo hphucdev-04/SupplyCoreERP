@@ -1,17 +1,14 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
-using SupplyCoreERP.Permissions;
+﻿using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Prices.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Prices
 {
-	public class PriceAppService : ApplicationService, IPriceAppService
+	public class PriceAppService : SupplyCore, IPriceAppService
 	{
 		private readonly IRepository<PriceList, Guid> _priceListRepo;
 		private readonly IRepository<ProductPrice, Guid> _productPriceRepo;

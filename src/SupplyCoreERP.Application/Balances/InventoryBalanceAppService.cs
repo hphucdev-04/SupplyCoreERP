@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Balances.Dtos;
-using SupplyCoreERP.Enums.Balances;
 using SupplyCoreERP.Inventories.Balances;
 using System;
 using System.Collections.Generic;
@@ -8,12 +7,11 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Balances
 {
-	public class InventoryBalanceAppService : ApplicationService, IInventoryBalanceAppService
+	public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppService
 	{
 		private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
 		private readonly IRepository<InventoryReservation, Guid> _reservationRepo;

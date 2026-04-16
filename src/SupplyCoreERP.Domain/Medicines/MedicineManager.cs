@@ -1,6 +1,7 @@
 ﻿using SupplyCoreERP.ActiveIngredients;
 using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Categories;
+using SupplyCoreERP.DocumentSequences;
 using SupplyCoreERP.DosageForms;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Locations.Countries;
@@ -22,17 +23,18 @@ namespace SupplyCoreERP.Medicines
 		private readonly IRepository<BaseUnit, Guid> _unitRepository;
 		private readonly IRepository<DosageForm, Guid> _dosageFormRepository;
 		private readonly IRepository<ActiveIngredient, Guid> _activeIngredientRepository;
-		private readonly IRepository<Country, Guid> _countryRepository;
+		private readonly DocumentSequenceManager _documentSequenceManager;
 
-		public MedicineManager(
+        public MedicineManager(
 			ProductManager productManager,
 			IRepository<Category, Guid> categoryRepository,
 			IRepository<Manufacturer, Guid> manufacturerRepository,
 			IRepository<BaseUnit, Guid> unitRepository,
 			IRepository<DosageForm, Guid> dosageFormRepository,
 			IRepository<ActiveIngredient, Guid> activeIngredientRepository,
-			IRepository<Country, Guid> countryRepository
-			)
+			IRepository<Country, Guid> countryRepository,
+			DocumentSequenceManager documentSequenceManager
+            )
 		{
 			_productManager = productManager;
 			_categoryRepository = categoryRepository;
@@ -40,11 +42,10 @@ namespace SupplyCoreERP.Medicines
 			_unitRepository = unitRepository;
 			_dosageFormRepository = dosageFormRepository;
 			_activeIngredientRepository = activeIngredientRepository;
-			_countryRepository = countryRepository;
+			_documentSequenceManager = documentSequenceManager;
 		}
 
 		public async Task<Medicine> CreateAsync(
-			string code,
 			string name,
 			Guid categoryId,
 			Guid manufacturerId,
@@ -56,7 +57,8 @@ namespace SupplyCoreERP.Medicines
 			bool isPrescriptionDrug)
 		{
 			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
-			await _productManager.CheckCodeAndNameAsync(code, name);
+			var code = await _documentSequenceManager.GenerateAsync("MD");
+            await _productManager.CheckCodeAndNameAsync(code, name);
 
 			return new Medicine(
 				GuidGenerator.Create(),
@@ -75,7 +77,6 @@ namespace SupplyCoreERP.Medicines
 
 		public async Task UpdateAsync(
 			Medicine medicine,
-			string code,
 			string name,
 			Guid categoryId,
 			Guid manufacturerId,
@@ -90,15 +91,12 @@ namespace SupplyCoreERP.Medicines
 
 			// Validate tất cả khóa ngoại bao gồm baseUnitId mới từ input
 			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
-
-			// Check trùng Code/Name (loại trừ chính nó)
+			var code = await _documentSequenceManager.GenerateAsync("MD");
 			await _productManager.CheckCodeAndNameAsync(code, name, excludeId: medicine.Id);
 
-			// Update thông tin chung (Product)
-			medicine.UpdateCode(code);
 			medicine.UpdateInfo(name, categoryId, manufacturerId, baseUnitId);
 
-			// Update toàn bộ thông tin pharma từ input thực sự, không truyền giá trị cũ
+			// Update toàn bộ thông tin pharma từ input thực sự, 
 			medicine.UpdatePharmaInfo(dosageFormId, regNumber, usageRoute, storageCondition, isPrescriptionDrug);
 		}
 

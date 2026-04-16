@@ -18,7 +18,7 @@ import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { ProductBatchService } from 'src/app/proxy/batches';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 import { PurchaseOrderDetailsComponent } from 'src/app/orders/purchaseorders/purchaseorder-details/purchaseorder-details.component';
 import { SalesOrderDetailsComponent } from 'src/app/orders/saleorders/saleorder-details/saleorder-details.component';
 
@@ -102,7 +102,7 @@ export class TicketDetailsComponent implements OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.destroy$.next();
@@ -549,7 +549,7 @@ export class TicketDetailsComponent implements OnDestroy {
   // ── Helpers ───────────────────────────────────────────────
   isIssueTicket(): boolean {
     return this.ticket?.type === TicketType.GoodsIssue
-        || this.ticket?.type === TicketType.DisposalIssue
-        || this.ticket?.type === TicketType.ReturnOutward;
+      || this.ticket?.type === TicketType.DisposalIssue
+      || this.ticket?.type === TicketType.ReturnOutward;
   }
 }

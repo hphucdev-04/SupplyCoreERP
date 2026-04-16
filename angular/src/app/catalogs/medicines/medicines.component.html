@@ -147,21 +147,6 @@
 
     <div class="row">
       <div class="col-md-6 mb-3">
-        <label class="ph-label ph-label--required">
-          {{ '::Code' | abpLocalization }}
-        </label>
-        <div class="input-group input-group-sm">
-          <input type="text" class="form-control form-control-sm" formControlName="code">
-          <button class="btn btn-outline-secondary btn-sm" type="button" (click)="generateCode()">
-            <i class="fa fa-sync-alt"></i>
-          </button>
-        </div>
-        <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
-          class="ph-error-msg">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
-      </div>
-      <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::Name' | abpLocalization }}</label>
         <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
         <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)"

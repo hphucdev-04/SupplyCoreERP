@@ -13,16 +13,16 @@ import { SharedModule } from 'src/app/shared/shared.module';
 export class SupplierDetailsComponent {
   isVisible = false;
   supplier: SupplierDetailDto;
-  
+
   Gender = Gender;
   constructor(
     private supplierService: SupplierService
-  ) {}
+  ) { }
 
   open(id: string) {
     this.supplierService.get(id).subscribe(res => {
       this.supplier = res;
-      this.isVisible = true; 
+      this.isVisible = true;
     });
   }
 

@@ -6,12 +6,11 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Batches
 {
-	public class ProductBatchAppService : ApplicationService, IProductBatchAppService
+	public class ProductBatchAppService : SupplyCore, IProductBatchAppService
 	{
 		private readonly IRepository<ProductBatch, Guid> _batchRepo;
 		private readonly BatchManager _batchManager;

@@ -1,5 +1,4 @@
-﻿using AutoMapper.Internal.Mappers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Customers;
 using SupplyCoreERP.Inventories.Tickets;
 using SupplyCoreERP.Sales.Orders;
@@ -9,15 +8,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.SalesOrders
 {
-	public class SalesOrderAppService : ApplicationService, ISalesOrderAppService
+	public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
 	{
 		// Dependencies
 		private readonly IRepository<SalesOrder, Guid> _orderRepo;

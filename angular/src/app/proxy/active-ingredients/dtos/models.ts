@@ -6,7 +6,6 @@ export interface ActiveIngredientDto extends FullAuditedEntityDto<string> {
 }
 
 export interface CreateUpdateActiveIngredientDto {
-  code: string;
   name: string;
 }
 

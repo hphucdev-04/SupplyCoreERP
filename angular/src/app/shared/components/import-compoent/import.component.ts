@@ -18,7 +18,7 @@ export class ImportModalComponent {
 
   // Hàm API Import: Nhận vào File -> Trả về Observable
   @Input() importFn: (file: File) => Observable<any>;
-  
+
   // Hàm API Template: Không nhận tham số -> Trả về Observable<Blob>
   @Input() templateFn: () => Observable<any>;
 
@@ -31,7 +31,7 @@ export class ImportModalComponent {
   isImporting = false;
   dragOver = false;
 
-  constructor(private toaster: ToasterService) {}
+  constructor(private toaster: ToasterService) { }
 
   // Đóng modal
   close() {
@@ -76,10 +76,10 @@ export class ImportModalComponent {
   }
 
   // --- ACTIONS ---
-  
+
   downloadTemplate() {
     if (!this.templateFn) return;
-    
+
     this.templateFn().subscribe((blob: Blob) => {
       this.downloadBlob(blob, this.templateName);
     });
@@ -89,7 +89,7 @@ export class ImportModalComponent {
     if (!this.file || !this.importFn) return;
 
     this.isImporting = true;
-    
+
     this.importFn(this.file)
       .pipe(finalize(() => this.isImporting = false))
       .subscribe({

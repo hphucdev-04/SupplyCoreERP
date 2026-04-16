@@ -8,7 +8,6 @@ import { ActiveIngredientDto, GetActiveIngredientListDto } from 'src/app/proxy/a
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
 
 @Component({
   selector: 'app-ingredient',
@@ -19,7 +18,7 @@ import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
 })
 export class IngredientsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  ingredient = {items: [], totalCount: 0} as PagedResultDto<ActiveIngredientDto>;
+  ingredient = { items: [], totalCount: 0 } as PagedResultDto<ActiveIngredientDto>;
   isDrawerOpen = false;
   form: FormGroup;
   selectedIngredient = {} as ActiveIngredientDto;
@@ -31,20 +30,20 @@ export class IngredientsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-  ){}
+  ) { }
 
   ngOnInit(): void {
-      const ingredientStreamCreator = (query) => this.ingredientService.getList({...query, filter: this.filterText});
-      this.list.maxResultCount = 10;
-      this.list.hookToQuery(ingredientStreamCreator).subscribe((response) => {
-        this.ingredient = response;
-      })
-      this.buildForm();
+    const ingredientStreamCreator = (query) => this.ingredientService.getList({ ...query, filter: this.filterText });
+    this.list.maxResultCount = 10;
+    this.list.hookToQuery(ingredientStreamCreator).subscribe((response) => {
+      this.ingredient = response;
+    })
+    this.buildForm();
   }
 
   ngOnDestroy(): void {
-     this.destroy$.next();
-     this.destroy$.complete();
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   onSearch(searchValue: string): void {
@@ -76,28 +75,22 @@ export class IngredientsComponent implements OnInit, OnDestroy {
           this.ingredientService.delete(id).subscribe(() => {
             this.list.get();
             this.toaster.success('::DeleteSuccess', '::Success')
-        });
-      }
-    });
+          });
+        }
+      });
   }
 
   buildForm(): void {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
     });
-  }
- generateCode(): void {
-    const name = this.form.get('name')?.value || '';
-    const code = CodeGeneratorUtil.generate(name, 'AI');
-    this.form.get('code')?.setValue(code);
   }
 
   closeDrawer(): void {
     this.isDrawerOpen = false;
     this.form.reset();
   }
-   save(): void {
+  save(): void {
     if (this.form.invalid) return;
 
     const request = this.selectedIngredient.id

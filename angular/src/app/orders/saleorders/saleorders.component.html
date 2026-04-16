@@ -20,23 +20,23 @@
     <!-- Filter Bar -->
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
       <div style="min-width: 260px; flex: 1;">
-        <app-search
-          [placeholder]="'::SearchByCodeOrCustomer' | abpLocalization"
-          [(value)]="filterText"
-          [debounceTime]="800"
-          (search)="onSearch($event)">
+        <app-search [placeholder]="'::SearchByCodeOrCustomer' | abpLocalization" [(value)]="filterText"
+          [debounceTime]="800" (search)="onSearch($event)">
         </app-search>
       </div>
       <div class="d-flex flex-wrap gap-1 justify-content-end">
-        <select class="form-select form-select-sm" style="width: 180px;" [(ngModel)]="filterCustomerId" (change)="onFilterChange()">
+        <select class="form-select form-select-sm" style="width: 180px;" [(ngModel)]="filterCustomerId"
+          (change)="onFilterChange()">
           <option [ngValue]="null">{{ '::AllCustomers' | abpLocalization }}</option>
           <option *ngFor="let c of customers" [ngValue]="c.id">{{ c.name }}</option>
         </select>
-        <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="filterWarehouseId" (change)="onFilterChange()">
+        <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="filterWarehouseId"
+          (change)="onFilterChange()">
           <option [ngValue]="null">{{ '::AllWarehouses' | abpLocalization }}</option>
           <option *ngFor="let w of warehouses" [ngValue]="w.id">{{ w.name }}</option>
         </select>
-        <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="filterStatus" (change)="onFilterChange()">
+        <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="filterStatus"
+          (change)="onFilterChange()">
           <option [ngValue]="null">{{ '::AllStatus' | abpLocalization }}</option>
           <option *ngFor="let s of salesOrderStatusOptions" [ngValue]="s.value">
             {{ '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, s.value) | abpLocalization }}
@@ -58,8 +58,8 @@
               <button ngbDropdownItem (click)="viewDetail(row.id)">
                 <i class="fa fa-eye me-1 txt-primary"></i>{{ '::ViewDetails' | abpLocalization }}
               </button>
-              <button *ngIf="row.status === SalesOrderStatus.Draft"
-                      ngbDropdownItem class="txt-danger" (click)="delete(row.id, row.code)">
+              <button *ngIf="row.status === SalesOrderStatus.Draft" ngbDropdownItem class="txt-danger"
+                (click)="delete(row.id, row.code)">
                 <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
               </button>
             </div>
@@ -119,22 +119,19 @@
 </div>
 
 <!-- Create Drawer -->
-<app-drawer
-  [isOpen]="isDrawerOpen"
-  [title]="'::NewSalesOrder' | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="form.invalid || isSaving"
-  (close)="closeDrawer()"
-  (save)="save()">
+<app-drawer [isOpen]="isDrawerOpen" [title]="'::NewSalesOrder' | abpLocalization" [width]="'md'"
+  [saveDisabled]="form.invalid || isSaving" (close)="closeDrawer()" (save)="save()">
 
   <form [formGroup]="form">
-    <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis d-flex align-items-center p-2 mb-3 txt-sm">
+    <div
+      class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis d-flex align-items-center p-2 mb-3 txt-sm">
       <i class="fa fa-info-circle me-2 txt-lg"></i>
       {{ '::SOAutoGenerateCodeHint' | abpLocalization }}
     </div>
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Customer' | abpLocalization }} <span class="txt-danger">*</span></label>
+      <label class="form-label txt-sm fw-semibold">{{ '::Customer' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
       <select class="form-select form-select-sm" formControlName="customerId">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</option>
@@ -145,7 +142,8 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Warehouse' | abpLocalization }} <span class="txt-danger">*</span></label>
+      <label class="form-label txt-sm fw-semibold">{{ '::Warehouse' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
       <select class="form-select form-select-sm" formControlName="warehouseId">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
@@ -157,7 +155,8 @@
 
     <div class="row">
       <div class="col-12 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::OrderDate' | abpLocalization }} <span class="txt-danger">*</span></label>
+        <label class="form-label txt-sm fw-semibold">{{ '::OrderDate' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
         <input type="date" class="form-control form-control-sm" formControlName="orderDate">
       </div>
       <div class="col-6 mb-3">
