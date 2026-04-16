@@ -1,4 +1,5 @@
 ﻿using SupplyCoreERP.Customers;
+using SupplyCoreERP.DocumentSequences;
 using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Balances;
@@ -7,7 +8,6 @@ using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Prices;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
-using SupplyCoreERP.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,16 +28,19 @@ namespace SupplyCoreERP.Sales.Orders
 		private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
 		private readonly PriceManager _priceManager;
 		private readonly TicketManager _ticketManager;
+        private readonly DocumentSequenceManager _documentManager;
 
-		// DI
-		public SalesOrderManager(
+        // DI
+        public SalesOrderManager(
 			IRepository<SalesOrder, Guid> orderRepo,
 			IRepository<Customer, Guid> customerRepo,
 			IRepository<Product, Guid> productRepo,
 			IRepository<Warehouse, Guid> warehouseRepo,
 			IRepository<InventoryBalance, Guid> balanceRepo,
 			PriceManager priceManager,
-			TicketManager ticketManager)
+			TicketManager ticketManager,
+            DocumentSequenceManager documentManager
+            )
 		{
 			_orderRepo = orderRepo;
 			_customerRepo = customerRepo;
@@ -46,6 +49,7 @@ namespace SupplyCoreERP.Sales.Orders
 			_balanceRepo = balanceRepo;
 			_priceManager = priceManager;
 			_ticketManager = ticketManager;
+			_documentManager = documentManager;
 		}
 
         #region SaleOrder
@@ -58,7 +62,7 @@ namespace SupplyCoreERP.Sales.Orders
 			if (!customer.IsActive)
 				throw new UserFriendlyException($"Khách hàng '{customer.Name}' đang bị khóa!");
 
-			string code = Utility.Code.Generate("SO");
+			string code = await _documentManager.GenerateAsync("SO");
 
 			DateTime? finalDueDate = inputDueDate
 				?? (customer.PaymentTermDays > 0 ? orderDate.AddDays(customer.PaymentTermDays) : null);

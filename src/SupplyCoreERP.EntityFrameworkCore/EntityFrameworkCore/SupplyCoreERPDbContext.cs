@@ -3,6 +3,7 @@ using SupplyCoreERP.ActiveIngredients;
 using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Categories;
 using SupplyCoreERP.Customers;
+using SupplyCoreERP.DocumentSequences;
 using SupplyCoreERP.DosageForms;
 using SupplyCoreERP.Inventories.Balances;
 using SupplyCoreERP.Inventories.Batches;
@@ -114,9 +115,12 @@ public class SupplyCoreERPDbContext :
 	public DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
 	public DbSet<SalesOrder> SalesOrders { get; set; } 
 	public DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
-	#endregion
 
-	public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
+    //DocumentSequence
+    public DbSet<DocumentSequence> DocumentSequences { get; set; }
+    #endregion
+
+    public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
         : base(options)
     {
 
@@ -569,6 +573,20 @@ public class SupplyCoreERPDbContext :
 			b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 			b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 		});
-	}
+
+        // DocumentSeuqence
+        builder.Entity<DocumentSequence>(b =>
+        {
+            b.ToTable("DocumentSequences");
+            b.ConfigureByConvention(); 
+
+            // Đảm bảo DocumentType là duy nhất để tránh tạo trùng loại chứng từ
+            b.HasIndex(x => x.DocumentType).IsUnique();
+
+            b.Property(x => x.DocumentType).IsRequired().HasMaxLength(10);
+            b.Property(x => x.PrefixDate).IsRequired().HasMaxLength(6);
+            b.Property(x => x.LastValue).IsRequired();
+        });
+    }
 }
 

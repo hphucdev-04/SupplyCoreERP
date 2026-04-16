@@ -1,10 +1,10 @@
-﻿using SupplyCoreERP.Enums.Orders;
+﻿using SupplyCoreERP.DocumentSequences;
+using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Tickets;
 using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
-using SupplyCoreERP.Utilities;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,20 +22,24 @@ namespace SupplyCoreERP.Orders.PO
 		private readonly IRepository<Product, Guid> _productRepo;
 		private readonly IRepository<Warehouse, Guid> _warehouseRepo;
 		private readonly TicketManager _ticketManager;
+		private readonly DocumentSequenceManager _documentManager;
 
-		// DI
-		public PurchaseOrderManager(
+        // DI
+        public PurchaseOrderManager(
 			IRepository<PurchaseOrder, Guid> orderRepo,
 			IRepository<Supplier, Guid> supplierRepo,
 			IRepository<Product, Guid> productRepo,
 			IRepository<Warehouse, Guid> warehouseRepo,
-			TicketManager ticketManager)
+			TicketManager ticketManager,
+			DocumentSequenceManager documentManager
+		)
 		{
 			_orderRepo = orderRepo;
 			_supplierRepo = supplierRepo;
 			_productRepo = productRepo;
 			_warehouseRepo = warehouseRepo;
 			_ticketManager = ticketManager;
+			_documentManager = documentManager;
 		}
 
         #region PurchaseOrder
@@ -49,7 +53,7 @@ namespace SupplyCoreERP.Orders.PO
             if (!supplier.IsActive)
                 throw new UserFriendlyException($"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
 
-            string code = Utility.Code.Generate("PO");
+			string code = await _documentManager.GenerateAsync("PO");
 
             DateTime? finalDueDate = inputDueDate
                 ?? (supplier.PaymentTermDays > 0 ? orderDate.AddDays(supplier.PaymentTermDays) : null);
