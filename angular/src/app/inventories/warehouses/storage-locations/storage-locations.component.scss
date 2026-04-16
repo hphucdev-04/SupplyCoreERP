@@ -7,15 +7,15 @@
 
 .map-canvas {
   background: #ffffff;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.06);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08), 0 1px 2px rgba(0, 0, 0, 0.06);
   border-radius: 0;
   border: 1px solid #e8eaed;
 }
 
 .map-grid {
   background-image:
-    linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
+    linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
 }
 
 .zone-drag-wrapper,
@@ -32,8 +32,14 @@
 .resizable-block {
   border-radius: 4px;
 
-  .rh { opacity: 0; transition: opacity 0.15s; }
-  &:hover .rh { opacity: 1; }
+  .rh {
+    opacity: 0;
+    transition: opacity 0.15s;
+  }
+
+  &:hover .rh {
+    opacity: 1;
+  }
 }
 
 .rh {
@@ -44,25 +50,67 @@
   border-radius: 2px;
 
   $hSize: 8px;
-  $hOffset: -4px; 
+  $hOffset: -4px;
 
   width: $hSize;
   height: $hSize;
 
-  &.rh-nw { top: $hOffset;  left: $hOffset;  cursor: nw-resize; }
-  &.rh-ne { top: $hOffset;  right: $hOffset; cursor: ne-resize; }
-  &.rh-sw { bottom: $hOffset; left: $hOffset;  cursor: sw-resize; }
-  &.rh-se { bottom: $hOffset; right: $hOffset; cursor: se-resize; }
+  &.rh-nw {
+    top: $hOffset;
+    left: $hOffset;
+    cursor: nw-resize;
+  }
 
-  &.rh-n { top: $hOffset;      left: 50%; transform: translateX(-50%); cursor: n-resize;  }
-  &.rh-s { bottom: $hOffset;   left: 50%; transform: translateX(-50%); cursor: s-resize;  }
-  &.rh-w { left: $hOffset;     top: 50%;  transform: translateY(-50%); cursor: w-resize;  }
-  &.rh-e { right: $hOffset;    top: 50%;  transform: translateY(-50%); cursor: e-resize;  }
+  &.rh-ne {
+    top: $hOffset;
+    right: $hOffset;
+    cursor: ne-resize;
+  }
+
+  &.rh-sw {
+    bottom: $hOffset;
+    left: $hOffset;
+    cursor: sw-resize;
+  }
+
+  &.rh-se {
+    bottom: $hOffset;
+    right: $hOffset;
+    cursor: se-resize;
+  }
+
+  &.rh-n {
+    top: $hOffset;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: n-resize;
+  }
+
+  &.rh-s {
+    bottom: $hOffset;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: s-resize;
+  }
+
+  &.rh-w {
+    left: $hOffset;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: w-resize;
+  }
+
+  &.rh-e {
+    right: $hOffset;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: e-resize;
+  }
 }
 
 .rotate-handle {
   position: absolute;
-  top: -28px;        
+  top: -28px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 35;
@@ -79,9 +127,11 @@
   transition: opacity 0.15s;
   font-size: 10px;
   color: #1976d2;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.18);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.18);
 
-  &:active { cursor: grabbing; }
+  &:active {
+    cursor: grabbing;
+  }
 
   &::after {
     content: '';
@@ -96,31 +146,49 @@
   }
 }
 
-.resizable-block:hover .rotate-handle { opacity: 1; }
+.resizable-block:hover .rotate-handle {
+  opacity: 1;
+}
 
 .bin-block .rotate-handle {
   border-color: #2e7d32;
   color: #2e7d32;
 
-  &::after { background: #2e7d32; }
+  &::after {
+    background: #2e7d32;
+  }
 }
 
 .zone-block {
   transition: box-shadow 0.15s;
-  overflow: visible !important; 
-  
-  &.zone-active { box-shadow: 0 0 0 2px rgba(25,118,210,0.35); }
-  &:hover       { box-shadow: 0 2px 12px rgba(0,0,0,0.12); z-index: 5 !important; }
+  overflow: visible !important;
+
+  &.zone-active {
+    box-shadow: 0 0 0 2px rgba(25, 118, 210, 0.35);
+  }
+
+  &:hover {
+    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
+    z-index: 5 !important;
+  }
 
   &.zone-collision {
     animation: collision-pulse 0.8s ease-in-out infinite alternate;
-    .rh { border-color: #f44336; }
+
+    .rh {
+      border-color: #f44336;
+    }
   }
 }
 
 @keyframes collision-pulse {
-  from { box-shadow: 0 0 0 2px rgba(244,67,54,0.3); }
-  to   { box-shadow: 0 0 8px 4px rgba(244,67,54,0.5); }
+  from {
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.3);
+  }
+
+  to {
+    box-shadow: 0 0 8px 4px rgba(244, 67, 54, 0.5);
+  }
 }
 
 .zone-label {
@@ -134,27 +202,41 @@
 .bin-block {
   transition: box-shadow 0.12s;
 
-  &:hover { box-shadow: 0 4px 16px rgba(25,118,210,0.25); z-index: 25 !important; }
-  .rh { border-color: #2e7d32; }
+  &:hover {
+    box-shadow: 0 4px 16px rgba(25, 118, 210, 0.25);
+    z-index: 25 !important;
+  }
+
+  .rh {
+    border-color: #2e7d32;
+  }
 
   &.bin-collision {
     border-color: #f44336 !important;
     animation: bin-collision-pulse 0.6s ease-in-out infinite alternate;
-    .rh { border-color: #f44336; }
+
+    .rh {
+      border-color: #f44336;
+    }
   }
 }
 
 @keyframes bin-collision-pulse {
-  from { box-shadow: 0 0 0 2px rgba(244,67,54,0.4); }
-  to   { box-shadow: 0 0 6px 3px rgba(244,67,54,0.6); }
+  from {
+    box-shadow: 0 0 0 2px rgba(244, 67, 54, 0.4);
+  }
+
+  to {
+    box-shadow: 0 0 6px 3px rgba(244, 67, 54, 0.6);
+  }
 }
 
 .cdk-drag-animating {
-  transition: transform 250ms cubic-bezier(0,0,0.2,1);
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
 }
 
 .cdk-drag-preview {
-  box-shadow: 0 10px 40px rgba(0,0,0,0.25) !important;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.25) !important;
   border-radius: 6px;
   opacity: 0.92;
 }
@@ -173,11 +255,11 @@
     display: flex;
     align-items: center;
   }
-  
+
   .card-body {
     max-height: calc(100vh - 200px);
   }
-  
+
   .shape-category {
     .category-title {
       padding: 4px 6px;
@@ -189,14 +271,14 @@
       letter-spacing: 0.05em;
     }
   }
-  
+
   .shapes-grid {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 6px;
     margin-bottom: 12px;
   }
-  
+
   .shape-item {
     display: flex;
     flex-direction: column;
@@ -208,19 +290,19 @@
     cursor: pointer;
     transition: all 0.15s ease;
     background: #ffffff;
-    
+
     &:hover {
       border-color: #1967d2;
       background: #f8fbff;
-      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
       transform: translateY(-1px);
     }
-    
+
     &:active {
       transform: translateY(0);
-      box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.06);
     }
-    
+
     .shape-icon {
       width: 44px;
       height: 44px;
@@ -231,12 +313,12 @@
       margin-bottom: 5px;
       font-size: 18px;
       transition: all 0.15s ease;
-      
+
       i {
         color: inherit;
       }
     }
-    
+
     .shape-label {
       font-size: 10px;
       font-weight: 500;
@@ -244,32 +326,108 @@
       text-align: center;
       line-height: 1.2;
     }
-    
+
     // Storage types
-    &:hover .storage-normal { background: rgba(78, 205, 196, 0.15); color: #4ECDC4; }
-    &:hover .storage-cool { background: rgba(69, 183, 209, 0.15); color: #45B7D1; }
-    &:hover .storage-cold { background: rgba(93, 173, 226, 0.15); color: #5DADE2; }
-    &:hover .storage-frozen { background: rgba(52, 152, 219, 0.15); color: #3498DB; }
-    
-    .storage-normal { background: rgba(78, 205, 196, 0.08); color: #4ECDC4; }
-    .storage-cool { background: rgba(69, 183, 209, 0.08); color: #45B7D1; }
-    .storage-cold { background: rgba(93, 173, 226, 0.08); color: #5DADE2; }
-    .storage-frozen { background: rgba(52, 152, 219, 0.08); color: #3498DB; }
-    
+    &:hover .storage-normal {
+      background: rgba(78, 205, 196, 0.15);
+      color: #4ECDC4;
+    }
+
+    &:hover .storage-cool {
+      background: rgba(69, 183, 209, 0.15);
+      color: #45B7D1;
+    }
+
+    &:hover .storage-cold {
+      background: rgba(93, 173, 226, 0.15);
+      color: #5DADE2;
+    }
+
+    &:hover .storage-frozen {
+      background: rgba(52, 152, 219, 0.15);
+      color: #3498DB;
+    }
+
+    .storage-normal {
+      background: rgba(78, 205, 196, 0.08);
+      color: #4ECDC4;
+    }
+
+    .storage-cool {
+      background: rgba(69, 183, 209, 0.08);
+      color: #45B7D1;
+    }
+
+    .storage-cold {
+      background: rgba(93, 173, 226, 0.08);
+      color: #5DADE2;
+    }
+
+    .storage-frozen {
+      background: rgba(52, 152, 219, 0.08);
+      color: #3498DB;
+    }
+
     // Operational zones
-    &:hover .zone-inbound { background: rgba(46, 204, 113, 0.15); color: #2ECC71; }
-    &:hover .zone-outbound { background: rgba(231, 76, 60, 0.15); color: #E74C3C; }
-    &:hover .zone-staging { background: rgba(243, 156, 18, 0.15); color: #F39C12; }
-    &:hover .zone-quarantine { background: rgba(230, 126, 34, 0.15); color: #E67E22; }
-    &:hover .zone-parking { background: rgba(149, 165, 166, 0.15); color: #95A5A6; }
-    &:hover .zone-office { background: rgba(155, 89, 182, 0.15); color: #9B59B6; }
-    
-    .zone-inbound { background: rgba(46, 204, 113, 0.08); color: #2ECC71; }
-    .zone-outbound { background: rgba(231, 76, 60, 0.08); color: #E74C3C; }
-    .zone-staging { background: rgba(243, 156, 18, 0.08); color: #F39C12; }
-    .zone-quarantine { background: rgba(230, 126, 34, 0.08); color: #E67E22; }
-    .zone-parking { background: rgba(149, 165, 166, 0.08); color: #95A5A6; }
-    .zone-office { background: rgba(155, 89, 182, 0.08); color: #9B59B6; }
+    &:hover .zone-inbound {
+      background: rgba(46, 204, 113, 0.15);
+      color: #2ECC71;
+    }
+
+    &:hover .zone-outbound {
+      background: rgba(231, 76, 60, 0.15);
+      color: #E74C3C;
+    }
+
+    &:hover .zone-staging {
+      background: rgba(243, 156, 18, 0.15);
+      color: #F39C12;
+    }
+
+    &:hover .zone-quarantine {
+      background: rgba(230, 126, 34, 0.15);
+      color: #E67E22;
+    }
+
+    &:hover .zone-parking {
+      background: rgba(149, 165, 166, 0.15);
+      color: #95A5A6;
+    }
+
+    &:hover .zone-office {
+      background: rgba(155, 89, 182, 0.15);
+      color: #9B59B6;
+    }
+
+    .zone-inbound {
+      background: rgba(46, 204, 113, 0.08);
+      color: #2ECC71;
+    }
+
+    .zone-outbound {
+      background: rgba(231, 76, 60, 0.08);
+      color: #E74C3C;
+    }
+
+    .zone-staging {
+      background: rgba(243, 156, 18, 0.08);
+      color: #F39C12;
+    }
+
+    .zone-quarantine {
+      background: rgba(230, 126, 34, 0.08);
+      color: #E67E22;
+    }
+
+    .zone-parking {
+      background: rgba(149, 165, 166, 0.08);
+      color: #95A5A6;
+    }
+
+    .zone-office {
+      background: rgba(155, 89, 182, 0.08);
+      color: #9B59B6;
+    }
   }
 }
 
@@ -280,23 +438,23 @@
   .card-header {
     border-bottom: 1px solid #e8eaed;
   }
-  
+
   .zone-dropdown-header {
     cursor: pointer;
     background: #fafafa;
     border-bottom: 1px solid #e8eaed;
     transition: background 0.15s ease;
     user-select: none;
-    
+
     &:hover {
       background: #f5f5f5;
     }
-    
+
     i.fa-chevron-right {
       font-size: 10px;
       color: #5f6368;
       transition: transform 0.2s ease;
-      
+
       &.rotated {
         transform: rotate(90deg);
       }

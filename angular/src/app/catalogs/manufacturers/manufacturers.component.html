@@ -20,24 +20,19 @@
 
     <div class="row mb-3">
       <div class="col-md-12">
-        <app-search
-          [placeholder]="'::Search' | abpLocalization"
-          [(value)]="filterText"
-          [debounceTime]="800"
+        <app-search [placeholder]="'::Search' | abpLocalization" [(value)]="filterText" [debounceTime]="800"
           (search)="onSearch($event)">
         </app-search>
       </div>
     </div>
 
     <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
-      
-      <ngx-datatable-column
-        [name]="'::Actions' | abpLocalization"
-        [maxWidth]="150"
-        [sortable]="false">
+
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
-            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              ngbDropdownToggle>
               <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
@@ -60,7 +55,7 @@
 
       <ngx-datatable-column [name]="'::Country' | abpLocalization" prop="countryName">
         <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.countryName }} <span class="text-muted small">({{ row.continentName }})</span>
+          {{ row.countryName }} <span class="text-muted small">({{ row.continentName }})</span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -75,56 +70,46 @@
 <!-- #endregion -->
 
 <!-- #region Drawer -->
-<app-drawer
-  [isOpen]="isDrawerOpen"
-  [title]="selectedManufacturer.id ? '::EditManufacturer' : '::NewManufacturer'"
-  [width]="'md'"
-  [saveDisabled]="form.invalid"
-  (close)="closeDrawer()"
-  (save)="save()">
-  
+<app-drawer [isOpen]="isDrawerOpen" [title]="selectedManufacturer.id ? '::EditManufacturer' : '::NewManufacturer'"
+  [width]="'md'" [saveDisabled]="form.invalid" (close)="closeDrawer()" (save)="save()">
+
   <form [formGroup]="form" *ngIf="form">
-    
+
     <div class="mb-3">
       <label for="manu-name" class="form-label small fw-semibold">
         {{ '::Name' | abpLocalization }} <span class="text-danger">*</span>
       </label>
-      <input
-        type="text"
-        id="manu-name"
-        class="form-control"
-        formControlName="name"
-        autofocus
-      />
+      <input type="text" id="manu-name" class="form-control" formControlName="name" autofocus />
       <div class="invalid-feedback d-block" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
         {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
 
     <div class="mb-3">
-        <label class="form-label small fw-semibold">Châu lục <span class="text-danger">*</span></label>
-        <select class="form-select" formControlName="continentId">
-          <option [ngValue]="null">-- Chọn Châu lục --</option>
-          <option *ngFor="let c of continents" [value]="c.id">{{ c.name }}</option>
-        </select>
-        <div class="invalid-feedback d-block" *ngIf="form.get('continentId')?.invalid && form.get('continentId')?.touched">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
+      <label class="form-label small fw-semibold">Châu lục <span class="text-danger">*</span></label>
+      <select class="form-select" formControlName="continentId">
+        <option [ngValue]="null">-- Chọn Châu lục --</option>
+        <option *ngFor="let c of continents" [value]="c.id">{{ c.name }}</option>
+      </select>
+      <div class="invalid-feedback d-block"
+        *ngIf="form.get('continentId')?.invalid && form.get('continentId')?.touched">
+        {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
-  
-      <div class="mb-3">
-        <label class="form-label small fw-semibold">Quốc gia <span class="text-danger">*</span></label>
-        <select class="form-select" formControlName="countryId">
-          <option [ngValue]="null">-- Chọn Quốc gia --</option>
-          <option *ngFor="let c of filteredCountries" [value]="c.id">{{ c.name }}</option>
-        </select>
-        <div class="invalid-feedback d-block" *ngIf="form.get('countryId')?.invalid && form.get('countryId')?.touched">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
-        <small class="text-muted" *ngIf="!form.get('continentId').value">
-           Vui lòng chọn Châu lục trước.
-        </small>
+    </div>
+
+    <div class="mb-3">
+      <label class="form-label small fw-semibold">Quốc gia <span class="text-danger">*</span></label>
+      <select class="form-select" formControlName="countryId">
+        <option [ngValue]="null">-- Chọn Quốc gia --</option>
+        <option *ngFor="let c of filteredCountries" [value]="c.id">{{ c.name }}</option>
+      </select>
+      <div class="invalid-feedback d-block" *ngIf="form.get('countryId')?.invalid && form.get('countryId')?.touched">
+        {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
+      <small class="text-muted" *ngIf="!form.get('continentId').value">
+        Vui lòng chọn Châu lục trước.
+      </small>
+    </div>
 
   </form>
 </app-drawer>

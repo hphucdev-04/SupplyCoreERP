@@ -2,17 +2,17 @@ import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil } from 'rxjs'; 
+import { Subject, takeUntil } from 'rxjs';
 import { SupplierService } from 'src/app/proxy/suppliers';
 import { SupplierDto, SupplierDetailDto, CreateUpdateSupplierDto, GetSupplierListDto } from 'src/app/proxy/suppliers/dtos';
-import { LocationService } from 'src/app/proxy/locations'; 
+import { LocationService } from 'src/app/proxy/locations';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SupplierDetailsComponent } from './supplier-details/supplier-details.component';
 import { Gender, genderOptions } from 'src/app/proxy/enums/partner/gender.enum';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
-import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
+import { CodeGeneratorUtil } from 'src/app/shared/untils/code-generator.util';
 
 @Component({
   selector: 'app-suppliers',
@@ -24,10 +24,10 @@ import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
 })
 export class SuppliersComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  
+
   // Data Grid
   data = { items: [], totalCount: 0 } as PagedResultDto<SupplierDto>;
-  
+
   // Drawer & Form State
   isDrawerOpen = false;
   form: FormGroup;
@@ -51,27 +51,27 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   constructor(
     public readonly list: ListService,
     private supplierService: SupplierService,
-    private locationService: LocationService, 
+    private locationService: LocationService,
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-  ) {}
-  
+  ) { }
+
   ngOnInit(): void {
-    this.buildForm(); 
-    this.loadInitialLookups(); 
-    const streamCreator = (query: GetSupplierListDto) => this.supplierService.getList({ 
-      ...query, 
+    this.buildForm();
+    this.loadInitialLookups();
+    const streamCreator = (query: GetSupplierListDto) => this.supplierService.getList({
+      ...query,
       filter: this.filterText,
       isActive: this.filterIsActive
     });
-    
+
     this.list.maxResultCount = 10;
     this.list.hookToQuery(streamCreator)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((response) => {
-            this.data = response;
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response) => {
+        this.data = response;
+      });
   }
 
   ngOnDestroy(): void {
@@ -87,12 +87,12 @@ export class SuppliersComponent implements OnInit, OnDestroy {
         this.countries = res.items;
       });
   }
-  
+
 
   // Dropdown phụ thuộc
   onCountryChange() {
     const countryId = this.form.get('countryId')?.value;
-    
+
     // Reset City và Area khi Country đổi
     this.cities = [];
     this.areas = [];
@@ -107,7 +107,7 @@ export class SuppliersComponent implements OnInit, OnDestroy {
 
   onCityChange() {
     const cityId = this.form.get('cityId')?.value;
-    
+
     // Reset Area khi City đổi
     this.areas = [];
     this.form.patchValue({ areaId: null });
@@ -126,7 +126,7 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   }
 
   onFilterChange() {
-    this.list.get(); 
+    this.list.get();
   }
 
   viewDetail(id: string): void {
@@ -199,17 +199,17 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   onToggleActive(row: SupplierDto, event: any): void {
     event.stopPropagation();
     this.confirmation.warn(
-        row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
-        '::Confirm'
+      row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
+      '::Confirm'
     ).subscribe((status) => {
-        if (status === Confirmation.Status.confirm) {
-            this.supplierService.toggleActive(row.id).subscribe(() => this.list.get());
-            this.toaster.success(
-              row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
-            );
-        } else {
-            event.target.checked = row.isActive; 
-        }
+      if (status === Confirmation.Status.confirm) {
+        this.supplierService.toggleActive(row.id).subscribe(() => this.list.get());
+        this.toaster.success(
+          row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
+        );
+      } else {
+        event.target.checked = row.isActive;
+      }
     });
   }
 
@@ -235,10 +235,10 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   }
 
   generateCode(): void {
-     const name = this.form.get('name')?.value || '';
-     const code = CodeGeneratorUtil.generate(name, 'SUP');
-     this.form.get('code')?.setValue(code);
-   }
+    const name = this.form.get('name')?.value || '';
+    const code = CodeGeneratorUtil.generate(name, 'SUP');
+    this.form.get('code')?.setValue(code);
+  }
 
   closeDrawer(): void {
     this.isDrawerOpen = false;
@@ -257,13 +257,13 @@ export class SuppliersComponent implements OnInit, OnDestroy {
       : this.supplierService.create(payload);
 
     request
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-            this.closeDrawer();
-            this.list.get();
-            this.toaster.success(
-              this.selectedSupplier.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
-            );
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.closeDrawer();
+        this.list.get();
+        this.toaster.success(
+          this.selectedSupplier.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
+        );
+      });
   }
 }

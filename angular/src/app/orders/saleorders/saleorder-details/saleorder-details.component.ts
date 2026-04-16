@@ -13,7 +13,7 @@ import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.enum';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 
 interface ProductUnitLookup {
   unitId: string;
@@ -70,7 +70,7 @@ export class SalesOrderDetailsComponent implements OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private modalService: NgbModal
-  ) {}
+  ) { }
 
   ngOnDestroy(): void {
     this.destroy$.next();

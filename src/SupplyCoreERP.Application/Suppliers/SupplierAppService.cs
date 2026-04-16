@@ -12,7 +12,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace SupplyCoreERP.Suppliers
 {
-	public class SupplierAppService : ApplicationService, ISupplierAppService
+	public class SupplierAppService : SupplyCore, ISupplierAppService
 	{
 		private readonly IRepository<Supplier, Guid> _supplierRepository;
 		private readonly SupplierManager _supplierManager;

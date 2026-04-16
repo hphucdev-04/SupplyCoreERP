@@ -1,56 +1,49 @@
-<!-- 
-  TICKET DETAIL COMPONENT - Updated to show linked PO/SO reference
-  Changes from original:
-  1. referenceDocumentNumber badge is now clickable (openLinkedOrder)
-  2. Added linked order info in General Info section
-  3. No structural changes — pure UX addition
--->
-
 <abp-modal [(visible)]="isVisible" [options]="{ size: 'xl', fullscreen: 'lg' }">
-  
+
   <ng-template #abpHeader>
     <div class="d-flex align-items-center justify-content-between w-100 pe-3" *ngIf="ticket">
       <div class="d-flex align-items-center gap-3">
-        <div class="bg-primary-subtle txt-primary rounded p-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
+        <div class="bg-primary-subtle txt-primary rounded p-3 d-flex align-items-center justify-content-center"
+          style="width: 64px; height: 64px;">
           <i class="fa fa-file-invoice fa-2x"></i>
         </div>
         <div>
           <h3 class="modal-title fw-bold mb-1 d-flex align-items-center gap-2 font-mono">
             {{ ticket.ticketNumber }}
-            <span class="badge badge-pill"
-                  [ngClass]="{
+            <span class="badge badge-pill" [ngClass]="{
                     'badge-secondary': ticket.status === ApprovalStatus.Draft,
                     'badge-warning':   ticket.status === ApprovalStatus.Pending,
                     'badge-success':   ticket.status === ApprovalStatus.Approved,
                     'badge-danger':    ticket.status === ApprovalStatus.Rejected
                   }">
-               <i class="fa me-1"
-                  [ngClass]="{
+              <i class="fa me-1" [ngClass]="{
                     'fa-pencil':       ticket.status === ApprovalStatus.Draft,
                     'fa-clock-o':      ticket.status === ApprovalStatus.Pending,
                     'fa-check-circle': ticket.status === ApprovalStatus.Approved,
                     'fa-times-circle': ticket.status === ApprovalStatus.Rejected
                   }">
-               </i>
+              </i>
               {{ '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, ticket.status) | abpLocalization }}
             </span>
           </h3>
           <div class="txt-muted txt-sm d-flex gap-3">
-            <span>{{ '::CreationTime' | abpLocalization }}: <strong class="txt-num">{{ ticket.creationTime | date:'dd/MM/yyyy HH:mm' }}</strong></span>
+            <span>{{ '::CreationTime' | abpLocalization }}: <strong class="txt-num">{{ ticket.creationTime |
+                date:'dd/MM/yyyy HH:mm' }}</strong></span>
           </div>
         </div>
       </div>
       <div>
-        <button class="btn btn-outline-secondary btn-sm"><i class="fa fa-print me-1"></i> {{ '::PrintTicket' | abpLocalization }}</button>
+        <button class="btn btn-outline-secondary btn-sm"><i class="fa fa-print me-1"></i> {{ '::PrintTicket' |
+          abpLocalization }}</button>
       </div>
     </div>
   </ng-template>
 
   <ng-template #abpBody>
     <div class="container-fluid p-0" *ngIf="ticket">
-      
-      <div class="alert alert-warning border-warning d-flex align-items-center mb-3 shadow-sm" 
-           *ngIf="ticket.status === ApprovalStatus.Pending && isIssueTicket()">
+
+      <div class="alert alert-warning border-warning d-flex align-items-center mb-3 shadow-sm"
+        *ngIf="ticket.status === ApprovalStatus.Pending && isIssueTicket()">
         <i class="fa fa-lock txt-xl me-3 txt-warning"></i>
         <div>
           <strong class="txt-main">{{ '::StockLockedWarning' | abpLocalization }}</strong><br>
@@ -62,149 +55,162 @@
         <div class="col-12">
           <div class="card border shadow-sm">
             <div class="card-header py-3">
-              <h6 class="txt-primary fw-bold mb-0"><i class="fa fa-info-circle me-2"></i> {{ '::GeneralInformation' | abpLocalization }}</h6>
+              <h6 class="txt-primary fw-bold mb-0"><i class="fa fa-info-circle me-2"></i> {{ '::GeneralInformation' |
+                abpLocalization }}</h6>
             </div>
             <div class="card-body py-4">
-               <div class="row g-2 p-3">
-                  <div class="col-md-3">
-                     <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Type' | abpLocalization }}</div>
-                     <div class="fw-bold txt-sm" [ngClass]="isIssueTicket() ? 'txt-danger' : 'txt-success'">
-                       <i class="fa me-1" [ngClass]="isIssueTicket() ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
-                       {{ '::Enum:TicketType.' + enumName(TicketType, ticket.type) | abpLocalization }}
-                     </div>
+              <div class="row g-2 p-3">
+                <div class="col-md-3">
+                  <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Type' | abpLocalization }}</div>
+                  <div class="fw-bold txt-sm" [ngClass]="isIssueTicket() ? 'txt-danger' : 'txt-success'">
+                    <i class="fa me-1" [ngClass]="isIssueTicket() ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+                    {{ '::Enum:TicketType.' + enumName(TicketType, ticket.type) | abpLocalization }}
                   </div>
-                  <div class="col-md-3">
-                     <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Warehouse' | abpLocalization }}</div>
-                     <div class="fw-medium txt-sm txt-main"><i class="fa fa-building-o txt-muted me-1"></i> {{ ticket.warehouse?.name }}</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Warehouse' | abpLocalization }}
                   </div>
-                  <div class="col-md-3">
-                     <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Source' | abpLocalization }}</div>
-                     <div class="fw-medium txt-sm">
-                        <!-- ✅ Updated: referenceDocumentNumber is now clickable -->
-                        <span *ngIf="ticket.referenceDocumentNumber"
-                              class="badge badge-info font-mono ph-link"
-                              style="cursor: pointer;"
-                              (click)="openLinkedOrder()"
-                              [title]="'::ClickToViewOrder' | abpLocalization">
-                          <i class="fa fa-link me-1"></i> {{ ticket.referenceDocumentNumber }}
-                          <i class="fa fa-external-link ms-1" style="font-size: 0.7em;"></i>
-                        </span>
-                        <span *ngIf="!ticket.referenceDocumentNumber" class="txt-muted fst-italic">{{ '::Manual' | abpLocalization }}</span>
-                     </div>
+                  <div class="fw-medium txt-sm txt-main"><i class="fa fa-building-o txt-muted me-1"></i> {{
+                    ticket.warehouse?.name }}</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Source' | abpLocalization }}</div>
+                  <div class="fw-medium txt-sm">
+                    <!-- ✅ Updated: referenceDocumentNumber is now clickable -->
+                    <span *ngIf="ticket.referenceDocumentNumber" class="badge badge-info font-mono ph-link"
+                      style="cursor: pointer;" (click)="openLinkedOrder()"
+                      [title]="'::ClickToViewOrder' | abpLocalization">
+                      <i class="fa fa-link me-1"></i> {{ ticket.referenceDocumentNumber }}
+                      <i class="fa fa-external-link ms-1" style="font-size: 0.7em;"></i>
+                    </span>
+                    <span *ngIf="!ticket.referenceDocumentNumber" class="txt-muted fst-italic">{{ '::Manual' |
+                      abpLocalization }}</span>
                   </div>
-                  <div class="col-md-3">
-                     <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Note' | abpLocalization }}</div>
-                     <div class="fw-medium txt-sm txt-main txt-truncate" [title]="ticket.note">{{ ticket.note || '—' }}</div>
+                </div>
+                <div class="col-md-3">
+                  <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Note' | abpLocalization }}</div>
+                  <div class="fw-medium txt-sm txt-main txt-truncate" [title]="ticket.note">{{ ticket.note || '—' }}
                   </div>
-               </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
       <div class="row mt-2">
-         <div class="col-12">
-            <div class="card border shadow-sm">
-                <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
-                    <h6 class="txt-primary fw-bold mb-0">
-                        <i class="fa fa-box-open me-2"></i> {{ '::GoodsList' | abpLocalization }}
-                        <span class="badge badge-secondary ms-2">{{ ticket.details?.length || 0 }}</span>
-                    </h6>
-                    
-                    <div class="d-flex gap-2">
-                      <ng-container *ngIf="ticket.status === ApprovalStatus.Draft">
-                        <button class="btn btn-sm btn-outline-primary fw-bold" (click)="openAddDetailDrawer()">
-                          <i class="fa fa-plus me-1"></i> {{ '::AddMedicine' | abpLocalization }}
-                        </button>
-                        <button *ngIf="isIssueTicket()" class="btn btn-sm btn-outline-secondary txt-warning fw-bold" (click)="openFefoDrawer()">
-                          <i class="fa fa-magic me-1"></i> {{ '::AutoFEFO' | abpLocalization }}
-                        </button>
-                        <button class="btn btn-sm btn-primary fw-bold" (click)="sendToApprove()">
-                          <i class="fa fa-paper-plane me-1"></i> {{ '::SendToApprove' | abpLocalization }}
-                        </button>
-                      </ng-container>
+        <div class="col-12">
+          <div class="card border shadow-sm">
+            <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center border-bottom">
+              <h6 class="txt-primary fw-bold mb-0">
+                <i class="fa fa-box-open me-2"></i> {{ '::GoodsList' | abpLocalization }}
+                <span class="badge badge-secondary ms-2">{{ ticket.details?.length || 0 }}</span>
+              </h6>
 
-                      <ng-container *ngIf="ticket.status === ApprovalStatus.Pending">
-                        <button class="btn btn-sm btn-outline-secondary txt-danger fw-bold" (click)="reject()">
-                          <i class="fa fa-times me-1"></i> {{ '::Reject' | abpLocalization }}
-                        </button>
-                        <button class="btn btn-sm btn-primary fw-bold" (click)="execute()">
-                          <i class="fa fa-check-square-o me-1"></i> {{ '::ExecuteAndSave' | abpLocalization }}
-                        </button>
-                      </ng-container>
-                    </div>
-                </div>
-                
-                <div class="card-body p-0">
-                    <div class="table-responsive">
-                        <table class="table table-hover mb-0 align-middle">
-                            <thead class="bg-light">
-                                <tr>
-                                    <th class="py-2 px-3 txt-muted txt-sm fw-semibold" style="width: 50px;" *ngIf="ticket.status === ApprovalStatus.Draft || ticket.status === ApprovalStatus.Pending"></th>
-                                    <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::Medicine' | abpLocalization }}</th>
-                                    <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::BatchNumber' | abpLocalization }}</th>
-                                    <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::Bin' | abpLocalization }}</th>
-                                    <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-4">{{ '::Quantity' | abpLocalization }}</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr *ngFor="let row of ticket.details">
-                                    <td class="px-3 text-center" *ngIf="ticket.status === ApprovalStatus.Draft || ticket.status === ApprovalStatus.Pending">
-                                        <button class="btn btn-link btn-sm txt-danger p-0" (click)="removeDetail(row.id)" title="{{ '::Delete' | abpLocalization }}">
-                                          <i class="fa fa-trash-alt"></i>
-                                        </button>
-                                    </td>
-                                    <td class="py-3">
-                                        <div class="fw-bold txt-primary">{{ row.productName }}</div>
-                                        <small class="txt-muted font-mono">{{ row.productCode }}</small>
-                                    </td>
-                                    <td class="py-3">
-                                        <div class="fw-bold font-mono txt-main">{{ row.batchNumber }}</div>
-                                        <div class="txt-danger fw-semibold txt-xs">{{ '::ExpiryDate' | abpLocalization }}: {{ row.expiryDate | date:'dd/MM/yyyy' }}</div>
-                                    </td>
-                                    <td class="py-3">
-                                        <span class="badge badge-secondary font-mono">{{ row.binCode }}</span>
-                                    </td>
-                                    <td class="py-3 text-end pe-4">
-                                        
-                                        <div *ngIf="ticket.status === ApprovalStatus.Draft || ticket.status === ApprovalStatus.Pending" class="d-flex flex-column align-items-end">
-                                          <div class="input-group input-group-sm shadow-sm" style="width: 140px;">
-                                            <span class="input-group-text fw-bold txt-num" [ngClass]="isIssueTicket() ? 'txt-danger' : 'txt-success'">
-                                              {{ isIssueTicket() ? '−' : '+' }}
-                                            </span>
-                                            <input type="number" class="form-control text-center fw-bold txt-num" 
-                                                   [value]="row.quantity"
-                                                   (change)="onInlineQuantityChange(row, $event.target.value)"
-                                                   min="0.01" step="1">
-                                            <span class="input-group-text bg-light txt-muted txt-xs">{{ row.unitName }}</span>
-                                          </div>
-                                          <div class="txt-muted txt-xs mt-1 txt-num" *ngIf="row.conversionFactor > 1">
-                                            ≈ {{ row.baseQuantity | number }} {{ row.baseUnitName }}
-                                          </div>
-                                        </div>
+              <div class="d-flex gap-2">
+                <ng-container *ngIf="ticket.status === ApprovalStatus.Draft">
+                  <button class="btn btn-sm btn-outline-primary fw-bold" (click)="openAddDetailDrawer()">
+                    <i class="fa fa-plus me-1"></i> {{ '::AddMedicine' | abpLocalization }}
+                  </button>
+                  <button *ngIf="isIssueTicket()" class="btn btn-sm btn-outline-secondary txt-warning fw-bold"
+                    (click)="openFefoDrawer()">
+                    <i class="fa fa-magic me-1"></i> {{ '::AutoFEFO' | abpLocalization }}
+                  </button>
+                  <button class="btn btn-sm btn-primary fw-bold" (click)="sendToApprove()">
+                    <i class="fa fa-paper-plane me-1"></i> {{ '::SendToApprove' | abpLocalization }}
+                  </button>
+                </ng-container>
 
-                                        <div *ngIf="ticket.status === ApprovalStatus.Approved || ticket.status === ApprovalStatus.Rejected">
-                                          <span class="fw-bold txt-sm txt-num" [ngClass]="isIssueTicket() ? 'txt-danger' : 'txt-success'">
-                                            {{ isIssueTicket() ? '−' : '+' }}{{ row.quantity | number }} {{ row.unitName }}
-                                          </span>
-                                          <div class="txt-muted txt-xs txt-num" *ngIf="row.conversionFactor > 1">
-                                            ≈ {{ row.baseQuantity | number }} {{ row.baseUnitName }}
-                                          </div>
-                                        </div>
-
-                                    </td>
-                                </tr>
-                                <tr *ngIf="ticket.details?.length === 0">
-                                    <td [colSpan]="(ticket.status === ApprovalStatus.Draft || ticket.status === ApprovalStatus.Pending) ? 5 : 4" class="text-center txt-muted py-5 txt-sm fst-italic">
-                                        {{ '::NoData' | abpLocalization }}
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                <ng-container *ngIf="ticket.status === ApprovalStatus.Pending">
+                  <button class="btn btn-sm btn-outline-secondary txt-danger fw-bold" (click)="reject()">
+                    <i class="fa fa-times me-1"></i> {{ '::Reject' | abpLocalization }}
+                  </button>
+                  <button class="btn btn-sm btn-primary fw-bold" (click)="execute()">
+                    <i class="fa fa-check-square-o me-1"></i> {{ '::ExecuteAndSave' | abpLocalization }}
+                  </button>
+                </ng-container>
+              </div>
             </div>
-         </div>
+
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                  <thead class="bg-light">
+                    <tr>
+                      <th class="py-2 px-3 txt-muted txt-sm fw-semibold" style="width: 50px;"
+                        *ngIf="ticket.status === ApprovalStatus.Draft || ticket.status === ApprovalStatus.Pending"></th>
+                      <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::Medicine' | abpLocalization }}</th>
+                      <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::BatchNumber' | abpLocalization }}</th>
+                      <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::Bin' | abpLocalization }}</th>
+                      <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-4">{{ '::Quantity' | abpLocalization }}
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let row of ticket.details">
+                      <td class="px-3 text-center"
+                        *ngIf="ticket.status === ApprovalStatus.Draft || ticket.status === ApprovalStatus.Pending">
+                        <button class="btn btn-link btn-sm txt-danger p-0" (click)="removeDetail(row.id)"
+                          title="{{ '::Delete' | abpLocalization }}">
+                          <i class="fa fa-trash-alt"></i>
+                        </button>
+                      </td>
+                      <td class="py-3">
+                        <div class="fw-bold txt-primary">{{ row.productName }}</div>
+                        <small class="txt-muted font-mono">{{ row.productCode }}</small>
+                      </td>
+                      <td class="py-3">
+                        <div class="fw-bold font-mono txt-main">{{ row.batchNumber }}</div>
+                        <div class="txt-danger fw-semibold txt-xs">{{ '::ExpiryDate' | abpLocalization }}: {{
+                          row.expiryDate | date:'dd/MM/yyyy' }}</div>
+                      </td>
+                      <td class="py-3">
+                        <span class="badge badge-secondary font-mono">{{ row.binCode }}</span>
+                      </td>
+                      <td class="py-3 text-end pe-4">
+
+                        <div *ngIf="ticket.status === ApprovalStatus.Draft || ticket.status === ApprovalStatus.Pending"
+                          class="d-flex flex-column align-items-end">
+                          <div class="input-group input-group-sm shadow-sm" style="width: 140px;">
+                            <span class="input-group-text fw-bold txt-num"
+                              [ngClass]="isIssueTicket() ? 'txt-danger' : 'txt-success'">
+                              {{ isIssueTicket() ? '−' : '+' }}
+                            </span>
+                            <input type="number" class="form-control text-center fw-bold txt-num" [value]="row.quantity"
+                              (change)="onInlineQuantityChange(row, $event.target.value)" min="0.01" step="1">
+                            <span class="input-group-text bg-light txt-muted txt-xs">{{ row.unitName }}</span>
+                          </div>
+                          <div class="txt-muted txt-xs mt-1 txt-num" *ngIf="row.conversionFactor > 1">
+                            ≈ {{ row.baseQuantity | number }} {{ row.baseUnitName }}
+                          </div>
+                        </div>
+
+                        <div
+                          *ngIf="ticket.status === ApprovalStatus.Approved || ticket.status === ApprovalStatus.Rejected">
+                          <span class="fw-bold txt-sm txt-num"
+                            [ngClass]="isIssueTicket() ? 'txt-danger' : 'txt-success'">
+                            {{ isIssueTicket() ? '−' : '+' }}{{ row.quantity | number }} {{ row.unitName }}
+                          </span>
+                          <div class="txt-muted txt-xs txt-num" *ngIf="row.conversionFactor > 1">
+                            ≈ {{ row.baseQuantity | number }} {{ row.baseUnitName }}
+                          </div>
+                        </div>
+
+                      </td>
+                    </tr>
+                    <tr *ngIf="ticket.details?.length === 0">
+                      <td
+                        [colSpan]="(ticket.status === ApprovalStatus.Draft || ticket.status === ApprovalStatus.Pending) ? 5 : 4"
+                        class="text-center txt-muted py-5 txt-sm fst-italic">
+                        {{ '::NoData' | abpLocalization }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div>
@@ -219,19 +225,16 @@
 </abp-modal>
 
 <!-- Add Detail Drawer (unchanged from original) -->
-<app-drawer
-  [isOpen]="isAddDetailDrawerOpen"
-  [title]="'::AddMedicine' | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="detailForm?.invalid || isSavingDetail"
-  (close)="closeAddDetailDrawer()"
-  (save)="saveDetail()">
+<app-drawer [isOpen]="isAddDetailDrawerOpen" [title]="'::AddMedicine' | abpLocalization" [width]="'md'"
+  [saveDisabled]="detailForm?.invalid || isSavingDetail" (close)="closeAddDetailDrawer()" (save)="saveDetail()">
 
   <form *ngIf="detailForm" [formGroup]="detailForm">
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Medicine' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <select class="form-select form-select-sm" formControlName="productId" (change)="onMedicineChange($event.target.value)">
+      <label class="form-label txt-sm fw-semibold">{{ '::Medicine' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
+      <select class="form-select form-select-sm" formControlName="productId"
+        (change)="onMedicineChange($event.target.value)">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
       </select>
@@ -239,32 +242,41 @@
 
     <div class="row">
       <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::Unit' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <select class="form-select form-select-sm" formControlName="unitId" (change)="onUnitChange($event.target.value)" [attr.disabled]="!units.length ? '' : null">
+        <label class="form-label txt-sm fw-semibold">{{ '::Unit' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
+        <select class="form-select form-select-sm" formControlName="unitId" (change)="onUnitChange($event.target.value)"
+          [attr.disabled]="!units.length ? '' : null">
           <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
           <option *ngFor="let u of units" [value]="u.unitId">{{ u.unitName }} (×{{ u.conversionFactor }})</option>
         </select>
       </div>
 
       <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::Quantity' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <input type="number" step="1" min="1" class="form-control form-control-sm" formControlName="quantity" (input)="updateQuantityPreview()">
+        <label class="form-label txt-sm fw-semibold">{{ '::Quantity' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
+        <input type="number" step="1" min="1" class="form-control form-control-sm" formControlName="quantity"
+          (input)="updateQuantityPreview()">
       </div>
     </div>
 
-    <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm" *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
-      <i class="fa fa-calculator me-1"></i> {{ '::EquivalentTo' | abpLocalization }}: <strong class="txt-num">{{ quantityPreview | number }} {{ baseUnitName }}</strong>
+    <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm"
+      *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
+      <i class="fa fa-calculator me-1"></i> {{ '::EquivalentTo' | abpLocalization }}: <strong class="txt-num">{{
+        quantityPreview | number }} {{ baseUnitName }}</strong>
     </div>
 
     <div class="mb-3">
       <div class="d-flex justify-content-between align-items-center mb-1">
-        <label class="form-label txt-sm fw-semibold mb-0">{{ '::BatchNumber' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <button type="button" class="btn btn-sm btn-link txt-primary p-0 text-decoration-none" *ngIf="detailForm.get('productId').value && !isCreatingBatch" (click)="openQuickBatchForm()">
+        <label class="form-label txt-sm fw-semibold mb-0">{{ '::BatchNumber' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
+        <button type="button" class="btn btn-sm btn-link txt-primary p-0 text-decoration-none"
+          *ngIf="detailForm.get('productId').value && !isCreatingBatch" (click)="openQuickBatchForm()">
           <i class="fa fa-plus-circle"></i> {{ '::CreateBatch' | abpLocalization }}
         </button>
       </div>
 
-      <select class="form-select form-select-sm" formControlName="productBatchId" [attr.disabled]="!batches.length && !isCreatingBatch ? '' : null">
+      <select class="form-select form-select-sm" formControlName="productBatchId"
+        [attr.disabled]="!batches.length && !isCreatingBatch ? '' : null">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let b of batches" [value]="b.id">
           {{ b.batchNumber }} (HSD: {{ b.expiryDate | date:'dd/MM/yyyy' }})
@@ -296,8 +308,10 @@
                 <input type="date" class="form-control form-control-sm" formControlName="expiryDate">
               </div>
             </div>
-            <button type="button" class="btn btn-primary btn-sm w-100" [disabled]="quickBatchForm.invalid || isSavingQuickBatch" (click)="saveQuickBatch()">
-              <i class="fa" [ngClass]="isSavingQuickBatch ? 'fa-spinner fa-spin' : 'fa-check'"></i> {{ '::SaveAndSelect' | abpLocalization }}
+            <button type="button" class="btn btn-primary btn-sm w-100"
+              [disabled]="quickBatchForm.invalid || isSavingQuickBatch" (click)="saveQuickBatch()">
+              <i class="fa" [ngClass]="isSavingQuickBatch ? 'fa-spinner fa-spin' : 'fa-check'"></i> {{ '::SaveAndSelect'
+              | abpLocalization }}
             </button>
           </form>
         </div>
@@ -305,8 +319,10 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Bin' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <select class="form-select form-select-sm" formControlName="binId" [attr.disabled]="!detailForm.get('productId').value ? '' : null">
+      <label class="form-label txt-sm fw-semibold">{{ '::Bin' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
+      <select class="form-select form-select-sm" formControlName="binId"
+        [attr.disabled]="!detailForm.get('productId').value ? '' : null">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let bin of filteredBins" [value]="bin.id">{{ bin.code }}</option>
       </select>
@@ -319,13 +335,8 @@
 </app-drawer>
 
 <!-- FEFO Drawer (unchanged from original) -->
-<app-drawer
-  [isOpen]="isFefoDrawerOpen"
-  [title]="'::AutoFEFO' | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="fefoForm?.invalid || isRunningFefo"
-  (close)="closeFefoDrawer()"
-  (save)="runFefo()">
+<app-drawer [isOpen]="isFefoDrawerOpen" [title]="'::AutoFEFO' | abpLocalization" [width]="'md'"
+  [saveDisabled]="fefoForm?.invalid || isRunningFefo" (close)="closeFefoDrawer()" (save)="runFefo()">
 
   <form *ngIf="fefoForm" [formGroup]="fefoForm">
 
@@ -334,8 +345,10 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Medicine' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <select class="form-select form-select-sm" formControlName="productId" (change)="onFefoMedicineChange($event.target.value)">
+      <label class="form-label txt-sm fw-semibold">{{ '::Medicine' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
+      <select class="form-select form-select-sm" formControlName="productId"
+        (change)="onFefoMedicineChange($event.target.value)">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
       </select>
@@ -343,21 +356,27 @@
 
     <div class="row">
       <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::Unit' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <select class="form-select form-select-sm" formControlName="unitId" (change)="onFefoUnitChange($event.target.value)" [attr.disabled]="!fefoUnits.length ? '' : null">
+        <label class="form-label txt-sm fw-semibold">{{ '::Unit' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
+        <select class="form-select form-select-sm" formControlName="unitId"
+          (change)="onFefoUnitChange($event.target.value)" [attr.disabled]="!fefoUnits.length ? '' : null">
           <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
           <option *ngFor="let u of fefoUnits" [value]="u.unitId">{{ u.unitName }} (×{{ u.conversionFactor }})</option>
         </select>
       </div>
 
       <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::QuantityToIssue' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <input type="number" step="1" min="1" class="form-control form-control-sm" formControlName="requiredQuantity" (input)="updateFefoPreview()">
+        <label class="form-label txt-sm fw-semibold">{{ '::QuantityToIssue' | abpLocalization }} <span
+            class="txt-danger">*</span></label>
+        <input type="number" step="1" min="1" class="form-control form-control-sm" formControlName="requiredQuantity"
+          (input)="updateFefoPreview()">
       </div>
     </div>
 
-    <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm" *ngIf="fefoBaseQtyPreview > 0">
-      <i class="fa fa-search me-1"></i> {{ '::SystemWillSearchFor' | abpLocalization }}: <strong class="txt-num">{{ fefoBaseQtyPreview | number }} {{ fefoBaseUnitName }}</strong>
+    <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm"
+      *ngIf="fefoBaseQtyPreview > 0">
+      <i class="fa fa-search me-1"></i> {{ '::SystemWillSearchFor' | abpLocalization }}: <strong class="txt-num">{{
+        fefoBaseQtyPreview | number }} {{ fefoBaseUnitName }}</strong>
     </div>
 
   </form>
@@ -373,17 +392,21 @@
   </div>
   <div class="modal-body pt-3">
     <div class="mb-2">
-      <label class="form-label txt-sm fw-semibold">{{ '::RejectReason' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <textarea class="form-control" [(ngModel)]="rejectReason" rows="3" [placeholder]="'::EnterReason' | abpLocalization" autofocus></textarea>
+      <label class="form-label txt-sm fw-semibold">{{ '::RejectReason' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
+      <textarea class="form-control" [(ngModel)]="rejectReason" rows="3"
+        [placeholder]="'::EnterReason' | abpLocalization" autofocus></textarea>
       <div *ngIf="showRejectError" class="txt-danger txt-sm mt-1">
         <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
   </div>
   <div class="modal-footer bg-light border-top-0" style="border-radius: 0 0 8px 8px;">
-    <button type="button" class="btn btn-outline-secondary btn-sm px-3" (click)="modal.dismiss()" [disabled]="isRejecting">{{ '::Cancel' | abpLocalization }}</button>
-    <button type="button" class="btn btn-primary btn-sm px-3 bg-danger border-danger" (click)="confirmReject(modal)" [disabled]="isRejecting">
-      <i class="fa" [ngClass]="isRejecting ? 'fa-spinner fa-spin' : 'fa-times'"></i> 
+    <button type="button" class="btn btn-outline-secondary btn-sm px-3" (click)="modal.dismiss()"
+      [disabled]="isRejecting">{{ '::Cancel' | abpLocalization }}</button>
+    <button type="button" class="btn btn-primary btn-sm px-3 bg-danger border-danger" (click)="confirmReject(modal)"
+      [disabled]="isRejecting">
+      <i class="fa" [ngClass]="isRejecting ? 'fa-spinner fa-spin' : 'fa-times'"></i>
       {{ '::ConfirmReject' | abpLocalization }}
     </button>
   </div>

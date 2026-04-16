@@ -19,7 +19,7 @@ export interface FilterConfig {
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [SharedModule],  
+  imports: [SharedModule],
   templateUrl: './filter.component.html',
   styleUrls: ['./filter.component.scss']
 })
@@ -29,7 +29,7 @@ export class FilterComponent {
 
   isOpen = false;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) { }
 
   @HostListener('document:click')
   onDocumentClick(): void {

@@ -6,28 +6,31 @@
       <div class="d-flex align-items-center gap-2">
         <nav aria-label="breadcrumb" class="mb-0">
           <ol class="breadcrumb mb-0 small text-uppercase">
-            <li class="breadcrumb-item"><a href="#" class="text-decoration-none">{{ '::Partners' | abpLocalization }}</a></li>
-            <li class="breadcrumb-item"><a href="#" class="text-decoration-none">{{ '::Customers' | abpLocalization }}</a></li>
+            <li class="breadcrumb-item"><a href="#" class="text-decoration-none">{{ '::Partners' | abpLocalization
+                }}</a></li>
+            <li class="breadcrumb-item"><a href="#" class="text-decoration-none">{{ '::Customers' | abpLocalization
+                }}</a></li>
             <li class="breadcrumb-item active" aria-current="page">{{ customer.name }}</li>
           </ol>
         </nav>
-         <span class="badge rounded-pill fs-6 border" 
-                  [ngClass]="customer.isActive ? 'bg-success text-white border-success' : 'bg-danger text-white border-secondary'">
-              {{ (customer.isActive ? '::Active' : '::Inactive') | abpLocalization }}
-            </span>
+        <span class="badge rounded-pill fs-6 border"
+          [ngClass]="customer.isActive ? 'bg-success text-white border-success' : 'bg-danger text-white border-secondary'">
+          {{ (customer.isActive ? '::Active' : '::Inactive') | abpLocalization }}
+        </span>
       </div>
     </div>
   </ng-template>
 
   <ng-template #abpBody>
     <div class="container-fluid" *ngIf="customer">
-      
+
       <!-- Stats Cards Row -->
       <div class="row g-4 mb-4">
         <div class="col-lg-4 col-md-12">
           <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-              <div class="text-muted text-uppercase small fw-semibold mb-2">{{ '::TotalProcurement' | abpLocalization }}</div>
+              <div class="text-muted text-uppercase small fw-semibold mb-2">{{ '::TotalProcurement' | abpLocalization }}
+              </div>
               <h3 class="fw-bold mb-2">{{ customer.currentDebt | number:'1.0-0' }} ₫</h3>
               <div class="text-success small">
                 <i class="fa fa-arrow-up me-1"></i>+12.4% {{ '::FromLastYear' | abpLocalization }}
@@ -35,16 +38,19 @@
             </div>
           </div>
         </div>
-        
+
         <div class="col-lg-4 col-md-12">
           <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-              <div class="text-muted text-uppercase small fw-semibold mb-2">{{ '::OutstandingBalance' | abpLocalization }}</div>
-              <h3 class="fw-bold mb-2" [ngClass]="{'text-danger': customer.currentDebt > 0, 'text-success': customer.currentDebt === 0}">
+              <div class="text-muted text-uppercase small fw-semibold mb-2">{{ '::OutstandingBalance' | abpLocalization
+                }}</div>
+              <h3 class="fw-bold mb-2"
+                [ngClass]="{'text-danger': customer.currentDebt > 0, 'text-success': customer.currentDebt === 0}">
                 {{ customer.currentDebt | number:'1.0-0' }} ₫
               </h3>
               <div class="text-warning small" *ngIf="customer.paymentTermDays > 0">
-                <i class="fa fa-clock me-1"></i>{{ '::NextDueIn' | abpLocalization }} {{ customer.paymentTermDays }} {{ '::Days' | abpLocalization }}
+                <i class="fa fa-clock me-1"></i>{{ '::NextDueIn' | abpLocalization }} {{ customer.paymentTermDays }} {{
+                '::Days' | abpLocalization }}
               </div>
               <div class="text-muted small" *ngIf="customer.paymentTermDays === 0">
                 <i class="fa fa-check-circle me-1"></i>{{ '::NoOutstandingDebt' | abpLocalization }}
@@ -52,11 +58,12 @@
             </div>
           </div>
         </div>
-        
+
         <div class="col-lg-4 col-md-12">
           <div class="card border-0 shadow-sm h-100">
             <div class="card-body">
-              <div class="text-muted text-uppercase small fw-semibold mb-2">{{ '::ActiveOrders' | abpLocalization }}</div>
+              <div class="text-muted text-uppercase small fw-semibold mb-2">{{ '::ActiveOrders' | abpLocalization }}
+              </div>
               <h3 class="fw-bold mb-2">0</h3>
               <div class="text-primary small">
                 <i class="fa fa-truck me-1"></i>0 {{ '::CurrentlyInTransit' | abpLocalization }}
@@ -68,10 +75,10 @@
 
       <!-- Main Content Row -->
       <div class="row g-4">
-        
+
         <!-- Left Column -->
         <div class="col-lg-8">
-          
+
           <!-- Legal & Identity -->
           <div class="card border-0 shadow-sm">
             <div class="card-body mb-4">
@@ -79,25 +86,29 @@
                 <i class="fa fa-file-contract text-primary me-2"></i>
                 <span class="fw-bold">{{ '::LegalAndIdentity' | abpLocalization }}</span>
               </h5>
-              
+
               <div class="row g-3">
                 <div class="col-md-6">
-                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::LegalName' | abpLocalization }}</div>
+                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::LegalName' | abpLocalization }}
+                  </div>
                   <div class="fw-medium">{{ customer.name }}</div>
                 </div>
                 <div class="col-md-6">
-                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::CustomerType' | abpLocalization }}</div>
+                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::CustomerType' | abpLocalization }}
+                  </div>
                   <div class="fw-medium">
                     {{ ('::Enum:CustomerType.' + getEnumName(CustomerType, customer.type)) | abpLocalization }}
                   </div>
                 </div>
                 <div class="col-md-6">
-                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::TaxCode' | abpLocalization }} / VAT</div>
+                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::TaxCode' | abpLocalization }} /
+                    VAT</div>
                   <div class="fw-medium">{{ customer.taxCode || 'N/A' }}</div>
                 </div>
-                
+
                 <div class="col-md-6">
-                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::RegistrationNumber' | abpLocalization }}</div>
+                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::RegistrationNumber' |
+                    abpLocalization }}</div>
                   <div class="fw-medium">{{ customer.code || 'N/A' }}</div>
                 </div>
               </div>
@@ -111,19 +122,22 @@
                 <i class="fa fa-credit-card text-primary me-2"></i>
                 <span class="fw-bold">{{ '::FinancialTerms' | abpLocalization }}</span>
               </h5>
-              
+
               <div class="row g-3">
                 <div class="col-md-6">
-                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::PaymentTerms' | abpLocalization }}</div>
+                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::PaymentTerms' | abpLocalization }}
+                  </div>
                   <div class="fw-medium">
-                    <span *ngIf="customer.paymentTermDays > 0">{{ '::Net' | abpLocalization }} {{ customer.paymentTermDays }} {{ '::Days' | abpLocalization }}</span>
+                    <span *ngIf="customer.paymentTermDays > 0">{{ '::Net' | abpLocalization }} {{
+                      customer.paymentTermDays }} {{ '::Days' | abpLocalization }}</span>
                     <span *ngIf="customer.paymentTermDays === 0">{{ '::Immediate' | abpLocalization }}</span>
                   </div>
                 </div>
-                
+
                 <div class="col-md-6">
-                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::CreditLimit' | abpLocalization }}</div>
-                  
+                  <div class="text-muted text-uppercase small fw-semibold mb-1">{{ '::CreditLimit' | abpLocalization }}
+                  </div>
+
                   <!-- Unlimited Credit -->
                   <div *ngIf="customer.debtLimit === 0">
                     <div class="progress mb-2" style="height: 8px;">
@@ -133,30 +147,29 @@
                       <span class="badge bg-success">{{ '::Unlimited' | abpLocalization }}</span>
                     </div>
                   </div>
-                  
+
                   <!-- Limited Credit -->
                   <div *ngIf="customer.debtLimit > 0">
                     <div class="progress mb-2" style="height: 8px;">
-                      <div class="progress-bar" 
-                           [ngClass]="{
+                      <div class="progress-bar" [ngClass]="{
                              'bg-danger': (customer.currentDebt / customer.debtLimit * 100) > 80,
                              'bg-warning': (customer.currentDebt / customer.debtLimit * 100) > 50 && (customer.currentDebt / customer.debtLimit * 100) <= 80,
                              'bg-success': (customer.currentDebt / customer.debtLimit * 100) <= 50
-                           }"
-                           role="progressbar" 
-                           [style.width.%]="(customer.currentDebt / customer.debtLimit * 100)"
-                           [attr.aria-valuenow]="customer.currentDebt"
-                           [attr.aria-valuemin]="0"
-                           [attr.aria-valuemax]="customer.debtLimit">
+                           }" role="progressbar" [style.width.%]="(customer.currentDebt / customer.debtLimit * 100)"
+                        [attr.aria-valuenow]="customer.currentDebt" [attr.aria-valuemin]="0"
+                        [attr.aria-valuemax]="customer.debtLimit">
                       </div>
                     </div>
                     <div class="d-flex justify-content-between align-items-center">
-                      <span class="fw-medium small">{{ '::Used' | abpLocalization }}: {{ customer.currentDebt | number:'1.0-0' }} ₫</span>
-                      <span class="fw-medium small">{{ '::Remaining' | abpLocalization }}: {{ (customer.debtLimit - customer.currentDebt) | number:'1.0-0' }} ₫</span>
+                      <span class="fw-medium small">{{ '::Used' | abpLocalization }}: {{ customer.currentDebt |
+                        number:'1.0-0' }} ₫</span>
+                      <span class="fw-medium small">{{ '::Remaining' | abpLocalization }}: {{ (customer.debtLimit -
+                        customer.currentDebt) | number:'1.0-0' }} ₫</span>
                     </div>
                     <div class="text-muted small mt-1">
-                      {{ '::Limit' | abpLocalization }}: {{ customer.debtLimit | number:'1.0-0' }} ₫ 
-                      ({{ (customer.currentDebt / customer.debtLimit * 100) | number:'1.0-0' }}% {{ '::Utilized' | abpLocalization }})
+                      {{ '::Limit' | abpLocalization }}: {{ customer.debtLimit | number:'1.0-0' }} ₫
+                      ({{ (customer.currentDebt / customer.debtLimit * 100) | number:'1.0-0' }}% {{ '::Utilized' |
+                      abpLocalization }})
                     </div>
                   </div>
                 </div>
@@ -173,7 +186,7 @@
                   <span class="fw-bold">{{ '::ContactPersons' | abpLocalization }}</span>
                 </h5>
               </div>
-              
+
               <div class="table-responsive">
                 <table class="table table-sm mb-0">
                   <thead class="text-muted text-uppercase small">
@@ -194,9 +207,9 @@
                       </td>
                       <td class="align-middle">
                         {{
-                          customer.gender
-                            ? (('::Enum:Gender.' + getEnumName(Gender, customer.gender)) | abpLocalization)
-                            : 'N/A'
+                        customer.gender
+                        ? (('::Enum:Gender.' + getEnumName(Gender, customer.gender)) | abpLocalization)
+                        : 'N/A'
                         }}
                       </td>
                       <td class="align-middle">{{ customer.email || 'N/A' }}</td>
@@ -218,7 +231,7 @@
                 </h5>
                 <a href="#" class="text-decoration-none small">{{ '::ViewAll' | abpLocalization }}</a>
               </div>
-              
+
               <div class="table-responsive">
                 <table class="table table-sm mb-0">
                   <thead class="text-muted text-uppercase small">
@@ -246,7 +259,7 @@
 
         <!-- Right Column -->
         <div class="col-lg-4">
-          
+
           <!-- Primary Address -->
           <div class="card border-0 shadow-sm">
             <div class="card-body mb-4">
@@ -254,7 +267,7 @@
                 <i class="fa fa-map-marker-alt text-primary me-2"></i>
                 <span class="fw-bold">{{ '::Address' | abpLocalization }}</span>
               </h5>
-              
+
               <div class="mb-3">
                 <div class="fw-medium">{{ customer.address || 'N/A' }}</div>
                 <div class="text-muted small mt-1">
@@ -265,7 +278,7 @@
                   <span *ngIf="customer.countryName">{{ customer.countryName }}</span>
                 </div>
               </div>
-              
+
               <div class="bg-light rounded" style="height: 150px; position: relative;">
                 <div class="position-absolute top-50 start-50 translate-middle">
                   <i class="fa fa-map text-muted fa-3x opacity-25"></i>
@@ -273,7 +286,7 @@
               </div>
             </div>
           </div>
-          
+
           <!-- System Data -->
           <div class="card border-0 shadow-sm">
             <div class="card-body">
@@ -282,27 +295,27 @@
                 <span class="fw-bold">{{ '::SystemData' | abpLocalization }}</span>
               </h5>
 
-             <div class="small">
-              <div class="row mb-2 align-items-center">
-                <div class="col-5 text-muted">
-                  {{ '::CreationTime' | abpLocalization }}
+              <div class="small">
+                <div class="row mb-2 align-items-center">
+                  <div class="col-5 text-muted">
+                    {{ '::CreationTime' | abpLocalization }}
+                  </div>
+                  <div class="col-7 text-end fw-medium">
+                    {{ customer.creationTime | date:'dd/MM/yyyy HH:mm' }}
+                  </div>
                 </div>
-                <div class="col-7 text-end fw-medium">
-                  {{ customer.creationTime | date:'dd/MM/yyyy HH:mm' }}
-                </div>
-              </div>
 
-              <div class="row align-items-center">
-                <div class="col-5 text-muted">
-                  {{ '::LastModificationTime' | abpLocalization }}
-                </div>
-                <div class="col-7 text-end fw-medium">
-                  {{ customer.lastModificationTime 
-                      ? (customer.lastModificationTime | date:'dd/MM/yyyy HH:mm') 
-                      : 'N/A' }}
+                <div class="row align-items-center">
+                  <div class="col-5 text-muted">
+                    {{ '::LastModificationTime' | abpLocalization }}
+                  </div>
+                  <div class="col-7 text-end fw-medium">
+                    {{ customer.lastModificationTime
+                    ? (customer.lastModificationTime | date:'dd/MM/yyyy HH:mm')
+                    : 'N/A' }}
+                  </div>
                 </div>
               </div>
-            </div>
             </div>
           </div>
 

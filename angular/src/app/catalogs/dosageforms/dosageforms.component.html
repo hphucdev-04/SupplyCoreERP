@@ -18,26 +18,21 @@
 
   <div class="card-body">
 
-   <div class="row mb-3">
+    <div class="row mb-3">
       <div class="col-md-12">
-        <app-search
-          [placeholder]="'::Search' | abpLocalization"
-          [(value)]="filterText"
-          [debounceTime]= "800"
+        <app-search [placeholder]="'::Search' | abpLocalization" [(value)]="filterText" [debounceTime]="800"
           (search)="onSearch($event)">
         </app-search>
       </div>
     </div>
 
     <ngx-datatable [rows]="dosage.items" [count]="dosage.totalCount" [list]="list" default>
-      
-      <ngx-datatable-column
-        [name]="'::Actions' | abpLocalization"
-        [maxWidth]="150"
-        [sortable]="false">
+
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
-            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              ngbDropdownToggle>
               <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
@@ -53,9 +48,9 @@
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code">
-         <ng-template let-row="row" ngx-datatable-cell-template>
-            {{ row.code }}
-         </ng-template>
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.code }}
+        </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"></ngx-datatable-column>
@@ -71,48 +66,20 @@
 <!-- #endregion -->
 
 <!-- #region Drawer -->
-<app-drawer
-  [isOpen]="isDrawerOpen"
-  [title]="selectedDosage.id ? '::EditDosage' : '::NewDosage'"
-  [width]="'md'"
-  [saveDisabled]="form.invalid"
-  (close)="closeDrawer()"
-  (save)="save()">
-  
+<app-drawer [isOpen]="isDrawerOpen" [title]="selectedDosage.id ? '::EditDosage' : '::NewDosage'" [width]="'md'"
+  [saveDisabled]="form.invalid" (close)="closeDrawer()" (save)="save()">
+
   <form [formGroup]="form" *ngIf="form">
     <div class="mb-3">
-        <label for="unit-code" class="form-label small fw-semibold">
-          {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
-        </label>
-        <input
-          type="text"
-          id="unit-code"
-          class="form-control text-uppercase" 
-          formControlName="code"
-        />
-        <div class="form-text text-muted" *ngIf="!selectedDosage.id">
-            Mã được tự động gợi ý từ tên. Bạn có thể sửa lại.
-        </div>
-        <div class="invalid-feedback d-block" *ngIf="form.get('code')?.invalid && form.get('code')?.touched">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
-      </div>
-        <div class="mb-3">
       <label for="unit-name" class="form-label small fw-semibold">
         {{ '::Name' | abpLocalization }} <span class="text-danger">*</span>
       </label>
-      <input
-        type="text"
-        id="unit-name"
-        class="form-control"
-        formControlName="name"
-        autofocus
-      />
+      <input type="text" id="unit-name" class="form-control" formControlName="name" autofocus />
       <div class="invalid-feedback d-block" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
         {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
-
   </form>
+  
 </app-drawer>
 <!-- #endregion -->

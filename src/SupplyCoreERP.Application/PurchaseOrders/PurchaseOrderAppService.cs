@@ -17,7 +17,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.PurchaseOrders
 {
-	public class PurchaseOrderAppService : ApplicationService, IPurchaseOrderAppService
+	public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
 	{
         // Dependencies
         private readonly IRepository<PurchaseOrder, Guid> _orderRepo;

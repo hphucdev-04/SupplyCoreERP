@@ -24,7 +24,7 @@ export const appConfig: ApplicationConfig = {
     provideAbpCore(
       withOptions({
         environment,
-         registerLocaleFn: registerLocales(), 
+        registerLocaleFn: registerLocales(),
       }),
     ),
     provideAbpOAuth(),

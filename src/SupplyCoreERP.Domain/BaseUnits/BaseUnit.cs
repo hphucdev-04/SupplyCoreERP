@@ -15,12 +15,11 @@ namespace SupplyCoreERP.BaseUnits
 
 		public BaseUnit(Guid id, string code, string name) : base(id)
 		{
-			Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50).ToUpper();
-			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 100);
-		}
-		public void Update(string code, string name)
-		{
 			SetCode(code);
+			SetName(name);
+        }
+		public void Update(string name)
+		{
 			SetName(name);
 		}
 

@@ -5,9 +5,9 @@ namespace SupplyCoreERP.Medicines.Dtos
 	public class MedicineImportDto
 	{
 		[ExcelColumnName("Mã thuốc")]
-		public string Code { get; set; }
+        public string TempCode { get; set; }
 
-		[ExcelColumnName("Tên thuốc")]
+        [ExcelColumnName("Tên thuốc")]
 		public string Name { get; set; }
 
 		[ExcelColumnName("Nhóm hàng")]

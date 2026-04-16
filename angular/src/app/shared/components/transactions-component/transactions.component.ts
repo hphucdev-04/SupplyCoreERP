@@ -2,15 +2,12 @@ import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-
-// Proxies
 import { InventoryTransactionService } from 'src/app/proxy/transactions';
 import { InventoryTransactionDto } from 'src/app/proxy/transactions/dtos';
 import { InventoryTransactionType } from 'src/app/proxy/enums/warehouses';
-
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 
 @Component({
   selector: 'app-transactions',
@@ -24,29 +21,29 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   // INPUTS ĐỂ NHẬN TỪ MODAL BALANCE-DETAIL
-  @Input() isEmbedded: boolean = false; 
+  @Input() isEmbedded: boolean = false;
   @Input() fixedProductId?: string;
   @Input() fixedBatchId?: string;
   @Input() fixedBinId?: string;
 
   data = { items: [], totalCount: 0 } as PagedResultDto<InventoryTransactionDto>;
-  
+
   // Biến phục vụ bộ lọc
   filterText = '';
   fromDate: string | null = null;
   toDate: string | null = null;
-  
+
   TransactionType = InventoryTransactionType;
   enumName = enumName;
 
   constructor(
     public readonly list: ListService,
     private transactionService: InventoryTransactionService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     // Mặc định 10 dòng/trang để hiện thanh phân trang
-    this.list.maxResultCount = 10; 
+    this.list.maxResultCount = 10;
 
     const streamCreator = (query: any) => {
       // Xử lý Timezone: ToDate lấy đến 23:59:59 cuối ngày

@@ -4,12 +4,12 @@ function createMenuGroup(
   name: string,
   icon: string,
   order: number,
-  children?: {name: string; icon: string, requiredPolicy?: string}[],
-  policy?: string, 
+  children?: { name: string; icon: string, requiredPolicy?: string }[],
+  policy?: string,
 ) {
   const parentName = `::Menu:${name}`;
   const parentPath = `/${name.toLowerCase()}`;
-  
+
   const parent = {
     path: parentPath,
     name: parentName,
@@ -20,19 +20,19 @@ function createMenuGroup(
   };
 
   if (!children || children.length === 0) {
-    return [parent];  
+    return [parent];
   }
 
   return [
     parent,
     ...children.map((c, i) => ({
-        path: `${parentPath}/${c.name.toLowerCase()}`,
-        name: `::Menu:${c.name}`,
-        parentName,
-        iconClass: c.icon,
-        order: i + 1,
-        layout: eLayoutType.application,
-        requiredPolicy: c.requiredPolicy || policy, 
+      path: `${parentPath}/${c.name.toLowerCase()}`,
+      name: `::Menu:${c.name}`,
+      parentName,
+      iconClass: c.icon,
+      order: i + 1,
+      layout: eLayoutType.application,
+      requiredPolicy: c.requiredPolicy || policy,
     })),
   ];
 }
@@ -53,7 +53,7 @@ export const APP_ROUTES = [
     { name: 'Ingredients', icon: 'fas fa-flask', requiredPolicy: 'Catalog.ActiveIngredient' },
     { name: 'DosageForms', icon: 'fas fa-capsules', requiredPolicy: 'Catalog.DosageForm' },
     { name: 'Manufacturers', icon: 'fas fa-industry', requiredPolicy: 'Catalog.Manufacturer' },
-  ]), 
+  ]),
 
   ...createMenuGroup('Partner', 'fas fa-handshake', 3, [
     { name: 'Suppliers', icon: 'fas fa-truck' },
@@ -68,8 +68,8 @@ export const APP_ROUTES = [
   ]),
 
   ...createMenuGroup('Order', 'fas fa-warehouse', 5, [
-    { name: 'SaleOrders', icon: 'fas fa-building' },       
-    { name: 'PurchaseOrders', icon: 'fas fa-boxes' },             
+    { name: 'SaleOrders', icon: 'fas fa-building' },
+    { name: 'PurchaseOrders', icon: 'fas fa-boxes' },
 
   ]),
 ];

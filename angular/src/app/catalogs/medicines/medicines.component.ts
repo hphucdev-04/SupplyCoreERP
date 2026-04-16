@@ -2,7 +2,7 @@ import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil, forkJoin } from 'rxjs'; 
+import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { BaseUnitService } from 'src/app/proxy/base-units';
 import { CategoryService } from 'src/app/proxy/categories';
 import { DosageFormService } from 'src/app/proxy/dosage-forms';
@@ -15,8 +15,7 @@ import { SearchComponent } from 'src/app/shared/components/search-component/sear
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MedicineDetailComponent } from './medicice-details/medicice-details.component';
 import { ImportModalComponent } from 'src/app/shared/components/import-compoent/import.component';
-import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 
 
 @Component({
@@ -29,10 +28,10 @@ import { enumName } from 'src/app/shared/utils/enum.util';
 })
 export class MedicinesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
-  
+
   //Data
   data = { items: [], totalCount: 0 } as PagedResultDto<MedicineDto>;
-  
+
   //Drawer state
   isDrawerOpen = false;
   form: FormGroup;
@@ -72,24 +71,24 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     private unitService: BaseUnitService,
     private dosageFormService: DosageFormService,
     private toaster: ToasterService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.loadLookups(); 
+    this.loadLookups();
     this.buildForm();
-   const streamCreator = (query: GetMedicineListDto) => this.medicineService.getList({ 
-      ...query, 
+    const streamCreator = (query: GetMedicineListDto) => this.medicineService.getList({
+      ...query,
       filter: this.filterText,
-      categoryId: this.filterCategoryId,      
-      manufacturerId: this.filterManufacturerId, 
-      status: this.filterStatus,              
+      categoryId: this.filterCategoryId,
+      manufacturerId: this.filterManufacturerId,
+      status: this.filterStatus,
     });
     this.list.maxResultCount = 10;
     this.list.hookToQuery(streamCreator)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((response) => {
-            this.data = response;
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response) => {
+        this.data = response;
+      });
   }
 
   ngOnDestroy(): void {
@@ -105,13 +104,13 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       units: this.unitService.getList({ maxResultCount: 1000 }),
       dosages: this.dosageFormService.getList({ maxResultCount: 1000 }),
     })
-    .pipe(takeUntil(this.destroy$))
-    .subscribe(res => {
-      this.categories = res.cats.items;
-      this.manufacturers = res.manus.items;
-      this.units = res.units.items;
-      this.dosageForms = res.dosages.items;
-    });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.categories = res.cats.items;
+        this.manufacturers = res.manus.items;
+        this.units = res.units.items;
+        this.dosageForms = res.dosages.items;
+      });
   }
 
   //Action
@@ -121,7 +120,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   }
 
   onFilterChange() {
-    this.list.get(); 
+    this.list.get();
   }
 
   viewDetail(id: string): void {
@@ -150,10 +149,10 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       .subscribe((status) => {
         if (status === Confirmation.Status.confirm) {
           this.medicineService.delete(id)
-            .pipe(takeUntil(this.destroy$))  
+            .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
-                this.list.get();
-                this.toaster.success('::DeleteSuccess', ':Success')
+              this.list.get();
+              this.toaster.success('::DeleteSuccess', ':Success')
             });
         }
       });
@@ -162,7 +161,6 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   //Form Handling
   buildForm(): void {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
       categoryId: [null, Validators.required],
       manufacturerId: [null, Validators.required],
@@ -175,13 +173,6 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       isActive: [true],
     });
   }
-
-  //Auto generate code function
-  generateCode(): void {
-     const name = this.form.get('name')?.value || '';
-     const code = CodeGeneratorUtil.generate(name, 'MED');
-     this.form.get('code')?.setValue(code);
-   }
 
   closeDrawer(): void {
     this.isDrawerOpen = false;
@@ -196,14 +187,14 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       : this.medicineService.create(payload);
 
     request
-        .pipe(takeUntil(this.destroy$))
-        .subscribe(() => {
-            this.closeDrawer();
-            this.list.get();
-            this.toaster.success(
-              this.selectedMedicine.id? '::UpdateSuccess' : '::CreateSuccess', '::Success'
-            );
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.closeDrawer();
+        this.list.get();
+        this.toaster.success(
+          this.selectedMedicine.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
+        );
+      });
   }
 
   //Export
@@ -215,9 +206,9 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       status: this.filterStatus,
       maxResultCount: 1000,
     }).subscribe((fileResult: any) => {
-       // Logic tải file xuống trình duyệt
-       this.downloadBlob(fileResult, `Medicines_Export_${new Date().getTime()}.xlsx`);
-       this.toaster.success('::ExportSuccess', '::Success');
+      // Logic tải file xuống trình duyệt
+      this.downloadBlob(fileResult, `Medicines_Export_${new Date().getTime()}.xlsx`);
+      this.toaster.success('::ExportSuccess', '::Success');
     });
   }
 
@@ -236,7 +227,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   //Import
   importFn = (file: File) => {
     const formData = new FormData();
-    formData.append('file', file); 
+    formData.append('file', file);
     return this.medicineService.importExcel(formData);
   };
 
@@ -254,37 +245,37 @@ export class MedicinesComponent implements OnInit, OnDestroy {
 
   approveMedicine(id: string): void {
     this.confirmation.warn('::AreYouSureToApprove', '::Approve').subscribe((status) => {
-        if (status === Confirmation.Status.confirm) {
-            this.medicineService.approve(id).subscribe(() => this.list.get());
-            this.toaster.success('::ApproveSuccess', '::Success')
-        }
+      if (status === Confirmation.Status.confirm) {
+        this.medicineService.approve(id).subscribe(() => this.list.get());
+        this.toaster.success('::ApproveSuccess', '::Success')
+      }
     });
   }
-  
+
   rejectMedicine(id: string): void {
     this.confirmation.warn('::AreYouSureToReject', '::Reject').subscribe((status) => {
-        if (status === Confirmation.Status.confirm) {
-            this.medicineService.reject(id).subscribe(() => this.list.get());
-            this.toaster.success('::RejectSuccess', '::Success')
-        }
+      if (status === Confirmation.Status.confirm) {
+        this.medicineService.reject(id).subscribe(() => this.list.get());
+        this.toaster.success('::RejectSuccess', '::Success')
+      }
     });
   }
 
   onToggleActive(row: MedicineDto, event: any): void {
     event.stopPropagation();
     this.confirmation.warn(
-        row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
-        '::Confirm'
+      row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
+      '::Confirm'
     ).subscribe((status) => {
-        if (status === Confirmation.Status.confirm) {
-            this.medicineService.toggleActive(row.id).subscribe(() => this.list.get());
-            this.toaster.success(
-              row.isActive? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
-            );
-        } else {
-            this.toaster.error('::Error');
-            event.target.checked = row.isActive; 
-        }
+      if (status === Confirmation.Status.confirm) {
+        this.medicineService.toggleActive(row.id).subscribe(() => this.list.get());
+        this.toaster.success(
+          row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
+        );
+      } else {
+        this.toaster.error('::Error');
+        event.target.checked = row.isActive;
+      }
     });
   }
 }

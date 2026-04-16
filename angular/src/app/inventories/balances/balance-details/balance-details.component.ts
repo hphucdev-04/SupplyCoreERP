@@ -23,11 +23,11 @@ export class BalanceDetailsComponent implements OnDestroy {
   isLoading = false;
   activeTab: 'info' | 'history' = 'info';
 
-  constructor(private balanceService: InventoryBalanceService) {}
+  constructor(private balanceService: InventoryBalanceService) { }
 
   public open(id: string) {
     this.balanceId = id;
-    this.activeTab = 'info'; 
+    this.activeTab = 'info';
     this.detail = null;
     this.isVisible = true; // Kích hoạt abp-modal
     this.loadDetail(id);

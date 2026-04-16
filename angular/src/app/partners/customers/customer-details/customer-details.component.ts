@@ -13,19 +13,19 @@ import { SharedModule } from 'src/app/shared/shared.module';
   styleUrl: './customer-details.component.scss'
 })
 export class CustomerDetailsComponent {
-  
+
   isVisible = false;
   customer: CustomerDetailDto;
 
   Gender = Gender;
   CustomerType = CustomerType;
 
-  constructor(private customerService: CustomerService) {}
+  constructor(private customerService: CustomerService) { }
 
   open(id: string) {
     this.customerService.get(id).subscribe(res => {
       this.customer = res;
-      this.isVisible = true; 
+      this.isVisible = true;
     });
   }
 

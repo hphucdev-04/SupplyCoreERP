@@ -28,7 +28,7 @@ export class BalancesComponent implements OnInit, OnDestroy {
   @ViewChild('detailModal') detailModal!: BalanceDetailsComponent;
 
   data = { items: [], totalCount: 0 } as PagedResultDto<InventoryBalanceDto>;
-  
+
   warehouses: any[] = [];
   medicines: any[] = [];
 
@@ -42,7 +42,7 @@ export class BalancesComponent implements OnInit, OnDestroy {
     private balanceService: InventoryBalanceService,
     private warehouseService: WarehouseService,
     private medicineService: MedicineService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.loadLookups();
@@ -69,7 +69,7 @@ export class BalancesComponent implements OnInit, OnDestroy {
   loadLookups() {
     this.warehouseService.getList({ maxResultCount: 1000, skipCount: 0 } as any)
       .pipe(takeUntil(this.destroy$)).subscribe(res => this.warehouses = res.items);
-      
+
     this.medicineService.getList({ maxResultCount: 1000, skipCount: 0 } as any)
       .pipe(takeUntil(this.destroy$)).subscribe(res => this.medicines = res.items);
   }

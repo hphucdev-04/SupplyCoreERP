@@ -5,9 +5,9 @@ namespace SupplyCoreERP;
 
 /* Inherit your application services from this class.
  */
-public abstract class SupplyCoreERPAppService : ApplicationService
+public abstract class SupplyCore : ApplicationService
 {
-    protected SupplyCoreERPAppService()
+    protected SupplyCore()
     {
         LocalizationResource = typeof(SupplyCoreERPResource);
     }

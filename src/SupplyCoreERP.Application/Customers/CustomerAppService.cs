@@ -13,7 +13,7 @@ using SupplyCoreERP.Enums.Partner;
 
 namespace SupplyCoreERP.Customers
 {
-	public class CustomerAppService : ApplicationService, ICustomerAppService
+	public class CustomerAppService : SupplyCore, ICustomerAppService
 	{
 		private readonly IRepository<Customer, Guid> _customerRepository;
 		private readonly CustomerManager _customerManager;

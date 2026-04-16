@@ -14,7 +14,7 @@ using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Locations
 {
-	public class LocationAppService : ApplicationService, ILocationAppService
+	public class LocationAppService : SupplyCore, ILocationAppService
 	{
 		private readonly IRepository<Continent, Guid> _continentRepository;
 		private readonly IRepository<Country, Guid> _countryRepository;

@@ -1,4 +1,5 @@
-﻿using SupplyCoreERP.Products;
+﻿using SupplyCoreERP.DocumentSequences;
+using SupplyCoreERP.Products;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -15,44 +16,38 @@ namespace SupplyCoreERP.BaseUnits
 		private readonly IRepository<BaseUnit, Guid> _repository;
 		private readonly IRepository<Product, Guid> _productRepository;
 		private readonly IRepository<ProductUnit, Guid> _productUnitRepository;
-		public BaseUnitManager(
+        private readonly DocumentSequenceManager _documentSequenceManager;
+
+        public BaseUnitManager(
 			IRepository<BaseUnit, Guid> repository,
 			IRepository<Product, Guid> productRepository,
-			IRepository<ProductUnit, Guid> productUnitRepository)
+			IRepository<ProductUnit, Guid> productUnitRepository,
+            DocumentSequenceManager documentSequenceManager
+            )
 		{
 			_repository = repository;
 			_productRepository = productRepository;
 			_productUnitRepository = productUnitRepository;
+			_documentSequenceManager = documentSequenceManager;
 		}
 
-		public async Task<BaseUnit> CreateAsync(string code, string name)
+		public async Task<BaseUnit> CreateAsync(string name)
 		{
-			Check.NotNullOrWhiteSpace(code, nameof(code));
 			Check.NotNullOrWhiteSpace(name, nameof(name));
 
-			var normalizedCode = code.Trim().ToUpper();
+			var code = await _documentSequenceManager.GenerateAsync("BU");
 
-			if (await _repository.AnyAsync(x => x.Code == normalizedCode))
+            if (await _repository.AnyAsync(x => x.Code == code))
 				throw new UserFriendlyException($"Mã đơn vị '{code}' đã tồn tại!");
 
-			return new BaseUnit(GuidGenerator.Create(), normalizedCode, name);
+			return new BaseUnit(GuidGenerator.Create(), code, name);
 		}
 
-		public async Task UpdateAsync(BaseUnit unit, string newCode, string newName)
+		public async Task UpdateAsync(BaseUnit unit, string newName)
 		{
 			Check.NotNull(unit, nameof(unit));
-			Check.NotNullOrWhiteSpace(newCode, nameof(newCode));
 			Check.NotNullOrWhiteSpace(newName, nameof(newName));
-
-			var normalizedCode = newCode.Trim().ToUpper();
-
-			// Check trùng mã 
-			if (await _repository.AnyAsync(x => x.Code == normalizedCode && x.Id != unit.Id))
-			{
-				throw new UserFriendlyException($"Mã đơn vị '{newCode}' đã được sử dụng!");
-			}
-
-			unit.Update(normalizedCode, newName);
+			unit.Update(newName);
 		}
 
 		public async Task DeleteAsync(BaseUnit unit)

@@ -1,10 +1,7 @@
 <div class="erp-filter-wrapper" (click)="$event.stopPropagation()">
 
   <!-- Trigger Button -->
-  <button class="btn btn-sm erp-filter-btn"
-          type="button"
-          [class.active]="isOpen"
-          (click)="toggleOpen()">
+  <button class="btn btn-sm erp-filter-btn" type="button" [class.active]="isOpen" (click)="toggleOpen()">
     <i class="fa fa-sliders-h me-1"></i>
     <span>{{ '::Filters' | abpLocalization }}</span>
     <span class="erp-filter-badge" *ngIf="getActiveCount() > 0">
@@ -24,10 +21,8 @@
           {{ getActiveCount() }}
         </span>
       </div>
-      <button class="btn btn-link btn-sm text-danger p-0 erp-clear-all"
-              type="button"
-              *ngIf="getActiveCount() > 0"
-              (click)="clearAll()">
+      <button class="btn btn-link btn-sm text-danger p-0 erp-clear-all" type="button" *ngIf="getActiveCount() > 0"
+        (click)="clearAll()">
         <i class="fa fa-times me-1"></i>{{ '::ClearAll' | abpLocalization }}
       </button>
     </div>
@@ -45,15 +40,9 @@
           <div class="erp-searchable-select" [class.has-value]="field.value != null">
             <div class="erp-select-search">
               <i class="fa fa-search erp-select-icon"></i>
-              <input type="text"
-                     class="erp-select-input"
-                     [placeholder]="'::SearchOrSelect' | abpLocalization"
-                     [(ngModel)]="field._searchTerm"
-                     autocomplete="off">
-              <button type="button"
-                      class="erp-select-clear"
-                      *ngIf="field.value != null"
-                      (click)="clearField(field)">
+              <input type="text" class="erp-select-input" [placeholder]="'::SearchOrSelect' | abpLocalization"
+                [(ngModel)]="field._searchTerm" autocomplete="off">
+              <button type="button" class="erp-select-clear" *ngIf="field.value != null" (click)="clearField(field)">
                 <i class="fa fa-times"></i>
               </button>
             </div>
@@ -62,24 +51,21 @@
               <span>{{ getSelectedLabel(field) }}</span>
             </div>
             <div class="erp-options-list" *ngIf="field._searchTerm || field.value == null">
-              <div class="erp-option erp-option-all"
-                   [class.active]="field.value == null"
-                   (click)="selectOption(field, null)">
+              <div class="erp-option erp-option-all" [class.active]="field.value == null"
+                (click)="selectOption(field, null)">
                 <i class="fa fa-layer-group me-2 text-muted"></i>
                 {{ '::All' | abpLocalization }}
                 <i class="fa fa-check ms-auto text-primary" *ngIf="field.value == null"></i>
               </div>
               <div class="erp-options-divider"></div>
               <ng-container *ngFor="let opt of getFilteredOptions(field)">
-                <div class="erp-option"
-                     [class.active]="field.value === opt.value"
-                     (click)="selectOption(field, opt.value)">
+                <div class="erp-option" [class.active]="field.value === opt.value"
+                  (click)="selectOption(field, opt.value)">
                   <span class="erp-option-text">{{ opt.label | abpLocalization }}</span>
                   <i class="fa fa-check ms-auto text-primary" *ngIf="field.value === opt.value"></i>
                 </div>
               </ng-container>
-              <div class="erp-no-result"
-                   *ngIf="getFilteredOptions(field).length === 0 && field._searchTerm">
+              <div class="erp-no-result" *ngIf="getFilteredOptions(field).length === 0 && field._searchTerm">
                 <i class="fa fa-search-minus me-2"></i>{{ '::NoResult' | abpLocalization }}
               </div>
             </div>
@@ -94,10 +80,8 @@
           </label>
           <div class="erp-badge-group">
             <ng-container *ngFor="let opt of field.options">
-              <button type="button"
-                      class="erp-badge-option"
-                      [class.active]="field.value === opt.value"
-                      (click)="selectOption(field, opt.value)">
+              <button type="button" class="erp-badge-option" [class.active]="field.value === opt.value"
+                (click)="selectOption(field, opt.value)">
                 <span *ngIf="opt.color" class="erp-badge-dot" [style.background]="opt.color"></span>
                 {{ opt.label | abpLocalization }}
               </button>

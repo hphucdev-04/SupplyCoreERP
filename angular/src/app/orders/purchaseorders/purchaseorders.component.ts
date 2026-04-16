@@ -14,7 +14,7 @@ import { WarehouseService } from 'src/app/proxy/warehouses';
 import { SupplierDto } from 'src/app/proxy/suppliers/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseOrderStatus, purchaseOrderStatusOptions } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 import { PurchaseOrderDetailsComponent } from './purchaseorder-details/purchaseorder-details.component';
 
 @Component({
@@ -53,7 +53,7 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
     private warehouseService: WarehouseService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();

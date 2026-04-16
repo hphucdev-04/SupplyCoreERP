@@ -8,7 +8,7 @@ import { ThemeSharedModule } from '@abp/ng.theme.shared';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
- imports: [
+  imports: [
     CommonModule,
     ThemeSharedModule,
     CoreModule,
@@ -16,17 +16,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     PageModule,
     NgbModule,
-    NgxDatatableModule 
+    NgxDatatableModule
   ],
   exports: [
     CommonModule,
     ThemeSharedModule,
-    CoreModule, 
+    CoreModule,
     FormsModule,
     ReactiveFormsModule,
     PageModule,
     NgbModule,
-    NgxDatatableModule 
+    NgxDatatableModule
   ]
 })
 export class SharedModule { }
