@@ -577,8 +577,8 @@ public class SupplyCoreERPDbContext :
         // DocumentSeuqence
         builder.Entity<DocumentSequence>(b =>
         {
-            b.ToTable("DocumentSequences");
-            b.ConfigureByConvention(); 
+			b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "DocumentSequences", SupplyCoreERPConsts.DbSchema);
+			b.ConfigureByConvention(); 
 
             // Đảm bảo DocumentType là duy nhất để tránh tạo trùng loại chứng từ
             b.HasIndex(x => x.DocumentType).IsUnique();
