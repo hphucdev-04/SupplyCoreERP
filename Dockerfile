@@ -1,12 +1,12 @@
 # 1. Base image cho runtime (đổi :8.0 thành 7.0 hoặc 6.0 nếu project của bạn dùng bản .NET cũ hơn)
-FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:10.0 AS base
 WORKDIR /app
 # Port mặc định cho .NET 8 trong container thường là 8080. Railway sẽ tự động map port này.
 EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
 
 # 2. Build image với SDK
-FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Copy toàn bộ mã nguồn vào container
