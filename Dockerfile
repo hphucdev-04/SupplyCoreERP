@@ -9,8 +9,14 @@ ENV ASPNETCORE_URLS=http://+:8080
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
+# CLI 
+RUN dotnet tool install -g Volo.Abp.Cli
+ENV PATH="${PATH}:/root/.dotnet/tools"
+
 # Copy toàn bộ mã nguồn vào container
 COPY . .
+
+RUN abp install-libs
 
 # Di chuyển đến thư mục chứa project Host
 WORKDIR "/src/src/SupplyCoreERP.HttpApi.Host"
