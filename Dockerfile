@@ -10,9 +10,8 @@ FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
 # Install only essential Node.js packages
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    nodejs npm \
-    && rm -rf /var/lib/apt/lists/*
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
+    apt-get install -y nodejs
 
 # CLI 
 RUN dotnet tool install -g Volo.Abp.Cli
