@@ -6,17 +6,19 @@ EXPOSE 8080
 ENV ASPNETCORE_URLS=http://+:8080
 
 # 2. Build image với SDK
+FROM node:20-slim AS node
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-RUN curl -fsSL https://nodejs.org/dist/v20.11.0/node-v20.11.0-linux-x64.tar.xz | tar -xJ -C /usr/local --strip-components=1
+COPY --from=node /usr/local/bin/node /usr/local/bin/node
+COPY --from=node /usr/local/lib/node_modules /usr/local/lib/node_modules
 
-# Verify Node and NPM
+# Tạo symlink cho npm và npx
+RUN ln -s /usr/local/lib/node_modules/npm/bin/npm-cli.js /usr/local/bin/npm && \
+    ln -s /usr/local/lib/node_modules/npm/bin/npx-cli.js /usr/local/bin/npx
+
+# Verify
 RUN node --version && npm --version
-
-# Verify Node and NPM are installed
-RUN node --version && npm --version
-
 # CLI 
 RUN dotnet tool install -g Volo.Abp.Cli
 ENV PATH="${PATH}:/root/.dotnet/tools"
