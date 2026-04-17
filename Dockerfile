@@ -9,9 +9,12 @@ ENV ASPNETCORE_URLS=http://+:8080
 FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
 WORKDIR /src
 
-# Install only essential Node.js packages
 RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && \
-    apt-get install -y nodejs
+    apt-get install -y nodejs && \
+    rm -rf /var/lib/apt/lists/*
+
+# Verify Node and NPM are installed
+RUN node --version && npm --version
 
 # CLI 
 RUN dotnet tool install -g Volo.Abp.Cli
