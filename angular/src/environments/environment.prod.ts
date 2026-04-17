@@ -1,6 +1,6 @@
 import { Environment } from '@abp/ng.core';
 
-const baseUrl = 'https://supply-core-erp.vercel.app'; 
+const baseUrl = 'https://rxlogistics.vercel.app'; 
 const backendUrl = 'https://rxlogistics.up.railway.app';
 
 export const environment = {
