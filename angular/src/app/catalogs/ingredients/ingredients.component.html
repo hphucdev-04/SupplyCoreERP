@@ -47,8 +47,12 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code"
-        cellClass="ellipsis-cell"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-link">{{row.code}}</span>
+        </ng-template>
+      </ngx-datatable-column>
+      
       <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="180"></ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">

@@ -124,7 +124,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Active' | abpLocalization" prop="isActive" [width]="80">
+      <ngx-datatable-column [name]="'::Active' | abpLocalization" prop="isActive" [width]="100">
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           <div class="form-check form-switch d-flex justify-content-center">
             <input class="form-check-input" type="checkbox" [checked]="value" (click)="onToggleActive(row, $event)"
