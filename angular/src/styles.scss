@@ -701,7 +701,6 @@ body {
   border: 1px solid var(--ph-color-border-default);
   border-radius: var(--ph-radius-lg);
   box-shadow: var(--ph-shadow-sm);
-  z-index: 1100;
 
   .card-header {
     background: var(--ph-color-bg-surface);
@@ -922,7 +921,6 @@ ngx-datatable {
   color: var(--ph-color-text-body) !important;
   border: 1px solid var(--ph-color-border-default) !important;
   border-radius: var(--ph-radius-lg) !important;
-  overflow: hidden !important;
   box-shadow: var(--ph-shadow-xs) !important;
 
   // Header row
