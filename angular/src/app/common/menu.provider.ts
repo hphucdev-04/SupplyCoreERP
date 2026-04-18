@@ -56,20 +56,20 @@ export const APP_ROUTES = [
   ]),
 
   ...createMenuGroup('Partner', 'fas fa-handshake', 3, [
-    { name: 'Suppliers', icon: 'fas fa-truck' },
-    { name: 'Customers', icon: 'fas fa-user-friends' },
+    { name: 'Suppliers', icon: 'fas fa-truck' , requiredPolicy: 'Partner.Supplier' },
+    { name: 'Customers', icon: 'fas fa-user-friends', requiredPolicy: 'Partner.Customer' },
   ]),
 
   ...createMenuGroup('Inventory', 'fas fa-warehouse', 4, [
-    { name: 'Warehouses', icon: 'fas fa-building' },        // Quản lý Kho & Kệ
-    { name: 'Batches', icon: 'fas fa-boxes' },              // Quản lý Lô & HSD
-    { name: 'Tickets', icon: 'fas fa-file-invoice' },       // Phiếu Nhập/Xuất
-    { name: 'Balances', icon: 'fas fa-clipboard-list' },    // Xem tồn kho
+    { name: 'Warehouses', icon: 'fas fa-building' , requiredPolicy: 'Inventory.Warehouse'},        
+    { name: 'Batches', icon: 'fas fa-boxes' , requiredPolicy: 'Inventory.Batch'},              
+    { name: 'Tickets', icon: 'fas fa-file-invoice' , requiredPolicy: 'Inventory.Ticket'},       
+    { name: 'Balances', icon: 'fas fa-clipboard-list' ,},    
   ]),
 
   ...createMenuGroup('Order', 'fas fa-warehouse', 5, [
-    { name: 'SaleOrders', icon: 'fas fa-building' },
-    { name: 'PurchaseOrders', icon: 'fas fa-boxes' },
+    { name: 'SaleOrders', icon: 'fas fa-building' , requiredPolicy: 'Order.SaleOrder'},
+    { name: 'PurchaseOrders', icon: 'fas fa-boxes' , requiredPolicy: 'Order.PurchaseOrder'},
 
   ]),
 ];
