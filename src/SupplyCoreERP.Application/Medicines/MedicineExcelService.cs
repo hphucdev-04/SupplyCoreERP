@@ -182,7 +182,7 @@ namespace SupplyCoreERP.Medicines
         {
             using var stream = file.GetStream();
 
-            // Cache db  lên RAM
+            // Cache db lên RAM
             var categories = (await _categoryRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
             var manufacturers = (await _manufacturerRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
             var units = (await _baseUnitRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
@@ -206,8 +206,8 @@ namespace SupplyCoreERP.Medicines
                 rowIndex++;
                 try
                 {
-                    // Skip dòng gợi ý (dòng đầu tiên sau header)
-                    if (rowIndex == 2) continue;
+                    // ĐÃ XÓA DÒNG SKIP ROWINDEX == 2 Ở ĐÂY
+
                     // Bỏ qua dòng trống
                     if (string.IsNullOrWhiteSpace(row.Name)) continue;
 
@@ -334,7 +334,6 @@ namespace SupplyCoreERP.Medicines
             var sheetPrice = workbook.CreateSheet("Bảng giá chi tiết");
             var sheetData = workbook.CreateSheet("MasterData");
             var headerStyle = CreateHeaderStyle(workbook);
-            var hintStyle = CreateHintStyle(workbook); 
 
             // MasterData
             int maxRows = new[] { categories.Count, manufacturers.Count, units.Count, dosageForms.Count, priceLists.Count }.Max();
@@ -353,7 +352,9 @@ namespace SupplyCoreERP.Medicines
             CreateNamedRange(workbook, "ListUnits", "MasterData", 2, units.Count);
             CreateNamedRange(workbook, "ListDosageForms", "MasterData", 3, dosageForms.Count);
             CreateNamedRange(workbook, "ListPriceLists", "MasterData", 4, priceLists.Count);
-            CreateNamedRange(workbook, "ListTempCodes", "Danh sách thuốc", 0, 1000, startRow: 1);
+
+            // Sửa startRow thành 0 để ListTempCodes map đúng từ dòng 2 của Excel
+            CreateNamedRange(workbook, "ListTempCodes", "Danh sách thuốc", 0, 1000, startRow: 0);
 
             workbook.SetSheetHidden(workbook.GetSheetIndex("MasterData"), true);
 
@@ -388,28 +389,10 @@ namespace SupplyCoreERP.Medicines
                 "Chọn từ danh sách:\nBình thường / Mát / Lạnh / Đông",
                 "Chọn từ danh sách:\nCó / Không",
                 "Nhiều hoạt chất cách nhau bằng dấu ;\nVD: Paracetamol; Caffeine",
-                "Nhiều đơn vị cách nhau bằng dấu ;\nVD: Vỉ (x10); Hộp (x100)\n Lưu ý: Tên đơn vị phải khớp danh mục."
-            };
-
-            // Dòng gợi ý
-            var hints1 = new[]
-            {
-                "VD: MED001",
-                "VD: Panadol 500mg",
-                "Chọn từ danh sách ▼",
-                "Chọn từ danh sách ▼",
-                "Chọn từ danh sách ▼",
-                "Chọn từ danh sách ▼",
-                "VD: VD-12345-21 (hoặc để trống)",
-                "Chọn từ danh sách ▼",
-                "Chọn từ danh sách ▼",
-                "Chọn từ danh sách ▼",
-                "VD: Paracetamol; Caffeine",
-                "VD: Vỉ (x10); Hộp (x100)"
+                "Nhiều đơn vị cách nhau bằng dấu ;\nVD: Vỉ (x10); Hộp (x100)\n Lưu ý: Tên đơn vị phải có trong đơn vị cơ bản"
             };
 
             var headerRow1 = sheetMain.CreateRow(0);
-            var hintRow1 = sheetMain.CreateRow(1); 
 
             for (int i = 0; i < headers1.Length; i++)
             {
@@ -420,19 +403,16 @@ namespace SupplyCoreERP.Medicines
 
                 // Tooltip trên header
                 AddCellComment(sheetMain, cell, tooltips1[i]);
-
-                var hintCell = hintRow1.CreateCell(i);
-                hintCell.SetCellValue(hints1[i]);
-                hintCell.CellStyle = hintStyle;
             }
 
-            AddValidationFromRow(sheetMain, "ListCategories", 2, 2);
-            AddValidationFromRow(sheetMain, "ListManufacturers", 3, 2);
-            AddValidationFromRow(sheetMain, "ListUnits", 4, 2);
-            AddValidationFromRow(sheetMain, "ListDosageForms", 5, 2);
-            AddValidationListFromRow(sheetMain, new[] { "Uống", "Tiêm", "Ngoài da", "Khác" }, 7, 2);
-            AddValidationListFromRow(sheetMain, new[] { "Bình thường", "Mát", "Lạnh", "Đông" }, 8, 2);
-            AddValidationListFromRow(sheetMain, new[] { "Có", "Không" }, 9, 2);
+            // Sửa startRow về 1 để ăn khớp với dòng ngay dưới header
+            AddValidationFromRow(sheetMain, "ListCategories", 2, 1);
+            AddValidationFromRow(sheetMain, "ListManufacturers", 3, 1);
+            AddValidationFromRow(sheetMain, "ListUnits", 4, 1);
+            AddValidationFromRow(sheetMain, "ListDosageForms", 5, 1);
+            AddValidationListFromRow(sheetMain, new[] { "Uống", "Tiêm", "Ngoài da", "Khác" }, 7, 1);
+            AddValidationListFromRow(sheetMain, new[] { "Bình thường", "Mát", "Lạnh", "Đông" }, 8, 1);
+            AddValidationListFromRow(sheetMain, new[] { "Có", "Không" }, 9, 1);
 
             // Sheet 2
             var headers2 = new[]
@@ -453,17 +433,7 @@ namespace SupplyCoreERP.Medicines
                 "Số lượng tối thiểu áp dụng giá này.\nVD: 1"
             };
 
-            var hints2 = new[]
-            {
-                "Chọn từ danh sách ▼ (khớp Sheet 1)",
-                "Chọn từ danh sách ▼",
-                "Chọn từ danh sách ▼",
-                "VD: 5000",
-                "VD: 1 (để trống = mặc định 1)"
-            };
-
             var headerRow2 = sheetPrice.CreateRow(0);
-            var hintRow2 = sheetPrice.CreateRow(1);
 
             for (int i = 0; i < headers2.Length; i++)
             {
@@ -473,15 +443,12 @@ namespace SupplyCoreERP.Medicines
                 sheetPrice.SetColumnWidth(i, 6500);
 
                 AddCellComment(sheetPrice, cell, tooltips2[i]);
-
-                var hintCell = hintRow2.CreateCell(i);
-                hintCell.SetCellValue(hints2[i]);
-                hintCell.CellStyle = hintStyle;
             }
 
-            AddValidationFromRow(sheetPrice, "ListTempCodes", 0, 2);
-            AddValidationFromRow(sheetPrice, "ListPriceLists", 1, 2);
-            AddValidationFromRow(sheetPrice, "ListUnits", 2, 2);
+            // Sửa startRow về 1 
+            AddValidationFromRow(sheetPrice, "ListTempCodes", 0, 1);
+            AddValidationFromRow(sheetPrice, "ListPriceLists", 1, 1);
+            AddValidationFromRow(sheetPrice, "ListUnits", 2, 1);
 
             var memoryStream = new MemoryStream();
             workbook.Write(memoryStream, leaveOpen: true);
@@ -517,9 +484,9 @@ namespace SupplyCoreERP.Medicines
             namedRange.NameName = name;
             string colLetter = CellReference.ConvertNumToColString(colIndex);
 
-            // startRow + 1 vì Excel tính row bắt đầu từ 1, code tính từ 0 (Header là row 0 -> Excel là 1)
+            // startRow + 1 vì Excel tính row bắt đầu từ 1, code tính từ 0 (Header là row 0)
             // Range dữ liệu thực tế bắt đầu sau Header
-            namedRange.RefersToFormula = $"'{sheetName}'!${colLetter}${startRow + 2}:${colLetter}${count + 1}";
+            namedRange.RefersToFormula = $"'{sheetName}'!${colLetter}${startRow + 2}:${colLetter}${count}";
         }
 
         private void AddValidation(ISheet sheet, string namedRange, int colIndex)
@@ -581,18 +548,6 @@ namespace SupplyCoreERP.Medicines
             return StorageCondition.Normal;
         }
 
-        // Style cho dòng gợi ý: chữ xám, nghiêng
-        private ICellStyle CreateHintStyle(IWorkbook wb)
-        {
-            var style = wb.CreateCellStyle();
-            var font = wb.CreateFont();
-            font.Color = IndexedColors.Grey50Percent.Index;
-            font.IsItalic = true;
-            style.SetFont(font);
-            style.FillForegroundColor = IndexedColors.LightYellow.Index;
-            style.FillPattern = FillPattern.SolidForeground;
-            return style;
-        }
 
         // Thêm tooltip (comment) vào 1 cell
         private void AddCellComment(ISheet sheet, ICell cell, string commentText)
