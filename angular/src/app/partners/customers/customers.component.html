@@ -105,23 +105,12 @@
   <form [formGroup]="form">
 
     <div class="row">
-      <div class="col-md-4 mb-3">
-        <label class="form-label small fw-semibold">
-          {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
-        </label>
-        <div class="input-group input-group-sm">
-          <input type="text" class="form-control" formControlName="code">
-          <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
-            [title]="'::GenerateCode' | abpLocalization">
-            <i class="fa fa-magic"></i>
-          </button>
-        </div>
-        <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
-          class="text-danger small">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
+       <div class="col-md-6 mb-3">
+        <label class="form-label small fw-semibold">{{ '::Name' | abpLocalization }} <span
+            class="text-danger">*</span></label>
+        <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
       </div>
-      <div class="col-md-4 mb-3">
+      <div class="col-md-6 mb-3">
         <label class="form-label small fw-semibold">{{ '::CustomerType' | abpLocalization }} <span
             class="text-danger">*</span></label>
         <select class="form-select form-select-sm" formControlName="type">
@@ -131,21 +120,16 @@
           </option>
         </select>
       </div>
-      <div class="col-md-4 mb-3">
-        <label class="form-label small fw-semibold">{{ '::TaxCode' | abpLocalization }}</label>
-        <input type="text" class="form-control form-control-sm" formControlName="taxCode">
-      </div>
     </div>
 
     <div class="row">
       <div class="col-md-6 mb-3">
-        <label class="form-label small fw-semibold">{{ '::Name' | abpLocalization }} <span
-            class="text-danger">*</span></label>
-        <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
-      </div>
-      <div class="col-md-6 mb-3">
         <label class="form-label small fw-semibold">{{ '::RepresentativeName' | abpLocalization }}</label>
         <input type="text" class="form-control form-control-sm" formControlName="representativeName">
+      </div>
+       <div class="col-md-6 mb-3">
+        <label class="form-label small fw-semibold">{{ '::TaxCode' | abpLocalization }}</label>
+        <input type="text" class="form-control form-control-sm" formControlName="taxCode">
       </div>
     </div>
 

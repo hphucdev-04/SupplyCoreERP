@@ -6,7 +6,7 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Guids;
 
-namespace SupplyCoreERP.Prices
+namespace SupplyCoreERP.Prices.DataSeed
 {
     public class PriceListDataSeedContributor : IDataSeedContributor, ITransientDependency
     {

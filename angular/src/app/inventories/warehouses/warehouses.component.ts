@@ -18,9 +18,10 @@ import { enumName } from 'src/app/shared/untils/enum.util';
 
 
 @Component({
+  standalone: true,
   selector: 'app-warehouses',
   templateUrl: './warehouses.component.html',
-  styleUrl: './warehouses.component.scss',
+  styleUrls: ['./warehouses.component.scss'],
   providers: [ListService],
   imports: [SharedModule, DrawerComponent, SearchComponent]
 })
@@ -130,7 +131,6 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   // ==============================================
   buildForm() {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
       address: ['', [Validators.maxLength(500)]],
       cityId: [null],
@@ -234,11 +234,5 @@ export class WarehousesComponent implements OnInit, OnDestroy {
         event.target.checked = row.isActive;
       }
     });
-  }
-
-  generateCode(): void {
-    const name = this.form.get('name')?.value || '';
-    const code = CodeGeneratorUtil.generate(name, 'WH');
-    this.form.get('code')?.setValue(code);
   }
 }

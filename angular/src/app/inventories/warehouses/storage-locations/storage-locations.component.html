@@ -302,10 +302,6 @@
   [saveDisabled]="form?.invalid" (close)="closeDrawer()" (save)="saveZone()">
   <form [formGroup]="form" (ngSubmit)="saveZone()">
     <div class="mb-3">
-      <label class="form-label small fw-semibold">{{ '::Code' | abpLocalization }} *</label>
-      <input class="form-control form-control-sm" formControlName="code">
-    </div>
-    <div class="mb-3">
       <label class="form-label small fw-semibold">{{ '::Name' | abpLocalization }} *</label>
       <input class="form-control form-control-sm" formControlName="name">
     </div>
@@ -371,10 +367,6 @@
         <option [ngValue]="null">{{ '::Sellect' | abpLocalization }}</option>
         <option *ngFor="let z of zones" [value]="z.id">{{ z.name }}</option>
       </select>
-    </div>
-    <div class="mb-3">
-      <label class="form-label small fw-semibold">{{ '::Code' | abpLocalization }} *</label>
-      <input class="form-control form-control-sm" formControlName="code">
     </div>
     <div class="row gx-2">
       <div class="col-6 mb-3">

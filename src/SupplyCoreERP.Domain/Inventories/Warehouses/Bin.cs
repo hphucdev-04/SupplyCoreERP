@@ -41,11 +41,10 @@ namespace SupplyCoreERP.Warehouses
 			PositionX = x; PositionY = y; Width = w; Length = l; Rotation = rotation;
 		}
 
-		public void UpdateInfo(Guid zoneId, int maxSKU, string code)
+		public void UpdateInfo(Guid zoneId, int maxSKU)
 		{
 			ZoneId = zoneId;
 			MaxSKU = maxSKU;
-			Code = code;
 		}
 
 		public void ToggleBlock(bool isBlocked) => IsBlocked = isBlocked;

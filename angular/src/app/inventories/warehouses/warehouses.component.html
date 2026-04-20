@@ -102,24 +102,6 @@
   <form [formGroup]="form" (ngSubmit)="save()" validateOnSubmit>
     <div class="row">
       <div class="col-md-12 mb-3">
-        <label class="form-label small fw-semibold">
-          {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
-        </label>
-        <div class="input-group input-group-sm">
-          <input type="text" class="form-control" formControlName="code">
-          <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
-            [title]="'::GenerateCode' | abpLocalization">
-            <i class="fa fa-magic"></i>
-          </button>
-        </div>
-        <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
-          class="text-danger small">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 mb-3">
         <label class="form-label small fw-semibold" for="warehouse-name">{{ '::Name' | abpLocalization }} <span
             class="text-danger">*</span></label>
         <input type="text" id="warehouse-name" class="form-control form-control-sm" formControlName="name" />

@@ -6,10 +6,6 @@ namespace SupplyCoreERP.Warehouses.Dtos
 	public class CreateUpdateWarehouseDto
 	{
 		[Required]
-		[MaxLength(50)]
-		public string Code { get; set; }
-
-		[Required]
 		[MaxLength(255)]
 		public string Name { get; set; }
 

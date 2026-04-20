@@ -216,7 +216,6 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   // --- FORM HANDLING ---
   buildForm(): void {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
       taxCode: ['', Validators.maxLength(50)],
       phoneNumber: ['', Validators.maxLength(20)],
@@ -232,12 +231,6 @@ export class SuppliersComponent implements OnInit, OnDestroy {
       note: ['', Validators.maxLength(1000)],
       isActive: [true],
     });
-  }
-
-  generateCode(): void {
-    const name = this.form.get('name')?.value || '';
-    const code = CodeGeneratorUtil.generate(name, 'SUP');
-    this.form.get('code')?.setValue(code);
   }
 
   closeDrawer(): void {

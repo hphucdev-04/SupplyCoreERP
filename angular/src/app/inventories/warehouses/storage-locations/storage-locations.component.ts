@@ -536,7 +536,6 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
     // Khởi tạo form bằng giá trị đã đổi sang MÉT
     this.form = this.fb.group({
       warehouseId: [this.warehouseId],
-      code: [zone?.code || '', [Validators.required, Validators.maxLength(50)]],
       name: [zone?.name || '', [Validators.required, Validators.maxLength(255)]],
       type: [zone?.type ?? ZoneType.Storage, [Validators.required]],
       storageCondition: [zone?.storageCondition ?? StorageCondition.Other, [Validators.required]],
@@ -628,7 +627,6 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       warehouseId: [this.warehouseId],
       zoneId: [bin?.zoneId || defaultZoneId, [Validators.required]],
-      code: [bin?.code || '', [Validators.required, Validators.maxLength(50)]],
       positionX: [this.toM(bin?.positionX ?? defaultX), [Validators.required]],
       positionY: [this.toM(bin?.positionY ?? defaultY), [Validators.required]],
       width: [this.toM(bin?.width || this.toPx(2)), [Validators.required, Validators.min(0.5)]], // 0.5m min

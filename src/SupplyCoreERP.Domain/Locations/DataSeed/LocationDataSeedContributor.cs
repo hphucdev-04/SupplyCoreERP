@@ -9,7 +9,7 @@ using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Guids;
 
-namespace SupplyCoreERP.Locations
+namespace SupplyCoreERP.Locations.DataSeed
 {
     public class LocationDataSeedContributor : IDataSeedContributor, ITransientDependency
     {

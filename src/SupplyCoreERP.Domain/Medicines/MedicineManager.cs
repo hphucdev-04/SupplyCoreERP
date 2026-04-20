@@ -57,6 +57,7 @@ namespace SupplyCoreERP.Medicines
 			bool isPrescriptionDrug)
 		{
 			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
+
 			var code = await _documentSequenceManager.GenerateAsync("MD");
             await _productManager.CheckCodeAndNameAsync(code, name);
 
@@ -91,8 +92,6 @@ namespace SupplyCoreERP.Medicines
 
 			// Validate tất cả khóa ngoại bao gồm baseUnitId mới từ input
 			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
-			var code = await _documentSequenceManager.GenerateAsync("MD");
-			await _productManager.CheckCodeAndNameAsync(code, name, excludeId: medicine.Id);
 
 			medicine.UpdateInfo(name, categoryId, manufacturerId, baseUnitId);
 

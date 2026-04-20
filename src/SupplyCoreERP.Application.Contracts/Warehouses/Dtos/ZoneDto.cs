@@ -14,7 +14,6 @@ namespace SupplyCoreERP.Warehouses.Dtos
 		public StorageCondition StorageCondition { get; set; }
 		public string Color { get; set; }
 
-		// Tọa độ vẽ Map
 		public int PositionX { get; set; }
 		public int PositionY { get; set; }
 		public int Width { get; set; }

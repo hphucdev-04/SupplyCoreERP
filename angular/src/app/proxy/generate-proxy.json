@@ -13758,18 +13758,6 @@
       "genericArguments": null,
       "properties": [
         {
-          "name": "Code",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": 50,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "Name",
           "jsonName": null,
           "type": "System.String",
@@ -14926,8 +14914,8 @@
         {
           "name": "ContinentId",
           "jsonName": null,
-          "type": "System.Guid?",
-          "typeSimple": "string?",
+          "type": "System.Guid",
+          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -14950,8 +14938,8 @@
         {
           "name": "CountryId",
           "jsonName": null,
-          "type": "System.Guid?",
-          "typeSimple": "string?",
+          "type": "System.Guid",
+          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -17327,18 +17315,6 @@
       "genericArguments": null,
       "properties": [
         {
-          "name": "Code",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": 50,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "Name",
           "jsonName": null,
           "type": "System.String",
@@ -18812,18 +18788,6 @@
           "regex": null
         },
         {
-          "name": "Code",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": 50,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "PositionX",
           "jsonName": null,
           "type": "System.Int32",
@@ -18917,18 +18881,6 @@
       "genericArguments": null,
       "properties": [
         {
-          "name": "Code",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": 50,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "Name",
           "jsonName": null,
           "type": "System.String",
@@ -19017,18 +18969,6 @@
           "isRequired": true,
           "minLength": null,
           "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Code",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": 50,
           "minimum": null,
           "maximum": null,
           "regex": null
