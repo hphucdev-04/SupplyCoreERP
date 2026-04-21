@@ -35,7 +35,7 @@ namespace SupplyCoreERP.BaseUnits
 		{
 			Check.NotNullOrWhiteSpace(name, nameof(name));
 
-			var code = await _documentSequenceManager.GenerateAsync("BU");
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeUnit);
 
             if (await _repository.AnyAsync(x => x.Code == code))
 				throw new UserFriendlyException($"Mã đơn vị '{code}' đã tồn tại!");

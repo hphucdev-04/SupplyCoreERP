@@ -209,7 +209,9 @@ public class SupplyCoreERPDbContext :
 			// Mapping Location (Restrict: Xóa location không được xóa Manufacturer)
 			b.HasOne(x => x.Continent).WithMany().HasForeignKey(x => x.ContinentId).OnDelete(DeleteBehavior.Restrict);
 			b.HasOne(x => x.Country).WithMany().HasForeignKey(x => x.CountryId).OnDelete(DeleteBehavior.Restrict);
-		});
+			
+			b.HasIndex(x => x.Code).IsUnique();
+        });
 
 		// ActiveIngredient
 		builder.Entity<ActiveIngredient>(b => {
@@ -395,7 +397,8 @@ public class SupplyCoreERPDbContext :
 
 			// Index hỗ trợ tìm kiếm FEFO nhanh hơn
 			b.HasIndex(x => new { x.ProductId, x.Status, x.ExpiryDate });
-		});
+            b.HasIndex(x => x.Code).IsUnique();
+        });
 
 		// Bin
 		builder.Entity<Bin>(b =>

@@ -11,6 +11,7 @@ export interface GetManufacturerListDto extends PagedAndSortedResultRequestDto {
 }
 
 export interface ManufacturerDto extends FullAuditedEntityDto<string> {
+  code?: string;
   name?: string;
   continentId?: string;
   continentName?: string;

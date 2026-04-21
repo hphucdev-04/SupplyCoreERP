@@ -12,7 +12,8 @@ namespace SupplyCoreERP.Warehouses.Dtos
 		[MaxLength(500)]
 		public string? Address { get; set; }
 
-		public Guid? CityId { get; set; }
+		public Guid? CountryId { get; set; }
+        public Guid? CityId { get; set; }
 		public Guid? AreaId { get; set; }
 
 		[Range(100, 10000)]

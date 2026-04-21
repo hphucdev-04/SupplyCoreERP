@@ -40,7 +40,7 @@ namespace SupplyCoreERP.Suppliers
 			string? address, Guid? countryId, Guid? cityId, Guid? areaId,
 			decimal debtLimit = 0, int paymentTermDays = 0)
 		{
-			var code = await _documentSequenceManager.GenerateAsync("SP");
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeSupplier);
 
 			await CheckCodeAndNameAsync(code, name);
 			await ValidateLocationAsync(countryId, cityId, areaId);

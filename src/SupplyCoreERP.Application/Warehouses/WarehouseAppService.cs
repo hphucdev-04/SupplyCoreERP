@@ -59,7 +59,7 @@ namespace SupplyCoreERP.Warehouses
 		public async Task<WarehouseDto> CreateAsync(CreateUpdateWarehouseDto input)
 		{
 			var warehouse = await _warehouseManager.CreateAsync(
-				input.Name, input.Address, input.CityId, input.AreaId, input.MapWidth, input.MapLength);
+				input.Name, input.Address, input.CountryId, input.CityId, input.AreaId, input.MapWidth, input.MapLength);
 
 			await _warehouseRepo.InsertAsync(warehouse);
 			return ObjectMapper.Map<Warehouse, WarehouseDto>(warehouse);
@@ -70,7 +70,7 @@ namespace SupplyCoreERP.Warehouses
 			var warehouse = await _warehouseRepo.GetAsync(id);
 
 			await _warehouseManager.UpdateAsync(
-				warehouse, input.Name, input.Address, input.CityId, input.AreaId, input.MapWidth, input.MapLength);
+				warehouse, input.Name, input.Address, input.CountryId,input.CityId, input.AreaId, input.MapWidth, input.MapLength);
 
 			await _warehouseRepo.UpdateAsync(warehouse);
 			return ObjectMapper.Map<Warehouse, WarehouseDto>(warehouse);

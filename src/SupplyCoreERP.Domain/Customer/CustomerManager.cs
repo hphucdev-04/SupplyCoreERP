@@ -44,7 +44,7 @@ namespace SupplyCoreERP.Customers
 			decimal debtLimit = 0, int paymentTermDays = 0, Guid? priceListId = null) 
 		{
 
-			var code = await _documentSequenceManager.GenerateAsync("CU");
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeCustomer);
 
 			await CheckCodeAndNameAsync(code, name);
 			await CheckPhoneNumberExistsAsync(phoneNumber);

@@ -33,6 +33,7 @@ export interface CreateUpdateBinDto {
 export interface CreateUpdateWarehouseDto {
   name: string;
   address?: string;
+  countryId?: string;
   cityId?: string;
   areaId?: string;
   mapWidth?: number;
@@ -62,6 +63,8 @@ export interface WarehouseDto extends FullAuditedEntityDto<string> {
   code?: string;
   name?: string;
   address?: string;
+  countryId?: string;
+  countryName?: string;
   cityId?: string;
   cityName?: string;
   areaId?: string;

@@ -1,4 +1,5 @@
-﻿using SupplyCoreERP.Locations.Continents;
+﻿using SupplyCoreERP.DocumentSequences;
+using SupplyCoreERP.Locations.Continents;
 using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Medicines;
 using System;
@@ -15,23 +16,29 @@ namespace SupplyCoreERP.Manufacturers
 		private readonly IRepository<Continent, Guid> _continentRepository;
 		private readonly IRepository<Country, Guid> _countryRepository;
 		private readonly IRepository<Medicine, Guid> _medicineRepository;
+		private readonly DocumentSequenceManager _documentSequenceManager;
 
-		public ManufacturerManager(
+        public ManufacturerManager(
 			IRepository<Manufacturer, Guid> repository,
 			IRepository<Continent, Guid> continentRepository,
 			IRepository<Country, Guid> countryRepository,
-			IRepository<Medicine, Guid> medicineRepository)
+			IRepository<Medicine, Guid> medicineRepository,
+			DocumentSequenceManager documentSequenceManager)
 		{
 			_repository = repository;
 			_continentRepository = continentRepository;
 			_countryRepository = countryRepository;
 			_medicineRepository = medicineRepository;
+			_documentSequenceManager = documentSequenceManager;
 		}
 
 		public async Task<Manufacturer> CreateAsync(string name, Guid continentId, Guid countryId)
 		{
+
 			Check.NotNullOrWhiteSpace(name, nameof(name));
 			var normalizedName = name.Trim();
+
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeManufacturer);
 
 			//Check tồn tại Châu lục & Quốc gia
 			if (!await _continentRepository.AnyAsync(x => x.Id == continentId))
@@ -49,7 +56,7 @@ namespace SupplyCoreERP.Manufacturers
 			if (await _repository.AnyAsync(x => x.Name == normalizedName))
 				throw new UserFriendlyException($"Nhà sản xuất '{name}' đã tồn tại!");
 
-			return new Manufacturer(GuidGenerator.Create(), normalizedName, continentId, countryId);
+			return new Manufacturer(GuidGenerator.Create(), code, normalizedName, continentId, countryId);
 		}
 
 		public async Task UpdateAsync(Manufacturer entity, string newName, Guid newContinentId, Guid newCountryId)

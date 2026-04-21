@@ -1,4 +1,7 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {
+  Component, OnInit, OnDestroy,
+  ChangeDetectionStrategy, ChangeDetectorRef, AfterViewInit
+} from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { RoutesService, eLayoutType } from '@abp/ng.core';
@@ -8,13 +11,22 @@ import { ZoneType, zoneTypeOptions } from 'src/app/proxy/enums/warehouses';
 import { StorageCondition, storageConditionOptions } from 'src/app/proxy/enums/medicines';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
 import { Subject, forkJoin, lastValueFrom } from 'rxjs';
-import { takeUntil, finalize } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { DragDropModule, CdkDragEnd } from '@angular/cdk/drag-drop';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 
-
 type ResizeHandle = 'n' | 's' | 'e' | 'w' | 'nw' | 'ne' | 'sw' | 'se';
+
+export interface CanvasZone extends ZoneDto {
+  _isDirty?: boolean;
+  _hasCollision?: boolean;
+}
+
+export interface CanvasBin extends BinDto {
+  _isDirty?: boolean;
+  _hasCollision?: boolean;
+}
 
 @Component({
   selector: 'app-storage-locations',
@@ -22,62 +34,78 @@ type ResizeHandle = 'n' | 's' | 'e' | 'w' | 'nw' | 'ne' | 'sw' | 'se';
   imports: [DragDropModule, SharedModule, DrawerComponent],
   templateUrl: './storage-locations.component.html',
   styleUrls: ['./storage-locations.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class StorageLocationsComponent implements OnInit, OnDestroy {
+export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewInit {
   private destroy$ = new Subject<void>();
 
   warehouseId: string;
   warehouse: WarehouseDto;
 
-  zones: ZoneDto[] = [];
-  bins: BinDto[] = [];
+  zones: CanvasZone[] = [];
+  bins: CanvasBin[] = [];
+
+  // ═══════════════════════════════════════════════════════════════════
+  // ROOT-CAUSE FIX: Tách drag positions ra Map riêng.
+  //
+  // Vấn đề gốc: [cdkDragFreeDragPosition]="{ x: zone.positionX * scale, y: ... }"
+  //   → Mỗi lần Angular CD chạy (sau bất kỳ async), expression này tạo object MỚI
+  //   → CDK so sánh reference thấy "đổi" → reset vị trí về giá trị mới
+  //   → Tất cả zone bị teleport về positionX/Y từ server (vị trí zone mới tạo)
+  //
+  // Giải pháp: Map<id, {x,y}> ổn định reference giữa các CD cycles.
+  //   refreshMap() KHÔNG SET lại Map cho zones đã có (chỉ set cho zone mới).
+  //   Chỉ update Map khi: user drag end, resize, zoom thay đổi.
+  // ═══════════════════════════════════════════════════════════════════
+  readonly zoneDragPos = new Map<string, { x: number; y: number }>();
+  readonly binDragPos = new Map<string, { x: number; y: number }>();
+
+  getDragPos(id: string, map: Map<string, { x: number; y: number }>, fallbackX: number, fallbackY: number) {
+    if (!map.has(id)) map.set(id, { x: fallbackX, y: fallbackY });
+    return map.get(id)!;
+  }
 
   drawerType: 'ZONE' | 'BIN' | null = null;
   form: FormGroup;
-  selectedZone: ZoneDto | null = null;
-  selectedBin: BinDto | null = null;
-
-  activeZone: ZoneDto | null = null;
+  selectedZone: CanvasZone | null = null;
+  selectedBin: CanvasBin | null = null;
+  activeZone: CanvasZone | null = null;
 
   hasUnsavedChanges = false;
   isSaving = false;
+
   scale = 0.5;
+  private _initialZoomDone = false;
+
   activeTab: 'zones' | 'bins' = 'zones';
 
-  // --- TỶ LỆ QUY ĐỔI (THỰC TẾ) ---
-  // 1 mét (m) = 20 pixels (px) trên bản vẽ
+  readonly ZOOM_LEVELS = [0.15, 0.25, 0.33, 0.5, 0.67, 0.75, 1.0, 1.25, 1.5, 2.0];
   readonly PX_PER_M = 20;
-  private readonly SNAP_THRESHOLD = 15; // Lực hít nam châm (px)
+  private readonly SNAP_THRESHOLD = 12;
+  private readonly SNAP_GRID = 5;
 
-  // Resize state
   isResizing = false;
-  resizingItem: { item: any; type: 'zone' | 'bin'; handle: ResizeHandle } | null = null;
+  resizingItem: { item: CanvasZone | CanvasBin; type: 'zone' | 'bin'; handle: ResizeHandle } | null = null;
   resizeStartMouse = { x: 0, y: 0 };
   resizeStartRect = { x: 0, y: 0, w: 0, h: 0 };
 
-  // Rotate state
   isRotating = false;
   rotatingItem: { item: any } | null = null;
   rotateCenterCanvas = { x: 0, y: 0 };
 
-  // Pan state (right-click drag)
   isPanning = false;
   panStartMouse = { x: 0, y: 0 };
   panStartScroll = { x: 0, y: 0 };
-  private canvasElement: HTMLElement | null = null;
 
-  // Dropdown state for bins panel
-  expandedZones: Set<string> = new Set();
+  expandedZones = new Set<string>();
 
   zoneTypes = zoneTypeOptions;
   storageConditions = storageConditionOptions;
-
-  // Expose enums to template
   ZoneType = ZoneType;
   StorageCondition = StorageCondition;
 
-  private readonly ROUTE_NAME = '::Menu:StorageLocations:Dynamic';
-  private zoneCounter = 1;
+  private readonly ROUTE_NAME = '::Menu:StorageLocations';
+  private canvasContainer: HTMLElement | null = null;
 
   constructor(
     private route: ActivatedRoute,
@@ -86,23 +114,27 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
     private warehouseService: WarehouseService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
+    private cdr: ChangeDetectorRef,
   ) { }
 
   ngOnInit() {
     this.warehouseId = this.route.snapshot.paramMap.get('id');
     this.loadWarehouseInfo();
-    this.refreshMap();
+    this.refreshMap(null, true);
+  }
 
-    // Get canvas scroll container after view init
-    setTimeout(() => {
-      this.canvasElement = document.querySelector('.map-wrapper .card-body') as HTMLElement;
-    }, 100);
+  ngAfterViewInit() {
+    this.canvasContainer = document.querySelector('.canvas-scroll-area') as HTMLElement;
   }
 
   ngOnDestroy() {
     this.routesService.remove([this.ROUTE_NAME]);
     this.destroy$.next();
     this.destroy$.complete();
+    this.cleanupListeners();
+  }
+
+  private cleanupListeners() {
     document.removeEventListener('mousemove', this.onResize);
     document.removeEventListener('mouseup', this.onResizeEnd);
     document.removeEventListener('mousemove', this.onRotate);
@@ -111,21 +143,16 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
     document.removeEventListener('mouseup', this.onCanvasPanEnd);
   }
 
-  goBack() {
-    this.router.navigate(['/inventory/warehouses']);
-  }
+  goBack() { this.router.navigate(['/inventory/warehouses']); }
 
-  // ============================================================
-  // HELPER CHUYỂN ĐỔI MÉT <--> PIXEL
-  // ============================================================
-  toM(px: number | undefined | null): number {
-    if (px == null) return 0;
-    return Number((px / this.PX_PER_M).toFixed(2));
+  toM(px: number | null | undefined): number {
+    return px == null ? 0 : +((px / this.PX_PER_M).toFixed(2));
   }
-
-  toPx(m: number | undefined | null): number {
-    if (m == null) return 0;
-    return Math.round(m * this.PX_PER_M);
+  toPx(m: number | null | undefined): number {
+    return m == null ? 0 : Math.round(m * this.PX_PER_M);
+  }
+  snapToGrid(v: number): number {
+    return Math.round(v / this.SNAP_GRID) * this.SNAP_GRID;
   }
 
   loadWarehouseInfo() {
@@ -133,79 +160,161 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.warehouse = res;
-        const currentPath = `/inventory/warehouses/${this.warehouseId}/locations`;
         this.routesService.add([{
-          path: currentPath,
-          name: this.ROUTE_NAME,
-          parentName: '::Menu:Warehouses',
-          iconClass: 'fas fa-map',
-          layout: eLayoutType.application,
+          path: `/inventory/warehouses/${this.warehouseId}/locations`,
+          name: this.ROUTE_NAME, parentName: '::Menu:Warehouses',
+          iconClass: 'fas fa-map', layout: eLayoutType.application,
         }]);
+        if (!this._initialZoomDone && this.zones.length >= 0) this.doInitialZoomFit();
+        this.cdr.markForCheck();
       });
   }
 
-  refreshMap() {
+  // ═══════════════════════════════════════════════════════════════════
+  // refreshMap — MUTATE in-place, NEVER replace array reference
+  // ═══════════════════════════════════════════════════════════════════
+  refreshMap(focusId: string | null = null, isInitial = false) {
     forkJoin({
       zones: this.warehouseService.getZones(this.warehouseId),
       bins: this.warehouseService.getStorageBins(this.warehouseId),
     })
       .pipe(takeUntil(this.destroy$))
-      .subscribe(({ zones, bins }) => {
-        this.zones = zones;
-        this.bins = bins;
+      .subscribe(({ zones: svZones, bins: svBins }) => {
 
-        this.zones.forEach(z => (z as any)['_isDirty'] = false);
-        this.bins.forEach(b => (b as any)['_isDirty'] = false);
+        // ─ ZONES ─────────────────────────────────────────────
+        const exMap = new Map(this.zones.map(z => [z.id, z]));
+        const svSet = new Set(svZones.map(z => z.id));
+
+        // Remove deleted zones
+        for (let i = this.zones.length - 1; i >= 0; i--) {
+          if (!svSet.has(this.zones[i].id)) {
+            this.zoneDragPos.delete(this.zones[i].id);
+            this.zones.splice(i, 1);
+          }
+        }
+
+        for (const sv of svZones) {
+          const ex = exMap.get(sv.id);
+          if (ex) {
+            // Existing zone: update display fields only, KEEP position/size intact
+            // so CDK drag positions are untouched
+            ex.name = sv.name; ex.code = sv.code;
+            ex.type = sv.type; ex.storageCondition = sv.storageCondition;
+            ex.color = sv.color; ex.rotation = sv.rotation;
+            if (!ex._isDirty) {
+              // Safe to sync layout from server if no local unsaved changes
+              const posChanged = ex.positionX !== sv.positionX || ex.positionY !== sv.positionY
+                || ex.width !== sv.width || ex.length !== sv.length;
+              ex.positionX = sv.positionX; ex.positionY = sv.positionY;
+              ex.width = sv.width; ex.length = sv.length;
+              if (posChanged) {
+                // Only update drag pos Map when server data actually changed
+                this.zoneDragPos.set(ex.id, { x: ex.positionX * this.scale, y: ex.positionY * this.scale });
+              }
+            }
+            // Reset dirty flag after sync
+            ex._isDirty = false;
+          } else {
+            // New zone from server → push + init drag pos
+            const nz: CanvasZone = { ...sv, _isDirty: false, _hasCollision: false };
+            this.zones.push(nz);
+            this.zoneDragPos.set(nz.id, { x: nz.positionX * this.scale, y: nz.positionY * this.scale });
+          }
+        }
+
+        // ─ BINS ──────────────────────────────────────────────
+        const exBinMap = new Map(this.bins.map(b => [b.id, b]));
+        const svBinSet = new Set(svBins.map(b => b.id));
+
+        for (let i = this.bins.length - 1; i >= 0; i--) {
+          if (!svBinSet.has(this.bins[i].id)) {
+            this.binDragPos.delete(this.bins[i].id);
+            this.bins.splice(i, 1);
+          }
+        }
+
+        for (const sb of svBins) {
+          const eb = exBinMap.get(sb.id);
+          if (eb) {
+            eb.code = sb.code; eb.zoneId = sb.zoneId;
+            eb.maxSKU = sb.maxSKU; eb.isBlocked = sb.isBlocked; eb.rotation = sb.rotation;
+            if (!eb._isDirty) {
+              eb.positionX = sb.positionX; eb.positionY = sb.positionY;
+              eb.width = sb.width; eb.length = sb.length;
+              this.binDragPos.set(eb.id, { x: eb.positionX * this.scale, y: eb.positionY * this.scale });
+            }
+            eb._isDirty = false;
+          } else {
+            const nb: CanvasBin = { ...sb, _isDirty: false, _hasCollision: false };
+            this.bins.push(nb);
+            this.binDragPos.set(nb.id, { x: nb.positionX * this.scale, y: nb.positionY * this.scale });
+          }
+        }
 
         this.hasUnsavedChanges = false;
         this.checkAllCollisions();
+
+        if (focusId) {
+          const fz = this.zones.find(z => z.id === focusId);
+          if (fz) { this.activeZone = fz; this.activeTab = 'zones'; }
+        }
+
+        if (isInitial && !this._initialZoomDone) this.doInitialZoomFit();
+
+        this.cdr.markForCheck();
       });
   }
 
-  getBinCount(zoneId: string): number {
-    return this.bins.filter(b => b.zoneId === zoneId).length;
+  // ─── INITIAL ZOOM FIT ────────────────────────────────────────────
+  private doInitialZoomFit() {
+    if (!this.warehouse) return;
+    setTimeout(() => {
+      if (!this.canvasContainer)
+        this.canvasContainer = document.querySelector('.canvas-scroll-area') as HTMLElement;
+      this.zoomFit(false); // false = don't rebuild drag pos (done separately)
+      this.rebuildAllDragPositions();
+      this._initialZoomDone = true;
+      this.cdr.markForCheck();
+    }, 250);
   }
 
-  getZoneName(id: string): string {
-    return this.zones.find(z => z.id === id)?.name || '---';
+  rebuildAllDragPositions() {
+    this.zones.forEach(z => this.zoneDragPos.set(z.id, { x: z.positionX * this.scale, y: z.positionY * this.scale }));
+    this.bins.forEach(b => this.binDragPos.set(b.id, { x: b.positionX * this.scale, y: b.positionY * this.scale }));
   }
 
-  toggleZoneDropdown(zoneId: string) {
-    if (this.expandedZones.has(zoneId)) {
-      this.expandedZones.delete(zoneId);
-    } else {
-      this.expandedZones.add(zoneId);
-    }
-  }
-
-  isZoneExpanded(zoneId: string): boolean {
-    return this.expandedZones.has(zoneId);
-  }
-
-  getRandomColor(): string {
-    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2'];
-    return colors[Math.floor(Math.random() * colors.length)];
-  }
-
+  // ─── ZONE HELPERS ───────────────────────────────────────────────
   getColorForZoneType(type: ZoneType, condition?: StorageCondition): string {
     if (type === ZoneType.Storage) {
       switch (condition) {
-        case StorageCondition.Normal: return '#4ECDC4';
-        case StorageCondition.Cool: return '#45B7D1';
-        case StorageCondition.Cold: return '#5DADE2';
-        case StorageCondition.Frozen: return '#3498DB';
-        default: return '#4ECDC4';
+        case StorageCondition.Normal: return '#00B894';
+        case StorageCondition.Cool: return '#0984E3';
+        case StorageCondition.Cold: return '#4A90D9';
+        case StorageCondition.Frozen: return '#2D3FE7';
+        default: return '#00B894';
       }
     }
-
     switch (type) {
-      case ZoneType.Inbound: return '#2ECC71';
-      case ZoneType.Outbound: return '#E74C3C';
-      case ZoneType.Staging: return '#F39C12';
-      case ZoneType.Quarantine: return '#E67E22';
-      case ZoneType.ForkliftParking: return '#95A5A6';
-      case ZoneType.Office: return '#9B59B6';
-      default: return '#BDC3C7';
+      case ZoneType.Inbound: return '#00CEC9';
+      case ZoneType.Outbound: return '#E17055';
+      case ZoneType.Staging: return '#F9CA24';
+      case ZoneType.Quarantine: return '#E84393';
+      case ZoneType.ForkliftParking: return '#636E72';
+      case ZoneType.Office: return '#A29BFE';
+      default: return '#B2BEC3';
+    }
+  }
+
+  getZoneTypeIcon(type: ZoneType): string {
+    switch (type) {
+      case ZoneType.Storage: return 'fa-th-large';
+      case ZoneType.Inbound: return 'fa-arrow-circle-down';
+      case ZoneType.Outbound: return 'fa-arrow-circle-up';
+      case ZoneType.Staging: return 'fa-layer-group';
+      case ZoneType.Quarantine: return 'fa-exclamation-circle';
+      case ZoneType.ForkliftParking: return 'fa-dolly';
+      case ZoneType.Office: return 'fa-building';
+      default: return 'fa-square';
     }
   }
 
@@ -219,7 +328,6 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
         default: return 'Storage';
       }
     }
-
     switch (type) {
       case ZoneType.Inbound: return 'Inbound';
       case ZoneType.Outbound: return 'Outbound';
@@ -231,538 +339,206 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
     }
   }
 
-  isStorageZoneType(type: number): boolean {
-    return type === ZoneType.Storage;
-  }
+  isStorageZoneType(t: number): boolean { return t === ZoneType.Storage; }
+  getBinCount(zid: string): number { return this.bins.filter(b => b.zoneId === zid).length; }
+  getBinsOfZone(zid: string): CanvasBin[] { return this.bins.filter(b => b.zoneId === zid); }
+  toggleZoneDropdown(id: string) { this.expandedZones.has(id) ? this.expandedZones.delete(id) : this.expandedZones.add(id); }
+  isZoneExpanded(id: string): boolean { return this.expandedZones.has(id); }
+  trackById(_: number, item: { id?: string }) { return item?.id; }
 
-  // ============================================================
-  // CREATE ZONE FROM TEMPLATE - Click vào shape để tạo zone ngay
-  // ============================================================
+  // ─── CREATE FROM TEMPLATE ────────────────────────────────────────
   createZoneFromTemplate(type: ZoneType, condition: StorageCondition) {
-    const zoneName = this.getZoneTypeName(type, condition);
-    const zoneCode = `ZONE-${this.zoneCounter++}`;
-    const color = this.getColorForZoneType(type, condition);
-
-    // Đặt zone ở giữa canvas
-    const centerX = ((this.warehouse?.mapWidth || 1000) / 2) - this.toPx(5);
-    const centerY = ((this.warehouse?.mapLength || 1000) / 2) - this.toPx(5);
-
-    const newZone: any = {
+    const mapW = this.warehouse?.mapWidth || 2000;
+    const mapH = this.warehouse?.mapLength || 2000;
+    const zW = this.toPx(10), zH = this.toPx(10);
+    let posX = this.snapToGrid(mapW / 2 - zW / 2);
+    let posY = this.snapToGrid(mapH / 2 - zH / 2);
+    for (let i = 0; i < 30; i++) {
+      if (!this.zones.some(z => this.rectsOverlap({ positionX: posX, positionY: posY, width: zW, length: zH }, z))) break;
+      posX = this.snapToGrid(posX + this.toPx(3));
+      posY = this.snapToGrid(posY + this.toPx(3));
+      if (posX + zW > mapW) posX = 20;
+      if (posY + zH > mapH) posY = 20;
+    }
+    this.warehouseService.createZone({
       warehouseId: this.warehouseId,
-      code: zoneCode,
-      name: zoneName,
-      type: type,
-      storageCondition: condition,
-      color: color,
-      positionX: Math.max(0, centerX),
-      positionY: Math.max(0, centerY),
-      width: this.toPx(10),
-      length: this.toPx(10),
-      rotation: 0,
-    };
-
-    this.warehouseService.createZone(newZone).subscribe(created => {
-      this.refreshMap();
-      setTimeout(() => {
-        const zone = this.zones.find(z => z.id === created.id);
-        if (zone) {
-          this.openZoneDrawer(zone);
-        }
-      }, 100);
-    });
+      name: this.getZoneTypeName(type, condition), type, storageCondition: condition,
+      color: this.getColorForZoneType(type, condition),
+      positionX: posX, positionY: posY, width: zW, length: zH, rotation: 0,
+    } as any).subscribe(c => this.refreshMap(c.id));
   }
 
-  // ============================================================
-  // LOGIC HÍT NAM CHÂM VÀ VA CHẠM (PIXELS)
-  // ============================================================
+  // ─── COLLISION & SNAP ────────────────────────────────────────────
   private rectsOverlap(a: any, b: any): boolean {
-    if (a.positionX + a.width <= b.positionX) return false;
-    if (b.positionX + b.width <= a.positionX) return false;
-    if (a.positionY + a.length <= b.positionY) return false;
-    if (b.positionY + b.length <= a.positionY) return false;
-    return true;
+    return !(a.positionX + a.width <= b.positionX || b.positionX + b.width <= a.positionX ||
+      a.positionY + a.length <= b.positionY || b.positionY + b.length <= a.positionY);
   }
 
-  private applyMagneticSnap(movingItem: any, targetItems: any[]) {
-    for (const target of targetItems) {
-      if (target.id === movingItem.id) continue;
-
-      if (Math.abs((movingItem.positionX + movingItem.width) - target.positionX) < this.SNAP_THRESHOLD) {
-        movingItem.positionX = target.positionX - movingItem.width;
-      }
-      else if (Math.abs(movingItem.positionX - (target.positionX + target.width)) < this.SNAP_THRESHOLD) {
-        movingItem.positionX = target.positionX + target.width;
-      }
-      else if (Math.abs(movingItem.positionX - target.positionX) < this.SNAP_THRESHOLD) {
-        movingItem.positionX = target.positionX;
-      }
-
-      if (Math.abs((movingItem.positionY + movingItem.length) - target.positionY) < this.SNAP_THRESHOLD) {
-        movingItem.positionY = target.positionY - movingItem.length;
-      }
-      else if (Math.abs(movingItem.positionY - (target.positionY + target.length)) < this.SNAP_THRESHOLD) {
-        movingItem.positionY = target.positionY + target.length;
-      }
-      else if (Math.abs(movingItem.positionY - target.positionY) < this.SNAP_THRESHOLD) {
-        movingItem.positionY = target.positionY;
-      }
+  private applyMagneticSnap(item: any, targets: any[]) {
+    const T = this.SNAP_THRESHOLD;
+    for (const t of targets) {
+      if (t.id === item.id) continue;
+      if (Math.abs((item.positionX + item.width) - t.positionX) < T) item.positionX = t.positionX - item.width;
+      else if (Math.abs(item.positionX - (t.positionX + t.width)) < T) item.positionX = t.positionX + t.width;
+      else if (Math.abs(item.positionX - t.positionX) < T) item.positionX = t.positionX;
+      if (Math.abs((item.positionY + item.length) - t.positionY) < T) item.positionY = t.positionY - item.length;
+      else if (Math.abs(item.positionY - (t.positionY + t.length)) < T) item.positionY = t.positionY + t.length;
+      else if (Math.abs(item.positionY - t.positionY) < T) item.positionY = t.positionY;
     }
   }
 
   checkAllCollisions() {
-    this.zones.forEach(z => (z as any)['_hasCollision'] = false);
-    for (let i = 0; i < this.zones.length; i++) {
-      for (let j = i + 1; j < this.zones.length; j++) {
-        if (this.rectsOverlap(this.zones[i], this.zones[j])) {
-          (this.zones[i] as any)['_hasCollision'] = true;
-          (this.zones[j] as any)['_hasCollision'] = true;
-        }
-      }
-    }
-
-    this.bins.forEach(b => (b as any)['_hasCollision'] = false);
-    this.zones.forEach(zone => {
-      const binsInZone = this.getBinsOfZone(zone.id);
-      for (let i = 0; i < binsInZone.length; i++) {
-        for (let j = i + 1; j < binsInZone.length; j++) {
-          if (this.rectsOverlap(binsInZone[i], binsInZone[j])) {
-            (binsInZone[i] as any)['_hasCollision'] = true;
-            (binsInZone[j] as any)['_hasCollision'] = true;
-          }
-        }
-      }
+    this.zones.forEach(z => z._hasCollision = false);
+    for (let i = 0; i < this.zones.length; i++)
+      for (let j = i + 1; j < this.zones.length; j++)
+        if (this.rectsOverlap(this.zones[i], this.zones[j]))
+          this.zones[i]._hasCollision = this.zones[j]._hasCollision = true;
+    this.bins.forEach(b => b._hasCollision = false);
+    this.zones.forEach(z => {
+      const bz = this.getBinsOfZone(z.id);
+      for (let i = 0; i < bz.length; i++)
+        for (let j = i + 1; j < bz.length; j++)
+          if (this.rectsOverlap(bz[i], bz[j])) bz[i]._hasCollision = bz[j]._hasCollision = true;
     });
   }
 
-  // ============================================================
-  // ZOOM & PAN CONTROLS
-  // ============================================================
+  // ─── ZOOM ────────────────────────────────────────────────────────
+  get scalePercent(): number { return Math.round(this.scale * 100); }
+
+  zoomIn() {
+    const n = this.ZOOM_LEVELS.find(z => z > this.scale + 0.001);
+    if (n) { this.scale = n; this.rebuildAllDragPositions(); this.cdr.markForCheck(); }
+  }
+
+  zoomOut() {
+    const p = [...this.ZOOM_LEVELS].reverse().find(z => z < this.scale - 0.001);
+    if (p) { this.scale = p; this.rebuildAllDragPositions(); this.cdr.markForCheck(); }
+  }
+
+  zoomFit(doRebuild = true) {
+    if (!this.canvasContainer) this.canvasContainer = document.querySelector('.canvas-scroll-area') as HTMLElement;
+    if (!this.canvasContainer || !this.warehouse) return;
+    const w = this.canvasContainer.clientWidth - 64;
+    const h = this.canvasContainer.clientHeight - 64;
+    const s = Math.max(0.15, Math.min(1.5, Math.min(w / (this.warehouse.mapWidth || 2000), h / (this.warehouse.mapLength || 2000))));
+    this.scale = +s.toFixed(3);
+    if (doRebuild) this.rebuildAllDragPositions();
+    setTimeout(() => {
+      if (this.canvasContainer) {
+        this.canvasContainer.scrollLeft = Math.max(0, (this.canvasContainer.scrollWidth - this.canvasContainer.clientWidth) / 2);
+        this.canvasContainer.scrollTop = Math.max(0, (this.canvasContainer.scrollHeight - this.canvasContainer.clientHeight) / 2);
+      }
+    }, 50);
+    this.cdr.markForCheck();
+  }
+
   onWheel(event: WheelEvent) {
-    // Zoom with Ctrl + Wheel
     if (event.ctrlKey || event.metaKey) {
       event.preventDefault();
-      const delta = event.deltaY > 0 ? -0.1 : 0.1;
-      const newScale = Math.max(0.2, Math.min(2.0, this.scale + delta));
-      this.scale = newScale;
+      const ns = Math.max(0.15, Math.min(2.0, this.scale * (event.deltaY > 0 ? 0.9 : 1.1)));
+      this.scale = +ns.toFixed(3);
+      this.rebuildAllDragPositions();
+      this.cdr.markForCheck();
     }
   }
 
+  // ─── PAN ─────────────────────────────────────────────────────────
   onCanvasMouseDown(event: MouseEvent) {
-    // Pan with right-click
-    if (event.button === 2) {
+    if (event.button === 1 || event.button === 2) {
       event.preventDefault();
       this.isPanning = true;
       this.panStartMouse = { x: event.clientX, y: event.clientY };
-      if (this.canvasElement) {
-        this.panStartScroll = {
-          x: this.canvasElement.scrollLeft,
-          y: this.canvasElement.scrollTop
-        };
-      }
+      if (this.canvasContainer)
+        this.panStartScroll = { x: this.canvasContainer.scrollLeft, y: this.canvasContainer.scrollTop };
       document.addEventListener('mousemove', this.onCanvasPan);
       document.addEventListener('mouseup', this.onCanvasPanEnd);
-
-      // Change cursor
-      if (this.canvasElement) {
-        this.canvasElement.style.cursor = 'grabbing';
-      }
     }
   }
 
-  onCanvasPan = (event: MouseEvent) => {
-    if (!this.isPanning || !this.canvasElement) return;
-
-    const deltaX = event.clientX - this.panStartMouse.x;
-    const deltaY = event.clientY - this.panStartMouse.y;
-
-    this.canvasElement.scrollLeft = this.panStartScroll.x - deltaX;
-    this.canvasElement.scrollTop = this.panStartScroll.y - deltaY;
+  onCanvasPan = (e: MouseEvent) => {
+    if (!this.isPanning || !this.canvasContainer) return;
+    this.canvasContainer.scrollLeft = this.panStartScroll.x - (e.clientX - this.panStartMouse.x);
+    this.canvasContainer.scrollTop = this.panStartScroll.y - (e.clientY - this.panStartMouse.y);
   };
 
   onCanvasPanEnd = () => {
     this.isPanning = false;
     document.removeEventListener('mousemove', this.onCanvasPan);
     document.removeEventListener('mouseup', this.onCanvasPanEnd);
-
-    if (this.canvasElement) {
-      this.canvasElement.style.cursor = '';
-    }
   };
 
-  onZoneSingleClick(zone: ZoneDto, event: MouseEvent) {
-    if (this.isResizing) return;
+  // ─── CANVAS CLICKS ───────────────────────────────────────────────
+  onZoneSingleClick(zone: CanvasZone, event: MouseEvent) {
+    if (this.isResizing || this.isRotating) return;
     event.stopPropagation();
-    this.activeZone = zone;
-    this.activeTab = 'bins';
+    this.activeZone = zone; this.activeTab = 'bins';
+    this.expandedZones.add(zone.id);
+    this.cdr.markForCheck();
   }
 
-  onZoneDoubleClick(zone: ZoneDto, event: MouseEvent) {
+  onZoneDoubleClick(zone: CanvasZone, event: MouseEvent) {
     event.stopPropagation();
     this.openZoneDrawer(zone);
   }
 
-  onBinDoubleClick(bin: BinDto, event: MouseEvent) {
+  onBinDoubleClick(bin: CanvasBin, event: MouseEvent) {
     event.stopPropagation();
     this.openBinDrawer(bin);
   }
 
   onCanvasClick(event: MouseEvent) {
-    const target = event.target as HTMLElement;
-    if (!target.closest('.zone-block') && !target.closest('.bin-block')) {
-      this.activeZone = null;
-      this.closeDrawer();
+    const t = event.target as HTMLElement;
+    if (!t.closest('.zone-drag-wrapper') && !t.closest('.bin-drag-wrapper')) {
+      this.activeZone = null; this.closeDrawer(); this.cdr.markForCheck();
     }
   }
 
-  // ============================================================
-  // DRAG & DROP
-  // ============================================================
-  onZoneDragEnded(event: CdkDragEnd, zone: ZoneDto) {
+  // ─── DRAG ────────────────────────────────────────────────────────
+  onZoneDragEnded(event: CdkDragEnd, zone: CanvasZone) {
+    if (this.isResizing) { return; }
+    const mapW = this.warehouse?.mapWidth || 2000, mapH = this.warehouse?.mapLength || 2000;
     const raw = event.source.getFreeDragPosition();
-    const mapW = (this.warehouse?.mapWidth || 1000) * this.scale;
-    const mapH = (this.warehouse?.mapLength || 1000) * this.scale;
-
-    const clampedX = Math.max(0, Math.min(raw.x, mapW - zone.width * this.scale));
-    const clampedY = Math.max(0, Math.min(raw.y, mapH - zone.length * this.scale));
-
-    const oldX = zone.positionX;
-    const oldY = zone.positionY;
-    let newX = Math.round(clampedX / this.scale);
-    let newY = Math.round(clampedY / this.scale);
-
-    zone.positionX = newX;
-    zone.positionY = newY;
-
+    const oldX = zone.positionX, oldY = zone.positionY;
+    zone.positionX = this.snapToGrid(Math.max(0, Math.min(Math.round(raw.x / this.scale), mapW - zone.width)));
+    zone.positionY = this.snapToGrid(Math.max(0, Math.min(Math.round(raw.y / this.scale), mapH - zone.length)));
     this.applyMagneticSnap(zone, this.zones);
-
-    const deltaX = zone.positionX - oldX;
-    const deltaY = zone.positionY - oldY;
-
-    const collision = this.zones.filter(z => z.id !== zone.id).some(z => this.rectsOverlap(zone, z));
-
-    if (collision) {
-      zone.positionX = oldX;
-      zone.positionY = oldY;
-      event.source.setFreeDragPosition({ x: oldX * this.scale, y: oldY * this.scale });
+    const dX = zone.positionX - oldX, dY = zone.positionY - oldY;
+    if (this.zones.filter(z => z.id !== zone.id).some(z => this.rectsOverlap(zone, z))) {
+      zone.positionX = oldX; zone.positionY = oldY;
     } else {
-      event.source.setFreeDragPosition({ x: zone.positionX * this.scale, y: zone.positionY * this.scale });
-      (zone as any)['_isDirty'] = true;
-
-      this.getBinsOfZone(zone.id).forEach(bin => {
-        bin.positionX += deltaX;
-        bin.positionY += deltaY;
-        (bin as any)['_isDirty'] = true;
+      zone._isDirty = true; this.hasUnsavedChanges = true;
+      this.getBinsOfZone(zone.id).forEach(b => {
+        b.positionX += dX; b.positionY += dY; b._isDirty = true;
+        this.binDragPos.set(b.id, { x: b.positionX * this.scale, y: b.positionY * this.scale });
       });
-      this.hasUnsavedChanges = true;
     }
-    this.checkAllCollisions();
+    this.zoneDragPos.set(zone.id, { x: zone.positionX * this.scale, y: zone.positionY * this.scale });
+    event.source.setFreeDragPosition(this.zoneDragPos.get(zone.id)!);
+    this.checkAllCollisions(); this.cdr.markForCheck();
   }
 
-  getBinsOfZone(zoneId: string): BinDto[] {
-    return this.bins.filter(b => b.zoneId === zoneId);
-  }
-
-  getBinAbsX(bin: BinDto): number { return bin.positionX; }
-  getBinAbsY(bin: BinDto): number { return bin.positionY; }
-
-  onBinDragEnded(event: CdkDragEnd, bin: BinDto, zone: ZoneDto) {
+  onBinDragEnded(event: CdkDragEnd, bin: CanvasBin, zone: CanvasZone) {
     const raw = event.source.getFreeDragPosition();
-
-    let logicX = Math.round(raw.x / this.scale);
-    let logicY = Math.round(raw.y / this.scale);
-
-    const oldX = bin.positionX;
-    const oldY = bin.positionY;
-
-    logicX = Math.max(zone.positionX, Math.min(logicX, zone.positionX + zone.width - bin.width));
-    logicY = Math.max(zone.positionY, Math.min(logicY, zone.positionY + zone.length - bin.length));
-
-    bin.positionX = logicX;
-    bin.positionY = logicY;
-
-    const binsInZone = this.getBinsOfZone(zone.id);
-    this.applyMagneticSnap(bin, binsInZone);
-
+    const oldX = bin.positionX, oldY = bin.positionY;
+    let lx = this.snapToGrid(Math.round(raw.x / this.scale));
+    let ly = this.snapToGrid(Math.round(raw.y / this.scale));
+    lx = Math.max(zone.positionX, Math.min(lx, zone.positionX + zone.width - bin.width));
+    ly = Math.max(zone.positionY, Math.min(ly, zone.positionY + zone.length - bin.length));
+    bin.positionX = lx; bin.positionY = ly;
+    this.applyMagneticSnap(bin, this.getBinsOfZone(zone.id));
     bin.positionX = Math.max(zone.positionX, Math.min(bin.positionX, zone.positionX + zone.width - bin.width));
     bin.positionY = Math.max(zone.positionY, Math.min(bin.positionY, zone.positionY + zone.length - bin.length));
-
-    const hasCollision = binsInZone.filter(b => b.id !== bin.id).some(b => this.rectsOverlap(bin, b));
-
-    if (hasCollision) {
-      bin.positionX = oldX;
-      bin.positionY = oldY;
-      event.source.setFreeDragPosition({ x: oldX * this.scale, y: oldY * this.scale });
-    } else {
-      event.source.setFreeDragPosition({ x: bin.positionX * this.scale, y: bin.positionY * this.scale });
-      (bin as any)['_isDirty'] = true;
-      this.hasUnsavedChanges = true;
-    }
-
-    this.checkAllCollisions();
+    if (this.getBinsOfZone(zone.id).filter(b => b.id !== bin.id).some(b => this.rectsOverlap(bin, b))) {
+      bin.positionX = oldX; bin.positionY = oldY;
+    } else { bin._isDirty = true; this.hasUnsavedChanges = true; }
+    this.binDragPos.set(bin.id, { x: bin.positionX * this.scale, y: bin.positionY * this.scale });
+    event.source.setFreeDragPosition(this.binDragPos.get(bin.id)!);
+    this.checkAllCollisions(); this.cdr.markForCheck();
   }
 
-  async saveAllLayouts() {
-    if (!this.hasUnsavedChanges) return;
-    this.isSaving = true;
-
-    try {
-      const dirtyZones = this.zones.filter(z => (z as any)['_isDirty']);
-      const dirtyBins = this.bins.filter(b => (b as any)['_isDirty']);
-
-      for (const zone of dirtyZones) {
-        await lastValueFrom(this.warehouseService.updateZone(zone.id, zone as any));
-      }
-      for (const bin of dirtyBins) {
-        await lastValueFrom(this.warehouseService.updateStorageBin(bin.id, bin as any));
-      }
-
-      this.hasUnsavedChanges = false;
-      this.refreshMap();
-    } catch (error) {
-      console.error('Save Layout Error:', error);
-    } finally {
-      this.isSaving = false;
-    }
-  }
-
-  // ============================================================
-  // DRAWER & FORM CRUD (DÙNG MÉT - M)
-  // ============================================================
-  openZoneDrawer(zone?: ZoneDto) {
-    this.selectedZone = zone || null;
-    this.selectedBin = null;
-    this.drawerType = 'ZONE';
-
-    // Khởi tạo form bằng giá trị đã đổi sang MÉT
-    this.form = this.fb.group({
-      warehouseId: [this.warehouseId],
-      name: [zone?.name || '', [Validators.required, Validators.maxLength(255)]],
-      type: [zone?.type ?? ZoneType.Storage, [Validators.required]],
-      storageCondition: [zone?.storageCondition ?? StorageCondition.Other, [Validators.required]],
-      color: [zone?.color || this.getRandomColor()],
-      positionX: [this.toM(zone?.positionX || 0), [Validators.required, Validators.min(0)]],
-      positionY: [this.toM(zone?.positionY || 0), [Validators.required, Validators.min(0)]],
-      width: [this.toM(zone?.width || this.toPx(10)), [Validators.required, Validators.min(0.5)]], // Tối thiểu 0.5m
-      length: [this.toM(zone?.length || this.toPx(10)), [Validators.required, Validators.min(0.5)]],
-      rotation: [zone?.rotation || 0, [Validators.min(0), Validators.max(360)]],
-    });
-
-    this.form.get('type').valueChanges.subscribe(type => {
-      if (type === ZoneType.Storage) {
-        if (this.form.get('storageCondition').value === StorageCondition.Other)
-          this.form.get('storageCondition').setValue(StorageCondition.Normal);
-      } else {
-        this.form.get('storageCondition').setValue(StorageCondition.Other);
-      }
-    });
-
-    this.form.get('rotation').valueChanges.subscribe(val => {
-      if (this.selectedZone) this.selectedZone.rotation = parseFloat(val) || 0;
-    });
-
-    // Preview trực tiếp vị trí khi gõ số mét trên form
-    this.form.valueChanges.subscribe(val => {
-      if (this.selectedZone && !this.isSaving) {
-        this.selectedZone.positionX = this.toPx(val.positionX);
-        this.selectedZone.positionY = this.toPx(val.positionY);
-        this.selectedZone.width = this.toPx(val.width);
-        this.selectedZone.length = this.toPx(val.length);
-        this.checkAllCollisions();
-      }
-    });
-  }
-
-  saveZone() {
-    if (this.form.invalid) return;
-
-    // Đổi từ Mét trả về Pixel để gửi xuống Backend
-    const payload = {
-      ...this.form.value,
-      positionX: this.toPx(this.form.value.positionX),
-      positionY: this.toPx(this.form.value.positionY),
-      width: this.toPx(this.form.value.width),
-      length: this.toPx(this.form.value.length),
-      rotation: parseFloat(this.form.value.rotation) || 0
-    };
-
-    const request = this.selectedZone?.id
-      ? this.warehouseService.updateZone(this.selectedZone.id, payload)
-      : this.warehouseService.createZone(payload);
-
-    request.subscribe(() => { this.closeDrawer(); this.refreshMap(); });
-  }
-
-  deleteZone(zone: ZoneDto, event?: MouseEvent) {
-    event?.stopPropagation();
-    this.confirmation.warn('::ZoneDeletionWarningMessage', '::AreYouSure', {
-      messageLocalizationParams: [zone.name],
-    }).subscribe(status => {
-      if (status === Confirmation.Status.confirm) {
-        this.warehouseService.deleteZone(zone.id).subscribe(() => {
-          if (this.activeZone?.id === zone.id) this.activeZone = null;
-          this.refreshMap();
-        });
-      }
-    });
-  }
-
-  openBinDrawer(bin?: BinDto) {
-    const defaultZoneId = this.activeZone?.id || (this.zones[0]?.id ?? null);
-    const targetZone = this.zones.find(z => z.id === (bin?.zoneId || defaultZoneId));
-
-    let defaultX = 0, defaultY = 0;
-    if (!bin && targetZone) {
-      defaultX = targetZone.positionX + (targetZone.width - this.toPx(2)) / 2;
-      defaultY = targetZone.positionY + (targetZone.length - this.toPx(2)) / 2;
-    }
-
-    this.selectedBin = bin || null;
-    this.selectedZone = null;
-    this.drawerType = 'BIN';
-
-    const isEditing = !!bin;
-    const originalZoneId = bin?.zoneId;
-
-    // Khởi tạo form bằng MÉT
-    this.form = this.fb.group({
-      warehouseId: [this.warehouseId],
-      zoneId: [bin?.zoneId || defaultZoneId, [Validators.required]],
-      positionX: [this.toM(bin?.positionX ?? defaultX), [Validators.required]],
-      positionY: [this.toM(bin?.positionY ?? defaultY), [Validators.required]],
-      width: [this.toM(bin?.width || this.toPx(2)), [Validators.required, Validators.min(0.5)]], // 0.5m min
-      length: [this.toM(bin?.length || this.toPx(2)), [Validators.required, Validators.min(0.5)]],
-      rotation: [bin?.rotation || 0, [Validators.min(0), Validators.max(360)]],
-      maxSKU: [bin?.maxSKU || 0, [Validators.min(0)]],
-      isBlocked: [bin?.isBlocked || false],
-    });
-
-    this.form.get('zoneId').valueChanges.subscribe(newZoneId => {
-      const newZone = this.zones.find(z => z.id === newZoneId);
-      if (newZone) {
-        if (isEditing && newZoneId !== originalZoneId) {
-          const newX = newZone.positionX + (newZone.width - this.toPx(this.form.get('width').value)) / 2;
-          const newY = newZone.positionY + (newZone.length - this.toPx(this.form.get('length').value)) / 2;
-          this.form.patchValue({ positionX: this.toM(newX), positionY: this.toM(newY) }, { emitEvent: false });
-        } else if (!isEditing) {
-          const newX = newZone.positionX + (newZone.width - this.toPx(this.form.get('width').value)) / 2;
-          const newY = newZone.positionY + (newZone.length - this.toPx(this.form.get('length').value)) / 2;
-          this.form.patchValue({ positionX: this.toM(newX), positionY: this.toM(newY) }, { emitEvent: false });
-        }
-      }
-    });
-
-    this.form.get('rotation').valueChanges.subscribe(val => {
-      if (this.selectedBin) this.selectedBin.rotation = parseFloat(val) || 0;
-    });
-
-    this.form.valueChanges.subscribe(val => {
-      if (this.selectedBin && !this.isSaving) {
-        this.selectedBin.positionX = this.toPx(val.positionX);
-        this.selectedBin.positionY = this.toPx(val.positionY);
-        this.selectedBin.width = this.toPx(val.width);
-        this.selectedBin.length = this.toPx(val.length);
-        this.checkAllCollisions();
-      }
-    });
-  }
-
-  createBinInActiveZone() {
-    if (!this.activeZone) return;
-    this.openBinDrawer();
-  }
-
-  saveBin() {
-    if (this.form.invalid) return;
-
-    // Chuyển lại từ Mét sang Pixel để gửi DB
-    const payload = {
-      ...this.form.value,
-      positionX: this.toPx(this.form.value.positionX),
-      positionY: this.toPx(this.form.value.positionY),
-      width: this.toPx(this.form.value.width),
-      length: this.toPx(this.form.value.length),
-      rotation: parseFloat(this.form.value.rotation) || 0,
-    };
-
-    const targetZone = this.zones.find(z => z.id === payload.zoneId);
-    if (targetZone) {
-      const maxX = targetZone.positionX + targetZone.width - payload.width;
-      const maxY = targetZone.positionY + targetZone.length - payload.length;
-
-      if (payload.positionX < targetZone.positionX || payload.positionY < targetZone.positionY ||
-        payload.positionX > maxX || payload.positionY > maxY) {
-        payload.positionX = targetZone.positionX + (targetZone.width - payload.width) / 2;
-        payload.positionY = targetZone.positionY + (targetZone.length - payload.length) / 2;
-      }
-    }
-
-    const request = this.selectedBin?.id
-      ? this.warehouseService.updateStorageBin(this.selectedBin.id, payload)
-      : this.warehouseService.createStorageBin(payload);
-
-    request.subscribe(() => { this.closeDrawer(); this.refreshMap(); });
-  }
-
-  deleteBin(bin: BinDto, event?: MouseEvent) {
-    event?.stopPropagation();
-    this.confirmation.warn('::BinDeletionWarningMessage', '::AreYouSure', {
-      messageLocalizationParams: [bin.code],
-    }).subscribe(status => {
-      if (status === Confirmation.Status.confirm) {
-        this.warehouseService.deleteStorageBin(bin.id).subscribe(() => this.refreshMap());
-      }
-    });
-  }
-
-  closeDrawer() {
-    this.drawerType = null;
-    this.selectedZone = null;
-    this.selectedBin = null;
-  }
-
-  // ============================================================
-  // ROTATE & RESIZE LOGIC (PIXELS)
-  // ============================================================
-  onRotateStart(event: MouseEvent, item: any) {
-    event.stopPropagation();
-    event.preventDefault();
-    this.isRotating = true;
-    this.rotatingItem = { item };
-
-    const inner = (event.target as HTMLElement).closest('.resizable-block') as HTMLElement;
-    if (inner) {
-      const rect = inner.getBoundingClientRect();
-      this.rotateCenterCanvas = { x: rect.left + rect.width / 2, y: rect.top + rect.height / 2 };
-    }
-    document.addEventListener('mousemove', this.onRotate);
-    document.addEventListener('mouseup', this.onRotateEnd);
-  }
-
-  onRotate = (event: MouseEvent) => {
-    if (!this.isRotating || !this.rotatingItem) return;
-    const { item } = this.rotatingItem;
-    const dx = event.clientX - this.rotateCenterCanvas.x;
-    const dy = event.clientY - this.rotateCenterCanvas.y;
-
-    let angle = Math.round(Math.atan2(dy, dx) * (180 / Math.PI) + 90);
-    if (angle < 0) angle += 360;
-    if (angle >= 360) angle -= 360;
-
-    item.rotation = angle;
-    item['_isDirty'] = true;
-    this.hasUnsavedChanges = true;
-  };
-
-  onRotateEnd = () => {
-    this.isRotating = false;
-    this.rotatingItem = null;
-    document.removeEventListener('mousemove', this.onRotate);
-    document.removeEventListener('mouseup', this.onRotateEnd);
-  };
-
-  onResizeStart(event: MouseEvent, item: any, type: 'zone' | 'bin', handle: ResizeHandle) {
-    event.stopPropagation();
-    event.preventDefault();
+  // ─── RESIZE ──────────────────────────────────────────────────────
+  onResizeStart(event: MouseEvent, item: CanvasZone | CanvasBin, type: 'zone' | 'bin', handle: ResizeHandle) {
+    event.stopPropagation(); event.preventDefault();
     this.isResizing = true;
     this.resizingItem = { item, type, handle };
     this.resizeStartMouse = { x: event.clientX, y: event.clientY };
@@ -773,78 +549,242 @@ export class StorageLocationsComponent implements OnInit, OnDestroy {
 
   onResize = (event: MouseEvent) => {
     if (!this.isResizing || !this.resizingItem) return;
-
     const { item, type, handle } = this.resizingItem;
     const dx = (event.clientX - this.resizeStartMouse.x) / this.scale;
     const dy = (event.clientY - this.resizeStartMouse.y) / this.scale;
     const { x: ox, y: oy, w: ow, h: oh } = this.resizeStartRect;
-
-    // Tối thiểu là 1m (20px) cho Zone, 0.5m (10px) cho Bin
-    const minSize = type === 'zone' ? this.toPx(1) : this.toPx(0.5);
-    const mapW = this.warehouse?.mapWidth || 1000;
-    const mapH = this.warehouse?.mapLength || 1000;
-
-    let newX = ox, newY = oy, newW = ow, newH = oh;
-
-    if (handle === 'e' || handle === 'ne' || handle === 'se') newW = Math.max(minSize, Math.min(ow + dx, mapW - ox));
-    if (handle === 'w' || handle === 'nw' || handle === 'sw') {
-      const proposedX = Math.max(0, Math.min(ox + dx, ox + ow - minSize));
-      newW = ow - (proposedX - ox);
-      newX = proposedX;
-    }
-    if (handle === 's' || handle === 'sw' || handle === 'se') newH = Math.max(minSize, Math.min(oh + dy, mapH - oy));
-    if (handle === 'n' || handle === 'nw' || handle === 'ne') {
-      const proposedY = Math.max(0, Math.min(oy + dy, oy + oh - minSize));
-      newH = oh - (proposedY - oy);
-      newY = proposedY;
-    }
-
-    item.positionX = Math.round(newX);
-    item.positionY = Math.round(newY);
-    item.width = Math.round(newW);
-    item.length = Math.round(newH);
-
+    const min = type === 'zone' ? this.toPx(1) : this.toPx(0.5);
+    const mapW = this.warehouse?.mapWidth || 2000, mapH = this.warehouse?.mapLength || 2000;
+    let nx = ox, ny = oy, nw = ow, nh = oh;
+    if (handle === 'e' || handle === 'ne' || handle === 'se') nw = Math.max(min, Math.min(ow + dx, mapW - ox));
+    if (handle === 'w' || handle === 'nw' || handle === 'sw') { const px = Math.max(0, Math.min(ox + dx, ox + ow - min)); nw = ow - (px - ox); nx = px; }
+    if (handle === 's' || handle === 'sw' || handle === 'se') nh = Math.max(min, Math.min(oh + dy, mapH - oy));
+    if (handle === 'n' || handle === 'nw' || handle === 'ne') { const py = Math.max(0, Math.min(oy + dy, oy + oh - min)); nh = oh - (py - oy); ny = py; }
+    item.positionX = this.snapToGrid(Math.round(nx)); item.positionY = this.snapToGrid(Math.round(ny));
+    item.width = this.snapToGrid(Math.round(nw)); item.length = this.snapToGrid(Math.round(nh));
     if (type === 'zone') {
       this.applyMagneticSnap(item, this.zones);
-
-      if (this.zones.filter(z => z.id !== item.id).some(z => this.rectsOverlap(item, z))) {
-        item.positionX = ox; item.positionY = oy; item.width = ow; item.length = oh;
-      } else {
-        item['_isDirty'] = true;
-        this.hasUnsavedChanges = true;
-      }
-      this.checkAllCollisions();
+      if (this.zones.filter(z => z.id !== item.id).some(z => this.rectsOverlap(item, z))) { item.positionX = ox; item.positionY = oy; item.width = ow; item.length = oh; }
+      else { (item as CanvasZone)._isDirty = true; this.hasUnsavedChanges = true; }
+      this.zoneDragPos.set(item.id, { x: item.positionX * this.scale, y: item.positionY * this.scale });
     } else {
-      const targetZone = this.zones.find(z => z.id === item.zoneId);
-      if (targetZone) {
-        this.applyMagneticSnap(item, this.getBinsOfZone(targetZone.id));
-      }
-
-      const hasCollision = this.getBinsOfZone(item.zoneId).filter(b => b.id !== item.id).some(b => this.rectsOverlap(item, b));
-      if (hasCollision) {
-        item.positionX = ox; item.positionY = oy; item.width = ow; item.length = oh;
-      } else {
-        item['_isDirty'] = true;
-        this.hasUnsavedChanges = true;
-      }
-      this.checkAllCollisions();
+      const tz = this.zones.find(z => z.id === (item as CanvasBin).zoneId);
+      if (tz) this.applyMagneticSnap(item, this.getBinsOfZone(tz.id));
+      if (this.getBinsOfZone((item as CanvasBin).zoneId).filter(b => b.id !== item.id).some(b => this.rectsOverlap(item, b))) { item.positionX = ox; item.positionY = oy; item.width = ow; item.length = oh; }
+      else { (item as CanvasBin)._isDirty = true; this.hasUnsavedChanges = true; }
     }
+    this.checkAllCollisions(); this.cdr.markForCheck();
   };
 
   onResizeEnd = () => {
-    this.isResizing = false;
-    this.resizingItem = null;
+    this.isResizing = false; this.resizingItem = null;
     document.removeEventListener('mousemove', this.onResize);
     document.removeEventListener('mouseup', this.onResizeEnd);
+    this.cdr.markForCheck();
+  };
+
+  // ─── ROTATE ──────────────────────────────────────────────────────
+  onRotateStart(event: MouseEvent, item: any) {
+    event.stopPropagation(); event.preventDefault();
+    this.isRotating = true; this.rotatingItem = { item };
+    const el = (event.target as HTMLElement).closest('.zone-inner,.bin-inner') as HTMLElement;
+    if (el) { const r = el.getBoundingClientRect(); this.rotateCenterCanvas = { x: r.left + r.width / 2, y: r.top + r.height / 2 }; }
+    document.addEventListener('mousemove', this.onRotate);
+    document.addEventListener('mouseup', this.onRotateEnd);
+  }
+
+  onRotate = (e: MouseEvent) => {
+    if (!this.isRotating || !this.rotatingItem) return;
+    let a = Math.round(Math.atan2(e.clientY - this.rotateCenterCanvas.y, e.clientX - this.rotateCenterCanvas.x) * (180 / Math.PI) + 90);
+    if (a < 0) a += 360; if (a >= 360) a -= 360;
+    if (e.shiftKey) a = Math.round(a / 15) * 15;
+    this.rotatingItem.item.rotation = a; this.rotatingItem.item._isDirty = true;
+    this.hasUnsavedChanges = true; this.cdr.markForCheck();
+  };
+
+  onRotateEnd = () => {
+    this.isRotating = false; this.rotatingItem = null;
     document.removeEventListener('mousemove', this.onRotate);
     document.removeEventListener('mouseup', this.onRotateEnd);
   };
 
-  getCursor(handle: ResizeHandle): string {
-    const map: Record<ResizeHandle, string> = {
-      n: 'n-resize', s: 's-resize', e: 'e-resize', w: 'w-resize',
-      nw: 'nw-resize', ne: 'ne-resize', sw: 'sw-resize', se: 'se-resize',
-    };
-    return map[handle];
+  // ─── FONT ────────────────────────────────────────────────────────
+  getZoneFontSize(z: CanvasZone): number {
+    return Math.max(8, Math.min(16, Math.min(z.width * this.scale, z.length * this.scale) * 0.12));
+  }
+  getBinFontSize(b: CanvasBin): number {
+    return Math.max(7, Math.min(12, Math.min(b.width * this.scale, b.length * this.scale) * 0.22));
+  }
+
+  // ─── SAVE ────────────────────────────────────────────────────────
+  async saveAllLayouts() {
+    if (!this.hasUnsavedChanges || this.isSaving) return;
+    this.isSaving = true; this.cdr.markForCheck();
+    try {
+      for (const z of this.zones.filter(z => z._isDirty)) { await lastValueFrom(this.warehouseService.updateZone(z.id, z as any)); z._isDirty = false; }
+      for (const b of this.bins.filter(b => b._isDirty)) { await lastValueFrom(this.warehouseService.updateStorageBin(b.id, b as any)); b._isDirty = false; }
+      this.hasUnsavedChanges = false;
+    } catch (e) { console.error(e); }
+    finally { this.isSaving = false; this.cdr.markForCheck(); }
+  }
+
+  // ─── PRINT ───────────────────────────────────────────────────────
+  printDiagram() {
+    const mapW = this.warehouse?.mapWidth || 2000, mapH = this.warehouse?.mapLength || 2000;
+    const printScale = Math.min(1100 / mapW, 760 / mapH, 1.0);
+    const origScale = this.scale;
+    this.scale = +printScale.toFixed(3);
+    this.rebuildAllDragPositions();
+    this.cdr.markForCheck();
+    setTimeout(() => {
+      const canvas = document.querySelector('.map-canvas') as HTMLElement;
+      if (!canvas) { this.scale = origScale; this.rebuildAllDragPositions(); return; }
+      const styles = Array.from(document.styleSheets)
+        .map(ss => { try { return Array.from(ss.cssRules).map(r => r.cssText).join('\n'); } catch { return ''; } })
+        .join('\n');
+      const cloned = canvas.cloneNode(true) as HTMLElement;
+      cloned.style.position = 'relative'; cloned.style.margin = '0 auto';
+      const w = window.open('', '_blank', 'width=840,height=680');
+      if (!w) return;
+      w.document.write(`<!DOCTYPE html><html><head>
+        <title>${this.warehouse?.name} — Warehouse Map</title>
+        <style>
+          @page{size:A3 landscape;margin:8mm}
+          *{box-sizing:border-box}
+          body{margin:0;background:#fff;font-family:sans-serif}
+          .ph{display:flex;justify-content:space-between;align-items:flex-end;padding:8px 16px;border-bottom:2px solid #1E2330;margin-bottom:12px}
+          .ph h1{margin:0;font-size:18px;color:#1E2330}
+          .ph p{margin:0;font-size:11px;color:#666}
+          .cw{display:flex;justify-content:center;padding:8px}
+          ${styles}
+          .rh,.rotate-handle,.zone-dirty-dot,.zone-bin-badge{display:none!important}
+        </style></head><body>
+        <div class="ph">
+          <div><h1>📦 ${this.warehouse?.name}</h1>
+          <p>${this.toM(mapW)} × ${this.toM(mapH)} m &nbsp;·&nbsp; ${this.zones.length} zones &nbsp;·&nbsp; ${this.bins.length} bins</p></div>
+          <p>Printed: ${new Date().toLocaleString()}</p>
+        </div>
+        <div class="cw">${cloned.outerHTML}</div>
+        </body></html>`);
+      w.document.close();
+      setTimeout(() => {
+        w.print(); w.close();
+        this.scale = origScale; this.rebuildAllDragPositions(); this.cdr.markForCheck();
+      }, 800);
+    }, 350);
+  }
+
+  // ─── ZONE DRAWER ─────────────────────────────────────────────────
+  openZoneDrawer(zone?: CanvasZone) {
+    this.selectedZone = zone || null; this.selectedBin = null; this.drawerType = 'ZONE';
+    this.form = this.fb.group({
+      warehouseId: [this.warehouseId],
+      name: [zone?.name || '', [Validators.required, Validators.maxLength(255)]],
+      type: [zone?.type ?? ZoneType.Storage, Validators.required],
+      storageCondition: [zone?.storageCondition ?? StorageCondition.Normal, Validators.required],
+      color: [zone?.color || this.getColorForZoneType(ZoneType.Storage, StorageCondition.Normal)],
+      positionX: [this.toM(zone?.positionX ?? 0), [Validators.required, Validators.min(0)]],
+      positionY: [this.toM(zone?.positionY ?? 0), [Validators.required, Validators.min(0)]],
+      width: [this.toM(zone?.width ?? this.toPx(10)), [Validators.required, Validators.min(1)]],
+      length: [this.toM(zone?.length ?? this.toPx(10)), [Validators.required, Validators.min(1)]],
+      rotation: [zone?.rotation ?? 0, [Validators.min(0), Validators.max(360)]],
+    });
+    this.form.get('type').valueChanges.pipe(takeUntil(this.destroy$)).subscribe(t => {
+      if (t === ZoneType.Storage && this.form.get('storageCondition').value === StorageCondition.Other)
+        this.form.get('storageCondition').setValue(StorageCondition.Normal, { emitEvent: false });
+      else if (t !== ZoneType.Storage)
+        this.form.get('storageCondition').setValue(StorageCondition.Other, { emitEvent: false });
+      this.form.get('color').setValue(this.getColorForZoneType(t, this.form.get('storageCondition').value), { emitEvent: false });
+    });
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => {
+      if (!this.selectedZone || this.isSaving) return;
+      this.selectedZone.positionX = this.toPx(val.positionX); this.selectedZone.positionY = this.toPx(val.positionY);
+      this.selectedZone.width = this.toPx(val.width); this.selectedZone.length = this.toPx(val.length);
+      this.selectedZone.color = val.color; this.selectedZone.rotation = parseFloat(val.rotation) || 0;
+      this.zoneDragPos.set(this.selectedZone.id, { x: this.selectedZone.positionX * this.scale, y: this.selectedZone.positionY * this.scale });
+      this.checkAllCollisions(); this.cdr.markForCheck();
+    });
+    this.cdr.markForCheck();
+  }
+
+  saveZone() {
+    if (this.form.invalid) return;
+    const v = this.form.value;
+    const p = { ...v, positionX: this.toPx(v.positionX), positionY: this.toPx(v.positionY), width: this.toPx(v.width), length: this.toPx(v.length), rotation: parseFloat(v.rotation) || 0 };
+    (this.selectedZone?.id ? this.warehouseService.updateZone(this.selectedZone.id, p) : this.warehouseService.createZone(p))
+      .subscribe(r => { this.closeDrawer(); this.refreshMap(r?.id); });
+  }
+
+  deleteZone(zone: CanvasZone, event?: MouseEvent) {
+    event?.stopPropagation();
+    this.confirmation.warn('::ZoneDeletionWarningMessage', '::AreYouSure', { messageLocalizationParams: [zone.name] })
+      .subscribe(s => {
+        if (s !== Confirmation.Status.confirm) return;
+        this.warehouseService.deleteZone(zone.id).subscribe(() => {
+          if (this.activeZone?.id === zone.id) this.activeZone = null;
+          this.refreshMap();
+        });
+      });
+  }
+
+  // ─── BIN DRAWER ──────────────────────────────────────────────────
+  createBinInActiveZone() { if (this.activeZone) this.openBinDrawer(); }
+
+  openBinDrawer(bin?: CanvasBin) {
+    const defaultZoneId = this.activeZone?.id || this.zones[0]?.id || null;
+    const tz = this.zones.find(z => z.id === (bin?.zoneId || defaultZoneId));
+    const dx = bin ? 0 : (tz ? tz.positionX + (tz.width - this.toPx(2)) / 2 : 0);
+    const dy = bin ? 0 : (tz ? tz.positionY + (tz.length - this.toPx(2)) / 2 : 0);
+    this.selectedBin = bin || null; this.selectedZone = null; this.drawerType = 'BIN';
+    this.form = this.fb.group({
+      warehouseId: [this.warehouseId],
+      zoneId: [bin?.zoneId || defaultZoneId, Validators.required],
+      positionX: [this.toM(bin?.positionX ?? dx), Validators.required],
+      positionY: [this.toM(bin?.positionY ?? dy), Validators.required],
+      width: [this.toM(bin?.width ?? this.toPx(2)), [Validators.required, Validators.min(0.5)]],
+      length: [this.toM(bin?.length ?? this.toPx(2)), [Validators.required, Validators.min(0.5)]],
+      rotation: [bin?.rotation ?? 0, [Validators.min(0), Validators.max(360)]],
+      maxSKU: [bin?.maxSKU ?? 0, Validators.min(0)],
+      isBlocked: [bin?.isBlocked ?? false],
+    });
+    this.form.get('zoneId').valueChanges.pipe(takeUntil(this.destroy$)).subscribe(zid => {
+      const nz = this.zones.find(z => z.id === zid);
+      if (nz) this.form.patchValue({
+        positionX: this.toM(nz.positionX + (nz.width - this.toPx(this.form.get('width').value)) / 2),
+        positionY: this.toM(nz.positionY + (nz.length - this.toPx(this.form.get('length').value)) / 2),
+      }, { emitEvent: false });
+    });
+    this.form.valueChanges.pipe(takeUntil(this.destroy$)).subscribe(val => {
+      if (!this.selectedBin || this.isSaving) return;
+      this.selectedBin.positionX = this.toPx(val.positionX); this.selectedBin.positionY = this.toPx(val.positionY);
+      this.selectedBin.width = this.toPx(val.width); this.selectedBin.length = this.toPx(val.length);
+      this.selectedBin.rotation = parseFloat(val.rotation) || 0;
+      this.checkAllCollisions(); this.cdr.markForCheck();
+    });
+    this.cdr.markForCheck();
+  }
+
+  saveBin() {
+    if (this.form.invalid) return;
+    const v = this.form.value;
+    const p = { ...v, positionX: this.toPx(v.positionX), positionY: this.toPx(v.positionY), width: this.toPx(v.width), length: this.toPx(v.length), rotation: parseFloat(v.rotation) || 0 };
+    const tz = this.zones.find(z => z.id === p.zoneId);
+    if (tz) {
+      p.positionX = Math.max(tz.positionX, Math.min(p.positionX, tz.positionX + tz.width - p.width));
+      p.positionY = Math.max(tz.positionY, Math.min(p.positionY, tz.positionY + tz.length - p.length));
+    }
+    (this.selectedBin?.id ? this.warehouseService.updateStorageBin(this.selectedBin.id, p) : this.warehouseService.createStorageBin(p))
+      .subscribe(() => { this.closeDrawer(); this.refreshMap(); });
+  }
+
+  deleteBin(bin: CanvasBin, event?: MouseEvent) {
+    event?.stopPropagation();
+    this.confirmation.warn('::BinDeletionWarningMessage', '::AreYouSure', { messageLocalizationParams: [bin.code] })
+      .subscribe(s => { if (s === Confirmation.Status.confirm) this.warehouseService.deleteStorageBin(bin.id).subscribe(() => this.refreshMap()); });
+  }
+
+  closeDrawer() {
+    this.drawerType = null; this.selectedZone = null; this.selectedBin = null;
+    this.cdr.markForCheck();
   }
 }

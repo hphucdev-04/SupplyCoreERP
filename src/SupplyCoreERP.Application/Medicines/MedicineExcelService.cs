@@ -347,16 +347,16 @@ namespace SupplyCoreERP.Medicines
                 if (i < priceLists.Count) row.CreateCell(4).SetCellValue(priceLists[i]);
             }
 
-            CreateNamedRange(workbook, "ListCategories", "MasterData", 0, categories.Count);
-            CreateNamedRange(workbook, "ListManufacturers", "MasterData", 1, manufacturers.Count);
-            CreateNamedRange(workbook, "ListUnits", "MasterData", 2, units.Count);
-            CreateNamedRange(workbook, "ListDosageForms", "MasterData", 3, dosageForms.Count);
-            CreateNamedRange(workbook, "ListPriceLists", "MasterData", 4, priceLists.Count);
+            CreateNamedRange(workbook, "ListCategories", "MasterData", 0, categories.Count, startRow: 0);
+            CreateNamedRange(workbook, "ListManufacturers", "MasterData", 1, manufacturers.Count, startRow: 0);
+            CreateNamedRange(workbook, "ListUnits", "MasterData", 2, units.Count, startRow: 0);
+            CreateNamedRange(workbook, "ListDosageForms", "MasterData", 3, dosageForms.Count, startRow: 0);
+            CreateNamedRange(workbook, "ListPriceLists", "MasterData", 4, priceLists.Count, startRow: 0);
 
             // Sửa startRow thành 0 để ListTempCodes map đúng từ dòng 2 của Excel
-            CreateNamedRange(workbook, "ListTempCodes", "Danh sách thuốc", 0, 1000, startRow: 0);
+            CreateNamedRange(workbook, "ListTempCodes", "Danh sách thuốc", 0, 1000, startRow: 1);
 
-            workbook.SetSheetHidden(workbook.GetSheetIndex("MasterData"), true);
+            //workbook.SetSheetHidden(workbook.GetSheetIndex("MasterData"), true);
 
             // Sheet 1
             var headers1 = new[]
@@ -477,16 +477,20 @@ namespace SupplyCoreERP.Medicines
         }
         private void CreateNamedRange(IWorkbook wb, string name, string sheetName, int colIndex, int count, int startRow = 0)
         {
-            if (count == 0 && startRow == 0) return; // Nếu danh mục rỗng
-                                                     // Nếu count = 1000 (cho Mã thuốc) thì cứ tạo range dù chưa có data
+            // Nếu là cột dữ liệu động (như ListTempCodes) thì cho phép range dài
+            // Nếu là MasterData thì phải có ít nhất 1 phần tử
+            if (count <= 0 && startRow == 0 && name != "ListTempCodes") return;
 
             IName namedRange = wb.CreateName();
             namedRange.NameName = name;
             string colLetter = CellReference.ConvertNumToColString(colIndex);
 
-            // startRow + 1 vì Excel tính row bắt đầu từ 1, code tính từ 0 (Header là row 0)
-            // Range dữ liệu thực tế bắt đầu sau Header
-            namedRange.RefersToFormula = $"'{sheetName}'!${colLetter}${startRow + 2}:${colLetter}${count}";
+            // Excel dòng bắt đầu từ 1. 
+            // Header ở row 0 -> Data bắt đầu từ row 1 (Excel gọi là dòng 2)
+            int excelStartRow = startRow + 1;
+            int excelEndRow = startRow + (count > 0 ? count : 1000); // Nếu count=0 thì mặc định 1000 dòng cho cột Mã tạm
+
+            namedRange.RefersToFormula = $"'{sheetName}'!${colLetter}${excelStartRow}:${colLetter}${excelEndRow}";
         }
 
         private void AddValidation(ISheet sheet, string namedRange, int colIndex)

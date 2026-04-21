@@ -53,7 +53,7 @@ namespace SupplyCoreERP.Orders.PO
             if (!supplier.IsActive)
                 throw new UserFriendlyException($"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
 
-			string code = await _documentManager.GenerateAsync("PO");
+			string code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypePurchaseOrder);
 
             DateTime? finalDueDate = inputDueDate
                 ?? (supplier.PaymentTermDays > 0 ? orderDate.AddDays(supplier.PaymentTermDays) : null);

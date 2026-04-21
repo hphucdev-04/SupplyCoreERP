@@ -111,6 +111,7 @@
     "Enum:ZoneType.Staging": "Staging",
     "Enum:ZoneType.Quarantine": "Quarantine",
     "Enum:ZoneType.ForkliftParking": "Forklift Parking",
+    "Enum:ZoneType.Office": "Office",
 
     "Enum:TicketType.GoodsReceipt": "GoodsReceipt",
     "Enum:TicketType.GoodsIssue": "GoodsIssue",

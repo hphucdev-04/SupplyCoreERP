@@ -62,7 +62,7 @@ namespace SupplyCoreERP.Sales.Orders
 			if (!customer.IsActive)
 				throw new UserFriendlyException($"Khách hàng '{customer.Name}' đang bị khóa!");
 
-			string code = await _documentManager.GenerateAsync("SO");
+			string code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeCustomer);
 
 			DateTime? finalDueDate = inputDueDate
 				?? (customer.PaymentTermDays > 0 ? orderDate.AddDays(customer.PaymentTermDays) : null);

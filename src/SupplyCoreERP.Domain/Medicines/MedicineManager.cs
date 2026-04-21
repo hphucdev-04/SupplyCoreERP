@@ -58,7 +58,7 @@ namespace SupplyCoreERP.Medicines
 		{
 			await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
 
-			var code = await _documentSequenceManager.GenerateAsync("MD");
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeMedicine);
             await _productManager.CheckCodeAndNameAsync(code, name);
 
 			return new Medicine(
