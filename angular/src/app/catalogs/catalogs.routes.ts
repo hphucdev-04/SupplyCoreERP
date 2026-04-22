@@ -29,5 +29,5 @@ export const CATALOGS_ROUTES: Routes = [
     path: 'medicines/details/:id',
     loadComponent: () => import('./medicines/medicice-details/medicice-details.component').then(m => m.MedicineDetailComponent),
   },
-  // ... Thêm route catalog/...
+
 ];

@@ -1,3 +1,82 @@
+<!--#region Summary-->
+<div class="row g-2 mb-3">
+  <div class="col-md-3">
+    <div class="ph-card h-100 shadow-sm border-0">
+      <div class="ph-card__body d-flex align-items-center p-2 gap-3">
+        <div class="ph-icon-avatar ph-icon-avatar--md bg-primary-light flex-shrink-0">
+          <i class="fa fa-capsules text-primary"></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="ph-field-meta mb-0 text-uppercase fw-bold" style="font-size: 10px;">{{ '::Total' | abpLocalization
+            }}</div>
+          <div class="ph-field-value fs-4 lh-1">{{ summary.totalCount | number }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-4">
+    <div class="ph-card h-100 shadow-sm border-0">
+      <div class="ph-card__body d-flex align-items-center p-2 gap-3">
+        <div class="ph-icon-avatar ph-icon-avatar--md bg-success-light flex-shrink-0">
+          <i class="fa fa-toggle-on text-success"></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="ph-field-meta mb-1 text-uppercase fw-bold" style="font-size: 10px;">{{ '::Status' |
+            abpLocalization }}</div>
+          <div class="d-flex gap-3">
+            <div>
+              <span class="ph-text-success fw-bold fs-5">{{ summary.totalActive | number }}</span>
+              <small class="ph-text-muted ms-1" style="font-size: 11px;">{{ '::Active' | abpLocalization }}</small>
+            </div>
+            <div class="border-start ps-3">
+              <span class="ph-text-muted fw-bold fs-5">{{ summary.totalInactive | number }}</span>
+              <small class="ph-text-muted ms-1" style="font-size: 11px;">{{ '::Inactive' | abpLocalization }}</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-md-5">
+    <div class="ph-card h-100 shadow-sm border-0">
+      <div class="ph-card__body d-flex align-items-center p-2 gap-3">
+        <div class="ph-icon-avatar ph-icon-avatar--md bg-warning-light flex-shrink-0">
+          <i class="fa fa-clipboard-check text-warning"></i>
+        </div>
+        <div class="flex-grow-1">
+          <div class="ph-field-meta mb-1 text-uppercase fw-bold" style="font-size: 10px;">{{ '::Approval' |
+            abpLocalization }}</div>
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex gap-3">
+              <div class="text-center">
+                <div class="ph-text-warning fw-bold fs-6">{{ summary.totalPending | number }}</div>
+                <div class="ph-text-muted" style="font-size: 9px; text-transform: uppercase;">{{ '::Pending' |
+                  abpLocalization }}</div>
+              </div>
+              <div class="text-center">
+                <div class="ph-text-info fw-bold fs-6">{{ summary.totalApproved | number }}</div>
+                <div class="ph-text-muted" style="font-size: 9px; text-transform: uppercase;">{{ '::Approved' |
+                  abpLocalization }}</div>
+              </div>
+              <div class="text-center">
+                <div class="ph-text-danger fw-bold fs-6">{{ summary.totalRejected | number }}</div>
+                <div class="ph-text-muted" style="font-size: 9px; text-transform: uppercase;">{{ '::Rejected' |
+                  abpLocalization }}</div>
+              </div>
+            </div>
+            <div class="badge rounded-pill bg-info bg-opacity-10 text-info border border-info border-opacity-25 ms-2">
+              {{ ((summary.totalApproved + summary.totalRejected) / summary.totalCount) | percent:'1.0-0' }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--#endregion-->
+
 <!-- #region Table -->
 <div class="ph-card">
   <div class="ph-card__header">
@@ -98,7 +177,11 @@
           </span>
         </ng-template>
       </ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="180"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-badge ph-badge--neutral">{{ row.name }}</span>
+        </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column [name]="'::Category' | abpLocalization" prop="categoryName"
         [width]="180"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::Manufacturer' | abpLocalization" prop="manufacturerName"></ngx-datatable-column>
@@ -121,6 +204,12 @@
             </i>
             {{ '::Enum:MedicineStatus.' + enumName(MedicineStatus, value) | abpLocalization }}
           </span>
+        </ng-template>
+
+      </ngx-datatable-column>
+      <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.creationTime | date: 'medium' }}
         </ng-template>
       </ngx-datatable-column>
 
@@ -149,23 +238,14 @@
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::Name' | abpLocalization }}</label>
         <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>
-        <div *ngIf="form.get('name').invalid && (form.get('name').dirty || form.get('name').touched)"
-          class="ph-error-msg">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::RegistrationNumber' | abpLocalization }}</label>
+        <input type="text" class="form-control form-control-sm" formControlName="registrationNumber">
       </div>
     </div>
 
     <div class="row">
-      <div class="col-md-6 mb-3">
-        <label class="ph-label ph-label--required">{{ '::RegistrationNumber' | abpLocalization }}</label>
-        <input type="text" class="form-control form-control-sm" formControlName="registrationNumber">
-        <div
-          *ngIf="form.get('registrationNumber').invalid && (form.get('registrationNumber').dirty || form.get('registrationNumber').touched)"
-          class="ph-error-msg">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
-      </div>
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::Category' | abpLocalization }}</label>
         <select class="form-select form-select-sm" formControlName="categoryId">
@@ -173,16 +253,16 @@
           <option *ngFor="let item of categories" [ngValue]="item.id">{{ item.name }}</option>
         </select>
       </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::Manufacturer' | abpLocalization }}</label>
+        <app-dropdown-search style="width: 180px;" [items]="manufacturers"
+          [placeholder]="'::Manufacturer' | abpLocalization" [nullLabel]="'::Manufacturer' | abpLocalization"
+          [(ngModel)]="filterManufacturerId" (valueChange)="onFilterChange()">
+        </app-dropdown-search>
+      </div>
     </div>
 
     <div class="row">
-      <div class="col-md-6 mb-3">
-        <label class="ph-label ph-label--required">{{ '::Manufacturer' | abpLocalization }}</label>
-        <select class="form-select form-select-sm" formControlName="manufacturerId">
-          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-          <option *ngFor="let item of manufacturers" [ngValue]="item.id">{{ item.name }}</option>
-        </select>
-      </div>
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::BaseUnit' | abpLocalization }}</label>
         <select class="form-select form-select-sm" formControlName="baseUnitId">
@@ -190,9 +270,6 @@
           <option *ngFor="let item of units" [ngValue]="item.id">{{ item.name }}</option>
         </select>
       </div>
-    </div>
-
-    <div class="row">
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::DosageForm' | abpLocalization }}</label>
         <select class="form-select form-select-sm" formControlName="dosageFormId">
@@ -200,6 +277,9 @@
           <option *ngFor="let item of dosageForms" [ngValue]="item.id">{{ item.name }}</option>
         </select>
       </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::UsageRoute' | abpLocalization }}</label>
         <select class="form-select form-select-sm" formControlName="usageRoute">
@@ -209,9 +289,6 @@
           </option>
         </select>
       </div>
-    </div>
-
-    <div class="row">
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::StorageCondition' | abpLocalization }}</label>
         <select class="form-select form-select-sm" formControlName="storageCondition">
@@ -261,10 +338,6 @@
 
   </form>
 </app-drawer>
-<!-- #endregion -->
-
-<!-- #region Detail Modal -->
-<app-medicine-detail #detailModal></app-medicine-detail>
 <!-- #endregion -->
 
 <!-- #region Import Excel -->

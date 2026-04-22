@@ -9,19 +9,21 @@ import { DosageFormService } from 'src/app/proxy/dosage-forms';
 import { MedicineStatus, medicineStatusOptions, StorageCondition, storageConditionOptions, UsageRoute, usageRouteOptions } from 'src/app/proxy/enums/medicines';
 import { ManufacturerService } from 'src/app/proxy/manufacturers';
 import { MedicineService } from 'src/app/proxy/medicines';
-import { CreateUpdateMedicineDto, GetMedicineListDto, MedicineDetailDto, MedicineDto } from 'src/app/proxy/medicines/dtos';
+import { CreateUpdateMedicineDto, GetMedicineListDto, MedicineDetailDto, MedicineDto, MedicineSummaryDto } from 'src/app/proxy/medicines/dtos';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { MedicineDetailComponent } from './medicice-details/medicice-details.component';
 import { ImportModalComponent } from 'src/app/shared/components/import-compoent/import.component';
 import { enumName } from 'src/app/shared/untils/enum.util';
+import { Router } from '@angular/router';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 
 
 @Component({
   selector: 'app-medicines',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, MedicineDetailComponent, ImportModalComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, ImportModalComponent, DropdownSearchComponent],
   templateUrl: './medicines.component.html',
   styleUrl: './medicines.component.scss',
   providers: [ListService]
@@ -48,6 +50,9 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   manufacturers: any[] = [];
   units: any[] = [];
   dosageForms: any[] = [];
+  summary = {} as MedicineSummaryDto;
+
+  //Enum
   usageRouteOptions = usageRouteOptions;
   storageConditionOptions = storageConditionOptions;
   medicineStatusOptions = medicineStatusOptions;
@@ -71,10 +76,12 @@ export class MedicinesComponent implements OnInit, OnDestroy {
     private unitService: BaseUnitService,
     private dosageFormService: DosageFormService,
     private toaster: ToasterService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
     this.loadLookups();
+    this.loadSummary();
     this.buildForm();
     const streamCreator = (query: GetMedicineListDto) => this.medicineService.getList({
       ...query,
@@ -88,6 +95,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((response) => {
         this.data = response;
+        this.loadSummary();
       });
   }
 
@@ -113,6 +121,14 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       });
   }
 
+  loadSummary(): void {
+    this.medicineService.getSummary()
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => {
+        this.summary = res;
+      });
+  }
+
   //Action
   onSearch(searchValue: string): void {
     this.filterText = searchValue;
@@ -124,7 +140,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
   }
 
   viewDetail(id: string): void {
-    this.detailModal.open(id);
+    this.router.navigate(['/catalog/medicines/details', id]);
   }
 
   createMedicine(): void {

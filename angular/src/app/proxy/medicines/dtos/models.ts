@@ -59,6 +59,7 @@ export interface MedicineDto extends EntityDto<string> {
   status?: MedicineStatus;
   isActive?: boolean;
   creationTime?: string;
+  lastModificationTime?: string;
 }
 
 export interface MedicineIngredientDto {

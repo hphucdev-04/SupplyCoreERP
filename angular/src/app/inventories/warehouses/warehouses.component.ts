@@ -12,7 +12,6 @@ import { LocationService } from 'src/app/proxy/locations';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
-import { CodeGeneratorUtil } from 'src/app/shared/untils/code-generator.util';
 import { Router } from '@angular/router';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
@@ -100,7 +99,7 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   }
 
   manageLocations(id: string): void {
-    this.router.navigate(['/inventory/warehouses', id, 'locations']);
+    this.router.navigate(['/inventory/warehouses','layouts', id]);
   }
 
   loadCountries() {
