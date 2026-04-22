@@ -63,7 +63,7 @@ namespace SupplyCoreERP.Medicines
         #region Export Excel
         public async Task<IRemoteStreamContent> GetListAsExcelFileAsync(GetMedicineListDto input)
         {
-            var query = await _medicineRepo.GetQueryableAsync();
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
 
             query = query
                 .Include(x => x.Category)
@@ -80,10 +80,10 @@ namespace SupplyCoreERP.Medicines
                 .WhereIf(input.ManufacturerId.HasValue, x => x.ManufacturerId == input.ManufacturerId)
                 .WhereIf(input.Status.HasValue, x => x.Status == (MedicineStatus)input.Status);
 
-            var items = await AsyncExecuter.ToListAsync(query);
+            List<Medicine> items = await AsyncExecuter.ToListAsync(query);
 
             //Map Sheet 1
-            var medicineData = items.Select(x => new MedicineExportDto
+            IEnumerable<MedicineExportDto> medicineData = items.Select(x => new MedicineExportDto
             {
                 Code = x.Code,
                 Name = x.Name,
@@ -134,11 +134,11 @@ namespace SupplyCoreERP.Medicines
                 CreationTime = x.CreationTime
             });
 
-            var medicineIds = items.Select(x => x.Id).ToList();
+            List<Guid> medicineIds = items.Select(x => x.Id).ToList();
 
-            var priceQuery = await _productPriceRepo.GetQueryableAsync();
+            IQueryable<ProductPrice> priceQuery = await _productPriceRepo.GetQueryableAsync();
 
-            var prices = await priceQuery
+            List<ProductPrice> prices = await priceQuery
                 .Include(x => x.PriceList)
                 .Include(x => x.Unit)
                 .Include(x => x.Product)
@@ -148,7 +148,7 @@ namespace SupplyCoreERP.Medicines
                 .ToListAsync();
 
             //Map Sheet 2
-            var priceData = prices.Select(x => new MedicinePriceExportDto
+            IEnumerable<MedicinePriceExportDto> priceData = prices.Select(x => new MedicinePriceExportDto
             {
                 MedicineCode = x.Product?.Code,
                 MedicineName = x.Product?.Name,
@@ -159,8 +159,8 @@ namespace SupplyCoreERP.Medicines
                 Currency = x.PriceList?.Currency.ToString()
             });
 
-            var memoryStream = new MemoryStream();
-            var sheets = new Dictionary<string, object>
+            MemoryStream memoryStream = new();
+            Dictionary<string, object> sheets = new()
             {
                 { "Danh sách thuốc", medicineData },
                 { "Bảng giá chi tiết", priceData }
@@ -180,28 +180,28 @@ namespace SupplyCoreERP.Medicines
         #region Import
         public async Task ImportExcelAsync(IRemoteStreamContent file)
         {
-            using var stream = file.GetStream();
+            using Stream stream = file.GetStream();
 
             // Cache db lên RAM
-            var categories = (await _categoryRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
-            var manufacturers = (await _manufacturerRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
-            var units = (await _baseUnitRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
-            var dosages = (await _dosageFormRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
-            var ingredients = (await _ingredientRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
-            var priceLists = (await _priceListRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
+            Dictionary<string, Guid> categories = (await _categoryRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
+            Dictionary<string, Guid> manufacturers = (await _manufacturerRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
+            Dictionary<string, Guid> units = (await _baseUnitRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
+            Dictionary<string, Guid> dosages = (await _dosageFormRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
+            Dictionary<string, Guid> ingredients = (await _ingredientRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
+            Dictionary<string, Guid> priceLists = (await _priceListRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
 
             // Map tempCode ra medicineId
             // Dùng để sheet price tham chiếu 
-            var tempCodeToMedicineId = new Dictionary<string, Guid>(StringComparer.OrdinalIgnoreCase);
+            Dictionary<string, Guid> tempCodeToMedicineId = new(StringComparer.OrdinalIgnoreCase);
 
-            var errors = new List<string>();
+            List<string> errors = new();
             int rowIndex = 1;
 
             // Sheet 1 Danh sách thuốc
-            var medRows = stream.Query<MedicineImportDto>("Danh sách thuốc").ToList();
+            List<MedicineImportDto> medRows = stream.Query<MedicineImportDto>("Danh sách thuốc").ToList();
             if (!medRows.Any()) medRows = stream.Query<MedicineImportDto>().ToList();
 
-            foreach (var row in medRows)
+            foreach (MedicineImportDto? row in medRows)
             {
                 rowIndex++;
                 try
@@ -212,13 +212,13 @@ namespace SupplyCoreERP.Medicines
                     if (string.IsNullOrWhiteSpace(row.Name)) continue;
 
                     // Tìm ID
-                    var catId = GetId(categories, row.Category, $"Dòng {rowIndex}: Nhóm hàng '{row.Category}' không tồn tại");
-                    var manuId = GetId(manufacturers, row.Manufacturer, $"Dòng {rowIndex}: NSX '{row.Manufacturer}' không tồn tại");
-                    var baseUnitId = GetId(units, row.BaseUnit, $"Dòng {rowIndex}: Đơn vị '{row.BaseUnit}' không tồn tại");
-                    var dosageId = GetId(dosages, row.DosageForm, $"Dòng {rowIndex}: Dạng bào chế '{row.DosageForm}' không tồn tại");
+                    Guid catId = GetId(categories, row.Category, $"Dòng {rowIndex}: Nhóm hàng '{row.Category}' không tồn tại");
+                    Guid manuId = GetId(manufacturers, row.Manufacturer, $"Dòng {rowIndex}: NSX '{row.Manufacturer}' không tồn tại");
+                    Guid baseUnitId = GetId(units, row.BaseUnit, $"Dòng {rowIndex}: Đơn vị '{row.BaseUnit}' không tồn tại");
+                    Guid dosageId = GetId(dosages, row.DosageForm, $"Dòng {rowIndex}: Dạng bào chế '{row.DosageForm}' không tồn tại");
 
                     // Manager tạo entity với đầy đủ thông tin ngay từ đầu
-                    var medicine = await _medicineManager.CreateAsync(
+                    Medicine medicine = await _medicineManager.CreateAsync(
                         row.Name, catId, manuId, baseUnitId, dosageId,
                         row.RegistrationNumber,
                         ParseUsageRoute(row.UsageRoute),
@@ -233,7 +233,7 @@ namespace SupplyCoreERP.Medicines
                     {
                         foreach (var name in row.Ingredients.Split(';'))
                         {
-                            if (ingredients.TryGetValue(name.Trim().ToLower(), out var iId)) medicine.AddIngredient(iId);
+                            if (ingredients.TryGetValue(name.Trim().ToLower(), out Guid iId)) medicine.AddIngredient(iId);
                         }
                     }
 
@@ -242,8 +242,8 @@ namespace SupplyCoreERP.Medicines
                     {
                         foreach (var item in row.Units.Split(';'))
                         {
-                            var match = Regex.Match(item.Trim(), @"^(.*?)\s*\(x(\d+)\)$");
-                            if (match.Success && units.TryGetValue(match.Groups[1].Value.Trim().ToLower(), out var uId))
+                            Match match = Regex.Match(item.Trim(), @"^(.*?)\s*\(x(\d+)\)$");
+                            if (match.Success && units.TryGetValue(match.Groups[1].Value.Trim().ToLower(), out Guid uId))
                             {
                                 medicine.AddUnit(GuidGenerator.Create(), uId, int.Parse(match.Groups[2].Value), 1);
                             }
@@ -272,8 +272,8 @@ namespace SupplyCoreERP.Medicines
             rowIndex = 1;
             try
             {
-                var priceRows = stream.Query<MedicinePriceImportDto>("Bảng giá chi tiết").ToList();
-                foreach (var row in priceRows)
+                List<MedicinePriceImportDto> priceRows = stream.Query<MedicinePriceImportDto>("Bảng giá chi tiết").ToList();
+                foreach (MedicinePriceImportDto? row in priceRows)
                 {
                     rowIndex++;
                     try
@@ -281,9 +281,9 @@ namespace SupplyCoreERP.Medicines
                         if (string.IsNullOrWhiteSpace(row.MedicineCode)) continue;
 
                         // Tìm medicine.id đã được map theo tempCode
-                        if (!tempCodeToMedicineId.TryGetValue(row.MedicineCode.ToUpper().Trim(), out var pId)) continue; // Thuốc chưa có -> Bỏ qua
-                        if (!priceLists.TryGetValue(row.PriceListName.ToLower().Trim(), out var plId)) continue;
-                        if (!units.TryGetValue(row.UnitName.ToLower().Trim(), out var uId)) continue;
+                        if (!tempCodeToMedicineId.TryGetValue(row.MedicineCode.ToUpper().Trim(), out Guid pId)) continue; // Thuốc chưa có -> Bỏ qua
+                        if (!priceLists.TryGetValue(row.PriceListName.ToLower().Trim(), out Guid plId)) continue;
+                        if (!units.TryGetValue(row.UnitName.ToLower().Trim(), out Guid uId)) continue;
 
                         int minQty = row.MinQuantity > 0 ? row.MinQuantity : 1;
 
@@ -300,7 +300,7 @@ namespace SupplyCoreERP.Medicines
                         }
 
                         // Insert
-                        var price = await _priceManager.CreatePriceAsync(plId, pId, uId, row.Price, minQty);
+                        ProductPrice price = await _priceManager.CreatePriceAsync(plId, pId, uId, row.Price, minQty);
                         await _productPriceRepo.InsertAsync(price);
                     }
                     catch (Exception ex)
@@ -323,23 +323,23 @@ namespace SupplyCoreERP.Medicines
         #region Template
         public async Task<IRemoteStreamContent> GetImportTemplateAsync()
         {
-            var categories = (await _categoryRepo.GetListAsync()).Select(x => x.Name).ToList();
-            var manufacturers = (await _manufacturerRepo.GetListAsync()).Select(x => x.Name).ToList();
-            var units = (await _baseUnitRepo.GetListAsync()).Select(x => x.Name).ToList();
-            var dosageForms = (await _dosageFormRepo.GetListAsync()).Select(x => x.Name).ToList();
-            var priceLists = (await _priceListRepo.GetListAsync()).Select(x => x.Name).ToList();
+            List<string> categories = (await _categoryRepo.GetListAsync()).Select(x => x.Name).ToList();
+            List<string> manufacturers = (await _manufacturerRepo.GetListAsync()).Select(x => x.Name).ToList();
+            List<string> units = (await _baseUnitRepo.GetListAsync()).Select(x => x.Name).ToList();
+            List<string> dosageForms = (await _dosageFormRepo.GetListAsync()).Select(x => x.Name).ToList();
+            List<string> priceLists = (await _priceListRepo.GetListAsync()).Select(x => x.Name).ToList();
 
-            var workbook = new XSSFWorkbook();
-            var sheetMain = workbook.CreateSheet("Danh sách thuốc");
-            var sheetPrice = workbook.CreateSheet("Bảng giá chi tiết");
-            var sheetData = workbook.CreateSheet("MasterData");
-            var headerStyle = CreateHeaderStyle(workbook);
+            XSSFWorkbook workbook = new();
+            ISheet sheetMain = workbook.CreateSheet("Danh sách thuốc");
+            ISheet sheetPrice = workbook.CreateSheet("Bảng giá chi tiết");
+            ISheet sheetData = workbook.CreateSheet("MasterData");
+            ICellStyle headerStyle = CreateHeaderStyle(workbook);
 
             // MasterData
             int maxRows = new[] { categories.Count, manufacturers.Count, units.Count, dosageForms.Count, priceLists.Count }.Max();
             for (int i = 0; i < maxRows; i++)
             {
-                var row = sheetData.CreateRow(i);
+                IRow row = sheetData.CreateRow(i);
                 if (i < categories.Count) row.CreateCell(0).SetCellValue(categories[i]);
                 if (i < manufacturers.Count) row.CreateCell(1).SetCellValue(manufacturers[i]);
                 if (i < units.Count) row.CreateCell(2).SetCellValue(units[i]);
@@ -356,7 +356,7 @@ namespace SupplyCoreERP.Medicines
             // Sửa startRow thành 0 để ListTempCodes map đúng từ dòng 2 của Excel
             CreateNamedRange(workbook, "ListTempCodes", "Danh sách thuốc", 0, 1000, startRow: 1);
 
-            //workbook.SetSheetHidden(workbook.GetSheetIndex("MasterData"), true);
+            workbook.SetSheetHidden(workbook.GetSheetIndex("MasterData"), true);
 
             // Sheet 1
             var headers1 = new[]
@@ -392,11 +392,11 @@ namespace SupplyCoreERP.Medicines
                 "Nhiều đơn vị cách nhau bằng dấu ;\nVD: Vỉ (x10); Hộp (x100)\n Lưu ý: Tên đơn vị phải có trong đơn vị cơ bản"
             };
 
-            var headerRow1 = sheetMain.CreateRow(0);
+            IRow headerRow1 = sheetMain.CreateRow(0);
 
             for (int i = 0; i < headers1.Length; i++)
             {
-                var cell = headerRow1.CreateCell(i);
+                ICell cell = headerRow1.CreateCell(i);
                 cell.SetCellValue(headers1[i]);
                 cell.CellStyle = headerStyle;
                 sheetMain.SetColumnWidth(i, 6500);
@@ -433,11 +433,11 @@ namespace SupplyCoreERP.Medicines
                 "Số lượng tối thiểu áp dụng giá này.\nVD: 1"
             };
 
-            var headerRow2 = sheetPrice.CreateRow(0);
+            IRow headerRow2 = sheetPrice.CreateRow(0);
 
             for (int i = 0; i < headers2.Length; i++)
             {
-                var cell = headerRow2.CreateCell(i);
+                ICell cell = headerRow2.CreateCell(i);
                 cell.SetCellValue(headers2[i]);
                 cell.CellStyle = headerStyle;
                 sheetPrice.SetColumnWidth(i, 6500);
@@ -450,7 +450,7 @@ namespace SupplyCoreERP.Medicines
             AddValidationFromRow(sheetPrice, "ListPriceLists", 1, 1);
             AddValidationFromRow(sheetPrice, "ListUnits", 2, 1);
 
-            var memoryStream = new MemoryStream();
+            MemoryStream memoryStream = new();
             workbook.Write(memoryStream, leaveOpen: true);
             memoryStream.Seek(0, SeekOrigin.Begin);
 
@@ -464,8 +464,8 @@ namespace SupplyCoreERP.Medicines
         #region Hepler
         private ICellStyle CreateHeaderStyle(IWorkbook wb)
         {
-            var style = wb.CreateCellStyle();
-            var font = wb.CreateFont();
+            ICellStyle style = wb.CreateCellStyle();
+            IFont font = wb.CreateFont();
             font.Color = IndexedColors.White.Index;
             font.IsBold = true;
             style.SetFont(font);
@@ -495,13 +495,13 @@ namespace SupplyCoreERP.Medicines
 
         private void AddValidation(ISheet sheet, string namedRange, int colIndex)
         {
-            var helper = sheet.GetDataValidationHelper();
+            IDataValidationHelper helper = sheet.GetDataValidationHelper();
             // Tạo constraint từ Named Range
-            var constraint = helper.CreateFormulaListConstraint(namedRange);
+            IDataValidationConstraint constraint = helper.CreateFormulaListConstraint(namedRange);
 
             // Áp dụng từ dòng 1 đến dòng 1000 (Bỏ qua header dòng 0)
-            var addressList = new CellRangeAddressList(1, 1000, colIndex, colIndex);
-            var validation = helper.CreateValidation(constraint, addressList);
+            CellRangeAddressList addressList = new(1, 1000, colIndex, colIndex);
+            IDataValidation validation = helper.CreateValidation(constraint, addressList);
 
             validation.ShowErrorBox = true;
             validation.CreateErrorBox("Lỗi nhập liệu", "Vui lòng chọn giá trị từ danh sách.");
@@ -510,10 +510,10 @@ namespace SupplyCoreERP.Medicines
 
         private void AddValidationList(ISheet sheet, string[] items, int colIndex)
         {
-            var helper = sheet.GetDataValidationHelper();
-            var constraint = helper.CreateExplicitListConstraint(items);
-            var addressList = new CellRangeAddressList(1, 1000, colIndex, colIndex);
-            var validation = helper.CreateValidation(constraint, addressList);
+            IDataValidationHelper helper = sheet.GetDataValidationHelper();
+            IDataValidationConstraint constraint = helper.CreateExplicitListConstraint(items);
+            CellRangeAddressList addressList = new(1, 1000, colIndex, colIndex);
+            IDataValidation validation = helper.CreateValidation(constraint, addressList);
 
             validation.ShowErrorBox = true;
             validation.CreateErrorBox("Lỗi nhập liệu", "Vui lòng chọn giá trị từ danh sách.");
@@ -522,7 +522,7 @@ namespace SupplyCoreERP.Medicines
         private Guid GetId(Dictionary<string, Guid> dict, string name, string err)
         {
             // Tìm trong Dict (Key đã lower + trim), nếu có trả về ID, không có ném lỗi
-            return dict.TryGetValue(name?.ToLower().Trim() ?? "", out var id) ? id : throw new Exception(err);
+            return dict.TryGetValue(name?.ToLower().Trim() ?? "", out Guid id) ? id : throw new Exception(err);
         }
 
         private bool ParseBool(string input)
@@ -556,14 +556,14 @@ namespace SupplyCoreERP.Medicines
         // Thêm tooltip (comment) vào 1 cell
         private void AddCellComment(ISheet sheet, ICell cell, string commentText)
         {
-            var anchor = sheet.Workbook.GetCreationHelper().CreateClientAnchor();
+            IClientAnchor anchor = sheet.Workbook.GetCreationHelper().CreateClientAnchor();
             anchor.Col1 = cell.ColumnIndex;
             anchor.Col2 = cell.ColumnIndex + 3;
             anchor.Row1 = 0;
             anchor.Row2 = 5;
 
-            var drawing = sheet.CreateDrawingPatriarch();
-            var comment = drawing.CreateCellComment(anchor);
+            IDrawing<IShape> drawing = sheet.CreateDrawingPatriarch();
+            IComment comment = drawing.CreateCellComment(anchor);
             comment.String = new XSSFRichTextString(commentText);
             comment.Author = "Hướng dẫn";
             comment.Visible = false; // chỉ hiện khi hover
@@ -573,10 +573,10 @@ namespace SupplyCoreERP.Medicines
         // Validation từ row chỉ định (để bỏ qua dòng gợi ý ở row 1)
         private void AddValidationFromRow(ISheet sheet, string namedRange, int colIndex, int startRow = 1)
         {
-            var helper = sheet.GetDataValidationHelper();
-            var constraint = helper.CreateFormulaListConstraint(namedRange);
-            var addressList = new CellRangeAddressList(startRow, 1000, colIndex, colIndex);
-            var validation = helper.CreateValidation(constraint, addressList);
+            IDataValidationHelper helper = sheet.GetDataValidationHelper();
+            IDataValidationConstraint constraint = helper.CreateFormulaListConstraint(namedRange);
+            CellRangeAddressList addressList = new(startRow, 1000, colIndex, colIndex);
+            IDataValidation validation = helper.CreateValidation(constraint, addressList);
             validation.ShowErrorBox = true;
             validation.CreateErrorBox("Lỗi nhập liệu", "Vui lòng chọn giá trị từ danh sách.");
             sheet.AddValidationData(validation);
@@ -584,10 +584,10 @@ namespace SupplyCoreERP.Medicines
 
         private void AddValidationListFromRow(ISheet sheet, string[] items, int colIndex, int startRow = 1)
         {
-            var helper = sheet.GetDataValidationHelper();
-            var constraint = helper.CreateExplicitListConstraint(items);
-            var addressList = new CellRangeAddressList(startRow, 1000, colIndex, colIndex);
-            var validation = helper.CreateValidation(constraint, addressList);
+            IDataValidationHelper helper = sheet.GetDataValidationHelper();
+            IDataValidationConstraint constraint = helper.CreateExplicitListConstraint(items);
+            CellRangeAddressList addressList = new(startRow, 1000, colIndex, colIndex);
+            IDataValidation validation = helper.CreateValidation(constraint, addressList);
             validation.ShowErrorBox = true;
             validation.CreateErrorBox("Lỗi nhập liệu", "Vui lòng chọn giá trị từ danh sách.");
             sheet.AddValidationData(validation);

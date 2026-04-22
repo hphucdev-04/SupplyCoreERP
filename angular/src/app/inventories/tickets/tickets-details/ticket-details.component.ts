@@ -196,6 +196,8 @@ export class TicketDetailsComponent implements OnDestroy {
       this.filteredBins = this.bins.filter(b => b.zoneStorageCondition === condition);
       this.hiddenBinCount = this.bins.length - this.filteredBins.length;
     }
+    console.log("Số Bin sau khi lọc:", this.filteredBins.length);
+    
     const currentBinId = this.detailForm?.get('binId')?.value;
     if (currentBinId && !this.filteredBins.find(b => b.id === currentBinId)) {
       this.detailForm?.patchValue({ binId: null });

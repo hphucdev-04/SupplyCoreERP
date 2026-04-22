@@ -161,7 +161,7 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
       .subscribe(res => {
         this.warehouse = res;
         this.routesService.add([{
-          path: `/inventory/warehouses/${this.warehouseId}/locations`,
+          path: `/inventory/warehouses/layouts/${this.warehouseId}`,
           name: this.ROUTE_NAME, parentName: '::Menu:Warehouses',
           iconClass: 'fas fa-map', layout: eLayoutType.application,
         }]);

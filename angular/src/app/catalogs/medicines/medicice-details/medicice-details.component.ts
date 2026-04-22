@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { forkJoin } from 'rxjs';
+import { forkJoin, Subject } from 'rxjs';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { ActiveIngredientService } from 'src/app/proxy/active-ingredients';
@@ -15,19 +15,23 @@ import { PriceService } from 'src/app/proxy/prices';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
 import { CurrencyType } from 'src/app/proxy/enums';
 import { enumName } from 'src/app/shared/untils/enum.util';
+import { ActivatedRoute, Router } from '@angular/router';
+import { eLayoutType, RoutesService } from '@abp/ng.core';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 
 @Component({
   selector: 'app-medicine-detail',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, CurrencyFormatDirective],
+  imports: [SharedModule, DrawerComponent, CurrencyFormatDirective, DropdownSearchComponent],
   templateUrl: 'medicice-details.component.html',
   styleUrl: 'medicice-details.component.scss',
 })
-export class MedicineDetailComponent {
-
+export class MedicineDetailComponent implements OnInit, OnDestroy{
+  private destroy$ = new Subject<void>();
+  private readonly ROUTE_NAME = '::Menu:MedicineDetails';
   //Modal State
   isVisible = false;
-  id = '';
+  id: string;
   medicine: MedicineDetailDto;
 
   //List này gộp BaseUnit + Các Unit quy đổi -> Dùng để chọn khi set giá
@@ -72,9 +76,28 @@ export class MedicineDetailComponent {
     private unitService: BaseUnitService,
     private priceService: PriceService,
     private fb: FormBuilder,
-    private confirmation: ConfirmationService
+    private confirmation: ConfirmationService,
+    private route: ActivatedRoute,
+    private router: Router,
+    private routesService: RoutesService,
   ) {
     this.initForms();
+  } 
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    if (id) {
+      this.open(id);
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.routesService.remove([this.ROUTE_NAME]);
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
+
+  goBack(): void {
+    this.router.navigate(['/catalog/medicines']);
   }
 
   readonly enumName = enumName;
@@ -93,6 +116,13 @@ export class MedicineDetailComponent {
   loadData() {
     this.medicineService.get(this.id).subscribe(res => {
       this.medicine = res;
+      this.routesService.add([{
+        path: `/catalog/medicines/details/${this.id}`,
+        name: this.ROUTE_NAME,
+        parentName: '::Menu:Medicines',
+        iconClass: 'fas fa-pills',
+        layout: eLayoutType.application,
+      }]);
       this.prepareUnitsForPrice();
       this.loadLookups(res);
       this.loadPrices();
