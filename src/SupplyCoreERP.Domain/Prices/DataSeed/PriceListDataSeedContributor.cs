@@ -1,6 +1,6 @@
-﻿using System;
+﻿using SupplyCoreERP.Enums.PriceList;
+using System;
 using System.Threading.Tasks;
-using SupplyCoreERP.Enums;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;

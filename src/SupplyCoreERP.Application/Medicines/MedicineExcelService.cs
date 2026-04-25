@@ -231,7 +231,7 @@ namespace SupplyCoreERP.Medicines
                     // Ingredients
                     if (!string.IsNullOrWhiteSpace(row.Ingredients))
                     {
-                        foreach (var name in row.Ingredients.Split(';'))
+                        foreach (string name in row.Ingredients.Split(';'))
                         {
                             if (ingredients.TryGetValue(name.Trim().ToLower(), out Guid iId)) medicine.AddIngredient(iId);
                         }
@@ -240,7 +240,7 @@ namespace SupplyCoreERP.Medicines
                     // Units
                     if (!string.IsNullOrWhiteSpace(row.Units))
                     {
-                        foreach (var item in row.Units.Split(';'))
+                        foreach (string item in row.Units.Split(';'))
                         {
                             Match match = Regex.Match(item.Trim(), @"^(.*?)\s*\(x(\d+)\)$");
                             if (match.Success && units.TryGetValue(match.Groups[1].Value.Trim().ToLower(), out Guid uId))
@@ -255,7 +255,7 @@ namespace SupplyCoreERP.Medicines
 
                     // Lưu mapping TempCode -> Id để Sheet giá dùng
                     // Nếu không có TempCode thì dùng Name làm key dự phòng
-                    var tempKey = !string.IsNullOrWhiteSpace(row.TempCode)
+                    string tempKey = !string.IsNullOrWhiteSpace(row.TempCode)
                         ? row.TempCode.Trim()
                         : row.Name.Trim();
 
@@ -289,7 +289,7 @@ namespace SupplyCoreERP.Medicines
 
                         // Check trùng giá
                         // Nếu giá này đã có rồi thì bỏ qua, không update đè
-                        var existsPrice = await _productPriceRepo.AnyAsync(x =>
+                        bool existsPrice = await _productPriceRepo.AnyAsync(x =>
                             x.PriceListId == plId && x.ProductId == pId &&
                             x.UnitId == uId && x.MinQuantity == minQty);
 
@@ -313,7 +313,7 @@ namespace SupplyCoreERP.Medicines
 
             if (errors.Any())
             {
-                var errorMsg = $"Kết quả nhập liệu:\n- " + string.Join("\n- ", errors.Take(15));
+                string errorMsg = $"Kết quả nhập liệu:\n- " + string.Join("\n- ", errors.Take(15));
                 if (errors.Count > 15) errorMsg += $"\n... và {errors.Count - 15} lỗi khác.";
                 throw new UserFriendlyException(errorMsg);
             }
@@ -359,7 +359,7 @@ namespace SupplyCoreERP.Medicines
             workbook.SetSheetHidden(workbook.GetSheetIndex("MasterData"), true);
 
             // Sheet 1
-            var headers1 = new[]
+            string[] headers1 = new[]
             {
                 "Mã tạm",           // 0
                 "Tên thuốc",        // 1
@@ -376,7 +376,7 @@ namespace SupplyCoreERP.Medicines
             };
 
             // Tooltip hover vào header để biết cách điền
-            var tooltips1 = new[]
+            string[] tooltips1 = new[]
             {
                 "Mã tạm do bạn tự đặt, dùng để ghép với Sheet 'Bảng giá'.\nVD: MED001, PANADOL_1",
                 "Tên thuốc. Bắt buộc điền.",
@@ -415,7 +415,7 @@ namespace SupplyCoreERP.Medicines
             AddValidationListFromRow(sheetMain, new[] { "Có", "Không" }, 9, 1);
 
             // Sheet 2
-            var headers2 = new[]
+            string[] headers2 = new[]
             {
                 "Mã tạm",       // 0
                 "Bảng giá",     // 1
@@ -424,7 +424,7 @@ namespace SupplyCoreERP.Medicines
                 "SL tối thiểu"  // 4
             };
 
-            var tooltips2 = new[]
+            string[] tooltips2 = new[]
             {
                 "Điền Mã tạm giống Sheet 'Danh sách thuốc'.\nChọn từ dropdown để tránh nhập sai.",
                 "Chọn từ danh sách dropdown.",
@@ -528,14 +528,14 @@ namespace SupplyCoreERP.Medicines
         private bool ParseBool(string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return false; // Mặc định false
-            var s = input.ToLower().Trim();
+            string s = input.ToLower().Trim();
             return s == "có" || s == "true" || s == "1" || s == "yes" || s.Contains("hoạt động");
         }
 
         private UsageRoute ParseUsageRoute(string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return UsageRoute.Oral; // Mặc định Uống
-            var s = input.ToLower().Trim();
+            string s = input.ToLower().Trim();
             if (s.Contains("tiêm")) return UsageRoute.Injection;
             if (s.Contains("ngoài")) return UsageRoute.External;
             if (s.Contains("khác")) return UsageRoute.Other;
@@ -545,7 +545,7 @@ namespace SupplyCoreERP.Medicines
         private StorageCondition ParseStorage(string input)
         {
             if (string.IsNullOrWhiteSpace(input)) return StorageCondition.Normal; // Mặc định Bình thường
-            var s = input.ToLower().Trim();
+            string s = input.ToLower().Trim();
             if (s.Contains("mát")) return StorageCondition.Cool;
             if (s.Contains("lạnh")) return StorageCondition.Cold;
             if (s.Contains("đông")) return StorageCondition.Frozen;

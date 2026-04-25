@@ -1,7 +1,6 @@
 ﻿using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Products;
 using System;
-using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Suppliers
 {
@@ -9,7 +8,7 @@ namespace SupplyCoreERP.Suppliers
     /// Bảng giá / thông tin mua hàng theo từng cặp (Nhà cung cấp – Sản phẩm).
     /// Tương đương Purchasing Info Record trong SAP.
     /// </summary>
-    public class SupplierProduct : FullAuditedEntity<Guid>
+    public class SupplierProduct
     {
         public Guid SupplierId { get; private set; }
         public virtual Supplier Supplier { get; protected set; }
@@ -39,7 +38,6 @@ namespace SupplyCoreERP.Suppliers
         protected SupplierProduct() { }
 
         public SupplierProduct(
-            Guid id,
             Guid supplierId,
             Guid productId,
             Guid defaultUnitId,
@@ -50,7 +48,7 @@ namespace SupplyCoreERP.Suppliers
             decimal overDeliveryTolerancePct = 0,
             decimal underDeliveryTolerancePct = 0,
             bool isPreferred = false,
-            string? note = null) : base(id)
+            string? note = null)
         {
             SupplierId = supplierId;
             ProductId = productId;

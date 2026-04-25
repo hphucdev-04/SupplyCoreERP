@@ -35,7 +35,7 @@ class Program
             //.UseEnvironment("Development")
             .ConfigureLogging((context, logging) =>
             {
-                Console.WriteLine($"===> CURRENT ENVIRONMENT: {context.HostingEnvironment.EnvironmentName}");
+                Console.WriteLine($"CURRENT ENVIRONMENT: {context.HostingEnvironment.EnvironmentName}");
                 logging.ClearProviders();
             })
             .ConfigureServices((hostContext, services) =>
