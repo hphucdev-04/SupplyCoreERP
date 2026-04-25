@@ -2,7 +2,6 @@ import type { Gender } from '../../enums/partner/gender.enum';
 import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 
 export interface CreateUpdateSupplierDto {
-  code: string;
   name: string;
   taxCode?: string;
   phoneNumber?: string;

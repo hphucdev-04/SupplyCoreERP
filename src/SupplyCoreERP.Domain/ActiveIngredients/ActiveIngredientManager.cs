@@ -29,7 +29,7 @@ namespace SupplyCoreERP.ActiveIngredients
 
 		public async Task<ActiveIngredient> CreateAsync(string name)
 		{
-			var code = await _documentSequenceManager.GenerateAsync("AI");
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeIngredient);
 
             if (await _repository.AnyAsync(x => x.Code == code))
 				throw new UserFriendlyException($"Mã hoạt chất '{code}' đã tồn tại!");

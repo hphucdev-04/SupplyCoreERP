@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using OpenIddict.Abstractions;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
-using OpenIddict.Abstractions;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.OpenIddict;
@@ -36,17 +36,18 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
 
     private async Task CreateScopesAsync()
     {
-        await CreateScopesAsync(new OpenIddictScopeDescriptor 
+        await CreateScopesAsync(new OpenIddictScopeDescriptor
         {
-            Name = "SupplyCoreERP", 
-            DisplayName = "SupplyCoreERP API", 
+            Name = "SupplyCoreERP",
+            DisplayName = "SupplyCoreERP API",
             Resources = { "SupplyCoreERP" }
         });
     }
 
     private async Task CreateApplicationsAsync()
     {
-        var commonScopes = new List<string> {
+        List<string> commonScopes = new()
+        {
             OpenIddictConstants.Permissions.Scopes.Address,
             OpenIddictConstants.Permissions.Scopes.Email,
             OpenIddictConstants.Permissions.Scopes.Phone,
@@ -55,7 +56,7 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
             "SupplyCoreERP"
         };
 
-        var configurationSection = Configuration.GetSection("OpenIddict:Applications");
+        IConfigurationSection configurationSection = Configuration.GetSection("OpenIddict:Applications");
 
 
         //Console Test / Angular Client
@@ -86,8 +87,8 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
             );
         }
 
-        
-        
+
+
 
 
 
@@ -113,6 +114,26 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
             );
         }
 
+        // Hangfire Client
+        var hangfireClientId = configurationSection["SupplyCoreERP_Hangfire:ClientId"];
+        if (!hangfireClientId.IsNullOrWhiteSpace())
+        {
+            var hangfireRootUrl = configurationSection["SupplyCoreERP_Hangfire:RootUrl"]?.TrimEnd('/');
+
+            await CreateOrUpdateApplicationAsync(
+                applicationType: OpenIddictConstants.ApplicationTypes.Web,
+                name: hangfireClientId!,
+                type: OpenIddictConstants.ClientTypes.Public,
+                consentType: OpenIddictConstants.ConsentTypes.Implicit,
+                displayName: "Hangfire Dashboard",
+                secret: null,
+                grantTypes: new List<string> { OpenIddictConstants.GrantTypes.AuthorizationCode },
+                scopes: commonScopes,
+                redirectUris: new List<string> { $"{hangfireRootUrl}/hangfire" },
+                clientUri: hangfireRootUrl.EnsureEndsWith('/') + "hangfire",
+                logoUri: "/images/clients/hangfire.svg"
+            );
+        }
 
     }
 }

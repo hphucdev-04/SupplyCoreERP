@@ -8,10 +8,6 @@ namespace SupplyCoreERP.Suppliers.Dtos
 	public class CreateUpdateSupplierDto
 	{
 		[Required]
-		[MaxLength(50)]
-		public string Code { get; set; }
-
-		[Required]
 		[MaxLength(255)]
 		public string Name { get; set; }
 

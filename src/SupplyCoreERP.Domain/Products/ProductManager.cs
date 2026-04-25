@@ -6,34 +6,26 @@ using Volo.Abp.Domain.Services;
 
 namespace SupplyCoreERP.Products
 {
-	public class ProductManager : DomainService
-	{
-		private readonly IRepository<Product, Guid> _productRepository;
+    public class ProductManager : DomainService
+    {
+        private readonly IRepository<Product, Guid> _productRepository;
 
-		public ProductManager(IRepository<Product, Guid> productRepository)
-		{
-			_productRepository = productRepository;
-		}
+        public ProductManager(IRepository<Product, Guid> productRepository)
+        {
+            _productRepository = productRepository;
+        }
 
-		public async Task CheckCodeAndNameAsync(string code, string name, Guid? excludeId = null)
-		{
-			Check.NotNullOrWhiteSpace(code, nameof(code));
-			Check.NotNullOrWhiteSpace(name, nameof(name));
+        public async Task CheckCodeAsync(string code, Guid? excludeId = null)
+        {
+            Check.NotNullOrWhiteSpace(code, nameof(code));
+            string normalizedCode = code.Trim().ToUpper();
 
-			var normalizedCode = code.Trim().ToUpper();
-			var normalizedName = name.Trim();
 
-			// Check Code
-			if (await _productRepository.AnyAsync(x => x.Code == normalizedCode && x.Id != excludeId))
-			{
-				throw new UserFriendlyException($"Mã sản phẩm '{code}' đã tồn tại!");
-			}
-
-			// Check Name 
-			if (await _productRepository.AnyAsync(x => x.Name == normalizedName && x.Id != excludeId))
-			{
-				throw new UserFriendlyException($"Tên sản phẩm '{name}' đã tồn tại!");
-			}
-		}
-	}
+            // Check Code
+            if (await _productRepository.AnyAsync(x => x.Code == normalizedCode && x.Id != excludeId))
+            {
+                throw new UserFriendlyException($"Mã sản phẩm '{code}' đã tồn tại!");
+            }
+        }
+    }
 }

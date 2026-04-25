@@ -1,0 +1,76 @@
+<div class="ds-wrapper" [class.ds-open]="isOpen" [class.ds-disabled]="disabled">
+
+  <!-- Trigger -->
+  <div class="ds-trigger form-control form-control-sm" (click)="toggle()" [class.ds-placeholder]="!hasValue">
+    <span class="ds-trigger__label">
+      {{ hasValue ? displayLabel : placeholder }}
+    </span>
+    <span class="ds-trigger__actions">
+      <span class="ds-clear" *ngIf="clearable && hasValue" (click)="clear($event)" title="Clear">
+        <i class="fa fa-times"></i>
+      </span>
+      <span class="ds-chevron">
+        <i class="fa fa-chevron-down"></i>
+      </span>
+    </span>
+  </div>
+
+  <!-- Dropdown panel -->
+  <div class="ds-panel" *ngIf="isOpen">
+
+    <!-- Search box -->
+    <div class="ds-search">
+      <i class="fa fa-search ds-search__icon"></i>
+      <input
+        class="ds-search__input"
+        type="text"
+        [placeholder]="searchPlaceholder"
+        [(ngModel)]="searchText"
+        (click)="$event.stopPropagation()"
+        autofocus
+      />
+      <span class="ds-search__clear" *ngIf="searchText" (click)="searchText = ''">
+        <i class="fa fa-times-circle"></i>
+      </span>
+    </div>
+
+    <!-- Options list -->
+    <ul class="ds-list">
+
+      <!-- Null option (used in filter mode) -->
+      <li
+        class="ds-list__item ds-list__item--null"
+        *ngIf="nullLabel !== null"
+        [class.ds-list__item--selected]="!hasValue"
+        (click)="select(null)"
+      >
+        <i class="fa fa-circle-xmark me-1 opacity-50"></i>
+        {{ nullLabel }}
+      </li>
+
+      <!-- Regular items -->
+      <li
+        class="ds-list__item"
+        *ngFor="let item of filteredItems"
+        [class.ds-list__item--selected]="isSelected(item)"
+        (click)="select(item)"
+      >
+        <i class="fa fa-check ds-list__check" *ngIf="isSelected(item)"></i>
+        <span>{{ item[labelKey] }}</span>
+      </li>
+
+      <!-- Empty state -->
+      <li class="ds-list__empty" *ngIf="filteredItems.length === 0">
+        <i class="fa fa-magnifying-glass-minus me-1"></i>
+        No results for "<strong>{{ searchText }}</strong>"
+      </li>
+
+    </ul>
+
+    <!-- Count hint -->
+    <div class="ds-footer" *ngIf="items.length > 0">
+      {{ filteredItems.length }} / {{ items.length }} items
+    </div>
+
+  </div>
+</div>

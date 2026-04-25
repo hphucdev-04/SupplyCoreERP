@@ -68,10 +68,17 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
 			);
 
         // Batch
+<<<<<<< HEAD
         AddCrudPermissions(inventoryGroup, SupplyCoreERPPermissions.Inventory.Warehouse.Default, "Batch");
 
 		// Ticket
         var ticketPermission = AddCrudPermissions(inventoryGroup, SupplyCoreERPPermissions.Inventory.Warehouse.Default, "Ticket");
+=======
+        AddCrudPermissions(inventoryGroup, SupplyCoreERPPermissions.Inventory.Batch.Default, "Batch");
+
+		// Ticket
+        var ticketPermission = AddCrudPermissions(inventoryGroup, SupplyCoreERPPermissions.Inventory.Ticket.Default, "Ticket");
+>>>>>>> 1a938ab5e1d7ee2a1ad1f03fa76d3cc6777a06d2
 			// Add Child
 			ticketPermission.AddChild(
 					SupplyCoreERPPermissions.Inventory.Ticket.Approve,

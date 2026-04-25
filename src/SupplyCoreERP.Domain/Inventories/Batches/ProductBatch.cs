@@ -1,14 +1,17 @@
-﻿using SupplyCoreERP.Enums.Warehouses;
+﻿using Microsoft.Extensions.Hosting;
+using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
 using System;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Inventories.Batches
 {
 	public class ProductBatch : FullAuditedAggregateRoot<Guid>
 	{
-		public Guid ProductId { get; private set; }
+		public string Code { get; private set; }
+        public Guid ProductId { get; private set; }
 		public virtual Product Product { get; protected set; }
 		public string BatchNumber { get; private set; }
 		public DateTime ManufacturingDate { get; private set; }
@@ -19,11 +22,12 @@ namespace SupplyCoreERP.Inventories.Batches
 
 		protected ProductBatch() { }
 
-		public ProductBatch(Guid id, Guid productId, string batchNumber, DateTime mfg, DateTime exp, Guid? supplierId) : base(id)
+		public ProductBatch(Guid id, string code, Guid productId, string batchNumber, DateTime mfg, DateTime exp, Guid? supplierId) : base(id)
 		{
 			if (exp <= mfg) throw new ArgumentException("Hạn sử dụng phải lớn hơn Ngày sản xuất!");
-			ProductId = productId; 
-			BatchNumber = batchNumber.ToUpper();
+			Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50);
+            ProductId = productId; 
+			BatchNumber = Check.NotNullOrWhiteSpace(batchNumber, nameof(BatchNumber), 50).ToUpper();
 			ManufacturingDate = mfg; 
 			ExpiryDate = exp; 
 			SupplierId = supplierId;

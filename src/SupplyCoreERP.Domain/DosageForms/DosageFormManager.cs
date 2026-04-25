@@ -29,7 +29,7 @@ namespace SupplyCoreERP.DosageForms
 			Check.NotNullOrWhiteSpace(name, nameof(name));
 			var normalizedName = name.Trim();
 
-			var code = await _documentSequenceManager.GenerateAsync("DF");
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeDosageForm);
             //Check trùng mã
             if (await _repository.AnyAsync(x => x.Code == code))
 			{

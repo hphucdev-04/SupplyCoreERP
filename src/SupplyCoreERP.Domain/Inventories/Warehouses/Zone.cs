@@ -10,8 +10,8 @@ namespace SupplyCoreERP.Warehouses
 	{
 		public Guid WarehouseId { get; private set; }
 
-		public string Code { get; private set; } // VD: Z-COLD-01
-		public string Name { get; private set; } // VD: Kho Lạnh Vắc-xin
+		public string Code { get; private set; } 
+		public string Name { get; private set; } 
 
 		public ZoneType Type { get; private set; }
 

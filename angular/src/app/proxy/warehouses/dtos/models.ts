@@ -21,7 +21,6 @@ export interface BinDto extends EntityDto<string> {
 export interface CreateUpdateBinDto {
   warehouseId: string;
   zoneId: string;
-  code: string;
   positionX?: number;
   positionY?: number;
   width?: number;
@@ -32,9 +31,9 @@ export interface CreateUpdateBinDto {
 }
 
 export interface CreateUpdateWarehouseDto {
-  code: string;
   name: string;
   address?: string;
+  countryId?: string;
   cityId?: string;
   areaId?: string;
   mapWidth?: number;
@@ -43,7 +42,6 @@ export interface CreateUpdateWarehouseDto {
 
 export interface CreateUpdateZoneDto {
   warehouseId: string;
-  code: string;
   name: string;
   type: ZoneType;
   storageCondition: StorageCondition;
@@ -65,6 +63,8 @@ export interface WarehouseDto extends FullAuditedEntityDto<string> {
   code?: string;
   name?: string;
   address?: string;
+  countryId?: string;
+  countryName?: string;
   cityId?: string;
   cityName?: string;
   areaId?: string;

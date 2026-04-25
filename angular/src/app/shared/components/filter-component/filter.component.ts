@@ -1,97 +1,88 @@
-import { Component, ElementRef, EventEmitter, HostListener, Input, Output } from '@angular/core';
+import {
+  Component, ElementRef,
+  EventEmitter, HostListener, Input, Output,
+} from '@angular/core';
 import { SharedModule } from '../../shared.module';
+import { DropdownSearchComponent } from '../dropdownsearch-component/dropdown-search.component';
 
-export interface FilterOption {
-  label: string;
-  value: any;
-  color?: string;
-}
-
-export interface FilterConfig {
+export interface FilterSlot {
   key: string;
   label: string;
-  type: 'radio' | 'searchable-select' | 'checkbox';
-  options: FilterOption[];
+  type: 'searchable-select' | 'radio';
+  items: any[];
+  labelKey?: string;
+  valueKey?: string;
+  colors?: Record<any, string>;
   value?: any;
-  _searchTerm?: string;
 }
 
 @Component({
   selector: 'app-filter',
   standalone: true,
-  imports: [SharedModule],
+  imports: [SharedModule, DropdownSearchComponent],
   templateUrl: './filter.component.html',
-  styleUrls: ['./filter.component.scss']
+  styleUrls: ['./filter.component.scss'],
 })
 export class FilterComponent {
-  @Input() config: FilterConfig[] = [];
-  @Output() filterApplied = new EventEmitter<Record<string, any>>();
+
+  // ── Mỗi filter field là 1 Input riêng ──────────────────────
+  @Input() set slot1(s: FilterSlot) { this._set(0, s); }
+  @Input() set slot2(s: FilterSlot) { this._set(1, s); }
+  @Input() set slot3(s: FilterSlot) { this._set(2, s); }
+  @Input() set slot4(s: FilterSlot) { this._set(3, s); }
+  @Input() set slot5(s: FilterSlot) { this._set(4, s); }
+
+  @Output() applied = new EventEmitter<Record<string, any>>();
 
   isOpen = false;
+  slots: FilterSlot[] = [];
+
+  private _set(idx: number, slot: FilterSlot): void {
+    if (!slot) return;
+    const existing = this.slots[idx];
+    // Giữ nguyên value khi items reload
+    this.slots[idx] = { ...slot, value: existing?.value ?? slot.value ?? null };
+  }
+
+  get activeSlots(): FilterSlot[] {
+    return this.slots.filter(Boolean);
+  }
 
   constructor(private el: ElementRef) { }
 
   @HostListener('document:click')
-  onDocumentClick(): void {
-    if (this.isOpen) {
-      this.isOpen = false;
-    }
-  }
+  onDocumentClick(): void { if (this.isOpen) this.isOpen = false; }
 
-  toggleOpen(): void {
-    this.isOpen = !this.isOpen;
-  }
-
-  close(): void {
-    this.isOpen = false;
-  }
+  toggleOpen(): void { this.isOpen = !this.isOpen; }
+  close(): void { this.isOpen = false; }
 
   applyAndClose(): void {
-    this.applyFilters();
+    const result: Record<string, any> = {};
+    this.activeSlots.forEach(s => (result[s.key] = s.value ?? null));
+    this.applied.emit(result);
     this.isOpen = false;
   }
 
   getActiveCount(): number {
-    return this.config.filter(f => f.value !== null && f.value !== undefined && f.value !== '').length;
-  }
-
-  getSelectedLabel(field: FilterConfig): string {
-    const opt = field.options.find(o => o.value === field.value);
-    return opt ? opt.label : '';
-  }
-
-  getFilteredOptions(field: FilterConfig): FilterOption[] {
-    const term = (field._searchTerm || '').toLowerCase().trim();
-    return field.options.filter(opt => {
-      if (opt.value === null) return false;
-      if (!term) return true;
-      return opt.label.toLowerCase().includes(term);
-    });
-  }
-
-  selectOption(field: FilterConfig, value: any): void {
-    field.value = value;
-    field._searchTerm = '';
-  }
-
-  clearField(field: FilterConfig): void {
-    field.value = null;
-    field._searchTerm = '';
+    return this.activeSlots.filter(
+      s => s.value !== null && s.value !== undefined && s.value !== ''
+    ).length;
   }
 
   clearAll(): void {
-    this.config.forEach(f => {
-      f.value = null;
-      f._searchTerm = '';
-    });
-    this.applyFilters();
+    this.activeSlots.forEach(s => (s.value = null));
+    const result: Record<string, any> = {};
+    this.activeSlots.forEach(s => (result[s.key] = null));
+    this.applied.emit(result);
   }
 
-  applyFilters(): void {
-    const result: Record<string, any> = {};
-    this.config.forEach(f => {
-      result[f.key] = f.value ?? null;
-    });
-    this.filterApplied.emit(result);
+  toDropdownItems(slot: FilterSlot) {
+    const lk = slot.labelKey ?? 'name';
+    const vk = slot.valueKey ?? 'id';
+    return (slot.items ?? []).map(i => ({ id: i[vk], name: i[lk] }));
+  }
+
+  getColor(slot: FilterSlot, value: any): string | undefined {
+    return slot.colors?.[value];
   }
 }

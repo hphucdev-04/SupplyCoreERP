@@ -121,6 +121,5 @@ namespace SupplyCoreERP.Customers
 		public void SetActive(bool isActive) => IsActive = isActive;
 		private void SetCode(string code) => Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper();
 		private void SetName(string name) => Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim();
-		public void UpdateCode(string newCode) => SetCode(newCode);
 	}
 }

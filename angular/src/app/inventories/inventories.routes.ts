@@ -7,8 +7,7 @@ export const INVENTORIES_ROUTES: Routes = [
         loadComponent: () => import('./warehouses/warehouses.component').then(m => m.WarehousesComponent),
     },
    {
-        // ✅ Load đúng StorageLocationsComponent
-        path: 'warehouses/:id/locations',
+        path: 'warehouses/layouts/:id',
         loadComponent: () => import('./warehouses/storage-locations/storage-locations.component').then(m => m.StorageLocationsComponent),
     },
     {

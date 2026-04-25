@@ -324,10 +324,13 @@
       <select class="form-select form-select-sm" formControlName="binId"
         [attr.disabled]="!detailForm.get('productId').value ? '' : null">
         <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-        <option *ngFor="let bin of filteredBins" [value]="bin.id">{{ bin.code }}</option>
+        <option *ngFor="let bin of filteredBins" [ngValue]="bin.id">{{ bin.code }}</option>
       </select>
-      <div class="form-text txt-info txt-sm mt-1" *ngIf="detailForm.get('productId').value && hiddenBinCount > 0">
-        <i class="fa fa-filter me-1"></i> {{ '::FilteredByStorageCondition' | abpLocalization }}
+      <div class="form-text text-danger txt-sm mt-1"
+        *ngIf="detailForm.get('productId').value && filteredBins.length === 0">
+        <i class="fa fa-exclamation-triangle me-1"></i>
+        <strong class="text-uppercase">{{ '::NoBinAvailable' | abpLocalization }}</strong>:
+        {{ '::NoBinMatchConditionWarning' | abpLocalization }} + 
       </div>
     </div>
 

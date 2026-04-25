@@ -59,7 +59,7 @@ namespace SupplyCoreERP.Warehouses
 		public async Task<WarehouseDto> CreateAsync(CreateUpdateWarehouseDto input)
 		{
 			var warehouse = await _warehouseManager.CreateAsync(
-				input.Code, input.Name, input.Address, input.CityId, input.AreaId, input.MapWidth, input.MapLength);
+				input.Name, input.Address, input.CountryId, input.CityId, input.AreaId, input.MapWidth, input.MapLength);
 
 			await _warehouseRepo.InsertAsync(warehouse);
 			return ObjectMapper.Map<Warehouse, WarehouseDto>(warehouse);
@@ -70,7 +70,7 @@ namespace SupplyCoreERP.Warehouses
 			var warehouse = await _warehouseRepo.GetAsync(id);
 
 			await _warehouseManager.UpdateAsync(
-				warehouse, input.Code, input.Name, input.Address, input.CityId, input.AreaId, input.MapWidth, input.MapLength);
+				warehouse, input.Name, input.Address, input.CountryId,input.CityId, input.AreaId, input.MapWidth, input.MapLength);
 
 			await _warehouseRepo.UpdateAsync(warehouse);
 			return ObjectMapper.Map<Warehouse, WarehouseDto>(warehouse);
@@ -119,7 +119,7 @@ namespace SupplyCoreERP.Warehouses
 		public async Task<ZoneDto> CreateZoneAsync(CreateUpdateZoneDto input)
 		{
 			var zone = await _warehouseManager.CreateZoneAsync(
-				input.WarehouseId, input.Code, input.Name, input.Type,
+				input.WarehouseId, input.Name, input.Type,
 				input.StorageCondition, input.Color,
 				input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation);
 
@@ -132,7 +132,7 @@ namespace SupplyCoreERP.Warehouses
 			var zone = await _zoneRepo.GetAsync(id);
 
 			await _warehouseManager.UpdateZoneAsync(
-				zone, input.Code, input.Name, input.Type,
+				zone, input.Name, input.Type,
 				input.StorageCondition, input.Color,
 				input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation);
 
@@ -167,7 +167,7 @@ namespace SupplyCoreERP.Warehouses
 		public async Task<BinDto> CreateStorageBinAsync(CreateUpdateBinDto input)
 		{
 			var bin = await _warehouseManager.CreateBinAsync(
-				input.WarehouseId, input.ZoneId, input.Code,
+				input.WarehouseId, input.ZoneId,
 				input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation, input.MaxSKU);
 
 			await _binRepo.InsertAsync(bin);
@@ -183,7 +183,7 @@ namespace SupplyCoreERP.Warehouses
 			if (bin == null) throw new Volo.Abp.UserFriendlyException("Không tìm thấy vị trí (Bin) này!");
 
 			await _warehouseManager.UpdateBinAsync(
-				bin, input.ZoneId, input.Code,
+				bin, input.ZoneId,
 				input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation,
 				input.MaxSKU, input.IsBlocked);
 

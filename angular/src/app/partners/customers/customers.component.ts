@@ -225,7 +225,6 @@ export class CustomersComponent implements OnInit, OnDestroy {
   // --- FORM HANDLING ---
   buildForm(): void {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
       phoneNumber: ['', Validators.maxLength(20)],
       email: ['', [Validators.email, Validators.maxLength(128)]],
@@ -242,12 +241,6 @@ export class CustomersComponent implements OnInit, OnDestroy {
       address: ['', Validators.maxLength(500)],
       isActive: [true],
     });
-  }
-
-  generateCode(): void {
-    const name = this.form.get('name')?.value || '';
-    const code = CodeGeneratorUtil.generate(name, 'CUS');
-    this.form.get('code')?.setValue(code);
   }
 
   closeDrawer(): void {

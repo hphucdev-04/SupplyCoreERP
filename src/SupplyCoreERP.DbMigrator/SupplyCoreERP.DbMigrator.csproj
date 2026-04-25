@@ -10,6 +10,7 @@
 	
 	<PropertyGroup>
 		<NoWarn>NU1903</NoWarn>
+		<UserSecretsId>824f2173-b2f5-47fa-b549-a88b6425cf44</UserSecretsId>
 	</PropertyGroup>
 	
   <ItemGroup>

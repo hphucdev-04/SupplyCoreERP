@@ -3,7 +3,6 @@ import type { CustomerType } from '../../enums/partner/customer-type.enum';
 import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 
 export interface CreateUpdateCustomerDto {
-  code: string;
   name: string;
   phoneNumber?: string;
   email?: string;

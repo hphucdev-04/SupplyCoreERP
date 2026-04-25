@@ -572,6 +572,10 @@ namespace SupplyCoreERP.Migrations
                         .HasMaxLength(100)
                         .HasColumnType("character varying(100)");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -630,6 +634,9 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.HasIndex("SupplierId");
 
@@ -888,6 +895,9 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("character varying(40)")
                         .HasColumnName("ConcurrencyStamp");
 
+                    b.Property<Guid?>("CountryId")
+                        .HasColumnType("uuid");
+
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("CreationTime");
@@ -948,6 +958,8 @@ namespace SupplyCoreERP.Migrations
 
                     b.HasIndex("Code")
                         .IsUnique();
+
+                    b.HasIndex("CountryId");
 
                     b.ToTable("AppWarehouses", (string)null);
                 });
@@ -1207,6 +1219,10 @@ namespace SupplyCoreERP.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Code")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -1260,6 +1276,9 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("Code")
+                        .IsUnique();
 
                     b.HasIndex("ContinentId");
 
@@ -4174,9 +4193,15 @@ namespace SupplyCoreERP.Migrations
                         .HasForeignKey("CityId")
                         .OnDelete(DeleteBehavior.Restrict);
 
+                    b.HasOne("SupplyCoreERP.Locations.Countries.Country", "Country")
+                        .WithMany()
+                        .HasForeignKey("CountryId");
+
                     b.Navigation("Area");
 
                     b.Navigation("City");
+
+                    b.Navigation("Country");
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Locations.Areas.Area", b =>

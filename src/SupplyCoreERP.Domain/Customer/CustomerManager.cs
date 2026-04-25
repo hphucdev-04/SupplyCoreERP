@@ -1,4 +1,5 @@
-﻿using SupplyCoreERP.Enums.Partner;
+﻿using SupplyCoreERP.DocumentSequences;
+using SupplyCoreERP.Enums.Partner;
 using SupplyCoreERP.Locations.Areas;
 using SupplyCoreERP.Locations.Cities;
 using SupplyCoreERP.Locations.Countries;
@@ -17,28 +18,34 @@ namespace SupplyCoreERP.Customers
 		private readonly IRepository<Country, Guid> _countryRepo;
 		private readonly IRepository<City, Guid> _cityRepo;
 		private readonly IRepository<Area, Guid> _areaRepo;
-		private readonly IRepository<PriceList, Guid> _priceListRepo; // <--- THÊM REPO NÀY
+		private readonly IRepository<PriceList, Guid> _priceListRepo;
+		private readonly DocumentSequenceManager _documentSequenceManager;
 
 		public CustomerManager(
 			IRepository<Customer, Guid> customerRepository,
 			IRepository<Country, Guid> countryRepo,
 			IRepository<City, Guid> cityRepo,
 			IRepository<Area, Guid> areaRepo,
-			IRepository<PriceList, Guid> priceListRepo)
+			IRepository<PriceList, Guid> priceListRepo,
+			DocumentSequenceManager documentSequenceManager)
 		{
 			_customerRepository = customerRepository;
 			_countryRepo = countryRepo;
 			_cityRepo = cityRepo;
 			_areaRepo = areaRepo;
 			_priceListRepo = priceListRepo;
+			_documentSequenceManager = documentSequenceManager;
 		}
 
 		public async Task<Customer> CreateAsync(
-			string code, string name, string? phoneNumber, string? email,
+			string name, string? phoneNumber, string? email,
 			string? representativeName, Gender? gender, CustomerType type, string? taxCode,
 			string? address, Guid? countryId, Guid? cityId, Guid? areaId, string? note,
 			decimal debtLimit = 0, int paymentTermDays = 0, Guid? priceListId = null) 
 		{
+
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeCustomer);
+
 			await CheckCodeAndNameAsync(code, name);
 			await CheckPhoneNumberExistsAsync(phoneNumber);
 			await ValidateLocationAsync(countryId, cityId, areaId);
@@ -52,13 +59,12 @@ namespace SupplyCoreERP.Customers
 		}
 
 		public async Task UpdateAsync(
-			Customer customer, string code, string name, string? phoneNumber, string? email,
+			Customer customer, string name, string? phoneNumber, string? email,
 			string? representativeName, Gender? gender, CustomerType type, string? taxCode,
 			string? address, Guid? countryId, Guid? cityId, Guid? areaId, string? note,
 			decimal debtLimit = 0, int paymentTermDays = 0, Guid? priceListId = null) 
 		{
 			Check.NotNull(customer, nameof(customer));
-			await CheckCodeAndNameAsync(code, name, customer.Id);
 
 			if (customer.PhoneNumber != phoneNumber)
 			{
@@ -68,7 +74,6 @@ namespace SupplyCoreERP.Customers
 			await ValidateLocationAsync(countryId, cityId, areaId);
 			await ValidatePriceListAsync(priceListId); 
 
-			customer.UpdateCode(code);
 			customer.UpdateInfo(name, phoneNumber, email, representativeName, gender, type, taxCode, note);
 			customer.SetLocation(address, countryId, cityId, areaId);
 			customer.SetDebtInfo(debtLimit, paymentTermDays);
@@ -135,12 +140,14 @@ namespace SupplyCoreERP.Customers
 			var normalizedCode = code.Trim().ToUpper();
 			var normalizedName = name.Trim();
 
-			if (await _customerRepository.AnyAsync(x => x.Code == normalizedCode && (!excludeId.HasValue || x.Id != excludeId.Value)))
+			// Check Code
+			if (await _customerRepository.AnyAsync(x => x.Code == normalizedCode && x.Id != excludeId))
 			{
-				throw new UserFriendlyException($"Mã khách hàng cấp '{code}' đã tồn tại!");
+				throw new UserFriendlyException($"Mã khách hàng '{code}' đã tồn tại!");
 			}
 
-			if (await _customerRepository.AnyAsync(x => x.Name == normalizedName && (!excludeId.HasValue || x.Id != excludeId.Value)))
+			// Check Name 
+			if (await _customerRepository.AnyAsync(x => x.Name == normalizedName && x.Id != excludeId))
 			{
 				throw new UserFriendlyException($"Tên khách hàng '{name}' đã tồn tại!");
 			}

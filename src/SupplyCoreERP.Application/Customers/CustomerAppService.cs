@@ -74,7 +74,7 @@ namespace SupplyCoreERP.Customers
 		public async Task<CustomerDetailDto> CreateAsync(CreateUpdateCustomerDto input)
 		{
 			var customer = await _customerManager.CreateAsync(
-				input.Code, input.Name, input.PhoneNumber, input.Email,
+				input.Name, input.PhoneNumber, input.Email,
 				input.RepresentativeName, input.Gender, input.Type, input.TaxCode,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
 				input.Note, input.DebtLimit, input.PaymentTermDays,
@@ -91,7 +91,7 @@ namespace SupplyCoreERP.Customers
 			var customer = await _customerRepository.GetAsync(id);
 
 			await _customerManager.UpdateAsync(
-				customer, input.Code, input.Name, input.PhoneNumber, input.Email,
+				customer, input.Name, input.PhoneNumber, input.Email,
 				input.RepresentativeName, input.Gender, input.Type, input.TaxCode,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
 				input.Note, input.DebtLimit, input.PaymentTermDays,

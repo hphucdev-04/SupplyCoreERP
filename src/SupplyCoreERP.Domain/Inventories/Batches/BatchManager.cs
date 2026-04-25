@@ -1,4 +1,5 @@
-﻿using SupplyCoreERP.Enums.Warehouses;
+﻿using SupplyCoreERP.DocumentSequences;
+using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Balances;
 using System;
 using System.Threading.Tasks;
@@ -12,19 +13,26 @@ namespace SupplyCoreERP.Inventories.Batches
 	{
 		private readonly IRepository<ProductBatch, Guid> _batchRepo;
 		private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
+		private readonly DocumentSequenceManager _documentSequenceManager;
 
-		public BatchManager(IRepository<ProductBatch, Guid> batchRepo, IRepository<InventoryBalance, Guid> balanceRepo)
+        public BatchManager(
+			IRepository<ProductBatch, Guid> batchRepo, 
+			IRepository<InventoryBalance, Guid> balanceRepo,
+			DocumentSequenceManager documentSequenceManager)
 		{
 			_batchRepo = batchRepo;
 			_balanceRepo = balanceRepo;
+			_documentSequenceManager = documentSequenceManager;
 		}
 
 		public async Task<ProductBatch> CreateAsync(Guid productId, string batchNumber, DateTime mfg, DateTime exp, Guid? supplierId)
 		{
-			if (await _batchRepo.AnyAsync(x => x.ProductId == productId && x.BatchNumber == batchNumber))
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeBatch);
+
+            if (await _batchRepo.AnyAsync(x => x.ProductId == productId && x.BatchNumber == batchNumber))
 				throw new UserFriendlyException($"Số lô '{batchNumber}' đã tồn tại!");
 
-			return new ProductBatch(GuidGenerator.Create(), productId, batchNumber, mfg, exp, supplierId);
+			return new ProductBatch(GuidGenerator.Create(), code, productId, batchNumber, mfg, exp, supplierId);
 		}
 
 		public void UpdateBatch(ProductBatch batch, DateTime mfg, DateTime exp, Guid? supplierId)

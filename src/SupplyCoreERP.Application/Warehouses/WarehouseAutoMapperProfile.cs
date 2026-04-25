@@ -12,10 +12,11 @@ namespace SupplyCoreERP.Warehouses
 			// Warehouse mappings
 			CreateMap<Warehouse, WarehouseDto>()
 				.ForMember(dest => dest.CityName, opt => opt.MapFrom(src => src.City != null ? src.City.Name : null))
-				.ForMember(dest => dest.AreaName, opt => opt.MapFrom(src => src.Area != null ? src.Area.Name : null));
+				.ForMember(dest => dest.AreaName, opt => opt.MapFrom(src => src.Area != null ? src.Area.Name : null))
+				.ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Country != null ? src.Country.Name : null));
 
-			// Zone mappings
-			CreateMap<Zone, ZoneDto>();
+            // Zone mappings
+            CreateMap<Zone, ZoneDto>();
 
 			// Bin mappings
 			CreateMap<Bin, BinDto>()

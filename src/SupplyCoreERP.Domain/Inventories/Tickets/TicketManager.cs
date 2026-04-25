@@ -1,4 +1,5 @@
-﻿using SupplyCoreERP.Enums.Balances;
+﻿using SupplyCoreERP.DocumentSequences;
+using SupplyCoreERP.Enums.Balances;
 using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Balances;
@@ -29,8 +30,7 @@ namespace SupplyCoreERP.Inventories.Tickets
 		private readonly WarehouseManager _warehouseManager;
 		private readonly InventoryBalanceManager _balanceManager;
 		private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
-		private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo;
-		private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
+		private readonly DocumentSequenceManager _documentSequenceManager;
 
 		public TicketManager(
 			IRepository<InventoryTicket, Guid> ticketRepo,
@@ -42,8 +42,7 @@ namespace SupplyCoreERP.Inventories.Tickets
 			IRepository<Product, Guid> productRepo,
 			WarehouseManager warehouseManager,
 			InventoryBalanceManager balanceManager,
-			IRepository<PurchaseOrder, Guid> purchaseOrderRepo, 
-			IRepository<SalesOrder, Guid> salesOrderRepo)      
+			DocumentSequenceManager documentSequenceManager)      
 		{
 			_ticketRepo = ticketRepo;
 			_ticketDetailRepo = ticketDetailRepo;
@@ -53,10 +52,9 @@ namespace SupplyCoreERP.Inventories.Tickets
 			_warehouseRepo = warehouseRepo;
 			_productRepo = productRepo;
 			_warehouseManager = warehouseManager;
-			_balanceManager = balanceManager;
-			_purchaseOrderRepo = purchaseOrderRepo;
-			_salesOrderRepo = salesOrderRepo;      
-		}
+			_balanceManager = balanceManager;  
+			_documentSequenceManager = documentSequenceManager;
+        }
 
 		#region Helpers
 		private bool IsIssueTicket(TicketType type) =>
@@ -128,9 +126,9 @@ namespace SupplyCoreERP.Inventories.Tickets
 			if (draftCount >= 10) throw new UserFriendlyException("Kho đang có quá nhiều phiếu Nháp chưa được xử lý!");
 
 			string prefix = type.ToString().Substring(0, 3).ToUpper();
-			string ticketNumber = $"{prefix}-{DateTime.Now:yyyyMMddHHmmss}-{Guid.NewGuid().ToString().Substring(0, 4).ToUpper()}";
+			var ticketNumber = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeInventoryTicket);
 
-			return new InventoryTicket(GuidGenerator.Create(), ticketNumber, type, warehouseId, referenceDocumentId, referenceDocumentNumber, note);
+            return new InventoryTicket(GuidGenerator.Create(), ticketNumber, type, warehouseId, referenceDocumentId, referenceDocumentNumber, note);
 		}
 
 		public void UpdateTicket(InventoryTicket ticket, string? note)
@@ -226,8 +224,6 @@ namespace SupplyCoreERP.Inventories.Tickets
 			ticket.Execute();
 		}
 		#endregion
-
-
 
 		#region FEFO
 		public async Task<IList<InventoryTicketDetail>> AllocateFEFOAsync(InventoryTicket ticket, Guid productId, decimal requiredBaseQuantity)

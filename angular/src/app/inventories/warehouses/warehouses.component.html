@@ -53,12 +53,18 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" cellClass="ellipsis-cell"
-        [width]="200"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" cellClass="ellipsis-cell" [width]="200">
+        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+          <span class="ph-link" (click)="manageLocations(row.id)">
+            {{ value }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name"></ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::Location' | abpLocalization" prop="cityName">
         <ng-template let-row="row" ngx-datatable-cell-template>
+          <span *ngIf="row.countryName">{{ row.countryName }} - </span>
           {{ row.cityName }} <span *ngIf="row.areaName">- {{ row.areaName }}</span>
         </ng-template>
       </ngx-datatable-column>
@@ -102,24 +108,6 @@
   <form [formGroup]="form" (ngSubmit)="save()" validateOnSubmit>
     <div class="row">
       <div class="col-md-12 mb-3">
-        <label class="form-label small fw-semibold">
-          {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
-        </label>
-        <div class="input-group input-group-sm">
-          <input type="text" class="form-control" formControlName="code">
-          <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
-            [title]="'::GenerateCode' | abpLocalization">
-            <i class="fa fa-magic"></i>
-          </button>
-        </div>
-        <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
-          class="text-danger small">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-md-12 mb-3">
         <label class="form-label small fw-semibold" for="warehouse-name">{{ '::Name' | abpLocalization }} <span
             class="text-danger">*</span></label>
         <input type="text" id="warehouse-name" class="form-control form-control-sm" formControlName="name" />
@@ -127,16 +115,25 @@
     </div>
 
     <div class="row">
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
+        <label class="form-label small fw-semibold" for="country-id">{{ '::Country' | abpLocalization }}</label>
+        <select class="form-select form-select-sm" id="country-id" formControlName="countryId"
+          (change)="onCountryChange($event.target.value)">
+          <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+          <option *ngFor="let country of countries" [value]="country.id">{{ country.name }}</option>
+        </select>
+      </div>
+
+      <div class="col-md-4 mb-3">
         <label class="form-label small fw-semibold" for="city-id">{{ '::City' | abpLocalization }}</label>
         <select class="form-select form-select-sm" id="city-id" formControlName="cityId"
-          (change)="onCityChange($event.target.value)">
+          (change)="onCityChange($event.target.value)" [disabled]="!cities.length">
           <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
           <option *ngFor="let city of cities" [value]="city.id">{{ city.name }}</option>
         </select>
       </div>
 
-      <div class="col-md-6 mb-3">
+      <div class="col-md-4 mb-3">
         <label class="form-label small fw-semibold" for="area-id">{{ '::Area' | abpLocalization }}</label>
         <select class="form-select form-select-sm" id="area-id" formControlName="areaId" [disabled]="!areas.length">
           <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
@@ -145,9 +142,11 @@
       </div>
     </div>
 
-    <div class="mb-3">
-      <label class="form-label small fw-semibold" for="warehouse-address">{{ '::Address' | abpLocalization }}</label>
-      <textarea id="warehouse-address" class="form-control" formControlName="address" rows="2"></textarea>
+    <div class="row">
+      <div class="mb-3">
+        <label class="form-label small fw-semibold" for="warehouse-address">{{ '::Address' | abpLocalization }}</label>
+        <textarea id="warehouse-address" class="form-control" formControlName="address" rows="2"></textarea>
+      </div>
     </div>
 
     <h6 class="mt-4 text-primary"><i class="fa fa-map-o me-1"></i> {{ '::MapConfiguration' | abpLocalization }}</h6>

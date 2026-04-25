@@ -8,7 +8,7 @@
         </h5>
       </div>
       <div class="col col-md-6 text-end">
-        <button class="btn btn-primary btn-sm" type="button" (click)="createSupplier()">
+        <button class="btn btn-sm ph-btn-new" type="button" (click)="createSupplier()">
           <i class="fa fa-plus me-1"></i>
           <span>{{ '::NewSupplier' | abpLocalization }}</span>
         </button>
@@ -57,9 +57,17 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="180"
-        cellClass="ellipsis-cell"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="350"></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-link" (click)="viewDetail(row.id)">{{row.code}}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-badge ph-badge--neutral">{{ row.name }}</span>
+        </ng-template>
+      </ngx-datatable-column>
       <ngx-datatable-column [name]="'::PhoneNumber' | abpLocalization" prop="phoneNumber"
         [width]="150"></ngx-datatable-column>
       <ngx-datatable-column [name]="'::City' | abpLocalization" prop="cityName" [width]="150"></ngx-datatable-column>
@@ -93,23 +101,7 @@
   <form [formGroup]="form">
 
     <div class="row">
-      <div class="col-md-4 mb-3">
-        <label class="form-label small fw-semibold">
-          {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
-        </label>
-        <div class="input-group input-group-sm">
-          <input type="text" class="form-control" formControlName="code">
-          <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
-            [title]="'::GenerateCode' | abpLocalization">
-            <i class="fa fa-magic"></i>
-          </button>
-        </div>
-        <div *ngIf="form.get('code').invalid && (form.get('code').dirty || form.get('code').touched)"
-          class="text-danger small">
-          {{ '::ThisFieldIsRequired' | abpLocalization }}
-        </div>
-      </div>
-      <div class="col-md-8 mb-3">
+      <div class="col-md-12 mb-3">
         <label class="form-label small fw-semibold">{{ '::Name' | abpLocalization }} <span
             class="text-danger">*</span></label>
         <input type="text" class="form-control form-control-sm" formControlName="name" autofocus>

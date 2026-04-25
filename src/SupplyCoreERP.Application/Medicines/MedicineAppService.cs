@@ -1,8 +1,6 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Medicines.Dtos;
-using SupplyCoreERP.Permissions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,271 +13,259 @@ using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Medicines
 {
-	public class MedicineAppService : SupplyCore, IMedicineAppService
-	{
-		private readonly IRepository<Medicine, Guid> _medicineRepo;
-		private readonly MedicineManager _medicineManager;
+    public class MedicineAppService : SupplyCore, IMedicineAppService
+    {
+        private readonly IRepository<Medicine, Guid> _medicineRepo;
+        private readonly MedicineManager _medicineManager;
 
         private readonly MedicineExcelService _excelService;
 
         public MedicineAppService(
-			IRepository<Medicine, Guid> medicineRepo,
-			MedicineManager medicineManager,
+            IRepository<Medicine, Guid> medicineRepo,
+            MedicineManager medicineManager,
             MedicineExcelService excelService
             )
-		{
-			_medicineRepo = medicineRepo;
-			_medicineManager = medicineManager;
-			_excelService = excelService;
-		}
-		#region Medicine
-		public async Task<PagedResultDto<MedicineDto>> GetListAsync(GetMedicineListDto input)
-		{
-			var isManager = await AuthorizationService.IsGrantedAsync(SupplyCoreERPPermissions.Catalog.Medicine.Approve);
+        {
+            _medicineRepo = medicineRepo;
+            _medicineManager = medicineManager;
+            _excelService = excelService;
+        }
+        #region Medicine
+        public async Task<PagedResultDto<MedicineDto>> GetListAsync(GetMedicineListDto input)
+        {
+            //Queryable
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
 
-			//Queryable
-			var query = await _medicineRepo.GetQueryableAsync();
+            //JOIN BẢNG 
+            query = query
+                .Include(x => x.Category)
+                .Include(x => x.Manufacturer).ThenInclude(m => m.Country)
+                .Include(x => x.BaseUnit)
+                .Include(x => x.DosageForm);
 
-			//JOIN BẢNG (Eager Loading) -> Để AutoMapper có dữ liệu map Name
-			query = query
-				.Include(x => x.Category)
-				.Include(x => x.Manufacturer).ThenInclude(m => m.Country)
-				.Include(x => x.BaseUnit)
-				.Include(x => x.DosageForm);
+            //Filter Logic
+            query = query
+                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Name.Contains(input.Filter) || x.Code.Contains(input.Filter))
+                .WhereIf(input.CategoryId.HasValue, x => x.CategoryId == input.CategoryId)
+                .WhereIf(input.ManufacturerId.HasValue, x => x.ManufacturerId == input.ManufacturerId);
 
-			//Filter Logic
-			query = query
-				.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Name.Contains(input.Filter) || x.Code.Contains(input.Filter))
-				.WhereIf(input.CategoryId.HasValue, x => x.CategoryId == input.CategoryId)
-				.WhereIf(input.ManufacturerId.HasValue, x => x.ManufacturerId == input.ManufacturerId);
+            //Sort & Paging
+            int totalCount = await AsyncExecuter.CountAsync(query);
 
-			if (!isManager)
-			{
-				query = query.Where(x => x.Status == MedicineStatus.Approved && x.IsActive);
-			}
-			else
-			{
-				query = query
-					.WhereIf(input.Status.HasValue, x => x.Status == (MedicineStatus)input.Status)
-					.WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
-			}
+            query = query
+                .OrderBy(input.Sorting ?? nameof(Medicine.CreationTime) + " DESC")
+                .PageBy(input);
 
-			//Sort & Paging
-			var totalCount = await AsyncExecuter.CountAsync(query);
+            // Load vào RAM
+            List<Medicine> items = await AsyncExecuter.ToListAsync(query);
 
-			query = query
-				.OrderBy(input.Sorting ?? nameof(Medicine.CreationTime) + " DESC")
-				.PageBy(input);
+            //Map to DTO 
+            List<MedicineDto> dtos = ObjectMapper.Map<List<Medicine>, List<MedicineDto>>(items);
 
-			var items = await AsyncExecuter.ToListAsync(query);
+            return new PagedResultDto<MedicineDto>(totalCount, dtos);
+        }
 
-			//Map to DTO 
-			var dtos = ObjectMapper.Map<List<Medicine>, List<MedicineDto>>(items);
+        public async Task<MedicineDetailDto> GetAsync(Guid id)
+        {
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
 
-			return new PagedResultDto<MedicineDto>(totalCount, dtos);
-		}
+            Medicine? entity = await query
+                .Include(x => x.Category)
+                .Include(x => x.Manufacturer).ThenInclude(m => m.Country)
+                .Include(x => x.BaseUnit)
+                .Include(x => x.DosageForm)
+                .Include(x => x.Ingredients).ThenInclude(i => i.ActiveIngredient)
+                .Include(x => x.Units).ThenInclude(u => u.Unit)
 
-		public async Task<MedicineDetailDto> GetAsync(Guid id)
-		{
-			var query = await _medicineRepo.GetQueryableAsync();
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-			var entity = await query
-				.Include(x => x.Category)
-				.Include(x => x.Manufacturer).ThenInclude(m => m.Country)
-				.Include(x => x.BaseUnit)
-				.Include(x => x.DosageForm)
-				.Include(x => x.Ingredients).ThenInclude(i => i.ActiveIngredient)
-				.Include(x => x.Units).ThenInclude(u => u.Unit)
+            if (entity == null) throw new EntityNotFoundException(typeof(Medicine), id);
 
-				.FirstOrDefaultAsync(x => x.Id == id);
-
-			if (entity == null) throw new EntityNotFoundException(typeof(Medicine), id);
-
-			return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
-		}
+            return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        }
 
 
-		public async Task<MedicineDetailDto> CreateAsync(CreateUpdateMedicineDto input)
-		{
-			var entity = await _medicineManager.CreateAsync(
-				input.Name,
-				input.CategoryId,
-				input.ManufacturerId,
-				input.BaseUnitId,
-				input.DosageFormId,
-				input.RegistrationNumber,
-				input.UsageRoute,
-				input.StorageCondition,
-				input.IsPrescriptionDrug
-			);
+        public async Task<MedicineDetailDto> CreateAsync(CreateUpdateMedicineDto input)
+        {
+            Medicine entity = await _medicineManager.CreateAsync(
+                input.Name,
+                input.CategoryId,
+                input.ManufacturerId,
+                input.BaseUnitId,
+                input.DosageFormId,
+                input.RegistrationNumber,
+                input.UsageRoute,
+                input.StorageCondition,
+                input.IsPrescriptionDrug
+            );
 
-			await _medicineRepo.InsertAsync(entity);
+            await _medicineRepo.InsertAsync(entity);
 
-			return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
-		}
+            return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        }
 
-		public async Task<MedicineDetailDto> UpdateAsync(Guid id, CreateUpdateMedicineDto input)
-		{
-			var entity = await _medicineRepo.GetAsync(id);
+        public async Task<MedicineDetailDto> UpdateAsync(Guid id, CreateUpdateMedicineDto input)
+        {
+            Medicine entity = await _medicineRepo.GetAsync(id);
 
-			await _medicineManager.UpdateAsync(
-				entity,
-				input.Name,
-				input.CategoryId,
-				input.ManufacturerId,
-				input.BaseUnitId,
-				input.DosageFormId,
-				input.RegistrationNumber,
-				input.UsageRoute,
-				input.StorageCondition,
-				input.IsPrescriptionDrug
-			);
+            await _medicineManager.UpdateAsync(
+                entity,
+                input.Name,
+                input.CategoryId,
+                input.ManufacturerId,
+                input.BaseUnitId,
+                input.DosageFormId,
+                input.RegistrationNumber,
+                input.UsageRoute,
+                input.StorageCondition,
+                input.IsPrescriptionDrug
+            );
 
-			entity.SetActive(input.IsActive);
+            entity.SetActive(input.IsActive);
 
-			await _medicineRepo.UpdateAsync(entity);
-			return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
-		}
+            await _medicineRepo.UpdateAsync(entity);
+            return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        }
 
-		public async Task DeleteAsync(Guid id)
-		{
-			await _medicineRepo.DeleteAsync(id);
-		}
+        public async Task DeleteAsync(Guid id)
+        {
+            await _medicineRepo.DeleteAsync(id);
+        }
 
-		public async Task ApproveAsync(Guid id)
-		{
-			var entity = await _medicineRepo.GetAsync(id);
-			entity.Approve();
-			await _medicineRepo.UpdateAsync(entity);
-		}
+        public async Task ApproveAsync(Guid id)
+        {
+            Medicine entity = await _medicineRepo.GetAsync(id);
+            entity.Approve();
+            await _medicineRepo.UpdateAsync(entity);
+        }
 
-		public async Task RejectAsync(Guid id)
-		{
-			var entity = await _medicineRepo.GetAsync(id);
-			entity.Reject();
-			await _medicineRepo.UpdateAsync(entity);
-		}
+        public async Task RejectAsync(Guid id)
+        {
+            Medicine entity = await _medicineRepo.GetAsync(id);
+            entity.Reject();
+            await _medicineRepo.UpdateAsync(entity);
+        }
 
-		public async Task ToggleActiveAsync(Guid id)
-		{
-			var entity = await _medicineRepo.GetAsync(id);
-			entity.SetActive(!entity.IsActive);
-			await _medicineRepo.UpdateAsync(entity);
-		}
+        public async Task ToggleActiveAsync(Guid id)
+        {
+            Medicine entity = await _medicineRepo.GetAsync(id);
+            entity.SetActive(!entity.IsActive);
+            await _medicineRepo.UpdateAsync(entity);
+        }
 
-		public async Task<MedicineSummaryDto> GetSummaryAsync()
-		{
-			var query = await _medicineRepo.GetQueryableAsync();
+        public async Task<MedicineSummaryDto> GetSummaryAsync()
+        {
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
 
-			var summary = await query
-				.GroupBy(x => 1)
-				.Select(g => new MedicineSummaryDto
-				{
-					TotalCount = g.Count(),
-					TotalActive = g.Count(x => x.IsActive),
-					TotalInactive = g.Count(x => !x.IsActive),
-					TotalApproved = g.Count(x => x.Status == MedicineStatus.Approved),
-					TotalPending = g.Count(x => x.Status == MedicineStatus.Pending),
-					TotalRejected = g.Count(x => x.Status == MedicineStatus.Rejected)
-				})
-				.FirstOrDefaultAsync();
+            MedicineSummaryDto? summary = await query
+                .GroupBy(x => 1)
+                .Select(g => new MedicineSummaryDto
+                {
+                    TotalCount = g.Count(),
+                    TotalActive = g.Count(x => x.IsActive),
+                    TotalInactive = g.Count(x => !x.IsActive),
+                    TotalApproved = g.Count(x => x.Status == MedicineStatus.Approved),
+                    TotalPending = g.Count(x => x.Status == MedicineStatus.Pending),
+                    TotalRejected = g.Count(x => x.Status == MedicineStatus.Rejected)
+                })
+                .FirstOrDefaultAsync();
 
-			return summary ?? new MedicineSummaryDto();
-		}
-		#endregion
+            return summary ?? new MedicineSummaryDto();
+        }
+        #endregion
 
-		#region Ingredients
-		public async Task AddIngredientAsync(Guid id, CreateUpdateMedicineIngredientDto input)
-		{
-			var query = await _medicineRepo.GetQueryableAsync();
-			var medicine = await query
-				.Include(x => x.Ingredients)
-				.FirstOrDefaultAsync(x => x.Id == id);
+        #region Ingredients
+        public async Task AddIngredientAsync(Guid id, CreateUpdateMedicineIngredientDto input)
+        {
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
+            Medicine? medicine = await query
+                .Include(x => x.Ingredients)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-			if (medicine == null)
-				throw new EntityNotFoundException(typeof(Medicine), id);
+            if (medicine == null)
+                throw new EntityNotFoundException(typeof(Medicine), id);
 
-			await _medicineManager.AddIngredientAsync(medicine, input.ActiveIngredientId);
+            await _medicineManager.AddIngredientAsync(medicine, input.ActiveIngredientId);
 
-			await _medicineRepo.UpdateAsync(medicine);
-		}
+            await _medicineRepo.UpdateAsync(medicine);
+        }
 
-		public async Task RemoveIngredientAsync(Guid id, Guid activeIngredientId)
-		{
-			var query = await _medicineRepo.GetQueryableAsync();
-			var medicine = await query
-				.Include(x => x.Ingredients)
-				.FirstOrDefaultAsync(x => x.Id == id);
+        public async Task RemoveIngredientAsync(Guid id, Guid activeIngredientId)
+        {
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
+            Medicine? medicine = await query
+                .Include(x => x.Ingredients)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-			if (medicine == null)
-				throw new EntityNotFoundException(typeof(Medicine), id);
+            if (medicine == null)
+                throw new EntityNotFoundException(typeof(Medicine), id);
 
-			await _medicineManager.RemoveIngredientAsync(medicine, activeIngredientId);
-			await _medicineRepo.UpdateAsync(medicine);
-		}
-		#endregion
+            await _medicineManager.RemoveIngredientAsync(medicine, activeIngredientId);
+            await _medicineRepo.UpdateAsync(medicine);
+        }
+        #endregion
 
-		#region Units
-		public async Task AddUnitAsync(Guid id, CreateUpdateMedicineUnitDto input)
-		{
-			var query = await _medicineRepo.GetQueryableAsync();
+        #region Units
+        public async Task AddUnitAsync(Guid id, CreateUpdateMedicineUnitDto input)
+        {
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
 
-			var medicine = await query
-				.Include(x => x.Units)
-				.FirstOrDefaultAsync(x => x.Id == id);
+            Medicine? medicine = await query
+                .Include(x => x.Units)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-			if (medicine == null)
-				throw new EntityNotFoundException(typeof(Medicine), id);
-			medicine.AddUnit(GuidGenerator.Create(), input.UnitId, input.ConversionFactor, input.Level);
+            if (medicine == null)
+                throw new EntityNotFoundException(typeof(Medicine), id);
+            medicine.AddUnit(GuidGenerator.Create(), input.UnitId, input.ConversionFactor, input.Level);
 
-			await _medicineRepo.UpdateAsync(medicine);
-		}
+            await _medicineRepo.UpdateAsync(medicine);
+        }
 
-		public async Task UpdateUnitAsync(Guid id, Guid unitId, CreateUpdateMedicineUnitDto input)
-		{
-			var query = await _medicineRepo.GetQueryableAsync();
+        public async Task UpdateUnitAsync(Guid id, Guid unitId, CreateUpdateMedicineUnitDto input)
+        {
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
 
-			var medicine = await query
-				.Include(x => x.Units)
-				.FirstOrDefaultAsync(x => x.Id == id);
+            Medicine? medicine = await query
+                .Include(x => x.Units)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-			if (medicine == null)
-				throw new EntityNotFoundException(typeof(Medicine), id);
-			medicine.UpdateUnit(unitId, input.ConversionFactor, input.Level);
+            if (medicine == null)
+                throw new EntityNotFoundException(typeof(Medicine), id);
+            medicine.UpdateUnit(unitId, input.ConversionFactor, input.Level);
 
-			await _medicineRepo.UpdateAsync(medicine);
-		}
+            await _medicineRepo.UpdateAsync(medicine);
+        }
 
-		public async Task RemoveUnitAsync(Guid id, Guid unitId)
-		{
-			var query = await _medicineRepo.GetQueryableAsync();
+        public async Task RemoveUnitAsync(Guid id, Guid unitId)
+        {
+            IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
 
-			var medicine = await query
-				.Include(x => x.Units)          
-				.FirstOrDefaultAsync(x => x.Id == id);
+            Medicine? medicine = await query
+                .Include(x => x.Units)
+                .FirstOrDefaultAsync(x => x.Id == id);
 
-			if (medicine == null)
-				throw new EntityNotFoundException(typeof(Medicine), id);
+            if (medicine == null)
+                throw new EntityNotFoundException(typeof(Medicine), id);
 
-			medicine.RemoveUnit(unitId);
-			await _medicineRepo.UpdateAsync(medicine);
-		}
-		#endregion
+            medicine.RemoveUnit(unitId);
+            await _medicineRepo.UpdateAsync(medicine);
+        }
+        #endregion
 
-		#region Excel
-		public Task ImportExcelAsync(IRemoteStreamContent file)
-		{
-			return _excelService.ImportExcelAsync(file);
-		}
+        #region Excel
+        public Task ImportExcelAsync(IRemoteStreamContent file)
+        {
+            return _excelService.ImportExcelAsync(file);
+        }
 
         public Task<IRemoteStreamContent> GetImportTemplateAsync()
-		{
-			return _excelService.GetImportTemplateAsync();
-		}
+        {
+            return _excelService.GetImportTemplateAsync();
+        }
 
         public Task<IRemoteStreamContent> GetListAsExcelFileAsync(GetMedicineListDto input)
-		{
-			return _excelService.GetListAsExcelFileAsync(input);
+        {
+            return _excelService.GetListAsExcelFileAsync(input);
         }
         #endregion
     }

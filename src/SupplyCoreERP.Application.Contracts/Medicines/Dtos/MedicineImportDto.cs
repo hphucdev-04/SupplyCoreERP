@@ -40,6 +40,5 @@ namespace SupplyCoreERP.Medicines.Dtos
 		[ExcelColumnName("Đơn vị quy đổi")]
 		public string Units { get; set; }
 
-		// Đã xóa Status và IsActive
 	}
 }
