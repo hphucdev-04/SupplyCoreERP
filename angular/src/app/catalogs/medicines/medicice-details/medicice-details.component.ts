@@ -13,7 +13,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { PriceService } from 'src/app/proxy/prices';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
-import { CurrencyType } from 'src/app/proxy/enums';
+import { CurrencyType } from 'src/app/proxy/enums/price-list';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { ActivatedRoute, Router } from '@angular/router';
 import { eLayoutType, RoutesService } from '@abp/ng.core';

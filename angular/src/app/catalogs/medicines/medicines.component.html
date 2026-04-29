@@ -1,3 +1,6 @@
+<div style="position: fixed; top: 0.2rem; right: 7rem; z-index: 1300;">
+  <app-notification></app-notification>
+</div>
 <!--#region Summary-->
 <div class="row g-2 mb-3">
   <div class="col-md-3">
@@ -255,9 +258,8 @@
       </div>
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::Manufacturer' | abpLocalization }}</label>
-        <app-dropdown-search style="width: 180px;" [items]="manufacturers"
-          [placeholder]="'::Manufacturer' | abpLocalization" [nullLabel]="'::Manufacturer' | abpLocalization"
-          [(ngModel)]="filterManufacturerId" (valueChange)="onFilterChange()">
+        <app-dropdown-search formControlName="manufacturerId" [items]="manufacturers"
+          [placeholder]="'::Manufacturer' | abpLocalization" [nullLabel]="'::Manufacturer' | abpLocalization">
         </app-dropdown-search>
       </div>
     </div>

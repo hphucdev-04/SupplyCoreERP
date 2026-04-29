@@ -1,6 +1,7 @@
 ﻿using SupplyCoreERP.DosageForms;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Enums.Products;
+using SupplyCoreERP.Medicines.Events;
 using SupplyCoreERP.Products;
 using System;
 using System.Collections.Generic;
@@ -53,6 +54,8 @@ namespace SupplyCoreERP.Medicines
             StorageCondition = storageCondition;
             IsPrescriptionDrug = isPrescriptionDrug;
             Ingredients = new List<MedicineIngredient>();
+
+            AddLocalEvent(new MedicineCreatedDomainEvent(id, name, code));
         }
 
         public void UpdatePharmaInfo(
@@ -82,9 +85,21 @@ namespace SupplyCoreERP.Medicines
             if (item != null) Ingredients.Remove(item);
         }
 
-        public void Approve() => Status = MedicineStatus.Approved;
-        public void Reject() => Status = MedicineStatus.Rejected;
-        public void Penđing() => Status = MedicineStatus.Pending;
+        public void Approve()
+        {
+            if (Status != MedicineStatus.Pending)
+                throw new BusinessException("SupplyCoreERP:InvalidMedicineStatus", "Chỉ thuốc đang ở trạng thái Pending mới có thể được duyệt.");
+            Status = MedicineStatus.Approved;
+            AddLocalEvent(new MedicineStatusChangedDomainEvent(Id, Name, Code, Status));
+        }
+        public void Reject()
+        {
+            if (Status != MedicineStatus.Pending)
+                throw new BusinessException("SupplyCoreERP:InvalidMedicineStatus", "Chỉ thuốc đang ở trạng thái Pending mới có thể bị từ chối.");
+            Status = MedicineStatus.Rejected;
+            AddLocalEvent(new MedicineStatusChangedDomainEvent(Id, Name, Code, Status));
+        }
+        public void SetPending() => Status = MedicineStatus.Pending;
         public void SetActive(bool isActive) => IsActive = isActive;
         public void SetStatus(MedicineStatus status) => Status = status;
     }

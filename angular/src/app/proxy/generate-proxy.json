@@ -5679,6 +5679,482 @@
             }
           }
         },
+        "SupplyCoreERP.Notifications.NotificationAppService": {
+          "controllerName": "Notification",
+          "controllerGroupName": "Notification",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "SupplyCoreERP.Notifications.NotificationAppService",
+          "interfaces": [
+            {
+              "type": "SupplyCoreERP.Notifications.INotificationAppService",
+              "name": "INotificationAppService",
+              "methods": [
+                {
+                  "name": "GetListAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Notifications.Dtos.GetNotificationListDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Notifications.Dtos.GetNotificationListDto",
+                      "typeSimple": "SupplyCoreERP.Notifications.Dtos.GetNotificationListDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Notifications.Dtos.NotificationDto>",
+                    "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Notifications.Dtos.NotificationDto>"
+                  }
+                },
+                {
+                  "name": "MarkReadAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "notificationId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "MarkAllReadAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "ids",
+                      "typeAsString": "System.Collections.Generic.List`1[[System.Guid, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                      "type": "System.Collections.Generic.List<System.Guid>",
+                      "typeSimple": "[string]",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "CreateGlobalAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "title",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "content",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "severity",
+                      "typeAsString": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity, SupplyCoreERP.Domain.Shared",
+                      "type": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity",
+                      "typeSimple": "enum",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Notifications.Dtos.NotificationDto",
+                    "typeSimple": "SupplyCoreERP.Notifications.Dtos.NotificationDto"
+                  }
+                },
+                {
+                  "name": "CreateForPermissionAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "title",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "content",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "severity",
+                      "typeAsString": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity, SupplyCoreERP.Domain.Shared",
+                      "type": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity",
+                      "typeSimple": "enum",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "targetPermissions",
+                      "typeAsString": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                      "type": "System.Collections.Generic.List<System.String>",
+                      "typeSimple": "[string]",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Notifications.Dtos.NotificationDto",
+                    "typeSimple": "SupplyCoreERP.Notifications.Dtos.NotificationDto"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "CreateGlobalAsyncByTitleAndContentAndSeverity": {
+              "uniqueName": "CreateGlobalAsyncByTitleAndContentAndSeverity",
+              "name": "CreateGlobalAsync",
+              "httpMethod": "POST",
+              "url": "api/app/notification/global",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "title",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "content",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "severity",
+                  "typeAsString": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity, SupplyCoreERP.Domain.Shared",
+                  "type": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity",
+                  "typeSimple": "enum",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "title",
+                  "name": "title",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "content",
+                  "name": "content",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "severity",
+                  "name": "severity",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity",
+                  "typeSimple": "enum",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Notifications.Dtos.NotificationDto",
+                "typeSimple": "SupplyCoreERP.Notifications.Dtos.NotificationDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Notifications.INotificationAppService"
+            },
+            "CreateForPermissionAsyncByTitleAndContentAndSeverityAndTargetPermissions": {
+              "uniqueName": "CreateForPermissionAsyncByTitleAndContentAndSeverityAndTargetPermissions",
+              "name": "CreateForPermissionAsync",
+              "httpMethod": "POST",
+              "url": "api/app/notification/for-permission",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "title",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "content",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "severity",
+                  "typeAsString": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity, SupplyCoreERP.Domain.Shared",
+                  "type": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity",
+                  "typeSimple": "enum",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "targetPermissions",
+                  "typeAsString": "System.Collections.Generic.List`1[[System.String, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                  "type": "System.Collections.Generic.List<System.String>",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "title",
+                  "name": "title",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "content",
+                  "name": "content",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "severity",
+                  "name": "severity",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity",
+                  "typeSimple": "enum",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "targetPermissions",
+                  "name": "targetPermissions",
+                  "jsonName": null,
+                  "type": "System.Collections.Generic.List<System.String>",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Notifications.Dtos.NotificationDto",
+                "typeSimple": "SupplyCoreERP.Notifications.Dtos.NotificationDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Notifications.INotificationAppService"
+            },
+            "GetListAsyncByInput": {
+              "uniqueName": "GetListAsyncByInput",
+              "name": "GetListAsync",
+              "httpMethod": "GET",
+              "url": "api/app/notification",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Notifications.Dtos.GetNotificationListDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Notifications.Dtos.GetNotificationListDto",
+                  "typeSimple": "SupplyCoreERP.Notifications.Dtos.GetNotificationListDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "IsRead",
+                  "jsonName": null,
+                  "type": "System.Boolean?",
+                  "typeSimple": "boolean?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Level",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Enums.Notificaitons.NotificationLevel?",
+                  "typeSimple": "enum?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Sorting",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "SkipCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "MaxResultCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Notifications.Dtos.NotificationDto>",
+                "typeSimple": "Volo.Abp.Application.Dtos.PagedResultDto<SupplyCoreERP.Notifications.Dtos.NotificationDto>"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Notifications.INotificationAppService"
+            },
+            "MarkReadAsyncByNotificationId": {
+              "uniqueName": "MarkReadAsyncByNotificationId",
+              "name": "MarkReadAsync",
+              "httpMethod": "POST",
+              "url": "api/app/notification/mark-read/{notificationId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "notificationId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "notificationId",
+                  "name": "notificationId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Notifications.INotificationAppService"
+            },
+            "MarkAllReadAsyncByIds": {
+              "uniqueName": "MarkAllReadAsyncByIds",
+              "name": "MarkAllReadAsync",
+              "httpMethod": "POST",
+              "url": "api/app/notification/mark-all-read",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "ids",
+                  "typeAsString": "System.Collections.Generic.List`1[[System.Guid, System.Private.CoreLib, Version=10.0.0.0, Culture=neutral, PublicKeyToken=7cec85d7bea7798e]], System.Private.CoreLib",
+                  "type": "System.Collections.Generic.List<System.Guid>",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "ids",
+                  "name": "ids",
+                  "jsonName": null,
+                  "type": "System.Collections.Generic.List<System.Guid>",
+                  "typeSimple": "[string]",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Notifications.INotificationAppService"
+            }
+          }
+        },
         "SupplyCoreERP.Prices.PriceAppService": {
           "controllerName": "Price",
           "controllerGroupName": "Price",
@@ -14438,22 +14914,6 @@
       "genericArguments": null,
       "properties": null
     },
-    "SupplyCoreERP.Enums.CurrencyType": {
-      "baseType": "System.Enum",
-      "isEnum": true,
-      "enumNames": [
-        "VND",
-        "USD",
-        "EUR"
-      ],
-      "enumValues": [
-        0,
-        1,
-        2
-      ],
-      "genericArguments": null,
-      "properties": null
-    },
     "SupplyCoreERP.Enums.Medicines.MedicineStatus": {
       "baseType": "System.Enum",
       "isEnum": true,
@@ -14504,6 +14964,38 @@
         2,
         3,
         4
+      ],
+      "genericArguments": null,
+      "properties": null
+    },
+    "SupplyCoreERP.Enums.Notificaitons.NotificationLevel": {
+      "baseType": "System.Enum",
+      "isEnum": true,
+      "enumNames": [
+        "Global",
+        "Permission"
+      ],
+      "enumValues": [
+        0,
+        1
+      ],
+      "genericArguments": null,
+      "properties": null
+    },
+    "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity": {
+      "baseType": "System.Enum",
+      "isEnum": true,
+      "enumNames": [
+        "Info",
+        "Success",
+        "Warning",
+        "Error"
+      ],
+      "enumValues": [
+        0,
+        1,
+        2,
+        3
       ],
       "genericArguments": null,
       "properties": null
@@ -14576,6 +15068,22 @@
       "enumValues": [
         0,
         1
+      ],
+      "genericArguments": null,
+      "properties": null
+    },
+    "SupplyCoreERP.Enums.PriceList.CurrencyType": {
+      "baseType": "System.Enum",
+      "isEnum": true,
+      "enumNames": [
+        "VND",
+        "USD",
+        "EUR"
+      ],
+      "enumValues": [
+        0,
+        1,
+        2
       ],
       "genericArguments": null,
       "properties": null
@@ -15714,6 +16222,132 @@
         }
       ]
     },
+    "SupplyCoreERP.Notifications.Dtos.GetNotificationListDto": {
+      "baseType": "Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "IsRead",
+          "jsonName": null,
+          "type": "System.Boolean?",
+          "typeSimple": "boolean?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Level",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Notificaitons.NotificationLevel?",
+          "typeSimple": "enum?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Notifications.Dtos.NotificationDto": {
+      "baseType": "Volo.Abp.Application.Dtos.EntityDto<System.Guid>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Title",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Content",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Severity",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Notificaitons.NotificationSeverity",
+          "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Level",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Notificaitons.NotificationLevel",
+          "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TargetPermissions",
+          "jsonName": null,
+          "type": "[System.String]",
+          "typeSimple": "[string]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "CreationTime",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "IsRead",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.Prices.Dtos.CreateUpdateProductPriceDto": {
       "baseType": null,
       "isEnum": false,
@@ -15817,7 +16451,7 @@
         {
           "name": "Currency",
           "jsonName": null,
-          "type": "SupplyCoreERP.Enums.CurrencyType",
+          "type": "SupplyCoreERP.Enums.PriceList.CurrencyType",
           "typeSimple": "enum",
           "isRequired": false,
           "minLength": null,
@@ -15886,7 +16520,7 @@
         {
           "name": "Currency",
           "jsonName": null,
-          "type": "SupplyCoreERP.Enums.CurrencyType",
+          "type": "SupplyCoreERP.Enums.PriceList.CurrencyType",
           "typeSimple": "enum",
           "isRequired": false,
           "minLength": null,

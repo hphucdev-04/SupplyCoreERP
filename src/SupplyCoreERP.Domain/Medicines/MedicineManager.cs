@@ -61,7 +61,7 @@ namespace SupplyCoreERP.Medicines
             string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeMedicine);
             await _productManager.CheckCodeAsync(code);
 
-            return new Medicine(
+            Medicine medicine = new(
                 GuidGenerator.Create(),
                 categoryId,
                 manufacturerId,
@@ -74,6 +74,7 @@ namespace SupplyCoreERP.Medicines
                 storageCondition,
                 isPrescriptionDrug
             );
+            return medicine;
         }
 
         public async Task UpdateAsync(
@@ -98,7 +99,7 @@ namespace SupplyCoreERP.Medicines
             // Update toàn bộ thông tin pharma từ input thực sự, 
             medicine.UpdatePharmaInfo(dosageFormId, regNumber, usageRoute, storageCondition, isPrescriptionDrug);
 
-            medicine.Penđing();
+            medicine.SetPending();
         }
 
         private async Task ValidateForeignKeysAsync(Guid catId, Guid manuId, Guid unitId, Guid dosageId)

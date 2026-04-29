@@ -35,5 +35,5 @@ export const APP_ROUTES: Routes = [
   {
     path: 'order',
     loadChildren: () => import('./orders/orders.routes').then(m => m.ORDER_ROUTES),
-  }
+  },
 ];
