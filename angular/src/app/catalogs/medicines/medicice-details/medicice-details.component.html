@@ -17,12 +17,22 @@
         </h3>
         <div class="ph-text-muted d-flex gap-3">
           <span>Code: <strong class="ph-text-body">{{ medicine.code }}</strong></span>
-          <span *ngIf="medicine.registrationNumber">Reg No: <strong class="ph-text-body">{{ medicine.registrationNumber
-              }}</strong></span>
+          <span *ngIf="medicine.registrationNumber">
+            Reg No: 
+            <strong class="ph-text-body" [copyText]="medicine.registrationNumber">
+              {{ medicine.registrationNumber}}
+            </strong>
+          </span>
         </div>
       </div>
     </div>
-    <div>
+
+    <div class="d-flex align-items-center gap-3">
+      <a href="https://dichvucong.dav.gov.vn/congbothuoc" target="_blank" class="ph-link-lookup"
+        style="font-size: 14px;">
+        <i class="fa fa-search me-1"></i> {{ '::LookUp' | abpLocalization }}
+      </a>
+
       <button class="btn btn-sm ph-btn-secondary">
         <i class="fa fa-print"></i> {{ '::PrintLabel' | abpLocalization }}
       </button>

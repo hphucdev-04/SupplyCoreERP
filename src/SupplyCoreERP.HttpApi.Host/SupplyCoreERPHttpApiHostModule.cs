@@ -14,6 +14,7 @@ using OpenIddict.Validation.AspNetCore;
 using SupplyCoreERP.EntityFrameworkCore;
 using SupplyCoreERP.HealthChecks;
 using SupplyCoreERP.MultiTenancy;
+using SupplyCoreERP.SignalR.Notifications;
 using System;
 using System.IO;
 using System.Linq;
@@ -27,6 +28,7 @@ using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
+using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.Autofac;
 using Volo.Abp.BackgroundJobs.Hangfire;
 using Volo.Abp.Hangfire;
@@ -51,7 +53,8 @@ namespace SupplyCoreERP;
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpSwashbuckleModule),
     typeof(AbpAspNetCoreSerilogModule),
-    typeof(AbpBackgroundJobsHangfireModule)
+    typeof(AbpBackgroundJobsHangfireModule),
+    typeof(AbpAspNetCoreSignalRModule)
     )]
 public class SupplyCoreERPHttpApiHostModule : AbpModule
 {
@@ -118,6 +121,7 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
         ConfigureHangfire(context, configuration);
+        ConfigureSignalR(context);
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -214,6 +218,19 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
                 {
                     options.UseNpgsqlConnection(configuration.GetConnectionString("Default"));
                 });
+            // Retry 3 times 30s, 120s, 300s if job fails
+            config.UseFilter(new AutomaticRetryAttribute
+            {
+                Attempts = 3,
+                DelaysInSeconds = new[] { 30, 120, 300 }
+            });
+        });
+    }
+    private void ConfigureSignalR(ServiceConfigurationContext context)
+    {
+        context.Services.AddSignalR(options =>
+        {
+            options.EnableDetailedErrors = true;
         });
     }
 
@@ -296,6 +313,9 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
 
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
-        app.UseConfiguredEndpoints();
+        app.UseConfiguredEndpoints(endpoints =>
+        {
+            endpoints.MapHub<NotificationHub>("/hubs/notification");
+        });
     }
 }

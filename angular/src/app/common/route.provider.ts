@@ -1,6 +1,6 @@
 import { RoutesService, eLayoutType } from '@abp/ng.core';
 import { inject, provideAppInitializer } from '@angular/core';
-import { APP_ROUTES } from './common/menu.provider';
+import { APP_ROUTES } from './menu.provider';
 
 export const APP_ROUTE_PROVIDER = [
   provideAppInitializer(() => {

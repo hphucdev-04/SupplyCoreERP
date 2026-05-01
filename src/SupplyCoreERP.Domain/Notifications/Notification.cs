@@ -1,44 +1,41 @@
 ﻿using SupplyCoreERP.Enums.Notificaitons;
 using System;
+using System.Collections.Generic;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
-namespace SupplyCoreERP.Notifications
+namespace SupplyCoreERP.Notifications;
+
+public class Notification : CreationAuditedAggregateRoot<Guid>
 {
-    public class Notification : CreationAuditedAggregateRoot<Guid>
+    public string Title { get; private set; }
+    public string Content { get; private set; }
+    public NotificationSeverity Severity { get; private set; }
+    public NotificationLevel Level { get; private set; }
+
+    /// <summary>
+    /// Danh sách ABP permission string.
+    /// Chỉ có giá trị khi Level = Permission.
+    /// User có BẤT KỲ permission nào trong list sẽ nhận được notification.
+    /// </summary>
+    public List<string> TargetPermissions { get; private set; }
+
+
+    private Notification() { }
+
+    internal Notification(
+        Guid id,
+        string title,
+        string content,
+        NotificationSeverity severity,
+        NotificationLevel level,
+        List<string>? targetPermissions = null)
+        : base(id)
     {
-        public Guid UserId { get; private set; }
-        public string Title { get; private set; }
-        public string Body { get; private set; }
-        public NotificationType NotificationType { get; private set; }
-        public string? ActionUrl { get; private set; }
-        public bool IsRead { get; private set; }
-        public DateTime? ReadAt { get; private set; }
-        public bool IsEmailSent { get; private set; }
-
-        protected Notification() { }
-
-        public Notification(
-         Guid id, Guid userId,
-         string title, string body,
-         NotificationType notificationType,
-         string? actionUrl = null)
-         : base(id)
-        {
-            UserId = userId;
-            Title = Check.NotNullOrWhiteSpace(title, nameof(title), 255);
-            Body = Check.NotNullOrWhiteSpace(body, nameof(body), 1024);
-            NotificationType = notificationType;
-            ActionUrl = actionUrl;
-            IsRead = false;
-            IsEmailSent = false;
-        }
-
-        public void MarkAsRead()
-        {
-            IsRead = true;
-            ReadAt = DateTime.UtcNow;
-        }
-
+        Title = Check.NotNullOrWhiteSpace(title, nameof(title), 255);
+        Content = Check.NotNullOrWhiteSpace(content, nameof(content), 2055);
+        Severity = severity;
+        Level = level;
+        TargetPermissions = targetPermissions ?? new List<string>();
     }
 }
