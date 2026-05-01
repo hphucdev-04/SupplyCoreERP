@@ -12,24 +12,30 @@ namespace SupplyCoreERP.Orders.PO
 	public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
 	{
 		public string Code { get; private set; }
+
 		public Guid SupplierId { get; private set; }
 		public virtual Supplier Supplier { get; private set; }
+
 		public DateTime OrderDate { get; private set; }
 		public DateTime? ExpectedDeliveryDate { get; private set; }
 		public DateTime? DueDate { get; private set; }
+
 		public PurchaseOrderStatus Status { get; private set; }
+
 		public decimal SubTotal { get; private set; }
 		public decimal TaxAmount { get; private set; }
 		public decimal TotalAmount { get; private set; }
 		public string? Note { get; private set; }
+
 		public Guid WarehouseId { get; private set; }
 		public virtual Warehouse Warehouse { get; private set; }
 
 		public virtual ICollection<PurchaseOrderDetail> Details { get; private set; }
-
 		protected PurchaseOrder() { Details = new List<PurchaseOrderDetail>(); }
 
-		public PurchaseOrder(Guid id, string code, Guid supplierId, Guid warehouseId, DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note) : base(id)
+		public PurchaseOrder(
+			Guid id, string code, Guid supplierId, Guid warehouseId, 
+			DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note) : base(id)
 		{
 			Code = code;
 			SupplierId = supplierId;
@@ -44,8 +50,7 @@ namespace SupplyCoreERP.Orders.PO
 			TotalAmount = 0;
 			Details = new List<PurchaseOrderDetail>();
 		}
-
-		public void UpdateMaster(Guid warehouseId, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
+        public void UpdateInfo(Guid warehouseId, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
 		{
 			if (Status != PurchaseOrderStatus.Draft && Status != PurchaseOrderStatus.PendingApproval)
 				throw new UserFriendlyException("Chỉ có thể sửa đơn hàng khi đang ở trạng thái Nháp hoặc Chờ duyệt.");
@@ -56,7 +61,8 @@ namespace SupplyCoreERP.Orders.PO
 			Note = note;
 		}
 
-		public PurchaseOrderDetail AddDetail(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
+        #region PurchaseOrder Detial
+        public PurchaseOrderDetail AddDetail(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
 		{
 			if (Status != PurchaseOrderStatus.Draft && Status != PurchaseOrderStatus.PendingApproval)
 				throw new UserFriendlyException("Chỉ được thêm chi tiết khi đơn đang Nháp hoặc Chờ duyệt.");
@@ -91,23 +97,30 @@ namespace SupplyCoreERP.Orders.PO
 			Details.Remove(detail);
 			RecalculateTotal();
 		}
+        #endregion
 
-		private void RecalculateTotal()
-		{
-			SubTotal = Details.Sum(x => x.TotalPrice);
-			TaxAmount = Details.Sum(x => x.TaxAmount);
-			TotalAmount = SubTotal + TaxAmount;
-		}
-
-		public void SendToApprove()
+        #region Work flow
+        public void SendToApprove()
 		{
 			if (!Details.Any()) throw new UserFriendlyException("Đơn hàng chưa có sản phẩm nào!");
 			Status = PurchaseOrderStatus.PendingApproval;
 		}
 
-		public void Approve() => Status = PurchaseOrderStatus.Approved;
-		public void StartReceiving() => Status = PurchaseOrderStatus.Receiving;
-		public void Complete() => Status = PurchaseOrderStatus.Completed;
+		public void Approve()
+		{
+			Status = PurchaseOrderStatus.Approved;
+		}
+		public void StartReceiving()
+		{
+			if (Status != PurchaseOrderStatus.Approved)
+				throw new UserFriendlyException(
+					"Chỉ có thể bắt đầu nhận hàng khi đơn đang ở trạng thái Đã duyệt!");
+			Status = PurchaseOrderStatus.Receiving;
+		}
+		public void Complete()
+		{
+			Status = PurchaseOrderStatus.Completed;
+		}
 
 		public void Cancel()
 		{
@@ -115,5 +128,15 @@ namespace SupplyCoreERP.Orders.PO
 			if (Status == PurchaseOrderStatus.Receiving) throw new UserFriendlyException("Đơn hàng đang nhập kho, yêu cầu Kho xóa phiếu trước!");
 			Status = PurchaseOrderStatus.Canceled;
 		}
-	}
+        #endregion
+
+        #region Helper
+        private void RecalculateTotal()
+        {
+            SubTotal = Details.Sum(x => x.TotalPrice);
+            TaxAmount = Details.Sum(x => x.TaxAmount);
+            TotalAmount = SubTotal + TaxAmount;
+        }
+        #endregion
+    }
 }

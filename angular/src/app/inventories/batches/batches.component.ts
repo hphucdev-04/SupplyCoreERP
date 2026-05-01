@@ -9,10 +9,10 @@ import { ProductBatchDto } from 'src/app/proxy/batches/dtos';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
-import { enumName } from 'src/app/shared/utils/enum.util';
-import { BatchQAStatus, batchQAStatusOptions } from 'src/app/proxy/enums/warehouses'; // Đảm bảo import đúng đường dẫn enum
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
+import { enumName } from 'src/app/shared/untils/enum.util';
+import { BatchQAStatus, batchQAStatusOptions } from 'src/app/proxy/enums/warehouses';
 
 @Component({
   selector: 'app-batches',
@@ -50,7 +50,7 @@ export class BatchesComponent implements OnInit, OnDestroy {
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();

@@ -5,8 +5,8 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { CategoryService } from 'src/app/proxy/categories';
 import { CategoryDto, CreateUpdateCategoryDto, GetCategoryListDto } from 'src/app/proxy/categories/dtos';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({

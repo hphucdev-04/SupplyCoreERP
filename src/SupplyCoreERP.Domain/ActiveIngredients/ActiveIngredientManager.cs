@@ -1,4 +1,5 @@
-﻿using SupplyCoreERP.Medicines;
+﻿using SupplyCoreERP.DocumentSequences;
+using SupplyCoreERP.Medicines;
 using System;
 using System.Threading.Tasks;
 using Volo.Abp;
@@ -12,37 +13,33 @@ namespace SupplyCoreERP.ActiveIngredients
 	{
 		private readonly IRepository<ActiveIngredient, Guid> _repository;
 		private readonly IRepository<MedicineIngredient, Guid> _medIngredientRepo;
+        private readonly DocumentSequenceManager _documentSequenceManager;
 
 
-		public ActiveIngredientManager(
+        public ActiveIngredientManager(
 			IRepository<ActiveIngredient, Guid> repository,
-			IRepository<MedicineIngredient, Guid> medIngredientRepo)
+			IRepository<MedicineIngredient, Guid> medIngredientRepo,
+            DocumentSequenceManager documentSequenceManager
+            )
 		{
 			_repository = repository;
 			_medIngredientRepo = medIngredientRepo;
+			_documentSequenceManager = documentSequenceManager;
 		}
 
-		public async Task<ActiveIngredient> CreateAsync(string code, string name)
+		public async Task<ActiveIngredient> CreateAsync(string name)
 		{
-			Check.NotNullOrWhiteSpace(code, nameof(code));
-			var normalizedCode = code.Trim().ToUpper();
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeIngredient);
 
-			if (await _repository.AnyAsync(x => x.Code == normalizedCode))
+            if (await _repository.AnyAsync(x => x.Code == code))
 				throw new UserFriendlyException($"Mã hoạt chất '{code}' đã tồn tại!");
 
-			return new ActiveIngredient(GuidGenerator.Create(), normalizedCode, name);
+			return new ActiveIngredient(GuidGenerator.Create(), code, name);
 		}
 
-		public async Task UpdateAsync(ActiveIngredient entity, string newCode, string newName)
+		public async Task UpdateAsync(ActiveIngredient entity, string newName)
 		{
-			Check.NotNull(entity, nameof(entity));
-			var normalizedCode = newCode.Trim().ToUpper();
-
-			// Check trùng với thằng khác
-			if (await _repository.AnyAsync(x => x.Code == normalizedCode && x.Id != entity.Id))
-				throw new UserFriendlyException($"Mã hoạt chất '{newCode}' đã bị sử dụng!");
-
-			entity.Update(normalizedCode, newName);
+			entity.Update(newName);
 		}
 
 		public async Task DeleteAsync(ActiveIngredient entity)

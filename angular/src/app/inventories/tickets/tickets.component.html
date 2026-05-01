@@ -1,181 +1,168 @@
-<div class="ticket-page">
-
-  <!-- ── Header ──────────────────────────────────────────── -->
-  <div class="page-header">
-    <div class="header-left">
-      <h5 class="page-title">{{ '::Menu:Tickets' | abpLocalization }}</h5>
-    </div>
-    <button class="btn-new-ticket" type="button" (click)="openCreateDrawer()">
-      <i class="fa fa-plus"></i>
-      {{ '::NewTicket' | abpLocalization }}
-    </button>
-  </div>
-
-  <!-- ── Filter bar ───────────────────────────────────────── -->
-  <div class="filter-bar">
-    <div class="filter-search">
-      <app-search
-        [placeholder]="'::SearchByTicketNumber' | abpLocalization"
-        [(value)]="filterText"
-        [debounceTime]="800"
-        (search)="onSearch($event)">
-      </app-search>
-    </div>
-
-    <div class="d-flex flex-wrap gap-1 justify-content-end">
-      <select class="form-select form-select-md" style="width: 190px;"
-              [(ngModel)]="filterWarehouseId" (change)="onFilterChange()">
-        <option [ngValue]="null">{{ '::AllWarehouse' | abpLocalization }}</option>
-        <option *ngFor="let item of warehouses" [ngValue]="item.id">{{ item.name }}</option>
-      </select>
-
-      <select class="form-select form-select-md" style="width: 170px;"
-              [(ngModel)]="filterType" (change)="onFilterChange()">
-        <option [ngValue]="null">{{ '::AllType' | abpLocalization }}</option>
-        <option *ngFor="let item of ticketTypeOptions" [ngValue]="item.value">
-          {{ '::Enum:TicketType.' + enumName(TicketType, item.value) | abpLocalization }}
-        </option>
-      </select>
-
-      <select class="form-select form-select-md" style="width: 150px;"
-              [(ngModel)]="filterStatus" (change)="onFilterChange()">
-        <option [ngValue]="null">{{ '::AllStatus' | abpLocalization }}</option>
-        <option *ngFor="let item of approvalStatusOptions" [ngValue]="item.value">
-          {{ '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, item.value) | abpLocalization }}
-        </option>
-      </select>
+<div class="card">
+  <div class="card-header">
+    <div class="row align-items-center">
+      <div class="col col-md-4">
+        <h5 class="card-title txt-lg fw-bold">
+          {{ '::Menu:Tickets' | abpLocalization }}
+        </h5>
+      </div>
+      <div class="col col-md-8 text-end">
+        <div class="d-flex justify-content-end gap-1">
+          <button class="btn btn-primary btn-sm" type="button" (click)="openCreateDrawer()">
+            <i class="fa fa-plus me-1"></i>
+            <span>{{ '::NewTicket' | abpLocalization }}</span>
+          </button>
+        </div>
+      </div>
     </div>
   </div>
 
-  <!-- ── Data table ───────────────────────────────────────── -->
-  <div class="table-card">
-    <ngx-datatable
-      class="ticket-table"
-      [rows]="data.items"
-      [count]="data.totalCount"
-      [list]="list"
-      default>
+  <div class="card-body">
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
+      <div style="min-width: 250px; flex: 1;">
+        <app-search [placeholder]="'::SearchByTicketNumber' | abpLocalization" [(value)]="filterText"
+          [debounceTime]="800" (search)="onSearch($event)">
+        </app-search>
+      </div>
 
-      <!-- Actions -->
-      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="110" [sortable]="false">
+      <div class="d-flex flex-wrap gap-1 justify-content-end">
+        <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="filterWarehouseId"
+          (change)="onFilterChange()">
+          <option [ngValue]="null">{{ '::AllWarehouse' | abpLocalization }}</option>
+          <option *ngFor="let item of warehouses" [ngValue]="item.id">{{ item.name }}</option>
+        </select>
+        <select class="form-select form-select-sm" style="width: 150px;" [(ngModel)]="filterType"
+          (change)="onFilterChange()">
+          <option [ngValue]="null">{{ '::AllType' | abpLocalization }}</option>
+          <option *ngFor="let item of ticketTypeOptions" [ngValue]="item.value">
+            {{ '::Enum:TicketType.' + enumName(TicketType, item.value) | abpLocalization }}
+          </option>
+        </select>
+        <select class="form-select form-select-sm" style="width: 140px;" [(ngModel)]="filterStatus"
+          (change)="onFilterChange()">
+          <option [ngValue]="null">{{ '::AllStatus' | abpLocalization }}</option>
+          <option *ngFor="let item of approvalStatusOptions" [ngValue]="item.value">
+            {{ '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, item.value) | abpLocalization }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="120" [sortable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
-            <button class="btn-action" ngbDropdownToggle>
-              <i class="fa fa-cog"></i> Tác vụ
+            <button class="btn btn-outline-secondary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              ngbDropdownToggle>
+              <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
               <button ngbDropdownItem (click)="viewDetail(row.id)">
-                <i class="fa fa-eye me-2 text-primary"></i>Xem chi tiết
+                <i class="fa fa-eye me-1 txt-primary"></i>{{ '::ViewDetails' | abpLocalization }}
               </button>
-              <button
-                *ngIf="row.status === ApprovalStatus.Draft || row.status === ApprovalStatus.Pending"
-                ngbDropdownItem
-                class="text-danger"
-                (click)="deleteTicket(row.id, row.ticketNumber)">
-                <i class="fa fa-trash me-2"></i>Xóa phiếu
+              <button *ngIf="row.status === ApprovalStatus.Draft || row.status === ApprovalStatus.Pending"
+                ngbDropdownItem class="txt-danger" (click)="deleteTicket(row.id, row.ticketNumber)">
+                <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
               </button>
             </div>
           </div>
         </ng-template>
       </ngx-datatable-column>
 
-      <!-- Ticket number -->
-      <ngx-datatable-column [name]="'::TicketNumber' | abpLocalization" prop="ticketNumber" [width]="210">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <a class="ticket-link" href="javascript:void(0)" (click)="viewDetail(row.id)">
-            {{ row.ticketNumber }}
-          </a>
+      <ngx-datatable-column [name]="'::TicketNumber' | abpLocalization" prop="ticketNumber" [width]="200">
+        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+          <span class="ph-link" (click)="viewDetail(row.id)">
+            {{ value }}
+          </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <!-- Type -->
-      <ngx-datatable-column [name]="'::Type' | abpLocalization" prop="type" [width]="190">
+      <ngx-datatable-column [name]="'::Type' | abpLocalization" prop="type" [width]="180">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="type-badge"
-            [ngClass]="{
-              incoming: row.type === TicketType.GoodsReceipt || row.type === TicketType.ReturnInward || row.type === TicketType.RecallReceipt,
-              outgoing: row.type === TicketType.GoodsIssue || row.type === TicketType.ReturnOutward || row.type === TicketType.DisposalIssue
-            }">
-            <i class="fa" [ngClass]="{
-              'fa-arrow-circle-down': row.type === TicketType.GoodsReceipt || row.type === TicketType.ReturnInward || row.type === TicketType.RecallReceipt,
-              'fa-arrow-circle-up':  row.type === TicketType.GoodsIssue || row.type === TicketType.ReturnOutward || row.type === TicketType.DisposalIssue
-            }"></i>
+          <span class="fw-semibold font-mono"
+            [ngClass]="(row.type === TicketType.GoodsReceipt || row.type === TicketType.ReturnInward || row.type === TicketType.RecallReceipt) ? 'txt-success' : 'txt-danger'">
+            <i class="fa me-1"
+              [ngClass]="(row.type === TicketType.GoodsReceipt || row.type === TicketType.ReturnInward || row.type === TicketType.RecallReceipt) ? 'fa-arrow-down' : 'fa-arrow-up'"></i>
             {{ '::Enum:TicketType.' + enumName(TicketType, row.type) | abpLocalization }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <!-- Warehouse -->
-      <ngx-datatable-column [name]="'::Warehouse' | abpLocalization" prop="warehouseName" [width]="200">
+      <ngx-datatable-column [name]="'::Warehouse' | abpLocalization" prop="warehouseName" [width]="160">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="wh-name">
-            <i class="fa fa-building-o me-1 text-muted"></i>{{ row.warehouseName }}
+          <span class="fw-medium txt-main font-mono"><i class="fa fa-building-o me-1 txt-muted"></i>{{ row.warehouseName
+            }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Source' | abpLocalization" prop="referenceDocumentNumber" [width]="160">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span *ngIf="row.referenceDocumentNumber" class="badge badge-info font-mono">
+            <i class="fa fa-link me-1"></i> {{ row.referenceDocumentNumber }}
+          </span>
+          <span *ngIf="!row.referenceDocumentNumber" class="txt-muted txt-sm fst-italic">
+            {{ '::Manual' | abpLocalization }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <!-- Status -->
       <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="140">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <span class="status-badge" [ngClass]="{
-            draft:    value === ApprovalStatus.Draft,
-            pending:  value === ApprovalStatus.Pending,
-            approved: value === ApprovalStatus.Approved,
-            rejected: value === ApprovalStatus.Rejected
-          }">
-            <i class="fa" [ngClass]="{
-              'fa-pencil':       value === ApprovalStatus.Draft,
-              'fa-clock-o':      value === ApprovalStatus.Pending,
-              'fa-check-circle': value === ApprovalStatus.Approved,
-              'fa-times-circle': value === ApprovalStatus.Rejected
-            }"></i>
+          <span class="badge" [ngClass]="{
+              'badge-secondary': value === ApprovalStatus.Draft,
+              'badge-warning':   value === ApprovalStatus.Pending,
+              'badge-success':   value === ApprovalStatus.Approved,
+              'badge-danger':    value === ApprovalStatus.Rejected
+            }">
+            <i class="fa me-1" [ngClass]="{
+                'fa-pencil':       value === ApprovalStatus.Draft,
+                'fa-clock-o':      value === ApprovalStatus.Pending,
+                'fa-check-circle': value === ApprovalStatus.Approved,
+                'fa-times-circle': value === ApprovalStatus.Rejected
+              }">
+            </i>
             {{ '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, value) | abpLocalization }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <!-- Creation time -->
       <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="date-text">{{ row.creationTime | date:'dd/MM/yyyy HH:mm' }}</span>
+          <span class="txt-muted txt-sm txt-num">{{ row.creationTime | date:'dd/MM/yyyy HH:mm' }}</span>
         </ng-template>
       </ngx-datatable-column>
 
     </ngx-datatable>
   </div>
-
 </div>
 
-<!-- ── Create ticket drawer ─────────────────────────────────── -->
-<app-drawer
-  [isOpen]="isDrawerOpen"
-  [title]="'::NewTicket' | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="form.invalid || isSaving"
-  (close)="closeDrawer()"
-  (save)="save()">
+<app-drawer [isOpen]="isDrawerOpen" [title]="'::NewTicket' | abpLocalization" [width]="'md'"
+  [saveDisabled]="form.invalid || isSaving" (close)="closeDrawer()" (save)="save()">
 
   <form [formGroup]="form">
-
-    <div class="alert-info-soft mb-4">
-      <i class="fa fa-info-circle me-1"></i>
-      Mã phiếu sẽ được sinh tự động theo loại phiếu và thời gian tạo.
+    <div
+      class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis d-flex align-items-center p-2 mb-3 txt-sm">
+      <i class="fa fa-info-circle me-2 txt-lg"></i>
+      {{ '::AutoGenerateTicketNumberHint' | abpLocalization }}
     </div>
 
     <div class="mb-3">
-      <label class="form-label">{{ '::Warehouse' | abpLocalization }} <span class="text-danger">*</span></label>
-      <select class="form-select" formControlName="warehouseId">
-        <option [ngValue]="null">— Chọn kho —</option>
+      <label class="form-label txt-sm fw-semibold">{{ '::Warehouse' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
+      <select class="form-select form-select-sm" formControlName="warehouseId">
+        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
         <option *ngFor="let wh of warehouses" [value]="wh.id">{{ wh.name }}</option>
       </select>
-      <div *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched" class="text-danger small mt-1">
-        Vui lòng chọn kho.
+      <div *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched" class="txt-danger txt-sm mt-1">
+        {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
 
     <div class="mb-3">
-      <label class="form-label">{{ '::TicketType' | abpLocalization }} <span class="text-danger">*</span></label>
-      <select class="form-select" formControlName="type">
+      <label class="form-label txt-sm fw-semibold">{{ '::TicketType' | abpLocalization }} <span
+          class="txt-danger">*</span></label>
+      <select class="form-select form-select-sm" formControlName="type">
         <option *ngFor="let t of ticketTypeOptions" [value]="t.value">
           {{ '::Enum:TicketType.' + enumName(TicketType, t.value) | abpLocalization }}
         </option>
@@ -183,11 +170,10 @@
     </div>
 
     <div class="mb-3">
-      <label class="form-label">{{ '::Note' | abpLocalization }}</label>
-      <textarea class="form-control" formControlName="note" rows="3"
-        placeholder="Lý do nhập / xuất kho..."></textarea>
+      <label class="form-label txt-sm fw-semibold">{{ '::Note' | abpLocalization }}</label>
+      <textarea class="form-control form-control-sm" formControlName="note" rows="3"
+        [placeholder]="'::EnterNote' | abpLocalization"></textarea>
     </div>
-
   </form>
 </app-drawer>
 

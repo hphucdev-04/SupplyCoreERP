@@ -1,0 +1,73 @@
+<div class="erp-filter-wrapper" (click)="$event.stopPropagation()">
+
+  <!-- Trigger -->
+  <button class="btn btn-sm erp-filter-btn" type="button" [class.active]="isOpen" (click)="toggleOpen()">
+    <i class="fa fa-sliders-h me-1"></i>
+    <span>{{ '::Filters' | abpLocalization }}</span>
+    <span class="erp-filter-badge" *ngIf="getActiveCount() > 0">{{ getActiveCount() }}</span>
+  </button>
+
+  <!-- Panel -->
+  <div class="erp-filter-panel" *ngIf="isOpen">
+
+    <!-- Header -->
+    <div class="erp-filter-header">
+      <div class="d-flex align-items-center gap-2">
+        <i class="fa fa-filter" style="color: var(--ph-color-brand-500)"></i>
+        <span class="fw-semibold">{{ '::AdvancedFilter' | abpLocalization }}</span>
+        <span class="erp-active-badge" *ngIf="getActiveCount() > 0">{{ getActiveCount() }}</span>
+      </div>
+      <button class="btn btn-link btn-sm p-0 erp-clear-all" type="button" *ngIf="getActiveCount() > 0"
+        (click)="clearAll()">
+        <i class="fa fa-times me-1"></i>{{ '::ClearAll' | abpLocalization }}
+      </button>
+    </div>
+
+    <!-- Body -->
+    <div class="erp-filter-body">
+      <ng-container *ngFor="let slot of activeSlots; let last = last">
+
+        <!-- searchable-select -->
+        <div class="erp-filter-field" *ngIf="slot.type === 'searchable-select'">
+          <label class="erp-field-label">{{ slot.label | abpLocalization }}</label>
+          <app-dropdown-search [items]="toDropdownItems(slot)" [placeholder]="slot.label | abpLocalization"
+            [nullLabel]="'::All' | abpLocalization" [ngModel]="slot.value" (valueChange)="slot.value = $event">
+          </app-dropdown-search>
+        </div>
+
+        <!-- radio / badge group -->
+        <div class="erp-filter-field" *ngIf="slot.type === 'radio'">
+          <label class="erp-field-label">{{ slot.label | abpLocalization }}</label>
+          <div class="erp-badge-group">
+            <button type="button" class="erp-badge-option" [class.active]="slot.value === null"
+              (click)="slot.value = null">
+              {{ '::All' | abpLocalization }}
+            </button>
+            <button type="button" class="erp-badge-option" *ngFor="let item of slot.items"
+              [class.active]="slot.value === item[slot.valueKey ?? 'id']"
+              (click)="slot.value = item[slot.valueKey ?? 'id']">
+              <span class="erp-badge-dot" *ngIf="getColor(slot, item[slot.valueKey ?? 'id'])"
+                [style.background]="getColor(slot, item[slot.valueKey ?? 'id'])">
+              </span>
+              {{ item[slot.labelKey ?? 'name'] | abpLocalization }}
+            </button>
+          </div>
+        </div>
+
+        <div class="erp-field-divider" *ngIf="!last"></div>
+      </ng-container>
+    </div>
+
+    <!-- Footer -->
+    <div class="erp-filter-footer">
+      <button type="button" class="btn btn-sm ph-btn-cancel" (click)="close()">
+        {{ '::Cancel' | abpLocalization }}
+      </button>
+      <button type="button" class="btn btn-sm ph-btn-new" (click)="applyAndClose()">
+        <i class="fa fa-check me-1"></i>{{ '::Apply' | abpLocalization }}
+        <span *ngIf="getActiveCount() > 0">({{ getActiveCount() }})</span>
+      </button>
+    </div>
+
+  </div>
+</div>

@@ -8,12 +8,12 @@ import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { TicketType, ticketTypeOptions } from 'src/app/proxy/enums/warehouses/ticket-type.enum';
 import { ApprovalStatus, approvalStatusOptions } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
 import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { WarehouseService } from 'src/app/proxy/warehouses';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 import { TicketDetailsComponent } from './tickets-details/ticket-details.component';
 
 @Component({
@@ -58,7 +58,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
     private warehouseService: WarehouseService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.buildForm();

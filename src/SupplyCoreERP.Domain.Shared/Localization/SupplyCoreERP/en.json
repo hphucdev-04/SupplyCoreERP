@@ -7,19 +7,26 @@
 
     //Menus
     "Menu:Dashboard": "Dashboard",
-    "Menu:Catalog": "Catalog",
+    "Menu:Catalog": "Catalog Management",
     "Menu:Categories": "Categories",
     "Menu:Medicines": "Medicines",
+    "Menu:MedicineDetails": "Medicine Detail",
     "Menu:Units": "Units",
     "Menu:Ingredients": "Ingredients",
     "Menu:DosageForms": "Dosage Form",
     "Menu:Manufacturers": "Manufacturers",
-    "Menu:Partner": "Partner",
+    "Menu:Partner": "Partner Management",
     "Menu:Suppliers": "Suppliers",
     "Menu:Customers": "Customers",
     "Menu:Medicnes": "Medicnes",
     "Menu:Warehouses": "Warehouses",
-    "Menu:Inventory": "Inventory"
-
+    "Menu:Inventory": "Inventory Management",
+    "Menu:StorageLocations": "Warehouse Layout",
+    "Menu:Batches": "Batches",
+    "Menu:Tickets": "Tickets",
+    "Menu:Balances": "Balances",
+    "Menu:Order": "Order Management",
+    "Menu:SaleOrders": "Sale Orders",
+    "Menu:PurchaseOrders": "Purchase Orders"
   }
 }

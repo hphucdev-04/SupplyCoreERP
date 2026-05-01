@@ -1,5 +1,6 @@
-﻿using AutoMapper.Internal.Mappers;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.Customers;
+using SupplyCoreERP.Inventories.Tickets;
 using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.SalesOrders.Dtos;
 using System;
@@ -7,25 +8,37 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.SalesOrders
 {
-	public class SalesOrderAppService : ApplicationService, ISalesOrderAppService
+	public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
 	{
+		// Dependencies
 		private readonly IRepository<SalesOrder, Guid> _orderRepo;
+		private readonly IRepository<InventoryTicket, Guid> _ticketRepo;         
+		private readonly IRepository<InventoryTicketDetail, Guid> _ticketDetailRepo; 
+		private readonly IRepository<Customer, Guid> _customerRepo;
 		private readonly SalesOrderManager _orderManager;
 
-		public SalesOrderAppService(IRepository<SalesOrder, Guid> orderRepo, SalesOrderManager orderManager)
+		// DI
+		public SalesOrderAppService(
+			IRepository<SalesOrder, Guid> orderRepo,
+			IRepository<InventoryTicket, Guid> ticketRepo,
+			IRepository<InventoryTicketDetail, Guid> ticketDetailRepo,
+			IRepository<Customer, Guid> customerRepo,
+			SalesOrderManager orderManager)
 		{
 			_orderRepo = orderRepo;
+			_ticketRepo = ticketRepo;
+			_ticketDetailRepo = ticketDetailRepo;
+			_customerRepo = customerRepo;
 			_orderManager = orderManager;
 		}
 
+		#region SaleOrder
 		public async Task<PagedResultDto<SalesOrderDto>> GetListAsync(GetSalesOrderListDto input)
 		{
 			var query = await _orderRepo.GetQueryableAsync();
@@ -98,7 +111,9 @@ namespace SupplyCoreERP.SalesOrders
 				await _orderRepo.DeleteAsync(entity);
 			}
 		}
+		#endregion
 
+		#region SaleOrder Details
 		public async Task AddDetailAsync(Guid orderId, AddSalesOrderDetailDto input)
 		{
 			var query = await _orderRepo.GetQueryableAsync();
@@ -128,13 +143,14 @@ namespace SupplyCoreERP.SalesOrders
 			await _orderManager.RemoveDetailAsync(entity, detailId);
 			await _orderRepo.UpdateAsync(entity);
 		}
+		#endregion
 
-
+		#region Workflow
 		public async Task SendToApproveAsync(Guid id)
 		{
 			var query = await _orderRepo.GetQueryableAsync();
-			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id);
-			if (entity == null) throw new EntityNotFoundException(typeof(SalesOrder), id);
+			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
+				?? throw new EntityNotFoundException(typeof(SalesOrder), id);
 
 			await _orderManager.SendToApproveAsync(entity);
 			await _orderRepo.UpdateAsync(entity);
@@ -143,19 +159,28 @@ namespace SupplyCoreERP.SalesOrders
 		public async Task ApproveAsync(Guid id)
 		{
 			var query = await _orderRepo.GetQueryableAsync();
-			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id);
-			if (entity == null) throw new EntityNotFoundException(typeof(SalesOrder), id);
+			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
+				?? throw new EntityNotFoundException(typeof(SalesOrder), id);
 
-			await _orderManager.ApproveAsync(entity);
+			// Manager validate tồn kho + tạo ticket + chạy FEFO 
+			var (ticket, fefoDetails) = await _orderManager.ApproveAsync(entity);
+
+			await _ticketRepo.InsertAsync(ticket);
+			if (fefoDetails.Any())
+				await _ticketDetailRepo.InsertManyAsync(fefoDetails);
 			await _orderRepo.UpdateAsync(entity);
 		}
 
 		public async Task CompleteAsync(Guid id)
 		{
 			var entity = await _orderRepo.GetAsync(id);
-			await _orderManager.CompleteAsync(entity);
+
+			var customer = await _orderManager.CompleteAsync(entity);
+
+			await _customerRepo.UpdateAsync(customer);
 			await _orderRepo.UpdateAsync(entity);
 		}
+
 
 		public async Task CancelAsync(Guid id, string reason)
 		{
@@ -163,5 +188,6 @@ namespace SupplyCoreERP.SalesOrders
 			await _orderManager.CancelAsync(entity, reason);
 			await _orderRepo.UpdateAsync(entity);
 		}
+		#endregion
 	}
 }

@@ -7,6 +7,7 @@ using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Locations.Cities;
 using SupplyCoreERP.Locations.Areas;
 using SupplyCoreERP.Enums.Partner;
+using SupplyCoreERP.DocumentSequences;
 
 namespace SupplyCoreERP.Suppliers
 {
@@ -16,25 +17,31 @@ namespace SupplyCoreERP.Suppliers
 		private readonly IRepository<Country, Guid> _countryRepo;
 		private readonly IRepository<City, Guid> _cityRepo;
 		private readonly IRepository<Area, Guid> _areaRepo;
+		private readonly DocumentSequenceManager _documentSequenceManager;
 
 		public SupplierManager(
 			IRepository<Supplier, Guid> supplierRepository,
 			IRepository<Country, Guid> countryRepo,
 			IRepository<City, Guid> cityRepo,
-			IRepository<Area, Guid> areaRepo)
+			IRepository<Area, Guid> areaRepo,
+			DocumentSequenceManager documentSequenceManager
+			)
 		{
 			_supplierRepository = supplierRepository;
 			_countryRepo = countryRepo;
 			_cityRepo = cityRepo;
 			_areaRepo = areaRepo;
+			_documentSequenceManager = documentSequenceManager;
 		}
 
 		public async Task<Supplier> CreateAsync(
-			string code, string name, string? taxCode, string? phoneNumber, string? email,
+			string name, string? taxCode, string? phoneNumber, string? email,
 			string? representativeName, Gender? gender, string? note,
 			string? address, Guid? countryId, Guid? cityId, Guid? areaId,
 			decimal debtLimit = 0, int paymentTermDays = 0)
 		{
+			var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeSupplier);
+
 			await CheckCodeAndNameAsync(code, name);
 			await ValidateLocationAsync(countryId, cityId, areaId);
 
@@ -47,17 +54,12 @@ namespace SupplyCoreERP.Suppliers
 
 		public async Task UpdateAsync(
 			Supplier supplier,
-			string code,
 			string name, string? taxCode, string? phoneNumber, string? email,
 			string? representativeName, Gender? gender, string? note,
 			string? address, Guid? countryId, Guid? cityId, Guid? areaId,
 			decimal debtLimit = 0, int paymentTermDays = 0)
 		{
-			Check.NotNull(supplier, nameof(supplier));
-			await CheckCodeAndNameAsync(code, name, supplier.Id);
 			await ValidateLocationAsync(countryId, cityId, areaId);
-
-			supplier.UpdateCode(code);
 			supplier.UpdateInfo(name, gender, taxCode, phoneNumber, email, representativeName, note);
 			supplier.SetLocation(address, countryId, cityId, areaId);
 			supplier.SetDebtInfo(debtLimit, paymentTermDays);

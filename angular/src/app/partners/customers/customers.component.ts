@@ -2,18 +2,18 @@ import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil, forkJoin } from 'rxjs'; 
+import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { CustomerService } from 'src/app/proxy/customers';
 import { CustomerDto, CustomerDetailDto, CreateUpdateCustomerDto, GetCustomerListDto } from 'src/app/proxy/customers/dtos';
 import { Gender, CustomerType, genderOptions, customerTypeOptions } from 'src/app/proxy/enums/partner';
 import { LocationService } from 'src/app/proxy/locations';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
-import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { CodeGeneratorUtil } from 'src/app/shared/untils/code-generator.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 
 
 @Component({
@@ -28,7 +28,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   // Data Grid
   data = { items: [], totalCount: 0 } as PagedResultDto<CustomerDto>;
-  
+
   // Drawer & Form State
   isDrawerOpen = false;
   form: FormGroup;
@@ -58,23 +58,23 @@ export class CustomersComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-  ) {}
+  ) { }
 
   ngOnInit(): void {
-    this.buildForm(); 
-    this.loadInitialLookups(); 
-    const streamCreator = (query: GetCustomerListDto) => this.customerService.getList({ 
-      ...query, 
+    this.buildForm();
+    this.loadInitialLookups();
+    const streamCreator = (query: GetCustomerListDto) => this.customerService.getList({
+      ...query,
       filter: this.filterText,
       isActive: this.filterIsActive
     });
-    
+
     this.list.maxResultCount = 10;
     this.list.hookToQuery(streamCreator)
-        .pipe(takeUntil(this.destroy$))
-        .subscribe((response) => {
-            this.data = response;
-        });
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((response) => {
+        this.data = response;
+      });
   }
 
   ngOnDestroy(): void {
@@ -87,7 +87,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
       .filter(key => !isNaN(Number(key)))
       .map(key => ({
         value: Number(key),
-        name: enumType[key]   
+        name: enumType[key]
       }));
   }
 
@@ -131,7 +131,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   onFilterChange() {
-    this.list.get(); 
+    this.list.get();
   }
 
   viewDetail(id: string): void {
@@ -150,7 +150,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
     this.isDrawerOpen = true;
   }
 
- editCustomer(id: string): void {
+  editCustomer(id: string): void {
     this.customerService.get(id)
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
@@ -191,14 +191,14 @@ export class CustomersComponent implements OnInit, OnDestroy {
       .subscribe((status) => {
         if (status === Confirmation.Status.confirm) {
           this.customerService.delete(id)
-            .pipe(takeUntil(this.destroy$))  
+            .pipe(takeUntil(this.destroy$))
             .subscribe({
               next: () => {
-                  this.list.get();
-                  this.toaster.success('::DeleteSuccess', '::Success');
+                this.list.get();
+                this.toaster.success('::DeleteSuccess', '::Success');
               },
               error: (err) => {
-                  this.toaster.error(err.error?.error?.message || '::Error');
+                this.toaster.error(err.error?.error?.message || '::Error');
               }
             });
         }
@@ -208,24 +208,23 @@ export class CustomersComponent implements OnInit, OnDestroy {
   onToggleActive(row: CustomerDto, event: any): void {
     event.stopPropagation();
     this.confirmation.warn(
-        row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
-        '::Confirm'
+      row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
+      '::Confirm'
     ).subscribe((status) => {
-        if (status === Confirmation.Status.confirm) {
-            this.customerService.toggleActive(row.id).subscribe(() => this.list.get());
-            this.toaster.success(
-              row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
-            );
-        } else {
-            event.target.checked = row.isActive; 
-        }
+      if (status === Confirmation.Status.confirm) {
+        this.customerService.toggleActive(row.id).subscribe(() => this.list.get());
+        this.toaster.success(
+          row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
+        );
+      } else {
+        event.target.checked = row.isActive;
+      }
     });
   }
 
   // --- FORM HANDLING ---
   buildForm(): void {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
       phoneNumber: ['', Validators.maxLength(20)],
       email: ['', [Validators.email, Validators.maxLength(128)]],
@@ -244,13 +243,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
     });
   }
 
-  generateCode(): void {
-    const name = this.form.get('name')?.value || '';
-    const code = CodeGeneratorUtil.generate(name, 'CUS');
-    this.form.get('code')?.setValue(code);
-  }
-
- closeDrawer(): void {
+  closeDrawer(): void {
     this.isDrawerOpen = false;
     this.form.reset({
       debtLimit: 0,

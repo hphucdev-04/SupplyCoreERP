@@ -11,6 +11,6 @@ namespace SupplyCoreERP.Balances
 	{
 		Task<PagedResultDto<InventoryBalanceDto>> GetListAsync(GetInventoryBalanceListDto input);
 		Task<InventoryBalanceDetailDto> GetAsync(Guid id);
-		Task<List<InventoryReservationDto>> GetActiveReservationsAsync(Guid id);
+		Task<PagedResultDto<InventoryReservationDto>> GetReservationListAsync(GetInventoryReservationListDto input);
 	}
 }

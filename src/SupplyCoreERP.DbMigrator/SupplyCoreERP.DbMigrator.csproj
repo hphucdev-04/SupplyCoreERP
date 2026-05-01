@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <Import Project="..\..\common.props" />
 
@@ -7,7 +7,12 @@
     <TargetFramework>net10.0</TargetFramework>
     <Nullable>enable</Nullable>
   </PropertyGroup>
-
+	
+	<PropertyGroup>
+		<NoWarn>NU1903</NoWarn>
+		<UserSecretsId>824f2173-b2f5-47fa-b549-a88b6425cf44</UserSecretsId>
+	</PropertyGroup>
+	
   <ItemGroup>
     <PackageReference Include="Scriban" Version="7.0.0" />
     <PackageReference Include="Serilog.Extensions.Logging" Version="9.0.2" />
@@ -31,14 +36,29 @@
     <None Remove="Logs\**" />
   </ItemGroup>
 
+	<ItemGroup>
+		<None Update="appsettings.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="appsettings.Development.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+		<None Update="appsettings.Production.json">
+			<CopyToOutputDirectory>Always</CopyToOutputDirectory>
+		</None>
+	</ItemGroup>
+
   <ItemGroup>
     <None Remove="appsettings.json" />
+    <Content Include="appsettings.Production.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
+    </Content>
     <Content Include="appsettings.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <None Remove="appsettings.secrets.json" />
-    <Content Include="appsettings.secrets.json">
+    <Content Include="appsettings.Development.json">
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

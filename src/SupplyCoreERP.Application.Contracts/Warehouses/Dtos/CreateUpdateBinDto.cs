@@ -11,10 +11,6 @@ namespace SupplyCoreERP.Warehouses.Dtos
 		[Required]
 		public Guid ZoneId { get; set; } 
 
-		[Required]
-		[MaxLength(50)]
-		public string Code { get; set; }
-
 		public int PositionX { get; set; }
 		public int PositionY { get; set; }
 

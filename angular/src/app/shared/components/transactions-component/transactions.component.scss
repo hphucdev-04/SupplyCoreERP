@@ -1,0 +1,24 @@
+/* Ép vẽ đường line phân cách giữa các dòng */
+::ng-deep .ngx-datatable.default .datatable-body-row {
+    border-bottom: 1px solid #ebedf2 !important;
+}
+
+/* Tăng khoảng cách trên/dưới của mỗi dòng một chút cho thoáng và căn giữa nội dung */
+::ng-deep .ngx-datatable.default .datatable-body-cell {
+    padding-top: 0.7rem !important;
+    padding-bottom: 0.7rem !important;
+    display: flex;
+    align-items: center;
+}
+
+/* Đảm bảo Header cũng có viền xám chuẩn Material */
+::ng-deep .ngx-datatable.default .datatable-header {
+    border-bottom: 1px solid #dee2e6 !important;
+    background-color: #f8f9fa;
+}
+
+/* Giữ chiều cao Paginator cố định không bị đè */
+::ng-deep .ngx-datatable.default .datatable-footer {
+    border-top: 1px solid #dee2e6 !important;
+    background-color: #ffffff;
+}

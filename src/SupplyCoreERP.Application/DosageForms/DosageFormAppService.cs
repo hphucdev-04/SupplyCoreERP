@@ -30,7 +30,7 @@ namespace SupplyCoreERP.DosageForms
 		public override async Task<DosageFormDto> CreateAsync(CreateUpdateDosageFormDto input)
 		{
 			// Manager check và tạo entity 
-			var entity = await _dosageFormManager.CreateAsync(input.Code, input.Name);
+			var entity = await _dosageFormManager.CreateAsync(input.Name);
 			//Repository save vào DB
 			await Repository.InsertAsync(entity);
 
@@ -41,7 +41,7 @@ namespace SupplyCoreERP.DosageForms
 		{
 			var entity = await Repository.GetAsync(id);
 			// Manager để đảm bảo tính hợp lệ của entity
-			await _dosageFormManager.UpdateAsync(entity, input.Code, input.Name);
+			await _dosageFormManager.UpdateAsync(entity,input.Name);
 			//Repository update vào DB
 			await Repository.UpdateAsync(entity);
 

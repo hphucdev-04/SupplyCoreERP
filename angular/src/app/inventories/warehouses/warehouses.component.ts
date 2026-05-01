@@ -5,60 +5,61 @@ import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
-import { AreaDto, CityDto } from 'src/app/proxy/locations/dtos';
+import { AreaDto, CityDto, CountryDto } from 'src/app/proxy/locations/dtos';
 import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { LocationService } from 'src/app/proxy/locations';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
-import { CodeGeneratorUtil } from 'src/app/shared/utils/code-generator.util';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { Router } from '@angular/router';
-import { enumName } from 'src/app/shared/utils/enum.util';
+import { enumName } from 'src/app/shared/untils/enum.util';
 
 
 @Component({
+  standalone: true,
   selector: 'app-warehouses',
   templateUrl: './warehouses.component.html',
-  styleUrl: './warehouses.component.scss',
-  providers: [ListService], 
+  styleUrls: ['./warehouses.component.scss'],
+  providers: [ListService],
   imports: [SharedModule, DrawerComponent, SearchComponent]
 })
 export class WarehousesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   warehouse = { items: [], totalCount: 0 } as PagedResultDto<WarehouseDto>;
-  
+
   isDrawerOpen = false;
   form: FormGroup;
   selectedWarehouse: WarehouseDto;
-  
-  filterText = ''; 
-  
-  cities: CityDto[] = []; 
-  areas: AreaDto[] = [];  
-  
-  approvalStatus = ApprovalStatus; 
+
+  filterText = '';
+
+  countries: CountryDto[] = [];
+  cities: CityDto[] = [];
+  areas: AreaDto[] = [];
+
+  approvalStatus = ApprovalStatus;
 
   // --- TỶ LỆ QUY ĐỔI (THỰC TẾ) ---
   // 1 mét (m) = 20 pixels (px) trên bản vẽ (Đồng bộ với Map Layout)
   readonly PX_PER_M = 20;
   readonly enumName = enumName;
-  
+
   constructor(
     public readonly list: ListService,
     private warehouseService: WarehouseService,
-    private locationService: LocationService, 
+    private locationService: LocationService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
-    private router: Router, 
+    private router: Router,
     private toaster: ToasterService,
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.buildForm();
     this.loadWarehouses();
-    this.loadCities(); 
+    this.loadCountries();
   }
 
   ngOnDestroy(): void {
@@ -82,7 +83,7 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   loadWarehouses() {
     const streamCreator = (query) => this.warehouseService.getList({
       ...query,
-      filter: this.filterText 
+      filter: this.filterText
     });
 
     this.list.hookToQuery(streamCreator)
@@ -94,28 +95,40 @@ export class WarehousesComponent implements OnInit, OnDestroy {
 
   onSearch(searchValue: string): void {
     this.filterText = searchValue;
-    this.list.get(); 
+    this.list.get();
   }
 
   manageLocations(id: string): void {
-    this.router.navigate(['/inventory/warehouses', id, 'locations']);
+    this.router.navigate(['/inventory/warehouses','layouts', id]);
   }
 
-  // ==============================================
-  // TÍCH HỢP LOCATION SERVICE (CASCADING DROPDOWN)
-  // ==============================================
-  loadCities() {
-    this.locationService.getAllCities()
+  loadCountries() {
+    this.locationService.getAllCountries()
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
-        this.cities = res.items;
+        this.countries = res.items;
       });
   }
 
-  onCityChange(cityId: string) {
-    this.form.get('areaId').setValue(null); 
+  onCountryChange(countryId: string) {
+    // Reset data các cấp nhỏ hơn
+    this.form.get('cityId').setValue(null);
+    this.form.get('areaId').setValue(null);
+    this.cities = [];
     this.areas = [];
-    
+
+    if (countryId) {
+      this.locationService.getCitiesByCountry(countryId) // Gọi API lấy city theo country
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res) => {
+          this.cities = res.items;
+        });
+    }
+  }
+  onCityChange(cityId: string) {
+    this.form.get('areaId').setValue(null);
+    this.areas = [];
+
     if (cityId) {
       this.locationService.getAreasByCity(cityId)
         .pipe(takeUntil(this.destroy$))
@@ -130,9 +143,9 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   // ==============================================
   buildForm() {
     this.form = this.fb.group({
-      code: ['', [Validators.required, Validators.maxLength(50)]],
       name: ['', [Validators.required, Validators.maxLength(255)]],
       address: ['', [Validators.maxLength(500)]],
+      countryId: [null],
       cityId: [null],
       areaId: [null],
       // Validator tính bằng MÉT (Ví dụ: Tối thiểu 5m x 5m, Tối đa 500m x 500m)
@@ -153,7 +166,7 @@ export class WarehousesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.selectedWarehouse = res;
-        
+
         // Cần đổi từ Pixel (DB) sang Mét (Form) để hiển thị
         this.form.patchValue({
           ...res,
@@ -161,12 +174,22 @@ export class WarehousesComponent implements OnInit, OnDestroy {
           mapLength: this.toM(res.mapLength)
         });
 
+        // Cascading data cho form Edit
+        if (res.countryId) {
+          this.locationService.getCitiesByCountry(res.countryId)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe((cityRes) => {
+              this.cities = cityRes.items;
+              this.form.get('cityId').setValue(res.cityId); // Set lại giá trị city sau khi list đã load xong
+            });
+        }
+
         if (res.cityId) {
           this.locationService.getAreasByCity(res.cityId)
             .pipe(takeUntil(this.destroy$))
             .subscribe((areaRes) => {
               this.areas = areaRes.items;
-              this.form.get('areaId').setValue(res.areaId);
+              this.form.get('areaId').setValue(res.areaId); // Set lại giá trị area sau khi list đã load xong
             });
         }
 
@@ -220,25 +243,19 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   }
 
   onToggleActive(row: WarehouseDto, event: any): void {
-      event.stopPropagation();
-      this.confirmation.warn(
-          row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
-          '::Confirm'
-      ).subscribe((status) => {
-          if (status === Confirmation.Status.confirm) {
-              this.warehouseService.toggleActive(row.id).subscribe(() => this.list.get());
-              this.toaster.success(
-                row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
-              );
-          } else {
-              event.target.checked = row.isActive; 
-          }
-      });
-    }
-
-  generateCode(): void {
-    const name = this.form.get('name')?.value || '';
-    const code = CodeGeneratorUtil.generate(name, 'WH');
-    this.form.get('code')?.setValue(code);
+    event.stopPropagation();
+    this.confirmation.warn(
+      row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
+      '::Confirm'
+    ).subscribe((status) => {
+      if (status === Confirmation.Status.confirm) {
+        this.warehouseService.toggleActive(row.id).subscribe(() => this.list.get());
+        this.toaster.success(
+          row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
+        );
+      } else {
+        event.target.checked = row.isActive;
+      }
+    });
   }
 }

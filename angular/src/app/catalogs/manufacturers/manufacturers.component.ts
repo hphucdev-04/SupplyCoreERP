@@ -7,8 +7,8 @@ import { LocationService } from 'src/app/proxy/locations';
 import { ContinentDto, CountryDto } from 'src/app/proxy/locations/dtos';
 import { ManufacturerService } from 'src/app/proxy/manufacturers';
 import { ManufacturerDto } from 'src/app/proxy/manufacturers/dtos';
-import { DrawerComponent } from 'src/app/shared/components/drawer/drawer.component';
-import { SearchComponent } from 'src/app/shared/components/search/search.component';
+import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Component({
@@ -19,8 +19,8 @@ import { SharedModule } from 'src/app/shared/shared.module';
   providers: [ListService]
 })
 export class ManufacturersComponent implements OnInit, OnDestroy {
-  private destroy$ = new Subject<void>(); 
-  
+  private destroy$ = new Subject<void>();
+
   data = { items: [], totalCount: 0 } as PagedResultDto<ManufacturerDto>;
   isDrawerOpen = false;
   form: FormGroup;
@@ -29,7 +29,7 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
 
   // Dữ liệu cho Dropdown
   continents: ContinentDto[] = [];
-  countries: CountryDto[] = [];       
+  countries: CountryDto[] = [];
   filteredCountries: CountryDto[] = [];
 
   constructor(
@@ -39,7 +39,7 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     const streamCreator = (query) => this.manufacturerService.getList({ ...query, filter: this.filterText });
@@ -116,7 +116,7 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
     });
   }
 
- onContinentChange(continentId: string): void {
+  onContinentChange(continentId: string): void {
     if (!continentId) {
       this.filteredCountries = [];
       return;
@@ -150,7 +150,7 @@ export class ManufacturersComponent implements OnInit, OnDestroy {
         this.closeDrawer();
         this.list.get();
         this.toaster.success(
-          this.selectedManufacturer.id ? '::UpdateSuccess' : '::CreateSuccess','::Success'
+          this.selectedManufacturer.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
         );
       });
   }

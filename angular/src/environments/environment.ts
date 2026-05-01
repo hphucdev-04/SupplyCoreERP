@@ -1,6 +1,7 @@
 import { Environment } from '@abp/ng.core';
 
 const baseUrl = 'http://localhost:4200';
+const dvcUrl = 'https://dichvucong.dav.gov.vn/congbothuoc'
 
 const oAuthConfig = {
   issuer: 'https://localhost:44367/',

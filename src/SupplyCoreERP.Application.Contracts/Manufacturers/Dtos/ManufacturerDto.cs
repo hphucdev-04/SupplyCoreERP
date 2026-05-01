@@ -7,6 +7,7 @@ namespace SupplyCoreERP.Manufacturers.Dtos
 {
 	public class ManufacturerDto : FullAuditedEntityDto<Guid>
 	{
+		public string Code { get; set; }
 		public string Name { get; set; }
 
 		public Guid ContinentId { get; set; }

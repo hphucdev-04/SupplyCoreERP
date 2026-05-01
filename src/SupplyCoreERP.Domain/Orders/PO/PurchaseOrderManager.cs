@@ -1,5 +1,8 @@
-﻿using SupplyCoreERP.Enums.Orders;
+﻿using SupplyCoreERP.DocumentSequences;
+using SupplyCoreERP.Enums.Orders;
+using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Tickets;
+using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
 using System;
@@ -13,52 +16,70 @@ namespace SupplyCoreERP.Orders.PO
 {
 	public class PurchaseOrderManager : DomainService
 	{
-		private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
+        // Dependencies
+        private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
 		private readonly IRepository<Supplier, Guid> _supplierRepo;
 		private readonly IRepository<Product, Guid> _productRepo;
+		private readonly IRepository<Warehouse, Guid> _warehouseRepo;
 		private readonly TicketManager _ticketManager;
+		private readonly DocumentSequenceManager _documentManager;
 
-		public PurchaseOrderManager(
+        // DI
+        public PurchaseOrderManager(
 			IRepository<PurchaseOrder, Guid> orderRepo,
 			IRepository<Supplier, Guid> supplierRepo,
 			IRepository<Product, Guid> productRepo,
-			TicketManager ticketManager)
+			IRepository<Warehouse, Guid> warehouseRepo,
+			TicketManager ticketManager,
+			DocumentSequenceManager documentManager
+		)
 		{
 			_orderRepo = orderRepo;
 			_supplierRepo = supplierRepo;
 			_productRepo = productRepo;
+			_warehouseRepo = warehouseRepo;
 			_ticketManager = ticketManager;
+			_documentManager = documentManager;
 		}
 
-		public async Task<PurchaseOrder> CreateOrderAsync(Guid supplierId, Guid warehouseId, DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? inputDueDate, string? note)
+        #region PurchaseOrder
+        public async Task<PurchaseOrder> CreateOrderAsync(
+		 Guid supplierId, Guid warehouseId, DateTime orderDate,
+		 DateTime? expectedDeliveryDate, DateTime? inputDueDate, string? note)
+        {
+            await ValidateAsync(supplierId, warehouseId, orderDate, expectedDeliveryDate, inputDueDate);
+
+            var supplier = await _supplierRepo.GetAsync(supplierId);
+            if (!supplier.IsActive)
+                throw new UserFriendlyException($"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
+
+			string code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypePurchaseOrder);
+
+            DateTime? finalDueDate = inputDueDate
+                ?? (supplier.PaymentTermDays > 0 ? orderDate.AddDays(supplier.PaymentTermDays) : null);
+
+            return new PurchaseOrder(GuidGenerator.Create(), code, supplierId, warehouseId,
+                                     orderDate, expectedDeliveryDate, finalDueDate, note);
+        }
+
+        public async Task UpdateOrderAsync(PurchaseOrder order, Guid warehouseId,
+			DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
 		{
-			var supplier = await _supplierRepo.GetAsync(supplierId);
-			if (!supplier.IsActive)
-				throw new UserFriendlyException($"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
+            await ValidateAsync(order.SupplierId, warehouseId, order.OrderDate, expectedDeliveryDate, dueDate);
+            order.UpdateInfo(warehouseId, expectedDeliveryDate, dueDate, note);
+        }
 
-			string code = $"PO-{DateTime.Now:yyyyMMdd}-{Guid.NewGuid().ToString().Substring(0, 4).ToUpper()}";
-
-			DateTime? finalDueDate = inputDueDate;
-			if (!finalDueDate.HasValue && supplier.PaymentTermDays > 0)
-			{
-				finalDueDate = orderDate.AddDays(supplier.PaymentTermDays);
-			}
-
-			return new PurchaseOrder(GuidGenerator.Create(), code, supplierId, warehouseId, orderDate, expectedDeliveryDate, finalDueDate, note);
-		}
-
-		public async Task UpdateOrderAsync(PurchaseOrder order, Guid warehouseId, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
-		{
-			order.UpdateMaster(warehouseId, expectedDeliveryDate, dueDate, note);
-		}
-
-		public async Task CheckBeforeDeleteAsync(PurchaseOrder order)
+		public Task CheckBeforeDeleteAsync(PurchaseOrder order)
 		{
 			if (order.Status != PurchaseOrderStatus.Draft)
 				throw new UserFriendlyException("Chỉ có thể xóa đơn hàng đang ở trạng thái Nháp!");
+			return Task.CompletedTask;
 		}
+        #endregion
 
-		public async Task AddDetailAsync(PurchaseOrder order, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
+        #region PurchaseOrder Detials
+        public async Task AddDetailAsync(PurchaseOrder order, Guid productId, Guid unitId,
+			int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
 		{
 			var product = await _productRepo.GetAsync(productId);
 			if (!product.IsAvailableForInventory)
@@ -67,25 +88,31 @@ namespace SupplyCoreERP.Orders.PO
 			order.AddDetail(GuidGenerator.Create(), productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
 		}
 
-		public async Task UpdateDetailAsync(PurchaseOrder order, Guid detailId, decimal quantity, decimal unitPrice, decimal taxRate)
+		public Task UpdateDetailAsync(PurchaseOrder order, Guid detailId,
+			decimal quantity, decimal unitPrice, decimal taxRate)
 		{
 			order.UpdateDetail(detailId, quantity, unitPrice, taxRate);
+			return Task.CompletedTask;
 		}
 
-		public async Task RemoveDetailAsync(PurchaseOrder order, Guid detailId)
+        public Task RemoveDetailAsync(PurchaseOrder order, Guid detailId)
 		{
 			order.RemoveDetail(detailId);
+			return Task.CompletedTask;
 		}
+        #endregion
 
-		public async Task SendToApproveAsync(PurchaseOrder order)
+        #region Work flow
+        public Task SendToApproveAsync(PurchaseOrder order)
 		{
 			if (order.Status != PurchaseOrderStatus.Draft)
 				throw new UserFriendlyException("Chỉ có thể gửi duyệt đơn đang ở trạng thái Nháp!");
-
 			order.SendToApprove();
+			return Task.CompletedTask;
 		}
 
-		public async Task ApproveAsync(PurchaseOrder order)
+
+		public async Task<InventoryTicket> ApproveAsync(PurchaseOrder order)
 		{
 			if (order.Status != PurchaseOrderStatus.PendingApproval)
 				throw new UserFriendlyException("Đơn hàng chưa được gửi duyệt!");
@@ -93,20 +120,20 @@ namespace SupplyCoreERP.Orders.PO
 			var supplier = await _supplierRepo.GetAsync(order.SupplierId);
 
 			if (supplier.DebtLimit > 0 && (supplier.CurrentDebt + order.TotalAmount) > supplier.DebtLimit)
-			{
-				throw new UserFriendlyException($"Từ chối duyệt! Đơn hàng này ({order.TotalAmount:N0}đ) sẽ làm vượt quá trần nợ cho phép với Nhà cung cấp '{supplier.Name}'.");
-			}
+				throw new UserFriendlyException(
+					$"Từ chối duyệt! Đơn ({order.TotalAmount:N0}đ) sẽ vượt trần nợ với '{supplier.Name}'.");
 
 			var today = DateTime.Now.Date;
-			bool hasOverdueOrders = await _orderRepo.AnyAsync(x =>
+			bool hasOverdue = await _orderRepo.AnyAsync(x =>
 				x.SupplierId == order.SupplierId &&
 				x.Status == PurchaseOrderStatus.Completed &&
 				x.DueDate.HasValue && x.DueDate.Value.Date < today);
 
-			if (hasOverdueOrders)
-				throw new UserFriendlyException($"Nhà cung cấp '{supplier.Name}' đang có khoản nợ quá hạn chưa thanh toán. Cần xử lý nợ cũ trước!");
+			if (hasOverdue)
+				throw new UserFriendlyException($"'{supplier.Name}' đang có khoản nợ quá hạn. Xử lý nợ cũ trước!");
 
-			Guid[] productIds = order.Details.Select(x => x.ProductId).Distinct().ToArray();
+	
+			var productIds = order.Details.Select(x => x.ProductId).Distinct().ToArray();
 			var products = await _productRepo.GetListAsync(x => productIds.Contains(x.Id));
 
 			foreach (var item in order.Details)
@@ -116,34 +143,64 @@ namespace SupplyCoreERP.Orders.PO
 					throw new UserFriendlyException($"Sản phẩm '{product?.Name}' không còn đủ điều kiện giao dịch!");
 			}
 
-			// TẠO PHIẾU NHẬP KHO CHỜ 
-			string note = $"Phiếu chờ nhập kho cho Đơn mua hàng {order.Code}";
+			// Tạo phiếu nhập kho — KHÔNG InsertAsync tại đây
 			var receiptTicket = await _ticketManager.CreateTicketAsync(
-				SupplyCoreERP.Enums.Warehouses.TicketType.GoodsReceipt,
-				order.WarehouseId,
-				order.Id,
-				order.Code,
-				note
-			);
+				TicketType.GoodsReceipt, order.WarehouseId, order.Id, order.Code,
+				$"Phiếu chờ nhập kho cho Đơn mua hàng {order.Code}");
 
 			order.Approve();
+
+			return receiptTicket;
 		}
 
-		public async Task CompleteAsync(PurchaseOrder order)
+		/// <summary>
+		/// Hoàn tất đơn mua và cộng công nợ cho nhà cung cấp.
+		/// </summary>
+		/// <returns>Supplier đã AddDebt — chưa được lưu DB. AppService gọi UpdateAsync.</returns>
+		public async Task<Supplier> CompleteAsync(PurchaseOrder order)
 		{
+			if (!await _ticketManager.HasStatusAsync(order.Id, ApprovalStatus.Approved))
+				throw new UserFriendlyException("Phiếu nhập kho chưa được thực thi! Cần hoàn tất nhập kho trước.");
+
 			if (order.Status != PurchaseOrderStatus.Receiving && order.Status != PurchaseOrderStatus.Approved)
-				throw new UserFriendlyException("Chỉ có thể Hoàn tất đơn hàng khi đang Nhập kho hoặc Đã duyệt!");
+				throw new UserFriendlyException("Chỉ có thể Hoàn tất khi đang Nhập kho hoặc Đã duyệt!");
 
 			order.Complete();
 
 			var supplier = await _supplierRepo.GetAsync(order.SupplierId);
 			supplier.AddDebt(order.TotalAmount);
+
+			return supplier; 
 		}
 
-		public async Task CancelAsync(PurchaseOrder order, string cancelReason)
+		public Task CancelAsync(PurchaseOrder order, string cancelReason)
 		{
 			order.Cancel();
-			order.UpdateMaster(order.WarehouseId, order.ExpectedDeliveryDate, order.DueDate, $"[Đã hủy: {cancelReason}] " + (order.Note ?? ""));
+			order.UpdateInfo(order.WarehouseId, order.ExpectedDeliveryDate, order.DueDate,
+							   $"[Đã hủy: {cancelReason}] " + (order.Note ?? ""));
+			return Task.CompletedTask;
 		}
-	}
+        #endregion
+
+        #region Validate
+        private async Task ValidateAsync(Guid supplierId, Guid warehouseId,
+			DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate)
+        {
+            if (!await _supplierRepo.AnyAsync(x => x.Id == supplierId))
+                throw new UserFriendlyException("Nhà cung cấp không tồn tại.");
+
+            if (!await _warehouseRepo.AnyAsync(x => x.Id == warehouseId))
+                throw new UserFriendlyException("Kho hàng không tồn tại.");
+
+            if (orderDate.Date > DateTime.Now.Date)
+                throw new UserFriendlyException("Ngày đặt hàng không được ở tương lai.");
+
+            if (expectedDeliveryDate.HasValue && expectedDeliveryDate.Value.Date < orderDate.Date)
+                throw new UserFriendlyException("Ngày giao hàng dự kiến không được trước ngày đặt hàng.");
+
+            if (dueDate.HasValue && dueDate.Value.Date < orderDate.Date)
+                throw new UserFriendlyException("Ngày đáo hạn không được trước ngày đặt hàng.");
+        }
+        #endregion
+    }
 }

@@ -1,0 +1,246 @@
+// ─────────────────────────────────────────────────────────────────────────────
+// Dropdown Search Component
+// Sử dụng 100% design tokens từ global SCSS (--ph-color-*, --ph-radius-*, ...)
+// Không hardcode màu sắc hay kích thước.
+// ─────────────────────────────────────────────────────────────────────────────
+
+.ds-wrapper {
+  position: relative;
+  display: block;
+  font-size: var(--ph-font-size-base);
+
+  &.ds-disabled .ds-trigger {
+    background: var(--ph-color-bg-subtle);
+    color: var(--ph-color-text-disabled);
+    pointer-events: none;
+    opacity: 0.7;
+  }
+}
+
+// ── Trigger — khớp hoàn toàn với .form-control.form-control-sm ───────────────
+.ds-trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+
+  // Lấy đúng padding của .form-control-sm trong global
+  padding: 0.3125rem 0.625rem;
+  min-height: 31px;
+
+  background: var(--ph-color-bg-surface);
+  border: 1px solid var(--ph-color-border-strong);
+  border-radius: var(--ph-radius-md);
+  color: var(--ph-color-text-body);
+  font-family: var(--ph-font-family);
+  font-size: var(--ph-font-size-sm);
+  line-height: var(--ph-line-height-base);
+
+  transition: border-color var(--ph-transition-fast),
+    box-shadow var(--ph-transition-fast);
+
+  // Khi mở panel — focus style giống .form-control:focus
+  .ds-wrapper.ds-open & {
+    border-color: var(--ph-color-border-focus);
+    box-shadow: 0 0 0 3px rgba(0, 179, 126, 0.14);
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+  }
+
+  &.ds-placeholder .ds-trigger__label {
+    color: var(--ph-color-text-disabled);
+  }
+}
+
+.ds-trigger__label {
+  flex: 1;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--ph-color-text-body);
+  font-size: var(--ph-font-size-sm);
+  line-height: var(--ph-line-height-base);
+}
+
+.ds-trigger__actions {
+  display: flex;
+  align-items: center;
+  gap: var(--ph-space-1);
+  margin-left: var(--ph-space-1);
+  flex-shrink: 0;
+  color: var(--ph-color-text-secondary);
+}
+
+.ds-clear {
+  display: flex;
+  align-items: center;
+  padding: 1px 3px;
+  border-radius: var(--ph-radius-sm);
+  font-size: var(--ph-font-size-xs);
+  transition: color var(--ph-transition-fast),
+    background var(--ph-transition-fast);
+
+  &:hover {
+    color: var(--ph-color-danger-icon);
+    background: var(--ph-color-danger-bg);
+  }
+}
+
+.ds-chevron {
+  font-size: var(--ph-font-size-xs);
+  transition: transform var(--ph-transition-base);
+
+  .ds-wrapper.ds-open & {
+    transform: rotate(180deg);
+  }
+}
+
+// ── Panel ─────────────────────────────────────────────────────────────────────
+.ds-panel {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 1060;
+
+  background: var(--ph-color-bg-surface);
+  border: 1px solid var(--ph-color-border-focus);
+  border-top: none;
+  border-bottom-left-radius: var(--ph-radius-md);
+  border-bottom-right-radius: var(--ph-radius-md);
+  box-shadow: var(--ph-shadow-md);
+
+  animation: ds-slide-down var(--ph-transition-fast);
+}
+
+@keyframes ds-slide-down {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// ── Search box ────────────────────────────────────────────────────────────────
+.ds-search {
+  display: flex;
+  align-items: center;
+  gap: var(--ph-space-2);
+  padding: var(--ph-space-2);
+  border-bottom: 1px solid var(--ph-color-border-default);
+
+  &__icon {
+    color: var(--ph-color-text-secondary);
+    font-size: var(--ph-font-size-xs);
+    flex-shrink: 0;
+  }
+
+  &__input {
+    flex: 1;
+    border: none;
+    outline: none;
+    font-family: var(--ph-font-family);
+    font-size: var(--ph-font-size-sm);
+    color: var(--ph-color-text-body);
+    background: transparent;
+    padding: 0;
+
+    &::placeholder {
+      color: var(--ph-color-text-disabled);
+    }
+  }
+
+  &__clear {
+    color: var(--ph-color-text-secondary);
+    font-size: var(--ph-font-size-sm);
+    cursor: pointer;
+    transition: color var(--ph-transition-fast);
+
+    &:hover {
+      color: var(--ph-color-danger-icon);
+    }
+  }
+}
+
+// ── Option list ───────────────────────────────────────────────────────────────
+.ds-list {
+  list-style: none;
+  margin: 0;
+  padding: var(--ph-space-1) 0;
+  max-height: 240px;
+  overflow-y: auto;
+
+  scrollbar-width: thin;
+  scrollbar-color: var(--ph-color-border-strong) transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: var(--ph-color-border-strong);
+    border-radius: var(--ph-radius-pill);
+  }
+}
+
+.ds-list__item {
+  display: flex;
+  align-items: center;
+  gap: var(--ph-space-2);
+  padding: var(--ph-space-2) var(--ph-space-3);
+  cursor: pointer;
+  font-family: var(--ph-font-family);
+  font-size: var(--ph-font-size-sm);
+  color: var(--ph-color-text-body);
+  transition: background var(--ph-transition-fast);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  &:hover {
+    background: var(--ph-color-bg-subtle);
+  }
+
+  &--selected {
+    background: var(--ph-color-brand-50);
+    color: var(--ph-color-text-body);
+    font-weight: var(--ph-font-weight-medium);
+  }
+
+  // Null option (-- All --)
+  &--null {
+    color: var(--ph-color-text-secondary);
+    font-style: italic;
+    border-bottom: 1px solid var(--ph-color-border-default);
+    margin-bottom: 2px;
+    padding-bottom: calc(var(--ph-space-2) + 2px);
+  }
+}
+
+.ds-list__check {
+  font-size: var(--ph-font-size-xs);
+  color: var(--ph-color-brand-500);
+  flex-shrink: 0;
+}
+
+.ds-list__empty {
+  padding: var(--ph-space-4) var(--ph-space-3);
+  text-align: center;
+  color: var(--ph-color-text-secondary);
+  font-size: var(--ph-font-size-sm);
+  font-style: italic;
+}
+
+// ── Footer hint ───────────────────────────────────────────────────────────────
+.ds-footer {
+  padding: var(--ph-space-1) var(--ph-space-3);
+  font-size: var(--ph-font-size-xs);
+  color: var(--ph-color-text-secondary);
+  border-top: 1px solid var(--ph-color-border-default);
+  text-align: right;
+  letter-spacing: 0.03em;
+}

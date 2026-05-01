@@ -1,0 +1,27 @@
+<div class="ph-drawer-overlay" *ngIf="isOpen" (click)="onOverlayClick()"></div>
+
+<div class="ph-drawer" [class.ph-drawer--open]="isOpen" [style.width]="drawerWidth" enterSubmit>
+  <div class="ph-drawer__header">
+    <h5>{{ title | abpLocalization }}</h5>
+    <button type="button" class="btn-close" (click)="onClose()"></button>
+  </div>
+
+  <div class="ph-drawer__body">
+    <ng-content></ng-content>
+  </div>
+
+  <div class="ph-drawer__footer" *ngIf="showFooter">
+    <ng-container *ngIf="hasCustomFooter; else defaultFooter">
+      <ng-container *ngTemplateOutlet="customFooter"></ng-container>
+    </ng-container>
+
+    <ng-template #defaultFooter>
+      <button type="button" class="btn ph-btn-cancel" (click)="onClose()">
+        {{ cancelButtonText | abpLocalization }}
+      </button>
+      <button type="button" class="btn ph-btn-save" (click)="onSave()" [disabled]="saveDisabled">
+        {{ saveButtonText | abpLocalization }}
+      </button>
+    </ng-template>
+  </div>
+</div>

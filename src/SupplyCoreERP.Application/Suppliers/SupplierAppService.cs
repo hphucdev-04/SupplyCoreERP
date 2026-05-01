@@ -12,7 +12,7 @@ using Volo.Abp.Domain.Entities;
 
 namespace SupplyCoreERP.Suppliers
 {
-	public class SupplierAppService : ApplicationService, ISupplierAppService
+	public class SupplierAppService : SupplyCore, ISupplierAppService
 	{
 		private readonly IRepository<Supplier, Guid> _supplierRepository;
 		private readonly SupplierManager _supplierManager;
@@ -68,7 +68,7 @@ namespace SupplyCoreERP.Suppliers
 		public async Task<SupplierDetailDto> CreateAsync(CreateUpdateSupplierDto input)
 		{
 			var supplier = await _supplierManager.CreateAsync(
-				input.Code, input.Name, input.TaxCode, input.PhoneNumber, input.Email,
+				input.Name, input.TaxCode, input.PhoneNumber, input.Email,
 				input.RepresentativeName, input.Gender ,input.Note,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
 				input.DebtLimit, input.PaymentTermDays
@@ -84,7 +84,7 @@ namespace SupplyCoreERP.Suppliers
 			var supplier = await _supplierRepository.GetAsync(id);
 
 			await _supplierManager.UpdateAsync(
-				supplier, input.Code, input.Name, input.TaxCode, input.PhoneNumber, input.Email,
+				supplier, input.Name, input.TaxCode, input.PhoneNumber, input.Email,
 				input.RepresentativeName, input.Gender, input.Note,
 				input.Address, input.CountryId, input.CityId, input.AreaId,
 				input.DebtLimit, input.PaymentTermDays

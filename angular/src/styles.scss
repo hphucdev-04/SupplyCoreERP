@@ -1,50 +1,1477 @@
-/* You can add global styles to this file, and also import other style files */
+/* ============================================================
+   PHARMACY ERP — Global Design System
+   Semantic Color Tokens + Component Styles
+   Version: 1.0.0
+   ============================================================ */
 
-
+// ─────────────────────────────────────────────
+// 1. DESIGN TOKENS — Semantic Color Palette
+// ─────────────────────────────────────────────
 :root {
+
+  // ── Brand / Primary (Pharmacy Green)
+  --ph-color-brand-50: #e6f7f1;
+  --ph-color-brand-100: #b3e8d5;
+  --ph-color-brand-200: #80d9b8;
+  --ph-color-brand-300: #4dca9c;
+  --ph-color-brand-400: #26bf88;
+  --ph-color-brand-500: #00B37E; // primary action
+  --ph-color-brand-600: #009e6f;
+  --ph-color-brand-700: #008a60;
+  --ph-color-brand-800: #007552;
+  --ph-color-brand-900: #005c40;
+
+  // ── Accent (Deep Teal for links / highlights)
+  --ph-color-accent-500: #0694a2;
+  --ph-color-accent-600: #047481;
+
+  // ── Neutral / Surface
+  --ph-color-bg-app: #F8FAFC; // page background
+  --ph-color-bg-surface: #FFFFFF; // card / panel surface
+  --ph-color-bg-subtle: #F1F5F9; // table thead, field bg, muted bg
+  --ph-color-bg-overlay: rgba(15, 23, 42, 0.45); // drawer overlay
+
+  // ── Borders
+  --ph-color-border-default: #E2E8F0;
+  --ph-color-border-strong: #CBD5E1;
+  --ph-color-border-focus: var(--ph-color-brand-500);
+
+  // ── Text
+  --ph-color-text-heading: #0F172A; // h1–h5
+  --ph-color-text-body: #1E293B; // default paragraph
+  --ph-color-text-secondary: #64748B; // muted / metadata
+  --ph-color-text-disabled: #94A3B8;
+  --ph-color-text-inverse: #FFFFFF;
+  --ph-color-text-link: var(--ph-color-brand-600);
+  --ph-color-text-link-hover: var(--ph-color-brand-700);
+
+  // ── Semantic — Status
+  --ph-color-success-bg: #ecfdf5;
+  --ph-color-success-border: #6ee7b7;
+  --ph-color-success-text: #065f46;
+  --ph-color-success-icon: #10b981;
+
+  --ph-color-warning-bg: #fffbeb;
+  --ph-color-warning-border: #fcd34d;
+  --ph-color-warning-text: #92400e;
+  --ph-color-warning-icon: #f59e0b;
+
+  --ph-color-danger-bg: #fef2f2;
+  --ph-color-danger-border: #fca5a5;
+  --ph-color-danger-text: #991b1b;
+  --ph-color-danger-icon: #ef4444;
+
+  --ph-color-info-bg: #eff6ff;
+  --ph-color-info-border: #93c5fd;
+  --ph-color-info-text: #1e40af;
+  --ph-color-info-icon: #3b82f6;
+
+  --ph-color-pending-bg: #fffbeb;
+  --ph-color-pending-border: #fcd34d;
+  --ph-color-pending-text: #78350f;
+
+  // ── Typography Scale
+  --ph-font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+  --ph-font-size-xs: 0.6875rem; // 11px — table meta, badges
+  --ph-font-size-sm: 0.75rem; // 12px — labels, captions
+  --ph-font-size-base: 0.8125rem; // 13px — body default in ERP
+  --ph-font-size-md: 0.875rem; // 14px — form values
+  --ph-font-size-lg: 1rem; // 16px — card titles
+  --ph-font-size-xl: 1.125rem; // 18px — modal title
+  --ph-font-size-2xl: 1.25rem; // 20px — page title
+  --ph-font-weight-normal: 400;
+  --ph-font-weight-medium: 500;
+  --ph-font-weight-semibold: 600;
+  --ph-font-weight-bold: 700;
+  --ph-line-height-tight: 1.25;
+  --ph-line-height-base: 1.5;
+  --ph-line-height-relaxed: 1.625;
+
+  // ── Spacing (mirrors Bootstrap 4px base)
+  --ph-space-1: 0.25rem;
+  --ph-space-2: 0.5rem;
+  --ph-space-3: 0.75rem;
+  --ph-space-4: 1rem;
+  --ph-space-5: 1.25rem;
+  --ph-space-6: 1.5rem;
+  --ph-space-8: 2rem;
+
+  // ── Radius
+  --ph-radius-sm: 4px;
+  --ph-radius-md: 6px;
+  --ph-radius-lg: 8px;
+  --ph-radius-xl: 12px;
+  --ph-radius-pill: 9999px;
+
+  // ── Shadow
+  --ph-shadow-xs: 0 1px 2px rgba(15, 23, 42, .06);
+  --ph-shadow-sm: 0 1px 3px rgba(15, 23, 42, .08), 0 1px 2px rgba(15, 23, 42, .04);
+  --ph-shadow-md: 0 4px 6px -1px rgba(15, 23, 42, .08), 0 2px 4px -2px rgba(15, 23, 42, .04);
+  --ph-shadow-lg: 0 10px 15px -3px rgba(15, 23, 42, .08), 0 4px 6px -4px rgba(15, 23, 42, .04);
+  --ph-shadow-drawer: -4px 0 24px rgba(15, 23, 42, .14);
+
+  // ── Transition
+  --ph-transition-fast: 120ms ease;
+  --ph-transition-base: 180ms ease;
+  --ph-transition-slow: 280ms ease;
+
+  // ─── ABP / LPX overrides (theme tokens)
   --lpx-theme-light-bg: url('assets/images/login/login-bg-img-light.svg');
   --lpx-theme-dim-bg: url('assets/images/login/login-bg-img-dim.svg');
   --lpx-theme-dark-bg: url('assets/images/login/login-bg-img-dark.svg');
-
   --lpx-logo-icon: url('assets/images/logo/icon.png');
   --lpx-logo-url: var(--lpx-logo-icon);
   --lpx-logo: var(--lpx-logo-icon);
 
-  .abp-logo {
-    background-repeat: no-repeat;
-  }
-  .lpx-nav-menu .lpx-menu-item-link.selected .lpx-menu-item-icon,
-  .lpx-nav-menu .lpx-menu-item-link.selected .dd-icon,
-  .lpx-nav-menu .lpx-menu-item-link.expanded .lpx-menu-item-icon,
-  .lpx-nav-menu .lpx-menu-item-link.expanded .dd-icon,
-  .lpx-nav-menu .lpx-menu-item-link:hover .lpx-menu-item-icon,
-  .lpx-nav-menu .lpx-menu-item-link:hover .dd-icon {
-    color: #00B37E;
-    opacity: 1;
-  }
-  .abp-toast-container {
-    top: 20px !important;
-    right: 20px !important;
-    bottom: auto !important;
-    left: auto !important;
-  }
-  .ngx-datatable .ellipsis-cell {
-    overflow: hidden !important;
+  // Legacy aliases kept for compatibility
+  --backgroud: var(--ph-color-bg-app);
+  --surface-lowesr: var(--ph-color-bg-surface);
+  --surface-low: var(--ph-color-bg-subtle);
+}
+
+
+// ─────────────────────────────────────────────
+// 2. GLOBAL BASE
+// ─────────────────────────────────────────────
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: var(--ph-font-family);
+  font-size: var(--ph-font-size-base);
+  color: var(--ph-color-text-body);
+  background: var(--ph-color-bg-app);
+  line-height: var(--ph-line-height-base);
+  -webkit-font-smoothing: antialiased;
+}
+
+.ph-link {
+  cursor: pointer;
+  color: var(--ph-color-text-link);
+  text-decoration: none;
+  transition: color var(--ph-transition-fast),
+  text-decoration var(--ph-transition-fast);
+  font-weight: var(--ph-font-weight-medium);
+
+  &:hover {
+    color: var(--ph-color-text-link-hover);
+    text-decoration: underline;
   }
 
-  .ngx-datatable .ellipsis-cell .datatable-body-cell-label {
+  &:active {
+    opacity: 0.8;
+  }
+}
+
+
+
+// ─────────────────────────────────────────────
+// 3. TYPOGRAPHY UTILITIES
+// ─────────────────────────────────────────────
+
+// Page / section headings
+.ph-page-title {
+  font-size: var(--ph-font-size-2xl);
+  font-weight: var(--ph-font-weight-bold);
+  color: var(--ph-color-text-heading);
+  line-height: var(--ph-line-height-tight);
+  margin: 0;
+}
+
+.ph-section-title {
+  font-size: var(--ph-font-size-lg);
+  font-weight: var(--ph-font-weight-semibold);
+  color: var(--ph-color-text-heading);
+  margin: 0;
+}
+
+.ph-card-title {
+  font-size: var(--ph-font-size-md);
+  font-weight: var(--ph-font-weight-semibold);
+  color: var(--ph-color-text-heading);
+  margin: 0;
+}
+
+// Field labels
+.ph-label {
+  display: block;
+  font-size: var(--ph-font-size-sm);
+  font-weight: var(--ph-font-weight-semibold);
+  color: var(--ph-color-text-body);
+  margin-bottom: var(--ph-space-1);
+  letter-spacing: 0.01em;
+
+  &--required::after {
+    content: ' *';
+    color: var(--ph-color-danger-icon);
+  }
+}
+
+// Detail view — field label (small uppercase meta)
+.ph-field-meta {
+  display: block;
+  font-size: var(--ph-font-size-xs);
+  font-weight: var(--ph-font-weight-semibold);
+  color: var(--ph-color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin-bottom: 2px;
+}
+
+.ph-field-value {
+  font-size: var(--ph-font-size-md);
+  font-weight: var(--ph-font-weight-medium);
+  color: var(--ph-color-text-body);
+}
+
+.ph-text-muted {
+  color: var(--ph-color-text-secondary) !important;
+  font-size: var(--ph-font-size-sm);
+}
+
+.ph-text-danger {
+  color: var(--ph-color-danger-icon) !important;
+}
+
+.ph-text-success {
+  color: var(--ph-color-success-icon) !important;
+}
+
+.ph-text-warning {
+  color: var(--ph-color-warning-icon) !important;
+}
+
+.ph-text-primary {
+  color: var(--ph-color-brand-600) !important;
+}
+
+.ph-text-info {
+  color: var(--ph-color-info-icon) !important;
+}
+
+.ph-error-msg {
+  font-size: var(--ph-font-size-sm);
+  color: var(--ph-color-danger-icon);
+  margin-top: var(--ph-space-1);
+}
+
+.ph-hint-msg {
+  font-size: var(--ph-font-size-sm);
+  color: var(--ph-color-text-secondary);
+  margin-top: var(--ph-space-1);
+}
+
+.ph-hint-warning {
+  font-size: var(--ph-font-size-sm);
+  color: var(--ph-color-warning-icon);
+  margin-top: var(--ph-space-1);
+}
+
+
+// ─────────────────────────────────────────────
+// 4. BUTTONS
+// Note: We extend .btn (Bootstrap base) — never override .btn-* color variants
+// ─────────────────────────────────────────────
+
+// Override Bootstrap .btn base defaults
+.btn {
+  font-family: var(--ph-font-family);
+  font-size: var(--ph-font-size-base);
+  font-weight: var(--ph-font-weight-medium);
+  line-height: 1;
+  border-radius: var(--ph-radius-md);
+  padding: 0.4375rem 0.875rem;
+  transition: background-color var(--ph-transition-fast),
+    border-color var(--ph-transition-fast),
+    box-shadow var(--ph-transition-fast),
+    opacity var(--ph-transition-fast);
+  white-space: nowrap;
+  letter-spacing: 0.01em;
+
+  &:focus-visible {
+    outline: 2px solid var(--ph-color-brand-500);
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
+  &.btn-sm {
+    font-size: var(--ph-font-size-sm);
+    padding: 0.3125rem 0.625rem;
+    border-radius: var(--ph-radius-sm);
+  }
+
+  &:disabled,
+  &.disabled {
+    opacity: 0.48;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+}
+
+// ── Pharmacy semantic action buttons (custom, non-Bootstrap-variant)
+// Primary action (brand green)
+.ph-btn-primary {
+  background: var(--ph-color-brand-500);
+  border-color: var(--ph-color-brand-500);
+  color: var(--ph-color-text-inverse);
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-brand-600);
+    border-color: var(--ph-color-brand-600);
+    color: var(--ph-color-text-inverse);
+    box-shadow: 0 0 0 3px rgba(0, 179, 126, .18);
+  }
+}
+
+// Destructive
+.ph-btn-danger {
+  background: var(--ph-color-danger-icon);
+  border-color: var(--ph-color-danger-icon);
+  color: var(--ph-color-text-inverse);
+
+  &:hover {
+    background: var(--ph-color-danger-text);
+    border-color: var(--ph-color-danger-text);
+    color: var(--ph-color-text-inverse);
+  }
+}
+
+// Ghost / outline
+.ph-btn-outline {
+  background: transparent;
+  border: 1px solid var(--ph-color-border-strong);
+  color: var(--ph-color-text-body);
+
+  &:hover {
+    background: var(--ph-color-bg-subtle);
+    border-color: var(--ph-color-border-focus);
+    color: var(--ph-color-brand-600);
+  }
+}
+
+// Ghost icon-only (dropdown trigger in table rows)
+.ph-btn-ghost {
+  background: transparent;
+  border: none;
+  color: var(--ph-color-text-secondary);
+  padding: var(--ph-space-1) var(--ph-space-2);
+  border-radius: var(--ph-radius-sm);
+
+  &:hover {
+    background: var(--ph-color-bg-subtle);
+    color: var(--ph-color-text-body);
+  }
+}
+
+// Action button sizes
+.ph-btn-xs {
+  font-size: var(--ph-font-size-xs);
+  padding: 0.1875rem 0.5rem;
+  border-radius: var(--ph-radius-sm);
+}
+
+// ─────────────────────────────────────────────
+// 4b. SEMANTIC ACTION BUTTONS (toolbar / card header)
+// Dùng chung cho toàn app — New, Import, Export, Actions
+// Cách dùng: <button class="btn ph-btn-new btn-sm">
+// Không override .btn-* Bootstrap, chỉ bổ sung semantic intent class
+// ─────────────────────────────────────────────
+
+// Shared base cho tất cả ph action button
+// (kết hợp với .btn và .btn-sm của Bootstrap)
+%ph-action-btn-base {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ph-space-1);
+  font-weight: var(--ph-font-weight-semibold);
+  letter-spacing: 0.01em;
+  border-radius: var(--ph-radius-md);
+  border: 1px solid transparent;
+  transition: background-color var(--ph-transition-fast),
+    border-color var(--ph-transition-fast),
+    box-shadow var(--ph-transition-fast),
+    transform var(--ph-transition-fast);
+
+  &:active {
+    transform: translateY(1px);
+  }
+
+  &:focus-visible {
+    outline: 2px solid var(--ph-color-brand-500);
+    outline-offset: 2px;
+    box-shadow: none;
+  }
+
+  i,
+  .fa {
+    font-size: 0.8em;
+  }
+}
+
+// ── NEW / Tạo mới  (xanh brand)
+.ph-btn-new {
+  @extend %ph-action-btn-base;
+  background: var(--ph-color-brand-500);
+  border-color: var(--ph-color-brand-500);
+  color: var(--ph-color-text-inverse) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-brand-600);
+    border-color: var(--ph-color-brand-600);
+    color: var(--ph-color-text-inverse) !important;
+    box-shadow: 0 2px 8px rgba(0, 179, 126, .28);
+  }
+}
+
+// ── IMPORT  (amber / cam đất — "đưa dữ liệu vào")
+.ph-btn-import {
+  @extend %ph-action-btn-base;
+  background: #f59e0b;
+  border-color: #f59e0b;
+  color: #1c1400 !important;
+
+  &:hover,
+  &:focus {
+    background: #d97706;
+    border-color: #d97706;
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(245, 158, 11, .28);
+  }
+}
+
+// ── EXPORT  (xanh dương nhạt — "đẩy dữ liệu ra")
+.ph-btn-export {
+  @extend %ph-action-btn-base;
+  background: var(--ph-color-info-bg);
+  border-color: var(--ph-color-info-border);
+  color: var(--ph-color-info-text) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-info-icon);
+    border-color: var(--ph-color-info-icon);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(59, 130, 246, .22);
+  }
+}
+
+// ── ACTIONS dropdown  (ghost neutral — không chiếm sự chú ý)
+.ph-btn-actions {
+  @extend %ph-action-btn-base;
+  background: var(--ph-color-bg-subtle);
+  border-color: var(--ph-color-border-strong);
+  color: var(--ph-color-text-body) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-brand-50);
+    border-color: var(--ph-color-brand-400);
+    color: var(--ph-color-brand-700) !important;
+    box-shadow: 0 2px 8px rgba(0, 179, 126, .12);
+  }
+
+  // Caret Bootstrap tự thêm — giữ nguyên
+  &::after {
+    margin-left: var(--ph-space-1);
+  }
+}
+
+// ── SAVE (modal/drawer footer — xanh brand solid)
+.ph-btn-save {
+  @extend %ph-action-btn-base;
+  background: var(--ph-color-brand-500);
+  border-color: var(--ph-color-brand-500);
+  color: var(--ph-color-text-inverse) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-brand-600);
+    border-color: var(--ph-color-brand-600);
+    color: var(--ph-color-text-inverse) !important;
+    box-shadow: 0 2px 8px rgba(0, 179, 126, .28);
+  }
+
+  &:disabled {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+}
+
+.btn:disabled {
+  background: var(--ph-color-border-strong);
+  border-color: var(--ph-color-border-strong);
+  color: var(--ph-color-text-disabled);
+  opacity: 1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+// ── CANCEL (modal/drawer footer — đỏ outline nhẹ)
+.ph-btn-cancel {
+  @extend %ph-action-btn-base;
+  background: var(--ph-color-danger-bg);
+  border-color: var(--ph-color-danger-border);
+  color: var(--ph-color-danger-text) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-danger-icon);
+    border-color: var(--ph-color-danger-icon);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(239, 68, 68, .2);
+  }
+}
+
+// ── APPROVE (dropdown item inline — xanh)
+.ph-btn-approve {
+  @extend %ph-action-btn-base;
+  background: var(--ph-color-success-bg);
+  border-color: var(--ph-color-success-border);
+  color: var(--ph-color-success-text) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-success-icon);
+    border-color: var(--ph-color-success-icon);
+    color: #fff !important;
+  }
+}
+
+// ── REJECT (dropdown item inline — đỏ)
+.ph-btn-reject {
+  @extend %ph-action-btn-base;
+  background: var(--ph-color-danger-bg);
+  border-color: var(--ph-color-danger-border);
+  color: var(--ph-color-danger-text) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-danger-icon);
+    border-color: var(--ph-color-danger-icon);
+    color: #fff !important;
+  }
+}
+
+// ── PRINT / VIEW (outline secondary)
+.ph-btn-secondary {
+  @extend %ph-action-btn-base;
+  background: transparent;
+  border-color: var(--ph-color-border-strong);
+  color: var(--ph-color-text-secondary) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-bg-subtle);
+    border-color: var(--ph-color-border-focus);
+    color: var(--ph-color-text-body) !important;
+  }
+}
+
+// ── DOWNLOAD TEMPLATE (primary outline — thao tác phụ)
+.ph-btn-download {
+  @extend %ph-action-btn-base;
+  background: transparent;
+  border-color: var(--ph-color-brand-400);
+  color: var(--ph-color-brand-600) !important;
+
+  &:hover,
+  &:focus {
+    background: var(--ph-color-brand-500);
+    border-color: var(--ph-color-brand-500);
+    color: #fff !important;
+    box-shadow: 0 2px 8px rgba(0, 179, 126, .2);
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 5. BACKGROUNDS
+// ─────────────────────────────────────────────
+.ph-bg-app {
+  background: var(--ph-color-bg-app) !important;
+}
+
+.ph-bg-surface {
+  background: var(--ph-color-bg-surface) !important;
+}
+
+.ph-bg-subtle {
+  background: var(--ph-color-bg-subtle) !important;
+}
+
+.ph-bg-success {
+  background: var(--ph-color-success-bg) !important;
+}
+
+.ph-bg-warning {
+  background: var(--ph-color-warning-bg) !important;
+}
+
+.ph-bg-danger {
+  background: var(--ph-color-danger-bg) !important;
+}
+
+.ph-bg-info {
+  background: var(--ph-color-info-bg) !important;
+}
+
+.ph-bg-pending {
+  background: var(--ph-color-pending-bg) !important;
+}
+
+// Icon accent pill (medicine header avatar)
+.ph-icon-avatar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--ph-radius-lg);
+  background: var(--ph-color-brand-50);
+  color: var(--ph-color-brand-600);
+  flex-shrink: 0;
+
+  &--md {
+    width: 48px;
+    height: 48px;
+    font-size: 1.25rem;
+  }
+
+  &--lg {
+    width: 85px;
+    height: 85px;
+    font-size: 1.75rem;
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 6. CARDS
+// ─────────────────────────────────────────────
+.ph-card {
+  background: var(--ph-color-bg-surface);
+  border: 1px solid var(--ph-color-border-default);
+  border-radius: var(--ph-radius-lg);
+  box-shadow: var(--ph-shadow-sm);
+  overflow: hidden;
+  transition: transform 0.2s ease-in-out;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--ph-space-4) var(--ph-space-5);
+    border-bottom: 1px solid var(--ph-color-border-default);
+    background: var(--ph-color-bg-surface);
+    gap: var(--ph-space-3);
+  }
+
+  &__header-title {
+    display: flex;
+    align-items: center;
+    gap: var(--ph-space-2);
+    font-size: var(--ph-font-size-md);
+    font-weight: var(--ph-font-weight-semibold);
+    color: var(--ph-color-brand-600);
+    margin: 0;
+
+    i {
+      opacity: .85;
+    }
+  }
+
+  &__header-actions {
+    display: flex;
+    gap: var(--ph-space-2);
+    flex-shrink: 0;
+  }
+
+  &__body {
+    padding: var(--ph-space-5);
+  }
+
+  &__body--flush {
+    padding: 0;
+  }
+}
+
+// Legacy Bootstrap .card used across the app — minimal override
+.card {
+  border: 1px solid var(--ph-color-border-default);
+  border-radius: var(--ph-radius-lg);
+  box-shadow: var(--ph-shadow-sm);
+
+  .card-header {
+    background: var(--ph-color-bg-surface);
+    border-bottom: 1px solid var(--ph-color-border-default);
+    padding: var(--ph-space-4) var(--ph-space-5);
+
+    .card-title {
+      font-size: var(--ph-font-size-lg);
+      font-weight: var(--ph-font-weight-semibold);
+      color: var(--ph-color-text-heading);
+      margin: 0;
+    }
+  }
+
+  .card-body {
+    padding: var(--ph-space-5);
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 7. FORM FIELDS
+// ─────────────────────────────────────────────
+
+// Override Bootstrap .form-control & .form-select base
+.form-control,
+.form-select {
+  font-family: var(--ph-font-family);
+  font-size: var(--ph-font-size-base);
+  color: var(--ph-color-text-body);
+  background: var(--ph-color-bg-surface);
+  border: 1px solid var(--ph-color-border-strong);
+  border-radius: var(--ph-radius-md);
+  padding: 0.4375rem 0.75rem;
+  transition: border-color var(--ph-transition-fast),
+    box-shadow var(--ph-transition-fast);
+  line-height: var(--ph-line-height-base);
+
+  &::placeholder {
+    color: var(--ph-color-text-disabled);
+  }
+
+  &:focus {
+    border-color: var(--ph-color-brand-500);
+    box-shadow: 0 0 0 3px rgba(0, 179, 126, .14);
+    outline: none;
+  }
+
+  &:disabled,
+  &[readonly] {
+    background: var(--ph-color-bg-subtle);
+    color: var(--ph-color-text-secondary);
+    cursor: not-allowed;
+  }
+
+  &.is-invalid {
+    border-color: var(--ph-color-danger-icon);
+
+    &:focus {
+      box-shadow: 0 0 0 3px rgba(239, 68, 68, .14);
+    }
+  }
+}
+
+.form-control-sm,
+.form-select-sm {
+  font-size: var(--ph-font-size-sm);
+  padding: 0.3125rem 0.625rem;
+}
+
+.form-label {
+  font-size: var(--ph-font-size-sm);
+  font-weight: var(--ph-font-weight-semibold);
+  color: var(--ph-color-text-body);
+  margin-bottom: var(--ph-space-1);
+}
+
+// Input groups
+.input-group-text {
+  background: var(--ph-color-bg-subtle);
+  border-color: var(--ph-color-border-strong);
+  color: var(--ph-color-text-secondary);
+  font-size: var(--ph-font-size-sm);
+}
+
+// Toggle / switch
+.form-check-input {
+  accent-color: var(--ph-color-brand-500);
+  cursor: pointer;
+
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(0, 179, 126, .14);
+  }
+}
+
+// Field group card (checkbox toggle panels)
+.ph-field-toggle-card {
+  border: 1px solid var(--ph-color-border-default);
+  border-radius: var(--ph-radius-md);
+  padding: var(--ph-space-3) var(--ph-space-4);
+  background: var(--ph-color-bg-subtle);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--ph-space-3);
+  height: 100%;
+  transition: border-color var(--ph-transition-fast),
+    background var(--ph-transition-fast);
+
+  &:hover {
+    border-color: var(--ph-color-brand-400);
+    background: var(--ph-color-brand-50);
+  }
+
+  &__label {
+    font-weight: var(--ph-font-weight-semibold);
+    font-size: var(--ph-font-size-base);
+    color: var(--ph-color-text-heading);
+    margin: 0;
+    cursor: pointer;
+  }
+
+  &__hint {
+    font-size: var(--ph-font-size-sm);
+    color: var(--ph-color-text-secondary);
+    margin: 0;
     display: block;
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 8. BADGES
+// ─────────────────────────────────────────────
+
+// Base .badge override (Bootstrap)
+.badge {
+  font-family: var(--ph-font-family);
+  font-size: var(--ph-font-size-xs);
+  font-weight: var(--ph-font-weight-semibold);
+  letter-spacing: 0.03em;
+  padding: 3px 8px;
+  border-radius: var(--ph-radius-pill);
+  line-height: 1.4;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+// Semantic status badges (pharmacy-specific, no Bootstrap override)
+.ph-badge {
+  font-size: var(--ph-font-size-xs);
+  font-weight: var(--ph-font-weight-semibold);
+  padding: 3px 10px;
+  border-radius: var(--ph-radius-pill);
+  border: 1px solid transparent;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  line-height: 1.4;
+  white-space: nowrap;
+
+  // Status variants
+  &--approved,
+  &--goods-receipt {
+    background: var(--ph-color-success-bg);
+    border-color: var(--ph-color-success-border);
+    color: var(--ph-color-success-text);
+  }
+
+  &--pending {
+    background: var(--ph-color-pending-bg);
+    border-color: var(--ph-color-pending-border);
+    color: var(--ph-color-pending-text);
+  }
+
+  &--rejected,
+  &--goodsissue {
+    background: var(--ph-color-danger-bg);
+    border-color: var(--ph-color-danger-border);
+    color: var(--ph-color-danger-text);
+  }
+
+  &--active {
+    background: var(--ph-color-success-bg);
+    border-color: var(--ph-color-success-border);
+    color: var(--ph-color-success-text);
+  }
+
+  &--inactive {
+    background: var(--ph-color-danger-bg);
+    border-color: var(--ph-color-danger-border);
+    color: var(--ph-color-danger-text);
+  }
+
+  &--neutral {
+    background: var(--ph-color-bg-subtle);
+    border-color: var(--ph-color-border-strong);
+    color: var(--ph-color-text-secondary);
+    font-weight: var(--ph-font-weight-semibold);
+    font-size: var(--ph-font-size-sm);
+  }
+
+  &--info {
+    background: var(--ph-color-info-bg);
+    border-color: var(--ph-color-info-border);
+    color: var(--ph-color-info-text);
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 9. TABLE — ngx-datatable overrides
+// ─────────────────────────────────────────────
+
+// NGX Datatable shell
+ngx-datatable {
+  font-family: var(--ph-font-family) !important;
+  font-size: var(--ph-font-size-base) !important;
+  color: var(--ph-color-text-body) !important;
+  border: 1px solid var(--ph-color-border-default) !important;
+  border-radius: var(--ph-radius-lg) !important;
+  box-shadow: var(--ph-shadow-xs) !important;
+
+  // Header row
+  .datatable-header {
+    background: var(--ph-color-bg-subtle) !important;
+    border-bottom: 1px solid var(--ph-color-border-default) !important;
+  }
+
+  .datatable-header-cell {
+    font-size: var(--ph-font-size-xs) !important;
+    font-weight: var(--ph-font-weight-semibold) !important;
+    color: var(--ph-color-text-secondary) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.06em !important;
+    padding: 10px 12px !important;
+    background: var(--ph-color-bg-subtle) !important;
+    border-right: none !important;
+  }
+
+  // Body rows
+  .datatable-body-row {
+    border-bottom: 1px solid var(--ph-color-border-default) !important;
+    transition: background var(--ph-transition-fast) !important;
+
+    &:hover {
+      background: var(--ph-color-brand-50) !important;
+    }
+
+    &:last-child {
+      border-bottom: none !important;
+    }
+  }
+
+  .datatable-body-cell {
+    font-size: var(--ph-font-size-base) !important;
+    color: var(--ph-color-text-body) !important;
+    padding: 10px 12px !important;
+    display: flex !important;
+    align-items: center !important;
+  }
+
+  // Footer / pager
+  .datatable-footer {
+    background: var(--ph-color-bg-subtle) !important;
+    border-top: 1px solid var(--ph-color-border-default) !important;
+    font-size: var(--ph-font-size-sm) !important;
+    color: var(--ph-color-text-secondary) !important;
+  }
+}
+
+// Standard HTML table (used in detail modals)
+.ph-table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: var(--ph-font-size-base);
+
+  thead tr th {
+    background: var(--ph-color-bg-subtle);
+    color: var(--ph-color-text-secondary);
+    font-size: var(--ph-font-size-xs);
+    font-weight: var(--ph-font-weight-semibold);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--ph-color-border-default);
+    white-space: nowrap;
+  }
+
+  tbody tr td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--ph-color-border-default);
+    color: var(--ph-color-text-body);
+    vertical-align: middle;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover td {
+    background: var(--ph-color-brand-50);
+  }
+
+  &--flush {
+
+    thead tr th:first-child,
+    tbody tr td:first-child {
+      padding-left: var(--ph-space-5);
+    }
+
+    thead tr th:last-child,
+    tbody tr td:last-child {
+      padding-right: var(--ph-space-5);
+    }
+  }
+}
+
+// Legacy Bootstrap table
+.table {
+  color: var(--ph-color-text-body);
+  font-size: var(--ph-font-size-base);
+
+  thead th {
+    font-size: var(--ph-font-size-xs);
+    font-weight: var(--ph-font-weight-semibold);
+    color: var(--ph-color-text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    background: var(--ph-color-bg-subtle);
+    border-bottom: 1px solid var(--ph-color-border-default);
+    padding: 8px 16px;
+  }
+
+  tbody td {
+    padding: 10px 16px;
+    border-bottom: 1px solid var(--ph-color-border-default);
+    vertical-align: middle;
+  }
+
+  &-hover tbody tr:hover td {
+    background: var(--ph-color-brand-50) !important;
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 10. SEARCH COMPONENT
+// ─────────────────────────────────────────────
+.ph-search-wrapper {
+  position: relative;
+
+  .form-control {
+    padding-right: 2rem;
+  }
+
+  .ph-search-clear {
+    position: absolute;
+    right: 0.5rem;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--ph-color-text-secondary);
+    padding: 2px 4px;
+    cursor: pointer;
+    line-height: 1;
+    border-radius: var(--ph-radius-sm);
+    transition: color var(--ph-transition-fast),
+      background var(--ph-transition-fast);
+
+    &:hover {
+      color: var(--ph-color-text-body);
+      background: var(--ph-color-bg-subtle);
+    }
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 11. FILTER BAR
+// ─────────────────────────────────────────────
+.ph-filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ph-space-2);
+  margin-bottom: var(--ph-space-4);
+
+  &__search {
+    min-width: 240px;
+    flex: 1;
+  }
+
+  &__controls {
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--ph-space-2);
+    justify-content: flex-end;
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 12. DRAWER COMPONENT
+// ─────────────────────────────────────────────
+.ph-drawer-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--ph-color-bg-overlay);
+  z-index: 1200;
+  animation: phFadeIn 350ms ease-out forwards;
+}
+
+.ph-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  height: 100%;
+  background: var(--ph-color-bg-surface);
+  box-shadow: var(--ph-shadow-drawer);
+  z-index: 1210;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 350ms cubic-bezier(0.25, 0.8, 0.25, 1);
+  will-change: transform;
+
+  &.ph-drawer--open {
+    transform: translateX(0);
+  }
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: var(--ph-space-4) var(--ph-space-5);
+    border-bottom: 1px solid var(--ph-color-border-default);
+    background: var(--ph-color-bg-surface);
+    flex-shrink: 0;
+
+    h5 {
+      font-size: var(--ph-font-size-lg);
+      font-weight: var(--ph-font-weight-semibold);
+      color: var(--ph-color-text-heading);
+      margin: 0;
+    }
+  }
+
+  &__body {
+    flex: 1;
+    overflow-y: auto;
+    padding: var(--ph-space-5);
+
+    &::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: var(--ph-color-border-strong);
+      border-radius: var(--ph-radius-pill);
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: var(--ph-space-2);
+    padding: var(--ph-space-4) var(--ph-space-5);
+    border-top: 1px solid var(--ph-color-border-default);
+    background: var(--ph-color-bg-surface);
+    flex-shrink: 0;
+  }
+}
+
+@keyframes phFadeIn {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 13. DROPDOWN MENUS (ngbDropdown)
+// ─────────────────────────────────────────────
+.dropdown-menu {
+  font-size: var(--ph-font-size-base);
+  border: 1px solid var(--ph-color-border-default);
+  border-radius: var(--ph-radius-md);
+  box-shadow: var(--ph-shadow-md);
+  padding: var(--ph-space-1);
+  min-width: 160px;
+
+  .dropdown-item {
+    font-size: var(--ph-font-size-base);
+    color: var(--ph-color-text-body);
+    border-radius: var(--ph-radius-sm);
+    padding: var(--ph-space-2) var(--ph-space-3);
+    transition: background var(--ph-transition-fast);
+
+    &:hover,
+    &:focus {
+      background: var(--ph-color-bg-subtle);
+      color: var(--ph-color-text-body);
+    }
+
+    &.text-danger:hover {
+      background: var(--ph-color-danger-bg);
+    }
+
+    &.text-success:hover {
+      background: var(--ph-color-success-bg);
+    }
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 14. IMPORT MODAL — upload area
+// ─────────────────────────────────────────────
+.ph-upload-area {
+  border: 2px dashed var(--ph-color-border-strong);
+  border-radius: var(--ph-radius-lg);
+  padding: var(--ph-space-8);
+  text-align: center;
+  cursor: pointer;
+  transition: border-color var(--ph-transition-base),
+    background var(--ph-transition-base);
+  background: var(--ph-color-bg-subtle);
+
+  &:hover,
+  &--drag-over {
+    border-color: var(--ph-color-brand-500);
+    background: var(--ph-color-brand-50);
+  }
+
+  &__icon {
+    font-size: 2.5rem;
+    color: var(--ph-color-text-disabled);
+    margin-bottom: var(--ph-space-3);
+  }
+
+  &__icon--file {
+    color: var(--ph-color-success-icon);
+  }
+
+  &__title {
+    font-size: var(--ph-font-size-md);
+    font-weight: var(--ph-font-weight-semibold);
+    color: var(--ph-color-text-body);
+    margin-bottom: var(--ph-space-1);
+  }
+
+  &__sub {
+    font-size: var(--ph-font-size-sm);
+    color: var(--ph-color-text-secondary);
+  }
+}
+
+// Download template row
+.ph-template-row {
+  display: flex;
+  align-items: center;
+  padding: var(--ph-space-3) var(--ph-space-4);
+  background: var(--ph-color-bg-subtle);
+  border: 1px solid var(--ph-color-border-default);
+  border-radius: var(--ph-radius-md);
+  gap: var(--ph-space-3);
+
+  &__name {
+    flex: 1;
+    font-size: var(--ph-font-size-sm);
+    color: var(--ph-color-text-body);
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
-  /* fix flex layout */
-  .ngx-datatable .datatable-body-cell {
-    overflow: hidden;
-  }
-  .lpx-footbar{
-    display: none !important;
- }
 }
 
+// Step labels in import modal
+.ph-step-label {
+  font-size: var(--ph-font-size-sm);
+  font-weight: var(--ph-font-weight-semibold);
+  color: var(--ph-color-brand-600);
+  margin-bottom: var(--ph-space-2);
+}
+
+
+// ─────────────────────────────────────────────
+// 15. CALLOUT / INFO BLOCKS
+// ─────────────────────────────────────────────
+.ph-callout {
+  padding: var(--ph-space-3) var(--ph-space-4);
+  border-radius: var(--ph-radius-md);
+  border: 1px solid transparent;
+  display: flex;
+  align-items: flex-start;
+  gap: var(--ph-space-3);
+  font-size: var(--ph-font-size-base);
+
+  &__icon {
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-size: 1rem;
+  }
+
+  &--info {
+    background: var(--ph-color-info-bg);
+    border-color: var(--ph-color-info-border);
+    color: var(--ph-color-info-text);
+
+    .ph-callout__icon {
+      color: var(--ph-color-info-icon);
+    }
+  }
+
+  &--warning {
+    background: var(--ph-color-warning-bg);
+    border-color: var(--ph-color-warning-border);
+    color: var(--ph-color-warning-text);
+
+    .ph-callout__icon {
+      color: var(--ph-color-warning-icon);
+    }
+  }
+
+  &--success {
+    background: var(--ph-color-success-bg);
+    border-color: var(--ph-color-success-border);
+    color: var(--ph-color-success-text);
+
+    .ph-callout__icon {
+      color: var(--ph-color-success-icon);
+    }
+  }
+
+  &--danger {
+    background: var(--ph-color-danger-bg);
+    border-color: var(--ph-color-danger-border);
+    color: var(--ph-color-danger-text);
+
+    .ph-callout__icon {
+      color: var(--ph-color-danger-icon);
+    }
+  }
+}
+
+
+// ─────────────────────────────────────────────
+// 16. ABP / LPX FRAMEWORK OVERRIDES
+// ─────────────────────────────────────────────
+.abp-logo {
+  background-repeat: no-repeat;
+}
+
+// Navigation menu — active/hover icon color
+.lpx-nav-menu {
+  .lpx-menu-item-link {
+
+    &.selected,
+    &.expanded,
+    &:hover {
+
+      .lpx-menu-item-icon,
+      .dd-icon {
+        color: var(--ph-color-brand-500);
+        opacity: 1;
+      }
+    }
+  }
+}
+
+// Toast positioning
+.abp-toast-container {
+  top: 20px !important;
+  left: 50% !important;
+  right: auto !important;
+  bottom: auto !important;
+  transform: translateX(-50%);
+}
+
+
+// Hide footer
+.lpx-footbar {
+  display: none !important;
+}
+
+// App background
+.lpx-content-container {
+  background: var(--ph-color-bg-app);
+}
+
+// Topbar surface
+.lpx-topbar {
+  background: var(--ph-color-bg-surface);
+}
+
+// abp-modal adjustments
+.modal-content {
+  border-radius: var(--ph-radius-xl);
+  border: 1px solid var(--ph-color-border-default);
+  box-shadow: var(--ph-shadow-lg);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--ph-color-border-default);
+  padding: var(--ph-space-5);
+}
+
+.modal-footer {
+  border-top: 1px solid var(--ph-color-border-default);
+  padding: var(--ph-space-4) var(--ph-space-5);
+  gap: var(--ph-space-2);
+}
+
+.modal-body {
+  padding: var(--ph-space-5);
+}
+
+
+// ─────────────────────────────────────────────
+// 17. UTILITY HELPERS
+// ─────────────────────────────────────────────
+.ph-divider {
+  border: none;
+  border-top: 1px solid var(--ph-color-border-default);
+  margin: var(--ph-space-4) 0;
+}
+
+.ph-empty-state {
+  text-align: center;
+  padding: var(--ph-space-8) var(--ph-space-4);
+  color: var(--ph-color-text-secondary);
+  font-size: var(--ph-font-size-sm);
+  font-style: italic;
+}
+
+.ellipsis-cell {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+#notification{
+  position: fixed;
+  top: 0.2rem;
+  right: 7rem; 
+  z-index: 1300;
+}
+.ph-link-lookup {
+  color: var(--ph-color-text-secondary) !important;
+  font-size: var(--ph-font-size-sm);
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--ph-color-border-focus);
+    color: var(--ph-color-text-body) !important;
+  }
+}

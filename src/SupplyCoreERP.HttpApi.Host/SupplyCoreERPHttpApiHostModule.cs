@@ -1,44 +1,44 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Security.Cryptography.X509Certificates;
-using Microsoft.AspNetCore.Authentication;
+using Hangfire;
+using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Extensions.DependencyInjection;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.AspNetCore.Extensions.DependencyInjection;
-using OpenIddict.Validation.AspNetCore;
-using OpenIddict.Server.AspNetCore;
-using SupplyCoreERP.EntityFrameworkCore;
-using SupplyCoreERP.MultiTenancy;
-using SupplyCoreERP.HealthChecks;
 using Microsoft.OpenApi.Models;
+using OpenIddict.Server.AspNetCore;
+using OpenIddict.Validation.AspNetCore;
+using SupplyCoreERP.EntityFrameworkCore;
+using SupplyCoreERP.HealthChecks;
+using SupplyCoreERP.MultiTenancy;
+using SupplyCoreERP.SignalR.Notifications;
+using System;
+using System.IO;
+using System.Linq;
 using Volo.Abp;
-using Volo.Abp.Studio;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
 using Volo.Abp.AspNetCore.MultiTenancy;
 using Volo.Abp.AspNetCore.Mvc;
-using Volo.Abp.Autofac;
-using Volo.Abp.Localization;
-using Volo.Abp.Modularity;
-using Volo.Abp.UI.Navigation.Urls;
-using Volo.Abp.VirtualFileSystem;
 using Volo.Abp.AspNetCore.Mvc.UI.Bundling;
-using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite;
 using Volo.Abp.AspNetCore.Mvc.UI.Theme.LeptonXLite.Bundling;
-using Microsoft.AspNetCore.Hosting;
+using Volo.Abp.AspNetCore.Mvc.UI.Theme.Shared;
 using Volo.Abp.AspNetCore.Serilog;
-using Volo.Abp.Identity;
+using Volo.Abp.AspNetCore.SignalR;
+using Volo.Abp.Autofac;
+using Volo.Abp.BackgroundJobs.Hangfire;
+using Volo.Abp.Hangfire;
+using Volo.Abp.Modularity;
 using Volo.Abp.OpenIddict;
-using Volo.Abp.Swashbuckle;
-using Volo.Abp.Studio.Client.AspNetCore;
 using Volo.Abp.Security.Claims;
+using Volo.Abp.Studio.Client.AspNetCore;
+using Volo.Abp.Swashbuckle;
+using Volo.Abp.UI.Navigation.Urls;
+using Volo.Abp.VirtualFileSystem;
 
 namespace SupplyCoreERP;
 
@@ -52,14 +52,16 @@ namespace SupplyCoreERP;
     typeof(SupplyCoreERPEntityFrameworkCoreModule),
     typeof(AbpAccountWebOpenIddictModule),
     typeof(AbpSwashbuckleModule),
-    typeof(AbpAspNetCoreSerilogModule)
+    typeof(AbpAspNetCoreSerilogModule),
+    typeof(AbpBackgroundJobsHangfireModule),
+    typeof(AbpAspNetCoreSignalRModule)
     )]
 public class SupplyCoreERPHttpApiHostModule : AbpModule
 {
     public override void PreConfigureServices(ServiceConfigurationContext context)
     {
-        var hostingEnvironment = context.Services.GetHostingEnvironment();
-        var configuration = context.Services.GetConfiguration();
+        IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
+        IConfiguration configuration = context.Services.GetConfiguration();
 
         PreConfigure<OpenIddictBuilder>(builder =>
         {
@@ -88,8 +90,8 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
 
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
-        var configuration = context.Services.GetConfiguration();
-        var hostingEnvironment = context.Services.GetHostingEnvironment();
+        IConfiguration configuration = context.Services.GetConfiguration();
+        IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
 
         if (!configuration.GetValue<bool>("App:DisablePII"))
         {
@@ -103,7 +105,7 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
             {
                 options.DisableTransportSecurityRequirement = true;
             });
-            
+
             Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardedHeaders = ForwardedHeaders.XForwardedProto;
@@ -118,6 +120,8 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
         ConfigureSwagger(context, configuration);
         ConfigureVirtualFileSystem(context);
         ConfigureCors(context, configuration);
+        ConfigureHangfire(context, configuration);
+        ConfigureSignalR(context);
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)
@@ -165,7 +169,7 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
 
     private void ConfigureVirtualFileSystem(ServiceConfigurationContext context)
     {
-        var hostingEnvironment = context.Services.GetHostingEnvironment();
+        IWebHostEnvironment hostingEnvironment = context.Services.GetHostingEnvironment();
 
         if (hostingEnvironment.IsDevelopment())
         {
@@ -202,6 +206,34 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
             });
     }
 
+    private void ConfigureHangfire(ServiceConfigurationContext context, IConfiguration configuration)
+    {
+        context.Services.AddHangfire(config =>
+        {
+            config
+                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
+                .UseSimpleAssemblyNameTypeSerializer()
+                .UseRecommendedSerializerSettings()
+                .UsePostgreSqlStorage(options =>
+                {
+                    options.UseNpgsqlConnection(configuration.GetConnectionString("Default"));
+                });
+            // Retry 3 times 30s, 120s, 300s if job fails
+            config.UseFilter(new AutomaticRetryAttribute
+            {
+                Attempts = 3,
+                DelaysInSeconds = new[] { 30, 120, 300 }
+            });
+        });
+    }
+    private void ConfigureSignalR(ServiceConfigurationContext context)
+    {
+        context.Services.AddSignalR(options =>
+        {
+            options.EnableDetailedErrors = true;
+        });
+    }
+
     private void ConfigureCors(ServiceConfigurationContext context, IConfiguration configuration)
     {
         context.Services.AddCors(options =>
@@ -232,8 +264,8 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)
     {
-        var app = context.GetApplicationBuilder();
-        var env = context.GetEnvironment();
+        IApplicationBuilder app = context.GetApplicationBuilder();
+        IWebHostEnvironment env = context.GetEnvironment();
 
         app.UseForwardedHeaders();
 
@@ -271,11 +303,19 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
         {
             options.SwaggerEndpoint("/swagger/v1/swagger.json", "SupplyCoreERP API");
 
-            var configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
+            IConfiguration configuration = context.ServiceProvider.GetRequiredService<IConfiguration>();
             options.OAuthClientId(configuration["AuthServer:SwaggerClientId"]);
         });
+        app.UseAbpHangfireDashboard("/hangfire", options =>
+        {
+            options.AsyncAuthorization = new[] { new AbpHangfireAuthorizationFilter() };
+        });
+
         app.UseAuditing();
         app.UseAbpSerilogEnrichers();
-        app.UseConfiguredEndpoints();
+        app.UseConfiguredEndpoints(endpoints =>
+        {
+            endpoints.MapHub<NotificationHub>("/hubs/notification");
+        });
     }
 }

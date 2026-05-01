@@ -17,27 +17,27 @@
   <div class="card-body">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
       <div style="min-width: 250px; flex: 1;">
-        <app-search 
-          [placeholder]="'::SearchByProductOrBatch' | abpLocalization" 
-          [(value)]="filterText" 
-          [debounceTime]="800" 
-          (search)="onSearch($event)">
+        <app-search [placeholder]="'::SearchByProductOrBatch' | abpLocalization" [(value)]="filterText"
+          [debounceTime]="800" (search)="onSearch($event)">
         </app-search>
       </div>
 
       <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center">
-        <select class="form-select form-select-md" style="width: 200px;" [(ngModel)]="filterWarehouseId" (change)="onFilterChange()">
+        <select class="form-select form-select-md" style="width: 200px;" [(ngModel)]="filterWarehouseId"
+          (change)="onFilterChange()">
           <option [ngValue]="null">{{ '::Warehouse' | abpLocalization }}</option>
           <option *ngFor="let item of warehouses" [ngValue]="item.id">{{ item.name }}</option>
         </select>
 
-        <select class="form-select form-select-md" style="width: 200px;" [(ngModel)]="filterMedicineId" (change)="onFilterChange()">
+        <select class="form-select form-select-md" style="width: 200px;" [(ngModel)]="filterMedicineId"
+          (change)="onFilterChange()">
           <option [ngValue]="null">{{ '::Medicine' | abpLocalization }}</option>
           <option *ngFor="let item of medicines" [ngValue]="item.id">{{ item.code }} - {{ item.name }}</option>
         </select>
 
         <div class="form-check form-switch ms-2 mb-0 d-flex align-items-center">
-          <input class="form-check-input mt-0 me-2" type="checkbox" id="hideZero" [(ngModel)]="hideZeroBalance" (change)="onFilterChange()" style="cursor: pointer; transform: scale(1.2);">
+          <input class="form-check-input mt-0 me-2" type="checkbox" id="hideZero" [(ngModel)]="hideZeroBalance"
+            (change)="onFilterChange()" style="cursor: pointer; transform: scale(1.2);">
           <label class="form-check-label small fw-semibold mb-0" for="hideZero" style="cursor: pointer;">
             {{ '::HideZeroBalance' | abpLocalization }}
           </label>
@@ -46,11 +46,12 @@
     </div>
 
     <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
-      
+
       <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="120" [sortable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <button class="btn btn-sm btn-outline-primary fw-semibold" (click)="openDetail(row.id)" title="Xem Chi tiết & Thẻ kho">
-            <i class="fa fa-eye me-1"></i>  {{ '::View' | abpLocalization }}
+          <button class="btn btn-sm btn-outline-primary fw-semibold" (click)="openDetail(row.id)"
+            title="Xem Chi tiết & Thẻ kho">
+            <i class="fa fa-eye me-1"></i> {{ '::View' | abpLocalization }}
           </button>
         </ng-template>
       </ngx-datatable-column>
@@ -68,18 +69,20 @@
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span><i class="fa fa-map-marker text-danger me-1"></i>{{ row.warehouseName }}</span>
           <small class="d-block mt-1">
-            <span class="badge bg-success text-dark border"><i class="fa fa-box text-primary me-1"></i>{{ row.binCode }}</span>
+            <span class="badge bg-success text-dark border"><i class="fa fa-box text-primary me-1"></i>{{ row.binCode
+              }}</span>
           </small>
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::TotalQuantity' | abpLocalization" prop="quantity" [width]="140">
-        
+
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::LockedQuantity' | abpLocalization" prop="lockedQuantity" [width]="140">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="badge" [ngClass]="row.lockedQuantity > 0 ? 'bg-warning text-dark' : 'bg-light text-muted border'">
+          <span class="badge"
+            [ngClass]="row.lockedQuantity > 0 ? 'bg-warning text-dark' : 'bg-light text-muted border'">
             <i class="fa fa-lock me-1"></i> {{ row.lockedQuantity | number }}
           </span>
         </ng-template>
@@ -87,7 +90,8 @@
 
       <ngx-datatable-column [name]="'::AvailableQuantity' | abpLocalization" prop="availableQuantity" [width]="160">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="fs-6 fw-bold" [ngClass]="(row.quantity - row.lockedQuantity) > 0 ? 'text-success' : 'text-danger'">
+          <span class="fs-6 fw-bold"
+            [ngClass]="(row.quantity - row.lockedQuantity) > 0 ? 'text-success' : 'text-danger'">
             {{ (row.quantity - row.lockedQuantity) | number }}
           </span>
         </ng-template>

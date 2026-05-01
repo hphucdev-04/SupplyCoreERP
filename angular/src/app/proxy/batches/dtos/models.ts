@@ -17,6 +17,7 @@ export interface GetProductBatchListDto extends PagedAndSortedResultRequestDto {
 }
 
 export interface ProductBatchDto extends FullAuditedEntityDto<string> {
+  code?: string;
   productId?: string;
   productName?: string;
   batchNumber?: string;

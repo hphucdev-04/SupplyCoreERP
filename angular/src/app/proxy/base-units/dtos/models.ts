@@ -6,7 +6,6 @@ export interface BaseUnitDto extends FullAuditedEntityDto<string> {
 }
 
 export interface CreateUpdateBaseUnitDto {
-  code: string;
   name: string;
 }
 

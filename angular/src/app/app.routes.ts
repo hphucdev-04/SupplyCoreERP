@@ -31,5 +31,9 @@ export const APP_ROUTES: Routes = [
   {
     path: 'inventory',
     loadChildren: () => import('./inventories/inventories.routes').then(m => m.INVENTORIES_ROUTES),
-  }
+  },
+  {
+    path: 'order',
+    loadChildren: () => import('./orders/orders.routes').then(m => m.ORDER_ROUTES),
+  },
 ];

@@ -8,7 +8,7 @@
         </h5>
       </div>
       <div class="col col-md-6 text-end">
-        <button class="btn btn-primary" type="button" (click)="createIngredient()">
+        <button class="btn btn-sm ph-btn-new" type="button" (click)="createIngredient()">
           <i class="fa fa-plus me-1"></i>
           <span>{{ '::NewIngredient' | abpLocalization }}</span>
         </button>
@@ -18,26 +18,21 @@
 
   <div class="card-body">
 
-   <div class="row mb-3">
+    <div class="row mb-3">
       <div class="col-md-12">
-        <app-search
-          [placeholder]="'::Search' | abpLocalization"
-          [(value)]="filterText"
-          [debounceTime]= "800"
+        <app-search [placeholder]="'::Search' | abpLocalization" [(value)]="filterText" [debounceTime]="800"
           (search)="onSearch($event)">
         </app-search>
       </div>
     </div>
 
     <ngx-datatable [rows]="ingredient.items" [count]="ingredient.totalCount" [list]="list" default>
-      
-      <ngx-datatable-column
-        [name]="'::Actions' | abpLocalization"
-        [maxWidth]="150"
-        [sortable]="false">
+
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
-            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+            <button class="btn btn-sm ph-btn-actions dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              ngbDropdownToggle>
               <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
@@ -52,8 +47,22 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" cellClass="ellipsis-cell"></ngx-datatable-column>
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="180" ></ngx-datatable-column>
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-link">{{row.code}}</span>
+        </ng-template>
+      </ngx-datatable-column>
+<<<<<<< HEAD
+      
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [width]="180"></ngx-datatable-column>
+=======
+
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-badge ph-badge--neutral">{{ row.name }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+>>>>>>> 1a938ab5e1d7ee2a1ad1f03fa76d3cc6777a06d2
 
       <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
         <ng-template let-row="row" ngx-datatable-cell-template>
@@ -66,47 +75,15 @@
 <!-- #endregion -->
 
 <!-- #region Drawer -->
-<app-drawer
-  [isOpen]="isDrawerOpen"
-  [title]="selectedIngredient.id ? '::EditIngredient' : '::NewIngredient'"
-  [width]="'md'"
-  [saveDisabled]="form.invalid"
-  (close)="closeDrawer()"
-  (save)="save()">
-  
+<app-drawer [isOpen]="isDrawerOpen" [title]="selectedIngredient.id ? '::EditIngredient' : '::NewIngredient'"
+  [width]="'md'" [saveDisabled]="form.invalid" (close)="closeDrawer()" (save)="save()">
+
   <form [formGroup]="form" *ngIf="form">
-   <div class="mb-3">
-    <label for="unit-code" class="form-label small fw-semibold">
-      {{ '::Code' | abpLocalization }} <span class="text-danger">*</span>
-    </label>
-    <div class="input-group">
-      <input
-        type="text"
-        id="unit-code"
-        class="form-control text-uppercase"
-        formControlName="code"
-      />
-      <button class="btn btn-outline-secondary" type="button" (click)="generateCode()"
-              [title]="'::GenerateCode' | abpLocalization">
-        <i class="fa fa-magic"></i>
-      </button>
-    </div>
-    <div class="invalid-feedback d-block" *ngIf="form.get('code')?.invalid && form.get('code')?.touched">
-      {{ '::ThisFieldIsRequired' | abpLocalization }}
-    </div>
-  </div>
-    
     <div class="mb-3">
       <label for="unit-name" class="form-label small fw-semibold">
         {{ '::Name' | abpLocalization }} <span class="text-danger">*</span>
       </label>
-      <input
-        type="text"
-        id="unit-name"
-        class="form-control"
-        formControlName="name"
-        autofocus
-      />
+      <input type="text" id="unit-name" class="form-control" formControlName="name" autofocus />
       <div class="invalid-feedback d-block" *ngIf="form.get('name')?.invalid && form.get('name')?.touched">
         {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>

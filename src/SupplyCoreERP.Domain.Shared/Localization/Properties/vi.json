@@ -79,6 +79,7 @@
     "Enum:ZoneType.Staging": "Khu trung chuyển",
     "Enum:ZoneType.Quarantine": "Kiểm dịch",
     "Enum:ZoneType.ForkliftParking": "Đỗ xe nâng",
+    "Enum:ZoneType.Office": "Văn phòng",
 
     //Validation
     "ThisFieldIsRequired": "Trường này là bắt buộc"

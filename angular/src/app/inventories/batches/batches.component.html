@@ -20,24 +20,21 @@
   <div class="card-body">
     <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
       <div style="min-width: 250px; flex: 1;">
-        <app-search
-          [placeholder]="'::SearchByBatchNumber' | abpLocalization"
-          [(value)]="filterText"
-          [debounceTime]="800"
-          (search)="onSearch($event)">
+        <app-search [placeholder]="'::SearchByBatchNumber' | abpLocalization" [(value)]="filterText"
+          [debounceTime]="800" (search)="onSearch($event)">
         </app-search>
       </div>
 
       <div class="d-flex flex-wrap gap-1 justify-content-end">
-        
-        <select class="form-select form-select-md" style="width: 220px;"
-                [(ngModel)]="filterMedicineId" (change)="onFilterChange()">
+
+        <select class="form-select form-select-md" style="width: 220px;" [(ngModel)]="filterMedicineId"
+          (change)="onFilterChange()">
           <option [ngValue]="null">{{ '::Medicine' | abpLocalization }}</option>
           <option *ngFor="let item of medicines" [ngValue]="item.id">{{ item.code }} - {{ item.name }}</option>
         </select>
 
-        <select class="form-select form-select-md" style="width: 140px;"
-                [(ngModel)]="filterStatus" (change)="onFilterChange()">
+        <select class="form-select form-select-md" style="width: 140px;" [(ngModel)]="filterStatus"
+          (change)="onFilterChange()">
           <option [ngValue]="null">{{ '::Status' | abpLocalization }}</option>
           <option *ngFor="let item of batchStatusOptions" [ngValue]="item.value">
             {{ '::Enum:BatchQAStatus.' + enumName(BatchQAStatus, item.value) | abpLocalization }}
@@ -48,18 +45,19 @@
     </div>
 
     <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
-      
+
       <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
-            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" ngbDropdownToggle>
+            <button class="btn btn-primary btn-sm dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+              ngbDropdownToggle>
               <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
               <button ngbDropdownItem (click)="editBatch(row.id)">
                 <i class="fa fa-edit me-1"></i>{{ '::Edit' | abpLocalization }}
               </button>
-              
+
               <div class="dropdown-divider"></div>
               <div *ngIf="row.status === BatchQAStatus.PendingQA || row.status === BatchQAStatus.Rejected">
                 <button ngbDropdownItem (click)="approveBatch(row.id)" class="text-success">
@@ -78,6 +76,12 @@
               </button>
             </div>
           </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-link">{{row.code}}</span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -107,14 +111,12 @@
 
       <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="140">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <span class="badge"
-            [ngClass]="{
+          <span class="badge" [ngClass]="{
               'bg-warning text-dark': value === BatchQAStatus.Pending,
               'bg-success': value === BatchQAStatus.Approved,
               'bg-danger': value === BatchQAStatus.Rejected
             }">
-            <i class="fa me-1"
-              [ngClass]="{
+            <i class="fa me-1" [ngClass]="{
                 'fa-clock': value === BatchQAStatus.Pending,
                 'fa-check-circle': value === BatchQAStatus.Approved,
                 'fa-ban': value === BatchQAStatus.Rejected
@@ -128,24 +130,21 @@
     </ngx-datatable>
   </div>
 </div>
-<app-drawer
-  [isOpen]="isDrawerOpen"
-  [title]="(selectedBatch?.id ? '::EditBatch' : '::NewBatch') | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="form.invalid"
-  (close)="closeDrawer()"
-  (save)="save()">
+<app-drawer [isOpen]="isDrawerOpen" [title]="(selectedBatch?.id ? '::EditBatch' : '::NewBatch') | abpLocalization"
+  [width]="'md'" [saveDisabled]="form.invalid" (close)="closeDrawer()" (save)="save()">
 
   <form [formGroup]="form" (ngSubmit)="save()" validateOnSubmit>
-    
+
     <div class="row">
       <div class="col-md-12 mb-3">
-        <label class="form-label small fw-semibold">{{ '::Medicine' | abpLocalization }} <span class="text-danger">*</span></label>
+        <label class="form-label small fw-semibold">{{ '::Medicine' | abpLocalization }} <span
+            class="text-danger">*</span></label>
         <select class="form-select form-select-sm" formControlName="productId">
           <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
           <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} - {{ m.name }}</option>
         </select>
-        <div *ngIf="form.get('productId').invalid && (form.get('productId').dirty || form.get('productId').touched)" class="text-danger small mt-1">
+        <div *ngIf="form.get('productId').invalid && (form.get('productId').dirty || form.get('productId').touched)"
+          class="text-danger small mt-1">
           {{ '::ThisFieldIsRequired' | abpLocalization }}
         </div>
       </div>
@@ -153,9 +152,13 @@
 
     <div class="row">
       <div class="col-md-12 mb-3">
-        <label class="form-label small fw-semibold">{{ '::BatchNumber' | abpLocalization }} <span class="text-danger">*</span></label>
-        <input type="text" class="form-control form-control-sm text-uppercase" formControlName="batchNumber" [placeholder]="'::EnterBatchNumber' | abpLocalization">
-        <div *ngIf="form.get('batchNumber').invalid && (form.get('batchNumber').dirty || form.get('batchNumber').touched)" class="text-danger small mt-1">
+        <label class="form-label small fw-semibold">{{ '::BatchNumber' | abpLocalization }} <span
+            class="text-danger">*</span></label>
+        <input type="text" class="form-control form-control-sm text-uppercase" formControlName="batchNumber"
+          [placeholder]="'::EnterBatchNumber' | abpLocalization">
+        <div
+          *ngIf="form.get('batchNumber').invalid && (form.get('batchNumber').dirty || form.get('batchNumber').touched)"
+          class="text-danger small mt-1">
           {{ '::ThisFieldIsRequired' | abpLocalization }}
         </div>
       </div>
@@ -163,17 +166,21 @@
 
     <div class="row">
       <div class="col-md-6 mb-3">
-        <label class="form-label small fw-semibold">{{ '::ManufacturingDate' | abpLocalization }} <span class="text-danger">*</span></label>
+        <label class="form-label small fw-semibold">{{ '::ManufacturingDate' | abpLocalization }} <span
+            class="text-danger">*</span></label>
         <input type="date" class="form-control form-control-sm" formControlName="manufacturingDate">
-        <div *ngIf="form.get('manufacturingDate').invalid && (form.get('manufacturingDate').dirty || form.get('manufacturingDate').touched)" class="text-danger small mt-1">
+        <div
+          *ngIf="form.get('manufacturingDate').invalid && (form.get('manufacturingDate').dirty || form.get('manufacturingDate').touched)"
+          class="text-danger small mt-1">
           {{ '::ThisFieldIsRequired' | abpLocalization }}
         </div>
       </div>
-      
+
       <div class="col-md-6 mb-3">
         <label class="form-label small fw-semibold text-danger">{{ '::ExpiryDate' | abpLocalization }} *</label>
         <input type="date" class="form-control form-control-sm" formControlName="expiryDate">
-        <div *ngIf="form.get('expiryDate').invalid && (form.get('expiryDate').dirty || form.get('expiryDate').touched)" class="text-danger small mt-1">
+        <div *ngIf="form.get('expiryDate').invalid && (form.get('expiryDate').dirty || form.get('expiryDate').touched)"
+          class="text-danger small mt-1">
           {{ '::ThisFieldIsRequired' | abpLocalization }}
         </div>
       </div>

@@ -11,6 +11,7 @@ namespace SupplyCoreERP.Manufacturers
 {
 	public class Manufacturer : FullAuditedAggregateRoot<Guid>
 	{
+		public string Code { get; private set; }
 		public string Name { get; private set; } 
 
 		public Guid ContinentId { get; private set; }
@@ -23,10 +24,11 @@ namespace SupplyCoreERP.Manufacturers
 
 		private Manufacturer() { }
 
-		public Manufacturer(Guid id, string name, Guid continentId, Guid countryId)
+		public Manufacturer(Guid id, string code, string name, Guid continentId, Guid countryId)
 			: base(id)
 		{
-			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255);
+			Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50);
+            Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255);
 			ContinentId = continentId;
 			CountryId = countryId;
 		}

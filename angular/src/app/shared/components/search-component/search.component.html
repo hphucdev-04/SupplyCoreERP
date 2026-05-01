@@ -1,0 +1,7 @@
+<div class="ph-search-wrapper">
+  <input type="text" class="form-control" [placeholder]="placeholder" [ngModel]="value"
+    (ngModelChange)="onInputChange($event)" />
+  <button class="ph-search-clear" type="button" (click)="clearSearch()" *ngIf="value">
+    <i class="fa fa-times"></i>
+  </button>
+</div>

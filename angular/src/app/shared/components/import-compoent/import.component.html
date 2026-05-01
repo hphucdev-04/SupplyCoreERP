@@ -1,0 +1,60 @@
+<abp-modal [(visible)]="visible" [options]="{ size: 'md', centered: true }" (visibleChange)="close()">
+
+  <ng-template #abpHeader>
+    <h4 class="modal-title m-0">
+      <i class="fa fa-file-import ph-text-warning me-2"></i> {{ title | abpLocalization }}
+    </h4>
+  </ng-template>
+
+  <ng-template #abpBody>
+    <div class="mb-3" *ngIf="templateFn">
+      <p class="ph-step-label">{{ '::Step1_DownloadTemplate' | abpLocalization }}</p>
+      <div class="ph-template-row">
+        <div class="ph-template-row__name">
+          <i class="fa fa-file-excel ph-text-success me-1"></i>
+          {{ templateName }}
+        </div>
+        <button class="btn btn-sm ph-btn-download text-nowrap" (click)="downloadTemplate()">
+          <i class="fa fa-download"></i> {{ '::DownloadTemplate' | abpLocalization }}
+        </button>
+      </div>
+    </div>
+
+    <div class="mb-2">
+      <p class="ph-step-label">{{ '::Step2_UploadFile' | abpLocalization }}</p>
+
+      <div class="ph-upload-area" [class.ph-upload-area--drag-over]="dragOver" (dragover)="onDragOver($event)"
+        (dragleave)="onDragLeave($event)" (drop)="onDrop($event)" (click)="fileInput.click()">
+
+        <input type="file" #fileInput hidden (change)="onFileSelected($event)" accept=".xlsx, .xls">
+
+        <div *ngIf="!file">
+          <i class="fa fa-cloud-upload-alt ph-upload-area__icon"></i>
+          <p class="ph-upload-area__title">{{ '::DragAndDropHere' | abpLocalization }}</p>
+          <span class="ph-upload-area__sub">{{ '::OrClickToBrowse' | abpLocalization }}</span>
+        </div>
+
+        <div *ngIf="file">
+          <i class="fa fa-file-excel ph-upload-area__icon ph-upload-area__icon--file"></i>
+          <p class="ph-upload-area__title">{{ file.name }}</p>
+          <span class="ph-upload-area__sub d-block mb-3">{{ (file.size / 1024) | number:'1.0-2' }} KB</span>
+          <button class="btn btn-sm btn-outline-danger" (click)="$event.stopPropagation(); file = null">
+            <i class="fa fa-times me-1"></i> {{ '::Remove' | abpLocalization }}
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </ng-template>
+
+  <ng-template #abpFooter>
+    <button type="button" class="btn ph-btn-cancel" (click)="close()">
+      {{ '::Cancel' | abpLocalization }}
+    </button>
+    <button type="button" class="btn ph-btn-save" (click)="upload()" [disabled]="!file || isImporting">
+      <i class="fa" [ngClass]="isImporting ? 'fa-spinner fa-spin' : 'fa-check'"></i>
+      {{ '::UploadAndImport' | abpLocalization }}
+    </button>
+  </ng-template>
+
+</abp-modal>

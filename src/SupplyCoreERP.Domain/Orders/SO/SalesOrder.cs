@@ -50,7 +50,7 @@ namespace SupplyCoreERP.Sales.Orders
 			Details = new List<SalesOrderDetail>();
 		}
 
-		public void UpdateMaster(Guid warehouseId, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
+		public void UpdateInfo(Guid warehouseId, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
 		{
 			if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
 				throw new UserFriendlyException("Chỉ có thể sửa đơn bán khi đang ở trạng thái Nháp hoặc Chờ duyệt.");
@@ -61,7 +61,8 @@ namespace SupplyCoreERP.Sales.Orders
 			Note = note;
 		}
 
-		public SalesOrderDetail AddDetail(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
+        #region SaleOrder Detials
+        public SalesOrderDetail AddDetail(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
 		{
 			if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
 				throw new UserFriendlyException("Chỉ được thêm chi tiết khi đơn đang Nháp hoặc Chờ duyệt.");
@@ -96,23 +97,29 @@ namespace SupplyCoreERP.Sales.Orders
 			Details.Remove(detail);
 			RecalculateTotal();
 		}
+        #endregion
 
-		private void RecalculateTotal()
-		{
-			SubTotal = Details.Sum(x => x.TotalPrice);
-			DiscountAmount = Details.Sum(x => x.DiscountAmount);
-			TaxAmount = Details.Sum(x => x.TaxAmount);
-			TotalAmount = SubTotal - DiscountAmount + TaxAmount;
-		}
-
-		public void SendToApprove()
+        #region Work flow
+        public void SendToApprove()
 		{
 			if (!Details.Any()) throw new UserFriendlyException("Đơn bán hàng chưa có sản phẩm nào!");
 			Status = SalesOrderStatus.PendingApproval;
 		}
-		public void Approve() => Status = SalesOrderStatus.Approved;
-		public void StartDelivering() => Status = SalesOrderStatus.Delivering;
-		public void Complete() => Status = SalesOrderStatus.Completed;
+		public void Approve()
+		{
+			Status = SalesOrderStatus.Approved;
+		}
+		public void StartDelivering()
+		{
+			if (Status != SalesOrderStatus.Approved)
+				throw new UserFriendlyException(
+					"Chỉ có thể bắt đầu giao hàng khi đơn đang ở trạng thái Đã duyệt!");
+			Status = SalesOrderStatus.Delivering;
+		}
+		public void Complete()
+		{
+			Status = SalesOrderStatus.Completed;
+		}
 
 		public void Cancel()
 		{
@@ -120,5 +127,16 @@ namespace SupplyCoreERP.Sales.Orders
 			if (Status == SalesOrderStatus.Delivering) throw new UserFriendlyException("Hàng đang giao, Kho phải thu hồi trước khi hủy!");
 			Status = SalesOrderStatus.Canceled;
 		}
-	}
+        #endregion
+
+        #region Helper 
+        private void RecalculateTotal()
+        {
+            SubTotal = Details.Sum(x => x.TotalPrice);
+            DiscountAmount = Details.Sum(x => x.DiscountAmount);
+            TaxAmount = Details.Sum(x => x.TaxAmount);
+            TotalAmount = SubTotal - DiscountAmount + TaxAmount;
+        }
+        #endregion
+    }
 }

@@ -1,7 +1,6 @@
 import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 
 export interface CreateUpdateDosageFormDto {
-  code: string;
   name: string;
 }
 

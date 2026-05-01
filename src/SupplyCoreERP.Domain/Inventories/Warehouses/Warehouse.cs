@@ -1,6 +1,7 @@
 ﻿using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Locations.Areas;
 using SupplyCoreERP.Locations.Cities;
+using SupplyCoreERP.Locations.Countries;
 using System;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -12,7 +13,9 @@ namespace SupplyCoreERP.Inventories.Warehouses
 		public string Code { get; private set; }
 		public string Name { get; private set; }
 		public string? Address { get; private set; }
-		public Guid? CityId { get; private set; }
+		public Guid? CountryId { get; private set; }
+		public virtual Country Country { get; protected set; }
+        public Guid? CityId { get; private set; }
 		public virtual City City { get; protected set; }
 		public Guid? AreaId { get; private set; }
 		public virtual Area Area { get; protected set; }
@@ -24,11 +27,12 @@ namespace SupplyCoreERP.Inventories.Warehouses
 
 		protected Warehouse() { }
 
-		public Warehouse(Guid id, string code, string name, string? address, Guid? cityId, Guid? areaId, int mapWidth = 1000, int mapLength = 1000) : base(id)
+		public Warehouse(Guid id, string code, string name, string? address, Guid? countryId, Guid? cityId, Guid? areaId, int mapWidth = 1000, int mapLength = 1000) : base(id)
 		{
 			Code = Check.NotNullOrWhiteSpace(code, nameof(Code), 50).ToUpper();
 			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255);
 			Address = address; 
+			CountryId = countryId;
 			CityId = cityId;
 			AreaId = areaId;
 			MapWidth = mapWidth; 
@@ -37,10 +41,11 @@ namespace SupplyCoreERP.Inventories.Warehouses
 			IsActive = true;
 		}
 
-		public void UpdateInfo(string name, string? address, Guid? cityId, Guid? areaId)
+		public void UpdateInfo(string name, string? address, Guid? countryId, Guid? cityId, Guid? areaId)
 		{
 			Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 255);
 			Address = address;
+			CountryId = countryId;
 			CityId = cityId;
 			AreaId = areaId;
 		}

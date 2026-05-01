@@ -30,7 +30,7 @@ export class InventoryTicketService {
   
 
   createTicketDetail = (ticketId: string, input: AddTicketDetailDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, InventoryTicketDto>({
+    this.restService.request<any, void>({
       method: 'POST',
       url: `/api/app/inventory-ticket/ticket-detail/${ticketId}`,
       body: input,

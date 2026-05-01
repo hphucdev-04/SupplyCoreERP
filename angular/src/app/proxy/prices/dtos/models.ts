@@ -1,5 +1,5 @@
 import type { EntityDto } from '@abp/ng.core';
-import type { CurrencyType } from '../../enums/currency-type.enum';
+import type { CurrencyType } from '../../enums/price-list/currency-type.enum';
 
 export interface CreateUpdateProductPriceDto {
   priceListId: string;
