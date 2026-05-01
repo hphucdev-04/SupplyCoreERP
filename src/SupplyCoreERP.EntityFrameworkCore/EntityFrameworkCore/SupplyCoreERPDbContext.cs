@@ -599,15 +599,15 @@ public class SupplyCoreERPDbContext :
         // DocumentSeuqence
         builder.Entity<DocumentSequence>(b =>
         {
-            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "DocumentSequences", SupplyCoreERPConsts.DbSchema);
-            b.ConfigureByConvention();
+           b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "DocumentSequences", SupplyCoreERPConsts.DbSchema);
+           b.ConfigureByConvention();
 
-            // Đảm bảo DocumentType là duy nhất để tránh tạo trùng loại chứng từ
-            b.HasIndex(x => x.DocumentType).IsUnique();
+           // Đảm bảo DocumentType là duy nhất để tránh tạo trùng loại chứng từ
+           b.HasIndex(x => x.DocumentType).IsUnique();
 
-            b.Property(x => x.DocumentType).IsRequired().HasMaxLength(10);
-            b.Property(x => x.PrefixDate).IsRequired().HasMaxLength(6);
-            b.Property(x => x.LastValue).IsRequired();
+           b.Property(x => x.DocumentType).IsRequired().HasMaxLength(10);
+           b.Property(x => x.PrefixDate).IsRequired().HasMaxLength(6);
+           b.Property(x => x.LastValue).IsRequired();
         });
 
         // Notification
