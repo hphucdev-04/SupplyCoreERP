@@ -54,7 +54,7 @@
 // ── Panel ─────────────────────────────────────────────────────────────────────
 .nb-panel {
   position: absolute;
-  top: calc(100% + 10px);
+  top: calc(100% + 2px);
   right: 0;
   width: 380px;
   max-height: 500px;
@@ -66,17 +66,11 @@
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.13), 0 2px 8px rgba(0, 0, 0, 0.06);
   z-index: 1060;
   overflow: hidden;
-  animation: nb-drop 0.15s ease;
+  animation: nb-drop 0.2s ease-in-out;
 
   @keyframes nb-drop {
-    from {
-      opacity: 0;
-      transform: translateY(-8px) scale(0.98);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0) scale(1);
-    }
+    from { opacity: 0; transform: translateY(-10px) scale(0.96); }
+    to   { opacity: 1; transform: translateY(0) scale(1); }
   }
 
   &__head {
@@ -94,19 +88,26 @@
     color: #212529;
   }
 
-  &__readall {
+  &__actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  &__readall,
+  &__deleteall {
     background: none;
     border: none;
     cursor: pointer;
     font-size: 12px;
-    color: #228be6;
     font-weight: 500;
     padding: 0;
 
-    &:hover {
-      text-decoration: underline;
-    }
+    &:hover { text-decoration: underline; }
   }
+
+  &__readall  { color: #228be6; }
+  &__deleteall { color: #e03131; }
 }
 
 // ── List ──────────────────────────────────────────────────────────────────────
@@ -114,14 +115,8 @@
   overflow-y: auto;
   flex: 1;
 
-  &::-webkit-scrollbar {
-    width: 4px;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #dee2e6;
-    border-radius: 4px;
-  }
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-thumb { background: #dee2e6; border-radius: 4px; }
 }
 
 // ── Empty / Loading state ─────────────────────────────────────────────────────
@@ -144,11 +139,7 @@
   border-radius: 50%;
   animation: nb-spin 0.7s linear infinite;
 
-  @keyframes nb-spin {
-    to {
-      transform: rotate(360deg);
-    }
-  }
+  @keyframes nb-spin { to { transform: rotate(360deg); } }
 }
 
 // ── Item ──────────────────────────────────────────────────────────────────────
@@ -162,29 +153,18 @@
   transition: background 0.15s;
   position: relative;
 
-  &:last-child {
-    border-bottom: none;
-  }
-
-  &:hover {
-    background: #f8f9fa;
-  }
+  &:last-child { border-bottom: none; }
+  &:hover { background: #f8f9fa; }
 
   &--unread {
     background: #f0f7ff;
-
-    &:hover {
-      background: #e7f1ff;
-    }
+    &:hover { background: #e7f1ff; }
   }
 
-  // Severity accent bar (left)
   &::before {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    bottom: 0;
+    left: 0; top: 0; bottom: 0;
     width: 3px;
     border-radius: 0 2px 2px 0;
   }
@@ -239,12 +219,43 @@
     color: #adb5bd;
   }
 
-  &__dot {
+  &__right {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
     flex-shrink: 0;
+  }
+
+  &__dot {
     width: 8px;
     height: 8px;
     border-radius: 50%;
     background: #228be6;
-    margin-top: 6px;
+  }
+
+  &__delete {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    background: none;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #adb5bd;
+    opacity: 0;
+    transition: opacity 0.15s, background 0.15s, color 0.15s;
+    padding: 0;
+
+    &:hover {
+      background: #fff5f5;
+      color: #e03131;
+    }
+  }
+
+  &:hover &__delete {
+    opacity: 1;
   }
 }

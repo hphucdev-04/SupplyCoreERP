@@ -1,9 +1,11 @@
-﻿using SupplyCoreERP.Enums.Notificaitons;
+﻿using Microsoft.AspNetCore.Authorization;
+using SupplyCoreERP.Enums.Notificaitons;
 using SupplyCoreERP.Notifications.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Domain.Repositories;
@@ -34,6 +36,7 @@ public class NotificationAppService : SupplyCore, INotificationAppService
         _permissionChecker = permissionChecker;
     }
 
+    [RemoteService(false)]
     public async Task<NotificationDto> CreateGlobalAsync(
         string title, string content, NotificationSeverity severity)
     {
@@ -45,6 +48,7 @@ public class NotificationAppService : SupplyCore, INotificationAppService
         return ObjectMapper.Map<Notification, NotificationDto>(notification);
     }
 
+    [RemoteService(false)]
     public async Task<NotificationDto> CreateForPermissionAsync(
         string title, string content,
         NotificationSeverity severity,
@@ -58,10 +62,11 @@ public class NotificationAppService : SupplyCore, INotificationAppService
         return ObjectMapper.Map<Notification, NotificationDto>(notification);
     }
 
-    // ── Public API ───────────────────────────────────────────────────────────
-
+    [Authorize]
     public async Task<PagedResultDto<NotificationDto>> GetListAsync(GetNotificationListDto input)
     {
+        Guid userId = _currentUser.GetId();
+
         List<string> grantedPerms = new();
         foreach (string perm in new[]
         {
@@ -71,26 +76,42 @@ public class NotificationAppService : SupplyCore, INotificationAppService
             if (await _permissionChecker.IsGrantedAsync(perm))
                 grantedPerms.Add(perm);
 
+        // Lấy các notification user này đã xóa
+        HashSet<Guid> deletedIds = (await _userNotifRepo
+            .GetListAsync(x => x.UserId == userId && x.IsDelete))
+            .Select(x => x.NotificationId)
+            .ToHashSet();
+
         IQueryable<Notification> query = (await _notificationRepo.GetQueryableAsync())
-            .Where(n =>
-                n.Level == NotificationLevel.Global ||
-                (n.Level == NotificationLevel.Permission
-                 && n.TargetPermissions.Any(p => grantedPerms.Contains(p))));
+            .Where(n => n.Level == NotificationLevel.Global || n.Level == NotificationLevel.Permission);
 
         if (input.Level.HasValue)
             query = query.Where(n => n.Level == input.Level.Value);
 
         query = query.OrderByDescending(n => n.CreationTime);
 
-        int total = await AsyncExecuter.CountAsync(query);
+        List<Notification> allCandidates = await AsyncExecuter.ToListAsync(query);
 
-        List<Notification> items = await AsyncExecuter.ToListAsync(query.PageBy(input));
+        // Filter trên memory: permission + loại bỏ đã xóa
+        List<Notification> filtered = allCandidates
+            .Where(n => !deletedIds.Contains(n.Id))
+            .Where(n =>
+                n.Level == NotificationLevel.Global ||
+                (n.Level == NotificationLevel.Permission
+                 && n.TargetPermissions.Any(p => grantedPerms.Contains(p))))
+            .ToList();
+
+        int total = filtered.Count;
+
+        List<Notification> items = filtered
+            .Skip(input.SkipCount)
+            .Take(input.MaxResultCount)
+            .ToList();
 
         List<NotificationDto> dtos = ObjectMapper
             .Map<List<Notification>, List<NotificationDto>>(items);
 
         // Gán IsRead
-        Guid userId = _currentUser.GetId();
         List<Guid> notifIds = items.Select(x => x.Id).ToList();
 
         HashSet<Guid> readIds = (await _userNotifRepo
@@ -108,9 +129,17 @@ public class NotificationAppService : SupplyCore, INotificationAppService
         return new PagedResultDto<NotificationDto>(total, dtos);
     }
 
+    [Authorize]
     public async Task MarkReadAsync(Guid notificationId)
         => await _notificationManager.MarkReadAsync(notificationId, _currentUser.GetId());
 
+    [Authorize]
     public async Task MarkAllReadAsync(List<Guid> ids)
         => await _notificationManager.MarkManyReadAsync(ids, _currentUser.GetId());
+    [Authorize]
+    public async Task MarkDeleteAsync(Guid notificationId)
+        => await _notificationManager.MarkDeleteAsync(notificationId, _currentUser.GetId());
+    [Authorize]
+    public async Task MarkAllDeleteAsync(List<Guid> ids)
+        => await _notificationManager.MarkManyDeleteAsync(ids, _currentUser.GetId());
 }

@@ -2,12 +2,10 @@
 using SupplyCoreERP.Enums.Notificaitons;
 using SupplyCoreERP.Medicines.Events;
 using SupplyCoreERP.Notifications.Jobs;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus;
-using static SupplyCoreERP.Permissions.SupplyCoreERPPermissions;
 
 namespace SupplyCoreERP.Notifications.Handlers;
 
@@ -26,17 +24,12 @@ public class MedicineStatusChangedNotificationHandler
         bool isApproved = eventData.NewStatus == MedicineStatus.Approved;
         string statusText = isApproved ? "được duyệt" : "bị từ chối";
 
-        await _backgroundJobManager.EnqueueAsync(new NotificationJobArgs
+        await _backgroundJobManager.EnqueueAsync(new NotificationSentJobArgs
         {
             Title = $"Thuốc {statusText}",
             Content = $"Thuốc [{eventData.MedicineCode}] {eventData.MedicineName} đã {statusText}.",
-            Severity = isApproved ? NotificationSeverity.Success : NotificationSeverity.Warning,
-            Level = NotificationLevel.Permission,
-            TargetPermissions = new List<string>
-            {
-                Catalog.Medicine.Approve,
-                Catalog.Medicine.Reject,
-            }
+            Severity = isApproved ? NotificationSeverity.Success : NotificationSeverity.Success,
+            Level = NotificationLevel.Global
         });
     }
 }

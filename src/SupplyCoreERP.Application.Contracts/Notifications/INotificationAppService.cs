@@ -14,6 +14,8 @@ namespace SupplyCoreERP.Notifications
         Task<PagedResultDto<NotificationDto>> GetListAsync(GetNotificationListDto input);
         Task MarkReadAsync(Guid notificationId);
         Task MarkAllReadAsync(List<Guid> ids);
+        Task MarkDeleteAsync(Guid notificationId);
+        Task MarkAllDeleteAsync(List<Guid> ids);
 
         Task<NotificationDto> CreateGlobalAsync(
             string title, string content, NotificationSeverity severity);

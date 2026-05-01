@@ -78,4 +78,44 @@ public class NotificationManager : DomainService
         if (toUpdate.Any())
             await _userNotificationRepo.UpdateManyAsync(toUpdate, autoSave: true);
     }
+
+    public async Task MarkDeleteAsync(Guid notificationId, Guid userId)
+    {
+        UserNotification? record = await _userNotificationRepo.FirstOrDefaultAsync(x => x.NotificationId == notificationId && x.UserId == userId);
+
+        if (record == null)
+        {
+            record = new UserNotification(GuidGenerator.Create(), notificationId, userId);
+            await _userNotificationRepo.InsertAsync(record);
+        }
+
+        record.MarkAsDeleted();
+        await _userNotificationRepo.UpdateAsync(record);
+    }
+
+    public async Task MarkManyDeleteAsync(IEnumerable<Guid> notificationIds, Guid userId)
+    {
+        List<Guid> ids = notificationIds.ToList();
+        if (!ids.Any()) return;
+
+        List<UserNotification> existing = await _userNotificationRepo
+            .GetListAsync(x => x.UserId == userId && ids.Contains(x.NotificationId));
+
+        HashSet<Guid> existingIds = existing.Select(x => x.NotificationId).ToHashSet();
+
+        List<UserNotification> toInsert = ids
+            .Where(id => !existingIds.Contains(id))
+            .Select(id => new UserNotification(GuidGenerator.Create(), id, userId))
+            .ToList();
+
+        if (toInsert.Any())
+            await _userNotificationRepo.InsertManyAsync(toInsert, autoSave: true);
+
+        List<UserNotification> toUpdate = existing.Where(x => !x.IsDelete).ToList();
+        foreach (UserNotification un in toUpdate.Concat(toInsert))
+            un.MarkAsDeleted();
+
+        if (toUpdate.Any())
+            await _userNotificationRepo.UpdateManyAsync(toUpdate, autoSave: true);
+    }
 }

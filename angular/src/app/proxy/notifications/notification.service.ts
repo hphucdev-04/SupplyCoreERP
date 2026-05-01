@@ -2,7 +2,6 @@ import type { GetNotificationListDto, NotificationDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
-import type { NotificationSeverity } from '../enums/notificaitons/notification-severity.enum';
 
 @Injectable({
   providedIn: 'root',
@@ -10,25 +9,6 @@ import type { NotificationSeverity } from '../enums/notificaitons/notification-s
 export class NotificationService {
   private restService = inject(RestService);
   apiName = 'Default';
-  
-
-  createForPermission = (title: string, content: string, severity: NotificationSeverity, targetPermissions: string[], config?: Partial<Rest.Config>) =>
-    this.restService.request<any, NotificationDto>({
-      method: 'POST',
-      url: '/api/app/notification/for-permission',
-      params: { title, content, severity },
-      body: targetPermissions,
-    },
-    { apiName: this.apiName,...config });
-  
-
-  createGlobal = (title: string, content: string, severity: NotificationSeverity, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, NotificationDto>({
-      method: 'POST',
-      url: '/api/app/notification/global',
-      params: { title, content, severity },
-    },
-    { apiName: this.apiName,...config });
   
 
   getList = (input: GetNotificationListDto, config?: Partial<Rest.Config>) =>
@@ -40,11 +20,28 @@ export class NotificationService {
     { apiName: this.apiName,...config });
   
 
+  markAllDelete = (ids: string[], config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: '/api/app/notification/mark-all-delete',
+      body: ids,
+    },
+    { apiName: this.apiName,...config });
+  
+
   markAllRead = (ids: string[], config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',
       url: '/api/app/notification/mark-all-read',
       body: ids,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  markDelete = (notificationId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/notification/mark-delete/${notificationId}`,
     },
     { apiName: this.apiName,...config });
   

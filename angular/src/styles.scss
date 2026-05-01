@@ -1459,3 +1459,19 @@ ngx-datatable {
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+#notification{
+  position: fixed;
+  top: 0.2rem;
+  right: 7rem; 
+  z-index: 1300;
+}
+.ph-link-lookup {
+  color: var(--ph-color-text-secondary) !important;
+  font-size: var(--ph-font-size-sm);
+  text-decoration: none;
+
+  &:hover {
+    border-color: var(--ph-color-border-focus);
+    color: var(--ph-color-text-body) !important;
+  }
+}

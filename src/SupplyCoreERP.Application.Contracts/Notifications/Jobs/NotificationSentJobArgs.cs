@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SupplyCoreERP.Notifications.Jobs
 {
-    public class NotificationJobArgs
+    public class NotificationSentJobArgs
     {
         public string Title { get; set; }
         public string Content { get; set; }

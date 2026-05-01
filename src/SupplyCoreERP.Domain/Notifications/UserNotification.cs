@@ -13,6 +13,7 @@ public class UserNotification : CreationAuditedEntity<Guid>
     public Guid UserId { get; private set; }
     public bool IsRead { get; private set; }
     public DateTime? ReadAt { get; private set; }
+    public bool IsDelete { get; private set; }
 
     private UserNotification() { }
 
@@ -21,6 +22,7 @@ public class UserNotification : CreationAuditedEntity<Guid>
         NotificationId = notificationId;
         UserId = userId;
         IsRead = false;
+        IsDelete = false;
     }
 
     public void MarkAsRead()
@@ -29,4 +31,6 @@ public class UserNotification : CreationAuditedEntity<Guid>
         IsRead = true;
         ReadAt = DateTime.UtcNow;
     }
+
+    public void MarkAsDeleted() => IsDelete = true;
 }

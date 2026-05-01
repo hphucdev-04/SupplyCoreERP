@@ -1,10 +1,12 @@
 ﻿using SupplyCoreERP.Enums.Notificaitons;
 using SupplyCoreERP.Medicines.Events;
 using SupplyCoreERP.Notifications.Jobs;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus;
+using static SupplyCoreERP.Permissions.SupplyCoreERPPermissions;
 
 namespace SupplyCoreERP.Notifications.Handlers;
 
@@ -20,12 +22,17 @@ public class MedicineCreatedNotificationHandler
 
     public async Task HandleEventAsync(MedicineCreatedDomainEvent eventData)
     {
-        await _backgroundJobManager.EnqueueAsync(new NotificationJobArgs
+        await _backgroundJobManager.EnqueueAsync(new NotificationSentJobArgs
         {
-            Title = "Thuốc mới được tạo",
-            Content = $"Thuốc [{eventData.MedicineCode}] {eventData.MedicineName} vừa được thêm vào hệ thống.",
+            Title = "Thuốc mới chờ duyệt",
+            Content = $"Thuốc [{eventData.MedicineCode}] {eventData.MedicineName} vừa được tạo và đang chờ phê duyệt.",
             Severity = NotificationSeverity.Info,
-            Level = NotificationLevel.Global
+            Level = NotificationLevel.Permission,
+            TargetPermissions = new List<string>
+            {
+                Catalog.Medicine.Approve,
+                Catalog.Medicine.Reject,
+            }
         });
     }
 }
