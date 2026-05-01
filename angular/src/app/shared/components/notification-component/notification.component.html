@@ -1,0 +1,97 @@
+<div class="nb-wrap" (click)="$event.stopPropagation()">
+
+  <!-- Bell trigger -->
+  <button class="nb-trigger" (click)="toggle()" [class.nb-trigger--open]="open()">
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"
+      fill="none" stroke="currentColor" stroke-width="2"
+      stroke-linecap="round" stroke-linejoin="round">
+      <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+      <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+    </svg>
+
+    @if (unread() > 0) {
+      <span class="nb-badge">{{ unread() > 99 ? '99+' : unread() }}</span>
+    }
+  </button>
+
+  <!-- Dropdown panel -->
+  @if (open()) {
+    <div class="nb-panel">
+
+      <!-- Header -->
+      <div class="nb-panel__head">
+        <span class="nb-panel__title">Thông báo</span>
+        <div class="nb-panel__actions">
+          @if (unread() > 0) {
+            <button class="nb-panel__readall" (click)="markAllRead()">Đánh dấu đã đọc</button>
+          }
+          @if (items().length > 0) {
+            <button class="nb-panel__deleteall" (click)="deleteAll()">Xóa tất cả</button>
+          }
+        </div>
+      </div>
+
+      <!-- Body -->
+      <div class="nb-list">
+
+        @if (loading()) {
+          <div class="nb-state">
+            <span class="nb-spinner"></span>
+            <span>Đang tải...</span>
+          </div>
+        } @else if (items().length === 0) {
+          <div class="nb-state">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24"
+              fill="none" stroke="currentColor" stroke-width="1.5"
+              stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span>Chưa có thông báo nào</span>
+          </div>
+        } @else {
+          @for (n of items(); track n.id) {
+            <div
+              class="nb-item"
+              [class.nb-item--unread]="!n.isRead"
+              [attr.data-sev]="sevClass(n.severity)"
+              (click)="markRead(n)">
+
+              <span class="nb-item__icon" [attr.data-sev]="sevClass(n.severity)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                  viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                  stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path [attr.d]="sevIcon(n.severity)" />
+                </svg>
+              </span>
+
+              <div class="nb-item__body">
+                <p class="nb-item__title">{{ n.title }}</p>
+                <p class="nb-item__content">{{ n.content }}</p>
+                <span class="nb-item__time">
+                  {{ n.creationTime | date: 'dd/MM/yyyy HH:mm' }}
+                </span>
+              </div>
+
+              <div class="nb-item__right">
+                @if (!n.isRead) {
+                  <span class="nb-item__dot"></span>
+                }
+                <button class="nb-item__delete" (click)="delete(n, $event)" title="Xóa">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14"
+                    viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 6 6 18M6 6l12 12"/>
+                  </svg>
+                </button>
+              </div>
+
+            </div>
+          }
+        }
+
+      </div>
+    </div>
+  }
+
+</div>

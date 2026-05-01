@@ -13,13 +13,15 @@ import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
 import { environment } from '../environments/environment';
 import { APP_ROUTES } from './app.routes';
-import { APP_ROUTE_PROVIDER } from './route.provider';
+import { APP_ROUTE_PROVIDER } from './common/route.provider';
 import { registerLocales } from './common/locale.provider';
+import { APP_SIGNALR_PROVIDER } from './common/signalR.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideRouter(APP_ROUTES),
     APP_ROUTE_PROVIDER,
+    APP_SIGNALR_PROVIDER,
     provideAnimations(),
     provideAbpCore(
       withOptions({
