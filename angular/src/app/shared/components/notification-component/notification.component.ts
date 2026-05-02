@@ -6,11 +6,12 @@ import { NotificationService } from '../../../proxy/notifications/notification.s
 import { NotificationHubService } from '../../services/signalR/notification.hub.service';
 import { NotificationSeverity } from '../../../proxy/enums/notificaitons/notification-severity.enum';
 import type { NotificationDto } from '../../../proxy/notifications/dtos/models';
+import { SharedModule } from '../../shared.module';
 
 @Component({
   selector: 'app-notification',
   standalone: true,
-  imports: [CommonModule],
+  imports: [SharedModule],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './notification.component.html',
   styleUrl: './notification.component.scss',

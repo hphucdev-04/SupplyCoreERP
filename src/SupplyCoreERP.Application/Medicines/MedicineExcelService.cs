@@ -10,6 +10,7 @@ using SupplyCoreERP.DosageForms;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Manufacturers;
 using SupplyCoreERP.Medicines.Dtos;
+using SupplyCoreERP.Medicines.Events;
 using SupplyCoreERP.Prices;
 using System;
 using System.Collections.Generic;
@@ -20,6 +21,7 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Content;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.EventBus.Local;
 
 namespace SupplyCoreERP.Medicines
 {
@@ -35,6 +37,7 @@ namespace SupplyCoreERP.Medicines
         private readonly IRepository<PriceList, Guid> _priceListRepo;
         private readonly IRepository<ProductPrice, Guid> _productPriceRepo;
         private readonly PriceManager _priceManager;
+        private readonly ILocalEventBus _localEventBus;
 
         public MedicineExcelService(
             IRepository<Medicine, Guid> medicineRepo,
@@ -46,7 +49,8 @@ namespace SupplyCoreERP.Medicines
             IRepository<ActiveIngredient, Guid> ingredientRepo,
             IRepository<PriceList, Guid> priceListRepo,
             IRepository<ProductPrice, Guid> productPriceRepo,
-            PriceManager priceManager)
+            PriceManager priceManager,
+            ILocalEventBus localEventBus)
         {
             _medicineRepo = medicineRepo;
             _medicineManager = medicineManager;
@@ -58,6 +62,7 @@ namespace SupplyCoreERP.Medicines
             _priceListRepo = priceListRepo;
             _productPriceRepo = productPriceRepo;
             _priceManager = priceManager;
+            _localEventBus = localEventBus;
         }
 
         #region Export Excel
@@ -195,6 +200,8 @@ namespace SupplyCoreERP.Medicines
             Dictionary<string, Guid> tempCodeToMedicineId = new(StringComparer.OrdinalIgnoreCase);
 
             List<string> errors = new();
+            List<MedicineImportedItem> importedItems = new();
+
             int rowIndex = 1;
 
             // Sheet 1 Danh sách thuốc
@@ -223,10 +230,9 @@ namespace SupplyCoreERP.Medicines
                         row.RegistrationNumber,
                         ParseUsageRoute(row.UsageRoute),
                         ParseStorage(row.StorageCondition),
-                        ParseBool(row.IsPrescriptionDrug)
+                        ParseBool(row.IsPrescriptionDrug),
+                        raiseEvent: false
                     );
-
-                    medicine.SetStatus(MedicineStatus.Pending);
 
                     // Ingredients
                     if (!string.IsNullOrWhiteSpace(row.Ingredients))
@@ -252,6 +258,8 @@ namespace SupplyCoreERP.Medicines
 
                     // Insert
                     await _medicineRepo.InsertAsync(medicine, autoSave: true);
+                    importedItems.Add(new MedicineImportedItem(medicine.Id, medicine.Name, medicine.Code));
+
 
                     // Lưu mapping TempCode -> Id để Sheet giá dùng
                     // Nếu không có TempCode thì dùng Name làm key dự phòng
@@ -310,6 +318,11 @@ namespace SupplyCoreERP.Medicines
                 }
             }
             catch { /*Không có sheet giá thì thôi */ }
+
+            if (importedItems.Any())
+            {
+                await _localEventBus.PublishAsync(new MedicineImportDomainEvent(importedItems));
+            }
 
             if (errors.Any())
             {
