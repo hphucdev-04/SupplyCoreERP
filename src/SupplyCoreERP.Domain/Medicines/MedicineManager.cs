@@ -54,7 +54,8 @@ namespace SupplyCoreERP.Medicines
             string regNumber,
             UsageRoute usageRoute,
             StorageCondition storageCondition,
-            bool isPrescriptionDrug)
+            bool isPrescriptionDrug,
+            bool raiseEvent = true)
         {
             await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
 
@@ -74,6 +75,10 @@ namespace SupplyCoreERP.Medicines
                 storageCondition,
                 isPrescriptionDrug
             );
+
+            if (raiseEvent)
+                medicine.RaiseCreatedEvent();
+
             return medicine;
         }
 

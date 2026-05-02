@@ -20,13 +20,13 @@
 
       <!-- Header -->
       <div class="nb-panel__head">
-        <span class="nb-panel__title">Thông báo</span>
+        <span class="nb-panel__title"> {{ '::Notification' | abpLocalization }}</span>
         <div class="nb-panel__actions">
           @if (unread() > 0) {
-            <button class="nb-panel__readall" (click)="markAllRead()">Đánh dấu đã đọc</button>
+            <button class="nb-panel__readall" (click)="markAllRead()"> {{ '::Mark Read All' | abpLocalization }}</button>
           }
           @if (items().length > 0) {
-            <button class="nb-panel__deleteall" (click)="deleteAll()">Xóa tất cả</button>
+            <button class="nb-panel__deleteall" (click)="deleteAll()"> {{ '::Delete All' | abpLocalization }}</button>
           }
         </div>
       </div>
@@ -47,7 +47,7 @@
               <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
               <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
             </svg>
-            <span>Chưa có thông báo nào</span>
+            <span> {{ '::NoNotificationYet' | abpLocalization }}</span>
           </div>
         } @else {
           @for (n of items(); track n.id) {
