@@ -28,7 +28,7 @@ public class MedicineStatusChangedNotificationHandler
         {
             Title = $"Thuốc {statusText}",
             Content = $"Thuốc [{eventData.MedicineCode}] {eventData.MedicineName} đã {statusText}.",
-            Severity = isApproved ? NotificationSeverity.Success : NotificationSeverity.Success,
+            Severity = isApproved ? NotificationSeverity.Success : NotificationSeverity.Warning,
             Level = NotificationLevel.Global
         });
     }

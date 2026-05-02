@@ -54,8 +54,10 @@ namespace SupplyCoreERP.Medicines
             StorageCondition = storageCondition;
             IsPrescriptionDrug = isPrescriptionDrug;
             Ingredients = new List<MedicineIngredient>();
-
-            AddLocalEvent(new MedicineCreatedDomainEvent(id, name, code));
+        }
+        public void RaiseCreatedEvent()
+        {
+            AddLocalEvent(new MedicineCreatedDomainEvent(Id, Name, Code));
         }
 
         public void UpdatePharmaInfo(
