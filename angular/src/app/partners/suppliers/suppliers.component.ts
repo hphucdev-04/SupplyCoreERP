@@ -9,15 +9,14 @@ import { LocationService } from 'src/app/proxy/locations';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { SupplierDetailsComponent } from './supplier-details/supplier-details.component';
 import { Gender, genderOptions } from 'src/app/proxy/enums/partner/gender.enum';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
-import { CodeGeneratorUtil } from 'src/app/shared/untils/code-generator.util';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-suppliers',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, SupplierDetailsComponent, CurrencyFormatDirective],
+  imports: [SharedModule, DrawerComponent, SearchComponent, CurrencyFormatDirective],
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.scss',
   providers: [ListService]
@@ -45,8 +44,6 @@ export class SuppliersComponent implements OnInit, OnDestroy {
 
   //Enum
   Gender = Gender;
-  // Detail Modal
-  @ViewChild('detailModal') detailModal: SupplierDetailsComponent;
 
   constructor(
     public readonly list: ListService,
@@ -55,6 +52,7 @@ export class SuppliersComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -130,7 +128,7 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   }
 
   viewDetail(id: string): void {
-    this.detailModal.open(id);
+    this.router.navigate(['/partner/suppliers/details', id]);
   }
 
   createSupplier(): void {
