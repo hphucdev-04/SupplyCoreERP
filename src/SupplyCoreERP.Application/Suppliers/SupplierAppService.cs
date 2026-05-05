@@ -6,105 +6,188 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
-using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Entities;
+using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Suppliers
 {
-	public class SupplierAppService : SupplyCore, ISupplierAppService
-	{
-		private readonly IRepository<Supplier, Guid> _supplierRepository;
-		private readonly SupplierManager _supplierManager;
+    public class SupplierAppService : SupplyCore, ISupplierAppService
+    {
+        // Dependency
+        private readonly IRepository<Supplier, Guid> _supplierRepository;
+        private readonly IRepository<SupplierProduct, Guid> _supplierProductRepo;
+        private readonly SupplierManager _supplierManager;
 
-		public SupplierAppService(IRepository<Supplier, Guid> supplierRepository, SupplierManager supplierManager)
-		{
-			_supplierRepository = supplierRepository;
-			_supplierManager = supplierManager;
-		}
+        // Constructor dependency injection
+        public SupplierAppService(
+            IRepository<Supplier, Guid> supplierRepository,
+            IRepository<SupplierProduct, Guid> supplierProductRepo,
+            SupplierManager supplierManager)
+        {
+            _supplierRepository = supplierRepository;
+            _supplierProductRepo = supplierProductRepo;
+            _supplierManager = supplierManager;
+        }
 
-		public async Task<SupplierDetailDto> GetAsync(Guid id)
-		{
-			var query = await _supplierRepository.GetQueryableAsync();
-			var supplier = await query
-				.Include(x => x.Country)
-				.Include(x => x.City)
-				.Include(x => x.Area)
-				.FirstOrDefaultAsync(x => x.Id == id);
+        #region Supplier
+        public async Task<SupplierDetailDto> GetAsync(Guid id)
+        {
+            IQueryable<Supplier> query = await _supplierRepository.GetQueryableAsync();
+            Supplier supplier = await query
+                .Include(x => x.Country)
+                .Include(x => x.City)
+                .Include(x => x.Area)
+                .FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new EntityNotFoundException(typeof(Supplier), id);
 
-			if (supplier == null)
-			{
-				throw new EntityNotFoundException(typeof(Supplier), id);
-			}
+            return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
+        }
 
-			return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
-		}
+        public async Task<PagedResultDto<SupplierDto>> GetListAsync(GetSupplierListDto input)
+        {
+            IQueryable<Supplier> query = await _supplierRepository.GetQueryableAsync();
+            query = query
+                .Include(x => x.City)
+                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
+                    x.Name.Contains(input.Filter) ||
+                    x.Code.Contains(input.Filter) ||
+                    x.PhoneNumber.Contains(input.Filter))
+                .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
 
-		public async Task<PagedResultDto<SupplierDto>> GetListAsync(GetSupplierListDto input)
-		{
-			var query = await _supplierRepository.GetQueryableAsync();
+            int totalCount = await query.CountAsync();
+            List<Supplier> items = await query
+                .OrderBy(input.Sorting ?? "CreationTime DESC")
+                .Skip(input.SkipCount)
+                .Take(input.MaxResultCount)
+                .ToListAsync();
 
-			query = query
-				.Include(x => x.City) 
-				.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
-					x.Name.Contains(input.Filter) ||
-					x.Code.Contains(input.Filter) ||
-					x.PhoneNumber.Contains(input.Filter))
-				.WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
+            return new PagedResultDto<SupplierDto>(
+                totalCount,
+                ObjectMapper.Map<List<Supplier>, List<SupplierDto>>(items));
+        }
 
-			var totalCount = await query.CountAsync();
-			var items = await query
-				.OrderBy(input.Sorting ?? "CreationTime DESC")
-				.Skip(input.SkipCount)
-				.Take(input.MaxResultCount)
-				.ToListAsync();
+        public async Task<SupplierDetailDto> CreateAsync(CreateUpdateSupplierDto input)
+        {
+            Supplier supplier = await _supplierManager.CreateAsync(
+                input.Name, input.TaxCode, input.PhoneNumber, input.Email,
+                input.RepresentativeName, input.Gender, input.Note,
+                input.Address, input.CountryId, input.CityId, input.AreaId,
+                input.DebtLimit, input.PaymentTermDays);
 
-			return new PagedResultDto<SupplierDto>(
-				totalCount,
-				ObjectMapper.Map<List<Supplier>, List<SupplierDto>>(items)
-			);
-		}
+            supplier.SetActive(input.IsActive);
+            await _supplierRepository.InsertAsync(supplier);
+            return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
+        }
 
-		public async Task<SupplierDetailDto> CreateAsync(CreateUpdateSupplierDto input)
-		{
-			var supplier = await _supplierManager.CreateAsync(
-				input.Name, input.TaxCode, input.PhoneNumber, input.Email,
-				input.RepresentativeName, input.Gender ,input.Note,
-				input.Address, input.CountryId, input.CityId, input.AreaId,
-				input.DebtLimit, input.PaymentTermDays
-			);
-			supplier.SetActive(input.IsActive);
+        public async Task<SupplierDetailDto> UpdateAsync(Guid id, CreateUpdateSupplierDto input)
+        {
+            Supplier supplier = await _supplierRepository.GetAsync(id);
+            await _supplierManager.UpdateAsync(
+                supplier, input.Name, input.TaxCode, input.PhoneNumber, input.Email,
+                input.RepresentativeName, input.Gender, input.Note,
+                input.Address, input.CountryId, input.CityId, input.AreaId,
+                input.DebtLimit, input.PaymentTermDays);
 
-			await _supplierRepository.InsertAsync(supplier);
-			return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
-		}
+            supplier.SetActive(input.IsActive);
+            await _supplierRepository.UpdateAsync(supplier);
+            return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
+        }
 
-		public async Task<SupplierDetailDto> UpdateAsync(Guid id, CreateUpdateSupplierDto input)
-		{
-			var supplier = await _supplierRepository.GetAsync(id);
+        public async Task DeleteAsync(Guid id)
+        {
+            await _supplierManager.DeleteAsync(id);
+        }
 
-			await _supplierManager.UpdateAsync(
-				supplier, input.Name, input.TaxCode, input.PhoneNumber, input.Email,
-				input.RepresentativeName, input.Gender, input.Note,
-				input.Address, input.CountryId, input.CityId, input.AreaId,
-				input.DebtLimit, input.PaymentTermDays
-			);
+        public async Task ToggleActiveAsync(Guid id)
+        {
+            Supplier supplier = await _supplierRepository.GetAsync(id);
+            supplier.SetActive(!supplier.IsActive);
+            await _supplierRepository.UpdateAsync(supplier);
+        }
+        #endregion
 
-			supplier.SetActive(input.IsActive);
-			await _supplierRepository.UpdateAsync(supplier);
-			return ObjectMapper.Map<Supplier, SupplierDetailDto>(supplier);
-		}
+        #region Supplier Product
+        public async Task<List<SupplierProductDto>> GetProductListAsync(Guid supplierId)
+        {
+            IQueryable<SupplierProduct> items = await _supplierProductRepo.GetQueryableAsync();
+            List<SupplierProduct> result = await items
+                .Include(x => x.Product).ThenInclude(p => p.BaseUnit)
+                .Include(x => x.DefaultUnit)
+                .Where(x => x.SupplierId == supplierId)
+                .OrderBy(x => x.Product.Name)
+                .ToListAsync();
 
-		public async Task DeleteAsync(Guid id)
-		{
-			await _supplierManager.DeleteAsync(id);
-		}
+            return ObjectMapper.Map<List<SupplierProduct>, List<SupplierProductDto>>(result);
+        }
 
-		public async Task ToggleActiveAsync(Guid id)
-		{
-			var supplier = await _supplierRepository.GetAsync(id);
-			supplier.SetActive(!supplier.IsActive);
-			await _supplierRepository.UpdateAsync(supplier);
-		}
-	}
+        public async Task<SupplierProductDto> AddProductAsync(Guid supplierId, CreateUpdateSupplierProductDto input)
+        {
+            IQueryable<Supplier> query = await _supplierRepository.GetQueryableAsync();
+            Supplier supplier = await query.Include(x => x.SupplierProducts)
+                                      .FirstOrDefaultAsync(x => x.Id == supplierId)
+                ?? throw new EntityNotFoundException(typeof(Supplier), supplierId);
+
+            SupplierProduct sp = await _supplierManager.AddProductAsync(
+                supplier,
+                input.ProductId,
+                input.DefaultUnitId,
+                input.DefaultConversionFactor,
+                input.StandardPrice,
+                input.LeadTimeDays,
+                input.MinOrderQuantity,
+                input.OverDeliveryTolerancePct,
+                input.UnderDeliveryTolerancePct,
+                input.IsPreferred,
+                input.Note);
+
+            await _supplierRepository.UpdateAsync(supplier);
+
+            return ObjectMapper.Map<SupplierProduct, SupplierProductDto>(sp);
+        }
+
+        public async Task<SupplierProductDto> UpdateProductAsync(Guid supplierId, Guid productId, CreateUpdateSupplierProductDto input)
+        {
+            IQueryable<Supplier> query = await _supplierRepository.GetQueryableAsync();
+            Supplier supplier = await query.Include(x => x.SupplierProducts)
+                                      .FirstOrDefaultAsync(x => x.Id == supplierId)
+                ?? throw new EntityNotFoundException(typeof(Supplier), supplierId);
+
+            await _supplierManager.UpdateProductAsync(
+                supplier,
+                productId,
+                input.DefaultUnitId, input.DefaultConversionFactor, input.StandardPrice,
+                input.LeadTimeDays, input.MinOrderQuantity,
+                input.OverDeliveryTolerancePct, input.UnderDeliveryTolerancePct,
+                input.IsPreferred, input.Note);
+
+            await _supplierRepository.UpdateAsync(supplier);
+
+            SupplierProduct sp = supplier.SupplierProducts.First(x => x.ProductId == productId);
+            return ObjectMapper.Map<SupplierProduct, SupplierProductDto>(sp);
+        }
+
+        public async Task RemoveProductAsync(Guid supplierId, Guid productId)
+        {
+            Supplier supplier = await _supplierRepository.WithDetailsAsync(x => x.SupplierProducts)
+                .ContinueWith(t => t.Result.FirstOrDefault(x => x.Id == supplierId))
+                ?? throw new EntityNotFoundException(typeof(Supplier), supplierId);
+
+            await _supplierManager.RemoveProductAsync(supplier, productId);
+
+            await _supplierRepository.UpdateAsync(supplier);
+        }
+
+        public async Task ToggleProductActiveAsync(Guid supplierId, Guid productId)
+        {
+
+            Supplier supplier = await _supplierRepository.WithDetailsAsync(x => x.SupplierProducts)
+                .ContinueWith(t => t.Result.FirstOrDefault(x => x.Id == supplierId))
+                ?? throw new EntityNotFoundException(typeof(Supplier), supplierId);
+
+            _supplierManager.ToggleProductActive(supplier, productId);
+
+            await _supplierRepository.UpdateAsync(supplier);
+        }
+        #endregion
+    }
 }
