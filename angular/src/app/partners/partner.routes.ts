@@ -8,5 +8,9 @@ export const PARTNERS_ROUTES: Routes = [
     {
         path: 'suppliers',
         loadComponent: () => import('./suppliers/suppliers.component').then(m => m.SuppliersComponent),
+    },
+    {
+        path: 'suppliers/details/:id',
+        loadComponent: () => import('./suppliers/supplier-details/supplier-details.component').then(m => m.SupplierDetailsComponent),
     }
 ]
