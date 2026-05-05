@@ -99,6 +99,7 @@ public class SupplyCoreERPDbContext :
     // Partner
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Supplier> Suppliers { get; set; }
+    public DbSet<SupplierProduct> SupplierProducts { get; set; }
 
     // Warehouse & Inventory
     public DbSet<Warehouse> Warehouses { get; set; }
@@ -346,6 +347,31 @@ public class SupplyCoreERPDbContext :
             b.HasOne(x => x.Area).WithMany().HasForeignKey(x => x.AreaId).IsRequired(false);
 
             b.HasIndex(x => x.Code).IsUnique();
+        });
+        // Supplier Product
+        builder.Entity<SupplierProduct>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "SupplierProducts", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.HasKey(x => x.Id);
+
+            b.HasOne(x => x.Supplier)
+             .WithMany(x => x.SupplierProducts)
+             .HasForeignKey(x => x.SupplierId)
+             .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasOne(x => x.Product)
+             .WithMany()
+             .HasForeignKey(x => x.ProductId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            b.HasOne(x => x.DefaultUnit)
+             .WithMany()
+             .HasForeignKey(x => x.DefaultUnitId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            b.HasIndex(x => new { x.SupplierId, x.ProductId }).IsUnique();
         });
 
         // Customer

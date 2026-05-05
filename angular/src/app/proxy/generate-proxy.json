@@ -8307,6 +8307,131 @@
                     "type": "System.Void",
                     "typeSimple": "System.Void"
                   }
+                },
+                {
+                  "name": "GetProductListAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "supplierId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Suppliers.Dtos.SupplierProductDto>",
+                    "typeSimple": "[SupplyCoreERP.Suppliers.Dtos.SupplierProductDto]"
+                  }
+                },
+                {
+                  "name": "AddProductAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "supplierId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                      "typeSimple": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto",
+                    "typeSimple": "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto"
+                  }
+                },
+                {
+                  "name": "UpdateProductAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "supplierId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "productId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                      "typeSimple": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto",
+                    "typeSimple": "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto"
+                  }
+                },
+                {
+                  "name": "RemoveProductAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "supplierId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "productId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ToggleProductActiveAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "supplierId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "productId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
                 }
               ]
             }
@@ -8592,6 +8717,291 @@
                   "defaultValue": null,
                   "constraintTypes": [],
                   "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Suppliers.ISupplierAppService"
+            },
+            "GetProductListAsyncBySupplierId": {
+              "uniqueName": "GetProductListAsyncBySupplierId",
+              "name": "GetProductListAsync",
+              "httpMethod": "GET",
+              "url": "api/app/supplier/product-list/{supplierId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "supplierId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "supplierId",
+                  "name": "supplierId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Suppliers.Dtos.SupplierProductDto>",
+                "typeSimple": "[SupplyCoreERP.Suppliers.Dtos.SupplierProductDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Suppliers.ISupplierAppService"
+            },
+            "AddProductAsyncBySupplierIdAndInput": {
+              "uniqueName": "AddProductAsyncBySupplierIdAndInput",
+              "name": "AddProductAsync",
+              "httpMethod": "POST",
+              "url": "api/app/supplier/product/{supplierId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "supplierId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                  "typeSimple": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "supplierId",
+                  "name": "supplierId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                  "typeSimple": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto",
+                "typeSimple": "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Suppliers.ISupplierAppService"
+            },
+            "UpdateProductAsyncBySupplierIdAndProductIdAndInput": {
+              "uniqueName": "UpdateProductAsyncBySupplierIdAndProductIdAndInput",
+              "name": "UpdateProductAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/supplier/product",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "supplierId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "productId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                  "typeSimple": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "supplierId",
+                  "name": "supplierId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "productId",
+                  "name": "productId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                  "typeSimple": "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto",
+                "typeSimple": "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Suppliers.ISupplierAppService"
+            },
+            "RemoveProductAsyncBySupplierIdAndProductId": {
+              "uniqueName": "RemoveProductAsyncBySupplierIdAndProductId",
+              "name": "RemoveProductAsync",
+              "httpMethod": "DELETE",
+              "url": "api/app/supplier/product",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "supplierId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "productId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "supplierId",
+                  "name": "supplierId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "productId",
+                  "name": "productId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Suppliers.ISupplierAppService"
+            },
+            "ToggleProductActiveAsyncBySupplierIdAndProductId": {
+              "uniqueName": "ToggleProductActiveAsyncBySupplierIdAndProductId",
+              "name": "ToggleProductActiveAsync",
+              "httpMethod": "POST",
+              "url": "api/app/supplier/toggle-product-active",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "supplierId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "productId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "supplierId",
+                  "name": "supplierId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "productId",
+                  "name": "productId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
                   "descriptorName": ""
                 }
               ],
@@ -18088,6 +18498,135 @@
         }
       ]
     },
+    "SupplyCoreERP.Suppliers.Dtos.CreateUpdateSupplierProductDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "ProductId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DefaultUnitId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DefaultConversionFactor",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "1",
+          "maximum": "2147483647",
+          "regex": null
+        },
+        {
+          "name": "StandardPrice",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "0",
+          "maximum": "1,7976931348623157E+308",
+          "regex": null
+        },
+        {
+          "name": "LeadTimeDays",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "0",
+          "maximum": "2147483647",
+          "regex": null
+        },
+        {
+          "name": "MinOrderQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "0,0001",
+          "maximum": "1,7976931348623157E+308",
+          "regex": null
+        },
+        {
+          "name": "OverDeliveryTolerancePct",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "0",
+          "maximum": "100",
+          "regex": null
+        },
+        {
+          "name": "UnderDeliveryTolerancePct",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "0",
+          "maximum": "100",
+          "regex": null
+        },
+        {
+          "name": "IsPreferred",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Note",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.Suppliers.Dtos.GetSupplierListDto": {
       "baseType": "Volo.Abp.Application.Dtos.PagedAndSortedResultRequestDto",
       "isEnum": false,
@@ -18358,6 +18897,207 @@
           "jsonName": null,
           "type": "System.Boolean",
           "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Suppliers.Dtos.SupplierProductDto": {
+      "baseType": "Volo.Abp.Application.Dtos.EntityDto<System.Guid>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "SupplierId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DefaultUnitId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DefaultUnitName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DefaultConversionFactor",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "StandardPrice",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "LastPurchasePrice",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "LeadTimeDays",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "MinOrderQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "OverDeliveryTolerancePct",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "UnderDeliveryTolerancePct",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "IsPreferred",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "IsActive",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Note",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,

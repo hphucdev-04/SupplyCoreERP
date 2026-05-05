@@ -1,5 +1,5 @@
 import type { Gender } from '../../enums/partner/gender.enum';
-import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
+import type { EntityDto, FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 
 export interface CreateUpdateSupplierDto {
   name: string;
@@ -16,6 +16,19 @@ export interface CreateUpdateSupplierDto {
   debtLimit?: number;
   paymentTermDays?: number;
   isActive?: boolean;
+}
+
+export interface CreateUpdateSupplierProductDto {
+  productId: string;
+  defaultUnitId: string;
+  defaultConversionFactor?: number;
+  standardPrice?: number;
+  leadTimeDays?: number;
+  minOrderQuantity?: number;
+  overDeliveryTolerancePct?: number;
+  underDeliveryTolerancePct?: number;
+  isPreferred?: boolean;
+  note?: string;
 }
 
 export interface GetSupplierListDto extends PagedAndSortedResultRequestDto {
@@ -46,4 +59,23 @@ export interface SupplierDto extends FullAuditedEntityDto<string> {
   cityName?: string;
   currentDebt?: number;
   isActive?: boolean;
+}
+
+export interface SupplierProductDto extends EntityDto<string> {
+  supplierId?: string;
+  productId?: string;
+  productName?: string;
+  productCode?: string;
+  defaultUnitId?: string;
+  defaultUnitName?: string;
+  defaultConversionFactor?: number;
+  standardPrice?: number;
+  lastPurchasePrice?: number;
+  leadTimeDays?: number;
+  minOrderQuantity?: number;
+  overDeliveryTolerancePct?: number;
+  underDeliveryTolerancePct?: number;
+  isPreferred?: boolean;
+  isActive?: boolean;
+  note?: string;
 }

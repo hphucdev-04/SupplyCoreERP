@@ -1,6 +1,7 @@
 ﻿using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Products;
 using System;
+using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Suppliers
 {
@@ -8,7 +9,7 @@ namespace SupplyCoreERP.Suppliers
     /// Bảng giá / thông tin mua hàng theo từng cặp (Nhà cung cấp – Sản phẩm).
     /// Tương đương Purchasing Info Record trong SAP.
     /// </summary>
-    public class SupplierProduct
+    public class SupplierProduct : AuditedEntity<Guid>
     {
         public Guid SupplierId { get; private set; }
         public virtual Supplier Supplier { get; protected set; }
@@ -19,25 +20,28 @@ namespace SupplyCoreERP.Suppliers
         // ── Đơn vị mua của nhà cung cấp (có thể ≠ BaseUnit của sản phẩm)
         public Guid DefaultUnitId { get; private set; }
         public virtual BaseUnit DefaultUnit { get; protected set; }
-        public int DefaultConversionFactor { get; private set; }    // 1 Hộp NCC = N BaseUnit
 
-        // ── Giá (không lưu trên Product vì phụ thuộc nhà cung cấp)
-        public decimal StandardPrice { get; private set; }          // Giá thỏa thuận
-        public decimal LastPurchasePrice { get; private set; }      // Giá mua gần nhất (auto-update khi Complete PO)
+        /// <summary>1 đơn vị mua (DefaultUnit) = N BaseUnit. Ví dụ: 1 Hộp = 50 Viên.</summary>
+        public int DefaultConversionFactor { get; private set; }
+
+        // ── Giá
+        public decimal StandardPrice { get; private set; }
+        public decimal LastPurchasePrice { get; private set; }
 
         // ── Điều kiện mua
-        public int LeadTimeDays { get; private set; }       // Thời gian giao hàng (ngày)
-        public decimal MinOrderQuantity { get; private set; }       // MOQ (theo DefaultUnit)
-        public decimal OverDeliveryTolerancePct { get; private set; }   // % cho phép giao vượt
-        public decimal UnderDeliveryTolerancePct { get; private set; }   // % cho phép giao thiếu
+        public int LeadTimeDays { get; private set; }
+        public decimal MinOrderQuantity { get; private set; }
+        public decimal OverDeliveryTolerancePct { get; private set; }
+        public decimal UnderDeliveryTolerancePct { get; private set; }
 
-        public bool IsPreferred { get; private set; }             // Nhà cung cấp ưu tiên cho sản phẩm này
+        public bool IsPreferred { get; private set; }
         public bool IsActive { get; private set; }
         public string? Note { get; private set; }
 
         protected SupplierProduct() { }
 
         public SupplierProduct(
+            Guid id,
             Guid supplierId,
             Guid productId,
             Guid defaultUnitId,
@@ -48,7 +52,7 @@ namespace SupplyCoreERP.Suppliers
             decimal overDeliveryTolerancePct = 0,
             decimal underDeliveryTolerancePct = 0,
             bool isPreferred = false,
-            string? note = null)
+            string? note = null) : base(id)
         {
             SupplierId = supplierId;
             ProductId = productId;
@@ -56,7 +60,9 @@ namespace SupplyCoreERP.Suppliers
             DefaultConversionFactor = defaultConversionFactor > 0
                 ? defaultConversionFactor
                 : throw new ArgumentException("Hệ số quy đổi không hợp lệ.");
-            StandardPrice = standardPrice >= 0 ? standardPrice : throw new ArgumentException("Giá chuẩn không được âm.");
+            StandardPrice = standardPrice >= 0
+                ? standardPrice
+                : throw new ArgumentException("Giá chuẩn không được âm.");
             LastPurchasePrice = standardPrice;
             LeadTimeDays = Math.Max(0, leadTimeDays);
             MinOrderQuantity = minOrderQuantity > 0 ? minOrderQuantity : 1;
@@ -82,7 +88,9 @@ namespace SupplyCoreERP.Suppliers
             DefaultConversionFactor = defaultConversionFactor > 0
                 ? defaultConversionFactor
                 : throw new ArgumentException("Hệ số quy đổi không hợp lệ.");
-            StandardPrice = standardPrice >= 0 ? standardPrice : throw new ArgumentException("Giá chuẩn không được âm.");
+            StandardPrice = standardPrice >= 0
+                ? standardPrice
+                : throw new ArgumentException("Giá chuẩn không được âm.");
             LeadTimeDays = Math.Max(0, leadTimeDays);
             MinOrderQuantity = minOrderQuantity > 0 ? minOrderQuantity : 1;
             OverDeliveryTolerancePct = Math.Max(0, overDeliveryTolerancePct);
@@ -90,13 +98,6 @@ namespace SupplyCoreERP.Suppliers
             IsPreferred = isPreferred;
             Note = note;
         }
-
-        /// <summary>Gọi sau khi hoàn tất PO để cập nhật giá mua gần nhất.</summary>
-        public void SyncLastPurchasePrice(decimal actualPrice)
-        {
-            if (actualPrice >= 0) LastPurchasePrice = actualPrice;
-        }
-
         public void SetActive(bool active) => IsActive = active;
     }
 }
