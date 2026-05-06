@@ -7,7 +7,7 @@
 
     //Menus
     "Menu:Dashboard": "Tổng quan",
-    "Menu:Catalog": "Quản lý danh mục",
+    "Menu:Catalog": "Danh mục",
     "Menu:Categories": "Nhóm thuốc",
     "Menu:Medicines": "Thuốc",
     "Menu:MedicineDetails": "Chi tiết thuốc",
@@ -15,16 +15,16 @@
     "Menu:Ingredients": "Thành phần",
     "Menu:DosageForms": "Dạng bào chế",
     "Menu:Manufacturers": "Nhà sản xuất",
-    "Menu:Partner": "Quản lý đối tác",
+    "Menu:Partner": "Đối tác",
     "Menu:Suppliers": "Nhà cung cấp",
     "Menu:Customers": "Khách hàng",
     "Menu:Warehouses": "Kho hàng",
-    "Menu:Inventory": "Quản lý tồn kho",
+    "Menu:Inventory": "Tồn kho",
     "Menu:StorageLocations": "Sơ đồ kho",
     "Menu:Batches": "Lô hàng",
     "Menu:Tickets": "Phiếu kho",
     "Menu:Balances": "Số dư tồn kho",
-    "Menu:Order": "Quản lý đơn hàng",
+    "Menu:Order": "Đơn hàng",
     "Menu:SaleOrders": "Đơn bán hàng",
     "Menu:PurchaseOrders": "Đơn mua hàng"
   }
