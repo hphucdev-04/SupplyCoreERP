@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, forkJoin, takeUntil } from 'rxjs';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { eLayoutType, RoutesService } from '@abp/ng.core';
-
 import { SupplierService } from 'src/app/proxy/suppliers';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { BaseUnitService } from 'src/app/proxy/base-units';
@@ -55,6 +54,8 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
 
   Gender = Gender;
   readonly enumName = enumName;
+
+  activeTab: string = 'overview';
 
   // Getters for template
   get activeProductsCount(): number {
