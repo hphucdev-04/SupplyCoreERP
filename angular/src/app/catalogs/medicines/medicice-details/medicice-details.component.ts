@@ -1,13 +1,21 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { forkJoin, Subject } from 'rxjs';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { ActiveIngredientService } from 'src/app/proxy/active-ingredients';
 import { BaseUnitService } from 'src/app/proxy/base-units';
-import { CreateUpdateMedicineIngredientDto, CreateUpdateMedicineUnitDto, MedicineDetailDto, MedicineUnitDto } from 'src/app/proxy/medicines/dtos';
-import { ProductPriceDto, PriceListDto, CreateUpdateProductPriceDto } from 'src/app/proxy/prices/dtos';
+import {
+  CreateUpdateMedicineIngredientDto,
+  CreateUpdateMedicineUnitDto,
+  MedicineDetailDto,
+  MedicineUnitDto,
+} from 'src/app/proxy/medicines/dtos';
+import {
+  ProductPriceDto,
+  PriceListDto,
+  CreateUpdateProductPriceDto,
+} from 'src/app/proxy/prices/dtos';
 import { UsageRoute, StorageCondition } from 'src/app/proxy/enums/medicines';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
@@ -16,18 +24,29 @@ import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-form
 import { CurrencyType } from 'src/app/proxy/enums/price-list';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { ActivatedRoute, Router } from '@angular/router';
-import { eLayoutType, RoutesService } from '@abp/ng.core';
+import { eLayoutType, ListService, PagedResultDto, RoutesService } from '@abp/ng.core';
 import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 import { CopyDirective } from 'src/app/shared/directives/copy.directive';
+import { SupplierMedicineDto } from 'src/app/proxy/suppliers/dtos';
+import { SupplierService } from 'src/app/proxy/suppliers';
+import { SearchComponent } from "src/app/shared/components/search-component/search.component";
 
 @Component({
   selector: 'app-medicine-detail',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, CurrencyFormatDirective, DropdownSearchComponent, CopyDirective],
+  imports: [
+    SharedModule,
+    DrawerComponent,
+    CurrencyFormatDirective,
+    DropdownSearchComponent,
+    CopyDirective,
+    SearchComponent,
+],
+  providers: [ListService],
   templateUrl: 'medicice-details.component.html',
   styleUrl: 'medicice-details.component.scss',
 })
-export class MedicineDetailComponent implements OnInit, OnDestroy{
+export class MedicineDetailComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private readonly ROUTE_NAME = '::Menu:MedicineDetails';
   //Modal State
@@ -43,6 +62,10 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
 
   //List price
   priceLists: PriceListDto[] = [];
+
+  //Supplier
+  suppliers = { items: [], totalCount: 0 } as PagedResultDto<SupplierMedicineDto>;
+  filterSupplierText = '';
 
   //Drawer state
   isIngrDrawerOpen = false;
@@ -69,7 +92,9 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
   //Enum
   UsageRoute = UsageRoute;
   StorageCondition = StorageCondition;
-  CurrencyType = CurrencyType
+  CurrencyType = CurrencyType;
+
+  activeTab: string = 'overview';
 
   constructor(
     private medicineService: MedicineService,
@@ -81,9 +106,11 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
     private route: ActivatedRoute,
     private router: Router,
     private routesService: RoutesService,
+    public readonly list: ListService,
+    private supplierService: SupplierService,
   ) {
     this.initForms();
-  } 
+  }
   ngOnInit(): void {
     const id = this.route.snapshot.paramMap.get('id');
     if (id) {
@@ -117,13 +144,15 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
   loadData() {
     this.medicineService.get(this.id).subscribe(res => {
       this.medicine = res;
-      this.routesService.add([{
-        path: `/catalog/medicines/details/${this.id}`,
-        name: this.ROUTE_NAME,
-        parentName: '::Menu:Medicines',
-        iconClass: 'fas fa-pills',
-        layout: eLayoutType.application,
-      }]);
+      this.routesService.add([
+        {
+          path: `/catalog/medicines/details/${this.id}`,
+          name: this.ROUTE_NAME,
+          parentName: '::Menu:Medicines',
+          iconClass: 'fas fa-pills',
+          layout: eLayoutType.application,
+        },
+      ]);
       this.prepareUnitsForPrice();
       this.loadLookups(res);
       this.loadPrices();
@@ -137,7 +166,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
       //Đơn vị cơ bản
       { id: this.medicine.baseUnitId, name: this.medicine.baseUnitName + ' (Base)' },
       //Các đơn vị quy đổi
-      ...this.medicine.units.map(u => ({ id: u.unitId, name: u.unitName }))
+      ...this.medicine.units.map(u => ({ id: u.unitId, name: u.unitName })),
     ];
   }
 
@@ -147,22 +176,39 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
     });
   }
 
+  loadSuppliers() {
+    const streamCreator = (query) => this.supplierService.getSupplierList(this.id, {
+      ...query,
+      filter: this.filterSupplierText,
+    });
+    this.list.maxResultCount = 10;
+    this.list.hookToQuery(streamCreator).subscribe((response) => {
+      this.suppliers = response;
+    });
+  }
+
+  onSupplierSearch(searchValue: string): void {
+    this.filterSupplierText = searchValue;
+    this.list.get(); 
+  }
+
   loadLookups(medicineData: MedicineDetailDto) {
     forkJoin({
       ingrs: this.ingredientService.getList({ maxResultCount: 1000 }),
       units: this.unitService.getList({ maxResultCount: 1000 }),
-      priceLists: this.priceService.getPriceLists()
+      priceLists: this.priceService.getPriceLists(),
     }).subscribe(res => {
       //Logic lọc Ingredient
-      this.allIngredients = res.ingrs.items.filter(ingr =>
-        !medicineData.ingredients.some(existing => existing.activeIngredientId === ingr.id)
+      this.allIngredients = res.ingrs.items.filter(
+        ingr => !medicineData.ingredients.some(existing => existing.activeIngredientId === ingr.id),
       );
 
       //Logic lọc Unit
       const fullUnits = res.units.items;
-      this.allUnits = fullUnits.filter(u =>
-        u.id !== medicineData.baseUnitId &&
-        !medicineData.units.some(existing => existing.unitId === u.id)
+      this.allUnits = fullUnits.filter(
+        u =>
+          u.id !== medicineData.baseUnitId &&
+          !medicineData.units.some(existing => existing.unitId === u.id),
       );
       //Nếu đang Edit Unit, push lại unit đó vào list để hiện tên
       if (this.isEditingUnit && this.editingUnitId) {
@@ -180,14 +226,14 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
   initForms() {
     //Ingredients Form
     this.ingrForm = this.fb.group({
-      activeIngredientId: [null, Validators.required]
+      activeIngredientId: [null, Validators.required],
     });
 
     //Units Form
     this.unitForm = this.fb.group({
       unitId: [null, Validators.required],
       conversionFactor: [null, [Validators.required, Validators.min(2)]],
-      level: [null, [Validators.required, Validators.min(1)]]
+      level: [null, [Validators.required, Validators.min(1)]],
     });
 
     //Price Form
@@ -195,16 +241,19 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
       priceListId: [null, Validators.required],
       unitId: [null, Validators.required],
       price: [0, [Validators.required, Validators.min(0)]],
-      minQuantity: [1, [Validators.required, Validators.min(1)]]
+      minQuantity: [1, [Validators.required, Validators.min(1)]],
     });
   }
 
   //Ingredient
-  openIngrDrawer() { this.ingrForm.reset(); this.isIngrDrawerOpen = true; }
+  openIngrDrawer() {
+    this.ingrForm.reset();
+    this.isIngrDrawerOpen = true;
+  }
 
   saveIngr() {
     if (this.ingrForm.invalid) return;
-    const payload = this.ingrForm.getRawValue() as CreateUpdateMedicineIngredientDto
+    const payload = this.ingrForm.getRawValue() as CreateUpdateMedicineIngredientDto;
     this.medicineService.addIngredient(this.id, payload).subscribe(() => {
       this.isIngrDrawerOpen = false;
       this.loadData();
@@ -223,7 +272,9 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
   openUnitDrawer() {
     this.isEditingUnit = false;
     this.editingUnitId = null;
-    const nextLevel = this.medicine?.units?.length ? Math.max(...this.medicine.units.map(u => u.level)) + 1 : 1;
+    const nextLevel = this.medicine?.units?.length
+      ? Math.max(...this.medicine.units.map(u => u.level)) + 1
+      : 1;
     this.unitForm.reset({ conversionFactor: 10, level: nextLevel });
     this.unitForm.get('unitId')?.enable();
     this.isUnitDrawerOpen = true;
@@ -235,7 +286,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
     this.unitForm.patchValue({
       unitId: unit.unitId,
       conversionFactor: unit.conversionFactor,
-      level: unit.level
+      level: unit.level,
     });
     this.unitForm.get('unitId')?.disable();
     this.isUnitDrawerOpen = true;
@@ -243,7 +294,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
 
   saveUnit() {
     if (this.unitForm.invalid) return;
-    const payload = this.unitForm.getRawValue() as CreateUpdateMedicineUnitDto
+    const payload = this.unitForm.getRawValue() as CreateUpdateMedicineUnitDto;
 
     if (this.isEditingUnit) {
       this.medicineService.updateUnit(this.id, this.editingUnitId!, payload).subscribe(() => {
@@ -286,7 +337,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
       priceListId: price.priceListId,
       unitId: price.unitId,
       price: price.price,
-      minQuantity: price.minQuantity
+      minQuantity: price.minQuantity,
     });
 
     this.priceForm.get('priceListId')?.disable();
@@ -297,7 +348,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy{
 
   savePrice() {
     if (this.priceForm.invalid) return;
-    const payload = this.priceForm.getRawValue() as CreateUpdateProductPriceDto
+    const payload = this.priceForm.getRawValue() as CreateUpdateProductPriceDto;
 
     if (this.isEditingPrice) {
       // Update

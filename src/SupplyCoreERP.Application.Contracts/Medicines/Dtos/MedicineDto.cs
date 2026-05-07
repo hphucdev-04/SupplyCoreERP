@@ -14,6 +14,7 @@ namespace SupplyCoreERP.Medicines.Dtos
         public string BaseUnitName { get; set; }
         public string DosageFormName { get; set; }
         public string OriginCountryName { get; set; }
+        public string OriginCountryISO { get; set; }
 
         public StorageCondition StorageCondition { get; set; }
         public MedicineStatus Status { get; set; }
