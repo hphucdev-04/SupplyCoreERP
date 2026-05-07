@@ -172,6 +172,8 @@ namespace SupplyCoreERP.Medicines
 
             return summary ?? new MedicineSummaryDto();
         }
+
+
         #endregion
 
         #region Ingredients

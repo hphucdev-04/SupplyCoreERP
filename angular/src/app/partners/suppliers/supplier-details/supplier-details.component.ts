@@ -103,14 +103,14 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
     this.loading = true;
     forkJoin({
       supplier: this.supplierService.get(supplierId),
-      products: this.supplierService.getProductList(supplierId),
+      products: this.supplierService.getProductList(supplierId, {maxResultCount: 10}),
       medicines: this.medicineService.getList({ maxResultCount: 1000 }),
       units: this.unitService.getList({ maxResultCount: 1000 })
     }).pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
           this.supplier = res.supplier;
-          this.products = res.products;
+          this.products = res.products.items;
           this.allMedicines = res.medicines.items;
           this.allUnits = res.units.items;
           this.loading = false;
@@ -132,9 +132,9 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
 
   refreshProducts() {
     if (this.supplier?.id) {
-      this.supplierService.getProductList(this.supplier.id)
+      this.supplierService.getProductList(this.supplier.id, {maxResultCount: 10})
         .pipe(takeUntil(this.destroy$))
-        .subscribe(products => this.products = products);
+        .subscribe(products => this.products = products.items);
     }
   }
 
