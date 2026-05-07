@@ -57,8 +57,7 @@ namespace SupplyCoreERP.Suppliers
             int totalCount = await query.CountAsync();
             List<Supplier> items = await query
                 .OrderBy(input.Sorting ?? "CreationTime DESC")
-                .Skip(input.SkipCount)
-                .Take(input.MaxResultCount)
+                .PageBy(input)
                 .ToListAsync();
 
             return new PagedResultDto<SupplierDto>(
@@ -107,17 +106,58 @@ namespace SupplyCoreERP.Suppliers
         #endregion
 
         #region Supplier Product
-        public async Task<List<SupplierProductDto>> GetProductListAsync(Guid supplierId)
+
+        public async Task<PagedResultDto<SupplierProductDto>> GetProductListAsync(Guid supplierId, GetSupplierProductListDto input)
         {
-            IQueryable<SupplierProduct> items = await _supplierProductRepo.GetQueryableAsync();
-            List<SupplierProduct> result = await items
+            IQueryable<SupplierProduct> query = await _supplierProductRepo.GetQueryableAsync();
+
+            query = query
                 .Include(x => x.Product).ThenInclude(p => p.BaseUnit)
                 .Include(x => x.DefaultUnit)
                 .Where(x => x.SupplierId == supplierId)
-                .OrderBy(x => x.Product.Name)
+                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
+                    x.Product.Name.Contains(input.Filter) ||
+                    x.Product.Code.Contains(input.Filter))
+                .WhereIf(input.IsPreferred.HasValue, x => x.IsPreferred == input.IsPreferred)
+                .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive)
+                .WhereIf(input.MinPrice.HasValue, x => x.StandardPrice >= input.MinPrice)
+                .WhereIf(input.MaxPrice.HasValue, x => x.StandardPrice <= input.MaxPrice);
+
+            int totalCount = await query.CountAsync();
+
+            List<SupplierProduct> result = await query
+                .OrderBy(input.Sorting ?? "Product.Name ASC")
+                .PageBy(input)
                 .ToListAsync();
 
-            return ObjectMapper.Map<List<SupplierProduct>, List<SupplierProductDto>>(result);
+            return new PagedResultDto<SupplierProductDto>(
+                totalCount,
+                ObjectMapper.Map<List<SupplierProduct>, List<SupplierProductDto>>(result)
+            );
+        }
+
+        public async Task<PagedResultDto<SupplierMedicineDto>> GetSupplierListAsync(Guid productId, GetSupplierMedicineListDto input)
+        {
+            IQueryable<SupplierProduct> query = await _supplierProductRepo.GetQueryableAsync();
+
+            query = query
+                .Include(x => x.Supplier).ThenInclude(s => s.Country)
+                .Include(x => x.DefaultUnit)
+                .Where(x => x.ProductId == productId && x.IsActive)
+                .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
+                    x.Supplier.Name.Contains(input.Filter) ||
+                    x.Supplier.Code.Contains(input.Filter));
+
+            int totalCount = await query.CountAsync();
+
+            List<SupplierProduct> list = await query
+                .OrderBy(input.Sorting ?? "IsPreferred DESC, StandardPrice ASC")
+                .PageBy(input)
+                .ToListAsync();
+
+            return new PagedResultDto<SupplierMedicineDto>(
+                totalCount,
+                ObjectMapper.Map<List<SupplierProduct>, List<SupplierMedicineDto>>(list));
         }
 
         public async Task<SupplierProductDto> AddProductAsync(Guid supplierId, CreateUpdateSupplierProductDto input)

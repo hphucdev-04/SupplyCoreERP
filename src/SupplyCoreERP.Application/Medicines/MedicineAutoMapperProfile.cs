@@ -13,7 +13,8 @@ namespace SupplyCoreERP.Medicines
                 .ForMember(d => d.ManufacturerName, o => o.MapFrom(s => s.Manufacturer.Name))
                 .ForMember(d => d.BaseUnitName, o => o.MapFrom(s => s.BaseUnit.Name))
                 .ForMember(d => d.DosageFormName, o => o.MapFrom(s => s.DosageForm.Name))
-                .ForMember(d => d.OriginCountryName, o => o.MapFrom(s => s.Manufacturer.Country.Name));
+                .ForMember(d => d.OriginCountryName, o => o.MapFrom(s => s.Manufacturer.Country.Name))
+                .ForMember(d => d.OriginCountryISO, o => o.MapFrom(s => s.Manufacturer.Country.ISO));
 
             CreateMap<Medicine, MedicineDetailDto>()
                 .IncludeBase<Medicine, MedicineDto>()

@@ -1,4 +1,4 @@
-import type { CreateUpdateSupplierDto, CreateUpdateSupplierProductDto, GetSupplierListDto, SupplierDetailDto, SupplierDto, SupplierProductDto } from './dtos/models';
+import type { CreateUpdateSupplierDto, CreateUpdateSupplierProductDto, GetSupplierListDto, GetSupplierMedicineListDto, GetSupplierProductListDto, SupplierDetailDto, SupplierDto, SupplierMedicineDto, SupplierProductDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
@@ -54,10 +54,20 @@ export class SupplierService {
     { apiName: this.apiName,...config });
   
 
-  getProductList = (supplierId: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, SupplierProductDto[]>({
+  getProductList = (supplierId: string, input: GetSupplierProductListDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PagedResultDto<SupplierProductDto>>({
       method: 'GET',
       url: `/api/app/supplier/product-list/${supplierId}`,
+      params: { filter: input.filter, isPreferred: input.isPreferred, isActive: input.isActive, minPrice: input.minPrice, maxPrice: input.maxPrice, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getSupplierList = (productId: string, input: GetSupplierMedicineListDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PagedResultDto<SupplierMedicineDto>>({
+      method: 'GET',
+      url: `/api/app/supplier/supplier-list/${productId}`,
+      params: { filter: input.filter, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   
