@@ -26,6 +26,22 @@
     "Menu:Balances": "Số dư tồn kho",
     "Menu:Order": "Đơn hàng",
     "Menu:SaleOrders": "Đơn bán hàng",
-    "Menu:PurchaseOrders": "Đơn mua hàng"
+    "Menu:PurchaseOrders": "Đơn mua hàng",
+
+    //Login Page
+    "Login:Organization": "Tổ chức",
+    "Login:SelectOrganization": "Chọn công ty",
+    "Login:SelectOrgHint": "Chọn công ty để đăng nhập",
+    "Login:EnterAccountInfo": "Vui lòng nhập thông tin tài khoản của bạn",
+    "Login:NoAccount": "Chưa có tài khoản?",
+    "Login:RegisterNow": "Đăng ký ngay",
+    "UserNameOrEmailAddress": "Tên tài khoản hoặc Email",
+    "RememberMe": "Ghi nhớ",
+
+    //Brand Section
+    "Brand:AppName": "RxLogistics",
+    "Brand:AppDesc": "Tối ưu vận hành. Kết nối chuỗi cung ứng",
+    "Password": "Mật khẩu",
+    "ForgotPassword": "Quên mật khẩu"
   }
 }
