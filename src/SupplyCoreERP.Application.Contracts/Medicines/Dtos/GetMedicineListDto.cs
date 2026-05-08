@@ -1,15 +1,14 @@
-﻿using SupplyCoreERP.Enums.Medicines;
 using System;
+using SupplyCoreERP.Enums.Medicines;
 using Volo.Abp.Application.Dtos;
 
-namespace SupplyCoreERP.Medicines.Dtos
+namespace SupplyCoreERP.Medicines.Dtos;
+
+public class GetMedicineListDto : PagedAndSortedResultRequestDto
 {
-	public class GetMedicineListDto : PagedAndSortedResultRequestDto
-	{
-		public string? Filter { get; set; }
-		public Guid? CategoryId { get; set; }
-		public Guid? ManufacturerId { get; set; }
-		public MedicineStatus? Status { get; set; }
-		public bool? IsActive { get; set; }
-	}
+    public string? Filter { get; set; }
+    public Guid? CategoryId { get; set; }
+    public Guid? ManufacturerId { get; set; }
+    public MedicineStatus? Status { get; set; }
+    public bool? IsActive { get; set; }
 }

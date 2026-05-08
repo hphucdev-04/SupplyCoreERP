@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
@@ -20,18 +20,18 @@ public class Program
         try
         {
             Log.Information("Starting SupplyCoreERP.HttpApi.Host.");
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             builder.Host
                 .AddAppSettingsSecretsJson()
                 .UseAutofac()
                 .UseSerilog((context, services, loggerConfiguration) =>
                 {
                     loggerConfiguration
-                    #if DEBUG
+#if DEBUG
                         .MinimumLevel.Debug()
-                    #else
+#else
                         .MinimumLevel.Information()
-                    #endif
+#endif
                         .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
                         .MinimumLevel.Override("Microsoft.EntityFrameworkCore", LogEventLevel.Warning)
                         .Enrich.FromLogContext()
@@ -40,7 +40,7 @@ public class Program
                         .WriteTo.Async(c => c.AbpStudio(services));
                 });
             await builder.AddApplicationAsync<SupplyCoreERPHttpApiHostModule>();
-            var app = builder.Build();
+            WebApplication app = builder.Build();
             await app.InitializeApplicationAsync();
             await app.RunAsync();
             return 0;

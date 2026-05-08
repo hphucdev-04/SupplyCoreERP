@@ -1,14 +1,13 @@
-﻿using AutoMapper;
+using AutoMapper;
 using SupplyCoreERP.Manufacturers.Dtos;
 
-namespace SupplyCoreERP.Manufacturers
+namespace SupplyCoreERP.Manufacturers;
+
+public class ManufacturerAutoMapperProfile : Profile
 {
-	public class ManufacturerAutoMapperProfile : Profile
-	{
-		public ManufacturerAutoMapperProfile()
-		{
-			CreateMap<Manufacturer, ManufacturerDto>();
-			CreateMap<CreateUpdateManufacturerDto, Manufacturer>();
-		}
-	}
+    public ManufacturerAutoMapperProfile()
+    {
+        CreateMap<Manufacturer, ManufacturerDto>();
+        CreateMap<CreateUpdateManufacturerDto, Manufacturer>();
+    }
 }

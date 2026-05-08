@@ -1,10 +1,9 @@
 using SupplyCoreERP.EntityFrameworkCore;
 using Xunit;
 
-namespace SupplyCoreERP.Categories
+namespace SupplyCoreERP.Categories;
+
+[Collection(SupplyCoreERPTestConsts.CollectionDefinitionName)]
+public class CategoryAppService_EntityFrameworkCore_Integration_Tests : CategoryAppService_Integration_Tests<SupplyCoreERPEntityFrameworkCoreTestModule>
 {
-    [Collection(SupplyCoreERPTestConsts.CollectionDefinitionName)]
-    public class CategoryAppService_EntityFrameworkCore_Integration_Tests : CategoryAppService_Integration_Tests<SupplyCoreERPEntityFrameworkCoreTestModule>
-    {
-    }
 }

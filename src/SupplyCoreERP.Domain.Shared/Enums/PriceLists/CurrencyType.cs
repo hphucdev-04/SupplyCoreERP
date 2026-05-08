@@ -1,9 +1,8 @@
-﻿namespace SupplyCoreERP.Enums.PriceList
+namespace SupplyCoreERP.Enums.PriceList;
+
+public enum CurrencyType
 {
-    public enum CurrencyType
-    {
-        VND = 0,
-        USD = 1,
-        EUR = 2
-    }
+    VND = 0,
+    USD = 1,
+    EUR = 2
 }

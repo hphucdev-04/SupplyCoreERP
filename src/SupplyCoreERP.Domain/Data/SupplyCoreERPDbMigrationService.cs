@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -7,11 +7,11 @@ using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
+using SupplyCoreERP.MultiTenancy;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Identity;
 using Volo.Abp.MultiTenancy;
-using SupplyCoreERP.MultiTenancy;
 
 namespace SupplyCoreERP.Data;
 
@@ -56,7 +56,7 @@ public class SupplyCoreERPDbMigrationService : ITransientDependency
 
     private async Task MigrateDatabaseSchemaAsync()
     {
-        foreach (var migrator in _dbSchemaMigrators)
+        foreach (ISupplyCoreERPDbSchemaMigrator migrator in _dbSchemaMigrators)
         {
             await migrator.MigrateAsync();
         }

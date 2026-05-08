@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.IO;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
@@ -14,20 +14,20 @@ public class SupplyCoreERPDbContextFactory : IDesignTimeDbContextFactory<SupplyC
     {
         // https://www.npgsql.org/efcore/release-notes/6.0.html#opting-out-of-the-new-timestamp-mapping-logic
         AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
-        
-        var configuration = BuildConfiguration();
-        
+
+        IConfigurationRoot configuration = BuildConfiguration();
+
         SupplyCoreERPEfCoreEntityExtensionMappings.Configure();
 
-        var builder = new DbContextOptionsBuilder<SupplyCoreERPDbContext>()
+        DbContextOptionsBuilder<SupplyCoreERPDbContext> builder = new DbContextOptionsBuilder<SupplyCoreERPDbContext>()
             .UseNpgsql(configuration.GetConnectionString("Default"));
-        
+
         return new SupplyCoreERPDbContext(builder.Options);
     }
 
     private static IConfigurationRoot BuildConfiguration()
     {
-        var builder = new ConfigurationBuilder()
+        IConfigurationBuilder builder = new ConfigurationBuilder()
             .SetBasePath(Path.Combine(Directory.GetCurrentDirectory(), "../SupplyCoreERP.DbMigrator/"))
             .AddJsonFile("appsettings.json", optional: false)
             .AddEnvironmentVariables();

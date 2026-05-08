@@ -1,36 +1,35 @@
-﻿
+
 using System;
 using Volo.Abp.Domain.Entities;
 
-namespace SupplyCoreERP.DocumentSequences
+namespace SupplyCoreERP.DocumentSequences;
+
+public class DocumentSequence : AggregateRoot<Guid>
 {
-    public class DocumentSequence : AggregateRoot<Guid>
+    public string DocumentType { get; set; }
+    public string PrefixDate { get; set; }
+    public int LastValue { get; set; }
+
+    protected DocumentSequence() { }
+
+    public DocumentSequence(Guid id, string documentType, string prefixDate) : base(id)
     {
-        public string DocumentType { get; set; }
-        public string PrefixDate { get; set; }
-        public int LastValue { get; set; }
+        DocumentType = documentType;
+        PrefixDate = prefixDate;
+        LastValue = 1;
+    }
 
-        protected DocumentSequence() { }
-
-        public DocumentSequence(Guid id, string documentType, string prefixDate) : base(id)
+    public void Increment(string today)
+    {
+        if (PrefixDate != today)
         {
-            DocumentType = documentType;
-            PrefixDate = prefixDate;
+            PrefixDate = today;
             LastValue = 1;
         }
-
-        public void Increment(string today)
+        else
         {
-            if (PrefixDate != today)
-            {
-                PrefixDate = today;
-                LastValue = 1;
-            }
-            else
-            {
-                LastValue += 1;
-            }
+            LastValue += 1;
         }
-
     }
+
 }

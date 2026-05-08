@@ -1,4 +1,4 @@
-﻿namespace SupplyCoreERP;
+namespace SupplyCoreERP;
 
 public static class SupplyCoreERPTestConsts
 {

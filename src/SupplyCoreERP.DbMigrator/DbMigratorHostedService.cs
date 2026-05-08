@@ -1,10 +1,10 @@
-﻿using System.Threading;
+using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using SupplyCoreERP.Data;
 using Serilog;
+using SupplyCoreERP.Data;
 using Volo.Abp;
 using Volo.Abp.Data;
 
@@ -23,25 +23,23 @@ public class DbMigratorHostedService : IHostedService
 
     public async Task StartAsync(CancellationToken cancellationToken)
     {
-        using (var application = await AbpApplicationFactory.CreateAsync<SupplyCoreERPDbMigratorModule>(options =>
+        using IAbpApplicationWithInternalServiceProvider application = await AbpApplicationFactory.CreateAsync<SupplyCoreERPDbMigratorModule>(options =>
         {
-           options.Services.ReplaceConfiguration(_configuration);
-           options.UseAutofac();
-           options.Services.AddLogging(c => c.AddSerilog());
-           options.AddDataMigrationEnvironment();
-        }))
-        {
-            await application.InitializeAsync();
+            options.Services.ReplaceConfiguration(_configuration);
+            options.UseAutofac();
+            options.Services.AddLogging(c => c.AddSerilog());
+            options.AddDataMigrationEnvironment();
+        });
+        await application.InitializeAsync();
 
-            await application
-                .ServiceProvider
-                .GetRequiredService<SupplyCoreERPDbMigrationService>()
-                .MigrateAsync();
+        await application
+            .ServiceProvider
+            .GetRequiredService<SupplyCoreERPDbMigrationService>()
+            .MigrateAsync();
 
-            await application.ShutdownAsync();
+        await application.ShutdownAsync();
 
-            _hostApplicationLifetime.StopApplication();
-        }
+        _hostApplicationLifetime.StopApplication();
     }
 
     public Task StopAsync(CancellationToken cancellationToken)

@@ -1,8 +1,8 @@
-﻿using Microsoft.Extensions.Configuration;
-using OpenIddict.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
+using OpenIddict.Abstractions;
 using Volo.Abp.Data;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.OpenIddict;

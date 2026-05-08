@@ -1,18 +1,18 @@
+using Localization.Resources.AbpUi;
 using SupplyCoreERP.Localization;
 using Volo.Abp.AuditLogging;
 using Volo.Abp.BackgroundJobs;
+using Volo.Abp.BlobStoring.Database;
 using Volo.Abp.FeatureManagement;
 using Volo.Abp.Identity;
 using Volo.Abp.Localization;
 using Volo.Abp.Localization.ExceptionHandling;
-using Volo.Abp.Validation.Localization;
 using Volo.Abp.Modularity;
+using Volo.Abp.OpenIddict;
 using Volo.Abp.PermissionManagement;
 using Volo.Abp.SettingManagement;
+using Volo.Abp.Validation.Localization;
 using Volo.Abp.VirtualFileSystem;
-using Volo.Abp.OpenIddict;
-using Volo.Abp.BlobStoring.Database;
-using Localization.Resources.AbpUi;
 
 namespace SupplyCoreERP;
 
@@ -46,18 +46,18 @@ public class SupplyCoreERPDomainSharedModule : AbpModule
             options.Resources
                 .Add<SupplyCoreERPResource>("en")
                 .AddBaseTypes(typeof(AbpValidationResource))
-				.AddBaseTypes(typeof(AbpUiResource))
-				.AddVirtualJson("/Localization/SupplyCoreERP")
+                .AddBaseTypes(typeof(AbpUiResource))
+                .AddVirtualJson("/Localization/SupplyCoreERP")
                 .AddVirtualJson("/Localization/Permissions")
                 .AddVirtualJson("/Localization/Properties");
 
-			options.DefaultResourceType = typeof(SupplyCoreERPResource);
+            options.DefaultResourceType = typeof(SupplyCoreERPResource);
 
-			options.Languages.Add(new LanguageInfo("en", "en", "English"));
-			options.Languages.Add(new LanguageInfo("vi", "vi", "Vietnamese")); 
+            options.Languages.Add(new LanguageInfo("en", "en", "English"));
+            options.Languages.Add(new LanguageInfo("vi", "vi", "Vietnamese"));
 
         });
-        
+
         Configure<AbpExceptionLocalizationOptions>(options =>
         {
             options.MapCodeNamespace("SupplyCoreERP", typeof(SupplyCoreERPResource));

@@ -1,190 +1,201 @@
-﻿using AutoMapper.Internal.Mappers;
-using Microsoft.EntityFrameworkCore;
-using SupplyCoreERP.Inventories.Tickets;
-using SupplyCoreERP.Orders.PO;
-using SupplyCoreERP.PurchaseOrders.Dtos;
-using SupplyCoreERP.Suppliers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using AutoMapper.Internal.Mappers;
+using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.Inventories.Tickets;
+using SupplyCoreERP.Orders.PO;
+using SupplyCoreERP.PurchaseOrders.Dtos;
+using SupplyCoreERP.Suppliers;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
-namespace SupplyCoreERP.PurchaseOrders
+namespace SupplyCoreERP.PurchaseOrders;
+
+public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
 {
-	public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
-	{
-        // Dependencies
-        private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
-		private readonly IRepository<InventoryTicket, Guid> _ticketRepo;   
-		private readonly IRepository<Supplier, Guid> _supplierRepo;
-		private readonly PurchaseOrderManager _orderManager;
-   
+    // Dependencies
+    private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
+    private readonly IRepository<InventoryTicket, Guid> _ticketRepo;
+    private readonly IRepository<Supplier, Guid> _supplierRepo;
+    private readonly PurchaseOrderManager _orderManager;
 
-		// DI
-        public PurchaseOrderAppService(
-		IRepository<PurchaseOrder, Guid> orderRepo,
-		IRepository<InventoryTicket, Guid> ticketRepo,
-		IRepository<Supplier, Guid> supplierRepo,
-		PurchaseOrderManager orderManager)
-		{
-			_orderRepo = orderRepo;
-			_ticketRepo = ticketRepo;
-			_supplierRepo = supplierRepo;
-			_orderManager = orderManager;
-		}
 
-        #region Purchase Order
-        public async Task<PagedResultDto<PurchaseOrderDto>> GetListAsync(GetPurchaseOrderListDto input)
-		{
-			var query = await _orderRepo.GetQueryableAsync();
+    // DI
+    public PurchaseOrderAppService(
+    IRepository<PurchaseOrder, Guid> orderRepo,
+    IRepository<InventoryTicket, Guid> ticketRepo,
+    IRepository<Supplier, Guid> supplierRepo,
+    PurchaseOrderManager orderManager)
+    {
+        _orderRepo = orderRepo;
+        _ticketRepo = ticketRepo;
+        _supplierRepo = supplierRepo;
+        _orderManager = orderManager;
+    }
 
-			query = query
-				.Include(x => x.Supplier)
-				.Include(x => x.Warehouse);
+    #region Purchase Order
+    public async Task<PagedResultDto<PurchaseOrderDto>> GetListAsync(GetPurchaseOrderListDto input)
+    {
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
 
-			query = query
-				.WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Code.Contains(input.Filter) || x.Supplier.Name.Contains(input.Filter))
-				.WhereIf(input.SupplierId.HasValue, x => x.SupplierId == input.SupplierId)
-				.WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
-				.WhereIf(input.Status.HasValue, x => x.Status == input.Status);
+        query = query
+            .Include(x => x.Supplier)
+            .Include(x => x.Warehouse);
 
-			var totalCount = await AsyncExecuter.CountAsync(query);
+        query = query
+            .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Code.Contains(input.Filter) || x.Supplier.Name.Contains(input.Filter))
+            .WhereIf(input.SupplierId.HasValue, x => x.SupplierId == input.SupplierId)
+            .WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
+            .WhereIf(input.Status.HasValue, x => x.Status == input.Status);
 
-			query = query
-				.OrderBy(input.Sorting ?? nameof(PurchaseOrder.CreationTime) + " DESC")
-				.PageBy(input);
+        var totalCount = await AsyncExecuter.CountAsync(query);
 
-			var items = await AsyncExecuter.ToListAsync(query);
+        query = query
+            .OrderBy(input.Sorting ?? nameof(PurchaseOrder.CreationTime) + " DESC")
+            .PageBy(input);
 
-			var dtos = ObjectMapper.Map<List<PurchaseOrder>, List<PurchaseOrderDto>>(items);
-			return new PagedResultDto<PurchaseOrderDto>(totalCount, dtos);
-		}
+        List<PurchaseOrder> items = await AsyncExecuter.ToListAsync(query);
 
-		public async Task<PurchaseOrderDto> GetAsync(Guid id)
-		{
-			var query = await _orderRepo.GetQueryableAsync();
+        List<PurchaseOrderDto> dtos = ObjectMapper.Map<List<PurchaseOrder>, List<PurchaseOrderDto>>(items);
+        return new PagedResultDto<PurchaseOrderDto>(totalCount, dtos);
+    }
 
-			var entity = await query
-				.Include(x => x.Supplier)
-				.Include(x => x.Warehouse)
-				.Include(x => x.Details).ThenInclude(d => d.Product)
-				.Include(x => x.Details).ThenInclude(d => d.Unit)
-				.FirstOrDefaultAsync(x => x.Id == id);
+    public async Task<PurchaseOrderDto> GetAsync(Guid id)
+    {
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
 
-			if (entity == null) throw new EntityNotFoundException(typeof(PurchaseOrder), id);
+        PurchaseOrder? entity = await query
+            .Include(x => x.Supplier)
+            .Include(x => x.Warehouse)
+            .Include(x => x.Details).ThenInclude(d => d.Product)
+            .Include(x => x.Details).ThenInclude(d => d.Unit)
+            .FirstOrDefaultAsync(x => x.Id == id);
 
-			return ObjectMapper.Map<PurchaseOrder, PurchaseOrderDto>(entity);
-		}
+        if (entity == null)
+        {
+            throw new EntityNotFoundException(typeof(PurchaseOrder), id);
+        }
 
-		public async Task<PurchaseOrderDto> CreateAsync(CreatePurchaseOrderDto input)
-		{
-			var entity = await _orderManager.CreateOrderAsync(input.SupplierId, input.WarehouseId, input.OrderDate, input.ExpectedDeliveryDate, input.DueDate, input.Note);
+        return ObjectMapper.Map<PurchaseOrder, PurchaseOrderDto>(entity);
+    }
 
-			await _orderRepo.InsertAsync(entity);
+    public async Task<PurchaseOrderDto> CreateAsync(CreatePurchaseOrderDto input)
+    {
+        PurchaseOrder entity = await _orderManager.CreateOrderAsync(input.SupplierId, input.WarehouseId, input.OrderDate, input.ExpectedDeliveryDate, input.DueDate, input.Note);
 
-			return ObjectMapper.Map<PurchaseOrder, PurchaseOrderDto>(entity);
-		}
+        await _orderRepo.InsertAsync(entity);
 
-		public async Task<PurchaseOrderDto> UpdateAsync(Guid id, UpdatePurchaseOrderDto input)
-		{
-			var entity = await _orderRepo.GetAsync(id);
+        return ObjectMapper.Map<PurchaseOrder, PurchaseOrderDto>(entity);
+    }
 
-			await _orderManager.UpdateOrderAsync(entity, input.WarehouseId, input.ExpectedDeliveryDate, input.DueDate, input.Note);
-			await _orderRepo.UpdateAsync(entity);
+    public async Task<PurchaseOrderDto> UpdateAsync(Guid id, UpdatePurchaseOrderDto input)
+    {
+        PurchaseOrder entity = await _orderRepo.GetAsync(id);
 
-			return ObjectMapper.Map<PurchaseOrder, PurchaseOrderDto>(entity);
-		}
+        await _orderManager.UpdateOrderAsync(entity, input.WarehouseId, input.ExpectedDeliveryDate, input.DueDate, input.Note);
+        await _orderRepo.UpdateAsync(entity);
 
-		public async Task DeleteAsync(Guid id)
-		{
-			var query = await _orderRepo.GetQueryableAsync();
-			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id);
+        return ObjectMapper.Map<PurchaseOrder, PurchaseOrderDto>(entity);
+    }
 
-			if (entity != null)
-			{
-				await _orderManager.CheckBeforeDeleteAsync(entity);
-				await _orderRepo.DeleteAsync(entity);
-			}
-		}
-		#endregion
+    public async Task DeleteAsync(Guid id)
+    {
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
+        PurchaseOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id);
 
-		#region Purchase Detail
-		public async Task AddDetailAsync(Guid orderId, AddPurchaseOrderDetailDto input)
-		{
-			var query = await _orderRepo.GetQueryableAsync();
-			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
-			if (entity == null) throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
+        if (entity != null)
+        {
+            await _orderManager.CheckBeforeDeleteAsync(entity);
+            await _orderRepo.DeleteAsync(entity);
+        }
+    }
+    #endregion
 
-			await _orderManager.AddDetailAsync(entity, input.ProductId, input.UnitId, input.ConversionFactor, input.Quantity, input.UnitPrice, input.TaxRate);
-			await _orderRepo.UpdateAsync(entity);
-		}
+    #region Purchase Detail
+    public async Task AddDetailAsync(Guid orderId, AddPurchaseOrderDetailDto input)
+    {
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
+        PurchaseOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        if (entity == null)
+        {
+            throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
+        }
 
-		public async Task UpdateDetailAsync(Guid orderId, Guid detailId, UpdatePurchaseOrderDetailDto input)
-		{
-			var query = await _orderRepo.GetQueryableAsync();
-			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
-			if (entity == null) throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
+        await _orderManager.AddDetailAsync(entity, input.ProductId, input.UnitId, input.ConversionFactor, input.Quantity, input.UnitPrice, input.TaxRate);
+        await _orderRepo.UpdateAsync(entity);
+    }
 
-			await _orderManager.UpdateDetailAsync(entity, detailId, input.Quantity, input.UnitPrice, input.TaxRate);
-			await _orderRepo.UpdateAsync(entity);
-		}
+    public async Task UpdateDetailAsync(Guid orderId, Guid detailId, UpdatePurchaseOrderDetailDto input)
+    {
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
+        PurchaseOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        if (entity == null)
+        {
+            throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
+        }
 
-		public async Task RemoveDetailAsync(Guid orderId, Guid detailId)
-		{
-			var query = await _orderRepo.GetQueryableAsync();
-			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
-			if (entity == null) throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
+        await _orderManager.UpdateDetailAsync(entity, detailId, input.Quantity, input.UnitPrice, input.TaxRate);
+        await _orderRepo.UpdateAsync(entity);
+    }
 
-			await _orderManager.RemoveDetailAsync(entity, detailId);
-			await _orderRepo.UpdateAsync(entity);
-		}
-		#endregion
+    public async Task RemoveDetailAsync(Guid orderId, Guid detailId)
+    {
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
+        PurchaseOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        if (entity == null)
+        {
+            throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
+        }
 
-		#region Workflow
-		public async Task SendToApproveAsync(Guid id)
-		{
-			var query = await _orderRepo.GetQueryableAsync();
-			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
-				?? throw new EntityNotFoundException(typeof(PurchaseOrder), id);
+        await _orderManager.RemoveDetailAsync(entity, detailId);
+        await _orderRepo.UpdateAsync(entity);
+    }
+    #endregion
 
-			await _orderManager.SendToApproveAsync(entity);
-			await _orderRepo.UpdateAsync(entity);
-		}
+    #region Workflow
+    public async Task SendToApproveAsync(Guid id)
+    {
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
+        PurchaseOrder entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
+            ?? throw new EntityNotFoundException(typeof(PurchaseOrder), id);
 
-		public async Task ApproveAsync(Guid id)
-		{
-			var query = await _orderRepo.GetQueryableAsync();
-			var entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
-				?? throw new EntityNotFoundException(typeof(PurchaseOrder), id);
+        await _orderManager.SendToApproveAsync(entity);
+        await _orderRepo.UpdateAsync(entity);
+    }
 
-			var ticket = await _orderManager.ApproveAsync(entity);
+    public async Task ApproveAsync(Guid id)
+    {
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
+        PurchaseOrder entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
+            ?? throw new EntityNotFoundException(typeof(PurchaseOrder), id);
 
-			await _ticketRepo.InsertAsync(ticket);
-			await _orderRepo.UpdateAsync(entity);
-		}
+        InventoryTicket ticket = await _orderManager.ApproveAsync(entity);
 
-		public async Task CompleteAsync(Guid id)
-		{
-			var entity = await _orderRepo.GetAsync(id);
+        await _ticketRepo.InsertAsync(ticket);
+        await _orderRepo.UpdateAsync(entity);
+    }
 
-			var supplier = await _orderManager.CompleteAsync(entity);
+    public async Task CompleteAsync(Guid id)
+    {
+        PurchaseOrder entity = await _orderRepo.GetAsync(id);
 
-			await _supplierRepo.UpdateAsync(supplier);
-			await _orderRepo.UpdateAsync(entity);
-		}
+        Supplier supplier = await _orderManager.CompleteAsync(entity);
 
-		public async Task CancelAsync(Guid id, string reason)
-		{
-			var entity = await _orderRepo.GetAsync(id);
-			await _orderManager.CancelAsync(entity, reason);
-			await _orderRepo.UpdateAsync(entity);
-		}
-		#endregion
-	}
+        await _supplierRepo.UpdateAsync(supplier);
+        await _orderRepo.UpdateAsync(entity);
+    }
+
+    public async Task CancelAsync(Guid id, string reason)
+    {
+        PurchaseOrder entity = await _orderRepo.GetAsync(id);
+        await _orderManager.CancelAsync(entity, reason);
+        await _orderRepo.UpdateAsync(entity);
+    }
+    #endregion
 }

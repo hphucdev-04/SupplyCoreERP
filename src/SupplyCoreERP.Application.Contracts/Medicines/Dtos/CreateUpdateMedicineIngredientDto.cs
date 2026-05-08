@@ -1,11 +1,10 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace SupplyCoreERP.Medicines.Dtos
+namespace SupplyCoreERP.Medicines.Dtos;
+
+public class CreateUpdateMedicineIngredientDto
 {
-    public class CreateUpdateMedicineIngredientDto
-    {
-        [Required]
-        public Guid ActiveIngredientId { get; set; }
-    }
+    [Required]
+    public Guid ActiveIngredientId { get; set; }
 }

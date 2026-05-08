@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -13,12 +13,12 @@ public static class HealthChecksBuilderExtensions
     public static void AddSupplyCoreERPHealthChecks(this IServiceCollection services)
     {
         // Add your health checks here
-        var healthChecksBuilder = services.AddHealthChecks();
+        IHealthChecksBuilder healthChecksBuilder = services.AddHealthChecks();
         healthChecksBuilder.AddCheck<SupplyCoreERPDatabaseCheck>("SupplyCoreERP DbContext Check", tags: new string[] { "database" });
 
         services.ConfigureHealthCheckEndpoint("/health-status");
 
-        var configuration = services.GetConfiguration();
+        Microsoft.Extensions.Configuration.IConfiguration configuration = services.GetConfiguration();
         var healthCheckUrl = configuration["App:HealthCheckUrl"];
 
         if (string.IsNullOrEmpty(healthCheckUrl))
@@ -26,7 +26,7 @@ public static class HealthChecksBuilderExtensions
             healthCheckUrl = "/health-status";
         }
 
-        var healthChecksUiBuilder = services.AddHealthChecksUI(settings =>
+        HealthChecksUIBuilder healthChecksUiBuilder = services.AddHealthChecksUI(settings =>
         {
             settings.AddHealthCheckEndpoint("SupplyCoreERP Health Status", configuration["App:HealthUiCheckUrl"] ?? healthCheckUrl);
         });
