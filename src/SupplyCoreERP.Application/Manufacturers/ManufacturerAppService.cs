@@ -53,7 +53,7 @@ public class ManufacturerAppService :
     public override async Task<PagedResultDto<ManufacturerDto>> GetListAsync(GetManufacturerListDto input)
     {
         IQueryable<Manufacturer> query = await CreateFilteredQueryAsync(input);
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
 
         List<Manufacturer> entities = await AsyncExecuter.ToListAsync(
             query.OrderByDescending(e => e.CreationTime)

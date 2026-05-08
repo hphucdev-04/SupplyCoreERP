@@ -45,7 +45,7 @@ public class CategoryManager : DomainService, ICategoryManager
         Check.NotNull(category, nameof(category));
         Check.NotNullOrWhiteSpace(newName, nameof(newName));
 
-        var normalizedName = newName.Trim();
+        string normalizedName = newName.Trim();
 
         //  Kiểm tra trùng tên với nhóm khác
         if (await _categoryRepository.IsNameExistsAsync(normalizedName, category.Id))
@@ -61,7 +61,7 @@ public class CategoryManager : DomainService, ICategoryManager
         Check.NotNull(category, nameof(category));
 
         //Check sản phẩm thuộc nhóm
-        var isInUse = await _productRepository.AnyAsync(x => x.CategoryId == category.Id);
+        bool isInUse = await _productRepository.AnyAsync(x => x.CategoryId == category.Id);
 
         if (isInUse)
         {

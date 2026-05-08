@@ -27,9 +27,9 @@ public class DosageFormManager : DomainService
     public async Task<DosageForm> CreateAsync(string name)
     {
         Check.NotNullOrWhiteSpace(name, nameof(name));
-        var normalizedName = name.Trim();
+        string normalizedName = name.Trim();
 
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeDosageForm);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeDosageForm);
         //Check trùng mã
         if (await _repository.AnyAsync(x => x.Code == code))
         {
@@ -49,7 +49,7 @@ public class DosageFormManager : DomainService
     {
         Check.NotNull(entity, nameof(entity));
         Check.NotNullOrWhiteSpace(newName, nameof(newName));
-        var normalizedName = newName.Trim();
+        string normalizedName = newName.Trim();
 
         //Check trùng tên
         if (await _repository.AnyAsync(x => x.Name == normalizedName && x.Id != entity.Id))
@@ -65,7 +65,7 @@ public class DosageFormManager : DomainService
         Check.NotNull(entity, nameof(entity));
 
         //Không xóa nếu đang có thuốc dùng dạng này
-        var isInUse = await _medicineRepository.AnyAsync(x => x.DosageFormId == entity.Id);
+        bool isInUse = await _medicineRepository.AnyAsync(x => x.DosageFormId == entity.Id);
 
         if (isInUse)
         {

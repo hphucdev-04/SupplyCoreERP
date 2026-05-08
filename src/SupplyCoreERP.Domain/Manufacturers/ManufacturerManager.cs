@@ -36,9 +36,9 @@ public class ManufacturerManager : DomainService
     {
 
         Check.NotNullOrWhiteSpace(name, nameof(name));
-        var normalizedName = name.Trim();
+        string normalizedName = name.Trim();
 
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeManufacturer);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeManufacturer);
 
         //Check tồn tại Châu lục & Quốc gia
         if (!await _continentRepository.AnyAsync(x => x.Id == continentId))
@@ -71,7 +71,7 @@ public class ManufacturerManager : DomainService
     {
         Check.NotNull(entity, nameof(entity));
         Check.NotNullOrWhiteSpace(newName, nameof(newName));
-        var normalizedName = newName.Trim();
+        string normalizedName = newName.Trim();
 
         //Check tồn tại Châu lục & Quốc gia
         if (!await _continentRepository.AnyAsync(x => x.Id == newContinentId))
@@ -105,7 +105,7 @@ public class ManufacturerManager : DomainService
         Check.NotNull(entity, nameof(entity));
 
         //Check ràng buộc với Medicine
-        var isInUse = await _medicineRepository.AnyAsync(x => x.ManufacturerId == entity.Id);
+        bool isInUse = await _medicineRepository.AnyAsync(x => x.ManufacturerId == entity.Id);
 
         if (isInUse)
         {

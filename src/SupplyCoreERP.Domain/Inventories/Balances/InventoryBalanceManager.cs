@@ -141,7 +141,7 @@ public class InventoryBalanceManager : DomainService
         }
         else // Nhả bớt Lock
         {
-            var unlockAmount = Math.Abs(baseQtyDiff);
+            decimal unlockAmount = Math.Abs(baseQtyDiff);
             if (balance != null)
             {
                 balance.UnlockStock(unlockAmount);
@@ -158,7 +158,7 @@ public class InventoryBalanceManager : DomainService
                     break;
                 }
 
-                var deduction = Math.Min(res.ReservedQuantity, unlockAmount);
+                decimal deduction = Math.Min(res.ReservedQuantity, unlockAmount);
                 res.DecreaseQuantity(deduction);
                 unlockAmount -= deduction;
             }

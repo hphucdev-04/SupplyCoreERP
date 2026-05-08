@@ -56,7 +56,7 @@ public class PurchaseOrderManager : DomainService
             throw new UserFriendlyException($"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
         }
 
-        var code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypePurchaseOrder);
+        string code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypePurchaseOrder);
 
         DateTime? finalDueDate = inputDueDate
             ?? (supplier.PaymentTermDays > 0 ? orderDate.AddDays(supplier.PaymentTermDays) : null);
@@ -139,7 +139,7 @@ public class PurchaseOrderManager : DomainService
         }
 
         DateTime today = DateTime.Now.Date;
-        var hasOverdue = await _orderRepo.AnyAsync(x =>
+        bool hasOverdue = await _orderRepo.AnyAsync(x =>
             x.SupplierId == order.SupplierId &&
             x.Status == PurchaseOrderStatus.Completed &&
             x.DueDate.HasValue && x.DueDate.Value.Date < today);

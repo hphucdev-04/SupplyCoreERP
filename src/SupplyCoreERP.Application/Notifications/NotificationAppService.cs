@@ -68,7 +68,7 @@ public class NotificationAppService : SupplyCore, INotificationAppService
         Guid userId = _currentUser.GetId();
 
         List<string> grantedPerms = new();
-        foreach (var perm in new[]
+        foreach (string? perm in new[]
         {
             Catalog.Medicine.Approve,
             Catalog.Medicine.Reject
@@ -107,7 +107,7 @@ public class NotificationAppService : SupplyCore, INotificationAppService
                  && n.TargetPermissions.Any(p => grantedPerms.Contains(p))))
             .ToList();
 
-        var total = filtered.Count;
+        int total = filtered.Count;
 
         List<Notification> items = filtered
             .Skip(input.SkipCount)

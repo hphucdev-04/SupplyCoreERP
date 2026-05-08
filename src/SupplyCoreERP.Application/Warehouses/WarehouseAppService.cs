@@ -40,7 +40,7 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
             .WhereIf(input.Status.HasValue, x => x.Status == input.Status)
             .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
 
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
         List<Warehouse> items = await AsyncExecuter.ToListAsync(
             query.OrderBy(string.IsNullOrWhiteSpace(input.Sorting) ? "CreationTime DESC" : input.Sorting)
                  .Skip(input.SkipCount)

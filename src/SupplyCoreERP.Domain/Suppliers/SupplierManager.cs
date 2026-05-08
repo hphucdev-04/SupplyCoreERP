@@ -49,7 +49,7 @@ public class SupplierManager : DomainService
         string? address, Guid? countryId, Guid? cityId, Guid? areaId,
         decimal debtLimit = 0, int paymentTermDays = 0)
     {
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeSupplier);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeSupplier);
         await CheckCodeAndNameAsync(code, name);
         await ValidateLocationAsync(countryId, cityId, areaId);
 
@@ -183,8 +183,8 @@ public class SupplierManager : DomainService
         Check.NotNullOrWhiteSpace(code, nameof(code));
         Check.NotNullOrWhiteSpace(name, nameof(name));
 
-        var normalizedCode = code.Trim().ToUpper();
-        var normalizedName = name.Trim();
+        string normalizedCode = code.Trim().ToUpper();
+        string normalizedName = name.Trim();
 
         if (await _supplierRepository.AnyAsync(x =>
                 x.Code == normalizedCode && (!excludeId.HasValue || x.Id != excludeId.Value)))

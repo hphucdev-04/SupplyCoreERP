@@ -87,7 +87,7 @@ public class CategoryAppService : CrudAppService<
             ProductCount = x.Products.Count()
         });
 
-        var totalCount = await queryDto.CountAsync();
+        int totalCount = await queryDto.CountAsync();
 
         List<CategoryDto> items = await queryDto
             .OrderBy(input.Sorting ?? nameof(Category.CreationTime) + " DESC")

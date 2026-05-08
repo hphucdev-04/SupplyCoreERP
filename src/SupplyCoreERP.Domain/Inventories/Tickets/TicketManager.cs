@@ -76,8 +76,8 @@ public class TicketManager : DomainService
         Product product = await _productRepo.GetAsync(productId);
         _warehouseManager.ValidateStorageCompatibility(bin, product.RequiredStorageCondition);
 
-        var usedSKUCount = await _balanceRepo.CountAsync(b => b.BinId == bin.Id && b.Quantity > 0);
-        var isNewSKU = !await _balanceRepo.AnyAsync(b => b.BinId == bin.Id && b.ProductId == productId && b.ProductBatchId == productBatchId);
+        int usedSKUCount = await _balanceRepo.CountAsync(b => b.BinId == bin.Id && b.Quantity > 0);
+        bool isNewSKU = !await _balanceRepo.AnyAsync(b => b.BinId == bin.Id && b.ProductId == productId && b.ProductBatchId == productBatchId);
         bin.ValidateSKUCapacity(usedSKUCount, isNewSKU);
     }
 
@@ -134,14 +134,14 @@ public class TicketManager : DomainService
             throw new UserFriendlyException($"Kho '{warehouse.Name}' đang bị tạm khóa!");
         }
 
-        var draftCount = await _ticketRepo.CountAsync(x => x.WarehouseId == warehouseId && x.Type == type && x.Status == ApprovalStatus.Draft);
+        int draftCount = await _ticketRepo.CountAsync(x => x.WarehouseId == warehouseId && x.Type == type && x.Status == ApprovalStatus.Draft);
         if (draftCount >= 10)
         {
             throw new UserFriendlyException("Kho đang có quá nhiều phiếu Nháp chưa được xử lý!");
         }
 
-        var prefix = type.ToString().Substring(0, 3).ToUpper();
-        var ticketNumber = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeInventoryTicket);
+        string prefix = type.ToString().Substring(0, 3).ToUpper();
+        string ticketNumber = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeInventoryTicket);
 
         return new InventoryTicket(GuidGenerator.Create(), ticketNumber, type, warehouseId, referenceDocumentId, referenceDocumentNumber, note);
     }
@@ -196,7 +196,7 @@ public class TicketManager : DomainService
             await ValidateBatchForIssueAsync(productBatchId);
         }
 
-        var baseQty = quantity * conversionFactor;
+        decimal baseQty = quantity * conversionFactor;
         if (ticket.Status == ApprovalStatus.Pending && IsIssueTicket(ticket.Type))
         {
             await _balanceManager.AdjustLockAsync(ticket, binId, productId, productBatchId, baseQty);
@@ -214,8 +214,8 @@ public class TicketManager : DomainService
 
         if (ticket.Status == ApprovalStatus.Pending && IsIssueTicket(ticket.Type))
         {
-            var newBaseQty = actualQuantity * detail.ConversionFactor;
-            var diff = newBaseQty - detail.BaseQuantity;
+            decimal newBaseQty = actualQuantity * detail.ConversionFactor;
+            decimal diff = newBaseQty - detail.BaseQuantity;
             await _balanceManager.AdjustLockAsync(ticket, detail.BinId, detail.ProductId, detail.ProductBatchId, diff);
         }
 
@@ -297,7 +297,7 @@ public class TicketManager : DomainService
             throw new UserFriendlyException($"Sản phẩm '{product.Name}' chưa được duyệt.");
         }
 
-        var remaining = requiredBaseQuantity;
+        decimal remaining = requiredBaseQuantity;
         DateTime now = DateTime.Now;
 
         var query =
@@ -323,7 +323,7 @@ public class TicketManager : DomainService
                 break;
             }
 
-            var take = Math.Min(stock.bal.Quantity - stock.bal.LockedQuantity, remaining);
+            decimal take = Math.Min(stock.bal.Quantity - stock.bal.LockedQuantity, remaining);
             detailsToReturn.Add(new InventoryTicketDetail(
                 GuidGenerator.Create(), ticket.Id, productId,
                 stock.bat.Id, stock.bin.Id, product.BaseUnitId, 1, take));

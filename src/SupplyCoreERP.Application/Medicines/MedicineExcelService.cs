@@ -202,7 +202,7 @@ public class MedicineExcelService : SupplyCore
         List<string> errors = new();
         List<MedicineImportedItem> importedItems = new();
 
-        var rowIndex = 1;
+        int rowIndex = 1;
 
         // Sheet 1 Danh sách thuốc
         List<MedicineImportDto> medRows = stream.Query<MedicineImportDto>("Danh sách thuốc").ToList();
@@ -243,7 +243,7 @@ public class MedicineExcelService : SupplyCore
                 // Ingredients
                 if (!string.IsNullOrWhiteSpace(row.Ingredients))
                 {
-                    foreach (var name in row.Ingredients.Split(';'))
+                    foreach (string name in row.Ingredients.Split(';'))
                     {
                         if (ingredients.TryGetValue(name.Trim().ToLower(), out Guid iId))
                         {
@@ -255,7 +255,7 @@ public class MedicineExcelService : SupplyCore
                 // Units
                 if (!string.IsNullOrWhiteSpace(row.Units))
                 {
-                    foreach (var item in row.Units.Split(';'))
+                    foreach (string item in row.Units.Split(';'))
                     {
                         Match match = Regex.Match(item.Trim(), @"^(.*?)\s*\(x(\d+)\)$");
                         if (match.Success && units.TryGetValue(match.Groups[1].Value.Trim().ToLower(), out Guid uId))
@@ -272,7 +272,7 @@ public class MedicineExcelService : SupplyCore
 
                 // Lưu mapping TempCode -> Id để Sheet giá dùng
                 // Nếu không có TempCode thì dùng Name làm key dự phòng
-                var tempKey = !string.IsNullOrWhiteSpace(row.TempCode)
+                string tempKey = !string.IsNullOrWhiteSpace(row.TempCode)
                     ? row.TempCode.Trim()
                     : row.Name.Trim();
 
@@ -318,11 +318,11 @@ public class MedicineExcelService : SupplyCore
                         continue;
                     }
 
-                    var minQty = row.MinQuantity > 0 ? row.MinQuantity : 1;
+                    int minQty = row.MinQuantity > 0 ? row.MinQuantity : 1;
 
                     // Check trùng giá
                     // Nếu giá này đã có rồi thì bỏ qua, không update đè
-                    var existsPrice = await _productPriceRepo.AnyAsync(x =>
+                    bool existsPrice = await _productPriceRepo.AnyAsync(x =>
                         x.PriceListId == plId && x.ProductId == pId &&
                         x.UnitId == uId && x.MinQuantity == minQty);
 
@@ -351,7 +351,7 @@ public class MedicineExcelService : SupplyCore
 
         if (errors.Any())
         {
-            var errorMsg = $"Kết quả nhập liệu:\n- " + string.Join("\n- ", errors.Take(15));
+            string errorMsg = $"Kết quả nhập liệu:\n- " + string.Join("\n- ", errors.Take(15));
             if (errors.Count > 15)
             {
                 errorMsg += $"\n... và {errors.Count - 15} lỗi khác.";
@@ -378,8 +378,8 @@ public class MedicineExcelService : SupplyCore
         ICellStyle headerStyle = CreateHeaderStyle(workbook);
 
         // MasterData
-        var maxRows = new[] { categories.Count, manufacturers.Count, units.Count, dosageForms.Count, priceLists.Count }.Max();
-        for (var i = 0; i < maxRows; i++)
+        int maxRows = new[] { categories.Count, manufacturers.Count, units.Count, dosageForms.Count, priceLists.Count }.Max();
+        for (int i = 0; i < maxRows; i++)
         {
             IRow row = sheetData.CreateRow(i);
             if (i < categories.Count)
@@ -420,7 +420,7 @@ public class MedicineExcelService : SupplyCore
         workbook.SetSheetHidden(workbook.GetSheetIndex("MasterData"), true);
 
         // Sheet 1
-        var headers1 = new[]
+        string[] headers1 = new[]
         {
             "Mã tạm",           // 0
             "Tên thuốc",        // 1
@@ -437,7 +437,7 @@ public class MedicineExcelService : SupplyCore
         };
 
         // Tooltip hover vào header để biết cách điền
-        var tooltips1 = new[]
+        string[] tooltips1 = new[]
         {
             "Mã tạm do bạn tự đặt, dùng để ghép với Sheet 'Bảng giá'.\nVD: MED001, PANADOL_1",
             "Tên thuốc. Bắt buộc điền.",
@@ -455,7 +455,7 @@ public class MedicineExcelService : SupplyCore
 
         IRow headerRow1 = sheetMain.CreateRow(0);
 
-        for (var i = 0; i < headers1.Length; i++)
+        for (int i = 0; i < headers1.Length; i++)
         {
             ICell cell = headerRow1.CreateCell(i);
             cell.SetCellValue(headers1[i]);
@@ -476,7 +476,7 @@ public class MedicineExcelService : SupplyCore
         AddValidationListFromRow(sheetMain, new[] { "Có", "Không" }, 9, 1);
 
         // Sheet 2
-        var headers2 = new[]
+        string[] headers2 = new[]
         {
             "Mã tạm",       // 0
             "Bảng giá",     // 1
@@ -485,7 +485,7 @@ public class MedicineExcelService : SupplyCore
             "SL tối thiểu"  // 4
         };
 
-        var tooltips2 = new[]
+        string[] tooltips2 = new[]
         {
             "Điền Mã tạm giống Sheet 'Danh sách thuốc'.\nChọn từ dropdown để tránh nhập sai.",
             "Chọn từ danh sách dropdown.",
@@ -496,7 +496,7 @@ public class MedicineExcelService : SupplyCore
 
         IRow headerRow2 = sheetPrice.CreateRow(0);
 
-        for (var i = 0; i < headers2.Length; i++)
+        for (int i = 0; i < headers2.Length; i++)
         {
             ICell cell = headerRow2.CreateCell(i);
             cell.SetCellValue(headers2[i]);
@@ -547,12 +547,12 @@ public class MedicineExcelService : SupplyCore
 
         IName namedRange = wb.CreateName();
         namedRange.NameName = name;
-        var colLetter = CellReference.ConvertNumToColString(colIndex);
+        string colLetter = CellReference.ConvertNumToColString(colIndex);
 
         // Excel dòng bắt đầu từ 1. 
         // Header ở row 0 -> Data bắt đầu từ row 1 (Excel gọi là dòng 2)
-        var excelStartRow = startRow + 1;
-        var excelEndRow = startRow + (count > 0 ? count : 1000); // Nếu count=0 thì mặc định 1000 dòng cho cột Mã tạm
+        int excelStartRow = startRow + 1;
+        int excelEndRow = startRow + (count > 0 ? count : 1000); // Nếu count=0 thì mặc định 1000 dòng cho cột Mã tạm
 
         namedRange.RefersToFormula = $"'{sheetName}'!${colLetter}${excelStartRow}:${colLetter}${excelEndRow}";
     }
@@ -596,7 +596,7 @@ public class MedicineExcelService : SupplyCore
             return false; // Mặc định false
         }
 
-        var s = input.ToLower().Trim();
+        string s = input.ToLower().Trim();
         return s == "có" || s == "true" || s == "1" || s == "yes" || s.Contains("hoạt động");
     }
 
@@ -607,7 +607,7 @@ public class MedicineExcelService : SupplyCore
             return UsageRoute.Oral; // Mặc định Uống
         }
 
-        var s = input.ToLower().Trim();
+        string s = input.ToLower().Trim();
         if (s.Contains("tiêm"))
         {
             return UsageRoute.Injection;
@@ -633,7 +633,7 @@ public class MedicineExcelService : SupplyCore
             return StorageCondition.Normal; // Mặc định Bình thường
         }
 
-        var s = input.ToLower().Trim();
+        string s = input.ToLower().Trim();
         if (s.Contains("mát"))
         {
             return StorageCondition.Cool;

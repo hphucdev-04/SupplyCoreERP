@@ -18,7 +18,7 @@ public class DocumentSequenceManager : DomainService
     [UnitOfWork]
     public async Task<string> GenerateAsync(string prefix)
     {
-        var todayStr = DateTime.Now.ToString("yyMMdd");
+        string todayStr = DateTime.Now.ToString("yyMMdd");
 
         // Tìm bản ghi sequence cho loại chứng từ này
         DocumentSequence? sequence = await _sequenceRepo.FirstOrDefaultAsync(x => x.DocumentType == prefix);

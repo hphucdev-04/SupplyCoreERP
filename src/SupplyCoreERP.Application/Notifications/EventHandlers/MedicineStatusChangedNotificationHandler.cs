@@ -21,8 +21,8 @@ public class MedicineStatusChangedNotificationHandler
 
     public async Task HandleEventAsync(MedicineStatusChangedDomainEvent eventData)
     {
-        var isApproved = eventData.NewStatus == MedicineStatus.Approved;
-        var statusText = isApproved ? "được duyệt" : "bị từ chối";
+        bool isApproved = eventData.NewStatus == MedicineStatus.Approved;
+        string statusText = isApproved ? "được duyệt" : "bị từ chối";
 
         await _backgroundJobManager.EnqueueAsync(new NotificationSentJobArgs
         {
