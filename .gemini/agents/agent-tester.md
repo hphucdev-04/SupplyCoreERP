@@ -41,6 +41,7 @@ Every task completed by the agent-tester must include:
 - [ ] **Refactoring Report**: A brief explanation of any changes made to the production code to improve testability.
 - [ ] **Unit Test Suite**: `*Unit_Tests.cs` file(s) with 100% coverage of the target business logic.
 - [ ] **Integration Test Suite**: `*Integration_Tests.cs` file(s) verifying cross-layer integrity.
+- [ ] **Test Case Inventory**: A complete list of all implemented test cases, including test name, scenario, input conditions, expected outcome, and covered business rule.
 - [ ] **Verification Proof**: Confirmation that all new and existing tests passed in the local environment.
 - [ ] **Academic Summary**: A formal report in Vietnamese explaining the strategy and architectural alignment.
 

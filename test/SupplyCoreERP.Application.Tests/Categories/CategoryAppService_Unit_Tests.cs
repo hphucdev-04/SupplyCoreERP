@@ -52,5 +52,45 @@ namespace SupplyCoreERP.Categories
             await _mockCategoryRepo.Received(1).InsertAsync(category, autoSave: true);
             _mockObjectMapper.Received(1).Map<Category, CategoryDto>(category);
         }
+
+        [Fact]
+        public async Task UpdateAsync_Should_Call_Manager_And_Repository()
+        {
+            // Arrange
+            var categoryId = Guid.NewGuid();
+            var input = new CreateUpdateCategoryDto { Name = "Updated Category" };
+            var category = new Category(categoryId, "Old Category");
+            var categoryDto = new CategoryDto { Id = categoryId, Name = input.Name };
+
+            _mockCategoryRepo.GetAsync(categoryId).Returns(Task.FromResult(category));
+            _mockObjectMapper.Map<Category, CategoryDto>(category).Returns(categoryDto);
+
+            // Act
+            var result = await _categoryAppService.UpdateAsync(categoryId, input);
+
+            // Assert
+            result.ShouldNotBeNull();
+            result.Name.ShouldBe(input.Name);
+
+            await _mockCategoryRepo.Received(1).GetAsync(categoryId);
+            await _mockCategoryManager.Received(1).UpdateAsync(category, input.Name);
+            await _mockCategoryRepo.Received(1).UpdateAsync(category, autoSave: true);
+        }
+
+        [Fact]
+        public async Task DeleteAsync_Should_Call_Manager()
+        {
+            // Arrange
+            var categoryId = Guid.NewGuid();
+            var category = new Category(categoryId, "Category to Delete");
+            _mockCategoryRepo.GetAsync(categoryId).Returns(Task.FromResult(category));
+
+            // Act
+            await _categoryAppService.DeleteAsync(categoryId);
+
+            // Assert
+            await _mockCategoryRepo.Received(1).GetAsync(categoryId);
+            await _mockCategoryManager.Received(1).DeleteAsync(category);
+        }
     }
 }
