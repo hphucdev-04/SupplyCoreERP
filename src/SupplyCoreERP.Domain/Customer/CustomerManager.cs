@@ -44,7 +44,7 @@ public class CustomerManager : DomainService
         decimal debtLimit = 0, int paymentTermDays = 0, Guid? priceListId = null)
     {
 
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeCustomer);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeCustomer);
 
         await CheckCodeAndNameAsync(code, name);
         await CheckPhoneNumberExistsAsync(phoneNumber);
@@ -154,8 +154,8 @@ public class CustomerManager : DomainService
         Check.NotNullOrWhiteSpace(code, nameof(code));
         Check.NotNullOrWhiteSpace(name, nameof(name));
 
-        var normalizedCode = code.Trim().ToUpper();
-        var normalizedName = name.Trim();
+        string normalizedCode = code.Trim().ToUpper();
+        string normalizedName = name.Trim();
 
         // Check Code
         if (await _customerRepository.AnyAsync(x => x.Code == normalizedCode && x.Id != excludeId))

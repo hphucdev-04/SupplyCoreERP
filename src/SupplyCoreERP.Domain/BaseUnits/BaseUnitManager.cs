@@ -35,7 +35,7 @@ public class BaseUnitManager : DomainService
     {
         Check.NotNullOrWhiteSpace(name, nameof(name));
 
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeUnit);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeUnit);
 
         if (await _repository.AnyAsync(x => x.Code == code))
         {
@@ -57,14 +57,14 @@ public class BaseUnitManager : DomainService
         Check.NotNull(unit, nameof(unit));
 
         //Check sản phẩm nào dùng làm Unit gốc (BaseUnit) không?
-        var isUsedAsBase = await _productRepository.AnyAsync(x => x.BaseUnitId == unit.Id);
+        bool isUsedAsBase = await _productRepository.AnyAsync(x => x.BaseUnitId == unit.Id);
         if (isUsedAsBase)
         {
             throw new UserFriendlyException($"Không thể xóa đơn vị '{unit.Name}' vì đang là đơn vị gốc của một số sản phẩm!");
         }
 
         //Check sản phẩm nào dùng làm Unit quy đổi (trong bảng ProductUnit) không?
-        var isUsedAsConversion = await _productUnitRepository.AnyAsync(x => x.UnitId == unit.Id);
+        bool isUsedAsConversion = await _productUnitRepository.AnyAsync(x => x.UnitId == unit.Id);
         if (isUsedAsConversion)
         {
             throw new UserFriendlyException($"Không thể xóa đơn vị '{unit.Name}' vì đang được dùng làm đơn vị quy đổi!");

@@ -36,7 +36,7 @@ public class CategoryManager_Unit_Tests
     public async Task CreateAsync_ValidName_ShouldCreateCategory()
     {
         // Arrange
-        var categoryName = "New Category";
+        string categoryName = "New Category";
         var expectedGuid = Guid.NewGuid();
 
         _mockGuidGenerator.Create().Returns(expectedGuid);
@@ -58,7 +58,7 @@ public class CategoryManager_Unit_Tests
     public async Task CreateAsync_DuplicateName_ShouldThrowException()
     {
         // Arrange
-        var duplicateName = "Existing Category";
+        string duplicateName = "Existing Category";
         _mockCategoryRepo.IsNameExistsAsync(duplicateName).Returns(Task.FromResult(true));
 
         // Act & Assert
@@ -79,7 +79,7 @@ public class CategoryManager_Unit_Tests
     {
         // Arrange
         var category = new Category(Guid.NewGuid(), "Old Name");
-        var newName = "New Name";
+        string newName = "New Name";
 
         _mockCategoryRepo.IsNameExistsAsync(newName.Trim(), category.Id).Returns(Task.FromResult(false));
 
@@ -96,7 +96,7 @@ public class CategoryManager_Unit_Tests
     {
         // Arrange
         var category = new Category(Guid.NewGuid(), "Electronics");
-        var existingName = "Software";
+        string existingName = "Software";
 
         _mockCategoryRepo.IsNameExistsAsync(existingName, category.Id).Returns(Task.FromResult(true));
 

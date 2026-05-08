@@ -64,7 +64,7 @@ public class SalesOrderManager : DomainService
             throw new UserFriendlyException($"Khách hàng '{customer.Name}' đang bị khóa!");
         }
 
-        var code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeCustomer);
+        string code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeCustomer);
 
         DateTime? finalDueDate = inputDueDate
             ?? (customer.PaymentTermDays > 0 ? orderDate.AddDays(customer.PaymentTermDays) : null);
@@ -103,7 +103,7 @@ public class SalesOrderManager : DomainService
         }
 
         Customer customer = await _customerRepo.GetAsync(order.CustomerId);
-        var price = await _priceManager.GetOfficialPriceAsync(customer.PriceListId, productId, unitId, quantity);
+        decimal price = await _priceManager.GetOfficialPriceAsync(customer.PriceListId, productId, unitId, quantity);
 
         order.AddDetail(GuidGenerator.Create(), productId, unitId, conversionFactor, quantity, price, discountRate, taxRate);
     }
@@ -115,7 +115,7 @@ public class SalesOrderManager : DomainService
             ?? throw new UserFriendlyException("Không tìm thấy dòng chi tiết.");
 
         Customer customer = await _customerRepo.GetAsync(order.CustomerId);
-        var newPrice = await _priceManager.GetOfficialPriceAsync(
+        decimal newPrice = await _priceManager.GetOfficialPriceAsync(
             customer.PriceListId, detail.ProductId, detail.UnitId, quantity);
 
         order.UpdateDetail(detailId, quantity, newPrice, discountRate, taxRate);
@@ -162,7 +162,7 @@ public class SalesOrderManager : DomainService
         }
 
         DateTime today = DateTime.Now.Date;
-        var hasOverdue = await _orderRepo.AnyAsync(x =>
+        bool hasOverdue = await _orderRepo.AnyAsync(x =>
             x.CustomerId == order.CustomerId &&
             x.Status == SalesOrderStatus.Completed &&
             x.DueDate.HasValue && x.DueDate.Value.Date < today);
@@ -179,7 +179,7 @@ public class SalesOrderManager : DomainService
 
         foreach (SalesOrderDetail item in order.Details)
         {
-            var totalAvailable = balances
+            decimal totalAvailable = balances
                 .Where(x => x.ProductId == item.ProductId)
                 .Sum(x => x.AvailableQuantity);
 

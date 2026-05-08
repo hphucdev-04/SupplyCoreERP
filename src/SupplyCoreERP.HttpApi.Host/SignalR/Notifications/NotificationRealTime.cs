@@ -26,7 +26,7 @@ public class NotificationRealTime : INotificationRealTime, ITransientDependency
     public async Task SendToPermissionGroupsAsync(
         IEnumerable<string> permissions, NotificationDto dto)
     {
-        foreach (var perm in permissions)
+        foreach (string perm in permissions)
         {
             await _hubContext.Clients
                 .Group(perm)

@@ -31,7 +31,7 @@ public class ProductBatchAppService : SupplyCore, IProductBatchAppService
             .WhereIf(input.SupplierId.HasValue, x => x.SupplierId == input.SupplierId)
             .WhereIf(input.Status.HasValue, x => x.Status == input.Status);
 
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
         List<ProductBatch> items = await AsyncExecuter.ToListAsync(
             query.OrderBy(string.IsNullOrWhiteSpace(input.Sorting) ? "CreationTime DESC" : input.Sorting)
                  .Skip(input.SkipCount)

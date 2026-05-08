@@ -55,7 +55,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
             .WhereIf(input.Status.HasValue, x => x.Status == input.Status)
             .WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId);
 
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
 
         query = query
             .OrderBy(input.Sorting ?? nameof(InventoryTicket.CreationTime) + " DESC")

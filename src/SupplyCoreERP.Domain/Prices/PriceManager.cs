@@ -34,7 +34,7 @@ public class PriceManager : DomainService
         }
 
         //Một bảng giá + Một thuốc + Một đơn vị + Một mức số lượng -> Chỉ có 1 giá duy nhất
-        var exists = await _productPriceRepository.AnyAsync(x =>
+        bool exists = await _productPriceRepository.AnyAsync(x =>
             x.PriceListId == priceListId &&
             x.ProductId == productId &&
             x.UnitId == unitId &&

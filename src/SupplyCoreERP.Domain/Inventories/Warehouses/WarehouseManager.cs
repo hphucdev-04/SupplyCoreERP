@@ -37,7 +37,7 @@ public class WarehouseManager : DomainService
     #region Warehouse
     public async Task<Warehouse> CreateAsync(string name, string? address, Guid? countryId, Guid? cityId, Guid? areaId, int width, int length)
     {
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeWarehouse);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeWarehouse);
 
         if (await _warehouseRepo.AnyAsync(x => x.Code == code))
         {
@@ -70,7 +70,7 @@ public class WarehouseManager : DomainService
     #region Zone
     public async Task<Zone> CreateZoneAsync(Guid warehouseId, string name, ZoneType type, StorageCondition condition, string color, int x, int y, int w, int l, float rotation)
     {
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeZone);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeZone);
 
         if (await _zoneRepo.AnyAsync(z => z.WarehouseId == warehouseId && z.Code == code))
         {
@@ -109,7 +109,7 @@ public class WarehouseManager : DomainService
             throw new UserFriendlyException("Dữ liệu không hợp lệ: Zone không thuộc Warehouse này!");
         }
 
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeBin);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeBin);
 
         if (await _binRepo.AnyAsync(b => b.WarehouseId == warehouseId && b.Code == code))
         {
@@ -135,7 +135,7 @@ public class WarehouseManager : DomainService
         // Nếu giảm MaxSKU xuống thấp hơn số SKU đang có → cảnh báo
         if (maxSKU > 0)
         {
-            var usedSKU = await _balanceRepo.CountAsync(b => b.BinId == bin.Id && b.Quantity > 0);
+            int usedSKU = await _balanceRepo.CountAsync(b => b.BinId == bin.Id && b.Quantity > 0);
             if (maxSKU < usedSKU)
             {
                 throw new UserFriendlyException(

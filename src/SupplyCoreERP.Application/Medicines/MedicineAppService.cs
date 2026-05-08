@@ -50,7 +50,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             .WhereIf(input.ManufacturerId.HasValue, x => x.ManufacturerId == input.ManufacturerId);
 
         //Sort & Paging
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
 
         query = query
             .OrderBy(input.Sorting ?? nameof(Medicine.CreationTime) + " DESC")

@@ -54,7 +54,7 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
             .WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
             .WhereIf(input.Status.HasValue, x => x.Status == input.Status);
 
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
 
         query = query
             .OrderBy(input.Sorting ?? nameof(PurchaseOrder.CreationTime) + " DESC")

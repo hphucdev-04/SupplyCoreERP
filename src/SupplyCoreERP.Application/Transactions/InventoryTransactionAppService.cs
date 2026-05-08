@@ -49,7 +49,7 @@ public class InventoryTransactionAppService : SupplyCore, IInventoryTransactionA
             .WhereIf(input.FromDate.HasValue, x => x.CreationTime >= input.FromDate.Value)
             .WhereIf(input.ToDate.HasValue, x => x.CreationTime <= input.ToDate.Value);
 
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
 
         List<InventoryTransaction> items = await AsyncExecuter.ToListAsync(
             query.OrderBy(string.IsNullOrWhiteSpace(input.Sorting) ? "CreationTime DESC" : input.Sorting)

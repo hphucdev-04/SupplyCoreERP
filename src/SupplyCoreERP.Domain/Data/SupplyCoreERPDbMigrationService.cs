@@ -37,7 +37,7 @@ public class SupplyCoreERPDbMigrationService : ITransientDependency
 
     public async Task MigrateAsync()
     {
-        var initialMigrationAdded = AddInitialMigrationIfNotExist();
+        bool initialMigrationAdded = AddInitialMigrationIfNotExist();
 
         if (initialMigrationAdded)
         {
@@ -107,14 +107,14 @@ public class SupplyCoreERPDbMigrationService : ITransientDependency
 
     private bool DbMigrationsProjectExists()
     {
-        var dbMigrationsProjectFolder = GetEntityFrameworkCoreProjectFolderPath();
+        string? dbMigrationsProjectFolder = GetEntityFrameworkCoreProjectFolderPath();
 
         return dbMigrationsProjectFolder != null;
     }
 
     private bool MigrationsFolderExists()
     {
-        var dbMigrationsProjectFolder = GetEntityFrameworkCoreProjectFolderPath();
+        string? dbMigrationsProjectFolder = GetEntityFrameworkCoreProjectFolderPath();
 
         return dbMigrationsProjectFolder != null && Directory.Exists(Path.Combine(dbMigrationsProjectFolder, "Migrations"));
     }
@@ -153,14 +153,14 @@ public class SupplyCoreERPDbMigrationService : ITransientDependency
 
     private string? GetEntityFrameworkCoreProjectFolderPath()
     {
-        var slnDirectoryPath = GetSolutionDirectoryPath();
+        string? slnDirectoryPath = GetSolutionDirectoryPath();
 
         if (slnDirectoryPath == null)
         {
             throw new Exception("Solution folder not found!");
         }
 
-        var srcDirectoryPath = Path.Combine(slnDirectoryPath, "src");
+        string srcDirectoryPath = Path.Combine(slnDirectoryPath, "src");
 
         return Directory.GetDirectories(srcDirectoryPath)
             .FirstOrDefault(d => d.EndsWith(".EntityFrameworkCore"));

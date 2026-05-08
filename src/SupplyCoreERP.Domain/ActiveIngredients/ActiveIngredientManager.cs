@@ -29,7 +29,7 @@ public class ActiveIngredientManager : DomainService
 
     public async Task<ActiveIngredient> CreateAsync(string name)
     {
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeIngredient);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeIngredient);
 
         if (await _repository.AnyAsync(x => x.Code == code))
         {
@@ -47,7 +47,7 @@ public class ActiveIngredientManager : DomainService
     public async Task DeleteAsync(ActiveIngredient entity)
     {
         //Check xem có thuốc nào đang dùng hoạt chất này không
-        var isUsed = await _medIngredientRepo.AnyAsync(x => x.ActiveIngredientId == entity.Id);
+        bool isUsed = await _medIngredientRepo.AnyAsync(x => x.ActiveIngredientId == entity.Id);
 
         if (isUsed)
         {

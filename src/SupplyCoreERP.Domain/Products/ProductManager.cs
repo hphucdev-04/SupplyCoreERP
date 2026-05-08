@@ -18,7 +18,7 @@ public class ProductManager : DomainService
     public async Task CheckCodeAsync(string code, Guid? excludeId = null)
     {
         Check.NotNullOrWhiteSpace(code, nameof(code));
-        var normalizedCode = code.Trim().ToUpper();
+        string normalizedCode = code.Trim().ToUpper();
 
 
         // Check Code
