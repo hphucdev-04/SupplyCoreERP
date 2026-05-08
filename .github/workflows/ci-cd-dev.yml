@@ -19,7 +19,7 @@ jobs:
           dotnet-version: '10.0.x'
 
       - name: Verify Format
-        run: dotnet format --verify-no-changes --severity warning
+        run: dotnet format --verify-no-changes --severity warn
 
   build-and-test:
     name: Build & Test (Full Stack)
