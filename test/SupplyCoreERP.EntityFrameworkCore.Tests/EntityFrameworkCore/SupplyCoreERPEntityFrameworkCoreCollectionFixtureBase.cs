@@ -1,4 +1,4 @@
-﻿using SupplyCoreERP.EntityFrameworkCore;
+using SupplyCoreERP.EntityFrameworkCore;
 using Xunit;
 
 namespace SupplyCoreERP.EntityFrameworkCore;

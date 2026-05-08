@@ -1,22 +1,21 @@
-﻿using MiniExcelLibs.Attributes;
+using MiniExcelLibs.Attributes;
 
-namespace SupplyCoreERP.Medicines.Dtos
+namespace SupplyCoreERP.Medicines.Dtos;
+
+public class MedicinePriceImportDto
 {
-	public class MedicinePriceImportDto
-	{
-		[ExcelColumnName("Mã thuốc")]
-		public string MedicineCode { get; set; }
+    [ExcelColumnName("Mã thuốc")]
+    public string MedicineCode { get; set; }
 
-		[ExcelColumnName("Bảng giá")]
-		public string PriceListName { get; set; }
+    [ExcelColumnName("Bảng giá")]
+    public string PriceListName { get; set; }
 
-		[ExcelColumnName("Đơn vị tính")]
-		public string UnitName { get; set; }
+    [ExcelColumnName("Đơn vị tính")]
+    public string UnitName { get; set; }
 
-		[ExcelColumnName("Giá bán")]
-		public decimal Price { get; set; }
+    [ExcelColumnName("Giá bán")]
+    public decimal Price { get; set; }
 
-		[ExcelColumnName("SL tối thiểu")]
-		public int MinQuantity { get; set; }
-	}
+    [ExcelColumnName("SL tối thiểu")]
+    public int MinQuantity { get; set; }
 }

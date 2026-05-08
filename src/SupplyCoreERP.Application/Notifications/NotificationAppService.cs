@@ -1,10 +1,10 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using SupplyCoreERP.Enums.Notificaitons;
-using SupplyCoreERP.Notifications.Dtos;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using SupplyCoreERP.Enums.Notificaitons;
+using SupplyCoreERP.Notifications.Dtos;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Authorization.Permissions;
@@ -68,13 +68,17 @@ public class NotificationAppService : SupplyCore, INotificationAppService
         Guid userId = _currentUser.GetId();
 
         List<string> grantedPerms = new();
-        foreach (string perm in new[]
+        foreach (var perm in new[]
         {
             Catalog.Medicine.Approve,
             Catalog.Medicine.Reject
         })
+        {
             if (await _permissionChecker.IsGrantedAsync(perm))
+            {
                 grantedPerms.Add(perm);
+            }
+        }
 
         // Lấy các notification user này đã xóa
         HashSet<Guid> deletedIds = (await _userNotifRepo
@@ -86,7 +90,9 @@ public class NotificationAppService : SupplyCore, INotificationAppService
             .Where(n => n.Level == NotificationLevel.Global || n.Level == NotificationLevel.Permission);
 
         if (input.Level.HasValue)
+        {
             query = query.Where(n => n.Level == input.Level.Value);
+        }
 
         query = query.OrderByDescending(n => n.CreationTime);
 
@@ -101,7 +107,7 @@ public class NotificationAppService : SupplyCore, INotificationAppService
                  && n.TargetPermissions.Any(p => grantedPerms.Contains(p))))
             .ToList();
 
-        int total = filtered.Count;
+        var total = filtered.Count;
 
         List<Notification> items = filtered
             .Skip(input.SkipCount)
@@ -121,10 +127,14 @@ public class NotificationAppService : SupplyCore, INotificationAppService
             .ToHashSet();
 
         foreach (NotificationDto dto in dtos)
+        {
             dto.IsRead = readIds.Contains(dto.Id);
+        }
 
         if (input.IsRead.HasValue)
+        {
             dtos = dtos.Where(x => x.IsRead == input.IsRead.Value).ToList();
+        }
 
         return new PagedResultDto<NotificationDto>(total, dtos);
     }

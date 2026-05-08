@@ -1,4 +1,4 @@
-﻿using SupplyCoreERP.EntityFrameworkCore;
+using SupplyCoreERP.EntityFrameworkCore;
 using Volo.Abp.Autofac;
 using Volo.Abp.Modularity;
 

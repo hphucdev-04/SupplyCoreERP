@@ -1,10 +1,9 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
 
-namespace SupplyCoreERP.Tickets.Dtos
+namespace SupplyCoreERP.Tickets.Dtos;
+
+public class UpdateInventoryTicketDto
 {
-	public class UpdateInventoryTicketDto
-	{
-		[MaxLength(1000)]
-		public string? Note { get; set; }
-	}
+    [MaxLength(1000)]
+    public string? Note { get; set; }
 }

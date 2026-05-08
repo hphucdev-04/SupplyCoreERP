@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Notifications;
@@ -27,7 +27,11 @@ public class UserNotification : CreationAuditedEntity<Guid>
 
     public void MarkAsRead()
     {
-        if (IsRead) return;
+        if (IsRead)
+        {
+            return;
+        }
+
         IsRead = true;
         ReadAt = DateTime.UtcNow;
     }

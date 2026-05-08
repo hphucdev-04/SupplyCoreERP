@@ -1,8 +1,7 @@
-﻿namespace SupplyCoreERP.Enums.Notificaitons
+namespace SupplyCoreERP.Enums.Notificaitons;
+
+public enum NotificationLevel
 {
-    public enum NotificationLevel
-    {
-        Global = 0,
-        Permission = 1
-    }
+    Global = 0,
+    Permission = 1
 }

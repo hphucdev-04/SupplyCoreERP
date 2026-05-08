@@ -1,8 +1,7 @@
-﻿namespace SupplyCoreERP.Enums.Partner
+namespace SupplyCoreERP.Enums.Partner;
+
+public enum Gender
 {
-    public enum Gender
-    {
-        Male = 0,
-        Female = 1,
-    }
+    Male = 0,
+    Female = 1,
 }

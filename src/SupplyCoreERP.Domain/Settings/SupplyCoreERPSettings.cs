@@ -1,4 +1,4 @@
-﻿namespace SupplyCoreERP.Settings;
+namespace SupplyCoreERP.Settings;
 
 public static class SupplyCoreERPSettings
 {

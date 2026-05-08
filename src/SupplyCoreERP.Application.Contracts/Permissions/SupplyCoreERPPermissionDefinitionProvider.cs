@@ -1,4 +1,4 @@
-﻿using SupplyCoreERP.Localization;
+using SupplyCoreERP.Localization;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Localization;
 
@@ -67,7 +67,6 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
             L("Permission:Inventory.Warehous.Reject")
         );
 
-        // Batch
         AddCrudPermissions(inventoryGroup, SupplyCoreERPPermissions.Inventory.Batch.Default, "Batch");
 
         // Ticket

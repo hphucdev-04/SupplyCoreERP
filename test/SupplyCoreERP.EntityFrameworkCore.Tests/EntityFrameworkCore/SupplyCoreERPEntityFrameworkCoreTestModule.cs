@@ -1,4 +1,4 @@
-﻿using Microsoft.Data.Sqlite;
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage;
@@ -63,7 +63,7 @@ public class SupplyCoreERPEntityFrameworkCoreTestModule : AbpModule
         var connection = new SqliteConnection("Data Source=:memory:");
         connection.Open();
 
-        var options = new DbContextOptionsBuilder<SupplyCoreERPDbContext>()
+        DbContextOptions<SupplyCoreERPDbContext> options = new DbContextOptionsBuilder<SupplyCoreERPDbContext>()
             .UseSqlite(connection)
             .Options;
 

@@ -1,7 +1,6 @@
-﻿namespace SupplyCoreERP.Notifications.Jobs
+namespace SupplyCoreERP.Notifications.Jobs;
+
+public class NotificationCleanupJobArgs
 {
-    public class NotificationCleanupJobArgs
-    {
-        public int RetentionDays { get; set; } = 30;
-    }
+    public int RetentionDays { get; set; } = 30;
 }

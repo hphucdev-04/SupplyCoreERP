@@ -1,12 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 using Volo.Abp.Application.Dtos;
 
-namespace SupplyCoreERP.Categories.Dtos
+namespace SupplyCoreERP.Categories.Dtos;
+
+public class GetCategoryListDto : PagedAndSortedResultRequestDto
 {
-	public class GetCategoryListDto : PagedAndSortedResultRequestDto
-	{
-		public string? Filter { get; set; }
-	}
+    public string? Filter { get; set; }
 }

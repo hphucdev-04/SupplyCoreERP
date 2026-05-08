@@ -1,8 +1,8 @@
-﻿using SupplyCoreERP.Enums.Medicines;
+using System.Threading.Tasks;
+using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Enums.Notificaitons;
 using SupplyCoreERP.Medicines.Events;
 using SupplyCoreERP.Notifications.Jobs;
-using System.Threading.Tasks;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus;
@@ -21,8 +21,8 @@ public class MedicineStatusChangedNotificationHandler
 
     public async Task HandleEventAsync(MedicineStatusChangedDomainEvent eventData)
     {
-        bool isApproved = eventData.NewStatus == MedicineStatus.Approved;
-        string statusText = isApproved ? "được duyệt" : "bị từ chối";
+        var isApproved = eventData.NewStatus == MedicineStatus.Approved;
+        var statusText = isApproved ? "được duyệt" : "bị từ chối";
 
         await _backgroundJobManager.EnqueueAsync(new NotificationSentJobArgs
         {

@@ -1,4 +1,4 @@
-﻿namespace SupplyCoreERP.MultiTenancy;
+namespace SupplyCoreERP.MultiTenancy;
 
 public static class MultiTenancyConsts
 {

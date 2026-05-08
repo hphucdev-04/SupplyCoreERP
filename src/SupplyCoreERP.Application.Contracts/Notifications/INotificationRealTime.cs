@@ -1,12 +1,11 @@
-﻿using SupplyCoreERP.Notifications.Dtos;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SupplyCoreERP.Notifications.Dtos;
 
-namespace SupplyCoreERP.Notifications
+namespace SupplyCoreERP.Notifications;
+
+public interface INotificationRealTime
 {
-    public interface INotificationRealTime
-    {
-        Task SendToGlobalAsync(NotificationDto dto);
-        Task SendToPermissionGroupsAsync(IEnumerable<string> permissions, NotificationDto dto);
-    }
+    Task SendToGlobalAsync(NotificationDto dto);
+    Task SendToPermissionGroupsAsync(IEnumerable<string> permissions, NotificationDto dto);
 }
