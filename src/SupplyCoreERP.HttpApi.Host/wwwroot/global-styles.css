@@ -1,8 +1,8 @@
 :root {
-    --lpx-logo: url('/images/logo/leptonxlite/logo-light-thumbnail.png');
-    --lpx-logo-icon: url('/images/logo/leptonxlite/logo-light-thumbnail.png');
+    --lpx-logo: url('/images/logo/leptonxlite/logo.png');
+    --lpx-logo-icon: url('/images/logo/leptonxlite/logo.png');
 }
 :root .abp-account-layout .lpx-brand-logo{
-    --lpx-logo: url('/images/logo/leptonxlite/logo-dark-thumbnail.png');
+    --lpx-logo: url('/images/logo/leptonxlite/logo.png');
     background-position: left;
 }

@@ -1,0 +1,255 @@
+﻿@page
+@using SupplyCoreERP.Localization
+@using Volo.Abp.Account.Web.Pages.Account
+@using Microsoft.AspNetCore.Mvc.Localization
+@using Volo.Abp.Account.Localization
+@model SupplyCoreERP.Pages.Account.LoginModel
+@inject IHtmlLocalizer<SupplyCoreERPResource> L
+@{
+    Layout = "Shared/_AccountLayout";
+    ViewData["Title"] = L["Login"].Value;
+}
+
+<div class="erp-login-layout">
+    
+    <!-- BRANDING SECTION (CỘT TRÁI) -->
+    <div class="erp-login-brand">
+        <div class="brand-content">
+            <div class="brand-logo">
+                <img src="~/images/logo/leptonxlite/logo.png" alt="RxLogistics Logo"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
+                <i class="fas fa-cube" style="display:none;"></i>
+            </div>
+            <h1 class="brand-title">@L["Brand:AppName"]</h1>
+            <p class="brand-subtitle">
+                @L["Brand:AppDesc"]
+            </p>
+        </div>
+        <div class="brand-pattern"></div>
+    </div>
+
+    <!-- FORM SECTION (CỘT PHẢI) -->
+    <div class="erp-login-container">
+        
+        <!-- LANGUAGE SELECTOR -->
+        <div class="language-switcher">
+            <button type="button" class="lang-btn" onclick="toggleLanguageDropdown(event)">
+                <i class="fas fa-globe"></i>
+                <span class="lang-label">Tiếng Việt</span>
+                <i class="fas fa-chevron-down chevron"></i>
+            </button>
+            <div class="lang-menu" id="langDropdown">
+                <a href="?culture=en-US&ReturnUrl=@(Uri.EscapeDataString(Model.ReturnUrl ?? ""))" class="lang-item" data-lang="en">
+                    <i class="fas fa-language"></i> <span>English / EN</span>
+                </a>
+                <a href="?culture=vi&ReturnUrl=@(Uri.EscapeDataString(Model.ReturnUrl ?? ""))" class="lang-item active" data-lang="vi">
+                    <i class="fas fa-language"></i> <span>Tiếng Việt / VI</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- FORM CARD -->
+        <div class="erp-login-card">
+            <div class="card-header">
+                <h2>@L["Login"]</h2>
+                <p>@L["Login:EnterAccountInfo"]</p>
+            </div>
+
+            <form method="post" class="erp-form">
+                @Html.AntiForgeryToken()
+
+                <!-- Tenant Selection (ABP) -->
+                <div class="form-group">
+                    <label class="form-label" for="tenantId">
+                        @L["Login:Organization"]
+                    </label>
+                    <div class="input-with-icon">
+                        <i class="fas fa-building input-icon"></i>
+                        <select id="tenantId" name="__tenant_id" class="form-control">
+                            <option value="">@L["Login:SelectOrganization"]</option>
+                            @if (Model.AvailableTenants != null && Model.AvailableTenants.Any())
+                            {
+                                @foreach (var tenant in Model.AvailableTenants)
+                                {
+                                    <option value="@tenant.Id">@tenant.Name</option>
+                                }
+                            }
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Username -->
+                <div class="form-group">
+                    <label asp-for="LoginInput.UserNameOrEmailAddress" class="form-label">
+                        @L["UserNameOrEmailAddress"]
+                    </label>
+                    <input asp-for="LoginInput.UserNameOrEmailAddress"
+                           class="form-control"
+                           placeholder="name@company.com"
+                           autocomplete="username"
+                           autofocus
+                           required />
+                    <span asp-validation-for="LoginInput.UserNameOrEmailAddress" class="form-error"></span>
+                </div>
+
+                <!-- Password -->
+                <div class="form-group">
+                    <div class="d-flex justify-content-between align-items-center mb-1">
+                        <label asp-for="LoginInput.Password" class="form-label mb-0">
+                            @L["Password"]
+                        </label>
+                        <a href="/Account/ForgotPassword" class="link-forgot">
+                            @L["ForgotPassword"]?
+                        </a>
+                    </div>
+                    <input asp-for="LoginInput.Password"
+                           type="password"
+                           class="form-control"
+                           placeholder="••••••••"
+                           autocomplete="current-password"
+                           required />
+                    <span asp-validation-for="LoginInput.Password" class="form-error"></span>
+                </div>
+
+                <!-- Remember Me -->
+                <div class="form-group form-check-group">
+                    <label class="erp-checkbox">
+                        <input asp-for="LoginInput.RememberMe" type="checkbox" id="rememberMe" />
+                        <span class="checkmark"></span>
+                        <span class="checkbox-label">@L["RememberMe"]</span>
+                    </label>
+                </div>
+
+                <!-- Submit Button -->
+                <button type="submit" name="Action" value="Login" class="btn-primary w-100">
+                    @L["Login"]
+                </button>
+
+                <!-- Register Link -->
+                <div class="register-prompt">
+                    @L["Login:NoAccount"]
+                    <a href="/Account/Register">@L["Login:RegisterNow"]</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // Tenant selection handler
+    function initTenantSelector() {
+        const tenantSelect = document.getElementById('tenantId');
+        if (!tenantSelect) return;
+
+        // Get tenant from URL or localStorage
+        const urlParams = new URLSearchParams(window.location.search);
+        const tenantIdFromUrl = urlParams.get('__tenant_id');
+
+        if (tenantIdFromUrl) {
+            tenantSelect.value = tenantIdFromUrl;
+        } else {
+            const savedTenant = localStorage.getItem('selectedTenantId');
+        if (savedTenant) {
+            tenantSelect.value = savedTenant;
+            }
+        }
+
+        // Handle tenant change
+        tenantSelect.addEventListener('change', function () {
+            const selectedTenant = this.value;
+            localStorage.setItem('selectedTenantId', selectedTenant);
+
+            // Redirect with tenant parameter
+            if (selectedTenant) {
+            const baseUrl = window.location.pathname;
+            const params = new URLSearchParams(window.location.search);
+            
+            // Get both cases just to be safe
+            const returnUrl = params.get('ReturnUrl') || params.get('returnUrl');
+            const culture = params.get('culture');
+
+            let redirectUrl = baseUrl + '?__tenant_id=' + selectedTenant;
+            
+            if (culture) {
+                redirectUrl += '&culture=' + encodeURIComponent(culture);
+            }
+            if (returnUrl) {
+                redirectUrl += '&ReturnUrl=' + encodeURIComponent(returnUrl);
+            }
+                window.location.href = redirectUrl;
+            }
+        });
+    }
+
+    function toggleLanguageDropdown(event) {
+        event.preventDefault();
+        const dropdown = document.getElementById('langDropdown');
+        const button = event.currentTarget;
+        dropdown.classList.toggle('show');
+        button.classList.toggle('active');
+    }
+
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function (event) {
+        const languageSwitcher = document.querySelector('.language-switcher');
+        const dropdown = document.getElementById('langDropdown');
+        const button = document.querySelector('.lang-btn');
+
+        if (languageSwitcher && !languageSwitcher.contains(event.target)) {
+            if (dropdown) dropdown.classList.remove('show');
+            if (button) button.classList.remove('active');
+        }
+    });
+
+    // Set active language option based on current culture
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize tenant selector
+        initTenantSelector();
+
+        // Set active language
+        const currentCulture = (window.abp && window.abp.currentLanguage) ? 
+            window.abp.currentLanguage : 
+            (document.documentElement.lang || 'vi');
+
+        const langOptions = document.querySelectorAll('.lang-item');
+        const langLabel = document.querySelector('.lang-label');
+
+        langOptions.forEach(option => {
+            if (currentCulture.startsWith(option.dataset.lang)) {
+                option.classList.add('active');
+                if (langLabel) {
+                    langLabel.textContent = option.textContent.trim();
+                }
+            } else {
+                option.classList.remove('active');
+            }
+        });
+
+        // Auto-check "Remember Me" if browser auto-filled credentials
+        const userNameInput = document.getElementById('LoginInput_UserNameOrEmailAddress');
+        const passwordInput = document.getElementById('LoginInput_Password');
+        const rememberMeCheckbox = document.getElementById('rememberMe');
+
+        if (userNameInput && passwordInput && rememberMeCheckbox) {
+            // Check if inputs have values (auto-filled by browser)
+            if (userNameInput.value && passwordInput.value && !rememberMeCheckbox.checked) {
+                rememberMeCheckbox.checked = true;
+            }
+
+            // Listen for autofill events
+            const checkRememberMe = () => {
+                if (userNameInput.value && passwordInput.value) {
+                    rememberMeCheckbox.checked = true;
+                }
+            };
+
+            // Chrome autofill detection
+            userNameInput.addEventListener('change', checkRememberMe);
+            passwordInput.addEventListener('change', checkRememberMe);
+
+            // For delayed autofill
+            setTimeout(checkRememberMe, 500);
+        }
+    });
+</script>

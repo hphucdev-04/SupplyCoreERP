@@ -1,7 +1,4 @@
 <Solution>
-    <Configurations>
-        <Platform Name="Any CPU" />
-    </Configurations>
     <Folder Name="/src/">
         <Project Path="src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.csproj" />
         <Project Path="src/SupplyCoreERP.Application/SupplyCoreERP.Application.csproj" />
