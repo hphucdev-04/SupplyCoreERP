@@ -28,58 +28,16 @@ public partial class Add_DocumentSequence_Table : Migration
             });
 
         migrationBuilder.CreateIndex(
-            name: "IX_AppSalesOrders_WarehouseId",
-            table: "AppSalesOrders",
-            column: "WarehouseId");
-
-        migrationBuilder.CreateIndex(
-            name: "IX_AppPurchaseOrders_WarehouseId",
-            table: "AppPurchaseOrders",
-            column: "WarehouseId");
-
-        migrationBuilder.CreateIndex(
             name: "IX_DocumentSequences_DocumentType",
             table: "DocumentSequences",
             column: "DocumentType",
             unique: true);
-
-        migrationBuilder.AddForeignKey(
-            name: "FK_AppPurchaseOrders_AppWarehouses_WarehouseId",
-            table: "AppPurchaseOrders",
-            column: "WarehouseId",
-            principalTable: "AppWarehouses",
-            principalColumn: "Id",
-            onDelete: ReferentialAction.Cascade);
-
-        migrationBuilder.AddForeignKey(
-            name: "FK_AppSalesOrders_AppWarehouses_WarehouseId",
-            table: "AppSalesOrders",
-            column: "WarehouseId",
-            principalTable: "AppWarehouses",
-            principalColumn: "Id",
-            onDelete: ReferentialAction.Cascade);
     }
 
     /// <inheritdoc />
     protected override void Down(MigrationBuilder migrationBuilder)
     {
-        migrationBuilder.DropForeignKey(
-            name: "FK_AppPurchaseOrders_AppWarehouses_WarehouseId",
-            table: "AppPurchaseOrders");
-
-        migrationBuilder.DropForeignKey(
-            name: "FK_AppSalesOrders_AppWarehouses_WarehouseId",
-            table: "AppSalesOrders");
-
         migrationBuilder.DropTable(
             name: "DocumentSequences");
-
-        migrationBuilder.DropIndex(
-            name: "IX_AppSalesOrders_WarehouseId",
-            table: "AppSalesOrders");
-
-        migrationBuilder.DropIndex(
-            name: "IX_AppPurchaseOrders_WarehouseId",
-            table: "AppPurchaseOrders");
     }
 }
