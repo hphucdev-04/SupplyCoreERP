@@ -30,16 +30,16 @@ namespace SupplyCoreERP.Categories
             _categoryManager = new CategoryManager(_mockCategoryRepo, _mockProductRepo, _mockGuidGenerator);
         }
 
+        #region CreateAsync Tests
+
         [Fact]
-        public async Task Should_Create_Category_When_Name_Is_Unique()
+        public async Task CreateAsync_ValidName_ShouldCreateCategory()
         {
             // Arrange
             var categoryName = "New Category";
             var expectedGuid = Guid.NewGuid();
             
             _mockGuidGenerator.Create().Returns(expectedGuid);
-            
-            // Mock phương thức tùy chỉnh: Trả về false (tên chưa tồn tại)
             _mockCategoryRepo.IsNameExistsAsync(categoryName).Returns(Task.FromResult(false));
 
             // Act
@@ -50,13 +50,12 @@ namespace SupplyCoreERP.Categories
             result.Name.ShouldBe(categoryName);
             result.Id.ShouldBe(expectedGuid);
 
-            // Kiểm tra các Dependency được gọi đúng mong đợi
             await _mockCategoryRepo.Received(1).IsNameExistsAsync(categoryName);
             _mockGuidGenerator.Received(1).Create();
         }
 
         [Fact]
-        public async Task Should_Throw_Exception_When_Creating_Duplicate_Name()
+        public async Task CreateAsync_DuplicateName_ShouldThrowException()
         {
             // Arrange
             var duplicateName = "Existing Category";
@@ -71,14 +70,71 @@ namespace SupplyCoreERP.Categories
             exception.Message.ShouldContain("đã tồn tại");
         }
 
+        #endregion
+
+        #region UpdateAsync Tests
+
         [Fact]
-        public async Task Should_Not_Allow_Deleting_Category_With_Products()
+        public async Task UpdateAsync_ValidInput_ShouldUpdateName()
+        {
+            // Arrange
+            var category = new Category(Guid.NewGuid(), "Old Name");
+            var newName = "New Name";
+            
+            _mockCategoryRepo.IsNameExistsAsync(newName.Trim(), category.Id).Returns(Task.FromResult(false));
+
+            // Act
+            await _categoryManager.UpdateAsync(category, newName);
+
+            // Assert
+            category.Name.ShouldBe(newName.Trim());
+            await _mockCategoryRepo.Received(1).IsNameExistsAsync(newName.Trim(), category.Id);
+        }
+
+        [Fact]
+        public async Task UpdateAsync_DuplicateName_ShouldThrowException()
+        {
+            // Arrange
+            var category = new Category(Guid.NewGuid(), "Electronics");
+            var existingName = "Software";
+            
+            _mockCategoryRepo.IsNameExistsAsync(existingName, category.Id).Returns(Task.FromResult(true));
+
+            // Act & Assert
+            var exception = await Should.ThrowAsync<UserFriendlyException>(async () =>
+            {
+                await _categoryManager.UpdateAsync(category, existingName);
+            });
+
+            exception.Message.ShouldContain("đã bị sử dụng");
+        }
+
+        #endregion
+
+        #region DeleteAsync Tests
+
+        [Fact]
+        public async Task DeleteAsync_NoProducts_ShouldDelete()
         {
             // Arrange
             var category = new Category(Guid.NewGuid(), "Electronics");
             
-            // Mock AnyAsync: Trả về true (có sản phẩm)
-            // Lưu ý: AnyAsync là Extension method, chúng ta dùng Arg.Any để khớp các calls
+            _mockProductRepo.AnyAsync(Arg.Any<Expression<Func<Product, bool>>>(), Arg.Any<CancellationToken>())
+                .Returns(Task.FromResult(false));
+
+            // Act
+            await _categoryManager.DeleteAsync(category);
+
+            // Assert
+            await _mockCategoryRepo.Received(1).DeleteAsync(category);
+        }
+
+        [Fact]
+        public async Task DeleteAsync_WithProducts_ShouldThrowException()
+        {
+            // Arrange
+            var category = new Category(Guid.NewGuid(), "Electronics");
+            
             _mockProductRepo.AnyAsync(Arg.Any<Expression<Func<Product, bool>>>(), Arg.Any<CancellationToken>())
                 .Returns(Task.FromResult(true));
 
@@ -90,8 +146,9 @@ namespace SupplyCoreERP.Categories
 
             exception.Message.ShouldContain("đang có sản phẩm thuộc nhóm này");
             
-            // Đảm bảo lệnh xóa KHÔNG bao giờ được gọi
             await _mockCategoryRepo.DidNotReceive().DeleteAsync(Arg.Any<Category>(), Arg.Any<bool>(), Arg.Any<CancellationToken>());
         }
+
+        #endregion
     }
 }

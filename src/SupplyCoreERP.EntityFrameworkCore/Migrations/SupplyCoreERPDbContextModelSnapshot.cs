@@ -368,11 +368,8 @@ namespace SupplyCoreERP.Migrations
                     b.HasIndex("DocumentType")
                         .IsUnique();
 
-<<<<<<< HEAD
                     b.ToTable("AppDocumentSequences", (string)null);
-=======
-                    b.ToTable("DocumentSequences", (string)null);
->>>>>>> 6689831dadc8940753843c8112e55e85efbacfe2
+
                 });
 
             modelBuilder.Entity("SupplyCoreERP.DosageForms.DosageForm", b =>
