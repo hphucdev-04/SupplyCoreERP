@@ -53,7 +53,7 @@ jobs:
 
       - name: Install Angular dependencies
         working-directory: ./angular
-        run: npm ci
+        run: npm ci --legacy-peer-deps
 
       - name: Build Angular (Production Check)
         working-directory: ./angular
