@@ -43,6 +43,22 @@ namespace SupplyCoreERP.Categories
 			return _objectMapper.Map<Category, CategoryDto>(category);
 		}
 
+		public override async Task<CategoryDto> UpdateAsync(Guid id, CreateUpdateCategoryDto input)
+		{
+			var category = await _categoryRepository.GetAsync(id);
+			
+			await _categoryManager.UpdateAsync(category, input.Name);
+			await _categoryRepository.UpdateAsync(category, autoSave: true);
+
+			return _objectMapper.Map<Category, CategoryDto>(category);
+		}
+
+		public override async Task DeleteAsync(Guid id)
+		{
+			var category = await _categoryRepository.GetAsync(id);
+			await _categoryManager.DeleteAsync(category);
+		}
+
 		protected override async Task<IQueryable<Category>> CreateFilteredQueryAsync(GetCategoryListDto input)
 		{
 			var query = await base.CreateFilteredQueryAsync(input);

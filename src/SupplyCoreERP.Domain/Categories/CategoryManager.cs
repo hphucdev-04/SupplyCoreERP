@@ -48,12 +48,7 @@ namespace SupplyCoreERP.Categories
 			var normalizedName = newName.Trim();
 
 			//  Kiểm tra trùng tên với nhóm khác
-			var isDuplicateName = await _categoryRepository.AnyAsync(x =>
-				x.Name == normalizedName &&
-				x.Id != category.Id
-			);
-
-			if (isDuplicateName)
+			if (await _categoryRepository.IsNameExistsAsync(normalizedName, category.Id))
 			{
 				throw new UserFriendlyException($"Tên nhóm '{newName}' đã bị sử dụng bởi nhóm khác!");
 			}

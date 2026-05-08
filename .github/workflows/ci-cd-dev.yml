@@ -1,0 +1,117 @@
+name: CI/CD Pipeline (Production-Ready)
+
+on:
+  push:
+    branches:
+      - deploy/dev
+  workflow_dispatch:
+
+jobs:
+  static-analysis:
+    name: Lint & Security Scan
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Verify Format
+        run: dotnet format --verify-no-changes --severity info
+
+  build-and-test:
+    name: Build & Test (Full Stack)
+    needs: static-analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # --- BACKEND BUILD & TEST ---
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Restore .NET dependencies
+        run: dotnet restore
+
+      - name: Build Backend (Host Project)
+        run: dotnet build src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.csproj --no-restore --configuration Release
+
+      - name: Run Unit & Integration Tests
+        run: dotnet test --no-restore --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx"
+
+      # --- FRONTEND BUILD CHECK ---
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: angular/package-lock.json
+
+      - name: Install Angular dependencies
+        working-directory: ./angular
+        run: npm ci
+
+      - name: Build Angular (Production Check)
+        working-directory: ./angular
+        run: npm run build:prod
+
+      - name: Upload Test Results
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: "**/test-results.trx"
+
+  database-migration:
+    name: Database Migration (Neon)
+    needs: build-and-test
+    runs-on: ubuntu-latest
+    environment: production
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+
+      - name: Execute Migrator
+        env:
+          ConnectionStrings__Default: ${{ secrets.DB_CONNECTION_STRING }}
+        run: |
+          dotnet run --project src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj --configuration Release -- --skip-db-migrations-project-check
+
+  deploy-backend:
+    name: Deploy to Railway
+    needs: database-migration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: railway up --detach --service rxlogistics-backend
+
+  deploy-frontend:
+    name: Deploy to Vercel
+    needs: database-migration
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: Deploy to Vercel
+        uses: amondnet/vercel-action@v25
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }}
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+          vercel-args: '--prod'
+          working-directory: ./angular

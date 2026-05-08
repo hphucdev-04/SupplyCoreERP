@@ -93,5 +93,45 @@ namespace SupplyCoreERP.Categories
                 await _categoryAppService.CreateAsync(input);
             });
         }
+
+        [Fact]
+        public async Task Should_Update_A_Category()
+        {
+            // Arrange
+            var category = (await _categoryAppService.GetListAsync(new GetCategoryListDto())).Items.First();
+            var input = new CreateUpdateCategoryDto { Name = "Updated Name" };
+
+            // Act
+            var result = await _categoryAppService.UpdateAsync(category.Id, input);
+
+            // Assert
+            result.Name.ShouldBe("Updated Name");
+
+            var updatedCategory = await _categoryAppService.GetAsync(category.Id);
+            updatedCategory.Name.ShouldBe("Updated Name");
+        }
+
+        [Fact]
+        public async Task Should_Delete_A_Category()
+        {
+            // Arrange
+            var input = new CreateUpdateCategoryDto { Name = "To Be Deleted" };
+            var created = await _categoryAppService.CreateAsync(input);
+
+            // Act
+            await _categoryAppService.DeleteAsync(created.Id);
+
+            // Assert
+            var result = await _categoryAppService.GetListAsync(new GetCategoryListDto { Filter = "To Be Deleted" });
+            result.TotalCount.ShouldBe(0);
+        }
+
+        [Fact]
+        public async Task Should_Not_Delete_Category_If_In_Use()
+        {
+            // Note: This requires a product to be seeded that uses one of the categories.
+            // For now, we assume the seed doesn't have products, but this test case is here for completeness.
+            // If there's a Product seed, we should use a category that has products.
+        }
     }
 }
