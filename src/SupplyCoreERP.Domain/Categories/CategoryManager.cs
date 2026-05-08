@@ -4,39 +4,43 @@ using System.Threading.Tasks;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
+using Volo.Abp.Guids;
 
 namespace SupplyCoreERP.Categories
 {
-	public class CategoryManager : DomainService
+	public class CategoryManager : DomainService, ICategoryManager
 	{
-		private readonly IRepository<Category, Guid> _categoryRepository;
+		private readonly ICategoryRepository _categoryRepository;
 		private readonly IRepository<Product, Guid> _productRepository;
+		private readonly IGuidGenerator _guidGenerator;
+
 		public CategoryManager(
-			IRepository<Category, Guid> categoryRepository,
-			IRepository<Product, Guid> productRepository)
+			ICategoryRepository categoryRepository,
+			IRepository<Product, Guid> productRepository,
+			IGuidGenerator guidGenerator)
 		{
 			_categoryRepository = categoryRepository;
 			_productRepository = productRepository;
+			_guidGenerator = guidGenerator;
 		}
 
-		public async Task<Category> CreateAsync(string name)
+		public virtual async Task<Category> CreateAsync(string name)
 		{
 			Check.NotNullOrWhiteSpace(name, nameof(name));
-			var normalizedName = name.Trim();
 
-			// Check: Kiểm tra trùng Tên 
-			if (await _categoryRepository.AnyAsync(x => x.Name.ToLower() == normalizedName.ToLower()))
+			// Dùng phương thức minh bạch từ Interface, dễ dàng Unit Test
+			if (await _categoryRepository.IsNameExistsAsync(name))
 			{
 				throw new UserFriendlyException($"Tên nhóm '{name}' đã tồn tại!");
 			}
 
 			return new Category(
-				GuidGenerator.Create(),
+				_guidGenerator.Create(),
 				name
 			);
 		}
 
-		public async Task UpdateAsync(Category category, string newName)
+		public virtual async Task UpdateAsync(Category category, string newName)
 		{
 			Check.NotNull(category, nameof(category));
 			Check.NotNullOrWhiteSpace(newName, nameof(newName));
@@ -57,7 +61,7 @@ namespace SupplyCoreERP.Categories
 			category.SetName(newName);
 		}
 
-		public async Task DeleteAsync(Category category)
+		public virtual async Task DeleteAsync(Category category)
 		{
 			Check.NotNull(category, nameof(category));
 
