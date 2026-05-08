@@ -27,6 +27,21 @@
     "Menu:Balances": "Balances",
     "Menu:Order": "Order",
     "Menu:SaleOrders": "Sale Orders",
-    "Menu:PurchaseOrders": "Purchase Orders"
+    "Menu:PurchaseOrders": "Purchase Orders",
+
+    //Login Page
+    "Login:Organization": "Organization",
+    "Login:SelectOrganization": "Select a company",
+    "Login:SelectOrgHint": "Select a company to log in",
+    "Login:EnterAccountInfo": "Please enter your account information",
+    "Login:NoAccount": "Don't have an account?",
+    "Login:RegisterNow": "Register now",
+
+    //Brand Section
+    "Brand:AppName": "RxLogistics",
+    "Brand:AppDesc": "Streamline Operations. Connect Supply Chains",
+    "UserNameOrEmailAddress": "UserName Or EmailAddress",
+    "RememberMe": "Remember Me",
+    "ForgotPassword": "Forgot Password"
   }
 }

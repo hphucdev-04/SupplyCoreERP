@@ -1,0 +1,495 @@
+﻿/* ===== DESIGN TOKENS (ERP STANDARD) ===== */
+:root {
+    /* Brand Colors - Deep & Professional */
+    --erp-primary: #00B37E;
+    --erp-primary-hover: #009e6f;
+    --erp-brand-bg: #0A251C;
+    /* Neutrals */
+    --erp-bg-app: #F3F4F6;
+    --erp-surface: #FFFFFF;
+    --erp-text-main: #111827;
+    --erp-text-muted: #6B7280;
+    --erp-border: #D1D5DB;
+    --erp-border-light: #E5E7EB;
+    /* States */
+    --erp-danger: #DC2626;
+    --erp-focus-ring: rgba(0, 143, 99, 0.2);
+    /* Structure */
+    --erp-radius: 6px;
+    --erp-radius-lg: 12px;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    color: var(--erp-text-main);
+    background-color: var(--erp-bg-app);
+    -webkit-font-smoothing: antialiased;
+}
+
+/* ===== LAYOUT ===== */
+.erp-login-layout {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* --- LEFT COLUMN (BRANDING) --- */
+.erp-login-brand {
+    flex: 0 0 45%;
+    background: linear-gradient(145deg, var(--erp-brand-bg) 0%, #061811 100%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    color: #fff;
+    padding: 3rem;
+}
+
+.brand-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 30px 30px;
+    opacity: 0.5;
+    z-index: 1;
+}
+
+.brand-content {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+    max-width: 500px;
+}
+
+.brand-logo {
+    width: 160px;
+    height: 160px;
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: var(--erp-radius-lg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 3.5rem;
+    backdrop-filter: blur(10px);
+}
+
+    .brand-logo img {
+        width: 100px;
+        height: 100px;
+        object-fit: contain;
+    }
+
+.brand-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    margin-bottom: 1.5rem;
+    letter-spacing: -0.02em;
+    line-height: 1.2;
+}
+
+.brand-subtitle {
+    font-size: 1.375rem;
+    color: #9CA3AF;
+    line-height: 1.8;
+    font-weight: 400;
+}
+
+/* --- RIGHT COLUMN (FORM) --- */
+.erp-login-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    padding: 2rem;
+}
+
+.erp-login-card {
+    background: var(--erp-surface);
+    width: 100%;
+    max-width: 440px;
+    padding: 3rem;
+    border-radius: var(--erp-radius-lg);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.02);
+    border: 1px solid var(--erp-border-light);
+    animation: slideUp 0.6s ease-out;
+}
+
+.card-header {
+    margin-bottom: 2rem;
+    text-align: center;
+}
+
+    .card-header h2 {
+        font-size: 2rem;
+        font-weight: 700;
+        color: var(--erp-text-main);
+        margin-bottom: 0.75rem;
+        letter-spacing: -0.02em;
+    }
+
+    .card-header p {
+        color: var(--erp-text-muted);
+        font-size: 1rem;
+        line-height: 1.5;
+    }
+
+/* ===== FORM CONTROLS ===== */
+.form-group {
+    margin-bottom: 1.25rem;
+}
+
+.form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #374151;
+    margin-bottom: 0.5rem;
+}
+
+.form-control {
+    width: 100%;
+    padding: 0.625rem 0.875rem;
+    font-size: 0.95rem;
+    font-family: inherit;
+    color: var(--erp-text-main);
+    background-color: #F9FAFB;
+    border: 1px solid var(--erp-border);
+    border-radius: var(--erp-radius);
+    transition: all 0.2s ease;
+    appearance: none;
+}
+
+    .form-control:hover {
+        border-color: #9CA3AF;
+    }
+
+    .form-control:focus {
+        background-color: var(--erp-surface);
+        border-color: var(--erp-primary);
+        box-shadow: 0 0 0 3px var(--erp-focus-ring);
+        outline: none;
+    }
+
+    .form-control::placeholder {
+        color: #9CA3AF;
+    }
+
+    .form-control option {
+        background: var(--erp-surface);
+        color: var(--erp-text-main);
+        padding: 0.5rem;
+    }
+
+    .form-control option:hover {
+        background: #F0F9F6;
+    }
+
+/* Input with Icon (cho Tenant) */
+.input-with-icon {
+    position: relative;
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--erp-text-muted);
+}
+
+.has-icon {
+    padding-left: 2.5rem;
+}
+
+/* Custom Checkbox */
+.erp-checkbox {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+    .erp-checkbox input {
+        display: none;
+    }
+
+.checkmark {
+    width: 18px;
+    height: 18px;
+    border: 1px solid var(--erp-border);
+    border-radius: 4px;
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s;
+    background: #fff;
+}
+
+.erp-checkbox input:checked ~ .checkmark {
+    background: var(--erp-primary);
+    border-color: var(--erp-primary);
+}
+
+    .erp-checkbox input:checked ~ .checkmark::after {
+        content: '✓';
+        color: white;
+        font-size: 12px;
+        font-weight: bold;
+    }
+
+.checkbox-label {
+    font-size: 0.875rem;
+    color: #4B5563;
+}
+
+/* ===== BUTTONS & LINKS ===== */
+.btn-primary {
+    background-color: var(--erp-primary);
+    color: white;
+    border: none;
+    padding: 0.75rem 1.5rem;
+    font-size: 0.95rem;
+    font-weight: 600;
+    border-radius: var(--erp-radius);
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-top: 0.5rem;
+}
+
+    .btn-primary:hover {
+        background-color: var(--erp-primary-hover);
+    }
+
+.btn-outline {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    background-color: var(--erp-surface);
+    color: #374151;
+    border: 1px solid var(--erp-border);
+    padding: 0.625rem 1.5rem;
+    font-size: 0.9rem;
+    font-weight: 500;
+    border-radius: var(--erp-radius);
+    cursor: pointer;
+    text-decoration: none;
+    transition: all 0.2s;
+    margin-bottom: 0.75rem;
+}
+
+    .btn-outline:hover {
+        background-color: #F9FAFB;
+        border-color: #9CA3AF;
+    }
+
+.link-forgot, .register-prompt a {
+    color: var(--erp-primary);
+    font-size: 0.875rem;
+    font-weight: 500;
+    text-decoration: none;
+}
+
+    .link-forgot:hover, .register-prompt a:hover {
+        text-decoration: underline;
+    }
+
+.register-prompt {
+    text-align: center;
+    margin-top: 2rem;
+    font-size: 0.875rem;
+    color: var(--erp-text-muted);
+}
+
+/* Divider */
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+    color: var(--erp-text-muted);
+    font-size: 0.875rem;
+}
+
+    .divider::before, .divider::after {
+        content: '';
+        flex: 1;
+        border-bottom: 1px solid var(--erp-border-light);
+    }
+
+    .divider span {
+        padding: 0 1rem;
+    }
+
+/* ===== LANGUAGE SWITCHER ===== */
+.language-switcher {
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    z-index: 100;
+}
+
+.lang-btn {
+    background: transparent;
+    border: 1px solid var(--erp-border);
+    padding: 0.5rem 1rem;
+    border-radius: var(--erp-radius);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    cursor: pointer;
+    font-size: 0.875rem;
+    color: #4B5563;
+    background: var(--erp-surface);
+    transition: all 0.2s ease;
+}
+
+    .lang-btn:hover {
+        border-color: var(--erp-primary);
+        background-color: #F9FAFB;
+        color: var(--erp-text-main);
+    }
+
+    .lang-btn.active {
+        border-color: var(--erp-primary);
+        background-color: #F0F9F6;
+    }
+
+.lang-menu {
+    position: absolute;
+    top: calc(100% + 0.5rem);
+    right: 0;
+    background: var(--erp-surface);
+    border: 1px solid var(--erp-border-light);
+    border-radius: var(--erp-radius);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    min-width: 160px;
+    display: none;
+    overflow: hidden;
+}
+
+    .lang-menu.show {
+        display: block;
+    }
+
+.lang-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    text-decoration: none;
+    color: #374151;
+    font-size: 0.875rem;
+    transition: all 0.15s ease;
+}
+
+    .lang-item:hover {
+        background-color: #F0F9F6;
+        color: var(--erp-primary);
+    }
+
+    .lang-item.active {
+        font-weight: 600;
+        color: var(--erp-primary);
+        background-color: #F0F9F6;
+    }
+
+/* Utility Classes */
+.w-100 {
+    width: 100%;
+}
+
+.mb-0 {
+    margin-bottom: 0 !important;
+}
+
+.mb-1 {
+    margin-bottom: 0.25rem;
+}
+
+.d-flex {
+    display: flex;
+}
+
+.justify-content-between {
+    justify-content: space-between;
+}
+
+.align-items-center {
+    align-items: center;
+}
+
+.form-error {
+    color: var(--erp-danger);
+    font-size: 0.75rem;
+    display: block;
+    margin-top: 0.25rem;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+    .erp-login-brand {
+        flex: 0 0 35%;
+    }
+}
+
+@media (max-width: 768px) {
+    .erp-login-brand {
+        display: none;
+    }
+
+    .erp-login-card {
+        padding: 2rem;
+        box-shadow: none;
+        border: none;
+    }
+
+    .erp-login-container {
+        background: var(--erp-surface);
+        padding: 0;
+        align-items: flex-start;
+        padding-top: 4rem;
+    }
+
+    .language-switcher {
+        top: 1rem;
+        right: 1rem;
+    }
+}
+
+/* ===== ANIMATIONS ===== */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(15px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}

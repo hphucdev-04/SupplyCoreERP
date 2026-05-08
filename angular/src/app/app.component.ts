@@ -10,7 +10,7 @@ import { NotificationComponent } from './shared/components/notification-componen
   template: `
     <abp-loader-bar />
     <abp-dynamic-layout />
-    <div id="notification" style="position: fixed; top: 0.2rem; right: 7rem; z-index: 1020;">
+    <div id="notification" style="position: fixed; top: 0.1rem; right: 7rem; z-index: 1020;">
       <app-notification></app-notification>
     </div>
   `,
