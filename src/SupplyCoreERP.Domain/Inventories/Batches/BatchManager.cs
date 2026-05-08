@@ -27,7 +27,7 @@ public class BatchManager : DomainService
 
     public async Task<ProductBatch> CreateAsync(Guid productId, string batchNumber, DateTime mfg, DateTime exp, Guid? supplierId)
     {
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeBatch);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeBatch);
 
         if (await _batchRepo.AnyAsync(x => x.ProductId == productId && x.BatchNumber == batchNumber))
         {

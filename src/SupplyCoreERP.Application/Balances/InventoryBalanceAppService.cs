@@ -41,7 +41,7 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
             query = query.Where(x => x.ProductBatch.ExpiryDate <= nearExpiryDate && x.ProductBatch.ExpiryDate > DateTime.Now);
         }
 
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
         List<InventoryBalance> items = await AsyncExecuter.ToListAsync(
             query.OrderBy(string.IsNullOrWhiteSpace(input.Sorting) ? "Warehouse.Name, Bin.Code" : input.Sorting)
                  .Skip(input.SkipCount)
@@ -86,7 +86,7 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
             .WhereIf(input.ProductBatchId.HasValue, x => x.ProductBatchId == input.ProductBatchId)
             .WhereIf(input.Status.HasValue, x => x.Status == input.Status);
 
-        var totalCount = await AsyncExecuter.CountAsync(query);
+        int totalCount = await AsyncExecuter.CountAsync(query);
 
         List<InventoryReservation> items = await AsyncExecuter.ToListAsync(
             query.OrderBy(string.IsNullOrWhiteSpace(input.Sorting) ? "CreationTime DESC" : input.Sorting)

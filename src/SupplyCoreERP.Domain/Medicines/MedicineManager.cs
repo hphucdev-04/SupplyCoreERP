@@ -59,7 +59,7 @@ public class MedicineManager : DomainService
     {
         await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
 
-        var code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeMedicine);
+        string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeMedicine);
         await _productManager.CheckCodeAsync(code);
 
         Medicine medicine = new(

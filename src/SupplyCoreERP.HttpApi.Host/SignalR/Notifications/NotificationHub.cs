@@ -29,7 +29,7 @@ public class NotificationHub : AbpHub
             // Thêm permission mới tại đây khi có feature mới
         ];
 
-        foreach (var perm in allPermissions)
+        foreach (string perm in allPermissions)
         {
             if (await _permissionChecker.IsGrantedAsync(perm))
             {

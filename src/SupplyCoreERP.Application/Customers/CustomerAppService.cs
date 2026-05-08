@@ -57,7 +57,7 @@ public class CustomerAppService : SupplyCore, ICustomerAppService
                 x.PhoneNumber.Contains(input.Filter))
             .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
 
-        var totalCount = await query.CountAsync();
+        int totalCount = await query.CountAsync();
         List<Customer> items = await query
             .OrderBy(input.Sorting ?? "CreationTime DESC")
             .Skip(input.SkipCount)

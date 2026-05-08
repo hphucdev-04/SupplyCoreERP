@@ -53,7 +53,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
                 x.Code.Contains(input.Filter))
             .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive);
 
-        var totalCount = await query.CountAsync();
+        int totalCount = await query.CountAsync();
         List<Supplier> items = await query
             .OrderBy(input.Sorting ?? "CreationTime DESC")
             .PageBy(input)
@@ -122,7 +122,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
             .WhereIf(input.MinPrice.HasValue, x => x.StandardPrice >= input.MinPrice)
             .WhereIf(input.MaxPrice.HasValue, x => x.StandardPrice <= input.MaxPrice);
 
-        var totalCount = await query.CountAsync();
+        int totalCount = await query.CountAsync();
 
         List<SupplierProduct> result = await query
             .OrderBy(input.Sorting ?? "Product.Name ASC")
@@ -147,7 +147,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
                 x.Supplier.Name.Contains(input.Filter) ||
                 x.Supplier.Code.Contains(input.Filter));
 
-        var totalCount = await query.CountAsync();
+        int totalCount = await query.CountAsync();
 
         List<SupplierProduct> list = await query
             .OrderBy(input.Sorting ?? "IsPreferred DESC, StandardPrice ASC")

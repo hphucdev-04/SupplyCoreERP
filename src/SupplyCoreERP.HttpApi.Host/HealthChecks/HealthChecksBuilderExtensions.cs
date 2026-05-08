@@ -19,7 +19,7 @@ public static class HealthChecksBuilderExtensions
         services.ConfigureHealthCheckEndpoint("/health-status");
 
         Microsoft.Extensions.Configuration.IConfiguration configuration = services.GetConfiguration();
-        var healthCheckUrl = configuration["App:HealthCheckUrl"];
+        string? healthCheckUrl = configuration["App:HealthCheckUrl"];
 
         if (string.IsNullOrEmpty(healthCheckUrl))
         {

@@ -60,10 +60,10 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
 
 
         //Console Test / Angular Client
-        var consoleAndAngularClientId = configurationSection["SupplyCoreERP_App:ClientId"];
+        string? consoleAndAngularClientId = configurationSection["SupplyCoreERP_App:ClientId"];
         if (!consoleAndAngularClientId.IsNullOrWhiteSpace())
         {
-            var consoleAndAngularClientRootUrl = configurationSection["SupplyCoreERP_App:RootUrl"]?.TrimEnd('/');
+            string? consoleAndAngularClientRootUrl = configurationSection["SupplyCoreERP_App:RootUrl"]?.TrimEnd('/');
             await CreateOrUpdateApplicationAsync(
                 applicationType: OpenIddictConstants.ApplicationTypes.Web,
                 name: consoleAndAngularClientId!,
@@ -94,10 +94,10 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
 
 
         // Swagger Client
-        var swaggerClientId = configurationSection["SupplyCoreERP_Swagger:ClientId"];
+        string? swaggerClientId = configurationSection["SupplyCoreERP_Swagger:ClientId"];
         if (!swaggerClientId.IsNullOrWhiteSpace())
         {
-            var swaggerRootUrl = configurationSection["SupplyCoreERP_Swagger:RootUrl"]?.TrimEnd('/');
+            string? swaggerRootUrl = configurationSection["SupplyCoreERP_Swagger:RootUrl"]?.TrimEnd('/');
 
             await CreateOrUpdateApplicationAsync(
                 applicationType: OpenIddictConstants.ApplicationTypes.Web,
@@ -115,10 +115,10 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
         }
 
         // Hangfire Client
-        var hangfireClientId = configurationSection["SupplyCoreERP_Hangfire:ClientId"];
+        string? hangfireClientId = configurationSection["SupplyCoreERP_Hangfire:ClientId"];
         if (!hangfireClientId.IsNullOrWhiteSpace())
         {
-            var hangfireRootUrl = configurationSection["SupplyCoreERP_Hangfire:RootUrl"]?.TrimEnd('/');
+            string? hangfireRootUrl = configurationSection["SupplyCoreERP_Hangfire:RootUrl"]?.TrimEnd('/');
 
             await CreateOrUpdateApplicationAsync(
                 applicationType: OpenIddictConstants.ApplicationTypes.Web,
