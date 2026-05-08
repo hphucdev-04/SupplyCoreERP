@@ -1,10 +1,9 @@
-﻿namespace SupplyCoreERP.Enums.Notificaitons
+namespace SupplyCoreERP.Enums.Notificaitons;
+
+public enum NotificationSeverity
 {
-    public enum NotificationSeverity
-    {
-        Info = 0,
-        Success = 1,
-        Warning = 2,
-        Error = 3
-    }
+    Info = 0,
+    Success = 1,
+    Warning = 2,
+    Error = 3
 }

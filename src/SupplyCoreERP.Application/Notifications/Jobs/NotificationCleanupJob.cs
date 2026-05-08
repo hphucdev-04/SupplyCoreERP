@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -33,7 +33,10 @@ public class NotificationCleanupJob
         List<Notification> oldNotifications = await _notificationRepo
             .GetListAsync(n => n.CreationTime < cutoff);
 
-        if (!oldNotifications.Any()) return;
+        if (!oldNotifications.Any())
+        {
+            return;
+        }
 
         List<Guid> oldIds = oldNotifications.Select(n => n.Id).ToList();
 
@@ -41,7 +44,9 @@ public class NotificationCleanupJob
             .GetListAsync(x => oldIds.Contains(x.NotificationId));
 
         if (relatedUserNotifs.Any())
+        {
             await _userNotifRepo.DeleteManyAsync(relatedUserNotifs, autoSave: true);
+        }
 
         await _notificationRepo.DeleteManyAsync(oldNotifications, autoSave: true);
     }

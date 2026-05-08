@@ -1,40 +1,39 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SupplyCoreERP.Migrations
+namespace SupplyCoreERP.Migrations;
+
+/// <inheritdoc />
+public partial class UpdateTargetPermissionNotification : Migration
 {
     /// <inheritdoc />
-    public partial class UpdateTargetPermissionNotification : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "TargetRole",
-                table: "AppNotifications");
+        migrationBuilder.DropColumn(
+            name: "TargetRole",
+            table: "AppNotifications");
 
-            migrationBuilder.AddColumn<List<string>>(
-                name: "TargetPermissions",
-                table: "AppNotifications",
-                type: "text[]",
-                nullable: false);
-        }
+        migrationBuilder.AddColumn<List<string>>(
+            name: "TargetPermissions",
+            table: "AppNotifications",
+            type: "text[]",
+            nullable: false);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "TargetPermissions",
-                table: "AppNotifications");
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            name: "TargetPermissions",
+            table: "AppNotifications");
 
-            migrationBuilder.AddColumn<string>(
-                name: "TargetRole",
-                table: "AppNotifications",
-                type: "character varying(128)",
-                maxLength: 128,
-                nullable: true);
-        }
+        migrationBuilder.AddColumn<string>(
+            name: "TargetRole",
+            table: "AppNotifications",
+            type: "character varying(128)",
+            maxLength: 128,
+            nullable: true);
     }
 }

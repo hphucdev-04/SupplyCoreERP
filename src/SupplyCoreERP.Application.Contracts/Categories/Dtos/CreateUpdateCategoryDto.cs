@@ -1,14 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
 
-namespace SupplyCoreERP.Categories.Dtos
+namespace SupplyCoreERP.Categories.Dtos;
+
+public class CreateUpdateCategoryDto
 {
-	public class CreateUpdateCategoryDto
-	{
-		[Required(ErrorMessage = "Tên danh mục là bắt buộc")]
-		[StringLength(100)]
-		public string Name { get; set; }
-	}
+    [Required(ErrorMessage = "Tên danh mục là bắt buộc")]
+    [StringLength(100)]
+    public string Name { get; set; }
 }

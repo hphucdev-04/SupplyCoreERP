@@ -1,6 +1,6 @@
-﻿using SupplyCoreERP.Enums.Notificaitons;
-using SupplyCoreERP.Notifications.Dtos;
 using System.Threading.Tasks;
+using SupplyCoreERP.Enums.Notificaitons;
+using SupplyCoreERP.Notifications.Dtos;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 
@@ -31,8 +31,12 @@ public class NotificationSentJob
 
         // Gửi real-time — Application chỉ biết interface, không biết SignalR
         if (args.Level == NotificationLevel.Global)
+        {
             await _notificationRealTime.SendToGlobalAsync(dto);
+        }
         else
+        {
             await _notificationRealTime.SendToPermissionGroupsAsync(args.TargetPermissions, dto);
+        }
     }
 }

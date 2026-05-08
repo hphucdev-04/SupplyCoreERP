@@ -1,29 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SupplyCoreERP.Migrations
+namespace SupplyCoreERP.Migrations;
+
+/// <inheritdoc />
+public partial class AddFlagIsDeleteUserNotification : Migration
 {
     /// <inheritdoc />
-    public partial class AddFlagIsDeleteUserNotification : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<bool>(
-                name: "IsDelete",
-                table: "AppUserNotifications",
-                type: "boolean",
-                nullable: false,
-                defaultValue: false);
-        }
+        migrationBuilder.AddColumn<bool>(
+            name: "IsDelete",
+            table: "AppUserNotifications",
+            type: "boolean",
+            nullable: false,
+            defaultValue: false);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "IsDelete",
-                table: "AppUserNotifications");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            name: "IsDelete",
+            table: "AppUserNotifications");
     }
 }

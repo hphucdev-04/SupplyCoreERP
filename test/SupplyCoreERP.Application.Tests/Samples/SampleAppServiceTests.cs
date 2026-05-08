@@ -1,5 +1,6 @@
-﻿using Shouldly;
 using System.Threading.Tasks;
+using Shouldly;
+using Volo.Abp.Application.Dtos;
 using Volo.Abp.Identity;
 using Volo.Abp.Modularity;
 using Xunit;
@@ -25,7 +26,7 @@ public abstract class SampleAppServiceTests<TStartupModule> : SupplyCoreERPAppli
     public async Task Initial_Data_Should_Contain_Admin_User()
     {
         //Act
-        var result = await _userAppService.GetListAsync(new GetIdentityUsersInput());
+        PagedResultDto<IdentityUserDto> result = await _userAppService.GetListAsync(new GetIdentityUsersInput());
 
         //Assert
         result.TotalCount.ShouldBeGreaterThan(0);

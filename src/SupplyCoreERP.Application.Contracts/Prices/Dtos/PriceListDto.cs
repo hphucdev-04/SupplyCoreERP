@@ -1,14 +1,13 @@
-﻿using SupplyCoreERP.Enums.PriceList;
 using System;
+using SupplyCoreERP.Enums.PriceList;
 using Volo.Abp.Application.Dtos;
 
-namespace SupplyCoreERP.Prices.Dtos
+namespace SupplyCoreERP.Prices.Dtos;
+
+public class PriceListDto : EntityDto<Guid>
 {
-    public class PriceListDto : EntityDto<Guid>
-    {
-        public string Code { get; set; }
-        public string Name { get; set; }
-        public CurrencyType Currency { get; set; }
-        public bool IsBase { get; set; }
-    }
+    public string Code { get; set; }
+    public string Name { get; set; }
+    public CurrencyType Currency { get; set; }
+    public bool IsBase { get; set; }
 }

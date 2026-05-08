@@ -1,15 +1,14 @@
-﻿using SupplyCoreERP.Categories.Dtos;
 using System;
+using SupplyCoreERP.Categories.Dtos;
 using Volo.Abp.Application.Services;
 
-namespace SupplyCoreERP.Categories
-{
-	public interface ICategoryAppService : ICrudAppService<
-		CategoryDto, 
-		Guid, 
-		GetCategoryListDto, 
-		CreateUpdateCategoryDto>
-	{
+namespace SupplyCoreERP.Categories;
 
-	}
+public interface ICategoryAppService : ICrudAppService<
+    CategoryDto,
+    Guid,
+    GetCategoryListDto,
+    CreateUpdateCategoryDto>
+{
+
 }

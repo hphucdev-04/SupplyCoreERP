@@ -1,8 +1,8 @@
-﻿using SupplyCoreERP.Enums.Notificaitons;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SupplyCoreERP.Enums.Notificaitons;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 
@@ -56,7 +56,10 @@ public class NotificationManager : DomainService
     public async Task MarkManyReadAsync(IEnumerable<Guid> notificationIds, Guid userId)
     {
         List<Guid> ids = notificationIds.ToList();
-        if (!ids.Any()) return;
+        if (!ids.Any())
+        {
+            return;
+        }
 
         List<UserNotification> existing = await _userNotificationRepo
             .GetListAsync(x => x.UserId == userId && ids.Contains(x.NotificationId));
@@ -69,14 +72,20 @@ public class NotificationManager : DomainService
             .ToList();
 
         if (toInsert.Any())
+        {
             await _userNotificationRepo.InsertManyAsync(toInsert, autoSave: true);
+        }
 
         List<UserNotification> toUpdate = existing.Where(x => !x.IsRead).ToList();
-        foreach (UserNotification un in toUpdate.Concat(toInsert))
+        foreach (UserNotification? un in toUpdate.Concat(toInsert))
+        {
             un.MarkAsRead();
+        }
 
         if (toUpdate.Any())
+        {
             await _userNotificationRepo.UpdateManyAsync(toUpdate, autoSave: true);
+        }
     }
 
     public async Task MarkDeleteAsync(Guid notificationId, Guid userId)
@@ -96,7 +105,10 @@ public class NotificationManager : DomainService
     public async Task MarkManyDeleteAsync(IEnumerable<Guid> notificationIds, Guid userId)
     {
         List<Guid> ids = notificationIds.ToList();
-        if (!ids.Any()) return;
+        if (!ids.Any())
+        {
+            return;
+        }
 
         List<UserNotification> existing = await _userNotificationRepo
             .GetListAsync(x => x.UserId == userId && ids.Contains(x.NotificationId));
@@ -109,13 +121,19 @@ public class NotificationManager : DomainService
             .ToList();
 
         if (toInsert.Any())
+        {
             await _userNotificationRepo.InsertManyAsync(toInsert, autoSave: true);
+        }
 
         List<UserNotification> toUpdate = existing.Where(x => !x.IsDelete).ToList();
-        foreach (UserNotification un in toUpdate.Concat(toInsert))
+        foreach (UserNotification? un in toUpdate.Concat(toInsert))
+        {
             un.MarkAsDeleted();
+        }
 
         if (toUpdate.Any())
+        {
             await _userNotificationRepo.UpdateManyAsync(toUpdate, autoSave: true);
+        }
     }
 }

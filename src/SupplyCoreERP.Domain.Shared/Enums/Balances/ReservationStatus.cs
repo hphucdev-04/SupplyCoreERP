@@ -1,13 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace SupplyCoreERP.Enums.Balances
+namespace SupplyCoreERP.Enums.Balances;
+
+public enum ReservationStatus
 {
-	public enum ReservationStatus
-	{
-		Active = 1,
-		Completed = 2,
-		Cancelled = 3
-	}
+    Active = 1,
+    Completed = 2,
+    Cancelled = 3
 }

@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using System.Linq;
 using Hangfire;
 using Hangfire.PostgreSql;
 using Microsoft.AspNetCore.Builder;
@@ -15,9 +18,6 @@ using SupplyCoreERP.EntityFrameworkCore;
 using SupplyCoreERP.HealthChecks;
 using SupplyCoreERP.MultiTenancy;
 using SupplyCoreERP.SignalR.Notifications;
-using System;
-using System.IO;
-using System.Linq;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;

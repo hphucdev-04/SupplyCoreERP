@@ -1,4 +1,4 @@
-﻿using System.CodeDom;
+using System.CodeDom;
 using Volo.Abp.Identity;
 
 namespace SupplyCoreERP;
@@ -10,7 +10,7 @@ public static class SupplyCoreERPConsts
     public const string AdminEmailDefaultValue = IdentityDataSeedContributor.AdminEmailDefaultValue;
     public const string AdminPasswordDefaultValue = IdentityDataSeedContributor.AdminPasswordDefaultValue;
 
-   // Document types
+    // Document types
     public const string DocumentTypeSalesOrder = "SO";
     public const string DocumentTypePurchaseOrder = "PO";
     public const string DocumentTypeBatch = "BA";

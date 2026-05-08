@@ -1,4 +1,4 @@
-﻿using SupplyCoreERP.Localization;
+using SupplyCoreERP.Localization;
 using Volo.Abp.Application.Services;
 
 namespace SupplyCoreERP;

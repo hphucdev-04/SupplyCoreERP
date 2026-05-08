@@ -1,9 +1,8 @@
-﻿namespace SupplyCoreERP.Enums.Notificaitons
+namespace SupplyCoreERP.Enums.Notificaitons;
+
+public enum NotificationType
 {
-    public enum NotificationType
-    {
-        Created = 0,
-        Approved = 1,
-        Rejected = 2,
-    }
+    Created = 0,
+    Approved = 1,
+    Rejected = 2,
 }

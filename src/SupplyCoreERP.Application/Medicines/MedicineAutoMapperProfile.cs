@@ -1,32 +1,31 @@
-﻿using AutoMapper;
+using AutoMapper;
 using SupplyCoreERP.Medicines.Dtos;
 using SupplyCoreERP.Products;
 
-namespace SupplyCoreERP.Medicines
+namespace SupplyCoreERP.Medicines;
+
+public class MedicineAutoMapperProfile : Profile
 {
-    public class MedicineAutoMapperProfile : Profile
+    public MedicineAutoMapperProfile()
     {
-        public MedicineAutoMapperProfile()
-        {
-            CreateMap<Medicine, MedicineDto>()
-                .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name))
-                .ForMember(d => d.ManufacturerName, o => o.MapFrom(s => s.Manufacturer.Name))
-                .ForMember(d => d.BaseUnitName, o => o.MapFrom(s => s.BaseUnit.Name))
-                .ForMember(d => d.DosageFormName, o => o.MapFrom(s => s.DosageForm.Name))
-                .ForMember(d => d.OriginCountryName, o => o.MapFrom(s => s.Manufacturer.Country.Name))
-                .ForMember(d => d.OriginCountryISO, o => o.MapFrom(s => s.Manufacturer.Country.ISO));
+        CreateMap<Medicine, MedicineDto>()
+            .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name))
+            .ForMember(d => d.ManufacturerName, o => o.MapFrom(s => s.Manufacturer.Name))
+            .ForMember(d => d.BaseUnitName, o => o.MapFrom(s => s.BaseUnit.Name))
+            .ForMember(d => d.DosageFormName, o => o.MapFrom(s => s.DosageForm.Name))
+            .ForMember(d => d.OriginCountryName, o => o.MapFrom(s => s.Manufacturer.Country.Name))
+            .ForMember(d => d.OriginCountryISO, o => o.MapFrom(s => s.Manufacturer.Country.ISO));
 
-            CreateMap<Medicine, MedicineDetailDto>()
-                .IncludeBase<Medicine, MedicineDto>()
-                .ForMember(d => d.OriginCountryId, o => o.MapFrom(s => s.Manufacturer.Country.Id));
+        CreateMap<Medicine, MedicineDetailDto>()
+            .IncludeBase<Medicine, MedicineDto>()
+            .ForMember(d => d.OriginCountryId, o => o.MapFrom(s => s.Manufacturer.Country.Id));
 
-            CreateMap<MedicineIngredient, MedicineIngredientDto>()
-                .ForMember(d => d.ActiveIngredientName, o => o.MapFrom(s => s.ActiveIngredient.Name))
-                .ForMember(d => d.ActiveIngredientCode, o => o.MapFrom(s => s.ActiveIngredient.Code));
+        CreateMap<MedicineIngredient, MedicineIngredientDto>()
+            .ForMember(d => d.ActiveIngredientName, o => o.MapFrom(s => s.ActiveIngredient.Name))
+            .ForMember(d => d.ActiveIngredientCode, o => o.MapFrom(s => s.ActiveIngredient.Code));
 
 
-            CreateMap<ProductUnit, MedicineUnitDto>()
-                .ForMember(d => d.UnitName, o => o.MapFrom(s => s.Unit.Name));
-        }
+        CreateMap<ProductUnit, MedicineUnitDto>()
+            .ForMember(d => d.UnitName, o => o.MapFrom(s => s.Unit.Name));
     }
 }

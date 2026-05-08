@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.Authorization.Permissions;
 using static SupplyCoreERP.Permissions.SupplyCoreERPPermissions;
@@ -29,10 +29,12 @@ public class NotificationHub : AbpHub
             // Thêm permission mới tại đây khi có feature mới
         ];
 
-        foreach (string perm in allPermissions)
+        foreach (var perm in allPermissions)
         {
             if (await _permissionChecker.IsGrantedAsync(perm))
+            {
                 await Groups.AddToGroupAsync(Context.ConnectionId, perm);
+            }
         }
 
         await base.OnConnectedAsync();
