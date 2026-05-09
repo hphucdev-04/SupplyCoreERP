@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - deploy/dev
+  pull_request:
+    branches:
+      - deploy/dev
   workflow_dispatch:
 
 jobs:
@@ -69,6 +72,7 @@ jobs:
   database-migration:
     name: Database Migration (Neon)
     needs: build-and-test
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     environment: production
     steps:
@@ -88,6 +92,7 @@ jobs:
   deploy-backend:
     name: Deploy to Railway
     needs: database-migration
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -103,6 +108,7 @@ jobs:
   deploy-frontend:
     name: Deploy to Vercel
     needs: database-migration
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -115,4 +121,4 @@ jobs:
           vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
           vercel-args: '--prod'
           vercel-version: latest
-          working-directory: ./angular
+          working-directory: .
