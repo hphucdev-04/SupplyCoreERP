@@ -105,12 +105,16 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
             {
                 options.DisableTransportSecurityRequirement = true;
             });
-
-            Configure<ForwardedHeadersOptions>(options =>
-            {
-                options.ForwardedHeaders = ForwardedHeaders.XForwardedProto;
-            });
         }
+
+        // Configure ASP.NET Core to forward headers when running behind a reverse proxy or load balancer.
+        Configure<ForwardedHeadersOptions>(options =>
+        {
+            options.ForwardedHeaders = ForwardedHeaders.XForwardedFor | ForwardedHeaders.XForwardedProto;
+            options.KnownIPNetworks.Clear();
+            options.KnownProxies.Clear();
+            options.ForwardLimit = null;
+        });
 
         ConfigureAuthentication(context);
         ConfigureUrls(configuration);
