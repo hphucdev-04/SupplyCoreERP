@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Tickets;
@@ -76,6 +77,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
         InventoryTicket? ticket = await query
             .Include(x => x.Warehouse)
             .Include(x => x.Lines).ThenInclude(l => l.Product)
+            .Include(x => x.Lines).ThenInclude(l => l.Unit)
             .Include(x => x.Lines).ThenInclude(l => l.PurchaseOrderLine)
             .Include(x => x.Lines).ThenInclude(l => l.Details).ThenInclude(d => d.ProductBatch)
             .Include(x => x.Lines).ThenInclude(l => l.Details).ThenInclude(d => d.Bin)
@@ -191,7 +193,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
 
         // 3. Re-validate số lượng còn lại (Sử dụng BaseQuantity)
         IQueryable<InventoryTicketLine> ticketLineQuery = await _ticketLineRepo.GetQueryableAsync();
-        var existingSumBase = await ticketLineQuery
+        decimal existingSumBase = await ticketLineQuery
             .Where(x => x.PurchaseOrderLineId == poLineId && x.Ticket.Status != ApprovalStatus.Rejected)
             .SumAsync(x => x.Quantity);
 

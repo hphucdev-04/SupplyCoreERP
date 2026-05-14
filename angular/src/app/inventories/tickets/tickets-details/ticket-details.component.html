@@ -117,6 +117,7 @@
             <div class="ph-table-header d-none d-md-flex">
               <div style="width: 44px;"></div>
               <div class="flex-grow-1 ps-2">{{ '::Medicine' | abpLocalization }}</div>
+              <div style="width: 120px;">{{ '::Unit' | abpLocalization }}</div>
               <div class="text-end" style="width: 150px; padding-right: 40px;">{{ '::TotalQuantity' | abpLocalization }}</div>
               <div style="width: 60px;"></div>
             </div>
@@ -131,8 +132,12 @@
                   <div class="fw-bold txt-primary">{{ line.productName }}</div>
                   <small class="txt-muted font-mono">{{ line.productCode }}</small>
                 </div>
+                <div style="width: 120px;">
+                  <span class="badge ph-badge--neutral">{{ line.unitName }}</span>
+                  <div class="txt-xs txt-muted" *ngIf="line.conversionFactor > 1">×{{ line.conversionFactor }}</div>
+                </div>
                 <div class="text-end fw-bold txt-num" style="width: 150px; padding-right: 40px;">
-                  {{ line.quantity | number }}
+                  {{ (line.quantity / (line.conversionFactor || 1)) | number }}
                 </div>
                 <div class="ph-accordion-row__actions text-center" style="width: 60px;">
                   <button *ngIf="ticket.status === ApprovalStatus.Draft" class="btn ph-btn-ghost text-danger btn-sm" 

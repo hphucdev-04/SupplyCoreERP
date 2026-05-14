@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Orders.PO;
 using SupplyCoreERP.Products;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -25,6 +26,7 @@ public class InventoryTicketLine : FullAuditedEntity<Guid>
     /// Đơn vị tính (thường kế thừa từ PO hoặc BaseUnit của Product).
     /// </summary>
     public Guid UnitId { get; private set; }
+    public virtual BaseUnit Unit { get; protected set; }
 
     /// <summary>
     /// Hệ số quy đổi tại thời điểm tạo phiếu.

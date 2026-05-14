@@ -427,8 +427,10 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     if (this.detailForm.invalid || !this.selectedTicketLine) return;
     this.isSavingDetail = true;
 
-    // ✅ Fix: Pass Line ID to addDetail
-    this.ticketService.addDetail(this.selectedTicketLine.id, this.detailForm.value)
+    // ✅ Sử dụng getRawValue() để lấy cả các trường bị disabled (productId, unitId)
+    const payload = this.detailForm.getRawValue();
+
+    this.ticketService.addDetail(this.selectedTicketLine.id, payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {

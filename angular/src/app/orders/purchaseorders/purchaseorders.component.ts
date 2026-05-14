@@ -16,11 +16,12 @@ import { SupplierDto } from 'src/app/proxy/suppliers/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseOrderStatus, purchaseOrderStatusOptions } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 
 @Component({
   selector: 'app-purchase-orders',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
   providers: [ListService],
   templateUrl: './purchaseorders.component.html',
 })
@@ -170,7 +171,7 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
   openCreateDrawer() {
     this.form.reset({
       supplierId: null,
-      warehouseId: this.warehouses[0]?.id ?? null,
+      warehouseId: null,
       orderDate: new Date().toISOString().split('T')[0],
       expectedDeliveryDate: null,
       dueDate: null,

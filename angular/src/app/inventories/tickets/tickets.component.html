@@ -213,10 +213,12 @@
 
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
-      <select class="form-select form-select-sm" formControlName="warehouseId">
-        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-        <option *ngFor="let wh of warehouses" [value]="wh.id">{{ wh.name }}</option>
-      </select>
+      <app-dropdown-search
+        formControlName="warehouseId"
+        [items]="warehouses"
+        [placeholder]="'::Select' | abpLocalization"
+        [searchPlaceholder]="'::Search' | abpLocalization"
+      ></app-dropdown-search>
     </div>
 
     <div class="mb-3">
@@ -230,12 +232,13 @@
 
     <div class="mb-3" *ngIf="form.get('type').value === TicketType.GoodsReceipt">
       <label class="ph-label">{{ '::LinkToPurchaseOrder' | abpLocalization }}</label>
-      <select class="form-select form-select-sm font-mono" formControlName="referenceDocumentId">
-        <option [ngValue]="null">-- {{ '::ManualReceipt' | abpLocalization }} --</option>
-        <option *ngFor="let po of approvedPurchaseOrders" [value]="po.id">
-          {{ po.code }} ({{ po.supplierName }})
-        </option>
-      </select>
+      <app-dropdown-search
+        formControlName="referenceDocumentId"
+        [items]="approvedPurchaseOrders"
+        [labelKey]="'displayName'"
+        [placeholder]="'::ManualReceipt' | abpLocalization"
+        [searchPlaceholder]="'::Search' | abpLocalization"
+      ></app-dropdown-search>
     </div>
 
     <div class="mb-3">

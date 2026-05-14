@@ -50,12 +50,6 @@
     <div class="row g-4">
       <!-- LEFT COLUMN: Order Lines -->
       <div class="col-lg-8">
-        <!-- Completed Alert -->
-        <div class="ph-callout ph-callout--success mb-4" *ngIf="order.status === PurchaseOrderStatus.Completed">
-          <i class="fa fa-check-circle ph-callout__icon"></i>
-          <div><strong>{{ '::POCompletedNote' | abpLocalization }}</strong></div>
-        </div>
-
         <!-- Order Lines Card -->
         <div class="ph-card mb-4">
           <div class="ph-card__header">
@@ -266,7 +260,7 @@
         <div class="col-6 mb-3">
           <label class="ph-label">{{ '::DueDate' | abpLocalization }}</label>
           <input type="date" class="form-control bg-light" formControlName="dueDate" readonly>
-          <div class="txt-muted txt-xs mt-1"><i class="fa fa-magic me-1"></i>{{ '::AutoCalcFromSupplierTerms' | abpLocalization }}</div>
+          <div class="txt-muted txt-xs mt-1">{{ '::AutoCalcFromSupplierTerms' | abpLocalization }}</div>
         </div>
       </div>
       <div class="mb-3"><label class="ph-label">{{ '::Note' | abpLocalization }}</label><textarea class="form-control" formControlName="note" rows="3"></textarea></div>
@@ -275,10 +269,49 @@
 
   <app-drawer [isOpen]="isAddLineOpen" [title]="'::AddProduct' | abpLocalization" [width]="'md'" [saveDisabled]="detailForm?.invalid || isSavingDetail" (close)="closeAddLineDrawer()" (save)="saveLine()">
     <form *ngIf="detailForm" [formGroup]="detailForm">
-      <div class="mb-3"><label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label><select class="form-select" formControlName="productId" (change)="onMedicineChange($event.target.value)"><option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option><option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option></select></div>
-      <div class="row"><div class="col-6 mb-3"><label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label><select class="form-select" formControlName="unitId" [attr.disabled]="!units.length ? '' : null" (change)="onUnitChange($event.target.value)"><option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option><option *ngFor="let u of units" [value]="u.unitId">{{ u.unitName }} (×{{ u.conversionFactor }})</option></select></div><div class="col-6 mb-3"><label class="ph-label ph-label--required">{{ '::Quantity' | abpLocalization }}</label><input type="number" step="1" min="1" class="form-control" formControlName="quantity" (input)="updateQuantityPreview()"></div></div>
-      <div class="ph-callout ph-callout--info mb-3" *ngIf="quantityPreview > 0 && selectedConversionFactor > 1"><i class="fa fa-calculator ph-callout__icon"></i><div>≈ <strong>{{ quantityPreview | number }} {{ baseUnitName }}</strong></div></div>
-      <div class="row"><div class="col-7 mb-3"><label class="ph-label ph-label--required">{{ '::UnitPrice' | abpLocalization }}</label><div class="input-group"><input type="number" class="form-control text-end fw-bold ph-text-primary" formControlName="unitPrice" min="0"><span class="input-group-text">₫</span></div></div><div class="col-5 mb-3"><label class="ph-label">{{ '::TaxRate' | abpLocalization }}</label><div class="input-group"><input type="number" class="form-control text-end" formControlName="taxRate" min="0" max="100"><span class="input-group-text">%</span></div></div></div>
+      <div class="mb-3">
+        <label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label>
+        <select class="form-select" formControlName="productId" (change)="onMedicineChange($event.target.value)">
+          <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+          <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
+        </select>
+      </div>
+      <div class="row">
+        <div class="col-6 mb-3">
+          <label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label>
+          <select class="form-select" formControlName="unitId" 
+            [attr.disabled]="isAutoFilled || !units.length ? 'disabled' : null" 
+            (change)="onUnitChange($event.target.value)">
+            <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+            <option *ngFor="let u of units" [value]="u.unitId">{{ u.unitName }} (×{{ u.conversionFactor }})</option>
+          </select>
+        </div>
+        <div class="col-6 mb-3">
+          <label class="ph-label ph-label--required">{{ '::Quantity' | abpLocalization }}</label>
+          <input type="number" step="1" min="1" class="form-control" formControlName="quantity" (input)="updateQuantityPreview()">
+        </div>
+      </div>
+      <div class="ph-callout ph-callout--info mb-3" *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
+        <i class="fa fa-calculator ph-callout__icon"></i>
+        <div>≈ <strong>{{ quantityPreview | number }} {{ baseUnitName }}</strong></div>
+      </div>
+      <div class="row">
+        <div class="col-7 mb-3">
+          <label class="ph-label ph-label--required">{{ '::UnitPrice' | abpLocalization }}</label>
+          <div class="input-group">
+            <input type="number" class="form-control text-end fw-bold ph-text-primary" 
+              formControlName="unitPrice" min="0" [readonly]="isAutoFilled">
+            <span class="input-group-text">₫</span>
+          </div>
+        </div>
+        <div class="col-5 mb-3">
+          <label class="ph-label">{{ '::TaxRate' | abpLocalization }}</label>
+          <div class="input-group">
+            <input type="number" class="form-control text-end" formControlName="taxRate" min="0" max="100">
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+      </div>
     </form>
   </app-drawer>
 
