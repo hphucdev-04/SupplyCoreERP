@@ -1,40 +1,40 @@
-<abp-modal [(visible)]="isVisible" [options]="{ size: 'xl', fullscreen: 'lg' }">
-
+<div class="ph-card" *ngIf="order">
   <!-- ── HEADER ───────────────────────────────────────────── -->
-  <ng-template #abpHeader>
-    <div class="d-flex align-items-center justify-content-between w-100 pe-3" *ngIf="order">
-      <div class="d-flex align-items-center gap-3">
-        <div class="bg-primary-subtle txt-primary rounded p-3 d-flex align-items-center justify-content-center" style="width: 64px; height: 64px;">
-          <i class="fa fa-file-text-o fa-2x"></i>
-        </div>
-        <div>
-          <h3 class="modal-title fw-bold mb-1 d-flex align-items-center gap-2 font-mono">
-            {{ order.code }}
-            <span class="badge badge-pill" [ngClass]="statusClass(order.status)">
-              <i class="fa me-1" [ngClass]="statusIcon(order.status)"></i>
-              {{ '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, order.status) | abpLocalization }}
-            </span>
-          </h3>
-          <div class="txt-muted txt-sm d-flex gap-3 flex-wrap">
-            <span><i class="fa fa-user-o me-1"></i><strong>{{ order.customerName }}</strong></span>
-            <span>{{ '::CreationTime' | abpLocalization }}: <strong class="txt-num">{{ order.creationTime | date:'dd/MM/yyyy HH:mm' }}</strong></span>
-          </div>
-        </div>
+  <div class="ph-card__header d-flex align-items-center justify-content-between flex-wrap gap-3">
+    <div class="d-flex align-items-center gap-3">
+      <button class="btn btn-link txt-main p-0 me-2" (click)="goBack()">
+        <i class="fa fa-arrow-left fa-lg"></i>
+      </button>
+      <div class="bg-primary-subtle txt-primary rounded p-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px;">
+        <i class="fa fa-file-text-o fa-xl"></i>
       </div>
-      <div class="d-flex gap-2">
-        <button *ngIf="isEditable()" class="btn btn-outline-secondary btn-sm" (click)="openEditDrawer()">
-          <i class="fa fa-pencil me-1"></i> {{ '::Edit' | abpLocalization }}
-        </button>
-        <button class="btn btn-outline-secondary btn-sm">
-          <i class="fa fa-print me-1"></i> {{ '::Print' | abpLocalization }}
-        </button>
+      <div>
+        <h4 class="fw-bold mb-1 d-flex align-items-center gap-2 font-mono">
+          {{ order.code }}
+          <span class="badge badge-pill" [ngClass]="statusClass(order.status)">
+            <i class="fa me-1" [ngClass]="statusIcon(order.status)"></i>
+            {{ '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, order.status) | abpLocalization }}
+          </span>
+        </h4>
+        <div class="txt-muted txt-sm d-flex gap-3 flex-wrap">
+          <span><i class="fa fa-user-o me-1"></i><strong>{{ order.customerName }}</strong></span>
+          <span>{{ '::OrderDate' | abpLocalization }}: <strong class="txt-num">{{ order.orderDate | date:'dd/MM/yyyy' }}</strong></span>
+        </div>
       </div>
     </div>
-  </ng-template>
+    <div class="d-flex gap-2">
+      <button *ngIf="isEditable()" class="btn btn-outline-secondary btn-sm" (click)="openEditDrawer()">
+        <i class="fa fa-pencil me-1"></i> {{ '::Edit' | abpLocalization }}
+      </button>
+      <button class="btn btn-outline-secondary btn-sm">
+        <i class="fa fa-print me-1"></i> {{ '::Print' | abpLocalization }}
+      </button>
+    </div>
+  </div>
 
   <!-- ── BODY ─────────────────────────────────────────────── -->
-  <ng-template #abpBody>
-    <div class="container-fluid p-0" *ngIf="order">
+  <div class="ph-card__body">
+    <div class="container-fluid p-0">
 
       <!-- Approved alert — stock allocated -->
       <div class="alert alert-info d-flex align-items-center mb-3"
@@ -58,7 +58,7 @@
 
       <!-- ── General Info ─────────────────────────────────── -->
       <div class="card border shadow-sm mb-3">
-        <div class="card-header py-3">
+        <div class="card-header py-3 bg-white">
           <h6 class="txt-primary fw-bold mb-0"><i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}</h6>
         </div>
         <div class="card-body py-3">
@@ -95,7 +95,7 @@
 
       <!-- ── Details Table ─────────────────────────────────── -->
       <div class="card border shadow-sm mb-3">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center">
+        <div class="card-header py-3 d-flex justify-content-between align-items-center bg-white">
           <h6 class="txt-primary fw-bold mb-0">
             <i class="fa fa-list me-2"></i>{{ '::OrderDetails' | abpLocalization }}
             <span class="badge badge-secondary ms-2">{{ order.details?.length || 0 }}</span>
@@ -181,7 +181,7 @@
                     <div class="txt-muted txt-xs" *ngIf="row.conversionFactor > 1">×{{ row.conversionFactor }}</div>
                   </td>
 
-                  <!-- Quantity (readonly for SO — price driven by pricelist) -->
+                  <!-- Quantity -->
                   <td class="py-3 text-end pe-3">
                     <span class="fw-bold txt-num">{{ row.quantity | number }}</span>
                     <div class="txt-muted txt-xs txt-num" *ngIf="row.baseQuantity !== row.quantity">
@@ -189,13 +189,13 @@
                     </div>
                   </td>
 
-                  <!-- Unit Price (auto from pricelist, readonly) -->
+                  <!-- Unit Price -->
                   <td class="py-3 text-end pe-3">
                     <span class="txt-num">{{ row.unitPrice | number:'1.0-0' }}đ</span>
                     <div class="txt-muted txt-xs">{{ '::PriceList' | abpLocalization }}</div>
                   </td>
 
-                  <!-- Discount Rate (inline edit if editable) -->
+                  <!-- Discount Rate -->
                   <td class="py-3 text-end pe-3">
                     <div *ngIf="isEditable()">
                       <input type="number" class="form-control form-control-sm text-end txt-num"
@@ -211,7 +211,7 @@
                     </div>
                   </td>
 
-                  <!-- Tax Rate (inline edit if editable) -->
+                  <!-- Tax Rate -->
                   <td class="py-3 text-end pe-3">
                     <div *ngIf="isEditable()">
                       <input type="number" class="form-control form-control-sm text-end txt-num"
@@ -265,7 +265,7 @@
       </div>
 
       <!-- ── Financial Summary ──────────────────────────────── -->
-      <div class="d-flex justify-content-end">
+      <div class="d-flex justify-content-end mb-4">
         <div class="card border shadow-sm" style="min-width: 300px;">
           <div class="card-body py-3">
             <div class="d-flex justify-content-between mb-2">
@@ -290,16 +290,14 @@
       </div>
 
     </div>
-  </ng-template>
+  </div>
+</div>
 
-  <!-- ── FOOTER ────────────────────────────────────────────── -->
-  <ng-template #abpFooter>
-    <button type="button" class="btn btn-outline-secondary" (click)="close()">
-      {{ '::Close' | abpLocalization }}
-    </button>
-  </ng-template>
-
-</abp-modal>
+<div class="text-center py-5" *ngIf="loading && !order">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
 
 <!-- Edit Drawer -->
 <app-drawer
@@ -400,31 +398,21 @@
   </form>
 </app-drawer>
 
-<!-- Cancel Modal -->
-<ng-template #cancelModal let-modal>
-  <div class="modal-header border-bottom-0 pb-0">
-    <h5 class="modal-title txt-danger fw-bold">
-      <i class="fa fa-exclamation-triangle me-2"></i>{{ '::CancelOrder' | abpLocalization }}
-    </h5>
-    <button type="button" class="btn-close" (click)="modal.dismiss()"></button>
-  </div>
-  <div class="modal-body pt-3">
-    <div class="mb-2">
-      <label class="form-label txt-sm fw-semibold">{{ '::CancelReason' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <textarea class="form-control" [(ngModel)]="cancelReason" rows="3"
-                [placeholder]="'::EnterReason' | abpLocalization" autofocus></textarea>
-      <div *ngIf="showCancelError" class="txt-danger txt-sm mt-1">
-        <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
-      </div>
+<!-- Cancel Drawer -->
+<app-drawer
+  [isOpen]="isCancelDrawerOpen"
+  [title]="'::CancelOrder' | abpLocalization"
+  [width]="'sm'"
+  [saveButtonText]="'::ConfirmCancel' | abpLocalization"
+  [saveDisabled]="isCanceling"
+  (close)="closeCancelDrawer()"
+  (save)="confirmCancel()">
+  <div class="mb-3">
+    <label class="form-label txt-sm fw-semibold">{{ '::CancelReason' | abpLocalization }} <span class="txt-danger">*</span></label>
+    <textarea class="form-control" [(ngModel)]="cancelReason" rows="4"
+              [placeholder]="'::EnterReason' | abpLocalization" autofocus></textarea>
+    <div *ngIf="showCancelError" class="txt-danger txt-sm mt-1">
+      <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
     </div>
   </div>
-  <div class="modal-footer bg-light border-top-0" style="border-radius: 0 0 8px 8px;">
-    <button type="button" class="btn btn-outline-secondary btn-sm px-3"
-            (click)="modal.dismiss()" [disabled]="isCanceling">{{ '::Cancel' | abpLocalization }}</button>
-    <button type="button" class="btn btn-sm px-3 bg-danger border-danger text-white"
-            (click)="confirmCancel(modal)" [disabled]="isCanceling">
-      <i class="fa" [ngClass]="isCanceling ? 'fa-spinner fa-spin' : 'fa-times'"></i>
-      {{ '::ConfirmCancel' | abpLocalization }}
-    </button>
-  </div>
-</ng-template>
+</app-drawer>

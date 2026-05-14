@@ -1,8 +1,9 @@
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Subject, takeUntil, forkJoin } from 'rxjs';
 import { CustomerService } from 'src/app/proxy/customers';
 import { CustomerDto, CustomerDetailDto, CreateUpdateCustomerDto, GetCustomerListDto } from 'src/app/proxy/customers/dtos';
 import { Gender, CustomerType, genderOptions, customerTypeOptions } from 'src/app/proxy/enums/partner';
@@ -10,16 +11,12 @@ import { LocationService } from 'src/app/proxy/locations';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { CustomerDetailsComponent } from './customer-details/customer-details.component';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
-import { CodeGeneratorUtil } from 'src/app/shared/untils/code-generator.util';
-import { enumName } from 'src/app/shared/untils/enum.util';
-
 
 @Component({
   selector: 'app-customers',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, CustomerDetailsComponent, CurrencyFormatDirective],
+  imports: [SharedModule, DrawerComponent, SearchComponent, CurrencyFormatDirective],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
   providers: [ListService]
@@ -48,9 +45,6 @@ export class CustomersComponent implements OnInit, OnDestroy {
   Gender = Gender;
   CustomerType = CustomerType;
 
-  // Detail Modal
-  @ViewChild('detailModal') detailModal: CustomerDetailsComponent;
-
   constructor(
     public readonly list: ListService,
     private customerService: CustomerService,
@@ -58,6 +52,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -80,15 +75,6 @@ export class CustomersComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.destroy$.next();
     this.destroy$.complete();
-  }
-
-  private mapEnumToOptions(enumType: any): any[] {
-    return Object.keys(enumType)
-      .filter(key => !isNaN(Number(key)))
-      .map(key => ({
-        value: Number(key),
-        name: enumType[key]
-      }));
   }
 
   loadInitialLookups() {
@@ -135,7 +121,7 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   viewDetail(id: string): void {
-    this.detailModal.open(id);
+    this.router.navigate(['/partner/customers/details', id]);
   }
 
   createCustomer(): void {

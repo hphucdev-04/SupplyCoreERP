@@ -30,8 +30,8 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
     public Guid WarehouseId { get; private set; }
     public virtual Warehouse Warehouse { get; private set; }
 
-    public virtual ICollection<PurchaseOrderDetail> Details { get; private set; }
-    protected PurchaseOrder() { Details = new List<PurchaseOrderDetail>(); }
+    public virtual ICollection<PurchaseOrderLine> Lines { get; private set; }
+    protected PurchaseOrder() { Lines = new List<PurchaseOrderLine>(); }
 
     public PurchaseOrder(
         Guid id, string code, Guid supplierId, Guid warehouseId,
@@ -48,7 +48,7 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
         SubTotal = 0;
         TaxAmount = 0;
         TotalAmount = 0;
-        Details = new List<PurchaseOrderDetail>();
+        Lines = new List<PurchaseOrderLine>();
     }
     public void UpdateInfo(Guid warehouseId, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
     {
@@ -63,52 +63,52 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
         Note = note;
     }
 
-    #region PurchaseOrder Detial
-    public PurchaseOrderDetail AddDetail(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
+    #region PurchaseOrder Line
+    public PurchaseOrderLine AddLine(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
     {
         if (Status != PurchaseOrderStatus.Draft && Status != PurchaseOrderStatus.PendingApproval)
         {
-            throw new UserFriendlyException("Chỉ được thêm chi tiết khi đơn đang Nháp hoặc Chờ duyệt.");
+            throw new UserFriendlyException("Chỉ được thêm dòng hàng khi đơn đang Nháp hoặc Chờ duyệt.");
         }
 
-        var detail = new PurchaseOrderDetail(id, Id, productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
-        Details.Add(detail);
+        var line = new PurchaseOrderLine(id, Id, productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
+        Lines.Add(line);
 
         RecalculateTotal();
-        return detail;
+        return line;
     }
 
-    public void UpdateDetail(Guid detailId, decimal quantity, decimal unitPrice, decimal taxRate)
+    public void UpdateLine(Guid lineId, decimal quantity, decimal unitPrice, decimal taxRate)
     {
         if (Status != PurchaseOrderStatus.Draft && Status != PurchaseOrderStatus.PendingApproval)
         {
-            throw new UserFriendlyException("Không thể sửa chi tiết khi đơn đã duyệt.");
+            throw new UserFriendlyException("Không thể sửa dòng hàng khi đơn đã duyệt.");
         }
 
-        PurchaseOrderDetail? detail = Details.FirstOrDefault(x => x.Id == detailId);
-        if (detail == null)
+        PurchaseOrderLine? line = Lines.FirstOrDefault(x => x.Id == lineId);
+        if (line == null)
         {
-            throw new UserFriendlyException("Không tìm thấy dòng chi tiết.");
+            throw new UserFriendlyException("Không tìm thấy dòng hàng.");
         }
 
-        detail.UpdateInfo(quantity, unitPrice, taxRate);
+        line.UpdateInfo(quantity, unitPrice, taxRate);
         RecalculateTotal();
     }
 
-    public void RemoveDetail(Guid detailId)
+    public void RemoveLine(Guid lineId)
     {
         if (Status != PurchaseOrderStatus.Draft && Status != PurchaseOrderStatus.PendingApproval)
         {
-            throw new UserFriendlyException("Không thể xóa chi tiết khi đơn hàng đã duyệt.");
+            throw new UserFriendlyException("Không thể xóa dòng hàng khi đơn hàng đã duyệt.");
         }
 
-        PurchaseOrderDetail? detail = Details.FirstOrDefault(x => x.Id == detailId);
-        if (detail == null)
+        PurchaseOrderLine? line = Lines.FirstOrDefault(x => x.Id == lineId);
+        if (line == null)
         {
-            throw new UserFriendlyException("Không tìm thấy dòng chi tiết.");
+            throw new UserFriendlyException("Không tìm thấy dòng hàng.");
         }
 
-        Details.Remove(detail);
+        Lines.Remove(line);
         RecalculateTotal();
     }
     #endregion
@@ -116,7 +116,7 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
     #region Work flow
     public void SendToApprove()
     {
-        if (!Details.Any())
+        if (!Lines.Any())
         {
             throw new UserFriendlyException("Đơn hàng chưa có sản phẩm nào!");
         }
@@ -162,8 +162,8 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
     #region Helper
     private void RecalculateTotal()
     {
-        SubTotal = Details.Sum(x => x.TotalPrice);
-        TaxAmount = Details.Sum(x => x.TaxAmount);
+        SubTotal = Lines.Sum(x => x.TotalPrice);
+        TaxAmount = Lines.Sum(x => x.TaxAmount);
         TotalAmount = SubTotal + TaxAmount;
     }
     #endregion

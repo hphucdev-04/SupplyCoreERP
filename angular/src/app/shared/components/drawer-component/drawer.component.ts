@@ -12,10 +12,12 @@ export class DrawerComponent implements AfterContentInit {
   @Input() isOpen = false;
   @Input() title = '';
   @Input() width: 'sm' | 'md' | 'lg' | 'xl' | 'auto' = 'md';
+  @Input() height: 'sm' | 'md' | 'lg' | 'auto' = 'md';
   @Input() showFooter = true;
   @Input() saveDisabled = false;
   @Input() saveButtonText = '::Save';
   @Input() cancelButtonText = '::Cancel';
+  @Input() position: 'right' | 'bottom' = 'right';
 
   @Output() close = new EventEmitter<void>();
   @Output() save = new EventEmitter<void>();
@@ -24,6 +26,7 @@ export class DrawerComponent implements AfterContentInit {
   hasCustomFooter = false;
 
   get drawerWidth(): string {
+    if (this.position === 'bottom') return '100%';
     const widthMap = {
       sm: '300px',
       md: '400px',
@@ -32,6 +35,17 @@ export class DrawerComponent implements AfterContentInit {
       auto: 'auto'
     };
     return widthMap[this.width];
+  }
+
+  get drawerHeight(): string {
+    if (this.position === 'right') return '100%';
+    const heightMap = {
+      sm: '30vh',
+      md: '50vh',
+      lg: '80vh',
+      auto: 'auto'
+    };
+    return heightMap[this.height];
   }
 
   ngAfterContentInit(): void {

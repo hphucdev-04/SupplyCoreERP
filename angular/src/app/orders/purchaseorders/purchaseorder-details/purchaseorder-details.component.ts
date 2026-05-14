@@ -1,18 +1,22 @@
-import { Component, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
+import { eLayoutType, RoutesService } from '@abp/ng.core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
-import { PurchaseOrderDto, PurchaseOrderDetailDto } from 'src/app/proxy/purchase-orders/dtos';
+import { PurchaseOrderDto, PurchaseOrderLineDto } from 'src/app/proxy/purchase-orders/dtos';
 import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
+import { SupplierService } from 'src/app/proxy/suppliers';
+import { InventoryTicketService } from 'src/app/proxy/tickets';
+import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseOrderStatus } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
 interface ProductUnitLookup {
@@ -28,20 +32,20 @@ interface ProductUnitLookup {
   imports: [SharedModule, DrawerComponent],
   templateUrl: './purchaseorder-details.component.html',
 })
-export class PurchaseOrderDetailsComponent implements OnDestroy {
-  @ViewChild('cancelModal', { static: false }) cancelModal: any;
-  @Output() onSaved = new EventEmitter<void>();
-
+export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  private readonly ROUTE_NAME = '::Menu:PurchaseOrderDetails';
 
-  isVisible = false;
   orderId: string;
   order: PurchaseOrderDto;
+  relatedTickets: InventoryTicketDto[] = [];
   warehouses: WarehouseDto[] = [];
   medicines: MedicineDto[] = [];
+  loading = true;
 
-  // Cancel state
-  cancelReason = '';
+  // Cancel state (Drawer)
+  isCancelDrawerOpen = false;
+  ngModel_cancelReason = '';
   showCancelError = false;
   isCanceling = false;
 
@@ -50,8 +54,8 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
   editForm: FormGroup;
   isSavingEdit = false;
 
-  // Add detail drawer
-  isAddDetailOpen = false;
+  // Add line drawer
+  isAddLineOpen = false;
   detailForm: FormGroup;
   isSavingDetail = false;
   units: ProductUnitLookup[] = [];
@@ -64,42 +68,67 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
 
   constructor(
     private poService: PurchaseOrderService,
+    private supplierService: SupplierService,
+    private ticketService: InventoryTicketService,
     private warehouseService: WarehouseService,
     private medicineService: MedicineService,
+    private routesService: RoutesService,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
+  ngOnInit(): void {
+    this.orderId = this.route.snapshot.params['id'];
+    if (this.orderId) {
+      this.buildForms();
+      this.loadData();
+      this.loadMasterData();
+    } else {
+      this.goBack();
+    }
+  }
+
   ngOnDestroy(): void {
+    this.routesService.remove([this.ROUTE_NAME]);
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  // ── Public API ────────────────────────────────────────────
-  open(orderId: string) {
-    this.orderId = orderId;
-    this.order = null;
-    this.buildForms();
-    this.loadData();
-    this.loadMasterData();
-    this.isVisible = true;
-  }
-
-  close() {
-    this.isVisible = false;
+  goBack() {
+    this.router.navigate(['/order/purchaseorders']);
   }
 
   // ── Data ─────────────────────────────────────────────────
   loadData() {
+    this.loading = true;
     this.poService
       .get(this.orderId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res) => (this.order = res),
-        error: () => this.close(),
+        next: (res) => {
+          this.order = res;
+          this.loading = false;
+          this.loadMasterData();
+
+          this.routesService.add([{
+            path: `/orders/purchaseorders/details/${this.order.id}`,
+            name: this.ROUTE_NAME,
+            parentName: '::Menu:PurchaseOrders',
+            iconClass: 'fas fa-file-invoice',
+            layout: eLayoutType.application,
+          }]);
+        },
+        error: () => this.goBack(),
       });
+
+
+    this.ticketService
+      .getRelatedTicketsByPurchaseOrder(this.orderId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.relatedTickets = res));
   }
 
   loadMasterData() {
@@ -119,7 +148,7 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
     this.editForm = this.fb.group({
       warehouseId: [null, [Validators.required]],
       expectedDeliveryDate: [null],
-      dueDate: [null],
+      dueDate: [{ value: null, disabled: false }],
       note: ['', [Validators.maxLength(1000)]],
     });
 
@@ -133,6 +162,21 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
     });
   }
 
+  calculateDueDate() {
+    if (!this.order?.supplierId || !this.order?.orderDate) return;
+
+    this.supplierService.get(this.order.supplierId).subscribe(supplier => {
+      const days = supplier.paymentTermDays || 0;
+      const orderDate = new Date(this.order.orderDate);
+      if (days > 0) {
+        orderDate.setDate(orderDate.getDate() + days);
+        this.editForm.get('dueDate').setValue(orderDate.toISOString().split('T')[0]);
+      } else {
+        this.editForm.get('dueDate').setValue(this.order.orderDate.split('T')[0]);
+      }
+    });
+  }
+
   // ── Edit master ───────────────────────────────────────────
   openEditDrawer() {
     this.editForm.patchValue({
@@ -142,6 +186,9 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
       note: this.order.note ?? '',
     });
     this.isEditDrawerOpen = true;
+    
+    // Tự động tính lại khi mở (để đảm bảo đồng bộ nếu cấu hình NCC thay đổi)
+    this.calculateDueDate();
   }
 
   closeEditDrawer() {
@@ -159,23 +206,22 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
           this.isSavingEdit = false;
           this.closeEditDrawer();
           this.loadData();
-          this.onSaved.emit();
         },
         error: () => (this.isSavingEdit = false),
       });
   }
 
-  // ── Add Detail ────────────────────────────────────────────
-  openAddDetailDrawer() {
+  // ── Add Line ────────────────────────────────────────────
+  openAddLineDrawer() {
     this.units = [];
     this.selectedConversionFactor = 1;
     this.quantityPreview = 0;
     this.detailForm.reset({ quantity: 1, conversionFactor: 1, unitPrice: 0, taxRate: 0 });
-    this.isAddDetailOpen = true;
+    this.isAddLineOpen = true;
   }
 
-  closeAddDetailDrawer() {
-    this.isAddDetailOpen = false;
+  closeAddLineDrawer() {
+    this.isAddLineOpen = false;
   }
 
   onMedicineChange(medicineId: string) {
@@ -224,25 +270,24 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
     this.quantityPreview = qty * this.selectedConversionFactor;
   }
 
-  saveDetail() {
+  saveLine() {
     if (this.detailForm.invalid) return;
     this.isSavingDetail = true;
     this.poService
-      .addDetail(this.orderId, this.detailForm.value)
+      .addLine(this.orderId, this.detailForm.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.isSavingDetail = false;
-          this.closeAddDetailDrawer();
+          this.closeAddLineDrawer();
           this.loadData();
-          this.onSaved.emit();
         },
         error: () => (this.isSavingDetail = false),
       });
   }
 
-  // ── Inline edit detail quantity ───────────────────────────
-  onInlineDetailChange(detail: PurchaseOrderDetailDto, field: 'quantity' | 'unitPrice' | 'taxRate', rawValue: string) {
+  // ── Inline edit line quantity ───────────────────────────
+  onInlineLineChange(line: PurchaseOrderLineDto, field: 'quantity' | 'unitPrice' | 'taxRate', rawValue: string) {
     const value = parseFloat(rawValue);
     if (isNaN(value) || (field === 'quantity' && value <= 0)) {
       this.toaster.error('::InvalidValue', '::Error');
@@ -250,35 +295,33 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
       return;
     }
     const payload: any = {
-      quantity: detail.quantity,
-      unitPrice: detail.unitPrice,
-      taxRate: detail.taxRate ?? 0,
+      quantity: line.quantity,
+      unitPrice: line.unitPrice,
+      taxRate: line.taxRate ?? 0,
     };
     payload[field] = value;
-    if (payload[field] === detail[field]) return;
+    if (payload[field] === line[field]) return;
 
     this.poService
-      .updateDetail(this.orderId, detail.id, payload)
+      .updateLine(this.orderId, line.id, payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.toaster.success('::UpdateSuccess', '::Success');
           this.loadData();
-          this.onSaved.emit();
         },
         error: () => this.loadData(),
       });
   }
 
-  removeDetail(detailId: string) {
+  removeLine(lineId: string) {
     this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
       if (status === Confirmation.Status.confirm) {
         this.poService
-          .removeDetail(this.orderId, detailId)
+          .removeLine(this.orderId, lineId)
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
             this.loadData();
-            this.onSaved.emit();
           });
       }
     });
@@ -286,8 +329,8 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
 
   // ── Workflow actions ──────────────────────────────────────
   sendToApprove() {
-    if (!this.order?.details?.length) {
-      this.toaster.error('::NoDetailsError', '::Error');
+    if (!this.order?.lines?.length) {
+      this.toaster.error('::NoLinesError', '::Error');
       return;
     }
     this.confirmation.info('::SendToApproveConfirmation', '::Confirm').subscribe((status) => {
@@ -297,7 +340,6 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
           this.loadData();
-          this.onSaved.emit();
         });
     });
   }
@@ -311,7 +353,6 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
         .subscribe(() => {
           this.toaster.success('::ApproveSuccess', '::Success');
           this.loadData();
-          this.onSaved.emit();
         });
     });
   }
@@ -325,34 +366,36 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
         .subscribe(() => {
           this.toaster.success('::CompleteSuccess', '::Success');
           this.loadData();
-          this.onSaved.emit();
         });
     });
   }
 
   openCancelModal() {
-    this.cancelReason = '';
+    this.ngModel_cancelReason = '';
     this.showCancelError = false;
     this.isCanceling = false;
-    this.modalService.open(this.cancelModal, { size: 'md', centered: true, backdrop: 'static' });
+    this.isCancelDrawerOpen = true;
   }
 
-  confirmCancel(modal: any) {
-    if (!this.cancelReason?.trim()) {
+  closeCancelDrawer() {
+    this.isCancelDrawerOpen = false;
+  }
+
+  confirmCancel() {
+    if (!this.ngModel_cancelReason?.trim()) {
       this.showCancelError = true;
       return;
     }
     this.isCanceling = true;
     this.poService
-      .cancel(this.orderId, this.cancelReason.trim())
+      .cancel(this.orderId, this.ngModel_cancelReason.trim())
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.isCanceling = false;
-          modal.close();
+          this.closeCancelDrawer();
           this.toaster.success('::CancelSuccess', '::Success');
           this.loadData();
-          this.onSaved.emit();
         },
         error: () => (this.isCanceling = false),
       });
@@ -374,9 +417,9 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
     );
   }
 
-  receiveProgress(detail: PurchaseOrderDetailDto): number {
-    if (!detail.quantity) return 0;
-    return Math.min(100, ((detail.receivedQuantity ?? 0) / detail.quantity) * 100);
+  receiveProgress(line: PurchaseOrderLineDto): number {
+    if (!line.quantity) return 0;
+    return Math.min(100, ((line.receivedQuantity ?? 0) / line.quantity) * 100);
   }
 
   statusClass(status: PurchaseOrderStatus): string {
@@ -403,3 +446,4 @@ export class PurchaseOrderDetailsComponent implements OnDestroy {
     return map[status] ?? 'fa-circle';
   }
 }
+

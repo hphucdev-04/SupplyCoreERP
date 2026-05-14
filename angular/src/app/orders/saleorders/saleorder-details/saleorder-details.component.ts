@@ -1,6 +1,8 @@
-import { Component, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
+import { eLayoutType, RoutesService } from '@abp/ng.core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -12,7 +14,6 @@ import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.enum';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
 interface ProductUnitLookup {
@@ -28,19 +29,18 @@ interface ProductUnitLookup {
   imports: [SharedModule, DrawerComponent],
   templateUrl: './saleorder-details.component.html',
 })
-export class SalesOrderDetailsComponent implements OnDestroy {
-  @ViewChild('cancelModal', { static: false }) cancelModal: any;
-  @Output() onSaved = new EventEmitter<void>();
-
+export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  private readonly ROUTE_NAME = '::Menu:SaleOrderDetails';
 
-  isVisible = false;
   orderId: string;
   order: SalesOrderDto;
   warehouses: WarehouseDto[] = [];
   medicines: MedicineDto[] = [];
+  loading = true;
 
-  // Cancel state
+  // Cancel state (Drawer)
+  isCancelDrawerOpen = false;
   cancelReason = '';
   showCancelError = false;
   isCanceling = false;
@@ -66,39 +66,55 @@ export class SalesOrderDetailsComponent implements OnDestroy {
     private soService: SalesOrderService,
     private warehouseService: WarehouseService,
     private medicineService: MedicineService,
+    private routesService: RoutesService,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
+  ngOnInit(): void {
+    this.orderId = this.route.snapshot.params['id'];
+    if (this.orderId) {
+      this.buildForms();
+      this.loadData();
+      this.loadMasterData();
+    } else {
+      this.goBack();
+    }
+  }
+
   ngOnDestroy(): void {
+    this.routesService.remove([this.ROUTE_NAME]);
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  // ── Public API ────────────────────────────────────────────
-  open(orderId: string) {
-    this.orderId = orderId;
-    this.order = null;
-    this.buildForms();
-    this.loadData();
-    this.loadMasterData();
-    this.isVisible = true;
-  }
-
-  close() {
-    this.isVisible = false;
+  goBack() {
+    this.router.navigate(['/orders/saleorders']);
   }
 
   // ── Data ─────────────────────────────────────────────────
   loadData() {
+    this.loading = true;
     this.soService
       .get(this.orderId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res) => (this.order = res),
-        error: () => this.close(),
+        next: (res) => {
+          this.order = res;
+          this.loading = false;
+          
+          this.routesService.add([{
+            path: `/orders/saleorders/details/${this.order.id}`,
+            name: this.ROUTE_NAME,
+            parentName: '::Menu:SalesOrders',
+            iconClass: 'fas fa-file-invoice',
+            layout: eLayoutType.application,
+          }]);
+        },
+        error: () => this.goBack(),
       });
   }
 
@@ -159,7 +175,6 @@ export class SalesOrderDetailsComponent implements OnDestroy {
           this.isSavingEdit = false;
           this.closeEditDrawer();
           this.loadData();
-          this.onSaved.emit();
         },
         error: () => (this.isSavingEdit = false),
       });
@@ -235,7 +250,6 @@ export class SalesOrderDetailsComponent implements OnDestroy {
           this.isSavingDetail = false;
           this.closeAddDetailDrawer();
           this.loadData();
-          this.onSaved.emit();
         },
         error: () => (this.isSavingDetail = false),
       });
@@ -265,7 +279,6 @@ export class SalesOrderDetailsComponent implements OnDestroy {
         next: () => {
           this.toaster.success('::UpdateSuccess', '::Success');
           this.loadData();
-          this.onSaved.emit();
         },
         error: () => this.loadData(),
       });
@@ -279,7 +292,6 @@ export class SalesOrderDetailsComponent implements OnDestroy {
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
             this.loadData();
-            this.onSaved.emit();
           });
       }
     });
@@ -298,7 +310,6 @@ export class SalesOrderDetailsComponent implements OnDestroy {
         .pipe(takeUntil(this.destroy$))
         .subscribe(() => {
           this.loadData();
-          this.onSaved.emit();
         });
     });
   }
@@ -312,7 +323,6 @@ export class SalesOrderDetailsComponent implements OnDestroy {
         .subscribe(() => {
           this.toaster.success('::ApproveSuccess', '::Success');
           this.loadData();
-          this.onSaved.emit();
         });
     });
   }
@@ -326,7 +336,6 @@ export class SalesOrderDetailsComponent implements OnDestroy {
         .subscribe(() => {
           this.toaster.success('::CompleteSuccess', '::Success');
           this.loadData();
-          this.onSaved.emit();
         });
     });
   }
@@ -335,10 +344,14 @@ export class SalesOrderDetailsComponent implements OnDestroy {
     this.cancelReason = '';
     this.showCancelError = false;
     this.isCanceling = false;
-    this.modalService.open(this.cancelModal, { size: 'md', centered: true, backdrop: 'static' });
+    this.isCancelDrawerOpen = true;
   }
 
-  confirmCancel(modal: any) {
+  closeCancelDrawer() {
+    this.isCancelDrawerOpen = false;
+  }
+
+  confirmCancel() {
     if (!this.cancelReason?.trim()) {
       this.showCancelError = true;
       return;
@@ -350,10 +363,9 @@ export class SalesOrderDetailsComponent implements OnDestroy {
       .subscribe({
         next: () => {
           this.isCanceling = false;
-          modal.close();
+          this.closeCancelDrawer();
           this.toaster.success('::CancelSuccess', '::Success');
           this.loadData();
-          this.onSaved.emit();
         },
         error: () => (this.isCanceling = false),
       });

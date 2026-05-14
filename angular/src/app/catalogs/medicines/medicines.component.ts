@@ -18,13 +18,12 @@ import { ImportModalComponent } from 'src/app/shared/components/import-compoent/
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { Router } from '@angular/router';
 import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
-import { NotificationComponent } from 'src/app/shared/components/notification-component/notification.component';
 
 
 @Component({
   selector: 'app-medicines',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, ImportModalComponent, DropdownSearchComponent, NotificationComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, ImportModalComponent, DropdownSearchComponent],
   templateUrl: './medicines.component.html',
   styleUrl: './medicines.component.scss',
   providers: [ListService]
@@ -65,7 +64,6 @@ export class MedicinesComponent implements OnInit, OnDestroy {
 
   //Modal import state
   isImportOpen = false;
-  @ViewChild('detailModal') detailModal: MedicineDetailComponent;
   readonly enumName = enumName;
   constructor(
     public readonly list: ListService,

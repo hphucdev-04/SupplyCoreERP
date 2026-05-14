@@ -2,6 +2,7 @@ import type { AddTicketDetailDto, CreateInventoryTicketDto, GetInventoryTicketLi
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
+import type { PurchaseOrderLineDto } from '../purchase-orders/dtos/models';
 
 @Injectable({
   providedIn: 'root',
@@ -11,11 +12,20 @@ export class InventoryTicketService {
   apiName = 'Default';
   
 
-  allocateFEFO = (id: string, productId: string, requiredBaseQuantity: number, config?: Partial<Rest.Config>) =>
+  addDetail = (id: string, input: AddTicketDetailDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',
-      url: `/api/app/inventory-ticket/${id}/allocate-fEFO/${productId}`,
-      params: { requiredBaseQuantity },
+      url: `/api/app/inventory-ticket/${id}/detail`,
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  addLineFromPurchaseOrder = (id: string, poLineId: string, quantity: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/inventory-ticket/${id}/line-from-purchase-order/${poLineId}`,
+      params: { quantity },
     },
     { apiName: this.apiName,...config });
   
@@ -29,19 +39,26 @@ export class InventoryTicketService {
     { apiName: this.apiName,...config });
   
 
-  createTicketDetail = (ticketId: string, input: AddTicketDetailDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
-      method: 'POST',
-      url: `/api/app/inventory-ticket/ticket-detail/${ticketId}`,
-      body: input,
-    },
-    { apiName: this.apiName,...config });
-  
-
   delete = (id: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'DELETE',
       url: `/api/app/inventory-ticket/${id}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  deleteDetail = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'DELETE',
+      url: `/api/app/inventory-ticket/${id}/detail`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  deleteLine = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'DELETE',
+      url: `/api/app/inventory-ticket/${id}/line`,
     },
     { apiName: this.apiName,...config });
   
@@ -62,6 +79,14 @@ export class InventoryTicketService {
     { apiName: this.apiName,...config });
   
 
+  getLinesFromPurchaseOrder = (poId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PurchaseOrderLineDto[]>({
+      method: 'GET',
+      url: `/api/app/inventory-ticket/lines-from-purchase-order/${poId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (input: GetInventoryTicketListDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<InventoryTicketDto>>({
       method: 'GET',
@@ -71,20 +96,10 @@ export class InventoryTicketService {
     { apiName: this.apiName,...config });
   
 
-  reject = (id: string, reason: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
-      method: 'POST',
-      url: `/api/app/inventory-ticket/${id}/reject`,
-      params: { reason },
-    },
-    { apiName: this.apiName,...config });
-  
-
-  removeDetail = (ticketId: string, detailId: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
-      method: 'DELETE',
-      url: '/api/app/inventory-ticket/detail',
-      params: { ticketId, detailId },
+  getRelatedTicketsByPurchaseOrder = (poId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, InventoryTicketDto[]>({
+      method: 'GET',
+      url: `/api/app/inventory-ticket/related-tickets-by-purchase-order/${poId}`,
     },
     { apiName: this.apiName,...config });
   
@@ -102,15 +117,6 @@ export class InventoryTicketService {
       method: 'PUT',
       url: `/api/app/inventory-ticket/${id}`,
       body: input,
-    },
-    { apiName: this.apiName,...config });
-  
-
-  updateDetailQuantity = (detailId: string, actualQuantity: number, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
-      method: 'PUT',
-      url: `/api/app/inventory-ticket/detail-quantity/${detailId}`,
-      params: { actualQuantity },
     },
     { apiName: this.apiName,...config });
 }
