@@ -55,6 +55,9 @@ public class MedicineManager : DomainService
         UsageRoute usageRoute,
         StorageCondition storageCondition,
         bool isPrescriptionDrug,
+        DateTime? regValidFrom = null,
+        DateTime? regValidTo = null,
+        string? regNote = null,
         bool raiseEvent = true)
     {
         await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
@@ -76,6 +79,13 @@ public class MedicineManager : DomainService
             isPrescriptionDrug
         );
 
+        var firstReg = medicine.GetCurrentRegistration();
+        if (firstReg != null)
+        {
+            firstReg.UpdateValidity(regValidFrom, regValidTo);
+            firstReg.SetNote(regNote);
+        }
+
         if (raiseEvent)
         {
             medicine.RaiseCreatedEvent();
@@ -94,7 +104,10 @@ public class MedicineManager : DomainService
         string regNumber,
         UsageRoute usageRoute,
         StorageCondition storageCondition,
-        bool isPrescriptionDrug)
+        bool isPrescriptionDrug,
+        DateTime? regValidFrom = null,
+        DateTime? regValidTo = null,
+        string? regNote = null)
     {
         Check.NotNull(medicine, nameof(medicine));
 
@@ -103,8 +116,21 @@ public class MedicineManager : DomainService
 
         medicine.UpdateInfo(name, categoryId, manufacturerId, baseUnitId);
 
+        // Kiểm tra nếu số đăng ký thay đổi thì thêm bản ghi mới
+        var currentReg = medicine.GetCurrentRegistration();
+        if (currentReg == null || currentReg.RegistrationNumber != regNumber.Trim().ToUpper())
+        {
+            medicine.AddRegistration(GuidGenerator.Create(), regNumber, regValidFrom, regValidTo, regNote);
+        }
+        else
+        {
+             // Tuỳ chọn: Nếu không đổi SĐK, có thể cho phép cập nhật lại ngày tháng của SĐK hiện tại nếu muốn.
+             // currentReg.UpdateValidity(regValidFrom, regValidTo);
+             // currentReg.SetNote(regNote);
+        }
+
         // Update toàn bộ thông tin pharma từ input thực sự, 
-        medicine.UpdatePharmaInfo(dosageFormId, regNumber, usageRoute, storageCondition, isPrescriptionDrug);
+        medicine.UpdatePharmaInfo(dosageFormId, usageRoute, storageCondition, isPrescriptionDrug);
 
         medicine.SetPending();
     }

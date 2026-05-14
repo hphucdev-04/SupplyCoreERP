@@ -153,7 +153,15 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => {
         this.selectedMedicine = res;
-        this.form.patchValue(res);
+        
+        // Format ngày tháng về YYYY-MM-DD cho input type="date"
+        const formattedData = {
+          ...res,
+          registrationValidFrom: res.registrationValidFrom ? res.registrationValidFrom.split('T')[0] : null,
+          registrationValidTo: res.registrationValidTo ? res.registrationValidTo.split('T')[0] : null,
+        };
+
+        this.form.patchValue(formattedData);
         this.isDrawerOpen = true;
       });
   }
@@ -182,6 +190,9 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       baseUnitId: [null, Validators.required],
       dosageFormId: [null, Validators.required],
       registrationNumber: ['', Validators.maxLength(50)],
+      registrationValidFrom: [null],
+      registrationValidTo: [null],
+      registrationNote: [''],
       usageRoute: [null, Validators.required],
       storageCondition: [null, Validators.required],
       isPrescriptionDrug: [false],

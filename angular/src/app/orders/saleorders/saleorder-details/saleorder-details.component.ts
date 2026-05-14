@@ -7,12 +7,15 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
-import { SalesOrderDto, SalesOrderDetailDto } from 'src/app/proxy/sales-orders/dtos';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
+import { SalesOrderDto, SalesOrderLineDto } from 'src/app/proxy/sales-orders/dtos';
 import { SalesOrderService } from 'src/app/proxy/sales-orders';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { MedicineService } from 'src/app/proxy/medicines';
+import { PriceService } from 'src/app/proxy/prices';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
+import { ProductPriceDto } from 'src/app/proxy/prices/dtos';
 import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
@@ -26,7 +29,7 @@ interface ProductUnitLookup {
 @Component({
   selector: 'app-sales-order-details',
   standalone: true,
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, DropdownSearchComponent],
   templateUrl: './saleorder-details.component.html',
 })
 export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
@@ -50,11 +53,12 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   editForm: FormGroup;
   isSavingEdit = false;
 
-  // Add detail drawer
-  isAddDetailOpen = false;
-  detailForm: FormGroup;
-  isSavingDetail = false;
+  // Add line drawer
+  isAddLineOpen = false;
+  lineForm: FormGroup;
+  isSavingLine = false;
   units: ProductUnitLookup[] = [];
+  availablePrices: ProductPriceDto[] = [];
   selectedConversionFactor = 1;
   baseUnitName = '';
   quantityPreview = 0;
@@ -66,6 +70,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
     private soService: SalesOrderService,
     private warehouseService: WarehouseService,
     private medicineService: MedicineService,
+    private priceService: PriceService,
     private routesService: RoutesService,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
@@ -92,7 +97,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   goBack() {
-    this.router.navigate(['/orders/saleorders']);
+    this.router.navigate(['/order/saleorders']);
   }
 
   // ── Data ─────────────────────────────────────────────────
@@ -107,7 +112,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
           this.loading = false;
           
           this.routesService.add([{
-            path: `/orders/saleorders/details/${this.order.id}`,
+            path: `/order/saleorders/details/${this.order.id}`,
             name: this.ROUTE_NAME,
             parentName: '::Menu:SalesOrders',
             iconClass: 'fas fa-file-invoice',
@@ -139,11 +144,12 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
       note: ['', [Validators.maxLength(1000)]],
     });
 
-    this.detailForm = this.fb.group({
+    this.lineForm = this.fb.group({
       productId: [null, [Validators.required]],
       unitId: [null, [Validators.required]],
       conversionFactor: [1, [Validators.required, Validators.min(1)]],
       quantity: [1, [Validators.required, Validators.min(0.01)]],
+      unitPrice: [null], // If null, backend will try to find default price
       discountRate: [0, [Validators.min(0), Validators.max(100)]],
       taxRate: [0, [Validators.min(0)]],
     });
@@ -180,22 +186,24 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  // ── Add Detail ────────────────────────────────────────────
-  openAddDetailDrawer() {
+  // ── Add Line ────────────────────────────────────────────
+  openAddLineDrawer() {
     this.units = [];
+    this.availablePrices = [];
     this.selectedConversionFactor = 1;
     this.quantityPreview = 0;
-    this.detailForm.reset({ quantity: 1, conversionFactor: 1, discountRate: 0, taxRate: 0 });
-    this.isAddDetailOpen = true;
+    this.lineForm.reset({ quantity: 1, conversionFactor: 1, discountRate: 0, taxRate: 0 });
+    this.isAddLineOpen = true;
   }
 
-  closeAddDetailDrawer() {
-    this.isAddDetailOpen = false;
+  closeAddLineDrawer() {
+    this.isAddLineOpen = false;
   }
 
   onMedicineChange(medicineId: string) {
-    this.detailForm.patchValue({ unitId: null, conversionFactor: 1 });
+    this.lineForm.patchValue({ unitId: null, conversionFactor: 1, unitPrice: null });
     this.units = [];
+    this.availablePrices = [];
     this.selectedConversionFactor = 1;
     this.baseUnitName = '';
     this.quantityPreview = 0;
@@ -220,8 +228,20 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
           });
         this.units = [baseUnit, ...others];
         this.baseUnitName = detail.baseUnitName ?? '';
-        this.detailForm.patchValue({ unitId: baseUnit.unitId, conversionFactor: 1 });
+        this.lineForm.patchValue({ unitId: baseUnit.unitId, conversionFactor: 1 });
         this.selectedConversionFactor = 1;
+
+        // Fetch prices for this product
+        this.loadPrices(medicineId);
+      });
+  }
+
+  loadPrices(productId: string) {
+    this.priceService.getByProduct(productId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(prices => {
+        this.availablePrices = prices;
+        this.filterAvailablePrices();
       });
   }
 
@@ -229,51 +249,72 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
     const unit = this.units.find((u) => u.unitId === unitId);
     if (unit) {
       this.selectedConversionFactor = unit.conversionFactor;
-      this.detailForm.patchValue({ conversionFactor: unit.conversionFactor });
+      this.lineForm.patchValue({ conversionFactor: unit.conversionFactor });
     }
+    this.filterAvailablePrices();
     this.updateQuantityPreview();
   }
 
-  updateQuantityPreview() {
-    const qty = this.detailForm.get('quantity')?.value || 0;
-    this.quantityPreview = qty * this.selectedConversionFactor;
+  filterAvailablePrices() {
+    const unitId = this.lineForm.get('unitId')?.value;
+    const qty = this.lineForm.get('quantity')?.value || 0;
+    
+    // Filter prices that match the selected unit and quantity
+    const filtered = this.availablePrices.filter(p => p.unitId === unitId && qty >= (p.minQuantity || 0));
+    
+    // If we have filtered prices, maybe auto-select the best one or just let the user pick.
+    // For now, we'll just keep them for the dropdown.
+    if (filtered.length > 0) {
+      // Auto pick the one with highest minQuantity that is still <= current qty
+      const best = filtered.sort((a, b) => (b.minQuantity || 0) - (a.minQuantity || 0))[0];
+      this.lineForm.patchValue({ unitPrice: best.price });
+    } else {
+      this.lineForm.patchValue({ unitPrice: null });
+    }
   }
 
-  saveDetail() {
-    if (this.detailForm.invalid) return;
-    this.isSavingDetail = true;
+  updateQuantityPreview() {
+    const qty = this.lineForm.get('quantity')?.value || 0;
+    this.quantityPreview = qty * this.selectedConversionFactor;
+    this.filterAvailablePrices();
+  }
+
+  saveLine() {
+    if (this.lineForm.invalid) return;
+    this.isSavingLine = true;
     this.soService
-      .addDetail(this.orderId, this.detailForm.value)
+      .addLine(this.orderId, this.lineForm.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
-          this.isSavingDetail = false;
-          this.closeAddDetailDrawer();
+          this.isSavingLine = false;
+          this.closeAddLineDrawer();
           this.loadData();
         },
-        error: () => (this.isSavingDetail = false),
+        error: () => (this.isSavingLine = false),
       });
   }
 
-  // ── Inline edit (only discountRate & taxRate for SO — price is auto from pricelist) ──
-  onInlineDetailChange(detail: SalesOrderDetailDto, field: 'discountRate' | 'taxRate', rawValue: string) {
+  // ── Inline edit ──
+  onInlineLineChange(line: SalesOrderLineDto, field: 'quantity' | 'unitPrice' | 'discountRate' | 'taxRate', rawValue: string) {
     const value = parseFloat(rawValue);
     if (isNaN(value) || value < 0) {
       this.toaster.error('::InvalidValue', '::Error');
       this.loadData();
       return;
     }
-    if (value === detail[field]) return;
+    if (value === line[field]) return;
 
     const payload: any = {
-      quantity: detail.quantity,
-      discountRate: detail.discountRate ?? 0,
-      taxRate: detail.taxRate ?? 0,
+      quantity: line.quantity,
+      unitPrice: line.unitPrice,
+      discountRate: line.discountRate ?? 0,
+      taxRate: line.taxRate ?? 0,
     };
     payload[field] = value;
 
     this.soService
-      .updateDetail(this.orderId, detail.id, payload)
+      .updateLine(this.orderId, line.id, payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
@@ -284,11 +325,11 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  removeDetail(detailId: string) {
+  removeLine(lineId: string) {
     this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
       if (status === Confirmation.Status.confirm) {
         this.soService
-          .removeDetail(this.orderId, detailId)
+          .removeLine(this.orderId, lineId)
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
             this.loadData();
@@ -299,8 +340,8 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
 
   // ── Workflow actions ──────────────────────────────────────
   sendToApprove() {
-    if (!this.order?.details?.length) {
-      this.toaster.error('::NoDetailsError', '::Error');
+    if (!this.order?.lines?.length) {
+      this.toaster.error('::NoLinesError', '::Error');
       return;
     }
     this.confirmation.info('::SendToApproveConfirmation', '::Confirm').subscribe((status) => {
@@ -387,9 +428,9 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
     );
   }
 
-  deliverProgress(detail: SalesOrderDetailDto): number {
-    if (!detail.quantity) return 0;
-    return Math.min(100, ((detail.deliveredQuantity ?? 0) / detail.quantity) * 100);
+  deliverProgress(line: SalesOrderLineDto): number {
+    if (!line.quantity) return 0;
+    return Math.min(100, ((line.deliveredQuantity ?? 0) / line.quantity) * 100);
   }
 
   statusClass(status: SalesOrderStatus): string {

@@ -16,6 +16,10 @@ public class MedicineDto : EntityDto<Guid>
     public string OriginCountryName { get; set; }
     public string OriginCountryISO { get; set; }
 
+    public string RegistrationNumber { get; set; }
+    public DateTime? RegistrationValidFrom { get; set; }
+    public DateTime? RegistrationValidTo { get; set; }
+    public string? RegistrationNote { get; set; }
     public StorageCondition StorageCondition { get; set; }
     public MedicineStatus Status { get; set; }
     public bool IsActive { get; set; }

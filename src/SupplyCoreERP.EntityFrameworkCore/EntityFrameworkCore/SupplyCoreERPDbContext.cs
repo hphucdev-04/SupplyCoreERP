@@ -91,6 +91,7 @@ public class SupplyCoreERPDbContext :
     // Medicine
     public DbSet<Medicine> Medicines { get; set; }
     public DbSet<MedicineIngredient> MedicineIngredients { get; set; }
+    public DbSet<MedicineRegistration> MedicineRegistrations { get; set; }
 
     // Price
     public DbSet<PriceList> PriceLists { get; set; }
@@ -117,7 +118,7 @@ public class SupplyCoreERPDbContext :
     public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
     public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; }
     public DbSet<SalesOrder> SalesOrders { get; set; }
-    public DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
+    public DbSet<SalesOrderLine> SalesOrderLines { get; set; }
 
     //DocumentSequence
     public DbSet<DocumentSequence> DocumentSequences { get; set; }
@@ -271,8 +272,20 @@ public class SupplyCoreERPDbContext :
             // Link DosageForm -> RESTRICT
             b.HasOne(x => x.DosageForm).WithMany().HasForeignKey(x => x.DosageFormId).OnDelete(DeleteBehavior.Restrict);
 
-            // Cascade: Xóa Medicine -> Xóa luôn Ingredients
+            // Cascade: Xóa Medicine -> Xóa luôn Ingredients và Registrations
             b.HasMany(x => x.Ingredients).WithOne().HasForeignKey(x => x.MedicineId).OnDelete(DeleteBehavior.Cascade);
+            b.HasMany(x => x.Registrations).WithOne().HasForeignKey(x => x.MedicineId).OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // MedicineRegistration
+        builder.Entity<MedicineRegistration>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "MedicineRegistrations", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.RegistrationNumber).IsRequired().HasMaxLength(100);
+            b.HasIndex(x => new { x.MedicineId, x.RegistrationNumber });
+            b.HasIndex(x => x.IsActive);
         });
 
         //MedicineIngredient
@@ -440,6 +453,9 @@ public class SupplyCoreERPDbContext :
 
             // Mua của NCC nào
             b.HasOne(x => x.Supplier).WithMany().HasForeignKey(x => x.SupplierId).OnDelete(DeleteBehavior.Restrict);
+
+            // Liên kết Số đăng ký (cho Thuốc)
+            b.HasOne(x => x.MedicineRegistration).WithMany().HasForeignKey(x => x.MedicineRegistrationId).OnDelete(DeleteBehavior.Restrict);
 
             // Index hỗ trợ tìm kiếm FEFO nhanh hơn
             b.HasIndex(x => new { x.ProductId, x.Status, x.ExpiryDate });
@@ -613,17 +629,17 @@ public class SupplyCoreERPDbContext :
 
             b.HasOne(x => x.Customer).WithMany().HasForeignKey(x => x.CustomerId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 
-            b.HasMany(x => x.Details)
+            b.HasMany(x => x.Lines)
              .WithOne(x => x.SalesOrder)
              .HasForeignKey(x => x.SalesOrderId)
              .IsRequired()
              .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // SalesOrderDetail
-        builder.Entity<SalesOrderDetail>(b =>
+        // SalesOrderLine
+        builder.Entity<SalesOrderLine>(b =>
         {
-            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "SalesOrderDetails", SupplyCoreERPConsts.DbSchema);
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "SalesOrderLines", SupplyCoreERPConsts.DbSchema);
             b.ConfigureByConvention();
 
             b.Property(x => x.Quantity).HasPrecision(18, 4);

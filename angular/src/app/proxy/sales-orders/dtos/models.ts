@@ -1,11 +1,12 @@
 import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { SalesOrderStatus } from '../../enums/orders/sales-order-status.enum';
 
-export interface AddSalesOrderDetailDto {
+export interface AddSalesOrderLineDto {
   productId: string;
   unitId: string;
   conversionFactor: number;
   quantity: number;
+  unitPrice?: number;
   discountRate?: number;
   taxRate?: number;
 }
@@ -26,7 +27,25 @@ export interface GetSalesOrderListDto extends PagedAndSortedResultRequestDto {
   status?: SalesOrderStatus;
 }
 
-export interface SalesOrderDetailDto extends FullAuditedEntityDto<string> {
+export interface SalesOrderDto extends FullAuditedEntityDto<string> {
+  code?: string;
+  customerId?: string;
+  customerName?: string;
+  warehouseId?: string;
+  warehouseName?: string;
+  orderDate?: string;
+  expectedDeliveryDate?: string;
+  dueDate?: string;
+  status?: SalesOrderStatus;
+  subTotal?: number;
+  discountAmount?: number;
+  taxAmount?: number;
+  totalAmount?: number;
+  note?: string;
+  lines?: SalesOrderLineDto[];
+}
+
+export interface SalesOrderLineDto extends FullAuditedEntityDto<string> {
   productId?: string;
   productCode?: string;
   productName?: string;
@@ -46,33 +65,16 @@ export interface SalesOrderDetailDto extends FullAuditedEntityDto<string> {
   finalPrice?: number;
 }
 
-export interface SalesOrderDto extends FullAuditedEntityDto<string> {
-  code?: string;
-  customerId?: string;
-  customerName?: string;
-  warehouseId?: string;
-  warehouseName?: string;
-  orderDate?: string;
-  expectedDeliveryDate?: string;
-  dueDate?: string;
-  status?: SalesOrderStatus;
-  subTotal?: number;
-  discountAmount?: number;
-  taxAmount?: number;
-  totalAmount?: number;
-  note?: string;
-  details?: SalesOrderDetailDto[];
-}
-
-export interface UpdateSalesOrderDetailDto {
-  quantity: number;
-  discountRate?: number;
-  taxRate?: number;
-}
-
 export interface UpdateSalesOrderDto {
   warehouseId: string;
   expectedDeliveryDate?: string;
   dueDate?: string;
   note?: string;
+}
+
+export interface UpdateSalesOrderLineDto {
+  quantity: number;
+  unitPrice?: number;
+  discountRate?: number;
+  taxRate?: number;
 }

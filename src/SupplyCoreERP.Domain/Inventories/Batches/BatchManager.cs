@@ -25,7 +25,13 @@ public class BatchManager : DomainService
         _documentSequenceManager = documentSequenceManager;
     }
 
-    public async Task<ProductBatch> CreateAsync(Guid productId, string batchNumber, DateTime mfg, DateTime exp, Guid? supplierId)
+    public async Task<ProductBatch> CreateAsync(
+        Guid productId, 
+        string batchNumber, 
+        DateTime mfg, 
+        DateTime exp, 
+        Guid? supplierId,
+        Guid? medicineRegistrationId = null)
     {
         string code = await _documentSequenceManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeBatch);
 
@@ -34,17 +40,22 @@ public class BatchManager : DomainService
             throw new UserFriendlyException($"Số lô '{batchNumber}' đã tồn tại!");
         }
 
-        return new ProductBatch(GuidGenerator.Create(), code, productId, batchNumber, mfg, exp, supplierId);
+        return new ProductBatch(GuidGenerator.Create(), code, productId, batchNumber, mfg, exp, supplierId, medicineRegistrationId);
     }
 
-    public void UpdateBatch(ProductBatch batch, DateTime mfg, DateTime exp, Guid? supplierId)
+    public void UpdateBatch(
+        ProductBatch batch, 
+        DateTime mfg, 
+        DateTime exp, 
+        Guid? supplierId,
+        Guid? medicineRegistrationId = null)
     {
         if (batch.Status == BatchQAStatus.Recalled || batch.Status == BatchQAStatus.Expired)
         {
             throw new UserFriendlyException("Không thể sửa thông tin Lô thuốc đã bị thu hồi hoặc hết hạn!");
         }
 
-        batch.UpdateInfo(mfg, exp, supplierId);
+        batch.UpdateInfo(mfg, exp, supplierId, medicineRegistrationId);
     }
 
     public async Task ValidateDeleteAsync(Guid batchId)

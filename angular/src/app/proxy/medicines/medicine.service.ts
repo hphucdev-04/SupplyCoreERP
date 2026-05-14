@@ -1,4 +1,4 @@
-import type { CreateUpdateMedicineDto, CreateUpdateMedicineIngredientDto, CreateUpdateMedicineUnitDto, GetMedicineListDto, MedicineDetailDto, MedicineDto, MedicineSummaryDto } from './dtos/models';
+import type { AddMedicineRegistrationDto, CreateUpdateMedicineDto, CreateUpdateMedicineIngredientDto, CreateUpdateMedicineUnitDto, GetMedicineListDto, MedicineDetailDto, MedicineDto, MedicineSummaryDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
@@ -15,6 +15,15 @@ export class MedicineService {
     this.restService.request<any, void>({
       method: 'POST',
       url: `/api/app/medicine/${id}/ingredient`,
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  addRegistration = (id: string, input: AddMedicineRegistrationDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/medicine/${id}/registration`,
       body: input,
     },
     { apiName: this.apiName,...config });

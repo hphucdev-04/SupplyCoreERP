@@ -93,18 +93,18 @@
         </div>
       </div>
 
-      <!-- ── Details Table ─────────────────────────────────── -->
+      <!-- ── Lines Table ─────────────────────────────────── -->
       <div class="card border shadow-sm mb-3">
         <div class="card-header py-3 d-flex justify-content-between align-items-center bg-white">
           <h6 class="txt-primary fw-bold mb-0">
-            <i class="fa fa-list me-2"></i>{{ '::OrderDetails' | abpLocalization }}
-            <span class="badge badge-secondary ms-2">{{ order.details?.length || 0 }}</span>
+            <i class="fa fa-list me-2"></i>{{ '::OrderLines' | abpLocalization }}
+            <span class="badge badge-secondary ms-2">{{ order.lines?.length || 0 }}</span>
           </h6>
 
           <div class="d-flex gap-2">
             <!-- Draft actions -->
             <ng-container *ngIf="order.status === SalesOrderStatus.Draft">
-              <button class="btn btn-sm btn-outline-primary fw-bold" (click)="openAddDetailDrawer()">
+              <button class="btn btn-sm btn-outline-primary fw-bold" (click)="openAddLineDrawer()">
                 <i class="fa fa-plus me-1"></i>{{ '::AddProduct' | abpLocalization }}
               </button>
               <button class="btn btn-sm btn-primary fw-bold" (click)="sendToApprove()">
@@ -162,9 +162,9 @@
                 </tr>
               </thead>
               <tbody>
-                <tr *ngFor="let row of order.details">
+                <tr *ngFor="let row of order.lines">
                   <td class="px-3 text-center" *ngIf="isEditable()">
-                    <button class="btn btn-link btn-sm txt-danger p-0" (click)="removeDetail(row.id)">
+                    <button class="btn btn-link btn-sm txt-danger p-0" (click)="removeLine(row.id)">
                       <i class="fa fa-trash-alt"></i>
                     </button>
                   </td>
@@ -183,16 +183,31 @@
 
                   <!-- Quantity -->
                   <td class="py-3 text-end pe-3">
-                    <span class="fw-bold txt-num">{{ row.quantity | number }}</span>
-                    <div class="txt-muted txt-xs txt-num" *ngIf="row.baseQuantity !== row.quantity">
-                      ≈ {{ row.baseQuantity | number }} base
+                    <div *ngIf="isEditable()">
+                      <input type="number" class="form-control form-control-sm text-end txt-num"
+                             style="width: 80px; display:inline-block;"
+                             [value]="row.quantity" min="0.01"
+                             (change)="onInlineLineChange(row, 'quantity', $event.target.value)">
+                    </div>
+                    <div *ngIf="!isEditable()">
+                      <span class="fw-bold txt-num">{{ row.quantity | number }}</span>
+                      <div class="txt-muted txt-xs txt-num" *ngIf="row.baseQuantity !== row.quantity">
+                        ≈ {{ row.baseQuantity | number }} base
+                      </div>
                     </div>
                   </td>
 
                   <!-- Unit Price -->
                   <td class="py-3 text-end pe-3">
-                    <span class="txt-num">{{ row.unitPrice | number:'1.0-0' }}đ</span>
-                    <div class="txt-muted txt-xs">{{ '::PriceList' | abpLocalization }}</div>
+                    <div *ngIf="isEditable()">
+                      <input type="number" class="form-control form-control-sm text-end txt-num"
+                             style="width: 100px; display:inline-block;"
+                             [value]="row.unitPrice" min="0"
+                             (change)="onInlineLineChange(row, 'unitPrice', $event.target.value)">
+                    </div>
+                    <div *ngIf="!isEditable()">
+                      <span class="txt-num">{{ row.unitPrice | number:'1.0-0' }}đ</span>
+                    </div>
                   </td>
 
                   <!-- Discount Rate -->
@@ -201,7 +216,7 @@
                       <input type="number" class="form-control form-control-sm text-end txt-num"
                              style="width: 70px; display:inline-block;"
                              [value]="row.discountRate ?? 0" min="0" max="100"
-                             (change)="onInlineDetailChange(row, 'discountRate', $event.target.value)">
+                             (change)="onInlineLineChange(row, 'discountRate', $event.target.value)">
                     </div>
                     <div *ngIf="!isEditable()">
                       <span class="txt-num txt-warning">{{ row.discountRate ?? 0 }}%</span>
@@ -217,7 +232,7 @@
                       <input type="number" class="form-control form-control-sm text-end txt-num"
                              style="width: 70px; display:inline-block;"
                              [value]="row.taxRate ?? 0" min="0" max="100"
-                             (change)="onInlineDetailChange(row, 'taxRate', $event.target.value)">
+                             (change)="onInlineLineChange(row, 'taxRate', $event.target.value)">
                     </div>
                     <span *ngIf="!isEditable()" class="txt-num txt-muted">{{ row.taxRate ?? 0 }}%</span>
                   </td>
@@ -253,7 +268,7 @@
                   </td>
                 </tr>
 
-                <tr *ngIf="!order.details?.length">
+                <tr *ngIf="!order.lines?.length">
                   <td [colSpan]="9" class="text-center txt-muted py-5 txt-sm fst-italic">
                     {{ '::NoData' | abpLocalization }}
                   </td>
@@ -310,10 +325,12 @@
   <form *ngIf="editForm" [formGroup]="editForm">
     <div class="mb-3">
       <label class="form-label txt-sm fw-semibold">{{ '::Warehouse' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <select class="form-select form-select-sm" formControlName="warehouseId">
-        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-        <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
-      </select>
+      <app-dropdown-search
+        formControlName="warehouseId"
+        [items]="warehouses"
+        [placeholder]="'::Select' | abpLocalization"
+        [searchPlaceholder]="'::Search' | abpLocalization"
+      ></app-dropdown-search>
     </div>
     <div class="row">
       <div class="col-6 mb-3">
@@ -332,26 +349,29 @@
   </form>
 </app-drawer>
 
-<!-- Add Detail Drawer -->
+<!-- Add Line Drawer -->
 <app-drawer
-  [isOpen]="isAddDetailOpen"
+  [isOpen]="isAddLineOpen"
   [title]="'::AddProduct' | abpLocalization"
   [width]="'md'"
-  [saveDisabled]="detailForm?.invalid || isSavingDetail"
-  (close)="closeAddDetailDrawer()"
-  (save)="saveDetail()">
-  <form *ngIf="detailForm" [formGroup]="detailForm">
+  [saveDisabled]="lineForm?.invalid || isSavingLine"
+  (close)="closeAddLineDrawer()"
+  (save)="saveLine()">
+  <form *ngIf="lineForm" [formGroup]="lineForm">
 
     <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm">
-      <i class="fa fa-tag me-1"></i> {{ '::PriceAutoFromPriceListHint' | abpLocalization }}
+      <i class="fa fa-tag me-1"></i> {{ '::PriceSelectionHint' | abpLocalization }}
     </div>
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Product' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <select class="form-select form-select-sm" formControlName="productId" (change)="onMedicineChange($event.target.value)">
-        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-        <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
-      </select>
+      <label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label>
+      <app-dropdown-search
+        formControlName="productId"
+        [items]="medicines"
+        [placeholder]="'::Select' | abpLocalization"
+        [searchPlaceholder]="'::Search' | abpLocalization"
+        (valueChange)="onMedicineChange($event)"
+      ></app-dropdown-search>
     </div>
 
     <div class="row">
@@ -369,6 +389,21 @@
         <input type="number" step="1" min="1" class="form-control form-control-sm"
                formControlName="quantity" (input)="updateQuantityPreview()">
       </div>
+    </div>
+
+    <!-- Price Selection -->
+    <div class="mb-3" *ngIf="availablePrices.length > 0">
+      <label class="form-label txt-sm fw-semibold">{{ '::SelectPrice' | abpLocalization }}</label>
+      <select class="form-select form-select-sm font-mono" formControlName="unitPrice">
+        <option [ngValue]="null">{{ '::AutoSelectBestPrice' | abpLocalization }}</option>
+        <option *ngFor="let p of availablePrices" [ngValue]="p.price">
+          [{{ p.priceListName }}] {{ p.price | number }}đ (Min: {{ p.minQuantity }})
+        </option>
+      </select>
+    </div>
+
+    <div class="alert alert-warning p-2 mb-3 txt-sm" *ngIf="lineForm.get('productId').value && availablePrices.length === 0">
+      <i class="fa fa-exclamation-triangle me-1"></i> {{ '::NoPriceFoundForThisProduct' | abpLocalization }}
     </div>
 
     <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm"

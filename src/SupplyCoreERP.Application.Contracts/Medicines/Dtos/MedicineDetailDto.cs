@@ -12,10 +12,10 @@ public class MedicineDetailDto : MedicineDto
     public Guid DosageFormId { get; set; }
     public Guid OriginCountryId { get; set; }
 
-    public string RegistrationNumber { get; set; }
     public UsageRoute UsageRoute { get; set; }
     public bool IsPrescriptionDrug { get; set; }
 
     public List<MedicineIngredientDto> Ingredients { get; set; }
     public List<MedicineUnitDto> Units { get; set; }
+    public List<MedicineRegistrationDto> Registrations { get; set; }
 }

@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SupplyCoreERP.EntityFrameworkCore;
@@ -13,9 +14,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace SupplyCoreERP.Migrations
 {
     [DbContext(typeof(SupplyCoreERPDbContext))]
-    partial class SupplyCoreERPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260514083711_UpdateSOLine")]
+    partial class UpdateSOLine
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -621,9 +624,6 @@ namespace SupplyCoreERP.Migrations
                     b.Property<DateTime>("ManufacturingDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<Guid?>("MedicineRegistrationId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
@@ -637,8 +637,6 @@ namespace SupplyCoreERP.Migrations
 
                     b.HasIndex("Code")
                         .IsUnique();
-
-                    b.HasIndex("MedicineRegistrationId");
 
                     b.HasIndex("SupplierId");
 
@@ -1373,70 +1371,6 @@ namespace SupplyCoreERP.Migrations
                     b.HasIndex("MedicineId");
 
                     b.ToTable("AppMedicineIngredients", (string)null);
-                });
-
-            modelBuilder.Entity("SupplyCoreERP.Medicines.MedicineRegistration", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<Guid?>("DeleterId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("DeleterId");
-
-                    b.Property<DateTime?>("DeletionTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("DeletionTime");
-
-                    b.Property<bool>("IsActive")
-                        .HasColumnType("boolean");
-
-                    b.Property<bool>("IsDeleted")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("boolean")
-                        .HasDefaultValue(false)
-                        .HasColumnName("IsDeleted");
-
-                    b.Property<DateTime?>("LastModificationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("LastModificationTime");
-
-                    b.Property<Guid?>("LastModifierId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("LastModifierId");
-
-                    b.Property<Guid>("MedicineId")
-                        .HasColumnType("uuid");
-
-                    b.Property<string>("Note")
-                        .HasColumnType("text");
-
-                    b.Property<string>("RegistrationNumber")
-                        .IsRequired()
-                        .HasMaxLength(100)
-                        .HasColumnType("character varying(100)");
-
-                    b.Property<DateTime?>("ValidFrom")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.Property<DateTime?>("ValidTo")
-                        .HasColumnType("timestamp without time zone");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IsActive");
-
-                    b.HasIndex("MedicineId", "RegistrationNumber");
-
-                    b.ToTable("AppMedicineRegistrations", (string)null);
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Notifications.Notification", b =>
@@ -4283,6 +4217,10 @@ namespace SupplyCoreERP.Migrations
                     b.Property<bool>("IsPrescriptionDrug")
                         .HasColumnType("boolean");
 
+                    b.Property<string>("RegistrationNumber")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
@@ -4361,11 +4299,6 @@ namespace SupplyCoreERP.Migrations
 
             modelBuilder.Entity("SupplyCoreERP.Inventories.Batches.ProductBatch", b =>
                 {
-                    b.HasOne("SupplyCoreERP.Medicines.MedicineRegistration", "MedicineRegistration")
-                        .WithMany()
-                        .HasForeignKey("MedicineRegistrationId")
-                        .OnDelete(DeleteBehavior.Restrict);
-
                     b.HasOne("SupplyCoreERP.Products.Product", "Product")
                         .WithMany()
                         .HasForeignKey("ProductId")
@@ -4376,8 +4309,6 @@ namespace SupplyCoreERP.Migrations
                         .WithMany()
                         .HasForeignKey("SupplierId")
                         .OnDelete(DeleteBehavior.Restrict);
-
-                    b.Navigation("MedicineRegistration");
 
                     b.Navigation("Product");
 
@@ -4597,15 +4528,6 @@ namespace SupplyCoreERP.Migrations
                         .IsRequired();
 
                     b.Navigation("ActiveIngredient");
-                });
-
-            modelBuilder.Entity("SupplyCoreERP.Medicines.MedicineRegistration", b =>
-                {
-                    b.HasOne("SupplyCoreERP.Medicines.Medicine", null)
-                        .WithMany("Registrations")
-                        .HasForeignKey("MedicineId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Orders.PO.PurchaseOrder", b =>
@@ -5079,8 +5001,6 @@ namespace SupplyCoreERP.Migrations
             modelBuilder.Entity("SupplyCoreERP.Medicines.Medicine", b =>
                 {
                     b.Navigation("Ingredients");
-
-                    b.Navigation("Registrations");
                 });
 #pragma warning restore 612, 618
         }

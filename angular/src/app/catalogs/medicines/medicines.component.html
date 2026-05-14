@@ -248,6 +248,24 @@
 
     <div class="row">
       <div class="col-md-6 mb-3">
+        <label class="ph-label">{{ '::RegistrationValidFrom' | abpLocalization }}</label>
+        <input type="date" class="form-control form-control-sm" formControlName="registrationValidFrom">
+      </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label">{{ '::RegistrationValidTo' | abpLocalization }}</label>
+        <input type="date" class="form-control form-control-sm" formControlName="registrationValidTo">
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 mb-3">
+        <label class="ph-label">{{ '::RegistrationNote' | abpLocalization }}</label>
+        <textarea class="form-control form-control-sm" formControlName="registrationNote" rows="2"></textarea>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::Category' | abpLocalization }}</label>
         <select class="form-select form-select-sm" formControlName="categoryId">
           <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>

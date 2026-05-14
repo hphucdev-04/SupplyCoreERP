@@ -92,9 +92,9 @@ public class SalesOrderManager : DomainService
     }
     #endregion
 
-    #region SaleOrder Details
-    public async Task AddDetailAsync(SalesOrder order, Guid productId, Guid unitId,
-        int conversionFactor, decimal quantity, decimal discountRate, decimal taxRate)
+    #region SaleOrder Lines
+    public async Task AddLineAsync(SalesOrder order, Guid productId, Guid unitId,
+        int conversionFactor, decimal quantity, decimal? unitPrice, decimal discountRate, decimal taxRate)
     {
         Product product = await _productRepo.GetAsync(productId);
         if (!product.IsAvailableForInventory)
@@ -103,27 +103,27 @@ public class SalesOrderManager : DomainService
         }
 
         Customer customer = await _customerRepo.GetAsync(order.CustomerId);
-        decimal price = await _priceManager.GetOfficialPriceAsync(customer.PriceListId, productId, unitId, quantity);
+        decimal price = unitPrice ?? await _priceManager.GetOfficialPriceAsync(customer.PriceListId, productId, unitId, quantity);
 
-        order.AddDetail(GuidGenerator.Create(), productId, unitId, conversionFactor, quantity, price, discountRate, taxRate);
+        order.AddLine(GuidGenerator.Create(), productId, unitId, conversionFactor, quantity, price, discountRate, taxRate);
     }
 
-    public async Task UpdateDetailAsync(SalesOrder order, Guid detailId,
-        decimal quantity, decimal discountRate, decimal taxRate)
+    public async Task UpdateLineAsync(SalesOrder order, Guid lineId,
+        decimal quantity, decimal? unitPrice, decimal discountRate, decimal taxRate)
     {
-        SalesOrderDetail detail = order.Details.FirstOrDefault(x => x.Id == detailId)
+        SalesOrderLine line = order.Lines.FirstOrDefault(x => x.Id == lineId)
             ?? throw new UserFriendlyException("Không tìm thấy dòng chi tiết.");
 
         Customer customer = await _customerRepo.GetAsync(order.CustomerId);
-        decimal newPrice = await _priceManager.GetOfficialPriceAsync(
-            customer.PriceListId, detail.ProductId, detail.UnitId, quantity);
+        decimal newPrice = unitPrice ?? await _priceManager.GetOfficialPriceAsync(
+            customer.PriceListId, line.ProductId, line.UnitId, quantity);
 
-        order.UpdateDetail(detailId, quantity, newPrice, discountRate, taxRate);
+        order.UpdateLine(lineId, quantity, newPrice, discountRate, taxRate);
     }
 
-    public Task RemoveDetailAsync(SalesOrder order, Guid detailId)
+    public Task RemoveLineAsync(SalesOrder order, Guid lineId)
     {
-        order.RemoveDetail(detailId);
+        order.RemoveLine(lineId);
         return Task.CompletedTask;
     }
     #endregion
@@ -149,7 +149,7 @@ public class SalesOrderManager : DomainService
             throw new UserFriendlyException("Đơn hàng chưa được gửi duyệt!");
         }
 
-        if (!order.Details.Any())
+        if (!order.Lines.Any())
         {
             throw new UserFriendlyException("Đơn hàng chưa có sản phẩm, không thể duyệt!");
         }
@@ -172,12 +172,12 @@ public class SalesOrderManager : DomainService
             throw new UserFriendlyException("Khách hàng đang có đơn hàng cũ quá hạn. Vui lòng thu hồi nợ trước!");
         }
 
-        var productIds = order.Details.Select(x => x.ProductId).Distinct().ToList();
+        var productIds = order.Lines.Select(x => x.ProductId).Distinct().ToList();
         List<InventoryBalance> balances = await _balanceRepo.GetListAsync(
             x => productIds.Contains(x.ProductId) && x.WarehouseId == order.WarehouseId);
         List<Product> products = await _productRepo.GetListAsync(x => productIds.Contains(x.Id));
 
-        foreach (SalesOrderDetail item in order.Details)
+        foreach (SalesOrderLine item in order.Lines)
         {
             decimal totalAvailable = balances
                 .Where(x => x.ProductId == item.ProductId)
@@ -199,7 +199,7 @@ public class SalesOrderManager : DomainService
 
         // FEFO cấp phát — chưa Insert details
         var allFefoDetails = new List<InventoryTicketDetail>();
-        foreach (SalesOrderDetail item in order.Details)
+        foreach (SalesOrderLine item in order.Lines)
         {
             IList<InventoryTicketDetail> details = await _ticketManager.AllocateFEFOAsync(issueTicket, item.ProductId, item.BaseQuantity);
             allFefoDetails.AddRange(details);

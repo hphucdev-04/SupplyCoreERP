@@ -3,6 +3,13 @@ import type { StorageCondition } from '../../enums/medicines/storage-condition.e
 import type { EntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { MedicineStatus } from '../../enums/medicines/medicine-status.enum';
 
+export interface AddMedicineRegistrationDto {
+  registrationNumber: string;
+  validFrom?: string;
+  validTo?: string;
+  note?: string;
+}
+
 export interface CreateUpdateMedicineDto {
   name: string;
   categoryId: string;
@@ -14,6 +21,9 @@ export interface CreateUpdateMedicineDto {
   storageCondition?: StorageCondition;
   isPrescriptionDrug?: boolean;
   isActive?: boolean;
+  registrationValidFrom?: string;
+  registrationValidTo?: string;
+  registrationNote?: string;
 }
 
 export interface CreateUpdateMedicineIngredientDto {
@@ -40,11 +50,11 @@ export interface MedicineDetailDto extends MedicineDto {
   baseUnitId?: string;
   dosageFormId?: string;
   originCountryId?: string;
-  registrationNumber?: string;
   usageRoute?: UsageRoute;
   isPrescriptionDrug?: boolean;
   ingredients?: MedicineIngredientDto[];
   units?: MedicineUnitDto[];
+  registrations?: MedicineRegistrationDto[];
 }
 
 export interface MedicineDto extends EntityDto<string> {
@@ -56,17 +66,30 @@ export interface MedicineDto extends EntityDto<string> {
   dosageFormName?: string;
   originCountryName?: string;
   originCountryISO?: string;
+  registrationNumber?: string;
   storageCondition?: StorageCondition;
   status?: MedicineStatus;
   isActive?: boolean;
   creationTime?: string;
   lastModificationTime?: string;
+  registrationValidFrom?: string;
+  registrationValidTo?: string;
+  registrationNote?: string;
 }
 
 export interface MedicineIngredientDto {
   activeIngredientId?: string;
   activeIngredientName?: string;
   activeIngredientCode?: string;
+}
+
+export interface MedicineRegistrationDto extends EntityDto<string> {
+  registrationNumber?: string;
+  validFrom?: string;
+  validTo?: string;
+  isActive?: boolean;
+  note?: string;
+  creationTime?: string;
 }
 
 export interface MedicineSummaryDto {
