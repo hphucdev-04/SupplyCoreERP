@@ -17,10 +17,12 @@ import { SalesOrderStatus, salesOrderStatusOptions } from 'src/app/proxy/enums/o
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { Router } from '@angular/router';
 
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
+
 @Component({
   selector: 'app-sales-orders',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
   providers: [ListService],
   templateUrl: './saleorders.component.html',
 })
@@ -135,7 +137,7 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
   openCreateDrawer() {
     this.form.reset({
       customerId: null,
-      warehouseId: this.warehouses[0]?.id ?? null,
+      warehouseId: null,
       orderDate: new Date().toISOString().split('T')[0],
       expectedDeliveryDate: null,
       dueDate: null,

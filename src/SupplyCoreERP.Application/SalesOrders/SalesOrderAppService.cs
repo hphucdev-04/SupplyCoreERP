@@ -72,8 +72,8 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
         SalesOrder? entity = await query
             .Include(x => x.Customer)
             .Include(x => x.Warehouse)
-            .Include(x => x.Details).ThenInclude(d => d.Product)
-            .Include(x => x.Details).ThenInclude(d => d.Unit)
+            .Include(x => x.Lines).ThenInclude(d => d.Product)
+            .Include(x => x.Lines).ThenInclude(d => d.Unit)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity == null)
@@ -106,7 +106,7 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     public async Task DeleteAsync(Guid id)
     {
         IQueryable<SalesOrder> query = await _orderRepo.GetQueryableAsync();
-        SalesOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id);
+        SalesOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity != null)
         {
@@ -116,43 +116,43 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     }
     #endregion
 
-    #region SaleOrder Details
-    public async Task AddDetailAsync(Guid orderId, AddSalesOrderDetailDto input)
+    #region SaleOrder Lines
+    public async Task AddLineAsync(Guid orderId, AddSalesOrderLineDto input)
     {
         IQueryable<SalesOrder> query = await _orderRepo.GetQueryableAsync();
-        SalesOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        SalesOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == orderId);
         if (entity == null)
         {
             throw new EntityNotFoundException(typeof(SalesOrder), orderId);
         }
 
-        await _orderManager.AddDetailAsync(entity, input.ProductId, input.UnitId, input.ConversionFactor, input.Quantity, input.DiscountRate, input.TaxRate);
+        await _orderManager.AddLineAsync(entity, input.ProductId, input.UnitId, input.ConversionFactor, input.Quantity, input.UnitPrice, input.DiscountRate, input.TaxRate);
         await _orderRepo.UpdateAsync(entity);
     }
 
-    public async Task UpdateDetailAsync(Guid orderId, Guid detailId, UpdateSalesOrderDetailDto input)
+    public async Task UpdateLineAsync(Guid orderId, Guid lineId, UpdateSalesOrderLineDto input)
     {
         IQueryable<SalesOrder> query = await _orderRepo.GetQueryableAsync();
-        SalesOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        SalesOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == orderId);
         if (entity == null)
         {
             throw new EntityNotFoundException(typeof(SalesOrder), orderId);
         }
 
-        await _orderManager.UpdateDetailAsync(entity, detailId, input.Quantity, input.DiscountRate, input.TaxRate);
+        await _orderManager.UpdateLineAsync(entity, lineId, input.Quantity, input.UnitPrice, input.DiscountRate, input.TaxRate);
         await _orderRepo.UpdateAsync(entity);
     }
 
-    public async Task RemoveDetailAsync(Guid orderId, Guid detailId)
+    public async Task RemoveLineAsync(Guid orderId, Guid lineId)
     {
         IQueryable<SalesOrder> query = await _orderRepo.GetQueryableAsync();
-        SalesOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        SalesOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == orderId);
         if (entity == null)
         {
             throw new EntityNotFoundException(typeof(SalesOrder), orderId);
         }
 
-        await _orderManager.RemoveDetailAsync(entity, detailId);
+        await _orderManager.RemoveLineAsync(entity, lineId);
         await _orderRepo.UpdateAsync(entity);
     }
     #endregion
@@ -161,7 +161,7 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     public async Task SendToApproveAsync(Guid id)
     {
         IQueryable<SalesOrder> query = await _orderRepo.GetQueryableAsync();
-        SalesOrder entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
+        SalesOrder entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == id)
             ?? throw new EntityNotFoundException(typeof(SalesOrder), id);
 
         await _orderManager.SendToApproveAsync(entity);
@@ -171,7 +171,7 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     public async Task ApproveAsync(Guid id)
     {
         IQueryable<SalesOrder> query = await _orderRepo.GetQueryableAsync();
-        SalesOrder entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
+        SalesOrder entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == id)
             ?? throw new EntityNotFoundException(typeof(SalesOrder), id);
 
         // Manager validate tồn kho + tạo ticket + chạy FEFO 

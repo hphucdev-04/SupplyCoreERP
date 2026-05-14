@@ -97,7 +97,7 @@ public class MedicineExcelService : SupplyCore
             OriginCountry = x.Manufacturer?.Country?.Name,
             BaseUnit = x.BaseUnit?.Name,
             DosageForm = x.DosageForm?.Name,
-            RegistrationNumber = x.RegistrationNumber,
+            RegistrationNumber = x.GetCurrentRegistration()?.RegistrationNumber ?? string.Empty,
 
             //Enum
             UsageRoute = x.UsageRoute switch

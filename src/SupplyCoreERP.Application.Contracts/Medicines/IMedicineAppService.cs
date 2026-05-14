@@ -22,6 +22,9 @@ public interface IMedicineAppService : IApplicationService
     Task RejectAsync(Guid id);
     Task ToggleActiveAsync(Guid id);
 
+    //Registrations
+    Task AddRegistrationAsync(Guid id, AddMedicineRegistrationDto input);
+
     //Ingredients
     Task AddIngredientAsync(Guid id, CreateUpdateMedicineIngredientDto input);
     Task RemoveIngredientAsync(Guid id, Guid activeIngredientId);

@@ -16,13 +16,13 @@ public class Medicine : Product
     public virtual DosageForm DosageForm { get; private set; }
 
     public bool IsActive { get; private set; }
-    public string RegistrationNumber { get; private set; }
     public UsageRoute UsageRoute { get; private set; }
     public StorageCondition StorageCondition { get; private set; }
     public MedicineStatus Status { get; private set; }
     public bool IsPrescriptionDrug { get; private set; }
 
-    public virtual ICollection<MedicineIngredient> Ingredients { get; private set; }
+    public virtual ICollection<MedicineIngredient> Ingredients { get; private set; } = new List<MedicineIngredient>();
+    public virtual ICollection<MedicineRegistration> Registrations { get; private set; } = new List<MedicineRegistration>();
 
     /// <summary>
     /// Thuốc chỉ được nhập/xuất kho khi đã được duyệt (Approved) và đang hoạt động.
@@ -30,7 +30,10 @@ public class Medicine : Product
     public override bool IsAvailableForInventory => IsActive && Status == MedicineStatus.Approved;
     public override StorageCondition? RequiredStorageCondition => StorageCondition;
 
-    private Medicine() { }
+    private Medicine() 
+    {
+        // Để trống để EF Core tự quản lý Proxy
+    }
 
     public Medicine(
         Guid id,
@@ -40,7 +43,7 @@ public class Medicine : Product
         string name,
         Guid baseUnitId,
         Guid dosageFormId,
-        string regNumber,
+        string initialRegNumber,
         UsageRoute usageRoute,
         StorageCondition storageCondition,
         bool isPrescriptionDrug)
@@ -49,12 +52,14 @@ public class Medicine : Product
         IsActive = true;
         Status = MedicineStatus.Pending;
         DosageFormId = dosageFormId;
-        RegistrationNumber = regNumber;
         UsageRoute = usageRoute;
         StorageCondition = storageCondition;
         IsPrescriptionDrug = isPrescriptionDrug;
-        Ingredients = new List<MedicineIngredient>();
+
+        // Tự động tạo bản ghi đăng ký đầu tiên khi tạo thuốc
+        AddRegistration(Guid.NewGuid(), initialRegNumber);
     }
+
     public void RaiseCreatedEvent()
     {
         AddLocalEvent(new MedicineCreatedDomainEvent(Id, Name, Code));
@@ -62,16 +67,36 @@ public class Medicine : Product
 
     public void UpdatePharmaInfo(
         Guid dosageFormId,
-        string regNumber,
         UsageRoute usageRoute,
         StorageCondition storageCondition,
         bool isPrescriptionDrug)
     {
         DosageFormId = dosageFormId;
-        RegistrationNumber = regNumber;
         UsageRoute = usageRoute;
         StorageCondition = storageCondition;
         IsPrescriptionDrug = isPrescriptionDrug;
+    }
+
+    public void AddRegistration(Guid id, string regNumber, DateTime? from = null, DateTime? to = null, string? note = null)
+    {
+        if (Registrations.Any(r => r.RegistrationNumber == regNumber.Trim().ToUpper()))
+        {
+            throw new BusinessException("SupplyCoreERP:DuplicateRegistration", "Số đăng ký này đã tồn tại cho thuốc này.");
+        }
+
+        // Vô hiệu hóa các SĐK cũ nếu bản ghi mới là Active (mặc định)
+        foreach (MedicineRegistration reg in Registrations)
+        {
+            reg.SetActive(false);
+        }
+
+        Registrations.Add(new MedicineRegistration(id, Id, regNumber, from, to, true, note));
+    }
+
+    public MedicineRegistration? GetCurrentRegistration()
+    {
+        return Registrations.FirstOrDefault(r => r.IsActive)
+               ?? Registrations.OrderByDescending(r => r.CreationTime).FirstOrDefault();
     }
 
     public void AddIngredient(Guid activeIngredientId)

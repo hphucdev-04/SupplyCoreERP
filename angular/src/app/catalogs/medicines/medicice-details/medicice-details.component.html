@@ -195,6 +195,62 @@
         </div>
 
         <div class="col-lg-5">
+          <!-- #region Registrations -->
+          <div class="ph-card mb-2">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-file-contract"></i> {{ '::Registrations' | abpLocalization }}
+              </h6>
+            </div>
+            <div class="ph-card__body--flush">
+              <div class="table-responsive">
+                <table class="ph-table ph-table--flush">
+                  <thead>
+                    <tr>
+                      <th>{{ '::RegistrationNumber' | abpLocalization }}</th>
+                      <th>{{ '::Duration' | abpLocalization }}</th>
+                      <th>{{ '::CreationTime' | abpLocalization }}</th>
+                      <th class="text-center">{{ '::Status' | abpLocalization }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let reg of medicine.registrations">
+                      <td>
+                        <div class="ph-field-value" [copyText]="reg.registrationNumber">
+                          {{ reg.registrationNumber }}
+                        </div>
+                        <small class="ph-text-muted" *ngIf="reg.note">{{ reg.note }}</small>
+                      </td>
+                      <td>
+                        <div class="ph-text-body">
+                          <span>{{ reg.validFrom | date: 'dd/MM/yyyy' }} {{ reg.validTo | date: 'dd/MM/yyyy' }}</span>
+                        </div>
+                      </td>
+                      <td>
+                        <div class="ph-text-body">
+                          {{ reg.creationTime | date: 'dd/MM/yyyy' }}
+                        </div>
+                      </td>
+                      <td class="text-center">
+                        <span
+                          class="ph-badge"
+                          [ngClass]="reg.isActive ? 'ph-badge--active' : 'ph-badge--inactive'"
+                        >
+                          {{ (reg.isActive ? '::Active' : '::Inactive') | abpLocalization }}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr *ngIf="!medicine.registrations || medicine.registrations.length === 0">
+                      <td colspan="3" class="ph-empty-state">
+                        {{ '::NoRegistrations' | abpLocalization }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <!-- #endregion -->
           <!-- #region Ingredient -->
           <div class="ph-card mb-2">
             <div class="ph-card__header">

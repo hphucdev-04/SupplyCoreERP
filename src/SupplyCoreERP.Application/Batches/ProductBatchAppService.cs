@@ -23,7 +23,7 @@ public class ProductBatchAppService : SupplyCore, IProductBatchAppService
 
     public async Task<PagedResultDto<ProductBatchDto>> GetListAsync(GetProductBatchListDto input)
     {
-        IQueryable<ProductBatch> query = await _batchRepo.WithDetailsAsync(x => x.Product, x => x.Supplier);
+        IQueryable<ProductBatch> query = await _batchRepo.WithDetailsAsync(x => x.Product, x => x.Supplier, x => x.MedicineRegistration);
 
         query = query
             .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.BatchNumber.Contains(input.Filter))
@@ -43,7 +43,7 @@ public class ProductBatchAppService : SupplyCore, IProductBatchAppService
 
     public async Task<ProductBatchDto> GetAsync(Guid id)
     {
-        IQueryable<ProductBatch> query = await _batchRepo.WithDetailsAsync(x => x.Product, x => x.Supplier);
+        IQueryable<ProductBatch> query = await _batchRepo.WithDetailsAsync(x => x.Product, x => x.Supplier, x => x.MedicineRegistration);
         ProductBatch? batch = await AsyncExecuter.FirstOrDefaultAsync(query.Where(x => x.Id == id));
         return ObjectMapper.Map<ProductBatch, ProductBatchDto>(batch);
     }
@@ -55,7 +55,8 @@ public class ProductBatchAppService : SupplyCore, IProductBatchAppService
             input.BatchNumber,
             input.ManufacturingDate,
             input.ExpiryDate,
-            input.SupplierId);
+            input.SupplierId,
+            input.MedicineRegistrationId);
 
         await _batchRepo.InsertAsync(batch);
 
@@ -66,7 +67,7 @@ public class ProductBatchAppService : SupplyCore, IProductBatchAppService
     {
         ProductBatch batch = await _batchRepo.GetAsync(id);
 
-        _batchManager.UpdateBatch(batch, input.ManufacturingDate, input.ExpiryDate, input.SupplierId);
+        _batchManager.UpdateBatch(batch, input.ManufacturingDate, input.ExpiryDate, input.SupplierId, input.MedicineRegistrationId);
         await _batchRepo.UpdateAsync(batch);
 
         return ObjectMapper.Map<ProductBatch, ProductBatchDto>(batch);
