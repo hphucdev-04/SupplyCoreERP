@@ -18,11 +18,12 @@ import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
 import { PurchaseOrderDto } from 'src/app/proxy/purchase-orders/dtos';
 import { PurchaseOrderStatus } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 
 @Component({
   selector: 'app-inventory-tickets',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
   providers: [ListService],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.scss']
@@ -102,10 +103,15 @@ export class TicketsComponent implements OnInit, OnDestroy {
     this.poService.getList({ maxResultCount: 1000, skipCount: 0 } as any)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
-        this.approvedPurchaseOrders = res.items.filter(po => 
-          po.status === PurchaseOrderStatus.Approved || 
-          po.status === PurchaseOrderStatus.Receiving
-        );
+        this.approvedPurchaseOrders = res.items
+          .filter(po => 
+            po.status === PurchaseOrderStatus.Approved || 
+            po.status === PurchaseOrderStatus.Receiving
+          )
+          .map(po => ({
+            ...po,
+            displayName: `${po.code} (${po.supplierName})`
+          }));
       });
   }
 
@@ -156,7 +162,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
   openCreateDrawer() {
     this.form.reset({
       type: TicketType.GoodsReceipt,
-      warehouseId: this.warehouses.length > 0 ? this.warehouses[0].id : null,
+      warehouseId: null,
       referenceDocumentId: null,
       note: ''
     });
@@ -196,3 +202,4 @@ export class TicketsComponent implements OnInit, OnDestroy {
       });
   }
 }
+

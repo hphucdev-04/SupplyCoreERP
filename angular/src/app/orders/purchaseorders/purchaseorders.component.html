@@ -219,10 +219,12 @@
       <label class="ph-label ph-label--required">{{
         '::Supplier' | abpLocalization
       }}</label>
-      <select class="form-select form-select-sm" formControlName="supplierId">
-        <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-        <option *ngFor="let s of suppliers" [value]="s.id">{{ s.name }}</option>
-      </select>
+      <app-dropdown-search
+        formControlName="supplierId"
+        [items]="suppliers"
+        [placeholder]="'::Select' | abpLocalization"
+        [searchPlaceholder]="'::Search' | abpLocalization"
+      ></app-dropdown-search>
       <div
         *ngIf="form.get('supplierId').invalid && form.get('supplierId').touched"
         class="ph-error-msg"
@@ -235,10 +237,12 @@
       <label class="ph-label ph-label--required">{{
         '::Warehouse' | abpLocalization
       }}</label>
-      <select class="form-select form-select-sm" formControlName="warehouseId">
-        <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
-        <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
-      </select>
+      <app-dropdown-search
+        formControlName="warehouseId"
+        [items]="warehouses"
+        [placeholder]="'::Select' | abpLocalization"
+        [searchPlaceholder]="'::Search' | abpLocalization"
+      ></app-dropdown-search>
       <div
         *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched"
         class="ph-error-msg"

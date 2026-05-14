@@ -12,6 +12,7 @@ public class InventoryTicketLineDto : FullAuditedEntityDto<Guid>
 
     public Guid? PurchaseOrderLineId { get; set; }
     public Guid? UnitId { get; set; }
+    public string? UnitName { get; set; }
     public int? ConversionFactor { get; set; }
 
     public decimal Quantity { get; set; }

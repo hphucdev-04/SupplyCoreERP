@@ -62,6 +62,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   selectedConversionFactor = 1;
   baseUnitName = '';
   quantityPreview = 0;
+  isAutoFilled = false;
 
   PurchaseOrderStatus = PurchaseOrderStatus;
   readonly enumName = enumName;
@@ -225,13 +226,16 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   onMedicineChange(medicineId: string) {
-    this.detailForm.patchValue({ unitId: null, conversionFactor: 1 });
+    this.detailForm.patchValue({ unitId: null, conversionFactor: 1, unitPrice: 0 });
     this.units = [];
     this.selectedConversionFactor = 1;
     this.baseUnitName = '';
     this.quantityPreview = 0;
+    this.isAutoFilled = false;
+    
     if (!medicineId) return;
 
+    // 1. Load Medicine Units
     this.medicineService
       .get(medicineId)
       .pipe(takeUntil(this.destroy$))
@@ -251,8 +255,26 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
           });
         this.units = [baseUnit, ...others];
         this.baseUnitName = detail.baseUnitName ?? '';
-        this.detailForm.patchValue({ unitId: baseUnit.unitId, conversionFactor: 1 });
-        this.selectedConversionFactor = 1;
+        
+        // 2. Tra cứu Supplier Product để điền tự động
+        this.supplierService.getProductList(this.order.supplierId, { productId: medicineId, maxResultCount: 1 } as any)
+          .subscribe(res => {
+            const sp = res.items[0];
+            if (sp && sp.isActive) {
+               this.isAutoFilled = true;
+               this.detailForm.patchValue({
+                  unitId: sp.defaultUnitId,
+                  conversionFactor: sp.defaultConversionFactor,
+                  unitPrice: sp.standardPrice || sp.lastPurchasePrice || 0
+               });
+               this.selectedConversionFactor = sp.defaultConversionFactor;
+            } else {
+               // Mặc định chọn BaseUnit nếu không có config nhà cung cấp
+               this.detailForm.patchValue({ unitId: baseUnit.unitId, conversionFactor: 1 });
+               this.selectedConversionFactor = 1;
+            }
+            this.updateQuantityPreview();
+          });
       });
   }
 
@@ -273,8 +295,12 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   saveLine() {
     if (this.detailForm.invalid) return;
     this.isSavingDetail = true;
+
+    // ✅ Sử dụng getRawValue để lấy cả các trường bị disabled (productId, unitId)
+    const payload = this.detailForm.getRawValue();
+
     this.poService
-      .addLine(this.orderId, this.detailForm.value)
+      .addLine(this.orderId, payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
