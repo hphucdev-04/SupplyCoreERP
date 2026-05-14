@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ListService, PagedResultDto } from '@abp/ng.core';
-import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
+import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -15,12 +16,11 @@ import { SupplierDto } from 'src/app/proxy/suppliers/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseOrderStatus, purchaseOrderStatusOptions } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
-import { PurchaseOrderDetailsComponent } from './purchaseorder-details/purchaseorder-details.component';
 
 @Component({
   selector: 'app-purchase-orders',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, PurchaseOrderDetailsComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   providers: [ListService],
   templateUrl: './purchaseorders.component.html',
 })
@@ -44,15 +44,15 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
   purchaseOrderStatusOptions = purchaseOrderStatusOptions;
   readonly enumName = enumName;
 
-  @ViewChild('detailModal') detailModal: PurchaseOrderDetailsComponent;
-
   constructor(
     public readonly list: ListService,
     private poService: PurchaseOrderService,
     private supplierService: SupplierService,
     private warehouseService: WarehouseService,
     private confirmation: ConfirmationService,
-    private fb: FormBuilder
+    private toaster: ToasterService,
+    private fb: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -102,7 +102,7 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
   }
 
   viewDetail(id: string) {
-    this.detailModal.open(id);
+    this.router.navigate(['/order/purchaseorders/details', id]);
   }
 
   onOrderSaved() {
@@ -117,7 +117,10 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
           this.poService
             .delete(id)
             .pipe(takeUntil(this.destroy$))
-            .subscribe(() => this.list.get());
+            .subscribe(() => {
+              this.list.get();
+              this.toaster.success('::DeleteSuccess', '::Success');
+            });
         }
       });
   }
@@ -128,8 +131,39 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
       warehouseId: [null, [Validators.required]],
       orderDate: [new Date().toISOString().split('T')[0], [Validators.required]],
       expectedDeliveryDate: [null],
-      dueDate: [null],
+      dueDate: [{ value: null, disabled: false }],
       note: ['', [Validators.maxLength(1000)]],
+    });
+
+    // Theo dõi thay đổi của supplierId và orderDate để tính DueDate
+    this.form.get('supplierId').valueChanges.pipe(takeUntil(this.destroy$)).subscribe(id => {
+      this.calculateDueDate();
+    });
+
+    this.form.get('orderDate').valueChanges.pipe(takeUntil(this.destroy$)).subscribe(date => {
+      this.calculateDueDate();
+    });
+  }
+
+  calculateDueDate() {
+    const supplierId = this.form.get('supplierId').value;
+    const orderDateStr = this.form.get('orderDate').value;
+
+    if (!supplierId || !orderDateStr) {
+      this.form.get('dueDate').setValue(null);
+      return;
+    }
+
+    // Lấy thông tin chi tiết nhà cung cấp để có paymentTermDays
+    this.supplierService.get(supplierId).subscribe(supplier => {
+      const days = supplier.paymentTermDays || 0;
+      const orderDate = new Date(orderDateStr);
+      if (days > 0) {
+        orderDate.setDate(orderDate.getDate() + days);
+        this.form.get('dueDate').setValue(orderDate.toISOString().split('T')[0]);
+      } else {
+        this.form.get('dueDate').setValue(orderDateStr);
+      }
     });
   }
 
@@ -160,6 +194,7 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
           this.isSaving = false;
           this.closeDrawer();
           this.list.get();
+          this.toaster.success('::CreateSuccess', '::Success');
           this.viewDetail(newOrder.id);
         },
         error: () => (this.isSaving = false),

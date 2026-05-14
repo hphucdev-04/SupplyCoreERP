@@ -1,8 +1,9 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { ConfirmationService, Confirmation } from '@abp/ng.theme.shared';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { TicketType, ticketTypeOptions } from 'src/app/proxy/enums/warehouses/ticket-type.enum';
@@ -13,13 +14,15 @@ import { SearchComponent } from 'src/app/shared/components/search-component/sear
 import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
 import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { WarehouseService } from 'src/app/proxy/warehouses';
+import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
+import { PurchaseOrderDto } from 'src/app/proxy/purchase-orders/dtos';
+import { PurchaseOrderStatus } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
-import { TicketDetailsComponent } from './tickets-details/ticket-details.component';
 
 @Component({
   selector: 'app-inventory-tickets',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, TicketDetailsComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   providers: [ListService],
   templateUrl: './tickets.component.html',
   styleUrls: ['./tickets.component.scss']
@@ -30,6 +33,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
   // Data
   data = { items: [], totalCount: 0 } as PagedResultDto<InventoryTicketDto>;
   warehouses: WarehouseDto[] = [];
+  approvedPurchaseOrders: PurchaseOrderDto[] = [];
 
   // Drawer state
   isDrawerOpen = false;
@@ -49,15 +53,14 @@ export class TicketsComponent implements OnInit, OnDestroy {
   ApprovalStatus = ApprovalStatus;
   readonly enumName = enumName;
 
-  // Modal detail state
-  @ViewChild('detailModal') detailModal: TicketDetailsComponent;
-
   constructor(
     public readonly list: ListService,
     private ticketService: InventoryTicketService,
     private warehouseService: WarehouseService,
+    private poService: PurchaseOrderService,
     private confirmation: ConfirmationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -94,6 +97,16 @@ export class TicketsComponent implements OnInit, OnDestroy {
       .subscribe(res => {
         this.warehouses = res.items;
       });
+
+    // Load POs that are Approved or Receiving for manual ticket link
+    this.poService.getList({ maxResultCount: 1000, skipCount: 0 } as any)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.approvedPurchaseOrders = res.items.filter(po => 
+          po.status === PurchaseOrderStatus.Approved || 
+          po.status === PurchaseOrderStatus.Receiving
+        );
+      });
   }
 
   // ============================================================
@@ -109,11 +122,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
   }
 
   viewDetail(id: string): void {
-    this.detailModal.open(id);
-  }
-
-  onTicketSaved() {
-    this.list.get(); // Reload list after modal changes
+    this.router.navigate(['/inventory/tickets/details', id]);
   }
 
   deleteTicket(id: string, ticketNumber: string): void {
@@ -162,14 +171,23 @@ export class TicketsComponent implements OnInit, OnDestroy {
     if (this.form.invalid) return;
     this.isSaving = true;
 
-    this.ticketService.create(this.form.value)
+    const payload = { ...this.form.value };
+    // If PO is selected, auto-fill reference document number
+    if (payload.referenceDocumentId) {
+      const selectedPo = this.approvedPurchaseOrders.find(po => po.id === payload.referenceDocumentId);
+      if (selectedPo) {
+        payload.referenceDocumentNumber = selectedPo.code;
+      }
+    }
+
+    this.ticketService.create(payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (newTicket) => {
           this.isSaving = false;
           this.closeDrawer();
           this.list.get();
-          // Open Modal Detail directly after creation
+          // Open Details directly after creation
           this.viewDetail(newTicket.id);
         },
         error: () => {

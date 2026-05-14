@@ -16,6 +16,7 @@ public class InventoryTicketDetailDto : FullAuditedEntityDto<Guid>
 
     public Guid ProductBatchId { get; set; }
     public string? BatchNumber { get; set; }
+    public DateTime? ManufacturingDate { get; set; }
     public DateTime? ExpiryDate { get; set; }
 
     public Guid BinId { get; set; }

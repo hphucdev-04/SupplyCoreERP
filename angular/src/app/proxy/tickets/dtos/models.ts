@@ -34,6 +34,7 @@ export interface InventoryTicketDetailDto extends FullAuditedEntityDto<string> {
   baseUnitName?: string;
   productBatchId?: string;
   batchNumber?: string;
+  manufacturingDate?: string;
   expiryDate?: string;
   binId?: string;
   binCode?: string;
@@ -53,6 +54,17 @@ export interface InventoryTicketDto extends FullAuditedEntityDto<string> {
   referenceDocumentId?: string;
   referenceDocumentNumber?: string;
   note?: string;
+  lines?: InventoryTicketLineDto[];
+}
+
+export interface InventoryTicketLineDto extends FullAuditedEntityDto<string> {
+  productId?: string;
+  productCode?: string;
+  productName?: string;
+  purchaseOrderLineId?: string;
+  unitId?: string;
+  conversionFactor?: number;
+  quantity?: number;
   details?: InventoryTicketDetailDto[];
 }
 

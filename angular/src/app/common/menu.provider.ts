@@ -67,9 +67,8 @@ export const APP_ROUTES = [
     { name: 'Balances', icon: 'fas fa-clipboard-list' ,},    
   ]),
 
-  ...createMenuGroup('Order', 'fas fa-warehouse', 5, [
-    { name: 'SaleOrders', icon: 'fas fa-building' , requiredPolicy: 'Order.SaleOrder'},
-    { name: 'PurchaseOrders', icon: 'fas fa-boxes' , requiredPolicy: 'Order.PurchaseOrder'},
-
+  ...createMenuGroup('Order', 'fas fa-clipboard-list', 5, [
+    { name: 'PurchaseOrders', icon: 'fas fa-file-invoice-dollar' , requiredPolicy: 'Order.PurchaseOrder'},
+    { name: 'SaleOrders', icon: 'fas fa-shipping-fast' , requiredPolicy: 'Order.SaleOrder'},
   ]),
 ];

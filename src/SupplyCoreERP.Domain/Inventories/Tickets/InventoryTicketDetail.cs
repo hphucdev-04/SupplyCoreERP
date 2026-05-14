@@ -10,8 +10,9 @@ namespace SupplyCoreERP.Inventories.Tickets;
 
 public class InventoryTicketDetail : FullAuditedEntity<Guid>
 {
-    public Guid TicketId { get; private set; }
-    public virtual InventoryTicket Ticket { get; protected set; }
+    public Guid TicketLineId { get; private set; }
+    public virtual InventoryTicketLine TicketLine { get; protected set; }
+    
     public Guid ProductId { get; private set; }
     public virtual Product Product { get; protected set; }
     public Guid ProductBatchId { get; private set; }
@@ -46,7 +47,7 @@ public class InventoryTicketDetail : FullAuditedEntity<Guid>
 
     public InventoryTicketDetail(
         Guid id,
-        Guid ticketId,
+        Guid ticketLineId,
         Guid productId,
         Guid batchId,
         Guid binId,
@@ -59,7 +60,7 @@ public class InventoryTicketDetail : FullAuditedEntity<Guid>
             throw new ArgumentException("ConversionFactor phải lớn hơn 0!");
         }
 
-        TicketId = ticketId;
+        TicketLineId = ticketLineId;
         ProductId = productId;
         ProductBatchId = batchId;
         BinId = binId;

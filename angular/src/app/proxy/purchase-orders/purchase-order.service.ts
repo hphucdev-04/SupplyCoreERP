@@ -1,4 +1,4 @@
-import type { AddPurchaseOrderDetailDto, CreatePurchaseOrderDto, GetPurchaseOrderListDto, PurchaseOrderDto, UpdatePurchaseOrderDetailDto, UpdatePurchaseOrderDto } from './dtos/models';
+import type { AddPurchaseOrderLineDto, CreatePurchaseOrderDto, GetPurchaseOrderListDto, PurchaseOrderDto, UpdatePurchaseOrderDto, UpdatePurchaseOrderLineDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
@@ -11,10 +11,10 @@ export class PurchaseOrderService {
   apiName = 'Default';
   
 
-  addDetail = (orderId: string, input: AddPurchaseOrderDetailDto, config?: Partial<Rest.Config>) =>
+  addLine = (orderId: string, input: AddPurchaseOrderLineDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',
-      url: `/api/app/purchase-order/detail/${orderId}`,
+      url: `/api/app/purchase-order/line/${orderId}`,
       body: input,
     },
     { apiName: this.apiName,...config });
@@ -79,11 +79,11 @@ export class PurchaseOrderService {
     { apiName: this.apiName,...config });
   
 
-  removeDetail = (orderId: string, detailId: string, config?: Partial<Rest.Config>) =>
+  removeLine = (orderId: string, lineId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'DELETE',
-      url: '/api/app/purchase-order/detail',
-      params: { orderId, detailId },
+      url: '/api/app/purchase-order/line',
+      params: { orderId, lineId },
     },
     { apiName: this.apiName,...config });
   
@@ -105,11 +105,11 @@ export class PurchaseOrderService {
     { apiName: this.apiName,...config });
   
 
-  updateDetail = (orderId: string, detailId: string, input: UpdatePurchaseOrderDetailDto, config?: Partial<Rest.Config>) =>
+  updateLine = (orderId: string, lineId: string, input: UpdatePurchaseOrderLineDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'PUT',
-      url: '/api/app/purchase-order/detail',
-      params: { orderId, detailId },
+      url: '/api/app/purchase-order/line',
+      params: { orderId, lineId },
       body: input,
     },
     { apiName: this.apiName,...config });

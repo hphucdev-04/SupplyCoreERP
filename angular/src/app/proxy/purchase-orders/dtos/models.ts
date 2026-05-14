@@ -1,12 +1,12 @@
 import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { PurchaseOrderStatus } from '../../enums/orders/purchase-order-status.enum';
 
-export interface AddPurchaseOrderDetailDto {
-  productId: string;
-  unitId: string;
-  conversionFactor: number;
-  quantity: number;
-  unitPrice: number;
+export interface AddPurchaseOrderLineDto {
+  productId?: string;
+  unitId?: string;
+  conversionFactor?: number;
+  quantity?: number;
+  unitPrice?: number;
   taxRate?: number;
 }
 
@@ -26,7 +26,24 @@ export interface GetPurchaseOrderListDto extends PagedAndSortedResultRequestDto 
   status?: PurchaseOrderStatus;
 }
 
-export interface PurchaseOrderDetailDto extends FullAuditedEntityDto<string> {
+export interface PurchaseOrderDto extends FullAuditedEntityDto<string> {
+  code?: string;
+  supplierId?: string;
+  supplierName?: string;
+  warehouseId?: string;
+  warehouseName?: string;
+  orderDate?: string;
+  expectedDeliveryDate?: string;
+  dueDate?: string;
+  status?: PurchaseOrderStatus;
+  subTotal?: number;
+  taxAmount?: number;
+  totalAmount?: number;
+  note?: string;
+  lines?: PurchaseOrderLineDto[];
+}
+
+export interface PurchaseOrderLineDto extends FullAuditedEntityDto<string> {
   productId?: string;
   productCode?: string;
   productName?: string;
@@ -43,32 +60,15 @@ export interface PurchaseOrderDetailDto extends FullAuditedEntityDto<string> {
   finalPrice?: number;
 }
 
-export interface PurchaseOrderDto extends FullAuditedEntityDto<string> {
-  code?: string;
-  supplierId?: string;
-  supplierName?: string;
-  warehouseId?: string;
-  warehouseName?: string;
-  orderDate?: string;
-  expectedDeliveryDate?: string;
-  dueDate?: string;
-  status?: PurchaseOrderStatus;
-  subTotal?: number;
-  taxAmount?: number;
-  totalAmount?: number;
-  note?: string;
-  details?: PurchaseOrderDetailDto[];
-}
-
-export interface UpdatePurchaseOrderDetailDto {
-  quantity: number;
-  unitPrice: number;
-  taxRate?: number;
-}
-
 export interface UpdatePurchaseOrderDto {
   warehouseId: string;
   expectedDeliveryDate?: string;
   dueDate?: string;
   note?: string;
+}
+
+export interface UpdatePurchaseOrderLineDto {
+  quantity?: number;
+  unitPrice?: number;
+  taxRate?: number;
 }

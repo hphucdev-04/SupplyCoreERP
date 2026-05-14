@@ -55,6 +55,7 @@ export interface MedicineDto extends EntityDto<string> {
   baseUnitName?: string;
   dosageFormName?: string;
   originCountryName?: string;
+  originCountryISO?: string;
   storageCondition?: StorageCondition;
   status?: MedicineStatus;
   isActive?: boolean;

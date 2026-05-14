@@ -22,7 +22,7 @@ public class CategoryAppService_Unit_Tests
         _mockCategoryManager = Substitute.For<ICategoryManager>();
         _mockObjectMapper = Substitute.For<IObjectMapper>();
 
-        // Khởi tạo Service 100% bằng bản Mock thông qua Constructor
+        // Khởi tạo Service bằng bản Mock thông qua Constructor
         _categoryAppService = new CategoryAppService(
             _mockCategoryRepo,
             _mockCategoryManager,
@@ -33,9 +33,9 @@ public class CategoryAppService_Unit_Tests
     public async Task CreateAsync_Should_Call_Manager_And_Repository()
     {
         // Arrange
-        var input = new CreateUpdateCategoryDto { Name = "New Category" };
-        var category = new Category(Guid.NewGuid(), input.Name);
-        var categoryDto = new CategoryDto { Id = category.Id, Name = category.Name };
+        CreateUpdateCategoryDto input = new() { Name = "New Category" };
+        Category category = new(Guid.NewGuid(), input.Name);
+        CategoryDto categoryDto = new() { Id = category.Id, Name = category.Name };
 
         _mockCategoryManager.CreateAsync(input.Name).Returns(Task.FromResult(category));
         _mockObjectMapper.Map<Category, CategoryDto>(category).Returns(categoryDto);
@@ -57,10 +57,10 @@ public class CategoryAppService_Unit_Tests
     public async Task UpdateAsync_Should_Call_Manager_And_Repository()
     {
         // Arrange
-        var categoryId = Guid.NewGuid();
-        var input = new CreateUpdateCategoryDto { Name = "Updated Category" };
-        var category = new Category(categoryId, "Old Category");
-        var categoryDto = new CategoryDto { Id = categoryId, Name = input.Name };
+        Guid categoryId = Guid.NewGuid();
+        CreateUpdateCategoryDto input = new() { Name = "Updated Category" };
+        Category category = new(categoryId, "Old Category");
+        CategoryDto categoryDto = new() { Id = categoryId, Name = input.Name };
 
         _mockCategoryRepo.GetAsync(categoryId).Returns(Task.FromResult(category));
         _mockObjectMapper.Map<Category, CategoryDto>(category).Returns(categoryDto);
@@ -81,8 +81,8 @@ public class CategoryAppService_Unit_Tests
     public async Task DeleteAsync_Should_Call_Manager()
     {
         // Arrange
-        var categoryId = Guid.NewGuid();
-        var category = new Category(categoryId, "Category to Delete");
+        Guid categoryId = Guid.NewGuid();
+        Category category = new(categoryId, "Category to Delete");
         _mockCategoryRepo.GetAsync(categoryId).Returns(Task.FromResult(category));
 
         // Act

@@ -6,6 +6,10 @@ export const PARTNERS_ROUTES: Routes = [
         loadComponent: () => import('./customers/customers.component').then(m => m.CustomersComponent),
     },
     {
+        path: 'customers/details/:id',
+        loadComponent: () => import('./customers/customer-details/customer-details.component').then(m => m.CustomerDetailsComponent),
+    },
+    {
         path: 'suppliers',
         loadComponent: () => import('./suppliers/suppliers.component').then(m => m.SuppliersComponent),
     },

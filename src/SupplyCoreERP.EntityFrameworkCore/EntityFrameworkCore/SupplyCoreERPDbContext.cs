@@ -107,6 +107,7 @@ public class SupplyCoreERPDbContext :
     public DbSet<Bin> Bins { get; set; }
     public DbSet<ProductBatch> ProductBatches { get; set; }
     public DbSet<InventoryTicket> InventoryTickets { get; set; }
+    public DbSet<InventoryTicketLine> InventoryTicketLines { get; set; }
     public DbSet<InventoryTicketDetail> InventoryTicketDetails { get; set; }
     public DbSet<InventoryBalance> InventoryBalances { get; set; }
     public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
@@ -114,7 +115,7 @@ public class SupplyCoreERPDbContext :
 
     //Order
     public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
-    public DbSet<PurchaseOrderDetail> PurchaseOrderDetails { get; set; }
+    public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; }
     public DbSet<SalesOrder> SalesOrders { get; set; }
     public DbSet<SalesOrderDetail> SalesOrderDetails { get; set; }
 
@@ -480,6 +481,19 @@ public class SupplyCoreERPDbContext :
             b.HasIndex(x => x.ReferenceDocumentId);
         });
 
+        // InventoryTicketLine
+        builder.Entity<InventoryTicketLine>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "InventoryTicketLines", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Quantity).HasColumnType("decimal(18, 2)");
+
+            b.HasOne(x => x.Ticket).WithMany(x => x.Lines).HasForeignKey(x => x.TicketId).OnDelete(DeleteBehavior.Cascade);
+            b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.PurchaseOrderLine).WithMany().HasForeignKey(x => x.PurchaseOrderLineId).OnDelete(DeleteBehavior.Restrict);
+        });
+
         // InventoryTicketDetail
         builder.Entity<InventoryTicketDetail>(b =>
         {
@@ -488,12 +502,11 @@ public class SupplyCoreERPDbContext :
 
             b.Property(x => x.Quantity).HasColumnType("decimal(18, 2)");
 
-            b.HasOne(x => x.Ticket).WithMany(x => x.Details).HasForeignKey(x => x.TicketId).OnDelete(DeleteBehavior.Cascade);
+            b.HasOne(x => x.TicketLine).WithMany(x => x.Details).HasForeignKey(x => x.TicketLineId).OnDelete(DeleteBehavior.Cascade);
             b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.ProductBatch).WithMany().HasForeignKey(x => x.ProductBatchId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Bin).WithMany().HasForeignKey(x => x.BinId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.NoAction);
-            b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.NoAction);
         });
 
         // InventoryBalance
@@ -559,17 +572,17 @@ public class SupplyCoreERPDbContext :
 
             b.HasOne(x => x.Supplier).WithMany().HasForeignKey(x => x.SupplierId).IsRequired();
 
-            b.HasMany(x => x.Details)
+            b.HasMany(x => x.Lines)
              .WithOne(x => x.PurchaseOrder)
              .HasForeignKey(x => x.PurchaseOrderId)
              .IsRequired()
              .OnDelete(DeleteBehavior.Cascade);
         });
 
-        // PurchaseOrderDetail
-        builder.Entity<PurchaseOrderDetail>(b =>
+        // PurchaseOrderLine
+        builder.Entity<PurchaseOrderLine>(b =>
         {
-            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseOrderDetails", SupplyCoreERPConsts.DbSchema);
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseOrderLines", SupplyCoreERPConsts.DbSchema);
             b.ConfigureByConvention();
 
             b.Property(x => x.Quantity).HasPrecision(18, 4);
@@ -656,4 +669,3 @@ public class SupplyCoreERPDbContext :
         });
     }
 }
-

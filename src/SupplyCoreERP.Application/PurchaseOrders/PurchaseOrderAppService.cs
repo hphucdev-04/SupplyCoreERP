@@ -73,8 +73,8 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
         PurchaseOrder? entity = await query
             .Include(x => x.Supplier)
             .Include(x => x.Warehouse)
-            .Include(x => x.Details).ThenInclude(d => d.Product)
-            .Include(x => x.Details).ThenInclude(d => d.Unit)
+            .Include(x => x.Lines).ThenInclude(d => d.Product)
+            .Include(x => x.Lines).ThenInclude(d => d.Unit)
             .FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity == null)
@@ -107,7 +107,7 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
     public async Task DeleteAsync(Guid id)
     {
         IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
-        PurchaseOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id);
+        PurchaseOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == id);
 
         if (entity != null)
         {
@@ -117,43 +117,43 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
     }
     #endregion
 
-    #region Purchase Detail
-    public async Task AddDetailAsync(Guid orderId, AddPurchaseOrderDetailDto input)
+    #region Purchase Line
+    public async Task AddLineAsync(Guid orderId, AddPurchaseOrderLineDto input)
     {
         IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
-        PurchaseOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        PurchaseOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == orderId);
         if (entity == null)
         {
             throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
         }
 
-        await _orderManager.AddDetailAsync(entity, input.ProductId, input.UnitId, input.ConversionFactor, input.Quantity, input.UnitPrice, input.TaxRate);
+        await _orderManager.AddLineAsync(entity, input.ProductId, input.UnitId, input.ConversionFactor, input.Quantity, input.UnitPrice, input.TaxRate);
         await _orderRepo.UpdateAsync(entity);
     }
 
-    public async Task UpdateDetailAsync(Guid orderId, Guid detailId, UpdatePurchaseOrderDetailDto input)
+    public async Task UpdateLineAsync(Guid orderId, Guid lineId, UpdatePurchaseOrderLineDto input)
     {
         IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
-        PurchaseOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        PurchaseOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == orderId);
         if (entity == null)
         {
             throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
         }
 
-        await _orderManager.UpdateDetailAsync(entity, detailId, input.Quantity, input.UnitPrice, input.TaxRate);
+        await _orderManager.UpdateLineAsync(entity, lineId, input.Quantity, input.UnitPrice, input.TaxRate);
         await _orderRepo.UpdateAsync(entity);
     }
 
-    public async Task RemoveDetailAsync(Guid orderId, Guid detailId)
+    public async Task RemoveLineAsync(Guid orderId, Guid lineId)
     {
         IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
-        PurchaseOrder? entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == orderId);
+        PurchaseOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == orderId);
         if (entity == null)
         {
             throw new EntityNotFoundException(typeof(PurchaseOrder), orderId);
         }
 
-        await _orderManager.RemoveDetailAsync(entity, detailId);
+        await _orderManager.RemoveLineAsync(entity, lineId);
         await _orderRepo.UpdateAsync(entity);
     }
     #endregion
@@ -162,7 +162,7 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
     public async Task SendToApproveAsync(Guid id)
     {
         IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
-        PurchaseOrder entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
+        PurchaseOrder entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == id)
             ?? throw new EntityNotFoundException(typeof(PurchaseOrder), id);
 
         await _orderManager.SendToApproveAsync(entity);
@@ -172,7 +172,7 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
     public async Task ApproveAsync(Guid id)
     {
         IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
-        PurchaseOrder entity = await query.Include(x => x.Details).FirstOrDefaultAsync(x => x.Id == id)
+        PurchaseOrder entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == id)
             ?? throw new EntityNotFoundException(typeof(PurchaseOrder), id);
 
         InventoryTicket ticket = await _orderManager.ApproveAsync(entity);
@@ -183,7 +183,12 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
 
     public async Task CompleteAsync(Guid id)
     {
-        PurchaseOrder entity = await _orderRepo.GetAsync(id);
+        IQueryable<PurchaseOrder> query = await _orderRepo.GetQueryableAsync();
+        PurchaseOrder entity = await query
+            .Include(x => x.Lines).ThenInclude(l => l.Product)
+            .Include(x => x.Lines).ThenInclude(l => l.Unit)
+            .FirstOrDefaultAsync(x => x.Id == id)
+            ?? throw new EntityNotFoundException(typeof(PurchaseOrder), id);
 
         Supplier supplier = await _orderManager.CompleteAsync(entity);
 

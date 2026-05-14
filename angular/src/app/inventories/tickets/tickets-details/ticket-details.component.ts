@@ -1,6 +1,8 @@
-import { Component, OnDestroy, Output, EventEmitter, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
+import { eLayoutType, RoutesService } from '@abp/ng.core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TicketType } from 'src/app/proxy/enums/warehouses/ticket-type.enum';
@@ -11,16 +13,19 @@ import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
-import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
+import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
+import { InventoryTicketDto, InventoryTicketLineDto } from 'src/app/proxy/tickets/dtos';
 import { BinDto } from 'src/app/proxy/warehouses/dtos';
 import { ProductBatchDto } from 'src/app/proxy/batches/dtos';
 import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { ProductBatchService } from 'src/app/proxy/batches';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { enumName } from 'src/app/shared/untils/enum.util';
-import { PurchaseOrderDetailsComponent } from 'src/app/orders/purchaseorders/purchaseorder-details/purchaseorder-details.component';
-import { SalesOrderDetailsComponent } from 'src/app/orders/saleorders/saleorder-details/saleorder-details.component';
+import { PurchaseOrderLineDto } from 'src/app/proxy/purchase-orders/dtos';
+
+interface SelectablePOLineDto extends PurchaseOrderLineDto {
+  importQuantity: number;
+}
 
 interface ProductUnitLookup {
   unitId: string;
@@ -32,22 +37,22 @@ interface ProductUnitLookup {
 @Component({
   selector: 'app-ticket-details',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, PurchaseOrderDetailsComponent, SalesOrderDetailsComponent],
+  imports: [SharedModule, DrawerComponent, NgbDropdownModule],
   templateUrl: './ticket-details.component.html',
   styleUrls: ['./ticket-details.component.scss']
 })
-export class TicketDetailsComponent implements OnDestroy {
+export class TicketDetailsComponent implements OnInit, OnDestroy {
   @ViewChild('rejectReasonModal', { static: false }) rejectReasonModal: any;
-  @ViewChild('poDetailModal') poDetailModal: PurchaseOrderDetailsComponent;
-  @ViewChild('soDetailModal') soDetailModal: SalesOrderDetailsComponent;
-
-  @Output() onSaved = new EventEmitter<void>();
 
   private destroy$ = new Subject<void>();
+  private readonly ROUTE_NAME = '::Menu:TicketDetails';
 
-  isVisible = false;
   ticketId: string;
   ticket: InventoryTicketDto;
+  loading = true;
+
+  // Accordion state
+  expandedLineIds = new Set<string>();
 
   rejectReason = '';
   showRejectError = false;
@@ -70,6 +75,7 @@ export class TicketDetailsComponent implements OnDestroy {
   isAddDetailDrawerOpen = false;
   detailForm: FormGroup;
   isSavingDetail = false;
+  selectedTicketLine: InventoryTicketLineDto | null = null;
 
   units: ProductUnitLookup[] = [];
   selectedConversionFactor = 1;
@@ -86,6 +92,12 @@ export class TicketDetailsComponent implements OnDestroy {
   fefoBaseUnitName = '';
   private fefoConversionFactor = 1;
 
+  // PO Selection
+  poLines: SelectablePOLineDto[] = [];
+  isPoLineDrawerOpen = false;
+
+  lineBatches: { [productId: string]: ProductBatchDto[] } = {};
+
   TicketType = TicketType;
   ApprovalStatus = ApprovalStatus;
   BatchQAStatus = BatchQAStatus;
@@ -101,38 +113,84 @@ export class TicketDetailsComponent implements OnDestroy {
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
     private fb: FormBuilder,
-    private modalService: NgbModal
+    private router: Router,
+    private route: ActivatedRoute,
+    private routesService: RoutesService
   ) { }
 
+  ngOnInit(): void {
+    this.ticketId = this.route.snapshot.params['id'];
+    if (this.ticketId) {
+      this.buildForms();
+      this.loadTicketData();
+      this.loadMasterData();
+    } else {
+      this.goBack();
+    }
+  }
+
   ngOnDestroy(): void {
+    this.routesService.remove([this.ROUTE_NAME]);
     this.destroy$.next();
     this.destroy$.complete();
   }
 
-  // ── Public API ────────────────────────────────────────────
-  open(ticketId: string) {
-    this.ticketId = ticketId;
-    this.ticket = null;
-    this.buildForms();
-    this.loadTicketData();
-    this.loadMasterData();
-    this.isVisible = true;
+  goBack(): void {
+    this.router.navigate(['/inventory/tickets']);
   }
 
-  close() {
-    this.isVisible = false;
+  // ── Accordion Logic ──────────────────────────────────────
+  toggleLine(id: string) {
+    if (this.expandedLineIds.has(id)) {
+      this.expandedLineIds.delete(id);
+    } else {
+      this.expandedLineIds.add(id);
+    }
   }
 
   // ── Data loading ──────────────────────────────────────────
   loadTicketData() {
+    this.loading = true;
     this.ticketService.get(this.ticketId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (res) => {
           this.ticket = res;
+          this.loading = false;
           this.loadBins(res.warehouseId);
+          if (res.referenceDocumentId && res.type === TicketType.GoodsReceipt) {
+            this.loadPoLines(res.referenceDocumentId);
+          }
+
+          if (res.lines) {
+            const productIds = Array.from(new Set(res.lines.map(l => l.productId)));
+            productIds.forEach(pid => {
+                this.batchService.getList({ productId: pid, maxResultCount: 100 } as any).subscribe(batchesRes => {
+                    this.lineBatches[pid] = this.filterBatchesByTicketType(batchesRes.items);
+                });
+            });
+          }
+
+          this.routesService.add([{
+            path: `/inventory/tickets/details/${this.ticket.id}`,
+            name: this.ROUTE_NAME,
+            parentName: '::Menu:InventoryTickets',
+            iconClass: 'fas fa-file-invoice',
+            layout: eLayoutType.application,
+          }]);
         },
-        error: () => this.close()
+        error: () => this.goBack()
+      });
+  }
+
+  loadPoLines(poId: string) {
+    this.ticketService.getLinesFromPurchaseOrder(poId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+          this.poLines = res.map(l => ({
+              ...l,
+              importQuantity: l.quantity
+          }));
       });
   }
 
@@ -151,39 +209,13 @@ export class TicketDetailsComponent implements OnDestroy {
       });
   }
 
-  // ✅ NEW: Open linked PO or SO from ticket's reference
   openLinkedOrder() {
     if (!this.ticket?.referenceDocumentId) return;
-
     if (this.ticket.type === TicketType.GoodsReceipt || this.ticket.type === TicketType.ReturnOutward) {
-      // Linked to Purchase Order
-      this.poDetailModal?.open(this.ticket.referenceDocumentId);
+        this.router.navigate(['/orders/purchaseorders/details', this.ticket.referenceDocumentId]);
     } else if (this.ticket.type === TicketType.GoodsIssue || this.ticket.type === TicketType.ReturnInward) {
-      // Linked to Sales Order
-      this.soDetailModal?.open(this.ticket.referenceDocumentId);
+        this.router.navigate(['/orders/saleorders/details', this.ticket.referenceDocumentId]);
     }
-  }
-
-  // ── UX MỚI: Inline Edit ───────────────────────────────────
-  onInlineQuantityChange(row: any, newValue: string) {
-    const newQty = parseFloat(newValue);
-    if (isNaN(newQty) || newQty <= 0) {
-      this.toaster.error('::InvalidQuantity', '::Error');
-      this.loadTicketData();
-      return;
-    }
-    if (newQty === row.quantity) return;
-
-    this.ticketService.updateDetailQuantity(row.id, newQty)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.toaster.success('::UpdateSuccess', '::Success');
-          this.loadTicketData();
-          this.onSaved.emit();
-        },
-        error: () => this.loadTicketData()
-      });
   }
 
   // ── Bin filtering ─────────────────────────────────────────
@@ -196,7 +228,6 @@ export class TicketDetailsComponent implements OnDestroy {
       this.filteredBins = this.bins.filter(b => b.zoneStorageCondition === condition);
       this.hiddenBinCount = this.bins.length - this.filteredBins.length;
     }
-    console.log("Số Bin sau khi lọc:", this.filteredBins.length);
     
     const currentBinId = this.detailForm?.get('binId')?.value;
     if (currentBinId && !this.filteredBins.find(b => b.id === currentBinId)) {
@@ -219,8 +250,7 @@ export class TicketDetailsComponent implements OnDestroy {
     this.hiddenBatchCount = all.length - this.batches.length;
   }
 
-  // ── Medicine change ───────────────────────────────────────
-  onMedicineChange(medicineId: string) {
+  onMedicineChange(medicineId: string, targetUnitId?: string, targetFactor?: number) {
     this.detailForm.patchValue({ productBatchId: null, unitId: null, binId: null });
     this.allBatches = [];
     this.batches = [];
@@ -248,16 +278,29 @@ export class TicketDetailsComponent implements OnDestroy {
     this.loadUnitsForProduct(medicineId, (units, baseUnitName) => {
       this.units = units;
       this.baseUnitName = baseUnitName;
-      const base = units.find(u => u.isBaseUnit);
-      if (base) {
-        this.detailForm.patchValue({ unitId: base.unitId });
-        this.selectedConversionFactor = 1;
-        this.selectedUnitName = base.unitName;
+      
+      // ✅ Nếu có targetUnitId (từ TicketLine), ưu tiên chọn nó
+      if (targetUnitId) {
+        this.detailForm.patchValue({ 
+          unitId: targetUnitId,
+          conversionFactor: targetFactor || 1
+        });
+        const unit = units.find(u => u.unitId === targetUnitId);
+        this.selectedConversionFactor = targetFactor || unit?.conversionFactor || 1;
+        this.selectedUnitName = unit?.unitName || '';
+      } else {
+        // Mặc định chọn BaseUnit
+        const base = units.find(u => u.isBaseUnit);
+        if (base) {
+          this.detailForm.patchValue({ unitId: base.unitId });
+          this.selectedConversionFactor = 1;
+          this.selectedUnitName = base.unitName;
+        }
       }
+      this.updateQuantityPreview();
     });
   }
 
-  // ── Inline batch creation ─────────────────────────────────
   openQuickBatchForm() {
     this.quickBatchForm = this.fb.group({
       batchNumber: ['', [Validators.required, Validators.maxLength(50)]],
@@ -274,14 +317,12 @@ export class TicketDetailsComponent implements OnDestroy {
 
   saveQuickBatch() {
     if (this.quickBatchForm?.invalid) return;
-
     const mfg = new Date(this.quickBatchForm.value.manufacturingDate);
     const exp = new Date(this.quickBatchForm.value.expiryDate);
     if (exp <= mfg) {
       this.toaster.error('::ExpiryDateMustBeGreaterThanMfgDate', '::Error');
       return;
     }
-
     const productId = this.detailForm.get('productId')?.value;
     if (!productId) return;
 
@@ -301,9 +342,8 @@ export class TicketDetailsComponent implements OnDestroy {
       });
   }
 
-  // ── Unit change ───────────────────────────────────────────
   onUnitChange(unitId: string) {
-    const unit = this.units.find(u => u.unitId === unitId);
+    const unit = this.units.find((u) => u.unitId === unitId);
     if (unit) {
       this.selectedConversionFactor = unit.conversionFactor;
       this.selectedUnitName = unit.unitName;
@@ -317,42 +357,6 @@ export class TicketDetailsComponent implements OnDestroy {
     this.quantityPreview = qty * this.selectedConversionFactor;
   }
 
-  // ── FEFO ──────────────────────────────────────────────────
-  onFefoMedicineChange(medicineId: string) {
-    this.fefoForm.patchValue({ unitId: null, requiredQuantity: 1 });
-    this.fefoUnits = [];
-    this.fefoConversionFactor = 1;
-    this.fefoBaseQtyPreview = 0;
-    this.fefoBaseUnitName = '';
-
-    if (!medicineId) return;
-
-    this.loadUnitsForProduct(medicineId, (units, baseUnitName) => {
-      this.fefoUnits = units;
-      this.fefoBaseUnitName = baseUnitName;
-      const base = units.find(u => u.isBaseUnit);
-      if (base) {
-        this.fefoForm.patchValue({ unitId: base.unitId });
-        this.fefoConversionFactor = 1;
-      }
-    });
-  }
-
-  onFefoUnitChange(unitId: string) {
-    const unit = this.fefoUnits.find(u => u.unitId === unitId);
-    if (unit) {
-      this.fefoConversionFactor = unit.conversionFactor;
-      this.fefoForm.patchValue({ conversionFactor: unit.conversionFactor });
-    }
-    this.updateFefoPreview();
-  }
-
-  updateFefoPreview() {
-    const qty = this.fefoForm.get('requiredQuantity')?.value || 0;
-    this.fefoBaseQtyPreview = qty * this.fefoConversionFactor;
-  }
-
-  // ── Load units helper ─────────────────────────────────────
   private loadUnitsForProduct(
     medicineId: string,
     callback: (units: ProductUnitLookup[], baseUnitName: string) => void
@@ -360,30 +364,17 @@ export class TicketDetailsComponent implements OnDestroy {
     this.medicineService.get(medicineId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(detail => {
-        const baseUnit: ProductUnitLookup = {
-          unitId: detail.baseUnitId,
-          unitName: detail.baseUnitName,
-          conversionFactor: 1,
-          isBaseUnit: true
-        };
-
+        const baseUnit: ProductUnitLookup = { unitId: detail.baseUnitId, unitName: detail.baseUnitName, conversionFactor: 1, isBaseUnit: true };
         const sorted = [...(detail.units || [])].sort((a, b) => (a.level ?? 0) - (b.level ?? 0));
         let cumulative = 1;
         const others: ProductUnitLookup[] = sorted.map(u => {
           cumulative *= u.conversionFactor ?? 1;
-          return {
-            unitId: u.unitId,
-            unitName: u.unitName,
-            conversionFactor: cumulative,
-            isBaseUnit: false
-          };
+          return { unitId: u.unitId, unitName: u.unitName, conversionFactor: cumulative, isBaseUnit: false };
         });
-
         callback([baseUnit, ...others], detail.baseUnitName ?? '');
       });
   }
 
-  // ── Forms ─────────────────────────────────────────────────
   buildForms() {
     this.detailForm = this.fb.group({
       productId: [null, [Validators.required]],
@@ -393,29 +384,38 @@ export class TicketDetailsComponent implements OnDestroy {
       conversionFactor: [1, [Validators.required, Validators.min(1)]],
       quantity: [1, [Validators.required, Validators.min(0.01)]]
     });
-
-    this.fefoForm = this.fb.group({
-      productId: [null, [Validators.required]],
-      unitId: [null, [Validators.required]],
-      conversionFactor: [1, [Validators.required, Validators.min(1)]],
-      requiredQuantity: [1, [Validators.required, Validators.min(0.01)]]
-    });
   }
 
-  // ── Add-detail drawer ─────────────────────────────────────
-  openAddDetailDrawer() {
-    this.allBatches = [];
-    this.batches = [];
-    this.hiddenBatchCount = 0;
-    this.units = [];
-    this.selectedConversionFactor = 1;
-    this.quantityPreview = 0;
-    this.isCreatingBatch = false;
-    this.selectedMedicineCondition = null;
-    this.filteredBins = this.bins;
-    this.hiddenBinCount = 0;
+  openAddDetailDrawer(line: InventoryTicketLineDto, batchId?: string) {
+    this.selectedTicketLine = line;
     this.detailForm.reset({ quantity: 1, conversionFactor: 1 });
+    
+    this.detailForm.patchValue({ 
+      productId: line.productId,
+      unitId: line.unitId,
+      quantity: 1, // Mặc định để 1 để người dùng nhập số lượng cho lô này
+      conversionFactor: line.conversionFactor || 1
+    });
+    
+    // ✅ Truyền thêm đơn vị và hệ số để không bị reset
+    this.onMedicineChange(line.productId, line.unitId, line.conversionFactor);
+    
+    // Đợi load batches xong
+    setTimeout(() => {
+      this.detailForm.patchValue({ 
+          productBatchId: batchId || null
+      });
+      this.updateQuantityPreview();
+    }, 800);
     this.isAddDetailDrawerOpen = true;
+  }
+
+  openQuickCreateBatchDrawer(line: InventoryTicketLineDto) {
+    this.openAddDetailDrawer(line);
+    // Đợi drawer mở và medicine được set rồi mới mở quick form
+    setTimeout(() => {
+        this.openQuickBatchForm();
+    }, 600);
   }
 
   closeAddDetailDrawer() {
@@ -424,131 +424,109 @@ export class TicketDetailsComponent implements OnDestroy {
   }
 
   saveDetail() {
-    if (this.detailForm.invalid) return;
+    if (this.detailForm.invalid || !this.selectedTicketLine) return;
     this.isSavingDetail = true;
 
-    this.ticketService.createTicketDetail(this.ticketId, this.detailForm.value)
+    // ✅ Fix: Pass Line ID to addDetail
+    this.ticketService.addDetail(this.selectedTicketLine.id, this.detailForm.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
           this.isSavingDetail = false;
           this.closeAddDetailDrawer();
           this.loadTicketData();
-          this.onSaved.emit();
         },
         error: () => { this.isSavingDetail = false; }
       });
   }
 
-  removeDetail(detailId: string) {
-    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure')
-      .subscribe(status => {
-        if (status === Confirmation.Status.confirm) {
-          this.ticketService.removeDetail(this.ticketId, detailId)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-              this.loadTicketData();
-              this.onSaved.emit();
-            });
-        }
+  deleteDetail(detailId: string) {
+      this.confirmation.warn('::AreYouSureToDeleteDetail', '::AreYouSure').subscribe(status => {
+          if (status === Confirmation.Status.confirm) {
+              // ✅ Fix: Pass Detail ID directly
+              this.ticketService.deleteDetail(detailId)
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(() => {
+                      this.loadTicketData();
+                  });
+          }
       });
   }
 
-  // ── FEFO drawer ───────────────────────────────────────────
-  openFefoDrawer() {
-    this.fefoUnits = [];
-    this.fefoConversionFactor = 1;
-    this.fefoBaseQtyPreview = 0;
-    this.fefoForm.reset({ requiredQuantity: 1, conversionFactor: 1 });
-    this.isFefoDrawerOpen = true;
+  deleteLine(lineId: string) {
+      this.confirmation.warn('::AreYouSureToDeleteLine', '::AreYouSure').subscribe(status => {
+          if (status === Confirmation.Status.confirm) {
+              // ✅ Fix: Pass Line ID directly
+              this.ticketService.deleteLine(lineId)
+                  .pipe(takeUntil(this.destroy$))
+                  .subscribe(() => {
+                      this.loadTicketData();
+                  });
+          }
+      });
   }
 
-  closeFefoDrawer() { this.isFefoDrawerOpen = false; }
+  // ── PO Line Selection ─────────────────────────────────────
+  openPoLineDrawer() {
+    this.isPoLineDrawerOpen = true;
+  }
 
-  runFefo() {
-    if (this.fefoForm.invalid) return;
-    this.isRunningFefo = true;
+  closePoLineDrawer() {
+    this.isPoLineDrawerOpen = false;
+  }
 
-    const { productId, requiredQuantity, conversionFactor } = this.fefoForm.value;
-    const requiredBaseQuantity = requiredQuantity * (conversionFactor || 1);
+  addPoLineToTicket(poLine: SelectablePOLineDto) {
+    if (poLine.importQuantity <= 0) {
+        this.toaster.error('::QuantityMustBeGreaterThanZero', '::Error');
+        return;
+    }
+    if (poLine.importQuantity > poLine.quantity) {
+        this.toaster.error('::ImportQuantityExceedsRemaining', '::Error');
+        return;
+    }
 
-    this.ticketService.allocateFEFO(this.ticketId, productId, requiredBaseQuantity)
+    // ✅ TicketId for root, payload for batch info
+    this.ticketService.addLineFromPurchaseOrder(this.ticketId, poLine.id, poLine.importQuantity)
       .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.isRunningFefo = false;
-          this.closeFefoDrawer();
+      .subscribe(() => {
           this.loadTicketData();
-          this.onSaved.emit();
-        },
-        error: () => { this.isRunningFefo = false; }
+          this.toaster.success('::ImportSuccess', '::Success');
+          
+          // Sau khi import xong, tìm line mới tạo và tự động mở drawer gán lô cho nó luôn (để người dùng làm tiếp bước tiếp theo)
+          // Hoặc đơn giản là load lại data và để người dùng tự chọn. Ở đây ta load lại data.
+          this.closePoLineDrawer();
       });
   }
 
   // ── Ticket workflow ───────────────────────────────────────
   sendToApprove() {
-    if (!this.ticket?.details?.length) {
+    if (!this.ticket?.lines?.length) {
       this.confirmation.error('::NoDataError', '::Error');
       return;
     }
-    this.confirmation
-      .info('::SendToApproveConfirmation', '::Confirm')
+    this.confirmation.info('::SendToApproveConfirmation', '::Confirm')
       .subscribe(status => {
         if (status !== Confirmation.Status.confirm) return;
         this.ticketService.sendToApprove(this.ticketId)
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
             this.loadTicketData();
-            this.onSaved.emit();
           });
       });
   }
 
-  reject() {
-    this.rejectReason = '';
-    this.showRejectError = false;
-    this.isRejecting = false;
-    this.modalService.open(this.rejectReasonModal, { size: 'md', centered: true, backdrop: 'static' });
-  }
-
-  confirmReject(modal: any) {
-    if (!this.rejectReason || !this.rejectReason.trim()) {
-      this.showRejectError = true;
-      return;
-    }
-
-    this.isRejecting = true;
-    this.ticketService.reject(this.ticketId, this.rejectReason.trim())
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.isRejecting = false;
-          modal.close();
-          this.toaster.success('::RejectSuccess', '::Success');
-          this.loadTicketData();
-          this.onSaved.emit();
-        },
-        error: () => {
-          this.isRejecting = false;
-        }
-      });
-  }
-
   execute() {
-    this.confirmation
-      .success('::ExecuteConfirmation', '::Confirm')
+    this.confirmation.success('::ExecuteConfirmation', '::Confirm')
       .subscribe(status => {
         if (status !== Confirmation.Status.confirm) return;
         this.ticketService.execute(this.ticketId)
           .pipe(takeUntil(this.destroy$))
           .subscribe(() => {
             this.loadTicketData();
-            this.onSaved.emit();
           });
       });
   }
 
-  // ── Helpers ───────────────────────────────────────────────
   isIssueTicket(): boolean {
     return this.ticket?.type === TicketType.GoodsIssue
       || this.ticket?.type === TicketType.DisposalIssue
