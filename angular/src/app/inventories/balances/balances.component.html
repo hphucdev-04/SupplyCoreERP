@@ -1,43 +1,58 @@
-<div class="card">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col col-md-4">
-        <h5 class="card-title mb-0">
-          {{ '::Menu:InventoryBalances' | abpLocalization }}
-        </h5>
-      </div>
-      <div class="col col-md-8 text-end">
-        <button class="btn btn-success btn-sm" type="button" (click)="list.get()">
-          <i class="fa fa-refresh me-1"></i> <span>{{ '::Refresh' | abpLocalization }}</span>
-        </button>
-      </div>
+<!-- Main Card -->
+<div class="ph-card">
+  <div class="ph-card__header">
+    <h5 class="ph-card-title mb-0">
+      {{ '::Menu:InventoryBalances' | abpLocalization }}
+    </h5>
+    <div class="ph-card__header-actions">
+      <button class="btn btn-sm ph-btn-secondary" type="button" (click)="list.get()">
+        <i class="fa fa-refresh me-1"></i> <span>{{ '::Refresh' | abpLocalization }}</span>
+      </button>
     </div>
   </div>
 
-  <div class="card-body">
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-      <div style="min-width: 250px; flex: 1;">
-        <app-search [placeholder]="'::SearchByProductOrBatch' | abpLocalization" [(value)]="filterText"
-          [debounceTime]="800" (search)="onSearch($event)">
-        </app-search>
+  <div class="ph-card__body">
+    <!-- Filter Bar -->
+    <div class="ph-filter-bar">
+      <div class="ph-filter-bar__search">
+        <app-search
+          [placeholder]="'::SearchByProductOrBatch' | abpLocalization"
+          [(value)]="filterText"
+          [debounceTime]="800"
+          (search)="onSearch($event)"
+        ></app-search>
       </div>
 
-      <div class="d-flex flex-wrap gap-2 justify-content-end align-items-center">
-        <select class="form-select form-select-md" style="width: 200px;" [(ngModel)]="filterWarehouseId"
-          (change)="onFilterChange()">
+      <div class="ph-filter-bar__controls">
+        <select
+          class="form-select form-select-sm"
+          style="width: 200px"
+          [(ngModel)]="filterWarehouseId"
+          (change)="onFilterChange()"
+        >
           <option [ngValue]="null">{{ '::Warehouse' | abpLocalization }}</option>
           <option *ngFor="let item of warehouses" [ngValue]="item.id">{{ item.name }}</option>
         </select>
 
-        <select class="form-select form-select-md" style="width: 200px;" [(ngModel)]="filterMedicineId"
-          (change)="onFilterChange()">
+        <select
+          class="form-select form-select-sm"
+          style="width: 200px"
+          [(ngModel)]="filterMedicineId"
+          (change)="onFilterChange()"
+        >
           <option [ngValue]="null">{{ '::Medicine' | abpLocalization }}</option>
           <option *ngFor="let item of medicines" [ngValue]="item.id">{{ item.code }} - {{ item.name }}</option>
         </select>
 
-        <div class="form-check form-switch ms-2 mb-0 d-flex align-items-center">
-          <input class="form-check-input mt-0 me-2" type="checkbox" id="hideZero" [(ngModel)]="hideZeroBalance"
-            (change)="onFilterChange()" style="cursor: pointer; transform: scale(1.2);">
+        <div class="form-check form-switch d-flex align-items-center gap-2 ms-2 mb-0">
+          <input
+            class="form-check-input mt-0"
+            type="checkbox"
+            id="hideZero"
+            [(ngModel)]="hideZeroBalance"
+            (change)="onFilterChange()"
+            style="cursor: pointer; transform: scale(1.2);"
+          />
           <label class="form-check-label small fw-semibold mb-0" for="hideZero" style="cursor: pointer;">
             {{ '::HideZeroBalance' | abpLocalization }}
           </label>
@@ -45,66 +60,103 @@
       </div>
     </div>
 
-    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
-
-      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="120" [sortable]="false">
+    <!-- Table -->
+    <ngx-datatable
+      [rows]="data.items"
+      [count]="data.totalCount"
+      [list]="list"
+      default
+    >
+      <ngx-datatable-column
+        [name]="'::Actions' | abpLocalization"
+        [maxWidth]="120"
+        [sortable]="false"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <button class="btn btn-sm btn-outline-primary fw-semibold" (click)="openDetail(row.id)"
-            title="Xem Chi tiết & Thẻ kho">
+          <button class="btn btn-sm ph-btn-outline" (click)="openDetail(row.id)" title="{{ '::View' | abpLocalization }}">
             <i class="fa fa-eye me-1"></i> {{ '::View' | abpLocalization }}
           </button>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Medicine' | abpLocalization" prop="productName" [width]="250">
+      <ngx-datatable-column
+        [name]="'::Medicine' | abpLocalization"
+        prop="productName"
+        [width]="250"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="fw-bold text-primary">{{ row.productName }}</span>
+          <span class="fw-bold ph-text-primary">{{ row.productName }}</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::BatchNumber' | abpLocalization" prop="batchNumber" [width]="150">
+      <ngx-datatable-column
+        [name]="'::BatchNumber' | abpLocalization"
+        prop="batchNumber"
+        [width]="150"
+      >
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Location' | abpLocalization" prop="warehouseName" [width]="200">
+      <ngx-datatable-column
+        [name]="'::Location' | abpLocalization"
+        prop="warehouseName"
+        [width]="200"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span><i class="fa fa-map-marker text-danger me-1"></i>{{ row.warehouseName }}</span>
+          <span><i class="fa fa-map-marker ph-text-danger me-1"></i>{{ row.warehouseName }}</span>
           <small class="d-block mt-1">
-            <span class="badge bg-success text-dark border"><i class="fa fa-box text-primary me-1"></i>{{ row.binCode
-              }}</span>
+            <span class="ph-badge ph-badge--neutral"><i class="fa fa-box ph-text-primary me-1"></i>{{ row.binCode }}</span>
           </small>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::TotalQuantity' | abpLocalization" prop="quantity" [width]="140">
-
+      <ngx-datatable-column
+        [name]="'::TotalQuantity' | abpLocalization"
+        prop="quantity"
+        [width]="140"
+      >
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::LockedQuantity' | abpLocalization" prop="lockedQuantity" [width]="140">
+      <ngx-datatable-column
+        [name]="'::LockedQuantity' | abpLocalization"
+        prop="lockedQuantity"
+        [width]="140"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="badge"
-            [ngClass]="row.lockedQuantity > 0 ? 'bg-warning text-dark' : 'bg-light text-muted border'">
+          <span
+            class="ph-badge"
+            [ngClass]="row.lockedQuantity > 0 ? 'ph-badge--pending' : 'ph-badge--neutral'"
+          >
             <i class="fa fa-lock me-1"></i> {{ row.lockedQuantity | number }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::AvailableQuantity' | abpLocalization" prop="availableQuantity" [width]="160">
+      <ngx-datatable-column
+        [name]="'::AvailableQuantity' | abpLocalization"
+        prop="availableQuantity"
+        [width]="160"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="fs-6 fw-bold"
-            [ngClass]="(row.quantity - row.lockedQuantity) > 0 ? 'text-success' : 'text-danger'">
+          <span
+            class="fs-6 fw-bold"
+            [ngClass]="(row.quantity - row.lockedQuantity) > 0 ? 'ph-text-success' : 'ph-text-danger'"
+          >
             {{ (row.quantity - row.lockedQuantity) | number }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
+      <ngx-datatable-column
+        [name]="'::CreationTime' | abpLocalization"
+        prop="creationTime"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.creationTime | date: 'medium' }}
         </ng-template>
       </ngx-datatable-column>
-
     </ngx-datatable>
   </div>
 </div>
 
+<!-- Balance Detail Modal (keeps same selector, no change) -->
 <app-balance-detail-modal #detailModal></app-balance-detail-modal>

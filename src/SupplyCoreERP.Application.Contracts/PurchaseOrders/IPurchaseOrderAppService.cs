@@ -14,10 +14,10 @@ public interface IPurchaseOrderAppService : IApplicationService
     Task<PurchaseOrderDto> CreateAsync(CreatePurchaseOrderDto input);
     Task<PurchaseOrderDto> UpdateAsync(Guid id, UpdatePurchaseOrderDto input);
     Task DeleteAsync(Guid id);
-    // Details
-    Task AddDetailAsync(Guid orderId, AddPurchaseOrderDetailDto input);
-    Task UpdateDetailAsync(Guid orderId, Guid detailId, UpdatePurchaseOrderDetailDto input);
-    Task RemoveDetailAsync(Guid orderId, Guid detailId);
+    // Lines
+    Task AddLineAsync(Guid orderId, AddPurchaseOrderLineDto input);
+    Task UpdateLineAsync(Guid orderId, Guid lineId, UpdatePurchaseOrderLineDto input);
+    Task RemoveLineAsync(Guid orderId, Guid lineId);
     // Workflow
     Task SendToApproveAsync(Guid id);
     Task ApproveAsync(Guid id);

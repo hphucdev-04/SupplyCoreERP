@@ -1,6 +1,12 @@
 <div class="ph-drawer-overlay" *ngIf="isOpen" (click)="onOverlayClick()"></div>
 
-<div class="ph-drawer" [class.ph-drawer--open]="isOpen" [style.width]="drawerWidth" enterSubmit>
+<div class="ph-drawer" 
+  [class.ph-drawer--open]="isOpen" 
+  [class.ph-drawer--bottom]="position === 'bottom'"
+  [class.ph-drawer--right]="position === 'right'"
+  [style.width]="drawerWidth"
+  [style.height]="drawerHeight"
+  enterSubmit>
   <div class="ph-drawer__header">
     <h5>{{ title | abpLocalization }}</h5>
     <button type="button" class="btn-close" (click)="onClose()"></button>

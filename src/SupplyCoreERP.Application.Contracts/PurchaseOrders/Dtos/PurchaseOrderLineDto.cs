@@ -5,7 +5,7 @@ using Volo.Abp.Application.Dtos;
 
 namespace SupplyCoreERP.PurchaseOrders.Dtos;
 
-public class PurchaseOrderDetailDto : FullAuditedEntityDto<Guid>
+public class PurchaseOrderLineDto : FullAuditedEntityDto<Guid>
 {
     public Guid ProductId { get; set; }
     public string? ProductCode { get; set; }

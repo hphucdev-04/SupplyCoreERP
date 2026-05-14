@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using SupplyCoreERP.Enums.Warehouses;
-using SupplyCoreERP.Tickets.Dtos;
 using Volo.Abp.Application.Dtos;
 
 namespace SupplyCoreERP.Tickets.Dtos;
@@ -19,5 +18,5 @@ public class InventoryTicketDto : FullAuditedEntityDto<Guid>
     public string? ReferenceDocumentNumber { get; set; }
     public string? Note { get; set; }
 
-    public List<InventoryTicketDetailDto> Details { get; set; } = new List<InventoryTicketDetailDto>();
+    public List<InventoryTicketLineDto> Lines { get; set; } = new List<InventoryTicketLineDto>();
 }

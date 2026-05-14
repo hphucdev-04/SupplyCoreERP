@@ -15,6 +15,10 @@ export const INVENTORIES_ROUTES: Routes = [
         loadComponent: () => import('./tickets/tickets.component').then(m => m.TicketsComponent),
     },
     {
+        path: 'tickets/details/:id',
+        loadComponent: () => import('./tickets/tickets-details/ticket-details.component').then(m => m.TicketDetailsComponent),
+    },
+    {
         path: 'batches',
         loadComponent: () => import('./batches/batches.component').then(m => m.BatchesComponent),
     },

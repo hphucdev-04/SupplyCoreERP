@@ -83,8 +83,8 @@ public class PurchaseOrderManager : DomainService
     }
     #endregion
 
-    #region PurchaseOrder Detials
-    public async Task AddDetailAsync(PurchaseOrder order, Guid productId, Guid unitId,
+    #region PurchaseOrder Lines
+    public async Task AddLineAsync(PurchaseOrder order, Guid productId, Guid unitId,
         int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
     {
         Product product = await _productRepo.GetAsync(productId);
@@ -93,19 +93,19 @@ public class PurchaseOrderManager : DomainService
             throw new UserFriendlyException($"Sản phẩm '{product.Name}' chưa đủ điều kiện giao dịch!");
         }
 
-        order.AddDetail(GuidGenerator.Create(), productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
+        order.AddLine(GuidGenerator.Create(), productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
     }
 
-    public Task UpdateDetailAsync(PurchaseOrder order, Guid detailId,
+    public Task UpdateLineAsync(PurchaseOrder order, Guid lineId,
         decimal quantity, decimal unitPrice, decimal taxRate)
     {
-        order.UpdateDetail(detailId, quantity, unitPrice, taxRate);
+        order.UpdateLine(lineId, quantity, unitPrice, taxRate);
         return Task.CompletedTask;
     }
 
-    public Task RemoveDetailAsync(PurchaseOrder order, Guid detailId)
+    public Task RemoveLineAsync(PurchaseOrder order, Guid lineId)
     {
-        order.RemoveDetail(detailId);
+        order.RemoveLine(lineId);
         return Task.CompletedTask;
     }
     #endregion
@@ -149,10 +149,10 @@ public class PurchaseOrderManager : DomainService
             throw new UserFriendlyException($"'{supplier.Name}' đang có khoản nợ quá hạn. Xử lý nợ cũ trước!");
         }
 
-        Guid[] productIds = order.Details.Select(x => x.ProductId).Distinct().ToArray();
+        Guid[] productIds = order.Lines.Select(x => x.ProductId).Distinct().ToArray();
         List<Product> products = await _productRepo.GetListAsync(x => productIds.Contains(x.Id));
 
-        foreach (PurchaseOrderDetail item in order.Details)
+        foreach (PurchaseOrderLine item in order.Lines)
         {
             Product? product = products.FirstOrDefault(p => p.Id == item.ProductId);
             if (product == null || !product.IsAvailableForInventory)
@@ -177,14 +177,32 @@ public class PurchaseOrderManager : DomainService
     /// <returns>Supplier đã AddDebt — chưa được lưu DB. AppService gọi UpdateAsync.</returns>
     public async Task<Supplier> CompleteAsync(PurchaseOrder order)
     {
+        if (order.Status == PurchaseOrderStatus.Completed)
+        {
+            throw new UserFriendlyException("Đơn hàng đã được hoàn tất trước đó.");
+        }
+
+        // 1. Kiểm tra trạng thái phiếu kho liên quan
         if (!await _ticketManager.HasStatusAsync(order.Id, ApprovalStatus.Approved))
         {
-            throw new UserFriendlyException("Phiếu nhập kho chưa được thực thi! Cần hoàn tất nhập kho trước.");
+            throw new UserFriendlyException("Chưa có phiếu nhập kho nào được thực thi! Cần thực hiện nhập kho trước khi hoàn tất đơn.");
+        }
+
+        // 2. BẮT BUỘC: Kiểm tra tất cả các dòng đã nhận đủ hàng
+        foreach (var line in order.Lines)
+        {
+            // So sánh theo BaseQuantity để tránh sai số làm tròn ở đơn vị PO
+            if (line.ReceivedQuantity * line.ConversionFactor < line.BaseQuantity - 0.0001m)
+            {
+                throw new UserFriendlyException(
+                    $"Sản phẩm '{line.Product?.Name}' mới nhận được {line.ReceivedQuantity} {line.Unit?.Name}, " +
+                    $"còn thiếu {line.Quantity - line.ReceivedQuantity}. Không thể hoàn tất đơn hàng khi chưa nhận đủ!");
+            }
         }
 
         if (order.Status != PurchaseOrderStatus.Receiving && order.Status != PurchaseOrderStatus.Approved)
         {
-            throw new UserFriendlyException("Chỉ có thể Hoàn tất khi đang Nhập kho hoặc Đã duyệt!");
+            throw new UserFriendlyException("Chỉ có thể Hoàn tất khi đang ở trạng thái Nhập kho hoặc Đã duyệt!");
         }
 
         order.Complete();

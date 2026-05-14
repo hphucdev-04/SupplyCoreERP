@@ -16,9 +16,9 @@ public class InventoryTicket : FullAuditedAggregateRoot<Guid>
     public Guid? ReferenceDocumentId { get; private set; }
     public string? ReferenceDocumentNumber { get; private set; }
     public string? Note { get; private set; }
-    public virtual ICollection<InventoryTicketDetail> Details { get; protected set; }
+    public virtual ICollection<InventoryTicketLine> Lines { get; protected set; }
 
-    protected InventoryTicket() { Details = new List<InventoryTicketDetail>(); }
+    protected InventoryTicket() { Lines = new List<InventoryTicketLine>(); }
 
     public InventoryTicket(Guid id, string ticketNumber, TicketType type, Guid warehouseId, Guid? refDocId, string? refDocNumber, string? note) : base(id)
     {
@@ -29,7 +29,7 @@ public class InventoryTicket : FullAuditedAggregateRoot<Guid>
         ReferenceDocumentNumber = refDocNumber;
         Note = note;
         Status = ApprovalStatus.Draft;
-        Details = new List<InventoryTicketDetail>();
+        Lines = new List<InventoryTicketLine>();
     }
 
     public void RequestApprove() => Status = ApprovalStatus.Pending;

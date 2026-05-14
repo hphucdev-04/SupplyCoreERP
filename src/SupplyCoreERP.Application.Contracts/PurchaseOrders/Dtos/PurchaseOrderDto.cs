@@ -26,5 +26,5 @@ public class PurchaseOrderDto : FullAuditedEntityDto<Guid>
     public decimal TotalAmount { get; set; }
     public string? Note { get; set; }
 
-    public List<PurchaseOrderDetailDto> Details { get; set; } = new List<PurchaseOrderDetailDto>();
+    public List<PurchaseOrderLineDto> Lines { get; set; } = new List<PurchaseOrderLineDto>();
 }

@@ -1,65 +1,99 @@
-<div class="card">
-  <div class="card-header">
-    <div class="row align-items-center">
-      <div class="col col-md-4">
-        <h5 class="card-title txt-lg fw-bold">
-          <i class="fa fa-shopping-cart me-2 txt-primary"></i>
-          {{ '::Menu:PurchaseOrders' | abpLocalization }}
-        </h5>
-      </div>
-      <div class="col col-md-8 text-end">
-        <button class="btn btn-primary btn-sm ph-btn-new" type="button" (click)="openCreateDrawer()">
-          <i class="fa fa-plus me-1"></i>
-          {{ '::NewPurchaseOrder' | abpLocalization }}
-        </button>
-      </div>
+<!-- Main Card -->
+<div class="ph-card">
+  <div class="ph-card__header">
+    <h5 class="ph-card-title">
+      {{ '::Menu:PurchaseOrders' | abpLocalization }}
+    </h5>
+    <div class="ph-card__header-actions">
+      <button class="btn btn-sm ph-btn-new" type="button" (click)="openCreateDrawer()">
+        <i class="fa fa-plus me-1"></i>
+        <span>{{ '::NewPurchaseOrder' | abpLocalization }}</span>
+      </button>
     </div>
   </div>
 
-  <div class="card-body">
+  <div class="ph-card__body">
     <!-- Filter Bar -->
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-3 gap-2">
-      <div style="min-width: 260px; flex: 1;">
-        <app-search [placeholder]="'::SearchByCodeOrSupplier' | abpLocalization" [(value)]="filterText"
-          [debounceTime]="800" (search)="onSearch($event)">
-        </app-search>
+    <div class="ph-filter-bar">
+      <div class="ph-filter-bar__search">
+        <app-search
+          [placeholder]="'::SearchByCodeOrSupplier' | abpLocalization"
+          [(value)]="filterText"
+          [debounceTime]="800"
+          (search)="onSearch($event)"
+        ></app-search>
       </div>
-      <div class="d-flex flex-wrap gap-1 justify-content-end">
-        <select class="form-select form-select-sm" style="width: 180px;" [(ngModel)]="filterSupplierId"
-          (change)="onFilterChange()">
+      <div class="ph-filter-bar__controls">
+        <select
+          class="form-select form-select-sm"
+          style="width: 180px"
+          [(ngModel)]="filterSupplierId"
+          (change)="onFilterChange()"
+        >
           <option [ngValue]="null">{{ '::AllSuppliers' | abpLocalization }}</option>
           <option *ngFor="let s of suppliers" [ngValue]="s.id">{{ s.name }}</option>
         </select>
-        <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="filterWarehouseId"
-          (change)="onFilterChange()">
+
+        <select
+          class="form-select form-select-sm"
+          style="width: 160px"
+          [(ngModel)]="filterWarehouseId"
+          (change)="onFilterChange()"
+        >
           <option [ngValue]="null">{{ '::AllWarehouses' | abpLocalization }}</option>
           <option *ngFor="let w of warehouses" [ngValue]="w.id">{{ w.name }}</option>
         </select>
-        <select class="form-select form-select-sm" style="width: 160px;" [(ngModel)]="filterStatus"
-          (change)="onFilterChange()">
+
+        <select
+          class="form-select form-select-sm"
+          style="width: 160px"
+          [(ngModel)]="filterStatus"
+          (change)="onFilterChange()"
+        >
           <option [ngValue]="null">{{ '::AllStatus' | abpLocalization }}</option>
-          <option *ngFor="let s of purchaseOrderStatusOptions" [ngValue]="s.value">
-            {{ '::Enum:PurchaseOrderStatus.' + enumName(PurchaseOrderStatus, s.value) | abpLocalization }}
+          <option
+            *ngFor="let s of purchaseOrderStatusOptions"
+            [ngValue]="s.value"
+          >
+            {{
+              '::Enum:PurchaseOrderStatus.' + enumName(PurchaseOrderStatus, s.value)
+                | abpLocalization
+            }}
           </option>
         </select>
       </div>
     </div>
 
     <!-- Table -->
-    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
-
-      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="100" [sortable]="false">
+    <ngx-datatable
+      [rows]="data.items"
+      [count]="data.totalCount"
+      [list]="list"
+      default
+    >
+      <ngx-datatable-column
+        [name]="'::Actions' | abpLocalization"
+        [maxWidth]="120"
+        [sortable]="false"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div ngbDropdown container="body" class="d-inline-block">
-            <button class="btn btn-outline-secondary btn-sm" ngbDropdownToggle>
+            <button
+              class="btn btn-sm ph-btn-actions dropdown-toggle"
+              ngbDropdownToggle
+            >
               <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
             </button>
             <div ngbDropdownMenu>
               <button ngbDropdownItem (click)="viewDetail(row.id)">
-                <i class="fa fa-eye me-1 txt-primary"></i>{{ '::ViewDetails' | abpLocalization }}
+                <i class="fa fa-eye me-1"></i>{{ '::View' | abpLocalization }}
               </button>
-              <button *ngIf="row.status === PurchaseOrderStatus.Draft" ngbDropdownItem class="txt-danger"
-                (click)="delete(row.id, row.code)">
+              <button
+                *ngIf="row.status === PurchaseOrderStatus.Draft"
+                ngbDropdownItem
+                class="text-danger"
+                (click)="delete(row.id, row.code)"
+              >
                 <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
               </button>
             </div>
@@ -67,115 +101,186 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="210">
+      <ngx-datatable-column
+        [name]="'::Code' | abpLocalization"
+        prop="code"
+        [width]="200"
+      >
         <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
-          <span class="ph-link fw-semibold font-mono" (click)="viewDetail(row.id)">{{ value }}</span>
+          <span class="ph-link" (click)="viewDetail(row.id)">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Supplier' | abpLocalization" prop="supplierName" [width]="200">
+      <ngx-datatable-column
+        [name]="'::Supplier' | abpLocalization"
+        prop="supplierName"
+        [width]="200"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="fw-medium txt-main"><i class="fa fa-building-o me-1 txt-muted"></i>{{ row.supplierName }}</span>
+          <span class="ph-badge ph-badge--neutral">{{ row.supplierName }}</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Warehouse' | abpLocalization" prop="warehouseName" [width]="160">
+      <ngx-datatable-column
+        [name]="'::Warehouse' | abpLocalization"
+        prop="warehouseName"
+        [width]="160"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="txt-muted txt-sm"><i class="fa fa-home me-1"></i>{{ row.warehouseName }}</span>
+          <span class="ph-text-muted">{{ row.warehouseName }}</span
+          >
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::OrderDate' | abpLocalization" prop="orderDate" [width]="130">
+      <ngx-datatable-column
+        [name]="'::OrderDate' | abpLocalization"
+        prop="orderDate"
+        [width]="120"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="txt-muted txt-sm txt-num">{{ row.orderDate | date:'dd/MM/yyyy' }}</span>
+          <span class="ph-text-muted">{{
+            row.orderDate | date: "dd/MM/yyyy"
+          }}</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::TotalAmount' | abpLocalization" prop="totalAmount" [width]="150">
+      <ngx-datatable-column
+        [name]="'::TotalAmount' | abpLocalization"
+        prop="totalAmount"
+        [width]="150"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="fw-bold txt-num txt-primary">{{ row.totalAmount | number:'1.0-0' }}đ</span>
+          <span class="fw-bold ph-text-primary"
+            >{{ row.totalAmount | number: "1.0-0" }} ₫</span
+          >
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="160">
+      <ngx-datatable-column
+        [name]="'::Status' | abpLocalization"
+        prop="status"
+        [width]="160"
+      >
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <span class="badge" [ngClass]="statusClass(value)">
+          <span
+            class="ph-badge"
+            [ngClass]="{
+              'ph-badge--neutral': value === PurchaseOrderStatus.Draft,
+              'ph-badge--pending': value === PurchaseOrderStatus.PendingApproval,
+              'ph-badge--info':
+                value === PurchaseOrderStatus.Approved ||
+                value === PurchaseOrderStatus.Receiving,
+              'ph-badge--approved': value === PurchaseOrderStatus.Completed,
+              'ph-badge--rejected': value === PurchaseOrderStatus.Canceled
+            }"
+          >
             <i class="fa me-1" [ngClass]="statusIcon(value)"></i>
-            {{ '::Enum:PurchaseOrderStatus.' + enumName(PurchaseOrderStatus, value) | abpLocalization }}
+            {{
+              '::Enum:PurchaseOrderStatus.' + enumName(PurchaseOrderStatus, value)
+                | abpLocalization
+            }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::DueDate' | abpLocalization" prop="dueDate" [width]="130">
+      <ngx-datatable-column
+        [name]="'::DueDate' | abpLocalization"
+        prop="dueDate"
+        [width]="120"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="txt-sm txt-num" [class.txt-danger]="row.dueDate && (row.dueDate | date) < ('' | date)">
-            {{ row.dueDate ? (row.dueDate | date:'dd/MM/yyyy') : '—' }}
+          <span
+            class="ph-text-muted"
+            [class.ph-text-danger]="
+              row.dueDate && (row.dueDate | date) < ('' | date)
+            "
+          >
+            {{
+              row.dueDate ? (row.dueDate | date: "dd/MM/yyyy") : "—"
+            }}
           </span>
         </ng-template>
       </ngx-datatable-column>
-
     </ngx-datatable>
   </div>
 </div>
 
 <!-- Create Drawer -->
-<app-drawer [isOpen]="isDrawerOpen" [title]="'::NewPurchaseOrder' | abpLocalization" [width]="'md'"
-  [saveDisabled]="form.invalid || isSaving" (close)="closeDrawer()" (save)="save()">
-
+<app-drawer
+  [isOpen]="isDrawerOpen"
+  [title]="'::NewPurchaseOrder' | abpLocalization"
+  [width]="'md'"
+  [saveDisabled]="form.invalid || isSaving"
+  (close)="closeDrawer()"
+  (save)="save()"
+>
   <form [formGroup]="form">
-    <div
-      class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis d-flex align-items-center p-2 mb-3 txt-sm">
-      <i class="fa fa-info-circle me-2 txt-lg"></i>
-      {{ '::POAutoGenerateCodeHint' | abpLocalization }}
-    </div>
-
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Supplier' | abpLocalization }} <span
-          class="txt-danger">*</span></label>
+      <label class="ph-label ph-label--required">{{
+        '::Supplier' | abpLocalization
+      }}</label>
       <select class="form-select form-select-sm" formControlName="supplierId">
-        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+        <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
         <option *ngFor="let s of suppliers" [value]="s.id">{{ s.name }}</option>
       </select>
-      <div *ngIf="form.get('supplierId').invalid && form.get('supplierId').touched" class="txt-danger txt-sm mt-1">
+      <div
+        *ngIf="form.get('supplierId').invalid && form.get('supplierId').touched"
+        class="ph-error-msg"
+      >
         {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Warehouse' | abpLocalization }} <span
-          class="txt-danger">*</span></label>
+      <label class="ph-label ph-label--required">{{
+        '::Warehouse' | abpLocalization
+      }}</label>
       <select class="form-select form-select-sm" formControlName="warehouseId">
-        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+        <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
         <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
       </select>
-      <div *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched" class="txt-danger txt-sm mt-1">
+      <div
+        *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched"
+        class="ph-error-msg"
+      >
         {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
 
     <div class="row">
       <div class="col-12 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::OrderDate' | abpLocalization }} <span
-            class="txt-danger">*</span></label>
-        <input type="date" class="form-control form-control-sm" formControlName="orderDate">
+        <label class="ph-label ph-label--required">{{
+          '::OrderDate' | abpLocalization
+        }}</label>
+        <input
+          type="date"
+          class="form-control form-control-sm"
+          formControlName="orderDate"
+        />
       </div>
       <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::ExpectedDeliveryDate' | abpLocalization }}</label>
-        <input type="date" class="form-control form-control-sm" formControlName="expectedDeliveryDate">
+        <label class="ph-label">{{ '::ExpectedDeliveryDate' | abpLocalization }}</label>
+        <input
+          type="date"
+          class="form-control form-control-sm"
+          formControlName="expectedDeliveryDate"
+        />
       </div>
       <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::DueDate' | abpLocalization }}</label>
-        <input type="date" class="form-control form-control-sm" formControlName="dueDate">
-        <div class="form-text txt-muted txt-sm">{{ '::AutoCalcFromSupplierTerms' | abpLocalization }}</div>
+        <label class="ph-label">{{ '::DueDate' | abpLocalization }}</label>
+        <input type="date" class="form-control form-control-sm bg-light" formControlName="dueDate" readonly />
+        <div class="txt-muted txt-xs mt-1">{{ '::AutoCalcFromSupplierTerms' | abpLocalization }}</div>
       </div>
     </div>
 
     <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Note' | abpLocalization }}</label>
-      <textarea class="form-control form-control-sm" formControlName="note" rows="3"
-        [placeholder]="'::EnterNote' | abpLocalization"></textarea>
+      <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
+      <textarea
+        class="form-control form-control-sm"
+        formControlName="note"
+        rows="3"
+        [placeholder]="'::EnterNote' | abpLocalization"
+      ></textarea>
     </div>
   </form>
 </app-drawer>
-
-<app-purchase-order-details #detailModal (onSaved)="onOrderSaved()"></app-purchase-order-details>

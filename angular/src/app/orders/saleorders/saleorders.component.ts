@@ -15,12 +15,12 @@ import { CustomerDto } from 'src/app/proxy/customers/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { SalesOrderStatus, salesOrderStatusOptions } from 'src/app/proxy/enums/orders/sales-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
-import { SalesOrderDetailsComponent } from './saleorder-details/saleorder-details.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-sales-orders',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, SalesOrderDetailsComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   providers: [ListService],
   templateUrl: './saleorders.component.html',
 })
@@ -44,15 +44,14 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
   salesOrderStatusOptions = salesOrderStatusOptions;
   readonly enumName = enumName;
 
-  @ViewChild('detailModal') detailModal: SalesOrderDetailsComponent;
-
   constructor(
     public readonly list: ListService,
     private soService: SalesOrderService,
     private customerService: CustomerService,
     private warehouseService: WarehouseService,
     private confirmation: ConfirmationService,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -102,7 +101,7 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
   }
 
   viewDetail(id: string) {
-    this.detailModal.open(id);
+    this.router.navigate(['/order/saleorders/details', id]);
   }
 
   onOrderSaved() {

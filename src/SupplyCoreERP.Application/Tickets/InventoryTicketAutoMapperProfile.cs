@@ -13,6 +13,12 @@ public class InventoryTicketAutoMapperProfile : Profile
             .ForMember(dest => dest.WarehouseName,
                 opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Name : null));
 
+        CreateMap<InventoryTicketLine, InventoryTicketLineDto>()
+            .ForMember(dest => dest.ProductName,
+                opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
+            .ForMember(dest => dest.ProductCode,
+                opt => opt.MapFrom(src => src.Product != null ? src.Product.Code : null));
+
         CreateMap<InventoryTicketDetail, InventoryTicketDetailDto>()
             // Product
             .ForMember(dest => dest.ProductName,
@@ -25,6 +31,8 @@ public class InventoryTicketAutoMapperProfile : Profile
             // Batch
             .ForMember(dest => dest.BatchNumber,
                 opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.BatchNumber : null))
+            .ForMember(dest => dest.ManufacturingDate,
+                opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.ManufacturingDate : (DateTime?)null))
             .ForMember(dest => dest.ExpiryDate,
                 opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.ExpiryDate : (DateTime?)null))
             // Bin

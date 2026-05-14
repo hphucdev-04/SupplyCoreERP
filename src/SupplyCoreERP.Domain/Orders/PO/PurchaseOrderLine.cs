@@ -5,7 +5,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Orders.PO;
 
-public class PurchaseOrderDetail : FullAuditedEntity<Guid>
+public class PurchaseOrderLine : FullAuditedEntity<Guid>
 {
     public Guid PurchaseOrderId { get; private set; }
     public virtual PurchaseOrder PurchaseOrder { get; protected set; }
@@ -28,9 +28,9 @@ public class PurchaseOrderDetail : FullAuditedEntity<Guid>
     public decimal FinalPrice => TotalPrice + TaxAmount;
     public decimal ReceivedQuantity { get; private set; }
 
-    protected PurchaseOrderDetail() { }
+    protected PurchaseOrderLine() { }
 
-    public PurchaseOrderDetail(
+    public PurchaseOrderLine(
         Guid id, Guid purchaseOrderId, Guid productId, Guid unitId,
         int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate) : base(id)
     {
