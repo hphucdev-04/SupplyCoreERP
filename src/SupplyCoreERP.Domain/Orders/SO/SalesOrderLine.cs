@@ -5,7 +5,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Sales.Orders;
 
-public class SalesOrderDetail : FullAuditedEntity<Guid>
+public class SalesOrderLine : FullAuditedEntity<Guid>
 {
     public Guid SalesOrderId { get; private set; }
     public virtual SalesOrder SalesOrder { get; protected set; }
@@ -31,9 +31,9 @@ public class SalesOrderDetail : FullAuditedEntity<Guid>
     public decimal TaxAmount => PriceAfterDiscount * (TaxRate / 100);
     public decimal FinalPrice => PriceAfterDiscount + TaxAmount;
 
-    protected SalesOrderDetail() { }
+    protected SalesOrderLine() { }
 
-    public SalesOrderDetail(
+    public SalesOrderLine(
         Guid id, Guid salesOrderId, Guid productId, Guid unitId,
         int conversionFactor, decimal quantity, decimal unitPrice,
         decimal discountRate, decimal taxRate) : base(id)

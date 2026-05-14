@@ -3,6 +3,7 @@ using Microsoft.Extensions.Hosting;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
+using SupplyCoreERP.Medicines;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -20,9 +21,23 @@ public class ProductBatch : FullAuditedAggregateRoot<Guid>
     public virtual Supplier Supplier { get; protected set; }
     public BatchQAStatus Status { get; private set; }
 
+    /// <summary>
+    /// Liên kết tới Số đăng ký cụ thể tại thời điểm nhập lô hàng này (chỉ dành cho Thuốc).
+    /// </summary>
+    public Guid? MedicineRegistrationId { get; private set; }
+    public virtual MedicineRegistration MedicineRegistration { get; protected set; }
+
     protected ProductBatch() { }
 
-    public ProductBatch(Guid id, string code, Guid productId, string batchNumber, DateTime mfg, DateTime exp, Guid? supplierId) : base(id)
+    public ProductBatch(
+        Guid id, 
+        string code, 
+        Guid productId, 
+        string batchNumber, 
+        DateTime mfg, 
+        DateTime exp, 
+        Guid? supplierId,
+        Guid? medicineRegistrationId = null) : base(id)
     {
         if (exp <= mfg)
         {
@@ -35,10 +50,11 @@ public class ProductBatch : FullAuditedAggregateRoot<Guid>
         ManufacturingDate = mfg;
         ExpiryDate = exp;
         SupplierId = supplierId;
+        MedicineRegistrationId = medicineRegistrationId;
         Status = BatchQAStatus.PendingQA;
     }
 
-    public void UpdateInfo(DateTime mfg, DateTime exp, Guid? supplierId)
+    public void UpdateInfo(DateTime mfg, DateTime exp, Guid? supplierId, Guid? medicineRegistrationId = null)
     {
         if (exp <= mfg)
         {
@@ -48,6 +64,7 @@ public class ProductBatch : FullAuditedAggregateRoot<Guid>
         ManufacturingDate = mfg;
         ExpiryDate = exp;
         SupplierId = supplierId;
+        MedicineRegistrationId = medicineRegistrationId;
     }
 
     public void ApproveQA() => Status = BatchQAStatus.Approved;

@@ -1,4 +1,4 @@
-import type { AddSalesOrderDetailDto, CreateSalesOrderDto, GetSalesOrderListDto, SalesOrderDto, UpdateSalesOrderDetailDto, UpdateSalesOrderDto } from './dtos/models';
+import type { AddSalesOrderLineDto, CreateSalesOrderDto, GetSalesOrderListDto, SalesOrderDto, UpdateSalesOrderDto, UpdateSalesOrderLineDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
@@ -11,10 +11,10 @@ export class SalesOrderService {
   apiName = 'Default';
   
 
-  addDetail = (orderId: string, input: AddSalesOrderDetailDto, config?: Partial<Rest.Config>) =>
+  addLine = (orderId: string, input: AddSalesOrderLineDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',
-      url: `/api/app/sales-order/detail/${orderId}`,
+      url: `/api/app/sales-order/line/${orderId}`,
       body: input,
     },
     { apiName: this.apiName,...config });
@@ -79,11 +79,11 @@ export class SalesOrderService {
     { apiName: this.apiName,...config });
   
 
-  removeDetail = (orderId: string, detailId: string, config?: Partial<Rest.Config>) =>
+  removeLine = (orderId: string, lineId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'DELETE',
-      url: '/api/app/sales-order/detail',
-      params: { orderId, detailId },
+      url: '/api/app/sales-order/line',
+      params: { orderId, lineId },
     },
     { apiName: this.apiName,...config });
   
@@ -105,11 +105,11 @@ export class SalesOrderService {
     { apiName: this.apiName,...config });
   
 
-  updateDetail = (orderId: string, detailId: string, input: UpdateSalesOrderDetailDto, config?: Partial<Rest.Config>) =>
+  updateLine = (orderId: string, lineId: string, input: UpdateSalesOrderLineDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'PUT',
-      url: '/api/app/sales-order/detail',
-      params: { orderId, detailId },
+      url: '/api/app/sales-order/line',
+      params: { orderId, lineId },
       body: input,
     },
     { apiName: this.apiName,...config });

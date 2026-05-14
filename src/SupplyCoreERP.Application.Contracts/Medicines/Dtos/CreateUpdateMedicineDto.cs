@@ -21,6 +21,10 @@ public class CreateUpdateMedicineDto
     [StringLength(50)]
     public string RegistrationNumber { get; set; }
 
+    public DateTime? RegistrationValidFrom { get; set; }
+    public DateTime? RegistrationValidTo { get; set; }
+    public string? RegistrationNote { get; set; }
+
     public UsageRoute UsageRoute { get; set; } = UsageRoute.Oral;
     public StorageCondition StorageCondition { get; set; } = StorageCondition.Normal;
     public bool IsPrescriptionDrug { get; set; }

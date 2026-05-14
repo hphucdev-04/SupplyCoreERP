@@ -29,9 +29,9 @@ public class SalesOrder : FullAuditedAggregateRoot<Guid>
     public Guid WarehouseId { get; private set; }
     public virtual Warehouse Warehouse { get; private set; }
 
-    public virtual ICollection<SalesOrderDetail> Details { get; private set; }
+    public virtual ICollection<SalesOrderLine> Lines { get; private set; }
 
-    protected SalesOrder() { Details = new List<SalesOrderDetail>(); }
+    protected SalesOrder() { Lines = new List<SalesOrderLine>(); }
 
     public SalesOrder(Guid id, string code, Guid customerId, Guid warehouseId, DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note) : base(id)
     {
@@ -47,7 +47,7 @@ public class SalesOrder : FullAuditedAggregateRoot<Guid>
         DiscountAmount = 0;
         TaxAmount = 0;
         TotalAmount = 0;
-        Details = new List<SalesOrderDetail>();
+        Lines = new List<SalesOrderLine>();
     }
 
     public void UpdateInfo(Guid warehouseId, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note)
@@ -63,52 +63,52 @@ public class SalesOrder : FullAuditedAggregateRoot<Guid>
         Note = note;
     }
 
-    #region SaleOrder Detials
-    public SalesOrderDetail AddDetail(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
+    #region SaleOrder Lines
+    public SalesOrderLine AddLine(Guid id, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
     {
         if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
         {
             throw new UserFriendlyException("Chỉ được thêm chi tiết khi đơn đang Nháp hoặc Chờ duyệt.");
         }
 
-        var detail = new SalesOrderDetail(id, Id, productId, unitId, conversionFactor, quantity, unitPrice, discountRate, taxRate);
-        Details.Add(detail);
+        var line = new SalesOrderLine(id, Id, productId, unitId, conversionFactor, quantity, unitPrice, discountRate, taxRate);
+        Lines.Add(line);
 
         RecalculateTotal();
-        return detail;
+        return line;
     }
 
-    public void UpdateDetail(Guid detailId, decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
+    public void UpdateLine(Guid lineId, decimal quantity, decimal unitPrice, decimal discountRate, decimal taxRate)
     {
         if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
         {
             throw new UserFriendlyException("Không thể sửa chi tiết khi đơn đã duyệt.");
         }
 
-        SalesOrderDetail? detail = Details.FirstOrDefault(x => x.Id == detailId);
-        if (detail == null)
+        SalesOrderLine? line = Lines.FirstOrDefault(x => x.Id == lineId);
+        if (line == null)
         {
             throw new UserFriendlyException("Không tìm thấy dòng chi tiết.");
         }
 
-        detail.UpdateInfo(quantity, unitPrice, discountRate, taxRate);
+        line.UpdateInfo(quantity, unitPrice, discountRate, taxRate);
         RecalculateTotal();
     }
 
-    public void RemoveDetail(Guid detailId)
+    public void RemoveLine(Guid lineId)
     {
         if (Status != SalesOrderStatus.Draft && Status != SalesOrderStatus.PendingApproval)
         {
             throw new UserFriendlyException("Không thể xóa chi tiết khi đơn đã duyệt.");
         }
 
-        SalesOrderDetail? detail = Details.FirstOrDefault(x => x.Id == detailId);
-        if (detail == null)
+        SalesOrderLine? line = Lines.FirstOrDefault(x => x.Id == lineId);
+        if (line == null)
         {
             throw new UserFriendlyException("Không tìm thấy dòng chi tiết.");
         }
 
-        Details.Remove(detail);
+        Lines.Remove(line);
         RecalculateTotal();
     }
     #endregion
@@ -116,7 +116,7 @@ public class SalesOrder : FullAuditedAggregateRoot<Guid>
     #region Work flow
     public void SendToApprove()
     {
-        if (!Details.Any())
+        if (!Lines.Any())
         {
             throw new UserFriendlyException("Đơn bán hàng chưa có sản phẩm nào!");
         }
@@ -161,9 +161,9 @@ public class SalesOrder : FullAuditedAggregateRoot<Guid>
     #region Helper 
     private void RecalculateTotal()
     {
-        SubTotal = Details.Sum(x => x.TotalPrice);
-        DiscountAmount = Details.Sum(x => x.DiscountAmount);
-        TaxAmount = Details.Sum(x => x.TaxAmount);
+        SubTotal = Lines.Sum(x => x.TotalPrice);
+        DiscountAmount = Lines.Sum(x => x.DiscountAmount);
+        TaxAmount = Lines.Sum(x => x.TaxAmount);
         TotalAmount = SubTotal - DiscountAmount + TaxAmount;
     }
     #endregion

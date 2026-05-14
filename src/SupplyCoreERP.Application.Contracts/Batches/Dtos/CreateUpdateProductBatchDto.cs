@@ -19,4 +19,6 @@ public class CreateUpdateProductBatchDto
     public DateTime ExpiryDate { get; set; }
 
     public Guid? SupplierId { get; set; }
+
+    public Guid? MedicineRegistrationId { get; set; }
 }

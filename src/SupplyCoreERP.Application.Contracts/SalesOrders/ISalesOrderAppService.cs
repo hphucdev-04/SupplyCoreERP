@@ -14,10 +14,10 @@ public interface ISalesOrderAppService : IApplicationService
     Task<SalesOrderDto> CreateAsync(CreateSalesOrderDto input);
     Task<SalesOrderDto> UpdateAsync(Guid id, UpdateSalesOrderDto input);
     Task DeleteAsync(Guid id);
-    // Details
-    Task AddDetailAsync(Guid orderId, AddSalesOrderDetailDto input);
-    Task UpdateDetailAsync(Guid orderId, Guid detailId, UpdateSalesOrderDetailDto input);
-    Task RemoveDetailAsync(Guid orderId, Guid detailId);
+    // Lines
+    Task AddLineAsync(Guid orderId, AddSalesOrderLineDto input);
+    Task UpdateLineAsync(Guid orderId, Guid lineId, UpdateSalesOrderLineDto input);
+    Task RemoveLineAsync(Guid orderId, Guid lineId);
     // Workflow
     Task SendToApproveAsync(Guid id);
     Task ApproveAsync(Guid id);

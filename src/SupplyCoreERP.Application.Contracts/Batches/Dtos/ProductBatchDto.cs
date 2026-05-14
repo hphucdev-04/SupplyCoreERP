@@ -18,4 +18,6 @@ public class ProductBatchDto : FullAuditedEntityDto<Guid>
     public string? SupplierName { get; set; }
 
     public BatchQAStatus Status { get; set; }
+
+    public string? RegistrationNumber { get; set; }
 }

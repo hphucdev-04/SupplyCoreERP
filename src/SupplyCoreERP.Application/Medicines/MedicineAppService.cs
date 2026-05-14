@@ -41,7 +41,8 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             .Include(x => x.Category)
             .Include(x => x.Manufacturer).ThenInclude(m => m.Country)
             .Include(x => x.BaseUnit)
-            .Include(x => x.DosageForm);
+            .Include(x => x.DosageForm)
+            .Include(x => x.Registrations);
 
         //Filter Logic
         query = query
@@ -74,6 +75,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             .Include(x => x.Manufacturer).ThenInclude(m => m.Country)
             .Include(x => x.BaseUnit)
             .Include(x => x.DosageForm)
+            .Include(x => x.Registrations)
             .Include(x => x.Ingredients).ThenInclude(i => i.ActiveIngredient)
             .Include(x => x.Units).ThenInclude(u => u.Unit)
 
@@ -99,7 +101,10 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             input.RegistrationNumber,
             input.UsageRoute,
             input.StorageCondition,
-            input.IsPrescriptionDrug
+            input.IsPrescriptionDrug,
+            input.RegistrationValidFrom,
+            input.RegistrationValidTo,
+            input.RegistrationNote
         );
 
         await _medicineRepo.InsertAsync(entity);
@@ -109,7 +114,14 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
 
     public async Task<MedicineDetailDto> UpdateAsync(Guid id, CreateUpdateMedicineDto input)
     {
-        Medicine entity = await _medicineRepo.GetAsync(id);
+        // Ép buộc nạp kèm danh sách Registrations từ Database
+        IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
+        Medicine? entity = await query.Include(x => x.Registrations).FirstOrDefaultAsync(x => x.Id == id);
+        
+        if (entity == null)
+        {
+            throw new EntityNotFoundException(typeof(Medicine), id);
+        }
 
         await _medicineManager.UpdateAsync(
             entity,
@@ -121,7 +133,10 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             input.RegistrationNumber,
             input.UsageRoute,
             input.StorageCondition,
-            input.IsPrescriptionDrug
+            input.IsPrescriptionDrug,
+            input.RegistrationValidFrom,
+            input.RegistrationValidTo,
+            input.RegistrationNote
         );
 
         entity.SetActive(input.IsActive);
@@ -268,6 +283,27 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
         await _medicineRepo.UpdateAsync(medicine);
     }
     #endregion
+
+    public virtual async Task AddRegistrationAsync(Guid id, AddMedicineRegistrationDto input)
+    {
+        IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
+        Medicine? medicine = await query.Include(x => x.Registrations).FirstOrDefaultAsync(x => x.Id == id);
+
+        if (medicine == null)
+        {
+            throw new EntityNotFoundException(typeof(Medicine), id);
+        }
+        
+        medicine.AddRegistration(
+            GuidGenerator.Create(),
+            input.RegistrationNumber,
+            input.ValidFrom,
+            input.ValidTo,
+            input.Note
+        );
+
+        await _medicineRepo.UpdateAsync(medicine);
+    }
 
     #region Excel
     public Task ImportExcelAsync(IRemoteStreamContent file)

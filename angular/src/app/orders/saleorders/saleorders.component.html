@@ -211,30 +211,30 @@
     </div>
 
     <div class="mb-3">
-      <label class="ph-label ph-label--required">{{ '::Customer' | abpLocalization }}</label>
-      <select class="form-select form-select-sm" formControlName="customerId">
-        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-        <option *ngFor="let c of customers" [value]="c.id">{{ c.name }}</option>
-      </select>
-      <div
-        *ngIf="form.get('customerId').invalid && form.get('customerId').touched"
-        class="ph-error-msg"
-      >
-        {{ '::ThisFieldIsRequired' | abpLocalization }}
+      <div class="mb-3">
+        <label class="ph-label ph-label--required">{{ '::Customer' | abpLocalization }}</label>
+        <app-dropdown-search
+          formControlName="customerId"
+          [items]="customers"
+          [placeholder]="'::Select' | abpLocalization"
+          [searchPlaceholder]="'::Search' | abpLocalization"
+        ></app-dropdown-search>
+        <div *ngIf="form.get('customerId').invalid && form.get('customerId').touched" class="ph-error-msg">
+          {{ '::ThisFieldIsRequired' | abpLocalization }}
+        </div>
       </div>
-    </div>
 
-    <div class="mb-3">
-      <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
-      <select class="form-select form-select-sm" formControlName="warehouseId">
-        <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-        <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
-      </select>
-      <div
-        *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched"
-        class="ph-error-msg"
-      >
-        {{ '::ThisFieldIsRequired' | abpLocalization }}
+      <div class="mb-3">
+        <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
+        <app-dropdown-search
+          formControlName="warehouseId"
+          [items]="warehouses"
+          [placeholder]="'::Select' | abpLocalization"
+          [searchPlaceholder]="'::Search' | abpLocalization"
+        ></app-dropdown-search>
+        <div *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched" class="ph-error-msg">
+          {{ '::ThisFieldIsRequired' | abpLocalization }}
+        </div>
       </div>
     </div>
 

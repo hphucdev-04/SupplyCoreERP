@@ -7,6 +7,7 @@ export interface CreateUpdateProductBatchDto {
   manufacturingDate: string;
   expiryDate: string;
   supplierId?: string;
+  medicineRegistrationId?: string;
 }
 
 export interface GetProductBatchListDto extends PagedAndSortedResultRequestDto {
@@ -26,4 +27,5 @@ export interface ProductBatchDto extends FullAuditedEntityDto<string> {
   supplierId?: string;
   supplierName?: string;
   status?: BatchQAStatus;
+  registrationNumber?: string;
 }
