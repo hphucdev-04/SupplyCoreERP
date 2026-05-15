@@ -22,9 +22,14 @@ import { WarehouseService } from 'src/app/proxy/warehouses';
 import { ProductBatchService } from 'src/app/proxy/batches';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { PurchaseOrderLineDto } from 'src/app/proxy/purchase-orders/dtos';
+import { SalesOrderLineDto } from 'src/app/proxy/sales-orders/dtos';
 
 interface SelectablePOLineDto extends PurchaseOrderLineDto {
   importQuantity: number;
+}
+
+interface SelectableSOLineDto extends SalesOrderLineDto {
+  exportQuantity: number;
 }
 
 interface ProductUnitLookup {
@@ -96,6 +101,10 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
   poLines: SelectablePOLineDto[] = [];
   isPoLineDrawerOpen = false;
 
+  // SO Selection
+  soLines: SelectableSOLineDto[] = [];
+  isSoLineDrawerOpen = false;
+
   lineBatches: { [productId: string]: ProductBatchDto[] } = {};
 
   TicketType = TicketType;
@@ -158,8 +167,12 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
           this.ticket = res;
           this.loading = false;
           this.loadBins(res.warehouseId);
-          if (res.referenceDocumentId && res.type === TicketType.GoodsReceipt) {
-            this.loadPoLines(res.referenceDocumentId);
+          if (res.referenceDocumentId) {
+            if (res.type === TicketType.GoodsReceipt) {
+              this.loadPoLines(res.referenceDocumentId);
+            } else if (res.type === TicketType.GoodsIssue) {
+              this.loadSoLines(res.referenceDocumentId);
+            }
           }
 
           if (res.lines) {
@@ -497,6 +510,45 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
           // Sau khi import xong, tìm line mới tạo và tự động mở drawer gán lô cho nó luôn (để người dùng làm tiếp bước tiếp theo)
           // Hoặc đơn giản là load lại data và để người dùng tự chọn. Ở đây ta load lại data.
           this.closePoLineDrawer();
+      });
+  }
+
+  // ── SO Line Selection ─────────────────────────────────────
+  loadSoLines(soId: string) {
+    this.ticketService.getLinesFromSalesOrder(soId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.soLines = res.map(l => ({
+          ...l,
+          exportQuantity: l.quantity
+        }));
+      });
+  }
+
+  openSoLineDrawer() {
+    this.isSoLineDrawerOpen = true;
+  }
+
+  closeSoLineDrawer() {
+    this.isSoLineDrawerOpen = false;
+  }
+
+  addSoLineToTicket(soLine: SelectableSOLineDto) {
+    if (soLine.exportQuantity <= 0) {
+      this.toaster.error('::QuantityMustBeGreaterThanZero', '::Error');
+      return;
+    }
+    if (soLine.exportQuantity > soLine.quantity) {
+      this.toaster.error('::ExportQuantityExceedsRemaining', '::Error');
+      return;
+    }
+
+    this.ticketService.addLineFromSalesOrder(this.ticketId, soLine.id, soLine.exportQuantity)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loadTicketData();
+        this.toaster.success('::AllocationSuccess', '::Success');
+        this.closeSoLineDrawer();
       });
   }
 

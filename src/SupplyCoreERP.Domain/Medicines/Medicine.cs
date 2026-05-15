@@ -30,7 +30,7 @@ public class Medicine : Product
     public override bool IsAvailableForInventory => IsActive && Status == MedicineStatus.Approved;
     public override StorageCondition? RequiredStorageCondition => StorageCondition;
 
-    private Medicine() 
+    private Medicine()
     {
         // Để trống để EF Core tự quản lý Proxy
     }

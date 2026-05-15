@@ -174,15 +174,10 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
         SalesOrder entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == id)
             ?? throw new EntityNotFoundException(typeof(SalesOrder), id);
 
-        // Manager validate tồn kho + tạo ticket + chạy FEFO 
-        (InventoryTicket? ticket, IList<InventoryTicketDetail>? fefoDetails) = await _orderManager.ApproveAsync(entity);
+        // Manager validate tồn kho tổng quát + tạo ticket Header (Draft)
+        InventoryTicket ticket = await _orderManager.ApproveAsync(entity);
 
         await _ticketRepo.InsertAsync(ticket);
-        if (fefoDetails.Any())
-        {
-            await _ticketDetailRepo.InsertManyAsync(fefoDetails);
-        }
-
         await _orderRepo.UpdateAsync(entity);
     }
 

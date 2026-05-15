@@ -102,6 +102,21 @@ public class SalesOrderManager : DomainService
             throw new UserFriendlyException($"Sản phẩm '{product.Name}' chưa đủ điều kiện giao dịch!");
         }
 
+        // Kiểm tra tồn kho khả dụng tổng quát (không quan tâm lô hàng/QA ở bước này)
+        decimal requiredBaseQty = quantity * conversionFactor;
+        
+        IQueryable<InventoryBalance> balanceQuery = await _balanceRepo.GetQueryableAsync();
+        decimal totalAvailable = await AsyncExecuter.SumAsync(
+            balanceQuery.Where(x => x.WarehouseId == order.WarehouseId && x.ProductId == productId),
+            x => x.Quantity - x.LockedQuantity);
+
+        if (totalAvailable < requiredBaseQty)
+        {
+            throw new UserFriendlyException(
+                $"Không đủ tồn kho khả dụng cho '{product.Name}'! " +
+                $"Yêu cầu: {requiredBaseQty}, Hiện có: {totalAvailable}.");
+        }
+
         Customer customer = await _customerRepo.GetAsync(order.CustomerId);
         decimal price = unitPrice ?? await _priceManager.GetOfficialPriceAsync(customer.PriceListId, productId, unitId, quantity);
 
@@ -136,13 +151,10 @@ public class SalesOrderManager : DomainService
     }
 
     /// <summary>
-    /// Validate tồn kho, tạo phiếu xuất kho và cấp phát FEFO tự động.
+    /// Duyệt đơn hàng về mặt kinh doanh và tạo phiếu xuất kho Nháp.
     /// </summary>
-    /// <returns>
-    /// Ticket mới tạo (chưa Insert) và danh sách FEFO details (chưa Insert).
-    /// AppService chịu trách nhiệm InsertAsync ticket + InsertManyAsync details.
-    /// </returns>
-    public async Task<(InventoryTicket Ticket, IList<InventoryTicketDetail> FefoDetails)> ApproveAsync(SalesOrder order)
+    /// <returns>Ticket mới tạo (chưa Insert).</returns>
+    public async Task<InventoryTicket> ApproveAsync(SalesOrder order)
     {
         if (order.Status != SalesOrderStatus.PendingApproval)
         {
@@ -173,23 +185,19 @@ public class SalesOrderManager : DomainService
         }
 
         var productIds = order.Lines.Select(x => x.ProductId).Distinct().ToList();
-        List<InventoryBalance> balances = await _balanceRepo.GetListAsync(
-            x => productIds.Contains(x.ProductId) && x.WarehouseId == order.WarehouseId);
-        List<Product> products = await _productRepo.GetListAsync(x => productIds.Contains(x.Id));
+        
+        // Kiểm tra tồn kho tổng quát (đảm bảo hứa bán được)
+        IQueryable<InventoryBalance> balanceQuery = await _balanceRepo.GetQueryableAsync();
+        decimal totalAvailable = await AsyncExecuter.SumAsync(
+            balanceQuery.Where(x => productIds.Contains(x.ProductId) && x.WarehouseId == order.WarehouseId),
+            x => x.Quantity - x.LockedQuantity);
 
-        foreach (SalesOrderLine item in order.Lines)
+        decimal totalRequired = order.Lines.Sum(x => x.BaseQuantity);
+
+        if (totalAvailable < totalRequired)
         {
-            decimal totalAvailable = balances
-                .Where(x => x.ProductId == item.ProductId)
-                .Sum(x => x.AvailableQuantity);
-
-            if (totalAvailable < item.BaseQuantity)
-            {
-                Product? product = products.FirstOrDefault(p => p.Id == item.ProductId);
-                throw new UserFriendlyException(
-                    $"Sản phẩm '{product?.Name}' không đủ tồn kho! " +
-                    $"Cần: {item.BaseQuantity}, Khả dụng: {totalAvailable}.");
-            }
+            throw new UserFriendlyException(
+                $"Tổng tồn kho khả dụng ({totalAvailable}) không đủ để đáp ứng đơn hàng ({totalRequired}).");
         }
 
         // Tạo phiếu xuất — chưa Insert (ticket.Id đã có từ GuidGenerator)
@@ -197,17 +205,9 @@ public class SalesOrderManager : DomainService
             TicketType.GoodsIssue, order.WarehouseId, order.Id, order.Code,
             $"Phiếu xuất tự động từ đơn bán hàng {order.Code}");
 
-        // FEFO cấp phát — chưa Insert details
-        var allFefoDetails = new List<InventoryTicketDetail>();
-        foreach (SalesOrderLine item in order.Lines)
-        {
-            IList<InventoryTicketDetail> details = await _ticketManager.AllocateFEFOAsync(issueTicket, item.ProductId, item.BaseQuantity);
-            allFefoDetails.AddRange(details);
-        }
-
         order.Approve();
 
-        return (issueTicket, allFefoDetails);
+        return issueTicket;
     }
 
     /// <summary>

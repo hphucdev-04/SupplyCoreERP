@@ -11,6 +11,7 @@ using SupplyCoreERP.Inventories.Tickets;
 using SupplyCoreERP.Orders.PO;
 using SupplyCoreERP.PurchaseOrders.Dtos;
 using SupplyCoreERP.Sales.Orders;
+using SupplyCoreERP.SalesOrders.Dtos;
 using SupplyCoreERP.Tickets.Dtos;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -79,6 +80,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
             .Include(x => x.Lines).ThenInclude(l => l.Product)
             .Include(x => x.Lines).ThenInclude(l => l.Unit)
             .Include(x => x.Lines).ThenInclude(l => l.PurchaseOrderLine)
+            .Include(x => x.Lines).ThenInclude(l => l.SalesOrderLine)
             .Include(x => x.Lines).ThenInclude(l => l.Details).ThenInclude(d => d.ProductBatch)
             .Include(x => x.Lines).ThenInclude(l => l.Details).ThenInclude(d => d.Bin)
             .Include(x => x.Lines).ThenInclude(l => l.Details).ThenInclude(d => d.Unit)
@@ -162,6 +164,87 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
         }
 
         return result;
+    }
+
+    public async Task<List<SalesOrderLineDto>> GetLinesFromSalesOrderAsync(Guid soId)
+    {
+        IQueryable<SalesOrder> query = await _salesOrderRepo.GetQueryableAsync();
+        SalesOrder so = await query.Include(x => x.Lines).ThenInclude(l => l.Product).Include(x => x.Lines).ThenInclude(l => l.Unit).FirstOrDefaultAsync(x => x.Id == soId)
+            ?? throw new EntityNotFoundException(typeof(SalesOrder), soId);
+
+        if (so.Status == SalesOrderStatus.Completed || so.Status == SalesOrderStatus.Canceled)
+        {
+            return new List<SalesOrderLineDto>();
+        }
+
+        IQueryable<InventoryTicketLine> ticketLineQuery = await _ticketLineRepo.GetQueryableAsync();
+        var soLineIds = so.Lines.Select(x => x.Id).ToList();
+
+        var existingAllocations = await ticketLineQuery
+            .Where(x => x.SalesOrderLineId.HasValue && soLineIds.Contains(x.SalesOrderLineId.Value) && x.Ticket.Status != ApprovalStatus.Rejected)
+            .Select(x => new { x.SalesOrderLineId, x.Quantity })
+            .ToListAsync();
+
+        var result = new List<SalesOrderLineDto>();
+        foreach (SalesOrderLine soLine in so.Lines)
+        {
+            decimal alreadyAllocatedBase = existingAllocations.Where(a => a.SalesOrderLineId == soLine.Id).Sum(a => a.Quantity);
+            decimal remainingBase = soLine.BaseQuantity - alreadyAllocatedBase;
+
+            if (remainingBase > 0.0001m)
+            {
+                SalesOrderLineDto dto = ObjectMapper.Map<SalesOrderLine, SalesOrderLineDto>(soLine);
+                dto.Quantity = Math.Round(remainingBase / soLine.ConversionFactor, 4);
+                dto.DeliveredQuantity = Math.Round(alreadyAllocatedBase / soLine.ConversionFactor, 4);
+                result.Add(dto);
+            }
+        }
+
+        return result;
+    }
+
+    public async Task AddLineFromSalesOrderAsync(Guid id, Guid soLineId, decimal quantity)
+    {
+        InventoryTicket ticket = await _ticketRepo.GetAsync(id);
+
+        if (ticket.Status != ApprovalStatus.Draft)
+        {
+            throw new UserFriendlyException("Chỉ có thể thêm dòng hàng khi phiếu ở trạng thái Nháp!");
+        }
+
+        if (await _ticketLineRepo.AnyAsync(x => x.TicketId == id && x.SalesOrderLineId == soLineId))
+        {
+            throw new UserFriendlyException("Sản phẩm này đã có trong phiếu kho hiện tại!");
+        }
+
+        IQueryable<SalesOrder> soQuery = await _salesOrderRepo.GetQueryableAsync();
+        SalesOrder so = await soQuery.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Lines.Any(l => l.Id == soLineId))
+            ?? throw new EntityNotFoundException(typeof(SalesOrderLine), soLineId);
+
+        if (so.Status == SalesOrderStatus.Completed || so.Status == SalesOrderStatus.Canceled)
+        {
+            throw new UserFriendlyException($"Đơn hàng {so.Code} đã ở trạng thái {so.Status}, không thể xuất thêm hàng!");
+        }
+
+        SalesOrderLine soLine = so.Lines.First(x => x.Id == soLineId);
+
+        IQueryable<InventoryTicketLine> ticketLineQuery = await _ticketLineRepo.GetQueryableAsync();
+        decimal existingSumBase = await ticketLineQuery
+            .Where(x => x.SalesOrderLineId == soLineId && x.Ticket.Status != ApprovalStatus.Rejected)
+            .SumAsync(x => x.Quantity);
+
+        decimal inputBaseQty = quantity * soLine.ConversionFactor;
+        decimal maxAllowedBase = soLine.BaseQuantity - existingSumBase;
+
+        if (inputBaseQty > maxAllowedBase + 0.0001m)
+        {
+            decimal maxAllowedSO = Math.Round(maxAllowedBase / soLine.ConversionFactor, 4);
+            throw new UserFriendlyException($"Số lượng xuất ({quantity}) vượt quá số lượng còn lại của đơn hàng ({maxAllowedSO})!");
+        }
+
+        // Tự động chạy FEFO bên trong CreateTicketLineAsync
+        InventoryTicketLine line = await _ticketManager.CreateTicketLineAsync(ticket, soLine.ProductId, null, inputBaseQty, null, null, soLine.Id);
+        await _ticketLineRepo.InsertAsync(line);
     }
 
     public async Task AddLineFromPurchaseOrderAsync(Guid id, Guid poLineId, decimal quantity)

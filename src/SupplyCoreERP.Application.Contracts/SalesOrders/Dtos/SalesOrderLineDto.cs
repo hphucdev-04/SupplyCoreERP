@@ -13,6 +13,7 @@ public class SalesOrderLineDto : FullAuditedEntityDto<Guid>
 
     public Guid UnitId { get; set; }
     public string? UnitName { get; set; }
+    public string? BaseUnitName { get; set; }
 
     public int ConversionFactor { get; set; }
     public decimal Quantity { get; set; }

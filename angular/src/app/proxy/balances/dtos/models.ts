@@ -39,6 +39,7 @@ export interface InventoryBalanceDto extends FullAuditedEntityDto<string> {
   productName?: string;
   productBatchId?: string;
   batchNumber?: string;
+  baseUnitName?: string;
   quantity?: number;
   lockedQuantity?: number;
   availableQuantity?: number;

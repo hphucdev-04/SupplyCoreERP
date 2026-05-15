@@ -97,10 +97,18 @@
           </h6>
           <div class="ph-card__header-actions">
             <ng-container *ngIf="ticket.status === ApprovalStatus.Draft">
+              <!-- Nhập từ PO -->
               <button *ngIf="ticket.referenceDocumentId && ticket.type === TicketType.GoodsReceipt" 
                 class="btn btn-sm ph-btn-actions" (click)="openPoLineDrawer()">
                 <i class="fa fa-list-check me-1"></i> {{ '::SelectFromPO' | abpLocalization }}
               </button>
+
+              <!-- Xuất từ SO -->
+              <button *ngIf="ticket.referenceDocumentId && ticket.type === TicketType.GoodsIssue" 
+                class="btn btn-sm ph-btn-actions" (click)="openSoLineDrawer()">
+                <i class="fa fa-list-check me-1"></i> {{ '::SelectFromSO' | abpLocalization }}
+              </button>
+
               <button class="btn btn-sm ph-btn-save" (click)="sendToApprove()">
                 <i class="fa fa-paper-plane me-1"></i> {{ '::SendToApprove' | abpLocalization }}
               </button>
@@ -134,10 +142,10 @@
                 </div>
                 <div style="width: 120px;">
                   <span class="badge ph-badge--neutral">{{ line.unitName }}</span>
-                  <div class="txt-xs txt-muted" *ngIf="line.conversionFactor > 1">×{{ line.conversionFactor }}</div>
+                  <div class="txt-xs txt-muted" *ngIf="line.conversionFactor > 1">×{{ line.conversionFactor }} {{ line.productBaseUnitName }}</div>
                 </div>
                 <div class="text-end fw-bold txt-num" style="width: 150px; padding-right: 40px;">
-                  {{ (line.quantity / (line.conversionFactor || 1)) | number }}
+                  {{ (line.quantity / (line.conversionFactor || 1)) | number }} {{ line.unitName }}
                 </div>
                 <div class="ph-accordion-row__actions text-center" style="width: 60px;">
                   <button *ngIf="ticket.status === ApprovalStatus.Draft" class="btn ph-btn-ghost text-danger btn-sm" 
@@ -238,6 +246,52 @@
                 [disabled]="!pl.importQuantity || pl.importQuantity <= 0"
                 (click)="addPoLineToTicket(pl)">
                 <i class="fa fa-plus me-1"></i> {{ '::Import' | abpLocalization }}
+              </button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</app-drawer>
+
+<!-- SO Lines Drawer (Simple Selection) -->
+<app-drawer [isOpen]="isSoLineDrawerOpen" [title]="'::ExportFromSalesOrder' | abpLocalization" [height]="'60vh'" [position]="'bottom'"
+  (close)="closeSoLineDrawer()">
+  <div class="ph-drawer__body--flush">
+    <div class="p-4 bg-light-subtle border-bottom">
+      <h5 class="mb-1 fw-bold">{{ '::SelectProductsToExport' | abpLocalization }}</h5>
+      <p class="txt-muted txt-sm mb-0">{{ '::ExportSoDescriptionHint' | abpLocalization }}</p>
+    </div>
+
+    <div class="table-responsive">
+      <table class="ph-table ph-table--flush">
+        <thead>
+          <tr>
+            <th class="ps-4">{{ '::Product' | abpLocalization }}</th>
+            <th class="text-end">{{ '::Ordered' | abpLocalization }}</th>
+            <th class="text-end">{{ '::Remaining' | abpLocalization }}</th>
+            <th style="width: 150px;" class="text-center">{{ '::ExportQty' | abpLocalization }}</th>
+            <th style="width: 120px;"></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let sl of soLines" [class.bg-primary-subtle-light]="sl.exportQuantity > 0">
+            <td class="ps-4 py-3">
+              <div class="fw-bold txt-main">{{ sl.productName }}</div>
+              <small class="txt-muted font-mono">{{ sl.productCode }}</small>
+            </td>
+            <td class="text-end txt-num">{{ sl.quantity | number }} <small>{{ sl.unitName }}</small></td>
+            <td class="text-end fw-bold txt-primary txt-num">{{ sl.quantity | number }} <small>{{ sl.unitName }}</small></td>
+            <td class="px-4">
+              <input type="number" class="form-control form-control-sm text-end fw-bold" 
+                     [(ngModel)]="sl.exportQuantity" [min]="0" [max]="sl.quantity">
+            </td>
+            <td class="text-center pe-4">
+              <button class="btn btn-sm ph-btn-new" 
+                [disabled]="!sl.exportQuantity || sl.exportQuantity <= 0"
+                (click)="addSoLineToTicket(sl)">
+                <i class="fa fa-truck me-1"></i> {{ '::Export' | abpLocalization }}
               </button>
             </td>
           </tr>

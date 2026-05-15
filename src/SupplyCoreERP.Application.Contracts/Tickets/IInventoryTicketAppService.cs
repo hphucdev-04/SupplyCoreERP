@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SupplyCoreERP.PurchaseOrders.Dtos;
+using SupplyCoreERP.SalesOrders.Dtos;
 using SupplyCoreERP.Tickets.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -19,6 +20,10 @@ public interface IInventoryTicketAppService : IApplicationService
     // Line & Detail
     Task<List<PurchaseOrderLineDto>> GetLinesFromPurchaseOrderAsync(Guid poId);
     Task AddLineFromPurchaseOrderAsync(Guid id, Guid poLineId, decimal quantity);
+
+    Task<List<SalesOrderLineDto>> GetLinesFromSalesOrderAsync(Guid soId);
+    Task AddLineFromSalesOrderAsync(Guid id, Guid soLineId, decimal quantity);
+
     Task DeleteLineAsync(Guid id); // ✅ New: CRUD for Line
     
     Task AddDetailAsync(Guid id, AddTicketDetailDto input);

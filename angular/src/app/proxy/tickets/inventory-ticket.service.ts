@@ -3,6 +3,7 @@ import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
 import type { PurchaseOrderLineDto } from '../purchase-orders/dtos/models';
+import type { SalesOrderLineDto } from '../sales-orders/dtos/models';
 
 @Injectable({
   providedIn: 'root',
@@ -25,6 +26,15 @@ export class InventoryTicketService {
     this.restService.request<any, void>({
       method: 'POST',
       url: `/api/app/inventory-ticket/${id}/line-from-purchase-order/${poLineId}`,
+      params: { quantity },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  addLineFromSalesOrder = (id: string, soLineId: string, quantity: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/inventory-ticket/${id}/line-from-sales-order/${soLineId}`,
       params: { quantity },
     },
     { apiName: this.apiName,...config });
@@ -83,6 +93,14 @@ export class InventoryTicketService {
     this.restService.request<any, PurchaseOrderLineDto[]>({
       method: 'GET',
       url: `/api/app/inventory-ticket/lines-from-purchase-order/${poId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getLinesFromSalesOrder = (soId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SalesOrderLineDto[]>({
+      method: 'GET',
+      url: `/api/app/inventory-ticket/lines-from-sales-order/${soId}`,
     },
     { apiName: this.apiName,...config });
   
