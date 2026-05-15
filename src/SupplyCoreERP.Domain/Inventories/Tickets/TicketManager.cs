@@ -10,6 +10,7 @@ using SupplyCoreERP.Inventories.Batches;
 using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Orders.PO;
 using SupplyCoreERP.Products;
+using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.Warehouses;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
@@ -28,6 +29,8 @@ public class TicketManager : DomainService
     private readonly IRepository<Product, Guid> _productRepo;
     private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo;
     private readonly IRepository<PurchaseOrderLine, Guid> _poLineRepo;
+    private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
+    private readonly IRepository<SalesOrderLine, Guid> _soLineRepo;
     private readonly WarehouseManager _warehouseManager;
     private readonly InventoryBalanceManager _balanceManager;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
@@ -44,6 +47,8 @@ public class TicketManager : DomainService
         IRepository<Product, Guid> productRepo,
         IRepository<PurchaseOrder, Guid> purchaseOrderRepo,
         IRepository<PurchaseOrderLine, Guid> poLineRepo,
+        IRepository<SalesOrder, Guid> salesOrderRepo,
+        IRepository<SalesOrderLine, Guid> soLineRepo,
         WarehouseManager warehouseManager,
         InventoryBalanceManager balanceManager,
         DocumentSequenceManager documentSequenceManager)
@@ -58,6 +63,8 @@ public class TicketManager : DomainService
         _productRepo = productRepo;
         _purchaseOrderRepo = purchaseOrderRepo;
         _poLineRepo = poLineRepo;
+        _salesOrderRepo = salesOrderRepo;
+        _soLineRepo = soLineRepo;
         _warehouseManager = warehouseManager;
         _balanceManager = balanceManager;
         _documentSequenceManager = documentSequenceManager;
@@ -180,7 +187,7 @@ public class TicketManager : DomainService
 
     # region Ticket Line
     public async Task<InventoryTicketLine> CreateTicketLineAsync(
-        InventoryTicket ticket, Guid productId, Guid? purchaseOrderLineId, decimal quantity, Guid? unitId = null, int? conversionFactor = null)
+        InventoryTicket ticket, Guid productId, Guid? purchaseOrderLineId, decimal quantity, Guid? unitId = null, int? conversionFactor = null, Guid? salesOrderLineId = null)
     {
         if (ticket.Status == ApprovalStatus.Approved || ticket.Status == ApprovalStatus.Rejected)
         {
@@ -201,15 +208,80 @@ public class TicketManager : DomainService
             PurchaseOrderLine poLine = await _poLineRepo.GetAsync(purchaseOrderLineId.Value);
             if (poLine.ProductId != productId)
             {
-                throw new UserFriendlyException("Sản phẩm không khớp với dòng đơn hàng!");
+                throw new UserFriendlyException("Sản phẩm không khớp với dòng đơn mua!");
             }
-            // Ưu tiên lấy từ PO nếu có truyền vào hoặc mặc định từ PO Line
             finalUnitId = unitId ?? poLine.UnitId;
             finalConversionFactor = conversionFactor ?? poLine.ConversionFactor;
         }
 
-        var line = new InventoryTicketLine(GuidGenerator.Create(), ticket.Id, productId, finalUnitId, finalConversionFactor, purchaseOrderLineId, quantity);
+        if (salesOrderLineId.HasValue)
+        {
+            SalesOrderLine soLine = await _soLineRepo.GetAsync(salesOrderLineId.Value);
+            if (soLine.ProductId != productId)
+            {
+                throw new UserFriendlyException("Sản phẩm không khớp với dòng đơn bán!");
+            }
+            finalUnitId = unitId ?? soLine.UnitId;
+            finalConversionFactor = conversionFactor ?? soLine.ConversionFactor;
+        }
+
+        var line = new InventoryTicketLine(GuidGenerator.Create(), ticket.Id, productId, finalUnitId, finalConversionFactor, purchaseOrderLineId, quantity, salesOrderLineId);
+        
+        // Nếu là phiếu xuất kho (Goods Issue) và được map từ SO, tự động chạy FEFO
+        if (IsIssueTicket(ticket.Type) && salesOrderLineId.HasValue)
+        {
+            await AllocateFEFOForLineAsync(ticket, line);
+        }
+
         return line;
+    }
+
+    private async Task AllocateFEFOForLineAsync(InventoryTicket ticket, InventoryTicketLine line)
+    {
+        decimal requiredBaseQuantity = line.Quantity * line.ConversionFactor;
+        Product product = await _productRepo.GetAsync(line.ProductId);
+
+        // Logic FEFO: Lấy từ InventoryBalance
+        List<InventoryBalance> balances = await _balanceRepo.GetListAsync(x => x.WarehouseId == ticket.WarehouseId && x.ProductId == line.ProductId && x.Quantity > x.LockedQuantity);
+
+        var batchIds = balances.Select(x => x.ProductBatchId).Distinct().ToList();
+        List<ProductBatch> batches = await _batchRepo.GetListAsync(x => batchIds.Contains(x.Id) && x.Status == BatchQAStatus.Approved && x.ExpiryDate > DateTime.Now);
+
+        var validBalances = (from b in balances
+                             join ba in batches on b.ProductBatchId equals ba.Id
+                             orderby ba.ExpiryDate ascending
+                             select b).ToList();
+
+        var details = new List<InventoryTicketDetail>();
+        decimal remaining = requiredBaseQuantity;
+
+        foreach (InventoryBalance? balance in validBalances)
+        {
+            if (remaining <= 0) break;
+
+            decimal available = balance.Quantity - balance.LockedQuantity;
+            decimal toTake = Math.Min(available, remaining);
+
+            var detail = new InventoryTicketDetail(GuidGenerator.Create(), line.Id, line.ProductId, balance.ProductBatchId, balance.BinId, product.BaseUnitId, 1, toTake);
+            details.Add(detail);
+
+            remaining -= toTake;
+        }
+
+        if (remaining > 0)
+        {
+            decimal rawTotal = balances.Sum(x => x.Quantity - x.LockedQuantity);
+            if (rawTotal >= requiredBaseQuantity)
+            {
+                throw new UserFriendlyException(
+                    $"Không thể xuất hàng FEFO cho '{product.Name}'. " +
+                    $"Tồn kho hiện tại ({rawTotal}) đủ số lượng nhưng các lô hàng chưa được Duyệt QA hoặc đã hết hạn sử dụng.");
+            }
+
+            throw new UserFriendlyException($"Không đủ tồn kho khả dụng để cấp phát FEFO cho '{product.Name}'!");
+        }
+
+        await _ticketDetailRepo.InsertManyAsync(details);
     }
 
     public void UpdateLineQuantity(InventoryTicket ticket, InventoryTicketLine line, decimal newQuantity)
@@ -374,7 +446,50 @@ public class TicketManager : DomainService
             await SyncPurchaseOrderProgressAsync(ticket.ReferenceDocumentId.Value, ticketLines);
         }
 
+        // Cập nhật DeliveredQuantity cho SalesOrderLine và kiểm tra đóng SO
+        if (IsIssueTicket(ticket.Type) && ticket.ReferenceDocumentId.HasValue)
+        {
+            await SyncSalesOrderProgressAsync(ticket.ReferenceDocumentId.Value, ticketLines);
+        }
+
         ticket.Execute();
+    }
+
+    // Auxiliary method to handle SO progress
+    public async Task SyncSalesOrderProgressAsync(Guid soId, List<InventoryTicketLine> ticketLines)
+    {
+        IQueryable<SalesOrder> soQuery = await _salesOrderRepo.WithDetailsAsync(x => x.Lines);
+        SalesOrder? so = await AsyncExecuter.FirstOrDefaultAsync(soQuery.Where(x => x.Id == soId));
+        
+        if (so == null) return;
+
+        foreach (InventoryTicketLine tLine in ticketLines)
+        {
+            if (tLine.SalesOrderLineId.HasValue)
+            {
+                SalesOrderLine? soLine = so.Lines.FirstOrDefault(x => x.Id == tLine.SalesOrderLineId.Value);
+                if (soLine != null)
+                {
+                    // tLine.Quantity luôn là đơn vị cơ bản, quy đổi về đơn vị SO để cộng vào DeliveredQuantity
+                    soLine.AddDeliveredQuantity(Math.Round(tLine.Quantity / soLine.ConversionFactor, 4));
+                }
+            }
+        }
+
+        // Cập nhật trạng thái SO dựa trên tiến độ giao hàng
+        if (so.Lines.All(x => x.DeliveredQuantity * x.ConversionFactor >= x.BaseQuantity - 0.0001m))
+        {
+            so.Complete();
+        }
+        else if (so.Lines.Any(x => x.DeliveredQuantity > 0))
+        {
+            if (so.Status != SalesOrderStatus.Delivering && so.Status != SalesOrderStatus.Completed)
+            {
+                so.StartDelivering();
+            }
+        }
+
+        await _salesOrderRepo.UpdateAsync(so);
     }
 
     // Auxiliary method to handle PO progress
@@ -450,7 +565,16 @@ public class TicketManager : DomainService
 
         if (remaining > 0)
         {
-            throw new UserFriendlyException("Không đủ tồn kho khả dụng để cấp phát FEFO!");
+            // Kiểm tra xem thực tế trong kho có hàng không nhưng không đạt điều kiện FEFO
+            decimal rawTotal = balances.Sum(x => x.Quantity - x.LockedQuantity);
+            if (rawTotal >= requiredBaseQuantity)
+            {
+                throw new UserFriendlyException(
+                    $"Không thể xuất hàng FEFO cho '{product.Name}'. " +
+                    $"Tồn kho hiện tại ({rawTotal}) đủ số lượng nhưng các lô hàng chưa được Duyệt QA hoặc đã hết hạn sử dụng.");
+            }
+
+            throw new UserFriendlyException($"Không đủ tồn kho khả dụng để cấp phát FEFO cho '{product.Name}'!");
         }
 
         await _ticketDetailRepo.InsertManyAsync(details);

@@ -11,6 +11,7 @@ public class InventoryTicketLineDto : FullAuditedEntityDto<Guid>
     public string? ProductName { get; set; }
 
     public Guid? PurchaseOrderLineId { get; set; }
+    public Guid? SalesOrderLineId { get; set; }
     public Guid? UnitId { get; set; }
     public string? UnitName { get; set; }
     public int? ConversionFactor { get; set; }

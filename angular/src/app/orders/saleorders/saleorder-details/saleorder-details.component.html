@@ -192,7 +192,7 @@
                     <div *ngIf="!isEditable()">
                       <span class="fw-bold txt-num">{{ row.quantity | number }}</span>
                       <div class="txt-muted txt-xs txt-num" *ngIf="row.baseQuantity !== row.quantity">
-                        ≈ {{ row.baseQuantity | number }} base
+                        ≈ {{ row.baseQuantity | number }} <small>{{ row.baseUnitName }}</small>
                       </div>
                     </div>
                   </td>
@@ -250,7 +250,7 @@
                       *ngIf="order.status !== SalesOrderStatus.Draft && order.status !== SalesOrderStatus.PendingApproval && order.status !== SalesOrderStatus.Canceled">
                     <div style="min-width: 110px;">
                       <div class="d-flex justify-content-between txt-xs mb-1">
-                        <span class="txt-muted">{{ row.deliveredQuantity | number }}</span>
+                        <span class="txt-muted">{{ row.deliveredQuantity | number }} <small>{{ row.unitName }}</small></span>
                         <span class="fw-bold"
                               [class.txt-success]="deliverProgress(row) >= 100"
                               [class.txt-warning]="deliverProgress(row) > 0 && deliverProgress(row) < 100">

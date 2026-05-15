@@ -9482,6 +9482,56 @@
                   }
                 },
                 {
+                  "name": "GetLinesFromSalesOrderAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "soId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.SalesOrders.Dtos.SalesOrderLineDto>",
+                    "typeSimple": "[SupplyCoreERP.SalesOrders.Dtos.SalesOrderLineDto]"
+                  }
+                },
+                {
+                  "name": "AddLineFromSalesOrderAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "soLineId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "quantity",
+                      "typeAsString": "System.Decimal, System.Private.CoreLib",
+                      "type": "System.Decimal",
+                      "typeSimple": "number",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
                   "name": "DeleteLineAsync",
                   "parametersOnMethod": [
                     {
@@ -9942,6 +9992,120 @@
               "returnValue": {
                 "type": "System.Collections.Generic.List<SupplyCoreERP.PurchaseOrders.Dtos.PurchaseOrderLineDto>",
                 "typeSimple": "[SupplyCoreERP.PurchaseOrders.Dtos.PurchaseOrderLineDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
+            },
+            "GetLinesFromSalesOrderAsyncBySoId": {
+              "uniqueName": "GetLinesFromSalesOrderAsyncBySoId",
+              "name": "GetLinesFromSalesOrderAsync",
+              "httpMethod": "GET",
+              "url": "api/app/inventory-ticket/lines-from-sales-order/{soId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "soId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "soId",
+                  "name": "soId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.SalesOrders.Dtos.SalesOrderLineDto>",
+                "typeSimple": "[SupplyCoreERP.SalesOrders.Dtos.SalesOrderLineDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
+            },
+            "AddLineFromSalesOrderAsyncByIdAndSoLineIdAndQuantity": {
+              "uniqueName": "AddLineFromSalesOrderAsyncByIdAndSoLineIdAndQuantity",
+              "name": "AddLineFromSalesOrderAsync",
+              "httpMethod": "POST",
+              "url": "api/app/inventory-ticket/{id}/line-from-sales-order/{soLineId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "soLineId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "quantity",
+                  "typeAsString": "System.Decimal, System.Private.CoreLib",
+                  "type": "System.Decimal",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "soLineId",
+                  "name": "soLineId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "quantity",
+                  "name": "quantity",
+                  "jsonName": null,
+                  "type": "System.Decimal",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
@@ -14329,6 +14493,18 @@
           "regex": null
         },
         {
+          "name": "BaseUnitName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "Quantity",
           "jsonName": null,
           "type": "System.Decimal",
@@ -16280,6 +16456,42 @@
           "regex": null
         },
         {
+          "name": "RegistrationValidFrom",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "RegistrationValidTo",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "RegistrationNote",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "UsageRoute",
           "jsonName": null,
           "type": "SupplyCoreERP.Enums.Medicines.UsageRoute",
@@ -16320,42 +16532,6 @@
           "jsonName": null,
           "type": "System.Boolean",
           "typeSimple": "boolean",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "RegistrationValidFrom",
-          "jsonName": null,
-          "type": "System.DateTime?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "RegistrationValidTo",
-          "jsonName": null,
-          "type": "System.DateTime?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "RegistrationNote",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -16745,6 +16921,42 @@
           "regex": null
         },
         {
+          "name": "RegistrationValidFrom",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "RegistrationValidTo",
+          "jsonName": null,
+          "type": "System.DateTime?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "RegistrationNote",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "StorageCondition",
           "jsonName": null,
           "type": "SupplyCoreERP.Enums.Medicines.StorageCondition",
@@ -16797,42 +17009,6 @@
           "jsonName": null,
           "type": "System.DateTime?",
           "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "RegistrationValidFrom",
-          "jsonName": null,
-          "type": "System.DateTime?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "RegistrationValidTo",
-          "jsonName": null,
-          "type": "System.DateTime?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "RegistrationNote",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -20460,6 +20636,18 @@
         },
         {
           "name": "PurchaseOrderLineId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SalesOrderLineId",
           "jsonName": null,
           "type": "System.Guid?",
           "typeSimple": "string?",

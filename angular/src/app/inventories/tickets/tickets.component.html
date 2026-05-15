@@ -206,11 +206,6 @@
   (save)="save()"
 >
   <form [formGroup]="form">
-    <div class="ph-callout ph-callout--info mb-3">
-      <i class="fa fa-info-circle ph-callout__icon"></i>
-      <div>{{ '::AutoGenerateTicketNumberHint' | abpLocalization }}</div>
-    </div>
-
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
       <app-dropdown-search
@@ -224,19 +219,20 @@
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::TicketType' | abpLocalization }}</label>
       <select class="form-select form-select-sm" formControlName="type">
-        <option *ngFor="let t of ticketTypeOptions" [value]="t.value">
+        <option [ngValue]="null">{{ '::SelectTicketType' | abpLocalization }}</option>
+        <option *ngFor="let t of ticketTypeOptions" [ngValue]="t.value">
           {{ '::Enum:TicketType.' + enumName(TicketType, t.value) | abpLocalization }}
         </option>
       </select>
     </div>
 
-    <div class="mb-3" *ngIf="form.get('type').value === TicketType.GoodsReceipt">
-      <label class="ph-label">{{ '::LinkToPurchaseOrder' | abpLocalization }}</label>
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::LinkToDocument' | abpLocalization }}</label>
       <app-dropdown-search
         formControlName="referenceDocumentId"
-        [items]="approvedPurchaseOrders"
+        [items]="selectableReferences"
         [labelKey]="'displayName'"
-        [placeholder]="'::ManualReceipt' | abpLocalization"
+        [placeholder]="'::SelectDocument' | abpLocalization"
         [searchPlaceholder]="'::Search' | abpLocalization"
       ></app-dropdown-search>
     </div>

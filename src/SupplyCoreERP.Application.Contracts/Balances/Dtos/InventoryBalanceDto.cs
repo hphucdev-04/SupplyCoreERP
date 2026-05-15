@@ -17,6 +17,8 @@ public class InventoryBalanceDto : FullAuditedEntityDto<Guid>
     public Guid ProductBatchId { get; set; }
     public string? BatchNumber { get; set; }
 
+    public string? BaseUnitName { get; set; }
+
     public decimal Quantity { get; set; }
     public decimal LockedQuantity { get; set; }
     public decimal AvailableQuantity { get; set; }

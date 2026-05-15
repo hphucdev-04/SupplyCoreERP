@@ -138,7 +138,7 @@
                       <span *ngIf="!isEditable()" class="fw-bold">{{ row.quantity | number }}</span>
                     </td>
                     <td class="text-end">
-                      <span class="ph-text-muted">{{ row.baseQuantity | number }}</span>
+                      <span class="ph-text-muted">{{ row.baseQuantity | number }} <small>{{ row.baseUnitName }}</small></span>
                     </td>
                     <td class="text-end">
                       <div *ngIf="isEditable()" class="d-flex justify-content-end">
@@ -162,7 +162,7 @@
                     <td class="text-center" *ngIf="order.status !== PurchaseOrderStatus.Draft && order.status !== PurchaseOrderStatus.PendingApproval && order.status !== PurchaseOrderStatus.Canceled">
                       <div style="min-width: 110px;">
                         <div class="d-flex justify-content-between small mb-1">
-                          <span class="ph-text-muted">{{ row.receivedQuantity | number }}</span>
+                          <span class="ph-text-muted">{{ row.receivedQuantity | number }} <small>{{ row.unitName }}</small></span>
                           <span class="fw-bold" [class.ph-text-success]="(row.receivedQuantity / row.quantity * 100) >= 100">
                             {{ (row.receivedQuantity / row.quantity * 100) | number:'1.0-0' }}%
                           </span>

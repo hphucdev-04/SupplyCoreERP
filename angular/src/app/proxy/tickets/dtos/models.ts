@@ -62,6 +62,7 @@ export interface InventoryTicketLineDto extends FullAuditedEntityDto<string> {
   productCode?: string;
   productName?: string;
   purchaseOrderLineId?: string;
+  salesOrderLineId?: string;
   unitId?: string;
   unitName?: string;
   conversionFactor?: number;

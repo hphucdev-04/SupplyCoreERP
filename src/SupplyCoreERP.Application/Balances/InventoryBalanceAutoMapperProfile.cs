@@ -13,7 +13,8 @@ public class InventoryBalanceAutoMapperProfile : Profile
             .ForMember(dest => dest.WarehouseName, opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Name : null))
             .ForMember(dest => dest.BinCode, opt => opt.MapFrom(src => src.Bin != null ? src.Bin.Code : null))
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
-            .ForMember(dest => dest.BatchNumber, opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.BatchNumber : null));
+            .ForMember(dest => dest.BatchNumber, opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.BatchNumber : null))
+            .ForMember(dest => dest.BaseUnitName, opt => opt.MapFrom(src => src.Product != null && src.Product.BaseUnit != null ? src.Product.BaseUnit.Name : null));
 
         // Map Detail 
         CreateMap<InventoryBalance, InventoryBalanceDetailDto>()

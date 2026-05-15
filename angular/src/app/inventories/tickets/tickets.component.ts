@@ -20,6 +20,10 @@ import { PurchaseOrderStatus } from 'src/app/proxy/enums/orders/purchase-order-s
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 
+import { SalesOrderService } from 'src/app/proxy/sales-orders';
+import { SalesOrderDto } from 'src/app/proxy/sales-orders/dtos';
+import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.enum';
+
 @Component({
   selector: 'app-inventory-tickets',
   standalone: true,
@@ -34,7 +38,9 @@ export class TicketsComponent implements OnInit, OnDestroy {
   // Data
   data = { items: [], totalCount: 0 } as PagedResultDto<InventoryTicketDto>;
   warehouses: WarehouseDto[] = [];
-  approvedPurchaseOrders: PurchaseOrderDto[] = [];
+  approvedPurchaseOrders: any[] = [];
+  approvedSalesOrders: any[] = [];
+  selectableReferences: any[] = [];
 
   // Drawer state
   isDrawerOpen = false;
@@ -59,6 +65,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
     private ticketService: InventoryTicketService,
     private warehouseService: WarehouseService,
     private poService: PurchaseOrderService,
+    private soService: SalesOrderService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
     private router: Router
@@ -67,6 +74,13 @@ export class TicketsComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.buildForm();
     this.loadLookups();
+
+    // Lắng nghe sự thay đổi của loại phiếu để lọc chứng từ tham chiếu
+    this.form.get('type').valueChanges
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.onTypeChange();
+      });
 
     const streamCreator = (query: any) => this.ticketService.getList({
       ...query,
@@ -99,20 +113,49 @@ export class TicketsComponent implements OnInit, OnDestroy {
         this.warehouses = res.items;
       });
 
-    // Load POs that are Approved or Receiving for manual ticket link
+    // Load POs Approved/Receiving
     this.poService.getList({ maxResultCount: 1000, skipCount: 0 } as any)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.approvedPurchaseOrders = res.items
-          .filter(po => 
-            po.status === PurchaseOrderStatus.Approved || 
-            po.status === PurchaseOrderStatus.Receiving
-          )
-          .map(po => ({
-            ...po,
-            displayName: `${po.code} (${po.supplierName})`
-          }));
+          .filter(po => po.status === PurchaseOrderStatus.Approved || po.status === PurchaseOrderStatus.Receiving)
+          .map(po => ({ id: po.id, code: po.code, displayName: `${po.code} (${po.supplierName})` }));
+        
+        // Nếu đang chọn GoodsReceipt thì cập nhật ngay list reference
+        if (this.form.get('type').value === TicketType.GoodsReceipt) {
+          this.selectableReferences = this.approvedPurchaseOrders;
+        }
       });
+
+    // Load SOs Approved/Delivering
+    this.soService.getList({ maxResultCount: 1000, skipCount: 0 } as any)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.approvedSalesOrders = res.items
+          .filter(so => so.status === SalesOrderStatus.Approved || so.status === SalesOrderStatus.Delivering)
+          .map(so => ({ id: so.id, code: so.code, displayName: `${so.code} (${so.customerName})` }));
+        
+        // Nếu đang chọn GoodsIssue thì cập nhật ngay list reference
+        if (this.form.get('type').value === TicketType.GoodsIssue) {
+          this.selectableReferences = this.approvedSalesOrders;
+        }
+      });
+  }
+
+  onTypeChange() {
+    const rawValue = this.form.get('type').value;
+    // Quan trọng: Không dùng Number(rawValue) ngay vì Number(null) = 0
+    const type = rawValue !== null && rawValue !== undefined ? Number(rawValue) : null;
+    
+    this.form.get('referenceDocumentId').setValue(null);
+
+    if (type === TicketType.GoodsReceipt) {
+      this.selectableReferences = this.approvedPurchaseOrders;
+    } else if (type === TicketType.GoodsIssue) {
+      this.selectableReferences = this.approvedSalesOrders;
+    } else {
+      this.selectableReferences = [];
+    }
   }
 
   // ============================================================
@@ -154,18 +197,19 @@ export class TicketsComponent implements OnInit, OnDestroy {
     this.form = this.fb.group({
       type: [null, [Validators.required]],
       warehouseId: [null, [Validators.required]],
-      referenceDocumentId: [null],
+      referenceDocumentId: [null, [Validators.required]], // Bắt buộc link
       note: ['', [Validators.maxLength(1000)]]
     });
   }
 
   openCreateDrawer() {
     this.form.reset({
-      type: TicketType.GoodsReceipt,
+      type: null,
       warehouseId: null,
       referenceDocumentId: null,
       note: ''
     });
+    this.selectableReferences = [];
     this.isDrawerOpen = true;
   }
 
@@ -178,12 +222,11 @@ export class TicketsComponent implements OnInit, OnDestroy {
     this.isSaving = true;
 
     const payload = { ...this.form.value };
-    // If PO is selected, auto-fill reference document number
-    if (payload.referenceDocumentId) {
-      const selectedPo = this.approvedPurchaseOrders.find(po => po.id === payload.referenceDocumentId);
-      if (selectedPo) {
-        payload.referenceDocumentNumber = selectedPo.code;
-      }
+    
+    // Tìm mã chứng từ tham chiếu
+    const selectedRef = this.selectableReferences.find(r => r.id === payload.referenceDocumentId);
+    if (selectedRef) {
+      payload.referenceDocumentNumber = selectedRef.code;
     }
 
     this.ticketService.create(payload)
@@ -193,7 +236,6 @@ export class TicketsComponent implements OnInit, OnDestroy {
           this.isSaving = false;
           this.closeDrawer();
           this.list.get();
-          // Open Details directly after creation
           this.viewDetail(newTicket.id);
         },
         error: () => {
@@ -202,4 +244,3 @@ export class TicketsComponent implements OnInit, OnDestroy {
       });
   }
 }
-
