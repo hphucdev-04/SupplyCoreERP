@@ -1,5 +1,5 @@
 import type { TicketType } from '../../enums/warehouses/ticket-type.enum';
-import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
+import type { AuditedEntityDto, FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { ApprovalStatus } from '../../enums/warehouses/approval-status.enum';
 
 export interface AddTicketDetailDto {
@@ -24,18 +24,20 @@ export interface GetInventoryTicketListDto extends PagedAndSortedResultRequestDt
   type?: TicketType;
   status?: ApprovalStatus;
   warehouseId?: string;
+  referenceDocumentId?: string;
 }
 
 export interface InventoryTicketDetailDto extends FullAuditedEntityDto<string> {
-  ticketId?: string;
   productId?: string;
   productName?: string;
   productCode?: string;
   baseUnitName?: string;
   productBatchId?: string;
   batchNumber?: string;
+  batchCode?: string;
   manufacturingDate?: string;
   expiryDate?: string;
+  registrationNumber?: string;
   binId?: string;
   binCode?: string;
   unitId?: string;
@@ -57,11 +59,13 @@ export interface InventoryTicketDto extends FullAuditedEntityDto<string> {
   lines?: InventoryTicketLineDto[];
 }
 
-export interface InventoryTicketLineDto extends FullAuditedEntityDto<string> {
+export interface InventoryTicketLineDto extends AuditedEntityDto<string> {
   productId?: string;
   productCode?: string;
   productName?: string;
+  productBaseUnitName?: string;
   purchaseOrderLineId?: string;
+  salesOrderLineId?: string;
   unitId?: string;
   unitName?: string;
   conversionFactor?: number;

@@ -114,9 +114,10 @@ public class SupplyCoreERPDbContext :
     public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
     public DbSet<InventoryReservation> InventoryReservations { get; set; }
 
-    //Order
+    // Orders
     public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
     public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; }
+
     public DbSet<SalesOrder> SalesOrders { get; set; }
     public DbSet<SalesOrderLine> SalesOrderLines { get; set; }
 
@@ -508,6 +509,7 @@ public class SupplyCoreERPDbContext :
             b.HasOne(x => x.Ticket).WithMany(x => x.Lines).HasForeignKey(x => x.TicketId).OnDelete(DeleteBehavior.Cascade);
             b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.PurchaseOrderLine).WithMany().HasForeignKey(x => x.PurchaseOrderLineId).OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.SalesOrderLine).WithMany().HasForeignKey(x => x.SalesOrderLineId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).OnDelete(DeleteBehavior.Restrict);
         });
 

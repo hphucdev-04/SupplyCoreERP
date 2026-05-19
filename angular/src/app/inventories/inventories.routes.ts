@@ -22,9 +22,13 @@ export const INVENTORIES_ROUTES: Routes = [
         path: 'batches',
         loadComponent: () => import('./batches/batches.component').then(m => m.BatchesComponent),
     },
+
+    {
+        path: 'batches/details/:id',
+        loadComponent: () => import('./batches/batch-details/batch-details.component').then(m => m.BatchDetailsComponent),
+    },
     {
         path: 'balances',
         loadComponent: () => import('./balances/balances.component').then(m => m.BalancesComponent),
     },
-
 ];

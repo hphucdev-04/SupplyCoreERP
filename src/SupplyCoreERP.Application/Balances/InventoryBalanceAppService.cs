@@ -24,13 +24,19 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
 
     public async Task<PagedResultDto<InventoryBalanceDto>> GetListAsync(GetInventoryBalanceListDto input)
     {
-        // Include đến 4 bảng để lấy đủ tên (Warehouse, Bin, Product, Batch)
-        IQueryable<InventoryBalance> query = await _balanceRepo.WithDetailsAsync(x => x.Warehouse, x => x.Bin, x => x.Product, x => x.ProductBatch);
+        // Sử dụng GetQueryableAsync và Include sâu vào BaseUnit
+        IQueryable<InventoryBalance> query = await _balanceRepo.GetQueryableAsync();
+        query = query
+            .Include(x => x.Warehouse)
+            .Include(x => x.Bin)
+            .Include(x => x.Product).ThenInclude(p => p.BaseUnit)
+            .Include(x => x.ProductBatch);
 
         query = query
             .WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
             .WhereIf(input.BinId.HasValue, x => x.BinId == input.BinId)
             .WhereIf(input.ProductId.HasValue, x => x.ProductId == input.ProductId)
+            .WhereIf(input.ProductBatchId.HasValue, x => x.ProductBatchId == input.ProductBatchId)
             .WhereIf(!string.IsNullOrWhiteSpace(input.BatchNumber), x => x.ProductBatch.BatchNumber.Contains(input.BatchNumber))
             .WhereIf(input.HideZeroQuantity == true, x => x.Quantity > 0);
 
@@ -60,7 +66,7 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
             .Include(x => x.Warehouse).ThenInclude(w => w.City)
             .Include(x => x.Warehouse).ThenInclude(w => w.Area)
             .Include(x => x.Bin)
-            .Include(x => x.Product)
+            .Include(x => x.Product).ThenInclude(p => p.BaseUnit)
             .Include(x => x.ProductBatch).ThenInclude(b => b.Supplier);
 
         InventoryBalance? entity = await AsyncExecuter.FirstOrDefaultAsync(query.Where(x => x.Id == id));
@@ -75,6 +81,7 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
     public async Task<PagedResultDto<InventoryReservationDto>> GetReservationListAsync(GetInventoryReservationListDto input)
     {
         IQueryable<InventoryReservation> query = await _reservationRepo.GetQueryableAsync();
+        query = query.Include(x => x.Warehouse).Include(x => x.Bin);
 
         // Bộ lọc đa năng (Multi-dimensional Filter)
         query = query
@@ -101,3 +108,4 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
 
     }
 }
+

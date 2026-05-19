@@ -10,6 +10,7 @@ public class ProductBatchAutoMapperProfile : Profile
     {
         CreateMap<ProductBatch, ProductBatchDto>()
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
+            .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.Product != null ? src.Product.Code : null))
             .ForMember(dest => dest.SupplierName, opt => opt.MapFrom(src => src.Supplier != null ? src.Supplier.Name : null))
             .ForMember(dest => dest.RegistrationNumber, opt => opt.MapFrom(src => src.MedicineRegistration != null ? src.MedicineRegistration.RegistrationNumber : null));
 

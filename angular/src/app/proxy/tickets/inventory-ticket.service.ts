@@ -3,6 +3,7 @@ import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
 import type { PurchaseOrderLineDto } from '../purchase-orders/dtos/models';
+import type { SalesOrderLineDto } from '../sales-orders/dtos/models';
 
 @Injectable({
   providedIn: 'root',
@@ -12,10 +13,10 @@ export class InventoryTicketService {
   apiName = 'Default';
   
 
-  addDetail = (id: string, input: AddTicketDetailDto, config?: Partial<Rest.Config>) =>
+  addDetail = (lineId: string, input: AddTicketDetailDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',
-      url: `/api/app/inventory-ticket/${id}/detail`,
+      url: `/api/app/inventory-ticket/detail/${lineId}`,
       body: input,
     },
     { apiName: this.apiName,...config });
@@ -26,6 +27,23 @@ export class InventoryTicketService {
       method: 'POST',
       url: `/api/app/inventory-ticket/${id}/line-from-purchase-order/${poLineId}`,
       params: { quantity },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  addLineFromSalesOrder = (id: string, soLineId: string, quantity: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/inventory-ticket/${id}/line-from-sales-order/${soLineId}`,
+      params: { quantity },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  applyFEFO = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/inventory-ticket/${id}/apply-fEFO`,
     },
     { apiName: this.apiName,...config });
   
@@ -87,11 +105,19 @@ export class InventoryTicketService {
     { apiName: this.apiName,...config });
   
 
+  getLinesFromSalesOrder = (soId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SalesOrderLineDto[]>({
+      method: 'GET',
+      url: `/api/app/inventory-ticket/lines-from-sales-order/${soId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getList = (input: GetInventoryTicketListDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, PagedResultDto<InventoryTicketDto>>({
       method: 'GET',
       url: '/api/app/inventory-ticket',
-      params: { filter: input.filter, type: input.type, status: input.status, warehouseId: input.warehouseId, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+      params: { filter: input.filter, type: input.type, status: input.status, warehouseId: input.warehouseId, referenceDocumentId: input.referenceDocumentId, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   
@@ -100,6 +126,14 @@ export class InventoryTicketService {
     this.restService.request<any, InventoryTicketDto[]>({
       method: 'GET',
       url: `/api/app/inventory-ticket/related-tickets-by-purchase-order/${poId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getRelatedTicketsBySaleOrder = (soId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, InventoryTicketDto[]>({
+      method: 'GET',
+      url: `/api/app/inventory-ticket/related-tickets-by-sale-order/${soId}`,
     },
     { apiName: this.apiName,...config });
   

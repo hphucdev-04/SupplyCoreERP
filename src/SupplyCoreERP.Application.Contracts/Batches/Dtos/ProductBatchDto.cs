@@ -8,7 +8,8 @@ public class ProductBatchDto : FullAuditedEntityDto<Guid>
 {
     public string Code { get; set; }
     public Guid ProductId { get; set; }
-    public string? ProductName { get; set; }
+    public string ProductName { get; set; }
+    public string ProductCode { get; set; }
 
     public string BatchNumber { get; set; }
     public DateTime ManufacturingDate { get; set; }

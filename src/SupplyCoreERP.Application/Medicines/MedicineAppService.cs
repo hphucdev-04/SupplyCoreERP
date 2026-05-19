@@ -117,7 +117,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
         // Ép buộc nạp kèm danh sách Registrations từ Database
         IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
         Medicine? entity = await query.Include(x => x.Registrations).FirstOrDefaultAsync(x => x.Id == id);
-        
+
         if (entity == null)
         {
             throw new EntityNotFoundException(typeof(Medicine), id);
@@ -284,6 +284,20 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
     }
     #endregion
 
+    #region Registration
+    public async Task<List<MedicineRegistrationDto>> GetRegistrationsAsync(Guid id)
+    {
+        IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
+        Medicine? medicine = await query.Include(x => x.Registrations).FirstOrDefaultAsync(x => x.Id == id);
+
+        if (medicine == null)
+        {
+            throw new EntityNotFoundException(typeof(Medicine), id);
+        }
+
+        return ObjectMapper.Map<List<MedicineRegistration>, List<MedicineRegistrationDto>>(medicine.Registrations.ToList());
+    }
+
     public virtual async Task AddRegistrationAsync(Guid id, AddMedicineRegistrationDto input)
     {
         IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
@@ -293,7 +307,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
         {
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
-        
+
         medicine.AddRegistration(
             GuidGenerator.Create(),
             input.RegistrationNumber,
@@ -304,6 +318,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
 
         await _medicineRepo.UpdateAsync(medicine);
     }
+    #endregion
 
     #region Excel
     public Task ImportExcelAsync(IRemoteStreamContent file)

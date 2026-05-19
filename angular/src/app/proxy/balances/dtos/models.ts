@@ -5,6 +5,7 @@ export interface GetInventoryBalanceListDto extends PagedAndSortedResultRequestD
   warehouseId?: string;
   binId?: string;
   productId?: string;
+  productBatchId?: string;
   batchNumber?: string;
   isNearExpiry?: boolean;
   hideZeroQuantity?: boolean;
@@ -39,6 +40,7 @@ export interface InventoryBalanceDto extends FullAuditedEntityDto<string> {
   productName?: string;
   productBatchId?: string;
   batchNumber?: string;
+  baseUnitName?: string;
   quantity?: number;
   lockedQuantity?: number;
   availableQuantity?: number;
@@ -48,7 +50,9 @@ export interface InventoryReservationDto extends CreationAuditedEntityDto<string
   referenceDocumentId?: string;
   referenceDocumentNumber?: string;
   warehouseId?: string;
+  warehouseName?: string;
   binId?: string;
+  binCode?: string;
   productId?: string;
   productBatchId?: string;
   reservedQuantity?: number;

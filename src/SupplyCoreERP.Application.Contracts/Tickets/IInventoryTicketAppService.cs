@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SupplyCoreERP.PurchaseOrders.Dtos;
+using SupplyCoreERP.SalesOrders.Dtos;
 using SupplyCoreERP.Tickets.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -19,15 +20,24 @@ public interface IInventoryTicketAppService : IApplicationService
     // Line & Detail
     Task<List<PurchaseOrderLineDto>> GetLinesFromPurchaseOrderAsync(Guid poId);
     Task AddLineFromPurchaseOrderAsync(Guid id, Guid poLineId, decimal quantity);
-    Task DeleteLineAsync(Guid id); // ✅ New: CRUD for Line
-    
-    Task AddDetailAsync(Guid id, AddTicketDetailDto input);
-    Task DeleteDetailAsync(Guid id); // ✅ New: CRUD for Detail
+
+    Task<List<SalesOrderLineDto>> GetLinesFromSalesOrderAsync(Guid soId);
+    Task AddLineFromSalesOrderAsync(Guid id, Guid soLineId, decimal quantity);
+
+    Task DeleteLineAsync(Guid id);
+
+    // Detail
+    Task AddDetailAsync(Guid lineId, AddTicketDetailDto input);
+    Task DeleteDetailAsync(Guid id);
 
     // Workflow
     Task SendToApproveAsync(Guid id);
     Task ExecuteAsync(Guid id);
 
-    // Get tickets by PO ID for traceability
+    //FEFO
+    Task ApplyFEFOAsync(Guid id);
+
+    // Get tickets by for traceability
     Task<List<InventoryTicketDto>> GetRelatedTicketsByPurchaseOrderAsync(Guid poId);
+    Task<List<InventoryTicketDto>> GetRelatedTicketsBySaleOrderAsync(Guid soId);
 }

@@ -17,13 +17,13 @@ export interface CreateUpdateMedicineDto {
   baseUnitId: string;
   dosageFormId: string;
   registrationNumber?: string;
+  registrationValidFrom?: string;
+  registrationValidTo?: string;
+  registrationNote?: string;
   usageRoute?: UsageRoute;
   storageCondition?: StorageCondition;
   isPrescriptionDrug?: boolean;
   isActive?: boolean;
-  registrationValidFrom?: string;
-  registrationValidTo?: string;
-  registrationNote?: string;
 }
 
 export interface CreateUpdateMedicineIngredientDto {
@@ -60,6 +60,7 @@ export interface MedicineDetailDto extends MedicineDto {
 export interface MedicineDto extends EntityDto<string> {
   code?: string;
   name?: string;
+  baseUnitId?: string;
   categoryName?: string;
   manufacturerName?: string;
   baseUnitName?: string;
@@ -67,14 +68,14 @@ export interface MedicineDto extends EntityDto<string> {
   originCountryName?: string;
   originCountryISO?: string;
   registrationNumber?: string;
+  registrationValidFrom?: string;
+  registrationValidTo?: string;
+  registrationNote?: string;
   storageCondition?: StorageCondition;
   status?: MedicineStatus;
   isActive?: boolean;
   creationTime?: string;
   lastModificationTime?: string;
-  registrationValidFrom?: string;
-  registrationValidTo?: string;
-  registrationNote?: string;
 }
 
 export interface MedicineIngredientDto {

@@ -41,7 +41,9 @@
           (change)="onFilterChange()"
         >
           <option [ngValue]="null">{{ '::Medicine' | abpLocalization }}</option>
-          <option *ngFor="let item of medicines" [ngValue]="item.id">{{ item.code }} - {{ item.name }}</option>
+          <option *ngFor="let item of medicines" [ngValue]="item.id">
+            {{ item.code }} - {{ item.name }}
+          </option>
         </select>
 
         <div class="form-check form-switch d-flex align-items-center gap-2 ms-2 mb-0">
@@ -51,9 +53,13 @@
             id="hideZero"
             [(ngModel)]="hideZeroBalance"
             (change)="onFilterChange()"
-            style="cursor: pointer; transform: scale(1.2);"
+            style="cursor: pointer; transform: scale(1.2)"
           />
-          <label class="form-check-label small fw-semibold mb-0" for="hideZero" style="cursor: pointer;">
+          <label
+            class="form-check-label small fw-semibold mb-0"
+            for="hideZero"
+            style="cursor: pointer"
+          >
             {{ '::HideZeroBalance' | abpLocalization }}
           </label>
         </div>
@@ -61,19 +67,18 @@
     </div>
 
     <!-- Table -->
-    <ngx-datatable
-      [rows]="data.items"
-      [count]="data.totalCount"
-      [list]="list"
-      default
-    >
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
       <ngx-datatable-column
         [name]="'::Actions' | abpLocalization"
-        [maxWidth]="120"
+        [maxWidth]="150"
         [sortable]="false"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <button class="btn btn-sm ph-btn-outline" (click)="openDetail(row.id)" title="{{ '::View' | abpLocalization }}">
+          <button
+            class="btn btn-sm ph-btn-outline"
+            (click)="openDetail(row.id)"
+            title="{{ '::View' | abpLocalization }}"
+          >
             <i class="fa fa-eye me-1"></i> {{ '::View' | abpLocalization }}
           </button>
         </ng-template>
@@ -104,7 +109,9 @@
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span><i class="fa fa-map-marker ph-text-danger me-1"></i>{{ row.warehouseName }}</span>
           <small class="d-block mt-1">
-            <span class="ph-badge ph-badge--neutral"><i class="fa fa-box ph-text-primary me-1"></i>{{ row.binCode }}</span>
+            <span class="ph-badge ph-badge--neutral"
+              ><i class="fa fa-box ph-text-primary me-1"></i>{{ row.binCode }}</span
+            >
           </small>
         </ng-template>
       </ngx-datatable-column>
@@ -114,6 +121,10 @@
         prop="quantity"
         [width]="140"
       >
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="fw-semibold">{{ row.quantity | number }}</span>
+          <span class="ph-text-muted small ms-1">{{ row.baseUnitName }}</span>
+        </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column
@@ -127,6 +138,7 @@
             [ngClass]="row.lockedQuantity > 0 ? 'ph-badge--pending' : 'ph-badge--neutral'"
           >
             <i class="fa fa-lock me-1"></i> {{ row.lockedQuantity | number }}
+            <small class="ms-1">{{ row.baseUnitName }}</small>
           </span>
         </ng-template>
       </ngx-datatable-column>
@@ -139,17 +151,15 @@
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span
             class="fs-6 fw-bold"
-            [ngClass]="(row.quantity - row.lockedQuantity) > 0 ? 'ph-text-success' : 'ph-text-danger'"
+            [ngClass]="row.quantity - row.lockedQuantity > 0 ? 'ph-text-success' : 'ph-text-danger'"
           >
-            {{ (row.quantity - row.lockedQuantity) | number }}
+            {{ row.quantity - row.lockedQuantity | number }}
           </span>
+          <span class="ph-text-muted small ms-1">{{ row.baseUnitName }}</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column
-        [name]="'::CreationTime' | abpLocalization"
-        prop="creationTime"
-      >
+      <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.creationTime | date: 'medium' }}
         </ng-template>

@@ -84,3 +84,60 @@
     }
   }
 }
+
+/* ── BATCHES & BINS STYLING ──────────────────────────── */
+.batches-bins-wrapper {
+  background-color: var(--ph-color-bg-subtle);
+  border-radius: var(--ph-radius-md);
+  margin: 0 var(--ph-space-4) var(--ph-space-4) 44px;
+  padding: var(--ph-space-3);
+  border: 1px solid var(--ph-color-border-default);
+  box-shadow: var(--ph-shadow-sm);
+
+  .header-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: var(--ph-space-2);
+    
+    .title {
+      font-size: var(--ph-font-size-xs);
+      font-weight: var(--ph-font-weight-bold);
+      color: var(--ph-color-text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+  }
+
+  .ph-table {
+    background: var(--ph-color-bg-base);
+    border-radius: var(--ph-radius-sm);
+    overflow: hidden;
+    border: 1px solid var(--ph-color-border-default);
+    margin-bottom: 0;
+    
+    thead th {
+      background-color: var(--ph-color-bg-subtle);
+      color: var(--ph-color-text-secondary);
+      border-bottom: 1px solid var(--ph-color-border-default);
+      font-weight: var(--ph-font-weight-semibold);
+      font-size: 10px;
+    }
+    
+    tbody tr {
+      &:last-child td {
+        border-bottom: none;
+      }
+      
+      &:hover {
+        background-color: var(--ph-color-brand-50);
+      }
+    }
+  }
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+

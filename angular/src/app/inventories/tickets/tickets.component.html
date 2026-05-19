@@ -63,9 +63,10 @@
 
     <!-- Table -->
     <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+      <!-- Cột Actions -->
       <ngx-datatable-column
         [name]="'::Actions' | abpLocalization"
-        [maxWidth]="120"
+        [maxWidth]="150"
         [sortable]="false"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
@@ -90,6 +91,7 @@
         </ng-template>
       </ngx-datatable-column>
 
+      <!-- Ticket Number -->
       <ngx-datatable-column
         [name]="'::TicketNumber' | abpLocalization"
         prop="ticketNumber"
@@ -102,10 +104,11 @@
         </ng-template>
       </ngx-datatable-column>
 
+      <!-- Type -->
       <ngx-datatable-column [name]="'::Type' | abpLocalization" prop="type" [width]="180">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span
-            class="fw-semibold font-mono"
+            class="fw-semibold ph-font-mono"
             [class.ph-text-success]="
               row.type === TicketType.GoodsReceipt ||
               row.type === TicketType.ReturnInward ||
@@ -135,25 +138,27 @@
         </ng-template>
       </ngx-datatable-column>
 
+      <!-- Warehouse -->
       <ngx-datatable-column
         [name]="'::Warehouse' | abpLocalization"
         prop="warehouseName"
         [width]="160"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="ph-text-muted"
-            ><i class="fa fa-building-o me-1"></i>{{ row.warehouseName }}</span
-          >
+          <span class="ph-text-muted">
+            <i class="fa fa-building-o me-1"></i>{{ row.warehouseName }}
+          </span>
         </ng-template>
       </ngx-datatable-column>
 
+      <!-- Source -->
       <ngx-datatable-column
         [name]="'::Source' | abpLocalization"
         prop="referenceDocumentNumber"
         [width]="160"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span *ngIf="row.referenceDocumentNumber" class="ph-badge ph-badge--info font-mono">
+          <span *ngIf="row.referenceDocumentNumber" class="ph-badge ph-badge--info ph-font-mono">
             <i class="fa fa-link me-1"></i> {{ row.referenceDocumentNumber }}
           </span>
           <span *ngIf="!row.referenceDocumentNumber" class="ph-text-muted fst-italic">
@@ -162,6 +167,7 @@
         </ng-template>
       </ngx-datatable-column>
 
+      <!-- Status -->
       <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="140">
         <ng-template let-value="value" ngx-datatable-cell-template>
           <span
@@ -187,6 +193,7 @@
         </ng-template>
       </ngx-datatable-column>
 
+      <!-- Creation Time -->
       <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
         <ng-template let-row="row" ngx-datatable-cell-template>
           {{ row.creationTime | date: 'medium' }}
@@ -206,11 +213,6 @@
   (save)="save()"
 >
   <form [formGroup]="form">
-    <div class="ph-callout ph-callout--info mb-3">
-      <i class="fa fa-info-circle ph-callout__icon"></i>
-      <div>{{ '::AutoGenerateTicketNumberHint' | abpLocalization }}</div>
-    </div>
-
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
       <app-dropdown-search
@@ -224,19 +226,20 @@
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::TicketType' | abpLocalization }}</label>
       <select class="form-select form-select-sm" formControlName="type">
-        <option *ngFor="let t of ticketTypeOptions" [value]="t.value">
+        <option [ngValue]="null">{{ '::SelectTicketType' | abpLocalization }}</option>
+        <option *ngFor="let t of ticketTypeOptions" [ngValue]="t.value">
           {{ '::Enum:TicketType.' + enumName(TicketType, t.value) | abpLocalization }}
         </option>
       </select>
     </div>
 
-    <div class="mb-3" *ngIf="form.get('type').value === TicketType.GoodsReceipt">
-      <label class="ph-label">{{ '::LinkToPurchaseOrder' | abpLocalization }}</label>
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::LinkToDocument' | abpLocalization }}</label>
       <app-dropdown-search
         formControlName="referenceDocumentId"
-        [items]="approvedPurchaseOrders"
+        [items]="selectableReferences"
         [labelKey]="'displayName'"
-        [placeholder]="'::ManualReceipt' | abpLocalization"
+        [placeholder]="'::SelectDocument' | abpLocalization"
         [searchPlaceholder]="'::Search' | abpLocalization"
       ></app-dropdown-search>
     </div>

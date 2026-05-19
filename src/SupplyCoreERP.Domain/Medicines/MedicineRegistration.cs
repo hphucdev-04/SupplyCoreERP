@@ -11,15 +11,15 @@ namespace SupplyCoreERP.Medicines;
 public class MedicineRegistration : FullAuditedEntity<Guid>
 {
     public Guid MedicineId { get; private set; }
-    
+
     public string RegistrationNumber { get; private set; }
-    
+
     public DateTime? ValidFrom { get; private set; }
-    
+
     public DateTime? ValidTo { get; private set; }
-    
+
     public bool IsActive { get; private set; }
-    
+
     public string? Note { get; private set; }
 
     protected MedicineRegistration() { }

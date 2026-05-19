@@ -59,16 +59,15 @@ export const APP_ROUTES = [
     { name: 'Suppliers', icon: 'fas fa-truck' , requiredPolicy: 'Partner.Supplier' },
     { name: 'Customers', icon: 'fas fa-user-friends', requiredPolicy: 'Partner.Customer' },
   ]),
-
-  ...createMenuGroup('Inventory', 'fas fa-warehouse', 4, [
-    { name: 'Warehouses', icon: 'fas fa-building' , requiredPolicy: 'Inventory.Warehouse'},        
-    { name: 'Batches', icon: 'fas fa-boxes' , requiredPolicy: 'Inventory.Batch'},              
-    { name: 'Tickets', icon: 'fas fa-file-invoice' , requiredPolicy: 'Inventory.Ticket'},       
-    { name: 'Balances', icon: 'fas fa-clipboard-list' ,},    
-  ]),
-
-  ...createMenuGroup('Order', 'fas fa-clipboard-list', 5, [
+  ...createMenuGroup('Order', 'fas fa-clipboard-list', 4, [
     { name: 'PurchaseOrders', icon: 'fas fa-file-invoice-dollar' , requiredPolicy: 'Order.PurchaseOrder'},
     { name: 'SaleOrders', icon: 'fas fa-shipping-fast' , requiredPolicy: 'Order.SaleOrder'},
   ]),
+  ...createMenuGroup('Inventory', 'fas fa-warehouse', 5, [
+    { name: 'Warehouses', icon: 'fas fa-building' , requiredPolicy: 'Inventory.Warehouse'},        
+    { name: 'Batches', icon: 'fas fa-boxes' , requiredPolicy: 'Inventory.Batch'},              
+    { name: 'Tickets', icon: 'fas fa-file-invoice' , requiredPolicy: 'Inventory.Ticket'},        
+    { name: 'Balances', icon: 'fas fa-clipboard-list' ,},   
+  ]),
+
 ];
