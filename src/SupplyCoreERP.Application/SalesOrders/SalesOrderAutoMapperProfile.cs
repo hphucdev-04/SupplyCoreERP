@@ -1,6 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using AutoMapper;
 using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.SalesOrders.Dtos;
@@ -13,7 +10,9 @@ public class SalesOrderAutoMapperProfile : Profile
     {
         CreateMap<SalesOrder, SalesOrderDto>()
             .ForMember(dest => dest.CustomerName, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Name : null))
+            .ForMember(dest => dest.CustomerCode, opt => opt.MapFrom(src => src.Customer != null ? src.Customer.Code : null))
             .ForMember(dest => dest.WarehouseName, opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Name : null))
+            .ForMember(dest => dest.WarehouseCode, opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Code : null))
             .ForMember(dest => dest.Lines, opt => opt.MapFrom(src => src.Lines));
 
         CreateMap<SalesOrderLine, SalesOrderLineDto>()
@@ -21,4 +20,5 @@ public class SalesOrderAutoMapperProfile : Profile
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
             .ForMember(dest => dest.UnitName, opt => opt.MapFrom(src => src.Unit != null ? src.Unit.Name : null))
             .ForMember(dest => dest.BaseUnitName, opt => opt.MapFrom(src => src.Product != null && src.Product.BaseUnit != null ? src.Product.BaseUnit.Name : null));
-        }}
+    }
+}

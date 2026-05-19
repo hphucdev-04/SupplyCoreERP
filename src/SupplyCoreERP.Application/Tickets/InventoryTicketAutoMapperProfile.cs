@@ -18,6 +18,8 @@ public class InventoryTicketAutoMapperProfile : Profile
                 opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
             .ForMember(dest => dest.ProductCode,
                 opt => opt.MapFrom(src => src.Product != null ? src.Product.Code : null))
+            .ForMember(dest => dest.ProductBaseUnitName,
+                opt => opt.MapFrom(src => src.Product != null && src.Product.BaseUnit != null ? src.Product.BaseUnit.Name : null))
             .ForMember(dest => dest.UnitName,
                 opt => opt.MapFrom(src => src.Unit != null ? src.Unit.Name : null));
 
@@ -33,6 +35,10 @@ public class InventoryTicketAutoMapperProfile : Profile
             // Batch
             .ForMember(dest => dest.BatchNumber,
                 opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.BatchNumber : null))
+            .ForMember(dest => dest.BatchCode,
+                opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.Code : null))
+            .ForMember(dest => dest.RegistrationNumber,
+                opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.MedicineRegistration.RegistrationNumber : null))
             .ForMember(dest => dest.ManufacturingDate,
                 opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.ManufacturingDate : (DateTime?)null))
             .ForMember(dest => dest.ExpiryDate,

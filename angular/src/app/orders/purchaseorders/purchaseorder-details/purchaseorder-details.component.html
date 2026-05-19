@@ -19,20 +19,32 @@
       <div>
         <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
           {{ order.code }}
-          <span class="ph-badge" [ngClass]="{
-            'ph-badge--neutral': order.status === PurchaseOrderStatus.Draft,
-            'ph-badge--pending': order.status === PurchaseOrderStatus.PendingApproval,
-            'ph-badge--info': order.status === PurchaseOrderStatus.Approved || order.status === PurchaseOrderStatus.Receiving,
-            'ph-badge--approved': order.status === PurchaseOrderStatus.Completed,
-            'ph-badge--rejected': order.status === PurchaseOrderStatus.Canceled
-          }">
+          <span
+            class="ph-badge"
+            [ngClass]="{
+              'ph-badge--neutral': order.status === PurchaseOrderStatus.Draft,
+              'ph-badge--pending': order.status === PurchaseOrderStatus.PendingApproval,
+              'ph-badge--info':
+                order.status === PurchaseOrderStatus.Approved ||
+                order.status === PurchaseOrderStatus.Receiving,
+              'ph-badge--approved': order.status === PurchaseOrderStatus.Completed,
+              'ph-badge--rejected': order.status === PurchaseOrderStatus.Canceled,
+            }"
+          >
             <i class="fa me-1" [ngClass]="statusIcon(order.status)"></i>
-            {{ '::Enum:PurchaseOrderStatus.' + enumName(PurchaseOrderStatus, order.status) | abpLocalization }}
+            {{
+              '::Enum:PurchaseOrderStatus.' + enumName(PurchaseOrderStatus, order.status)
+                | abpLocalization
+            }}
           </span>
         </h3>
         <div class="ph-text-muted d-flex gap-3">
-          <span>Supplier: <strong>{{ order.supplierName }}</strong></span>
-          <span>Order Date: <strong>{{ order.orderDate | date:'dd/MM/yyyy' }}</strong></span>
+          <span
+            >Supplier: <strong>{{ order.supplierName }}</strong></span
+          >
+          <span
+            >Order Date: <strong>{{ order.orderDate | date: 'dd/MM/yyyy' }}</strong></span
+          >
         </div>
       </div>
     </div>
@@ -47,15 +59,161 @@
   </div>
 
   <div class="container-fluid p-0">
-    <div class="row g-4">
-      <!-- LEFT COLUMN: Order Lines -->
+    <!-- Row 1: General Information + System Data & Related Tickets -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <!-- General Information Card -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::Warehouse' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="d-flex flex-column">
+                    {{ order.warehouseName }}
+                    <small class="ph-text-muted font-mono">{{ order.warehouseCode }}</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::Supplier' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="d-flex flex-column">
+                    {{ order.supplierName }}
+                    <small class="ph-text-muted font-mono">{{ order.supplierCode }}</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::OrderDate' | abpLocalization }}</span>
+                <div class="ph-field-value">{{ order.orderDate | date: 'dd/MM/yyyy' }}</div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::ExpectedDeliveryDate' | abpLocalization }}</span>
+                <div
+                  class="ph-field-value"
+                  [class.ph-text-danger]="
+                    order.expectedDeliveryDate && (order.expectedDeliveryDate | date) < ('' | date)
+                  "
+                >
+                  {{
+                    order.expectedDeliveryDate
+                      ? (order.expectedDeliveryDate | date: 'dd/MM/yyyy')
+                      : '—'
+                  }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::DueDate' | abpLocalization }}</span>
+                <div
+                  class="ph-field-value"
+                  [class.ph-text-danger]="order.dueDate && (order.dueDate | date) < ('' | date)"
+                >
+                  {{ order.dueDate ? (order.dueDate | date: 'dd/MM/yyyy') : '—' }}
+                </div>
+              </div>
+              <div class="col-12" *ngIf="order.note">
+                <span class="ph-field-meta">{{ '::Note' | abpLocalization }}</span>
+                <div class="ph-field-value small fst-italic">{{ order.note }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <!-- System Data Card (tầng trên) -->
+          <div class="ph-card mb-3">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-clock-rotate-left"></i> {{ '::SystemData' | abpLocalization }}
+              </h6>
+            </div>
+            <div class="ph-card__body">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="ph-field-meta">{{ '::CreationTime' | abpLocalization }}</span>
+                <span class="ph-field-value">{{
+                  order.creationTime | date: 'HH:mm dd/MM/yyyy'
+                }}</span>
+              </div>
+              <hr class="ph-divider my-1" />
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="ph-field-meta">{{ '::LastModificationTime' | abpLocalization }}</span>
+                <span class="ph-field-value">
+                  {{
+                    order.lastModificationTime
+                      ? (order.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
+                      : 'N/A'
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+
+        <!-- Related Inventory Tickets Card (tầng dưới) -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-history me-2"></i>{{ '::RelatedInventoryTickets' | abpLocalization }}
+              <span class="ph-badge ph-badge--info ms-2">
+                {{ relatedTickets.length || 0 }}
+              </span>
+            </h6>
+          </div>
+          <div class="ph-card__body--flush">
+            <div class="table-responsive">
+              <table class="ph-table">
+                <thead>
+                  <tr>
+                    <th>{{ '::TicketNumber' | abpLocalization }}</th>
+                    <th>{{ '::CreationTime' | abpLocalization }}</th>
+                    <th>{{ '::Status' | abpLocalization }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let t of relatedTickets">
+                    <td class="font-mono fw-bold w-50">{{ t.ticketNumber }}</td>
+                    <td>{{ t.creationTime | date: 'HH:mm dd/MM/yyyy' }}</td>
+                    <td>
+                      <span
+                        class="ph-badge"
+                        [ngClass]="{
+                          'ph-badge--neutral': t.status === 0,
+                          'ph-badge--pending': t.status === 1,
+                          'ph-badge--approved': t.status === 2,
+                          'ph-badge--rejected': t.status === 3,
+                        }"
+                        >{{ '::Enum:ApprovalStatus.' + t.status | abpLocalization }}</span
+                      >
+                    </td>
+                  </tr>
+                  <tr *ngIf="!relatedTickets.length">
+                    <td colspan="3" class="ph-empty-state">
+                      {{ '::NoRelatedTickets' | abpLocalization }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Order Lines (8 cột) + Financial Summary (4 cột) -->
+    <div class="row g-3">
       <div class="col-lg-8">
         <!-- Order Lines Card -->
-        <div class="ph-card mb-4">
+        <div class="ph-card">
           <div class="ph-card__header">
             <h6 class="ph-card__header-title">
               <i class="fa fa-list me-2"></i>{{ '::OrderLines' | abpLocalization }}
-              <span class="ph-badge ph-badge--neutral ms-2">{{ order.lines?.length || 0 }}</span>
+              <span class="ph-badge ph-badge--info ms-2">{{ order.lines?.length || 0 }}</span>
             </h6>
             <div class="ph-card__header-actions">
               <!-- Draft actions -->
@@ -101,7 +259,7 @@
               <table class="ph-table">
                 <thead>
                   <tr>
-                    <th style="width:44px" *ngIf="isEditable()"></th>
+                    <th style="width: 44px" *ngIf="isEditable()"></th>
                     <th>{{ '::Product' | abpLocalization }}</th>
                     <th>{{ '::Unit' | abpLocalization }}</th>
                     <th class="text-end">{{ '::Quantity' | abpLocalization }}</th>
@@ -109,7 +267,14 @@
                     <th class="text-end">{{ '::UnitPrice' | abpLocalization }}</th>
                     <th class="text-end">{{ '::Tax' | abpLocalization }}%</th>
                     <th class="text-end">{{ '::FinalPrice' | abpLocalization }}</th>
-                    <th class="text-center" *ngIf="order.status !== PurchaseOrderStatus.Draft && order.status !== PurchaseOrderStatus.PendingApproval && order.status !== PurchaseOrderStatus.Canceled">
+                    <th
+                      class="text-center"
+                      *ngIf="
+                        order.status !== PurchaseOrderStatus.Draft &&
+                        order.status !== PurchaseOrderStatus.PendingApproval &&
+                        order.status !== PurchaseOrderStatus.Canceled
+                      "
+                    >
                       {{ '::Received' | abpLocalization }}
                     </th>
                   </tr>
@@ -127,51 +292,93 @@
                     </td>
                     <td>
                       <span class="ph-field-value">{{ row.unitName }}</span>
-                      <div class="ph-text-muted small" *ngIf="row.conversionFactor > 1">×{{ row.conversionFactor }}</div>
+                      <div class="ph-text-muted small" *ngIf="row.conversionFactor > 1">
+                        ×{{ row.conversionFactor }}
+                      </div>
                     </td>
                     <td class="text-end">
                       <div *ngIf="isEditable()" class="d-flex justify-content-end">
-                        <input type="number" class="form-control form-control-sm text-end fw-bold" style="width: 80px"
-                          [value]="row.quantity" min="0.01" step="1"
-                          (change)="onInlineLineChange(row, 'quantity', $event.target.value)">
+                        <input
+                          type="number"
+                          class="form-control form-control-sm text-end fw-bold"
+                          style="width: 80px"
+                          [value]="row.quantity"
+                          min="0.01"
+                          step="1"
+                          (change)="onInlineLineChange(row, 'quantity', $event.target.value)"
+                        />
                       </div>
                       <span *ngIf="!isEditable()" class="fw-bold">{{ row.quantity | number }}</span>
                     </td>
                     <td class="text-end">
-                      <span class="ph-text-muted">{{ row.baseQuantity | number }} <small>{{ row.baseUnitName }}</small></span>
+                      <span class="ph-text-muted"
+                        >{{ row.baseQuantity | number }} <small>{{ row.baseUnitName }}</small></span
+                      >
                     </td>
                     <td class="text-end">
                       <div *ngIf="isEditable()" class="d-flex justify-content-end">
-                        <input type="number" class="form-control form-control-sm text-end" style="width: 100px"
-                          [value]="row.unitPrice" min="0"
-                          (change)="onInlineLineChange(row, 'unitPrice', $event.target.value)">
+                        <input
+                          type="number"
+                          class="form-control form-control-sm text-end"
+                          style="width: 100px"
+                          [value]="row.unitPrice"
+                          min="0"
+                          (change)="onInlineLineChange(row, 'unitPrice', $event.target.value)"
+                        />
                       </div>
-                      <span *ngIf="!isEditable()">{{ row.unitPrice | number:'1.0-0' }} ₫</span>
+                      <span *ngIf="!isEditable()">{{ row.unitPrice | number: '1.0-0' }} ₫</span>
                     </td>
                     <td class="text-end">
                       <div *ngIf="isEditable()" class="d-flex justify-content-end">
-                        <input type="number" class="form-control form-control-sm text-end" style="width: 60px"
-                          [value]="row.taxRate ?? 0" min="0" max="100"
-                          (change)="onInlineLineChange(row, 'taxRate', $event.target.value)">
+                        <input
+                          type="number"
+                          class="form-control form-control-sm text-end"
+                          style="width: 60px"
+                          [value]="row.taxRate ?? 0"
+                          min="0"
+                          max="100"
+                          (change)="onInlineLineChange(row, 'taxRate', $event.target.value)"
+                        />
                       </div>
-                      <span *ngIf="!isEditable()" class="ph-text-muted">{{ row.taxRate ?? 0 }}%</span>
+                      <span *ngIf="!isEditable()" class="ph-text-muted"
+                        >{{ row.taxRate ?? 0 }}%</span
+                      >
                     </td>
                     <td class="text-end">
-                      <span class="fw-bold ph-text-primary">{{ row.finalPrice | number:'1.0-0' }} ₫</span>
+                      <span class="fw-bold ph-text-primary"
+                        >{{ row.finalPrice | number: '1.0-0' }} ₫</span
+                      >
                     </td>
-                    <td class="text-center" *ngIf="order.status !== PurchaseOrderStatus.Draft && order.status !== PurchaseOrderStatus.PendingApproval && order.status !== PurchaseOrderStatus.Canceled">
-                      <div style="min-width: 110px;">
+                    <td
+                      class="text-center"
+                      *ngIf="
+                        order.status !== PurchaseOrderStatus.Draft &&
+                        order.status !== PurchaseOrderStatus.PendingApproval &&
+                        order.status !== PurchaseOrderStatus.Canceled
+                      "
+                    >
+                      <div style="min-width: 110px">
                         <div class="d-flex justify-content-between small mb-1">
-                          <span class="ph-text-muted">{{ row.receivedQuantity | number }} <small>{{ row.unitName }}</small></span>
-                          <span class="fw-bold" [class.ph-text-success]="(row.receivedQuantity / row.quantity * 100) >= 100">
-                            {{ (row.receivedQuantity / row.quantity * 100) | number:'1.0-0' }}%
+                          <span class="ph-text-muted"
+                            >{{ row.receivedQuantity | number }}
+                            <small>{{ row.unitName }}</small></span
+                          >
+                          <span
+                            class="fw-bold"
+                            [class.ph-text-success]="
+                              (row.receivedQuantity / row.quantity) * 100 >= 100
+                            "
+                          >
+                            {{ (row.receivedQuantity / row.quantity) * 100 | number: '1.0-0' }}%
                           </span>
                         </div>
-                        <div class="progress" style="height: 4px;">
-                          <div class="progress-bar" [class.bg-success]="(row.receivedQuantity / row.quantity * 100) >= 100"
-                            [class.bg-warning]="(row.receivedQuantity / row.quantity * 100) < 100"
-                            [style.width.%]="(row.receivedQuantity / row.quantity * 100)">
-                          </div>
+                        <div class="progress" style="height: 4px">
+                          <div
+                            class="progress-bar"
+                            [class.bg-success]="(row.receivedQuantity / row.quantity) * 100 >= 100"
+                            [class.bg-warning]="(row.receivedQuantity / row.quantity) * 100 < 100"
+                            [style.width.%]="(row.receivedQuantity / row.quantity) * 100"
+                          ></div>
                         </div>
                       </div>
                     </td>
@@ -181,67 +388,34 @@
             </div>
           </div>
         </div>
-
-        <!-- Related Inventory Tickets Card -->
-        <div class="ph-card mb-4">
-          <div class="ph-card__header">
-            <h6 class="ph-card__header-title">
-              <i class="fa fa-history me-2"></i>{{ '::RelatedInventoryTickets' | abpLocalization }}
-            </h6>
-          </div>
-          <div class="ph-card__body--flush">
-            <table class="ph-table">
-              <thead>
-                <tr><th>{{ '::TicketNumber' | abpLocalization }}</th><th>{{ '::CreationTime' | abpLocalization }}</th><th>{{ '::Status' | abpLocalization }}</th></tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let t of relatedTickets"><td class="font-mono fw-bold">{{ t.ticketNumber }}</td><td>{{ t.creationTime | date:'dd/MM/yyyy HH:mm' }}</td><td><span class="ph-badge" [ngClass]="{'ph-badge--neutral': t.status === 0,'ph-badge--pending': t.status === 1,'ph-badge--approved': t.status === 2,'ph-badge--rejected': t.status === 3}">{{ '::Enum:ApprovalStatus.' + t.status | abpLocalization }}</span></td></tr>
-                <tr *ngIf="!relatedTickets.length"><td colspan="3" class="ph-empty-state">{{ '::NoRelatedTickets' | abpLocalization }}</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
       </div>
 
-      <!-- RIGHT COLUMN: PO Details & Financial Summary -->
       <div class="col-lg-4">
-        <!-- General Information Card -->
-        <div class="ph-card mb-4">
-          <div class="ph-card__header">
-            <h6 class="ph-card__header-title"><i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}</h6>
-          </div>
-          <div class="ph-card__body">
-            <div class="mb-3"><span class="ph-field-meta">{{ '::Warehouse' | abpLocalization }}</span><div class="ph-field-value"><i class="fa fa-home ph-text-muted me-2"></i>{{ order.warehouseName }}</div></div>
-            <div class="mb-3"><span class="ph-field-meta">{{ '::Supplier' | abpLocalization }}</span><div class="ph-field-value"><i class="fa fa-truck ph-text-muted me-2"></i>{{ order.supplierName }}</div></div>
-            <div class="mb-3"><span class="ph-field-meta">{{ '::OrderDate' | abpLocalization }}</span><div class="ph-field-value">{{ order.orderDate | date:'dd/MM/yyyy' }}</div></div>
-            <div class="mb-3"><span class="ph-field-meta">{{ '::ExpectedDeliveryDate' | abpLocalization }}</span><div class="ph-field-value" [class.ph-text-danger]="order.expectedDeliveryDate && (order.expectedDeliveryDate | date) < ('' | date)">{{ order.expectedDeliveryDate ? (order.expectedDeliveryDate | date:'dd/MM/yyyy') : '—' }}</div></div>
-            <div class="mb-3"><span class="ph-field-meta">{{ '::DueDate' | abpLocalization }}</span><div class="ph-field-value" [class.ph-text-danger]="order.dueDate && (order.dueDate | date) < ('' | date)">{{ order.dueDate ? (order.dueDate | date:'dd/MM/yyyy') : '—' }}</div></div>
-            <div *ngIf="order.note"><span class="ph-field-meta">{{ '::Note' | abpLocalization }}</span><div class="ph-field-value small fst-italic">{{ order.note }}</div></div>
-          </div>
-        </div>
-
         <!-- Financial Summary Card -->
-        <div class="ph-card mb-4">
+        <div class="ph-card">
           <div class="ph-card__header">
-            <h6 class="ph-card__header-title"><i class="fa fa-credit-card me-2"></i>{{ '::FinancialSummary' | abpLocalization }}</h6>
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-credit-card me-2"></i>{{ '::FinancialSummary' | abpLocalization }}
+            </h6>
           </div>
           <div class="ph-card__body">
-            <div class="d-flex justify-content-between mb-2"><span class="ph-text-muted">{{ '::SubTotal' | abpLocalization }}</span><span class="ph-field-value">{{ order.subTotal | number:'1.0-0' }} ₫</span></div>
-            <div class="d-flex justify-content-between mb-2"><span class="ph-text-muted">{{ '::TaxAmount' | abpLocalization }}</span><span class="ph-field-value ph-text-warning">+{{ order.taxAmount | number:'1.0-0' }} ₫</span></div>
-            <hr class="ph-divider">
-            <div class="d-flex justify-content-between align-items-center"><span class="fw-bold">{{ '::TotalAmount' | abpLocalization }}</span><span class="fw-bold h3 ph-text-primary mb-0">{{ order.totalAmount | number:'1.0-0' }} ₫</span></div>
-          </div>
-        </div>
-
-        <!-- System Data Card -->
-        <div class="ph-card mb-4">
-          <div class="ph-card__header">
-            <h6 class="ph-card__header-title"><i class="fa fa-clock-rotate-left me-2"></i>{{ '::SystemData' | abpLocalization }}</h6>
-          </div>
-          <div class="ph-card__body">
-            <div class="d-flex justify-content-between py-2"><span class="ph-text-muted small">{{ '::CreationTime' | abpLocalization }}</span><span class="small">{{ order.creationTime | date:'dd/MM/yyyy HH:mm' }}</span></div>
-            <hr class="ph-divider my-1">
-            <div class="d-flex justify-content-between py-2"><span class="ph-text-muted small">{{ '::LastModificationTime' | abpLocalization }}</span><span class="small">{{ order.lastModificationTime ? (order.lastModificationTime | date:'dd/MM/yyyy HH:mm') : 'N/A' }}</span></div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="ph-text-muted">{{ '::SubTotal' | abpLocalization }}</span
+              ><span class="ph-field-value">{{ order.subTotal | number: '1.0-0' }} ₫</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="ph-text-muted">{{ '::TaxAmount' | abpLocalization }}</span
+              ><span class="ph-field-value ph-text-warning"
+                >+{{ order.taxAmount | number: '1.0-0' }} ₫</span
+              >
+            </div>
+            <hr class="ph-divider" />
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold">{{ '::TotalAmount' | abpLocalization }}</span
+              ><span class="fw-bold h3 ph-text-primary mb-0"
+                >{{ order.totalAmount | number: '1.0-0' }} ₫</span
+              >
+            </div>
           </div>
         </div>
       </div>
@@ -249,65 +423,122 @@
   </div>
 
   <!-- Drawers: Edit, Add Line, Cancel (giữ nguyên logic cũ) -->
-  <app-drawer [isOpen]="isEditDrawerOpen" [title]="'::EditPurchaseOrder' | abpLocalization" [width]="'md'" [saveDisabled]="editForm?.invalid || isSavingEdit" (close)="closeEditDrawer()" (save)="saveEdit()">
+  <app-drawer
+    [isOpen]="isEditDrawerOpen"
+    [title]="'::EditPurchaseOrder' | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="editForm?.invalid || isSavingEdit"
+    (close)="closeEditDrawer()"
+    (save)="saveEdit()"
+  >
     <form *ngIf="editForm" [formGroup]="editForm">
-      <div class="mb-3"><label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label><select class="form-select" formControlName="warehouseId"><option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option><option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option></select></div>
+      <div class="mb-3">
+        <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label
+        ><select class="form-select" formControlName="warehouseId">
+          <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+          <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
+        </select>
+      </div>
       <div class="row">
         <div class="col-6 mb-3">
           <label class="ph-label">{{ '::ExpectedDeliveryDate' | abpLocalization }}</label>
-          <input type="date" class="form-control" formControlName="expectedDeliveryDate">
+          <input type="date" class="form-control" formControlName="expectedDeliveryDate" />
         </div>
         <div class="col-6 mb-3">
           <label class="ph-label">{{ '::DueDate' | abpLocalization }}</label>
-          <input type="date" class="form-control bg-light" formControlName="dueDate" readonly>
-          <div class="txt-muted txt-xs mt-1">{{ '::AutoCalcFromSupplierTerms' | abpLocalization }}</div>
+          <input type="date" class="form-control bg-light" formControlName="dueDate" readonly />
+          <div class="txt-muted txt-xs mt-1">
+            {{ '::AutoCalcFromSupplierTerms' | abpLocalization }}
+          </div>
         </div>
       </div>
-      <div class="mb-3"><label class="ph-label">{{ '::Note' | abpLocalization }}</label><textarea class="form-control" formControlName="note" rows="3"></textarea></div>
+      <div class="mb-3">
+        <label class="ph-label">{{ '::Note' | abpLocalization }}</label
+        ><textarea class="form-control" formControlName="note" rows="3"></textarea>
+      </div>
     </form>
   </app-drawer>
 
-  <app-drawer [isOpen]="isAddLineOpen" [title]="'::AddProduct' | abpLocalization" [width]="'md'" [saveDisabled]="detailForm?.invalid || isSavingDetail" (close)="closeAddLineDrawer()" (save)="saveLine()">
+  <app-drawer
+    [isOpen]="isAddLineOpen"
+    [title]="'::AddProduct' | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="detailForm?.invalid || isSavingDetail"
+    (close)="closeAddLineDrawer()"
+    (save)="saveLine()"
+  >
     <form *ngIf="detailForm" [formGroup]="detailForm">
       <div class="mb-3">
         <label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label>
-        <select class="form-select" formControlName="productId" (change)="onMedicineChange($event.target.value)">
-          <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+        <select
+          class="form-select"
+          formControlName="productId"
+          (change)="onMedicineChange($event.target.value)"
+        >
+          <option [ngValue]="null">{{ '::SelectMedicine' | abpLocalization }}</option>
           <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
         </select>
       </div>
       <div class="row">
         <div class="col-6 mb-3">
           <label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label>
-          <select class="form-select" formControlName="unitId" 
-            [attr.disabled]="isAutoFilled || !units.length ? 'disabled' : null" 
-            (change)="onUnitChange($event.target.value)">
-            <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-            <option *ngFor="let u of units" [value]="u.unitId">{{ u.unitName }} (×{{ u.conversionFactor }})</option>
+          <select
+            class="form-select"
+            formControlName="unitId"
+            [attr.disabled]="isAutoFilled || !units.length ? 'disabled' : null"
+            (change)="onUnitChange($event.target.value)"
+          >
+            <option [ngValue]="null">{{ '::SelectUnit' | abpLocalization }}</option>
+            <option *ngFor="let u of units" [value]="u.unitId">
+              {{ u.unitName }} (×{{ u.conversionFactor }})
+            </option>
           </select>
         </div>
         <div class="col-6 mb-3">
           <label class="ph-label ph-label--required">{{ '::Quantity' | abpLocalization }}</label>
-          <input type="number" step="1" min="1" class="form-control" formControlName="quantity" (input)="updateQuantityPreview()">
+          <input
+            type="number"
+            step="1"
+            min="1"
+            class="form-control"
+            formControlName="quantity"
+            (input)="updateQuantityPreview()"
+          />
         </div>
       </div>
-      <div class="ph-callout ph-callout--info mb-3" *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
+      <div
+        class="ph-callout ph-callout--info mb-3"
+        *ngIf="quantityPreview > 0 && selectedConversionFactor > 1"
+      >
         <i class="fa fa-calculator ph-callout__icon"></i>
-        <div>≈ <strong>{{ quantityPreview | number }} {{ baseUnitName }}</strong></div>
+        <div>
+          ≈ <strong>{{ quantityPreview | number }} {{ baseUnitName }}</strong>
+        </div>
       </div>
       <div class="row">
         <div class="col-7 mb-3">
           <label class="ph-label ph-label--required">{{ '::UnitPrice' | abpLocalization }}</label>
           <div class="input-group">
-            <input type="number" class="form-control text-end fw-bold ph-text-primary" 
-              formControlName="unitPrice" min="0" [readonly]="isAutoFilled">
+            <input
+              type="number"
+              class="form-control text-end fw-bold ph-text-primary"
+              formControlName="unitPrice"
+              min="0"
+              [readonly]="isAutoFilled"
+            />
             <span class="input-group-text">₫</span>
           </div>
         </div>
         <div class="col-5 mb-3">
           <label class="ph-label">{{ '::TaxRate' | abpLocalization }}</label>
           <div class="input-group">
-            <input type="number" class="form-control text-end" formControlName="taxRate" min="0" max="100">
+            <input
+              type="number"
+              class="form-control text-end"
+              formControlName="taxRate"
+              min="0"
+              max="100"
+            />
             <span class="input-group-text">%</span>
           </div>
         </div>
@@ -315,8 +546,30 @@
     </form>
   </app-drawer>
 
-  <app-drawer [isOpen]="isCancelDrawerOpen" [title]="'::CancelOrder' | abpLocalization" [width]="'md'" [saveDisabled]="isCanceling" (close)="closeCancelDrawer()" (save)="confirmCancel()">
-    <div class="ph-callout ph-callout--danger mb-3"><i class="fa fa-exclamation-triangle ph-callout__icon"></i><div>{{ '::CancelOrderWarning' | abpLocalization }}</div></div>
-    <div class="mb-2"><label class="ph-label ph-label--required">{{ '::CancelReason' | abpLocalization }}</label><textarea class="form-control" [(ngModel)]="ngModel_cancelReason" rows="3" [placeholder]="'::EnterReason' | abpLocalization" autofocus></textarea><div *ngIf="showCancelError" class="ph-error-msg"><i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}</div></div>
+  <app-drawer
+    [isOpen]="isCancelDrawerOpen"
+    [title]="'::CancelOrder' | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="isCanceling"
+    (close)="closeCancelDrawer()"
+    (save)="confirmCancel()"
+  >
+    <div class="ph-callout ph-callout--danger mb-3">
+      <i class="fa fa-exclamation-triangle ph-callout__icon"></i>
+      <div>{{ '::CancelOrderWarning' | abpLocalization }}</div>
+    </div>
+    <div class="mb-2">
+      <label class="ph-label ph-label--required">{{ '::CancelReason' | abpLocalization }}</label
+      ><textarea
+        class="form-control"
+        [(ngModel)]="ngModel_cancelReason"
+        rows="3"
+        [placeholder]="'::EnterReason' | abpLocalization"
+        autofocus
+      ></textarea>
+      <div *ngIf="showCancelError" class="ph-error-msg">
+        <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
+      </div>
+    </div>
   </app-drawer>
 </div>

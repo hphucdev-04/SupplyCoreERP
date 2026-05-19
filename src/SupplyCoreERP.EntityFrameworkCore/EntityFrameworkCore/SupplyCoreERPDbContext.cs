@@ -114,9 +114,10 @@ public class SupplyCoreERPDbContext :
     public DbSet<InventoryTransaction> InventoryTransactions { get; set; }
     public DbSet<InventoryReservation> InventoryReservations { get; set; }
 
-    //Order
+    // Orders
     public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
     public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; }
+
     public DbSet<SalesOrder> SalesOrders { get; set; }
     public DbSet<SalesOrderLine> SalesOrderLines { get; set; }
 

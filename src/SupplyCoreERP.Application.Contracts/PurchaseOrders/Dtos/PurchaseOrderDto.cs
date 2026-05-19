@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using SupplyCoreERP.Enums.Orders;
 using Volo.Abp.Application.Dtos;
 
@@ -11,10 +10,12 @@ public class PurchaseOrderDto : FullAuditedEntityDto<Guid>
     public string Code { get; set; }
 
     public Guid SupplierId { get; set; }
-    public string? SupplierName { get; set; }
+    public string SupplierName { get; set; }
+    public string SupplierCode { get; set; }
 
     public Guid WarehouseId { get; set; }
-    public string? WarehouseName { get; set; }
+    public string WarehouseName { get; set; }
+    public string WarehouseCode { get; set; }
 
     public DateTime OrderDate { get; set; }
     public DateTime? ExpectedDeliveryDate { get; set; }

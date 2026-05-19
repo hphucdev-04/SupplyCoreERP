@@ -60,6 +60,7 @@ export interface MedicineDetailDto extends MedicineDto {
 export interface MedicineDto extends EntityDto<string> {
   code?: string;
   name?: string;
+  baseUnitId?: string;
   categoryName?: string;
   manufacturerName?: string;
   baseUnitName?: string;

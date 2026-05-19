@@ -11,7 +11,6 @@ using SupplyCoreERP.Inventories.Tickets;
 using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Prices;
 using SupplyCoreERP.Products;
-using SupplyCoreERP.Suppliers;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
@@ -64,7 +63,7 @@ public class SalesOrderManager : DomainService
             throw new UserFriendlyException($"Khách hàng '{customer.Name}' đang bị khóa!");
         }
 
-        string code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeCustomer);
+        string code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypeSalesOrder);
 
         DateTime? finalDueDate = inputDueDate
             ?? (customer.PaymentTermDays > 0 ? orderDate.AddDays(customer.PaymentTermDays) : null);
@@ -104,7 +103,7 @@ public class SalesOrderManager : DomainService
 
         // Kiểm tra tồn kho khả dụng tổng quát (không quan tâm lô hàng/QA ở bước này)
         decimal requiredBaseQty = quantity * conversionFactor;
-        
+
         IQueryable<InventoryBalance> balanceQuery = await _balanceRepo.GetQueryableAsync();
         decimal totalAvailable = await AsyncExecuter.SumAsync(
             balanceQuery.Where(x => x.WarehouseId == order.WarehouseId && x.ProductId == productId),
@@ -184,8 +183,8 @@ public class SalesOrderManager : DomainService
             throw new UserFriendlyException("Khách hàng đang có đơn hàng cũ quá hạn. Vui lòng thu hồi nợ trước!");
         }
 
-        var productIds = order.Lines.Select(x => x.ProductId).Distinct().ToList();
-        
+        List<Guid> productIds = order.Lines.Select(x => x.ProductId).Distinct().ToList();
+
         // Kiểm tra tồn kho tổng quát (đảm bảo hứa bán được)
         IQueryable<InventoryBalance> balanceQuery = await _balanceRepo.GetQueryableAsync();
         decimal totalAvailable = await AsyncExecuter.SumAsync(

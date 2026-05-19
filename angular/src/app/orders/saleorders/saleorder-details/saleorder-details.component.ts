@@ -10,6 +10,8 @@ import { DrawerComponent } from 'src/app/shared/components/drawer-component/draw
 import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 import { SalesOrderDto, SalesOrderLineDto } from 'src/app/proxy/sales-orders/dtos';
 import { SalesOrderService } from 'src/app/proxy/sales-orders';
+import { InventoryTicketService } from 'src/app/proxy/tickets';
+import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { PriceService } from 'src/app/proxy/prices';
@@ -38,6 +40,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
 
   orderId: string;
   order: SalesOrderDto;
+  relatedTickets: InventoryTicketDto[] = [];
   warehouses: WarehouseDto[] = [];
   medicines: MedicineDto[] = [];
   loading = true;
@@ -68,6 +71,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
 
   constructor(
     private soService: SalesOrderService,
+    private ticketService: InventoryTicketService,
     private warehouseService: WarehouseService,
     private medicineService: MedicineService,
     private priceService: PriceService,
@@ -110,7 +114,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
         next: (res) => {
           this.order = res;
           this.loading = false;
-          
+
           this.routesService.add([{
             path: `/order/saleorders/details/${this.order.id}`,
             name: this.ROUTE_NAME,
@@ -121,6 +125,11 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
         },
         error: () => this.goBack(),
       });
+
+    this.ticketService
+      .getRelatedTicketsBySaleOrder(this.orderId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.relatedTickets = res));
   }
 
   loadMasterData() {
@@ -149,7 +158,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
       unitId: [null, [Validators.required]],
       conversionFactor: [1, [Validators.required, Validators.min(1)]],
       quantity: [1, [Validators.required, Validators.min(0.01)]],
-      unitPrice: [null], // If null, backend will try to find default price
+      unitPrice: [null],
       discountRate: [0, [Validators.min(0), Validators.max(100)]],
       taxRate: [0, [Validators.min(0)]],
     });
@@ -231,7 +240,6 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
         this.lineForm.patchValue({ unitId: baseUnit.unitId, conversionFactor: 1 });
         this.selectedConversionFactor = 1;
 
-        // Fetch prices for this product
         this.loadPrices(medicineId);
       });
   }
@@ -258,14 +266,8 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   filterAvailablePrices() {
     const unitId = this.lineForm.get('unitId')?.value;
     const qty = this.lineForm.get('quantity')?.value || 0;
-    
-    // Filter prices that match the selected unit and quantity
     const filtered = this.availablePrices.filter(p => p.unitId === unitId && qty >= (p.minQuantity || 0));
-    
-    // If we have filtered prices, maybe auto-select the best one or just let the user pick.
-    // For now, we'll just keep them for the dropdown.
     if (filtered.length > 0) {
-      // Auto pick the one with highest minQuantity that is still <= current qty
       const best = filtered.sort((a, b) => (b.minQuantity || 0) - (a.minQuantity || 0))[0];
       this.lineForm.patchValue({ unitPrice: best.price });
     } else {

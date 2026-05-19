@@ -79,7 +79,7 @@ public class MedicineManager : DomainService
             isPrescriptionDrug
         );
 
-        var firstReg = medicine.GetCurrentRegistration();
+        MedicineRegistration? firstReg = medicine.GetCurrentRegistration();
         if (firstReg != null)
         {
             firstReg.UpdateValidity(regValidFrom, regValidTo);
@@ -117,16 +117,16 @@ public class MedicineManager : DomainService
         medicine.UpdateInfo(name, categoryId, manufacturerId, baseUnitId);
 
         // Kiểm tra nếu số đăng ký thay đổi thì thêm bản ghi mới
-        var currentReg = medicine.GetCurrentRegistration();
+        MedicineRegistration? currentReg = medicine.GetCurrentRegistration();
         if (currentReg == null || currentReg.RegistrationNumber != regNumber.Trim().ToUpper())
         {
             medicine.AddRegistration(GuidGenerator.Create(), regNumber, regValidFrom, regValidTo, regNote);
         }
         else
         {
-             // Tuỳ chọn: Nếu không đổi SĐK, có thể cho phép cập nhật lại ngày tháng của SĐK hiện tại nếu muốn.
-             // currentReg.UpdateValidity(regValidFrom, regValidTo);
-             // currentReg.SetNote(regNote);
+            // Tuỳ chọn: Nếu không đổi SĐK, có thể cho phép cập nhật lại ngày tháng của SĐK hiện tại nếu muốn.
+            // currentReg.UpdateValidity(regValidFrom, regValidTo);
+            // currentReg.SetNote(regNote);
         }
 
         // Update toàn bộ thông tin pharma từ input thực sự, 

@@ -1,453 +1,641 @@
-<div class="ph-card" *ngIf="order">
-  <!-- ── HEADER ───────────────────────────────────────────── -->
-  <div class="ph-card__header d-flex align-items-center justify-content-between flex-wrap gap-3">
-    <div class="d-flex align-items-center gap-3">
-      <button class="btn btn-link txt-main p-0 me-2" (click)="goBack()">
-        <i class="fa fa-arrow-left fa-lg"></i>
-      </button>
-      <div class="bg-primary-subtle txt-primary rounded p-3 d-flex align-items-center justify-content-center" style="width: 56px; height: 56px;">
-        <i class="fa fa-file-text-o fa-xl"></i>
-      </div>
-      <div>
-        <h4 class="fw-bold mb-1 d-flex align-items-center gap-2 font-mono">
-          {{ order.code }}
-          <span class="badge badge-pill" [ngClass]="statusClass(order.status)">
-            <i class="fa me-1" [ngClass]="statusIcon(order.status)"></i>
-            {{ '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, order.status) | abpLocalization }}
-          </span>
-        </h4>
-        <div class="txt-muted txt-sm d-flex gap-3 flex-wrap">
-          <span><i class="fa fa-user-o me-1"></i><strong>{{ order.customerName }}</strong></span>
-          <span>{{ '::OrderDate' | abpLocalization }}: <strong class="txt-num">{{ order.orderDate | date:'dd/MM/yyyy' }}</strong></span>
-        </div>
-      </div>
-    </div>
-    <div class="d-flex gap-2">
-      <button *ngIf="isEditable()" class="btn btn-outline-secondary btn-sm" (click)="openEditDrawer()">
-        <i class="fa fa-pencil me-1"></i> {{ '::Edit' | abpLocalization }}
-      </button>
-      <button class="btn btn-outline-secondary btn-sm">
-        <i class="fa fa-print me-1"></i> {{ '::Print' | abpLocalization }}
-      </button>
-    </div>
-  </div>
-
-  <!-- ── BODY ─────────────────────────────────────────────── -->
-  <div class="ph-card__body">
-    <div class="container-fluid p-0">
-
-      <!-- Approved alert — stock allocated -->
-      <div class="alert alert-info d-flex align-items-center mb-3"
-           *ngIf="order.status === SalesOrderStatus.Approved">
-        <i class="fa fa-lock txt-xl me-3 txt-info"></i>
-        <div>
-          <strong>{{ '::StockAllocatedInfo' | abpLocalization }}</strong><br>
-          <span class="txt-sm">{{ '::FEFOAllocatedDescription' | abpLocalization }}</span>
-        </div>
-      </div>
-
-      <!-- Delivering alert -->
-      <div class="alert alert-warning d-flex align-items-center mb-3"
-           *ngIf="order.status === SalesOrderStatus.Delivering">
-        <i class="fa fa-truck txt-xl me-3 txt-warning"></i>
-        <div>
-          <strong>{{ '::DeliveringInProgress' | abpLocalization }}</strong><br>
-          <span class="txt-sm">{{ '::DeliveringDescription' | abpLocalization }}</span>
-        </div>
-      </div>
-
-      <!-- ── General Info ─────────────────────────────────── -->
-      <div class="card border shadow-sm mb-3">
-        <div class="card-header py-3 bg-white">
-          <h6 class="txt-primary fw-bold mb-0"><i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}</h6>
-        </div>
-        <div class="card-body py-3">
-          <div class="row g-3">
-            <div class="col-md-3">
-              <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Customer' | abpLocalization }}</div>
-              <div class="fw-bold txt-sm txt-main"><i class="fa fa-user-o txt-muted me-1"></i>{{ order.customerName }}</div>
-            </div>
-            <div class="col-md-3">
-              <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Warehouse' | abpLocalization }}</div>
-              <div class="fw-medium txt-sm txt-main"><i class="fa fa-home txt-muted me-1"></i>{{ order.warehouseName }}</div>
-            </div>
-            <div class="col-md-2">
-              <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::OrderDate' | abpLocalization }}</div>
-              <div class="fw-medium txt-sm txt-num">{{ order.orderDate | date:'dd/MM/yyyy' }}</div>
-            </div>
-            <div class="col-md-2">
-              <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::ExpectedDelivery' | abpLocalization }}</div>
-              <div class="fw-medium txt-sm txt-num">{{ order.expectedDeliveryDate ? (order.expectedDeliveryDate | date:'dd/MM/yyyy') : '—' }}</div>
-            </div>
-            <div class="col-md-2">
-              <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::DueDate' | abpLocalization }}</div>
-              <div class="fw-medium txt-sm txt-num" [class.txt-danger]="order.dueDate && (order.dueDate | date) < ('' | date)">
-                {{ order.dueDate ? (order.dueDate | date:'dd/MM/yyyy') : '—' }}
-              </div>
-            </div>
-            <div class="col-12" *ngIf="order.note">
-              <div class="txt-muted text-uppercase fw-semibold txt-xs mb-1">{{ '::Note' | abpLocalization }}</div>
-              <div class="txt-sm txt-main fst-italic">{{ order.note }}</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Lines Table ─────────────────────────────────── -->
-      <div class="card border shadow-sm mb-3">
-        <div class="card-header py-3 d-flex justify-content-between align-items-center bg-white">
-          <h6 class="txt-primary fw-bold mb-0">
-            <i class="fa fa-list me-2"></i>{{ '::OrderLines' | abpLocalization }}
-            <span class="badge badge-secondary ms-2">{{ order.lines?.length || 0 }}</span>
-          </h6>
-
-          <div class="d-flex gap-2">
-            <!-- Draft actions -->
-            <ng-container *ngIf="order.status === SalesOrderStatus.Draft">
-              <button class="btn btn-sm btn-outline-primary fw-bold" (click)="openAddLineDrawer()">
-                <i class="fa fa-plus me-1"></i>{{ '::AddProduct' | abpLocalization }}
-              </button>
-              <button class="btn btn-sm btn-primary fw-bold" (click)="sendToApprove()">
-                <i class="fa fa-paper-plane me-1"></i>{{ '::SendToApprove' | abpLocalization }}
-              </button>
-            </ng-container>
-
-            <!-- PendingApproval actions -->
-            <ng-container *ngIf="order.status === SalesOrderStatus.PendingApproval">
-              <button class="btn btn-sm btn-outline-secondary txt-danger fw-bold" (click)="openCancelModal()">
-                <i class="fa fa-times me-1"></i>{{ '::Cancel' | abpLocalization }}
-              </button>
-              <button class="btn btn-sm btn-success fw-bold" (click)="approve()">
-                <i class="fa fa-check me-1"></i>{{ '::Approve' | abpLocalization }}
-              </button>
-            </ng-container>
-
-            <!-- Approved actions -->
-            <ng-container *ngIf="order.status === SalesOrderStatus.Approved">
-              <button class="btn btn-sm btn-outline-secondary txt-danger fw-bold" (click)="openCancelModal()">
-                <i class="fa fa-times me-1"></i>{{ '::Cancel' | abpLocalization }}
-              </button>
-              <button class="btn btn-sm btn-primary fw-bold" (click)="complete()">
-                <i class="fa fa-check-square-o me-1"></i>{{ '::Complete' | abpLocalization }}
-              </button>
-            </ng-container>
-
-            <!-- Delivering actions -->
-            <ng-container *ngIf="order.status === SalesOrderStatus.Delivering">
-              <button class="btn btn-sm btn-primary fw-bold" (click)="complete()">
-                <i class="fa fa-check-square-o me-1"></i>{{ '::Complete' | abpLocalization }}
-              </button>
-            </ng-container>
-          </div>
-        </div>
-
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table table-hover mb-0 align-middle">
-              <thead class="bg-light">
-                <tr>
-                  <th class="py-2 px-3 txt-muted txt-sm fw-semibold" style="width:44px;"
-                      *ngIf="isEditable()"></th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::Product' | abpLocalization }}</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold">{{ '::Unit' | abpLocalization }}</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::Quantity' | abpLocalization }}</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::UnitPrice' | abpLocalization }}</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::Discount' | abpLocalization }}%</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::Tax' | abpLocalization }}%</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold text-end pe-3">{{ '::FinalPrice' | abpLocalization }}</th>
-                  <th class="py-2 txt-muted txt-sm fw-semibold text-center"
-                      *ngIf="order.status !== SalesOrderStatus.Draft && order.status !== SalesOrderStatus.PendingApproval && order.status !== SalesOrderStatus.Canceled">
-                    {{ '::Delivered' | abpLocalization }}
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let row of order.lines">
-                  <td class="px-3 text-center" *ngIf="isEditable()">
-                    <button class="btn btn-link btn-sm txt-danger p-0" (click)="removeLine(row.id)">
-                      <i class="fa fa-trash-alt"></i>
-                    </button>
-                  </td>
-
-                  <!-- Product -->
-                  <td class="py-3">
-                    <div class="fw-bold txt-primary">{{ row.productName }}</div>
-                    <small class="txt-muted font-mono">{{ row.productCode }}</small>
-                  </td>
-
-                  <!-- Unit -->
-                  <td class="py-3">
-                    <span class="txt-sm txt-main">{{ row.unitName }}</span>
-                    <div class="txt-muted txt-xs" *ngIf="row.conversionFactor > 1">×{{ row.conversionFactor }}</div>
-                  </td>
-
-                  <!-- Quantity -->
-                  <td class="py-3 text-end pe-3">
-                    <div *ngIf="isEditable()">
-                      <input type="number" class="form-control form-control-sm text-end txt-num"
-                             style="width: 80px; display:inline-block;"
-                             [value]="row.quantity" min="0.01"
-                             (change)="onInlineLineChange(row, 'quantity', $event.target.value)">
-                    </div>
-                    <div *ngIf="!isEditable()">
-                      <span class="fw-bold txt-num">{{ row.quantity | number }}</span>
-                      <div class="txt-muted txt-xs txt-num" *ngIf="row.baseQuantity !== row.quantity">
-                        ≈ {{ row.baseQuantity | number }} <small>{{ row.baseUnitName }}</small>
-                      </div>
-                    </div>
-                  </td>
-
-                  <!-- Unit Price -->
-                  <td class="py-3 text-end pe-3">
-                    <div *ngIf="isEditable()">
-                      <input type="number" class="form-control form-control-sm text-end txt-num"
-                             style="width: 100px; display:inline-block;"
-                             [value]="row.unitPrice" min="0"
-                             (change)="onInlineLineChange(row, 'unitPrice', $event.target.value)">
-                    </div>
-                    <div *ngIf="!isEditable()">
-                      <span class="txt-num">{{ row.unitPrice | number:'1.0-0' }}đ</span>
-                    </div>
-                  </td>
-
-                  <!-- Discount Rate -->
-                  <td class="py-3 text-end pe-3">
-                    <div *ngIf="isEditable()">
-                      <input type="number" class="form-control form-control-sm text-end txt-num"
-                             style="width: 70px; display:inline-block;"
-                             [value]="row.discountRate ?? 0" min="0" max="100"
-                             (change)="onInlineLineChange(row, 'discountRate', $event.target.value)">
-                    </div>
-                    <div *ngIf="!isEditable()">
-                      <span class="txt-num txt-warning">{{ row.discountRate ?? 0 }}%</span>
-                      <div class="txt-muted txt-xs txt-num" *ngIf="(row.discountAmount ?? 0) > 0">
-                        −{{ row.discountAmount | number:'1.0-0' }}đ
-                      </div>
-                    </div>
-                  </td>
-
-                  <!-- Tax Rate -->
-                  <td class="py-3 text-end pe-3">
-                    <div *ngIf="isEditable()">
-                      <input type="number" class="form-control form-control-sm text-end txt-num"
-                             style="width: 70px; display:inline-block;"
-                             [value]="row.taxRate ?? 0" min="0" max="100"
-                             (change)="onInlineLineChange(row, 'taxRate', $event.target.value)">
-                    </div>
-                    <span *ngIf="!isEditable()" class="txt-num txt-muted">{{ row.taxRate ?? 0 }}%</span>
-                  </td>
-
-                  <!-- Final Price -->
-                  <td class="py-3 text-end pe-3">
-                    <span class="fw-bold txt-num txt-primary">{{ row.finalPrice | number:'1.0-0' }}đ</span>
-                    <div class="txt-muted txt-xs txt-num" *ngIf="(row.taxAmount ?? 0) > 0">
-                      +{{ row.taxAmount | number:'1.0-0' }}đ VAT
-                    </div>
-                  </td>
-
-                  <!-- Delivered progress -->
-                  <td class="py-3 text-center"
-                      *ngIf="order.status !== SalesOrderStatus.Draft && order.status !== SalesOrderStatus.PendingApproval && order.status !== SalesOrderStatus.Canceled">
-                    <div style="min-width: 110px;">
-                      <div class="d-flex justify-content-between txt-xs mb-1">
-                        <span class="txt-muted">{{ row.deliveredQuantity | number }} <small>{{ row.unitName }}</small></span>
-                        <span class="fw-bold"
-                              [class.txt-success]="deliverProgress(row) >= 100"
-                              [class.txt-warning]="deliverProgress(row) > 0 && deliverProgress(row) < 100">
-                          {{ deliverProgress(row) | number:'1.0-0' }}%
-                        </span>
-                      </div>
-                      <div class="progress" style="height: 5px;">
-                        <div class="progress-bar"
-                             [class.bg-success]="deliverProgress(row) >= 100"
-                             [class.bg-warning]="deliverProgress(row) < 100"
-                             [style.width.%]="deliverProgress(row)">
-                        </div>
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-
-                <tr *ngIf="!order.lines?.length">
-                  <td [colSpan]="9" class="text-center txt-muted py-5 txt-sm fst-italic">
-                    {{ '::NoData' | abpLocalization }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div>
-
-      <!-- ── Financial Summary ──────────────────────────────── -->
-      <div class="d-flex justify-content-end mb-4">
-        <div class="card border shadow-sm" style="min-width: 300px;">
-          <div class="card-body py-3">
-            <div class="d-flex justify-content-between mb-2">
-              <span class="txt-muted txt-sm">{{ '::SubTotal' | abpLocalization }}</span>
-              <span class="fw-medium txt-num">{{ order.subTotal | number:'1.0-0' }}đ</span>
-            </div>
-            <div class="d-flex justify-content-between mb-2">
-              <span class="txt-muted txt-sm">{{ '::DiscountAmount' | abpLocalization }}</span>
-              <span class="fw-medium txt-num txt-warning">−{{ order.discountAmount | number:'1.0-0' }}đ</span>
-            </div>
-            <div class="d-flex justify-content-between mb-2">
-              <span class="txt-muted txt-sm">{{ '::TaxAmount' | abpLocalization }}</span>
-              <span class="fw-medium txt-num txt-muted">+{{ order.taxAmount | number:'1.0-0' }}đ</span>
-            </div>
-            <hr class="my-2">
-            <div class="d-flex justify-content-between">
-              <span class="fw-bold txt-md">{{ '::TotalAmount' | abpLocalization }}</span>
-              <span class="fw-bold txt-lg txt-primary txt-num">{{ order.totalAmount | number:'1.0-0' }}đ</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<div class="text-center py-5" *ngIf="loading && !order">
+<div *ngIf="loading" class="d-flex justify-content-center my-5">
   <div class="spinner-border text-primary" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
 
-<!-- Edit Drawer -->
-<app-drawer
-  [isOpen]="isEditDrawerOpen"
-  [title]="'::EditSalesOrder' | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="editForm?.invalid || isSavingEdit"
-  (close)="closeEditDrawer()"
-  (save)="saveEdit()">
-  <form *ngIf="editForm" [formGroup]="editForm">
-    <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Warehouse' | abpLocalization }} <span class="txt-danger">*</span></label>
-      <app-dropdown-search
-        formControlName="warehouseId"
-        [items]="warehouses"
-        [placeholder]="'::Select' | abpLocalization"
-        [searchPlaceholder]="'::Search' | abpLocalization"
-      ></app-dropdown-search>
-    </div>
-    <div class="row">
-      <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::ExpectedDeliveryDate' | abpLocalization }}</label>
-        <input type="date" class="form-control form-control-sm" formControlName="expectedDeliveryDate">
+<div *ngIf="!loading && order">
+  <!-- Back button -->
+  <button class="btn btn-sm ph-btn-secondary mb-3" (click)="goBack()">
+    <i class="fa fa-arrow-left me-1"></i> {{ '::Back' | abpLocalization }}
+  </button>
+
+  <!-- Page Header -->
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center gap-3">
+      <div class="ph-icon-avatar ph-icon-avatar--lg">
+        <i class="fa fa-file-text-o fa-2x"></i>
       </div>
-      <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::DueDate' | abpLocalization }}</label>
-        <input type="date" class="form-control form-control-sm" formControlName="dueDate">
-      </div>
-    </div>
-    <div class="mb-3">
-      <label class="form-label txt-sm fw-semibold">{{ '::Note' | abpLocalization }}</label>
-      <textarea class="form-control form-control-sm" formControlName="note" rows="3"></textarea>
-    </div>
-  </form>
-</app-drawer>
-
-<!-- Add Line Drawer -->
-<app-drawer
-  [isOpen]="isAddLineOpen"
-  [title]="'::AddProduct' | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="lineForm?.invalid || isSavingLine"
-  (close)="closeAddLineDrawer()"
-  (save)="saveLine()">
-  <form *ngIf="lineForm" [formGroup]="lineForm">
-
-    <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm">
-      <i class="fa fa-tag me-1"></i> {{ '::PriceSelectionHint' | abpLocalization }}
-    </div>
-
-    <div class="mb-3">
-      <label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label>
-      <app-dropdown-search
-        formControlName="productId"
-        [items]="medicines"
-        [placeholder]="'::Select' | abpLocalization"
-        [searchPlaceholder]="'::Search' | abpLocalization"
-        (valueChange)="onMedicineChange($event)"
-      ></app-dropdown-search>
-    </div>
-
-    <div class="row">
-      <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::Unit' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <select class="form-select form-select-sm" formControlName="unitId"
-                [attr.disabled]="!units.length ? '' : null"
-                (change)="onUnitChange($event.target.value)">
-          <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
-          <option *ngFor="let u of units" [value]="u.unitId">{{ u.unitName }} (×{{ u.conversionFactor }})</option>
-        </select>
-      </div>
-      <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::Quantity' | abpLocalization }} <span class="txt-danger">*</span></label>
-        <input type="number" step="1" min="1" class="form-control form-control-sm"
-               formControlName="quantity" (input)="updateQuantityPreview()">
-      </div>
-    </div>
-
-    <!-- Price Selection -->
-    <div class="mb-3" *ngIf="availablePrices.length > 0">
-      <label class="form-label txt-sm fw-semibold">{{ '::SelectPrice' | abpLocalization }}</label>
-      <select class="form-select form-select-sm font-mono" formControlName="unitPrice">
-        <option [ngValue]="null">{{ '::AutoSelectBestPrice' | abpLocalization }}</option>
-        <option *ngFor="let p of availablePrices" [ngValue]="p.price">
-          [{{ p.priceListName }}] {{ p.price | number }}đ (Min: {{ p.minQuantity }})
-        </option>
-      </select>
-    </div>
-
-    <div class="alert alert-warning p-2 mb-3 txt-sm" *ngIf="lineForm.get('productId').value && availablePrices.length === 0">
-      <i class="fa fa-exclamation-triangle me-1"></i> {{ '::NoPriceFoundForThisProduct' | abpLocalization }}
-    </div>
-
-    <div class="alert alert-info bg-info-subtle border-info-subtle text-info-emphasis p-2 mb-3 txt-sm"
-         *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
-      <i class="fa fa-calculator me-1"></i> ≈ <strong class="txt-num">{{ quantityPreview | number }} {{ baseUnitName }}</strong>
-    </div>
-
-    <div class="row">
-      <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::DiscountRate' | abpLocalization }}</label>
-        <div class="input-group input-group-sm">
-          <input type="number" class="form-control form-control-sm text-end"
-                 formControlName="discountRate" min="0" max="100">
-          <span class="input-group-text">%</span>
-        </div>
-      </div>
-      <div class="col-6 mb-3">
-        <label class="form-label txt-sm fw-semibold">{{ '::TaxRate' | abpLocalization }}</label>
-        <div class="input-group input-group-sm">
-          <input type="number" class="form-control form-control-sm text-end"
-                 formControlName="taxRate" min="0" max="100">
-          <span class="input-group-text">%</span>
+      <div>
+        <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
+          {{ order.code }}
+          <span
+            class="ph-badge"
+            [ngClass]="{
+              'ph-badge--neutral': order.status === SalesOrderStatus.Draft,
+              'ph-badge--pending': order.status === SalesOrderStatus.PendingApproval,
+              'ph-badge--approved': order.status === SalesOrderStatus.Approved,
+              'ph-badge--info':
+                order.status === SalesOrderStatus.Picking ||
+                order.status === SalesOrderStatus.Packing,
+              'ph-badge--success':
+                order.status === SalesOrderStatus.Shipped ||
+                order.status === SalesOrderStatus.Completed,
+              'ph-badge--rejected': order.status === SalesOrderStatus.Canceled,
+            }"
+          >
+            <i class="fa me-1" [ngClass]="statusIcon(order.status)"></i>
+            {{
+              '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, order.status)
+                | abpLocalization
+            }}
+          </span>
+        </h3>
+        <div class="ph-text-muted d-flex gap-3">
+          <span
+            ><i class="fa fa-user-o me-1"></i>Customer:
+            <strong>{{ order.customerName }}</strong></span
+          >
+          <span
+            >Order Date: <strong>{{ order.orderDate | date: 'dd/MM/yyyy' }}</strong></span
+          >
         </div>
       </div>
     </div>
-
-  </form>
-</app-drawer>
-
-<!-- Cancel Drawer -->
-<app-drawer
-  [isOpen]="isCancelDrawerOpen"
-  [title]="'::CancelOrder' | abpLocalization"
-  [width]="'sm'"
-  [saveButtonText]="'::ConfirmCancel' | abpLocalization"
-  [saveDisabled]="isCanceling"
-  (close)="closeCancelDrawer()"
-  (save)="confirmCancel()">
-  <div class="mb-3">
-    <label class="form-label txt-sm fw-semibold">{{ '::CancelReason' | abpLocalization }} <span class="txt-danger">*</span></label>
-    <textarea class="form-control" [(ngModel)]="cancelReason" rows="4"
-              [placeholder]="'::EnterReason' | abpLocalization" autofocus></textarea>
-    <div *ngIf="showCancelError" class="txt-danger txt-sm mt-1">
-      <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
+    <div class="d-flex gap-2">
+      <button *ngIf="isEditable()" class="btn ph-btn-outline" (click)="openEditDrawer()">
+        <i class="fa fa-pencil me-1"></i> {{ '::Edit' | abpLocalization }}
+      </button>
+      <button class="btn ph-btn-secondary">
+        <i class="fa fa-print me-1"></i> {{ '::Print' | abpLocalization }}
+      </button>
     </div>
   </div>
-</app-drawer>
+
+  <div class="container-fluid p-0">
+    <!-- Row 1: General Information + System Data & Related Tickets -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <!-- General Information Card -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::Customer' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="d-flex flex-column">
+                    {{ order.customerName }}
+                    <small class="ph-text-muted font-mono">{{ order.customerCode }}</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::Warehouse' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="d-flex flex-column">
+                    {{ order.warehouseName }}
+                    <small class="ph-text-muted font-mono">{{ order.warehouseCode }}</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::OrderDate' | abpLocalization }}</span>
+                <div class="ph-field-value">{{ order.orderDate | date: 'dd/MM/yyyy' }}</div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::ExpectedDeliveryDate' | abpLocalization }}</span>
+                <div
+                  class="ph-field-value"
+                  [class.ph-text-danger]="
+                    order.expectedDeliveryDate && (order.expectedDeliveryDate | date) < ('' | date)
+                  "
+                >
+                  {{
+                    order.expectedDeliveryDate
+                      ? (order.expectedDeliveryDate | date: 'dd/MM/yyyy')
+                      : '—'
+                  }}
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::DueDate' | abpLocalization }}</span>
+                <div
+                  class="ph-field-value"
+                  [class.ph-text-danger]="order.dueDate && (order.dueDate | date) < ('' | date)"
+                >
+                  {{ order.dueDate ? (order.dueDate | date: 'dd/MM/yyyy') : '—' }}
+                </div>
+              </div>
+              <div class="col-12" *ngIf="order.note">
+                <span class="ph-field-meta">{{ '::Note' | abpLocalization }}</span>
+                <div class="ph-field-value small fst-italic">{{ order.note }}</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <!-- System Data Card -->
+        <div class="ph-card mb-3">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-clock-rotate-left"></i> {{ '::SystemData' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="ph-field-meta">{{ '::CreationTime' | abpLocalization }}</span>
+              <span class="ph-field-value">{{
+                order.creationTime | date: 'HH:mm dd/MM/yyyy'
+              }}</span>
+            </div>
+            <hr class="ph-divider my-1" />
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="ph-field-meta">{{ '::LastModificationTime' | abpLocalization }}</span>
+              <span class="ph-field-value">
+                {{
+                  order.lastModificationTime
+                    ? (order.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
+                    : 'N/A'
+                }}
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Related Inventory Tickets Card -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-history me-2"></i>{{ '::RelatedInventoryTickets' | abpLocalization }}
+              <span class="ph-badge ph-badge--info ms-2">
+                {{ relatedTickets.length || 0 }}
+              </span>
+            </h6>
+          </div>
+          <div class="ph-card__body--flush">
+            <div class="table-responsive">
+              <table class="ph-table">
+                <thead>
+                  <tr>
+                    <th>{{ '::TicketNumber' | abpLocalization }}</th>
+                    <th>{{ '::CreationTime' | abpLocalization }}</th>
+                    <th>{{ '::Status' | abpLocalization }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let t of relatedTickets">
+                    <td class="font-mono fw-bold w-50">{{ t.ticketNumber }}</td>
+                    <td>{{ t.creationTime | date: 'HH:mm dd/MM/yyyy' }}</td>
+                    <td>
+                      <span
+                        class="ph-badge"
+                        [ngClass]="{
+                          'ph-badge--neutral': t.status === 0,
+                          'ph-badge--pending': t.status === 1,
+                          'ph-badge--approved': t.status === 2,
+                          'ph-badge--rejected': t.status === 3,
+                        }"
+                        >{{ '::Enum:ApprovalStatus.' + t.status | abpLocalization }}</span
+                      >
+                    </td>
+                  </tr>
+                  <tr *ngIf="!relatedTickets.length">
+                    <td colspan="3" class="ph-empty-state">
+                      {{ '::NoRelatedTickets' | abpLocalization }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Row 2: Order Lines (8 col) + Financial Summary (4 col) -->
+    <div class="row g-3">
+      <div class="col-lg-8">
+        <!-- Order Lines Card -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-list me-2"></i>{{ '::OrderLines' | abpLocalization }}
+              <span class="ph-badge ph-badge--info ms-2">{{ order.lines?.length || 0 }}</span>
+            </h6>
+            <div class="ph-card__header-actions">
+              <!-- Draft actions -->
+              <ng-container *ngIf="order.status === SalesOrderStatus.Draft">
+                <button class="btn btn-sm ph-btn-outline" (click)="openAddLineDrawer()">
+                  <i class="fa fa-plus me-1"></i>{{ '::AddProduct' | abpLocalization }}
+                </button>
+                <button class="btn btn-sm ph-btn-save" (click)="sendToApprove()">
+                  <i class="fa fa-paper-plane me-1"></i>{{ '::SendToApprove' | abpLocalization }}
+                </button>
+              </ng-container>
+
+              <!-- PendingApproval actions -->
+              <ng-container *ngIf="order.status === SalesOrderStatus.PendingApproval">
+                <button class="btn btn-sm ph-btn-cancel" (click)="openCancelModal()">
+                  <i class="fa fa-times me-1"></i>{{ '::Cancel' | abpLocalization }}
+                </button>
+                <button class="btn btn-sm ph-btn-save" (click)="approve()">
+                  <i class="fa fa-check me-1"></i>{{ '::Approve' | abpLocalization }}
+                </button>
+              </ng-container>
+
+              <!-- Approved actions -->
+              <ng-container *ngIf="order.status === SalesOrderStatus.Approved">
+                <button class="btn btn-sm ph-btn-cancel" (click)="openCancelModal()">
+                  <i class="fa fa-times me-1"></i>{{ '::Cancel' | abpLocalization }}
+                </button>
+                <button class="btn btn-sm ph-btn-save" (click)="complete()">
+                  <i class="fa fa-check-square-o me-1"></i>{{ '::Complete' | abpLocalization }}
+                </button>
+              </ng-container>
+
+              <!-- Delivering actions -->
+              <ng-container *ngIf="order.status === SalesOrderStatus.Delivering">
+                <button class="btn btn-sm ph-btn-save" (click)="complete()">
+                  <i class="fa fa-check-square-o me-1"></i>{{ '::Complete' | abpLocalization }}
+                </button>
+              </ng-container>
+            </div>
+          </div>
+          <div class="ph-card__body--flush">
+            <div class="table-responsive">
+              <table class="ph-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px" *ngIf="isEditable()"></th>
+                    <th>{{ '::Product' | abpLocalization }}</th>
+                    <th>{{ '::Unit' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::Quantity' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::UnitPrice' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::Discount' | abpLocalization }}%</th>
+                    <th class="text-end">{{ '::Tax' | abpLocalization }}%</th>
+                    <th class="text-end">{{ '::FinalPrice' | abpLocalization }}</th>
+                    <th
+                      class="text-center"
+                      *ngIf="
+                        order.status !== SalesOrderStatus.Draft &&
+                        order.status !== SalesOrderStatus.PendingApproval &&
+                        order.status !== SalesOrderStatus.Canceled
+                      "
+                    >
+                      {{ '::Delivered' | abpLocalization }}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of order.lines">
+                    <td class="text-center" *ngIf="isEditable()">
+                      <button class="ph-btn-ghost text-danger" (click)="removeLine(row.id)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <div class="fw-bold ph-text-primary">{{ row.productName }}</div>
+                      <small class="ph-text-muted font-mono">{{ row.productCode }}</small>
+                    </td>
+                    <td>
+                      <span class="ph-field-value">{{ row.unitName }}</span>
+                      <div class="ph-text-muted small" *ngIf="row.conversionFactor > 1">
+                        ×{{ row.conversionFactor }}
+                      </div>
+                    </td>
+                    <td class="text-end">
+                      <div *ngIf="isEditable()" class="d-flex justify-content-end">
+                        <input
+                          type="number"
+                          class="form-control form-control-sm text-end fw-bold"
+                          style="width: 80px"
+                          [value]="row.quantity"
+                          min="0.01"
+                          step="1"
+                          (change)="onInlineLineChange(row, 'quantity', $event.target.value)"
+                        />
+                      </div>
+                      <div *ngIf="!isEditable()">
+                        <span class="fw-bold">{{ row.quantity | number }}</span>
+                        <div class="ph-text-muted small" *ngIf="row.baseQuantity !== row.quantity">
+                          ≈ {{ row.baseQuantity | number }}
+                          <small>{{ row.baseUnitName }}</small>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-end">
+                      <div *ngIf="isEditable()" class="d-flex justify-content-end">
+                        <input
+                          type="number"
+                          class="form-control form-control-sm text-end"
+                          style="width: 100px"
+                          [value]="row.unitPrice"
+                          min="0"
+                          (change)="onInlineLineChange(row, 'unitPrice', $event.target.value)"
+                        />
+                      </div>
+                      <span *ngIf="!isEditable()">{{ row.unitPrice | number: '1.0-0' }} ₫</span>
+                    </td>
+                    <td class="text-end">
+                      <div *ngIf="isEditable()" class="d-flex justify-content-end">
+                        <input
+                          type="number"
+                          class="form-control form-control-sm text-end"
+                          style="width: 70px"
+                          [value]="row.discountRate ?? 0"
+                          min="0"
+                          max="100"
+                          (change)="onInlineLineChange(row, 'discountRate', $event.target.value)"
+                        />
+                      </div>
+                      <div *ngIf="!isEditable()">
+                        <span class="ph-text-warning">{{ row.discountRate ?? 0 }}%</span>
+                        <div class="ph-text-muted small" *ngIf="(row.discountAmount ?? 0) > 0">
+                          −{{ row.discountAmount | number: '1.0-0' }} ₫
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-end">
+                      <div *ngIf="isEditable()" class="d-flex justify-content-end">
+                        <input
+                          type="number"
+                          class="form-control form-control-sm text-end"
+                          style="width: 60px"
+                          [value]="row.taxRate ?? 0"
+                          min="0"
+                          max="100"
+                          (change)="onInlineLineChange(row, 'taxRate', $event.target.value)"
+                        />
+                      </div>
+                      <span *ngIf="!isEditable()" class="ph-text-muted"
+                        >{{ row.taxRate ?? 0 }}%</span
+                      >
+                    </td>
+                    <td class="text-end">
+                      <span class="fw-bold ph-text-primary"
+                        >{{ row.finalPrice | number: '1.0-0' }} ₫</span
+                      >
+                      <div class="ph-text-muted small" *ngIf="(row.taxAmount ?? 0) > 0">
+                        +{{ row.taxAmount | number: '1.0-0' }} ₫ VAT
+                      </div>
+                    </td>
+                    <td
+                      class="text-center"
+                      *ngIf="
+                        order.status !== SalesOrderStatus.Draft &&
+                        order.status !== SalesOrderStatus.PendingApproval &&
+                        order.status !== SalesOrderStatus.Canceled
+                      "
+                    >
+                      <div style="min-width: 110px">
+                        <div class="d-flex justify-content-between small mb-1">
+                          <span class="ph-text-muted"
+                            >{{ row.deliveredQuantity | number }}
+                            <small>{{ row.unitName }}</small></span
+                          >
+                          <span
+                            class="fw-bold"
+                            [class.ph-text-success]="deliverProgress(row) >= 100"
+                            [class.ph-text-warning]="
+                              deliverProgress(row) > 0 && deliverProgress(row) < 100
+                            "
+                          >
+                            {{ deliverProgress(row) | number: '1.0-0' }}%
+                          </span>
+                        </div>
+                        <div class="progress" style="height: 4px">
+                          <div
+                            class="progress-bar"
+                            [class.bg-success]="deliverProgress(row) >= 100"
+                            [class.bg-warning]="deliverProgress(row) < 100"
+                            [style.width.%]="deliverProgress(row)"
+                          ></div>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!order.lines?.length">
+                    <td colspan="9" class="ph-empty-state">
+                      {{ '::NoData' | abpLocalization }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-4">
+        <!-- Financial Summary Card -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-credit-card me-2"></i>{{ '::FinancialSummary' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="ph-text-muted">{{ '::SubTotal' | abpLocalization }}</span
+              ><span class="ph-field-value">{{ order.subTotal | number: '1.0-0' }} ₫</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="ph-text-muted">{{ '::DiscountAmount' | abpLocalization }}</span
+              ><span class="ph-field-value ph-text-warning"
+                >−{{ order.discountAmount | number: '1.0-0' }} ₫</span
+              >
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="ph-text-muted">{{ '::TaxAmount' | abpLocalization }}</span
+              ><span class="ph-field-value ph-text-warning"
+                >+{{ order.taxAmount | number: '1.0-0' }} ₫</span
+              >
+            </div>
+            <hr class="ph-divider" />
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold">{{ '::TotalAmount' | abpLocalization }}</span
+              ><span class="fw-bold h3 ph-text-primary mb-0"
+                >{{ order.totalAmount | number: '1.0-0' }} ₫</span
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Drawer -->
+  <app-drawer
+    [isOpen]="isEditDrawerOpen"
+    [title]="'::EditSalesOrder' | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="editForm?.invalid || isSavingEdit"
+    (close)="closeEditDrawer()"
+    (save)="saveEdit()"
+  >
+    <form *ngIf="editForm" [formGroup]="editForm">
+      <div class="mb-3">
+        <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
+        <app-dropdown-search
+          formControlName="warehouseId"
+          [items]="warehouses"
+          [placeholder]="'::Select' | abpLocalization"
+          [searchPlaceholder]="'::Search' | abpLocalization"
+        ></app-dropdown-search>
+      </div>
+      <div class="row">
+        <div class="col-6 mb-3">
+          <label class="ph-label">{{ '::ExpectedDeliveryDate' | abpLocalization }}</label>
+          <input type="date" class="form-control" formControlName="expectedDeliveryDate" />
+        </div>
+        <div class="col-6 mb-3">
+          <label class="ph-label">{{ '::DueDate' | abpLocalization }}</label>
+          <input type="date" class="form-control" formControlName="dueDate" />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
+        <textarea class="form-control" formControlName="note" rows="3"></textarea>
+      </div>
+    </form>
+  </app-drawer>
+
+  <!-- Add Line Drawer -->
+  <app-drawer
+    [isOpen]="isAddLineOpen"
+    [title]="'::AddProduct' | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="lineForm?.invalid || isSavingLine"
+    (close)="closeAddLineDrawer()"
+    (save)="saveLine()"
+  >
+    <form *ngIf="lineForm" [formGroup]="lineForm">
+      <div class="ph-callout ph-callout--info mb-3">
+        <i class="fa fa-tag ph-callout__icon"></i>
+        <div>{{ '::PriceSelectionHint' | abpLocalization }}</div>
+      </div>
+
+      <div class="mb-3">
+        <label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label>
+        <app-dropdown-search
+          formControlName="productId"
+          [items]="medicines"
+          [placeholder]="'::Select' | abpLocalization"
+          [searchPlaceholder]="'::Search' | abpLocalization"
+          (valueChange)="onMedicineChange($event)"
+        ></app-dropdown-search>
+      </div>
+
+      <div class="row">
+        <div class="col-6 mb-3">
+          <label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label>
+          <select
+            class="form-select form-select-sm"
+            formControlName="unitId"
+            [attr.disabled]="!units.length ? '' : null"
+            (change)="onUnitChange($event.target.value)"
+          >
+            <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
+            <option *ngFor="let u of units" [value]="u.unitId">
+              {{ u.unitName }} (×{{ u.conversionFactor }})
+            </option>
+          </select>
+        </div>
+        <div class="col-6 mb-3">
+          <label class="ph-label ph-label--required">{{ '::Quantity' | abpLocalization }}</label>
+          <input
+            type="number"
+            step="1"
+            min="1"
+            class="form-control form-control-sm"
+            formControlName="quantity"
+            (input)="updateQuantityPreview()"
+          />
+        </div>
+      </div>
+
+      <!-- Price Selection -->
+      <div class="mb-3" *ngIf="availablePrices.length > 0">
+        <label class="ph-label">{{ '::SelectPrice' | abpLocalization }}</label>
+        <select class="form-select form-select-sm font-mono" formControlName="unitPrice">
+          <option [ngValue]="null">{{ '::AutoSelectBestPrice' | abpLocalization }}</option>
+          <option *ngFor="let p of availablePrices" [ngValue]="p.price">
+            [{{ p.priceListName }}] {{ p.price | number }}₫ (Min: {{ p.minQuantity }})
+          </option>
+        </select>
+      </div>
+
+      <div
+        class="ph-callout ph-callout--warning mb-3"
+        *ngIf="lineForm.get('productId').value && availablePrices.length === 0"
+      >
+        <i class="fa fa-exclamation-triangle ph-callout__icon"></i>
+        <div>{{ '::NoPriceFoundForThisProduct' | abpLocalization }}</div>
+      </div>
+
+      <div
+        class="ph-callout ph-callout--info mb-3"
+        *ngIf="quantityPreview > 0 && selectedConversionFactor > 1"
+      >
+        <i class="fa fa-calculator ph-callout__icon"></i>
+        <div>
+          ≈ <strong>{{ quantityPreview | number }} {{ baseUnitName }}</strong>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-7 mb-3">
+          <label class="ph-label">{{ '::DiscountRate' | abpLocalization }}</label>
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control form-control-sm text-end"
+              formControlName="discountRate"
+              min="0"
+              max="100"
+            />
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+        <div class="col-5 mb-3">
+          <label class="ph-label">{{ '::TaxRate' | abpLocalization }}</label>
+          <div class="input-group">
+            <input
+              type="number"
+              class="form-control form-control-sm text-end"
+              formControlName="taxRate"
+              min="0"
+              max="100"
+            />
+            <span class="input-group-text">%</span>
+          </div>
+        </div>
+      </div>
+    </form>
+  </app-drawer>
+
+  <!-- Cancel Drawer -->
+  <app-drawer
+    [isOpen]="isCancelDrawerOpen"
+    [title]="'::CancelOrder' | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="isCanceling"
+    (close)="closeCancelDrawer()"
+    (save)="confirmCancel()"
+  >
+    <div class="ph-callout ph-callout--danger mb-3">
+      <i class="fa fa-exclamation-triangle ph-callout__icon"></i>
+      <div>{{ '::CancelOrderWarning' | abpLocalization }}</div>
+    </div>
+    <div class="mb-2">
+      <label class="ph-label ph-label--required">{{ '::CancelReason' | abpLocalization }}</label>
+      <textarea
+        class="form-control"
+        [(ngModel)]="cancelReason"
+        rows="3"
+        [placeholder]="'::EnterReason' | abpLocalization"
+        autofocus
+      ></textarea>
+      <div *ngIf="showCancelError" class="ph-error-msg">
+        <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
+      </div>
+    </div>
+  </app-drawer>
+</div>

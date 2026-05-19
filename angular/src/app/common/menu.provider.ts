@@ -66,8 +66,8 @@ export const APP_ROUTES = [
   ...createMenuGroup('Inventory', 'fas fa-warehouse', 5, [
     { name: 'Warehouses', icon: 'fas fa-building' , requiredPolicy: 'Inventory.Warehouse'},        
     { name: 'Batches', icon: 'fas fa-boxes' , requiredPolicy: 'Inventory.Batch'},              
-    { name: 'Tickets', icon: 'fas fa-file-invoice' , requiredPolicy: 'Inventory.Ticket'},       
-    { name: 'Balances', icon: 'fas fa-clipboard-list' ,},    
+    { name: 'Tickets', icon: 'fas fa-file-invoice' , requiredPolicy: 'Inventory.Ticket'},        
+    { name: 'Balances', icon: 'fas fa-clipboard-list' ,},   
   ]),
 
 ];

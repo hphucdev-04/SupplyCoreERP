@@ -10,9 +10,10 @@ import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.e
 import { BatchQAStatus } from 'src/app/proxy/enums/warehouses';
 import { StorageCondition } from 'src/app/proxy/enums/medicines';
 import { MedicineService } from 'src/app/proxy/medicines';
-import { MedicineDto } from 'src/app/proxy/medicines/dtos';
+import { MedicineDto, MedicineRegistrationDto } from 'src/app/proxy/medicines/dtos';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 import { NgbDropdownModule } from '@ng-bootstrap/ng-bootstrap';
 import { InventoryTicketDto, InventoryTicketLineDto } from 'src/app/proxy/tickets/dtos';
 import { BinDto } from 'src/app/proxy/warehouses/dtos';
@@ -42,7 +43,7 @@ interface ProductUnitLookup {
 @Component({
   selector: 'app-ticket-details',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, NgbDropdownModule],
+  imports: [SharedModule, DrawerComponent, DropdownSearchComponent, NgbDropdownModule],
   templateUrl: './ticket-details.component.html',
   styleUrls: ['./ticket-details.component.scss']
 })
@@ -87,6 +88,9 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
   selectedUnitName = '';
   baseUnitName = '';
   quantityPreview = 0;
+  remainingQty = 0;
+
+  registrations: MedicineRegistrationDto[] = [];
 
   isFefoDrawerOpen = false;
   fefoForm: FormGroup;
@@ -284,6 +288,13 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     const medicine = this.medicines.find(m => m.id === medicineId);
     this.applyBinFilter(medicine?.storageCondition ?? null);
 
+    // ✅ Tải danh sách SĐK bằng API mới tối ưu
+    this.medicineService.getRegistrations(medicineId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+          this.registrations = res.filter(r => r.isActive);
+      });
+
     this.batchService.getList({ productId: medicineId, maxResultCount: 1000, skipCount: 0 } as any)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => this.applyBatchFilter(res.items));
@@ -318,8 +329,17 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     this.quickBatchForm = this.fb.group({
       batchNumber: ['', [Validators.required, Validators.maxLength(50)]],
       manufacturingDate: [null, [Validators.required]],
-      expiryDate: [null, [Validators.required]]
+      expiryDate: [null, [Validators.required]],
+      medicineRegistrationId: [null]
     });
+
+    // Mặc định chọn SĐK đầu tiên nếu có
+    if (this.registrations.length > 0) {
+        this.quickBatchForm.patchValue({
+            medicineRegistrationId: this.registrations[0].id
+        });
+    }
+
     this.isCreatingBatch = true;
   }
 
@@ -340,7 +360,10 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     if (!productId) return;
 
     this.isSavingQuickBatch = true;
-    this.batchService.create({ productId, ...this.quickBatchForm.value })
+    this.batchService.create({ 
+        productId, 
+        ...this.quickBatchForm.value 
+    })
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: (newBatch) => {
@@ -401,12 +424,17 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
 
   openAddDetailDrawer(line: InventoryTicketLineDto, batchId?: string) {
     this.selectedTicketLine = line;
-    this.detailForm.reset({ quantity: 1, conversionFactor: 1 });
     
-    this.detailForm.patchValue({ 
+    // Tính toán số lượng còn lại
+    const totalAssignedBaseQty = (line.details || []).reduce((sum, d) => sum + ((d.quantity || 0) * (d.conversionFactor || 1)), 0);
+    const lineBaseQty = (line.quantity || 0) * (line.conversionFactor || 1);
+    const remainingBaseQty = Math.max(0, lineBaseQty - totalAssignedBaseQty);
+    this.remainingQty = remainingBaseQty / (line.conversionFactor || 1);
+
+    this.detailForm.reset({ 
       productId: line.productId,
       unitId: line.unitId,
-      quantity: 1, // Mặc định để 1 để người dùng nhập số lượng cho lô này
+      quantity: this.remainingQty > 0 ? this.remainingQty : 1,
       conversionFactor: line.conversionFactor || 1
     });
     
@@ -438,6 +466,14 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
 
   saveDetail() {
     if (this.detailForm.invalid || !this.selectedTicketLine) return;
+
+    // Kiểm tra số lượng còn lại ở client
+    const inputQty = this.detailForm.get('quantity')?.value || 0;
+    if (inputQty > this.remainingQty + 0.0001) {
+      this.toaster.error('::Error:QuantityExceedsRemaining', '::Error');
+      return;
+    }
+
     this.isSavingDetail = true;
 
     // ✅ Sử dụng getRawValue() để lấy cả các trường bị disabled (productId, unitId)
@@ -558,6 +594,22 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
       this.confirmation.error('::NoDataError', '::Error');
       return;
     }
+
+    // Kiểm tra tính đầy đủ của các dòng hàng trước khi gửi duyệt
+    for (const line of this.ticket.lines) {
+      const totalAssignedBaseQty = (line.details || []).reduce((sum, d) => sum + ((d.quantity || 0) * (d.conversionFactor || 1)), 0);
+      const lineBaseQty = (line.quantity || 0) * (line.conversionFactor || 1);
+      
+      if (Math.abs(lineBaseQty - totalAssignedBaseQty) > 0.0001) {
+        this.toaster.error(
+          '::Error:LineNotFullyAllocated',
+          '::Error',
+          { messageLocalizationParams: [line.productName] }
+        );
+        return;
+      }
+    }
+
     this.confirmation.info('::SendToApproveConfirmation', '::Confirm')
       .subscribe(status => {
         if (status !== Confirmation.Status.confirm) return;
@@ -581,9 +633,26 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
+  applyFEFO() {
+    this.confirmation.warn('::ApplyFEFOConfirmation', '::AreYouSure')
+      .subscribe(status => {
+        if (status !== Confirmation.Status.confirm) return;
+        this.ticketService.applyFEFO(this.ticketId)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe(() => {
+            this.toaster.success('::ApplyFEFOSuccess', '::Success');
+            this.loadTicketData();
+          });
+      });
+  }
+
   isIssueTicket(): boolean {
     return this.ticket?.type === TicketType.GoodsIssue
       || this.ticket?.type === TicketType.DisposalIssue
       || this.ticket?.type === TicketType.ReturnOutward;
+  }
+
+  getLineAssignedBaseQty(line: InventoryTicketLineDto): number {
+    return (line.details || []).reduce((sum, d) => sum + ((d.quantity || 0) * (d.conversionFactor || 1)), 0);
   }
 }

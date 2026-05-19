@@ -131,7 +131,7 @@
           <!-- #endregion -->
 
           <!-- #region Regulatory -->
-          <div class="ph-card mt-2">
+          <div class="ph-card mt-3">
             <div class="ph-card__header">
               <h6 class="ph-card__header-title">
                 <i class="fa fa-gavel"></i> {{ '::ClinicalAndRegulatory' | abpLocalization }}
@@ -195,11 +195,43 @@
         </div>
 
         <div class="col-lg-5">
+          <!-- #region System -->
+          <div class="ph-card mb-2">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-clock-rotate-left"></i> {{ '::SystemData' | abpLocalization }}
+              </h6>
+            </div>
+            <div class="ph-card__body">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="ph-field-meta">{{ '::CreationTime' | abpLocalization }}</span>
+                <span class="ph-field-value">{{
+                  medicine.creationTime | date: 'HH:mm dd/MM/yyyy'
+                }}</span>
+              </div>
+              <hr class="ph-divider my-1" />
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="ph-field-meta">{{ '::LastModificationTime' | abpLocalization }}</span>
+                <span class="ph-field-value">
+                  {{
+                    medicine.lastModificationTime
+                      ? (medicine.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
+                      : 'N/A'
+                  }}
+                </span>
+              </div>
+            </div>
+          </div>
+          <!-- #endregion -->
+
           <!-- #region Registrations -->
           <div class="ph-card mb-2">
             <div class="ph-card__header">
               <h6 class="ph-card__header-title">
                 <i class="fa fa-file-contract"></i> {{ '::Registrations' | abpLocalization }}
+                <span class="ph-badge ph-badge--info ms-2">{{
+                  medicine.registrations?.length || 0
+                }}</span>
               </h6>
             </div>
             <div class="ph-card__body--flush">
@@ -222,8 +254,9 @@
                         <small class="ph-text-muted" *ngIf="reg.note">{{ reg.note }}</small>
                       </td>
                       <td>
-                        <div class="ph-text-body">
-                          <span>{{ reg.validFrom | date: 'dd/MM/yyyy' }} {{ reg.validTo | date: 'dd/MM/yyyy' }}</span>
+                        <div class="ph-text-body d-flex flex-column">
+                          <span>{{ reg.validFrom | date: 'dd/MM/yyyy' }}</span>
+                          <span>{{ reg.validTo | date: 'dd/MM/yyyy' }}</span>
                         </div>
                       </td>
                       <td>
@@ -256,6 +289,9 @@
             <div class="ph-card__header">
               <h6 class="ph-card__header-title">
                 <i class="fa fa-flask"></i> {{ '::ActiveIngredients' | abpLocalization }}
+                <span class="ph-badge ph-badge--info ms-2">{{
+                  medicine.ingredients?.length || 0
+                }}</span>
               </h6>
               <button class="btn btn-sm ph-btn-new" (click)="openIngrDrawer()">
                 <i class="fa fa-plus"></i> {{ '::Add' | abpLocalization }}
@@ -303,6 +339,7 @@
             <div class="ph-card__header">
               <h6 class="ph-card__header-title">
                 <i class="fa fa-boxes-stacked"></i> {{ '::ProductUnits' | abpLocalization }}
+                <span class="ph-badge ph-badge--info ms-2">{{ medicine.units?.length || 0 }}</span>
               </h6>
               <button class="btn btn-sm ph-btn-new" (click)="openUnitDrawer()">
                 <i class="fa fa-plus"></i> {{ '::Add' | abpLocalization }}
@@ -360,35 +397,6 @@
             </div>
           </div>
           <!-- #endregion -->
-
-          <!-- #region System -->
-          <div class="ph-card">
-            <div class="ph-card__header">
-              <h6 class="ph-card__header-title">
-                <i class="fa fa-clock-rotate-left"></i> {{ '::SystemData' | abpLocalization }}
-              </h6>
-            </div>
-            <div class="ph-card__body">
-              <div class="d-flex justify-content-between align-items-center py-2">
-                <span class="ph-field-meta">{{ '::CreationTime' | abpLocalization }}</span>
-                <span class="ph-field-value">{{
-                  medicine.creationTime | date: 'dd/MM/yyyy HH:mm'
-                }}</span>
-              </div>
-              <hr class="ph-divider my-1" />
-              <div class="d-flex justify-content-between align-items-center py-2">
-                <span class="ph-field-meta">{{ '::LastModificationTime' | abpLocalization }}</span>
-                <span class="ph-field-value">
-                  {{
-                    medicine.lastModificationTime
-                      ? (medicine.lastModificationTime | date: 'dd/MM/yyyy HH:mm')
-                      : 'N/A'
-                  }}
-                </span>
-              </div>
-            </div>
-          </div>
-          <!-- #endregion -->
         </div>
       </div>
     </div>
@@ -401,6 +409,7 @@
             <div class="ph-card__header">
               <h6 class="ph-card__header-title">
                 <i class="fa fa-tags"></i> {{ '::Pricing' | abpLocalization }}
+                <span class="ph-badge ph-badge--info ms-2">{{ productPrices?.length || 0 }}</span>
               </h6>
               <button class="btn btn-sm ph-btn-new" (click)="openPriceDrawer()">
                 <i class="fa fa-plus"></i> {{ '::Add' | abpLocalization }}

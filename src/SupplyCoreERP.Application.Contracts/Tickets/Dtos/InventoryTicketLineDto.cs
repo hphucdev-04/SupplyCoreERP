@@ -4,11 +4,12 @@ using Volo.Abp.Application.Dtos;
 
 namespace SupplyCoreERP.Tickets.Dtos;
 
-public class InventoryTicketLineDto : FullAuditedEntityDto<Guid>
+public class InventoryTicketLineDto : AuditedEntityDto<Guid>
 {
     public Guid ProductId { get; set; }
     public string? ProductCode { get; set; }
     public string? ProductName { get; set; }
+    public string? ProductBaseUnitName { get; set; }
 
     public Guid? PurchaseOrderLineId { get; set; }
     public Guid? SalesOrderLineId { get; set; }

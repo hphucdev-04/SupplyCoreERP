@@ -10,4 +10,5 @@ public class GetInventoryTicketListDto : PagedAndSortedResultRequestDto
     public TicketType? Type { get; set; }
     public ApprovalStatus? Status { get; set; }
     public Guid? WarehouseId { get; set; }
+    public Guid? ReferenceDocumentId { get; set; }
 }

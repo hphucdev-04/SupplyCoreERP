@@ -1,9 +1,8 @@
 using System;
-using Microsoft.Extensions.Hosting;
 using SupplyCoreERP.Enums.Warehouses;
+using SupplyCoreERP.Medicines;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
-using SupplyCoreERP.Medicines;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
@@ -30,12 +29,12 @@ public class ProductBatch : FullAuditedAggregateRoot<Guid>
     protected ProductBatch() { }
 
     public ProductBatch(
-        Guid id, 
-        string code, 
-        Guid productId, 
-        string batchNumber, 
-        DateTime mfg, 
-        DateTime exp, 
+        Guid id,
+        string code,
+        Guid productId,
+        string batchNumber,
+        DateTime mfg,
+        DateTime exp,
         Guid? supplierId,
         Guid? medicineRegistrationId = null) : base(id)
     {
