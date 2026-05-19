@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SupplyCoreERP.Medicines.Dtos;
 using Volo.Abp.Application.Dtos;
@@ -23,6 +24,7 @@ public interface IMedicineAppService : IApplicationService
     Task ToggleActiveAsync(Guid id);
 
     //Registrations
+    Task<List<MedicineRegistrationDto>> GetRegistrationsAsync(Guid id);
     Task AddRegistrationAsync(Guid id, AddMedicineRegistrationDto input);
 
     //Ingredients

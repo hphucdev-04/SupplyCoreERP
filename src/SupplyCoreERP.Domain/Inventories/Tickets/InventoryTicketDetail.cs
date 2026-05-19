@@ -1,18 +1,17 @@
 using System;
 using SupplyCoreERP.BaseUnits;
 using SupplyCoreERP.Inventories.Batches;
-using SupplyCoreERP.Inventories.Warehouses;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Warehouses;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Inventories.Tickets;
 
-public class InventoryTicketDetail : FullAuditedEntity<Guid>
+public class InventoryTicketDetail : AuditedEntity<Guid>
 {
     public Guid TicketLineId { get; private set; }
     public virtual InventoryTicketLine TicketLine { get; protected set; }
-    
+
     public Guid ProductId { get; private set; }
     public virtual Product Product { get; protected set; }
     public Guid ProductBatchId { get; private set; }

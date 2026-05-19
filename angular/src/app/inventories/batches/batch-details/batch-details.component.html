@@ -1,0 +1,207 @@
+<div class="ph-page-header mb-4">
+  <div class="d-flex align-items-center">
+    <button class="btn btn-link ph-text-muted p-0 me-3" routerLink="/inventory/batches">
+      <i class="fa fa-arrow-left fa-lg"></i>
+    </button>
+    <div>
+      <h4 class="mb-0">{{ '::BatchDetails' | abpLocalization }}: {{ batch.batchNumber }}</h4>
+      <small class="ph-text-muted">{{ batch.productCode }} - {{ batch.productName }}</small>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <!-- Sidebar / Summary Info -->
+  <div class="col-md-3">
+    <div class="ph-card mb-4">
+      <div class="ph-card__body p-3">
+        <div class="text-center mb-4">
+          <div class="ph-avatar ph-avatar--xl mx-auto mb-2">
+            <i class="fa fa-box-open fa-2x"></i>
+          </div>
+          <h5 class="mb-1">{{ batch.batchNumber }}</h5>
+          <span
+            class="ph-badge"
+            [ngClass]="{
+              'ph-badge--pending': batch.status === BatchQAStatus.PendingQA,
+              'ph-badge--approved': batch.status === BatchQAStatus.Approved,
+              'ph-badge--rejected': batch.status === BatchQAStatus.Rejected
+            }"
+          >
+            {{ '::Enum:BatchQAStatus.' + batch.status | abpLocalization }}
+          </span>
+        </div>
+
+        <div class="ph-info-list">
+          <div class="ph-info-item">
+            <label>{{ '::Code' | abpLocalization }}</label>
+            <span>{{ batch.code }}</span>
+          </div>
+          <div class="ph-info-item">
+            <label>{{ '::ManufacturingDate' | abpLocalization }}</label>
+            <span>{{ batch.manufacturingDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="ph-info-item">
+            <label>{{ '::ExpiryDate' | abpLocalization }}</label>
+            <span class="ph-text-danger fw-bold">{{ batch.expiryDate | date: 'dd/MM/yyyy' }}</span>
+          </div>
+          <div class="ph-info-item">
+            <label>{{ '::Supplier' | abpLocalization }}</label>
+            <span>{{ batch.supplierName || '---' }}</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="ph-card">
+      <div class="ph-card__header py-2">
+        <h6 class="ph-card-title small mb-0">{{ '::InventorySummary' | abpLocalization }}</h6>
+      </div>
+      <div class="ph-card__body p-3">
+        <div class="d-flex justify-content-between mb-2">
+          <span class="small ph-text-muted">{{ '::Available' | abpLocalization }}</span>
+          <span class="ph-text-success fw-bold">{{ totalAvailable | number }}</span>
+        </div>
+        <div class="d-flex justify-content-between">
+          <span class="small ph-text-muted">{{ '::Locked' | abpLocalization }}</span>
+          <span class="ph-text-warning fw-bold">{{ totalLocked | number }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Content Tabs -->
+  <div class="col-md-9">
+    <div class="ph-card h-100">
+      <div class="ph-card__header p-0">
+        <ul class="nav ph-nav-tabs">
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">
+              {{ '::Information' | abpLocalization }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'balances'" (click)="activeTab = 'balances'">
+              {{ '::CurrentBalances' | abpLocalization }}
+              <span class="badge bg-secondary ms-1">{{ balances.length }}</span>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'transactions'" (click)="activeTab = 'transactions'">
+              {{ '::TransactionHistory' | abpLocalization }}
+            </a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" [class.active]="activeTab === 'reservations'" (click)="activeTab = 'reservations'">
+              {{ '::Reservations' | abpLocalization }}
+            </a>
+          </li>
+        </ul>
+      </div>
+
+      <div class="ph-card__body p-0">
+        <!-- Tab: Information -->
+        <div *ngIf="activeTab === 'info'" class="p-4">
+           <div class="row">
+              <div class="col-md-6 mb-4">
+                 <h6 class="ph-section-title">{{ '::ProductInfo' | abpLocalization }}</h6>
+                 <table class="table table-sm table-borderless small">
+                    <tr>
+                       <td class="ph-text-muted" style="width: 140px">{{ '::MedicineName' | abpLocalization }}</td>
+                       <td class="fw-semibold">{{ batch.productName }}</td>
+                    </tr>
+                    <tr>
+                       <td class="ph-text-muted">{{ '::ProductCode' | abpLocalization }}</td>
+                       <td>{{ batch.productCode }}</td>
+                    </tr>
+                    <tr>
+                        <td class="ph-text-muted">{{ '::RegistrationNumber' | abpLocalization }}</td>
+                        <td>{{ batch.registrationNumber || '---' }}</td>
+                     </tr>
+                 </table>
+              </div>
+           </div>
+        </div>
+
+        <!-- Tab: Balances -->
+        <div *ngIf="activeTab === 'balances'" class="p-0">
+          <ngx-datatable [rows]="balances" [count]="balances.length" default>
+            <ngx-datatable-column [name]="'::Warehouse' | abpLocalization" prop="warehouseName"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Bin' | abpLocalization" prop="binCode"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'::TotalQuantity' | abpLocalization" prop="quantity">
+               <ng-template let-value="value" ngx-datatable-cell-template>
+                  {{ value | number }}
+               </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Available' | abpLocalization" prop="availableQuantity">
+               <ng-template let-value="value" ngx-datatable-cell-template>
+                  <span class="ph-text-success fw-bold">{{ value | number }}</span>
+               </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Locked' | abpLocalization" prop="lockedQuantity">
+               <ng-template let-value="value" ngx-datatable-cell-template>
+                  <span class="ph-text-warning">{{ value | number }}</span>
+               </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+
+        <!-- Tab: Transactions -->
+        <div *ngIf="activeTab === 'transactions'" class="p-0">
+          <ngx-datatable [rows]="transactions" [count]="transactions.length" default>
+            <ngx-datatable-column [name]="'::Date' | abpLocalization" prop="creationTime">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value | date: 'dd/MM/yyyy HH:mm' }}
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Type' | abpLocalization" prop="transactionType">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span class="ph-badge" [ngClass]="{
+                  'ph-badge--approved': value === InventoryTransactionType.Incoming,
+                  'ph-badge--rejected': value === InventoryTransactionType.Outgoing
+                }">
+                   {{ '::Enum:InventoryTransactionType.' + value | abpLocalization }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Reference' | abpLocalization" prop="referenceDocumentNumber"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Quantity' | abpLocalization" prop="quantity">
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span [class.ph-text-success]="row.transactionType === InventoryTransactionType.Incoming"
+                      [class.ph-text-danger]="row.transactionType === InventoryTransactionType.Outgoing">
+                  {{ row.transactionType === InventoryTransactionType.Incoming ? '+' : '-' }}{{ row.quantity | number }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Bin' | abpLocalization" prop="binCode"></ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+
+        <!-- Tab: Reservations -->
+        <div *ngIf="activeTab === 'reservations'" class="p-0">
+          <ngx-datatable [rows]="reservations" [count]="reservations.length" default>
+            <ngx-datatable-column [name]="'::Reference' | abpLocalization" prop="referenceDocumentNumber"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Quantity' | abpLocalization" prop="reservedQuantity">
+               <ng-template let-value="value" ngx-datatable-cell-template>
+                  {{ value | number }}
+               </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Warehouse' | abpLocalization" prop="warehouseName"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Bin' | abpLocalization" prop="binCode"></ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                <span class="ph-badge" [ngClass]="{
+                  'ph-badge--approved': value === ReservationStatus.Active,
+                  'ph-badge--pending': value === ReservationStatus.Released,
+                  'ph-badge--rejected': value === ReservationStatus.Cancelled
+                }">
+                   {{ '::Enum:ReservationStatus.' + value | abpLocalization }}
+                </span>
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

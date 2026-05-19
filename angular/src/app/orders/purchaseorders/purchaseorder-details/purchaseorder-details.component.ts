@@ -138,10 +138,25 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe((res) => (this.warehouses = res.items));
 
-    this.medicineService
-      .getList({ maxResultCount: 1000, skipCount: 0 } as any)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.medicines = res.items));
+    if (this.order?.supplierId) {
+      this.supplierService
+        .getProductList(this.order.supplierId, {
+          maxResultCount: 1000,
+          skipCount: 0,
+          isActive: true,
+        } as any)
+        .pipe(takeUntil(this.destroy$))
+        .subscribe((res) => {
+          this.medicines = res.items.map(
+            (sp) =>
+              ({
+                id: sp.productId,
+                code: sp.productCode,
+                name: sp.productName,
+              } as MedicineDto)
+          );
+        });
+    }
   }
 
   // ── Forms ─────────────────────────────────────────────────

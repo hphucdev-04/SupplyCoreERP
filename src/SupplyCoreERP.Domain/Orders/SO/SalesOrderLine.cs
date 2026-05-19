@@ -5,7 +5,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Sales.Orders;
 
-public class SalesOrderLine : FullAuditedEntity<Guid>
+public class SalesOrderLine : AuditedEntity<Guid>
 {
     public Guid SalesOrderId { get; private set; }
     public virtual SalesOrder SalesOrder { get; protected set; }

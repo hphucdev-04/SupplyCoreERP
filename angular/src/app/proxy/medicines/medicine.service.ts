@@ -1,4 +1,4 @@
-import type { AddMedicineRegistrationDto, CreateUpdateMedicineDto, CreateUpdateMedicineIngredientDto, CreateUpdateMedicineUnitDto, GetMedicineListDto, MedicineDetailDto, MedicineDto, MedicineSummaryDto } from './dtos/models';
+import type { AddMedicineRegistrationDto, CreateUpdateMedicineDto, CreateUpdateMedicineIngredientDto, CreateUpdateMedicineUnitDto, GetMedicineListDto, MedicineDetailDto, MedicineDto, MedicineRegistrationDto, MedicineSummaryDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
@@ -95,6 +95,14 @@ export class MedicineService {
       responseType: 'blob',
       url: '/api/app/medicine/as-excel-file',
       params: { filter: input.filter, categoryId: input.categoryId, manufacturerId: input.manufacturerId, status: input.status, isActive: input.isActive, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getRegistrations = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, MedicineRegistrationDto[]>({
+      method: 'GET',
+      url: `/api/app/medicine/${id}/registrations`,
     },
     { apiName: this.apiName,...config });
   

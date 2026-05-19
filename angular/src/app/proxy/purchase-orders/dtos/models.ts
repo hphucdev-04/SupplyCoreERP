@@ -1,4 +1,4 @@
-import type { FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
+import type { AuditedEntityDto, FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { PurchaseOrderStatus } from '../../enums/orders/purchase-order-status.enum';
 
 export interface AddPurchaseOrderLineDto {
@@ -30,8 +30,10 @@ export interface PurchaseOrderDto extends FullAuditedEntityDto<string> {
   code?: string;
   supplierId?: string;
   supplierName?: string;
+  supplierCode?: string;
   warehouseId?: string;
   warehouseName?: string;
+  warehouseCode?: string;
   orderDate?: string;
   expectedDeliveryDate?: string;
   dueDate?: string;
@@ -43,12 +45,13 @@ export interface PurchaseOrderDto extends FullAuditedEntityDto<string> {
   lines?: PurchaseOrderLineDto[];
 }
 
-export interface PurchaseOrderLineDto extends FullAuditedEntityDto<string> {
+export interface PurchaseOrderLineDto extends AuditedEntityDto<string> {
   productId?: string;
   productCode?: string;
   productName?: string;
   unitId?: string;
   unitName?: string;
+  baseUnitName?: string;
   conversionFactor?: number;
   quantity?: number;
   baseQuantity?: number;

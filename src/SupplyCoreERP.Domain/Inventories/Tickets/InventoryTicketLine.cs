@@ -8,7 +8,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Inventories.Tickets;
 
-public class InventoryTicketLine : FullAuditedEntity<Guid>
+public class InventoryTicketLine : AuditedEntity<Guid>
 {
     public Guid TicketId { get; private set; }
     public virtual InventoryTicket Ticket { get; protected set; }
@@ -50,12 +50,12 @@ public class InventoryTicketLine : FullAuditedEntity<Guid>
     protected InventoryTicketLine() { Details = new List<InventoryTicketDetail>(); }
 
     public InventoryTicketLine(
-        Guid id, 
-        Guid ticketId, 
-        Guid productId, 
-        Guid unitId, 
-        int conversionFactor, 
-        Guid? purchaseOrderLineId, 
+        Guid id,
+        Guid ticketId,
+        Guid productId,
+        Guid unitId,
+        int conversionFactor,
+        Guid? purchaseOrderLineId,
         decimal quantity,
         Guid? salesOrderLineId = null) : base(id)
     {

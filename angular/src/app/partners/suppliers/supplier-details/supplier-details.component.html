@@ -117,7 +117,7 @@
         </div>
 
         <!-- Legal & Identity -->
-        <div class="ph-card mb-4">
+        <div class="ph-card mb-3">
           <div class="ph-card__header">
             <h6 class="ph-card__header-title">
               <i class="fa fa-file-contract me-2"></i>{{ '::LegalAndIdentity' | abpLocalization }}
@@ -142,7 +142,7 @@
         </div>
 
         <!-- Contact Persons -->
-        <div class="ph-card mb-4">
+        <div class="ph-card mb-3">
           <div class="ph-card__header">
             <h6 class="ph-card__header-title">
               <i class="fa fa-users me-2"></i>{{ '::ContactPersons' | abpLocalization }}
@@ -177,7 +177,7 @@
       <!-- Right Column -->
       <div class="col-lg-4">
         <!-- Address -->
-        <div class="ph-card mb-4">
+        <div class="ph-card mb-3">
           <div class="ph-card__header">
             <h6 class="ph-card__header-title">
               <i class="fa fa-map-marker-alt me-2"></i>{{ '::Address' | abpLocalization }}
@@ -195,34 +195,8 @@
           </div>
         </div>
 
-        <!-- System Data -->
-        <div class="ph-card mb-4">
-          <div class="ph-card__header">
-            <h6 class="ph-card__header-title">
-              <i class="fa fa-clock-rotate-left me-2"></i>{{ '::SystemData' | abpLocalization }}
-            </h6>
-          </div>
-          <div class="ph-card__body">
-            <div class="d-flex justify-content-between align-items-center py-2">
-              <span class="ph-text-muted">{{ '::CreationTime' | abpLocalization }}</span>
-              <span class="ph-field-value">{{
-                supplier.creationTime | date: 'dd/MM/yyyy HH:mm'
-              }}</span>
-            </div>
-            <hr class="ph-divider my-1" />
-            <div class="d-flex justify-content-between align-items-center py-2">
-              <span class="ph-text-muted">{{ '::LastModificationTime' | abpLocalization }}</span>
-              <span class="ph-field-value">{{
-                supplier.lastModificationTime
-                  ? (supplier.lastModificationTime | date: 'dd/MM/yyyy HH:mm')
-                  : 'N/A'
-              }}</span>
-            </div>
-          </div>
-        </div>
-
         <!-- Financial Terms -->
-        <div class="ph-card mb-4">
+        <div class="ph-card mb-3">
           <div class="ph-card__header">
             <h6 class="ph-card__header-title">
               <i class="fa fa-credit-card me-2"></i>{{ '::FinancialTerms' | abpLocalization }}
@@ -272,6 +246,32 @@
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- System Data -->
+        <div class="ph-card mb-4">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-clock-rotate-left me-2"></i>{{ '::SystemData' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="ph-text-muted">{{ '::CreationTime' | abpLocalization }}</span>
+              <span class="ph-field-value">{{
+                supplier.creationTime | date: 'HH:mm dd/MM/yyyy'
+              }}</span>
+            </div>
+            <hr class="ph-divider my-1" />
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="ph-text-muted">{{ '::LastModificationTime' | abpLocalization }}</span>
+              <span class="ph-field-value">{{
+                supplier.lastModificationTime
+                  ? (supplier.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
+                  : 'N/A'
+              }}</span>
             </div>
           </div>
         </div>

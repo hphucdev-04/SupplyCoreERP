@@ -26,10 +26,10 @@ public class BatchManager : DomainService
     }
 
     public async Task<ProductBatch> CreateAsync(
-        Guid productId, 
-        string batchNumber, 
-        DateTime mfg, 
-        DateTime exp, 
+        Guid productId,
+        string batchNumber,
+        DateTime mfg,
+        DateTime exp,
         Guid? supplierId,
         Guid? medicineRegistrationId = null)
     {
@@ -44,9 +44,9 @@ public class BatchManager : DomainService
     }
 
     public void UpdateBatch(
-        ProductBatch batch, 
-        DateTime mfg, 
-        DateTime exp, 
+        ProductBatch batch,
+        DateTime mfg,
+        DateTime exp,
         Guid? supplierId,
         Guid? medicineRegistrationId = null)
     {

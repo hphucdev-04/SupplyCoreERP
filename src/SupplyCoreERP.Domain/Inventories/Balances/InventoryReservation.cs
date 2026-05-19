@@ -1,7 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using SupplyCoreERP.Enums.Balances;
+using SupplyCoreERP.Inventories.Batches;
+using SupplyCoreERP.Inventories.Warehouses;
+using SupplyCoreERP.Products;
+using SupplyCoreERP.Warehouses;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Inventories.Balances;
@@ -14,9 +16,13 @@ public class InventoryReservation : CreationAuditedEntity<Guid>
 
     // Giữ chỗ món hàng nào, ở đâu?
     public Guid WarehouseId { get; private set; }
+    public virtual Warehouse Warehouse { get; private set; }
     public Guid BinId { get; private set; }
+    public virtual Bin Bin { get; private set; }
     public Guid ProductId { get; private set; }
+    public virtual Product Product { get; private set; }
     public Guid ProductBatchId { get; private set; }
+    public virtual ProductBatch ProductBatch { get; private set; }
 
     // Số lượng giữ là bao nhiêu?
     public decimal ReservedQuantity { get; private set; }

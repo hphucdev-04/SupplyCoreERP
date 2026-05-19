@@ -28,6 +28,8 @@ public class InventoryBalanceAutoMapperProfile : Profile
             .ForMember(dest => dest.ManufacturingDate, opt => opt.MapFrom(src => src.ProductBatch != null ? (DateTime?)src.ProductBatch.ManufacturingDate : null))
             .ForMember(dest => dest.SupplierName, opt => opt.MapFrom(src => src.ProductBatch != null && src.ProductBatch.Supplier != null ? src.ProductBatch.Supplier.Name : null)); ;
 
-        CreateMap<InventoryReservation, InventoryReservationDto>();
+        CreateMap<InventoryReservation, InventoryReservationDto>()
+            .ForMember(dest => dest.WarehouseName, opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Name : null))
+            .ForMember(dest => dest.BinCode, opt => opt.MapFrom(src => src.Bin != null ? src.Bin.Code : null));
     }
 }

@@ -61,15 +61,10 @@
     </div>
 
     <!-- Table -->
-    <ngx-datatable
-      [rows]="data.items"
-      [count]="data.totalCount"
-      [list]="list"
-      default
-    >
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
       <ngx-datatable-column
         [name]="'::Actions' | abpLocalization"
-        [maxWidth]="100"
+        [maxWidth]="150"
         [sortable]="false"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
@@ -94,13 +89,11 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column
-        [name]="'::Code' | abpLocalization"
-        prop="code"
-        [width]="210"
-      >
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="210">
         <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
-          <span class="ph-link fw-semibold font-mono" (click)="viewDetail(row.id)">{{ value }}</span>
+          <span class="ph-link fw-semibold font-mono" (click)="viewDetail(row.id)">{{
+            value
+          }}</span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -122,19 +115,24 @@
         [width]="160"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="ph-text-muted"
-            ><i class="fa fa-home me-1"></i>{{ row.warehouseName }}</span
-          >
+          <span class="ph-text-muted"><i class="fa fa-home me-1"></i>{{ row.warehouseName }}</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column
-        [name]="'::OrderDate' | abpLocalization"
-        prop="orderDate"
-        [width]="130"
-      >
+      <ngx-datatable-column [name]="'::OrderDate' | abpLocalization" prop="orderDate" [width]="130">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="ph-text-muted">{{ row.orderDate | date: "dd/MM/yyyy" }}</span>
+          <span class="ph-text-muted">{{ row.orderDate | date: 'dd/MM/yyyy' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::DueDate' | abpLocalization" prop="dueDate" [width]="130">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span
+            class="ph-text-muted"
+            [class.ph-text-danger]="row.dueDate && (row.dueDate | date) < ('' | date)"
+          >
+            {{ row.dueDate ? (row.dueDate | date: 'dd/MM/yyyy') : '—' }}
+          </span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -144,17 +142,11 @@
         [width]="150"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="fw-bold ph-text-primary"
-            >{{ row.totalAmount | number: "1.0-0" }}đ</span
-          >
+          <span class="fw-bold ph-text-primary">{{ row.totalAmount | number: '1.0-0' }}đ</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column
-        [name]="'::Status' | abpLocalization"
-        prop="status"
-        [width]="160"
-      >
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="160">
         <ng-template let-value="value" ngx-datatable-cell-template>
           <span
             class="ph-badge"
@@ -162,33 +154,22 @@
               'ph-badge--neutral': value === SalesOrderStatus.Draft,
               'ph-badge--pending': value === SalesOrderStatus.PendingApproval,
               'ph-badge--approved': value === SalesOrderStatus.Approved,
-              'ph-badge--info': value === SalesOrderStatus.Picking || value === SalesOrderStatus.Packing,
-              'ph-badge--success': value === SalesOrderStatus.Shipped || value === SalesOrderStatus.Completed,
-              'ph-badge--rejected': value === SalesOrderStatus.Canceled
+              'ph-badge--info':
+                value === SalesOrderStatus.Picking || value === SalesOrderStatus.Packing,
+              'ph-badge--success':
+                value === SalesOrderStatus.Shipped || value === SalesOrderStatus.Completed,
+              'ph-badge--rejected': value === SalesOrderStatus.Canceled,
             }"
           >
             <i class="fa me-1" [ngClass]="statusIcon(value)"></i>
-            {{
-              '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, value) | abpLocalization
-            }}
+            {{ '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, value) | abpLocalization }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column
-        [name]="'::DueDate' | abpLocalization"
-        prop="dueDate"
-        [width]="130"
-      >
+      <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span
-            class="ph-text-muted"
-            [class.ph-text-danger]="
-              row.dueDate && (row.dueDate | date) < ('' | date)
-            "
-          >
-            {{ row.dueDate ? (row.dueDate | date: "dd/MM/yyyy") : "—" }}
-          </span>
+          {{ row.creationTime | date: 'medium' }}
         </ng-template>
       </ngx-datatable-column>
     </ngx-datatable>
@@ -219,7 +200,10 @@
           [placeholder]="'::Select' | abpLocalization"
           [searchPlaceholder]="'::Search' | abpLocalization"
         ></app-dropdown-search>
-        <div *ngIf="form.get('customerId').invalid && form.get('customerId').touched" class="ph-error-msg">
+        <div
+          *ngIf="form.get('customerId').invalid && form.get('customerId').touched"
+          class="ph-error-msg"
+        >
           {{ '::ThisFieldIsRequired' | abpLocalization }}
         </div>
       </div>
@@ -232,7 +216,10 @@
           [placeholder]="'::Select' | abpLocalization"
           [searchPlaceholder]="'::Search' | abpLocalization"
         ></app-dropdown-search>
-        <div *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched" class="ph-error-msg">
+        <div
+          *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched"
+          class="ph-error-msg"
+        >
           {{ '::ThisFieldIsRequired' | abpLocalization }}
         </div>
       </div>
@@ -245,7 +232,11 @@
       </div>
       <div class="col-6 mb-3">
         <label class="ph-label">{{ '::ExpectedDeliveryDate' | abpLocalization }}</label>
-        <input type="date" class="form-control form-control-sm" formControlName="expectedDeliveryDate" />
+        <input
+          type="date"
+          class="form-control form-control-sm"
+          formControlName="expectedDeliveryDate"
+        />
       </div>
       <div class="col-6 mb-3">
         <label class="ph-label">{{ '::DueDate' | abpLocalization }}</label>

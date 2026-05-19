@@ -1,11 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using Volo.Abp.Application.Dtos;
 
 namespace SupplyCoreERP.SalesOrders.Dtos;
 
-public class SalesOrderLineDto : FullAuditedEntityDto<Guid>
+public class SalesOrderLineDto : AuditedEntityDto<Guid>
 {
     public Guid ProductId { get; set; }
     public string? ProductCode { get; set; }

@@ -21,6 +21,7 @@ export interface ProductBatchDto extends FullAuditedEntityDto<string> {
   code?: string;
   productId?: string;
   productName?: string;
+  productCode?: string;
   batchNumber?: string;
   manufacturingDate?: string;
   expiryDate?: string;

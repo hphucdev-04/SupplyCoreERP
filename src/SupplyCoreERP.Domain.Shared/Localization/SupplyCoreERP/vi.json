@@ -42,6 +42,10 @@
     "Brand:AppName": "RxLogistics",
     "Brand:AppDesc": "Tối ưu vận hành. Kết nối chuỗi cung ứng",
     "Password": "Mật khẩu",
-    "ForgotPassword": "Quên mật khẩu"
+    "ForgotPassword": "Quên mật khẩu",
+    "AutoFEFO": "Gợi ý FEFO",
+    "ApplyFEFOHint": "Hệ thống sẽ tự động chọn lô hàng hết hạn sớm nhất trong kho",
+    "ApplyFEFOConfirmation": "Bạn có chắc chắn muốn hệ thống tự động phân bổ lô hàng theo FEFO? Các chi tiết đã chọn thủ công sẽ bị thay thế.",
+    "ApplyFEFOSuccess": "Đã áp dụng gợi ý FEFO thành công cho các dòng hàng."
   }
 }

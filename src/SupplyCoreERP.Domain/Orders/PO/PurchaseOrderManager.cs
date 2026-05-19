@@ -93,6 +93,17 @@ public class PurchaseOrderManager : DomainService
             throw new UserFriendlyException($"Sản phẩm '{product.Name}' chưa đủ điều kiện giao dịch!");
         }
 
+        // Ràng buộc sản phẩm theo nhà cung cấp
+        bool isProvidedBySupplier = await _supplierRepo.AnyAsync(s =>
+            s.Id == order.SupplierId &&
+            s.SupplierProducts.Any(sp => sp.ProductId == productId && sp.IsActive));
+
+        if (!isProvidedBySupplier)
+        {
+            Supplier supplier = await _supplierRepo.GetAsync(order.SupplierId);
+            throw new UserFriendlyException($"Sản phẩm '{product.Name}' không nằm trong danh mục cung cấp của nhà cung cấp '{supplier.Name}'!");
+        }
+
         order.AddLine(GuidGenerator.Create(), productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
     }
 
@@ -189,7 +200,7 @@ public class PurchaseOrderManager : DomainService
         }
 
         // 2. BẮT BUỘC: Kiểm tra tất cả các dòng đã nhận đủ hàng
-        foreach (var line in order.Lines)
+        foreach (PurchaseOrderLine line in order.Lines)
         {
             // So sánh theo BaseQuantity để tránh sai số làm tròn ở đơn vị PO
             if (line.ReceivedQuantity * line.ConversionFactor < line.BaseQuantity - 0.0001m)

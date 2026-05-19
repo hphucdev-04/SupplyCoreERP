@@ -9,6 +9,7 @@ public class MedicineDto : EntityDto<Guid>
     public string Code { get; set; }
     public string Name { get; set; }
 
+    public Guid BaseUnitId { get; set; }
     public string CategoryName { get; set; }
     public string ManufacturerName { get; set; }
     public string BaseUnitName { get; set; }

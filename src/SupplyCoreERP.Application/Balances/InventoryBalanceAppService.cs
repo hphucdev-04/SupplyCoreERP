@@ -36,6 +36,7 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
             .WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
             .WhereIf(input.BinId.HasValue, x => x.BinId == input.BinId)
             .WhereIf(input.ProductId.HasValue, x => x.ProductId == input.ProductId)
+            .WhereIf(input.ProductBatchId.HasValue, x => x.ProductBatchId == input.ProductBatchId)
             .WhereIf(!string.IsNullOrWhiteSpace(input.BatchNumber), x => x.ProductBatch.BatchNumber.Contains(input.BatchNumber))
             .WhereIf(input.HideZeroQuantity == true, x => x.Quantity > 0);
 
@@ -80,6 +81,7 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
     public async Task<PagedResultDto<InventoryReservationDto>> GetReservationListAsync(GetInventoryReservationListDto input)
     {
         IQueryable<InventoryReservation> query = await _reservationRepo.GetQueryableAsync();
+        query = query.Include(x => x.Warehouse).Include(x => x.Bin);
 
         // Bộ lọc đa năng (Multi-dimensional Filter)
         query = query

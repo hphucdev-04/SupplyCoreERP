@@ -11,6 +11,7 @@ public class MedicineAutoMapperProfile : Profile
         CreateMap<Medicine, MedicineDto>()
             .ForMember(d => d.CategoryName, o => o.MapFrom(s => s.Category.Name))
             .ForMember(d => d.ManufacturerName, o => o.MapFrom(s => s.Manufacturer.Name))
+            .ForMember(d => d.BaseUnitId, o => o.MapFrom(s => s.BaseUnitId))
             .ForMember(d => d.BaseUnitName, o => o.MapFrom(s => s.BaseUnit.Name))
             .ForMember(d => d.DosageFormName, o => o.MapFrom(s => s.DosageForm.Name))
             .ForMember(d => d.OriginCountryName, o => o.MapFrom(s => s.Manufacturer.Country.Name))
