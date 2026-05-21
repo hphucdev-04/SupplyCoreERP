@@ -45,12 +45,6 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   medicines: MedicineDto[] = [];
   loading = true;
 
-  // Cancel state (Drawer)
-  isCancelDrawerOpen = false;
-  cancelReason = '';
-  showCancelError = false;
-  isCanceling = false;
-
   // Edit master drawer
   isEditDrawerOpen = false;
   editForm: FormGroup;
@@ -80,8 +74,8 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.orderId = this.route.snapshot.params['id'];
@@ -111,17 +105,20 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
       .get(this.orderId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res) => {
+        next: res => {
           this.order = res;
           this.loading = false;
 
-          this.routesService.add([{
-            path: `/order/saleorders/details/${this.order.id}`,
-            name: this.ROUTE_NAME,
-            parentName: '::Menu:SalesOrders',
-            iconClass: 'fas fa-file-invoice',
-            layout: eLayoutType.application,
-          }]);
+          this.routesService.add([
+            {
+              path: `/order/saleorders/details/${this.order.id}`,
+              name: this.ROUTE_NAME,
+              parentName: '::Menu:SaleOrders',
+              iconClass: 'fas fa-file-invoice',
+              layout: eLayoutType.application,
+              requiredPolicy: 'Order.SaleOrder',
+            },
+          ]);
         },
         error: () => this.goBack(),
       });
@@ -129,19 +126,19 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
     this.ticketService
       .getRelatedTicketsBySaleOrder(this.orderId)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.relatedTickets = res));
+      .subscribe(res => (this.relatedTickets = res));
   }
 
   loadMasterData() {
     this.warehouseService
       .getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.warehouses = res.items));
+      .subscribe(res => (this.warehouses = res.items));
 
     this.medicineService
       .getList({ maxResultCount: 1000, skipCount: 0 } as any)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.medicines = res.items));
+      .subscribe(res => (this.medicines = res.items));
   }
 
   // ── Forms ─────────────────────────────────────────────────
@@ -221,7 +218,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
     this.medicineService
       .get(medicineId)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((detail) => {
+      .subscribe(detail => {
         const baseUnit: ProductUnitLookup = {
           unitId: detail.baseUnitId,
           unitName: detail.baseUnitName,
@@ -231,9 +228,14 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
         let cumulative = 1;
         const others: ProductUnitLookup[] = (detail.units ?? [])
           .sort((a, b) => (a.level ?? 0) - (b.level ?? 0))
-          .map((u) => {
+          .map(u => {
             cumulative *= u.conversionFactor ?? 1;
-            return { unitId: u.unitId, unitName: u.unitName, conversionFactor: cumulative, isBaseUnit: false };
+            return {
+              unitId: u.unitId,
+              unitName: u.unitName,
+              conversionFactor: cumulative,
+              isBaseUnit: false,
+            };
           });
         this.units = [baseUnit, ...others];
         this.baseUnitName = detail.baseUnitName ?? '';
@@ -245,7 +247,8 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   loadPrices(productId: string) {
-    this.priceService.getByProduct(productId)
+    this.priceService
+      .getByProduct(productId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(prices => {
         this.availablePrices = prices;
@@ -254,7 +257,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUnitChange(unitId: string) {
-    const unit = this.units.find((u) => u.unitId === unitId);
+    const unit = this.units.find(u => u.unitId === unitId);
     if (unit) {
       this.selectedConversionFactor = unit.conversionFactor;
       this.lineForm.patchValue({ conversionFactor: unit.conversionFactor });
@@ -266,7 +269,9 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   filterAvailablePrices() {
     const unitId = this.lineForm.get('unitId')?.value;
     const qty = this.lineForm.get('quantity')?.value || 0;
-    const filtered = this.availablePrices.filter(p => p.unitId === unitId && qty >= (p.minQuantity || 0));
+    const filtered = this.availablePrices.filter(
+      p => p.unitId === unitId && qty >= (p.minQuantity || 0),
+    );
     if (filtered.length > 0) {
       const best = filtered.sort((a, b) => (b.minQuantity || 0) - (a.minQuantity || 0))[0];
       this.lineForm.patchValue({ unitPrice: best.price });
@@ -298,7 +303,11 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   // ── Inline edit ──
-  onInlineLineChange(line: SalesOrderLineDto, field: 'quantity' | 'unitPrice' | 'discountRate' | 'taxRate', rawValue: string) {
+  onInlineLineChange(
+    line: SalesOrderLineDto,
+    field: 'quantity' | 'unitPrice' | 'discountRate' | 'taxRate',
+    rawValue: string,
+  ) {
     const value = parseFloat(rawValue);
     if (isNaN(value) || value < 0) {
       this.toaster.error('::InvalidValue', '::Error');
@@ -328,7 +337,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   removeLine(lineId: string) {
-    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
+    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe(status => {
       if (status === Confirmation.Status.confirm) {
         this.soService
           .removeLine(this.orderId, lineId)
@@ -346,7 +355,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
       this.toaster.error('::NoLinesError', '::Error');
       return;
     }
-    this.confirmation.info('::SendToApproveConfirmation', '::Confirm').subscribe((status) => {
+    this.confirmation.info('::SendToApproveConfirmation', '::Confirm').subscribe(status => {
       if (status !== Confirmation.Status.confirm) return;
       this.soService
         .sendToApprove(this.orderId)
@@ -358,7 +367,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   approve() {
-    this.confirmation.success('::ApproveSOConfirmation', '::Confirm').subscribe((status) => {
+    this.confirmation.success('::ApproveSOConfirmation', '::Confirm').subscribe(status => {
       if (status !== Confirmation.Status.confirm) return;
       this.soService
         .approve(this.orderId)
@@ -371,7 +380,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   complete() {
-    this.confirmation.success('::CompleteConfirmation', '::Confirm').subscribe((status) => {
+    this.confirmation.success('::CompleteConfirmation', '::Confirm').subscribe(status => {
       if (status !== Confirmation.Status.confirm) return;
       this.soService
         .complete(this.orderId)
@@ -383,50 +392,11 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  openCancelModal() {
-    this.cancelReason = '';
-    this.showCancelError = false;
-    this.isCanceling = false;
-    this.isCancelDrawerOpen = true;
-  }
-
-  closeCancelDrawer() {
-    this.isCancelDrawerOpen = false;
-  }
-
-  confirmCancel() {
-    if (!this.cancelReason?.trim()) {
-      this.showCancelError = true;
-      return;
-    }
-    this.isCanceling = true;
-    this.soService
-      .cancel(this.orderId, this.cancelReason.trim())
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.isCanceling = false;
-          this.closeCancelDrawer();
-          this.toaster.success('::CancelSuccess', '::Success');
-          this.loadData();
-        },
-        error: () => (this.isCanceling = false),
-      });
-  }
-
   // ── Helpers ───────────────────────────────────────────────
   isEditable(): boolean {
     return (
       this.order?.status === SalesOrderStatus.Draft ||
       this.order?.status === SalesOrderStatus.PendingApproval
-    );
-  }
-
-  isCancelable(): boolean {
-    return (
-      this.order?.status !== SalesOrderStatus.Completed &&
-      this.order?.status !== SalesOrderStatus.Canceled &&
-      this.order?.status !== SalesOrderStatus.Delivering
     );
   }
 
@@ -437,14 +407,14 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
 
   statusClass(status: SalesOrderStatus): string {
     const map: Record<number, string> = {
-      [SalesOrderStatus.Draft]: 'badge-secondary',
-      [SalesOrderStatus.PendingApproval]: 'badge-warning',
-      [SalesOrderStatus.Approved]: 'badge-info',
-      [SalesOrderStatus.Delivering]: 'badge-primary',
-      [SalesOrderStatus.Completed]: 'badge-success',
-      [SalesOrderStatus.Canceled]: 'badge-danger',
+      [SalesOrderStatus.Draft]: 'ph-badge--neutral',
+      [SalesOrderStatus.PendingApproval]: 'ph-badge--pending',
+      [SalesOrderStatus.Approved]: 'ph-badge--info',
+      [SalesOrderStatus.Delivering]: 'ph-badge--pending',
+      [SalesOrderStatus.Completed]: 'ph-badge--approved',
+      [SalesOrderStatus.Canceled]: 'ph-badge--rejected',
     };
-    return map[status] ?? 'badge-secondary';
+    return map[status] ?? 'ph-badge--neutral';
   }
 
   statusIcon(status: SalesOrderStatus): string {
@@ -452,7 +422,7 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
       [SalesOrderStatus.Draft]: 'fa-pencil',
       [SalesOrderStatus.PendingApproval]: 'fa-clock-o',
       [SalesOrderStatus.Approved]: 'fa-check',
-      [SalesOrderStatus.Delivering]: 'fa-truck',
+      [SalesOrderStatus.Delivering]: 'fa-road',
       [SalesOrderStatus.Completed]: 'fa-check-circle',
       [SalesOrderStatus.Canceled]: 'fa-times-circle',
     };

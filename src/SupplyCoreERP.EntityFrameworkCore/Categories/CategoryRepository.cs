@@ -8,9 +8,9 @@ using Volo.Abp.EntityFrameworkCore;
 
 namespace SupplyCoreERP.Categories;
 
-public class EfCoreCategoryRepository : EfCoreRepository<SupplyCoreERPDbContext, Category, Guid>, ICategoryRepository
+public class CategoryRepository : EfCoreRepository<SupplyCoreERPDbContext, Category, Guid>, ICategoryRepository
 {
-    public EfCoreCategoryRepository(IDbContextProvider<SupplyCoreERPDbContext> dbContextProvider)
+    public CategoryRepository(IDbContextProvider<SupplyCoreERPDbContext> dbContextProvider)
         : base(dbContextProvider)
     {
     }

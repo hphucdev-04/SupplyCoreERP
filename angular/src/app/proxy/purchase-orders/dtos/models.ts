@@ -1,5 +1,7 @@
 import type { AuditedEntityDto, FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { PurchaseOrderStatus } from '../../enums/orders/purchase-order-status.enum';
+import type { TicketType } from '../../enums/warehouses/ticket-type.enum';
+import type { ApprovalStatus } from '../../enums/warehouses/approval-status.enum';
 
 export interface AddPurchaseOrderLineDto {
   productId?: string;
@@ -42,7 +44,10 @@ export interface PurchaseOrderDto extends FullAuditedEntityDto<string> {
   taxAmount?: number;
   totalAmount?: number;
   note?: string;
+  purchaseRequisitionId?: string;
+  purchaseRequisitionCode?: string;
   lines?: PurchaseOrderLineDto[];
+  relatedTickets?: RelatedTicketDto[];
 }
 
 export interface PurchaseOrderLineDto extends AuditedEntityDto<string> {
@@ -61,6 +66,14 @@ export interface PurchaseOrderLineDto extends AuditedEntityDto<string> {
   totalPrice?: number;
   taxAmount?: number;
   finalPrice?: number;
+}
+
+export interface RelatedTicketDto {
+  id?: string;
+  ticketNumber?: string;
+  type?: TicketType;
+  status?: ApprovalStatus;
+  creationTime?: string;
 }
 
 export interface UpdatePurchaseOrderDto {

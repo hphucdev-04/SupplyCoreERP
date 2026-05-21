@@ -27,5 +27,9 @@ public class PurchaseOrderDto : FullAuditedEntityDto<Guid>
     public decimal TotalAmount { get; set; }
     public string? Note { get; set; }
 
+    public Guid? PurchaseRequisitionId { get; set; }
+    public string? PurchaseRequisitionCode { get; set; }
+
     public List<PurchaseOrderLineDto> Lines { get; set; } = new List<PurchaseOrderLineDto>();
+    public List<RelatedTicketDto> RelatedTickets { get; set; } = new List<RelatedTicketDto>();
 }

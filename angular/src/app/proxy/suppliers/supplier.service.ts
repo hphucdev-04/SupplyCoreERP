@@ -1,4 +1,4 @@
-import type { CreateUpdateSupplierDto, CreateUpdateSupplierProductDto, GetSupplierListDto, GetSupplierMedicineListDto, GetSupplierProductListDto, SupplierDetailDto, SupplierDto, SupplierMedicineDto, SupplierProductDto } from './dtos/models';
+import type { CreateUpdateSupplierDto, CreateUpdateSupplierProductDto, GetSupplierListDto, GetSupplierMedicineListDto, GetSupplierProductListDto, SourcingSuggestionDto, SupplierDetailDto, SupplierDto, SupplierMedicineDto, SupplierProductDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
@@ -59,6 +59,15 @@ export class SupplierService {
       method: 'GET',
       url: `/api/app/supplier/product-list/${supplierId}`,
       params: { filter: input.filter, isPreferred: input.isPreferred, isActive: input.isActive, minPrice: input.minPrice, maxPrice: input.maxPrice, sorting: input.sorting, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getSourcingSuggestions = (productIds: string[], config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SourcingSuggestionDto[]>({
+      method: 'GET',
+      url: '/api/app/supplier/sourcing-suggestions',
+      params: { productIds },
     },
     { apiName: this.apiName,...config });
   

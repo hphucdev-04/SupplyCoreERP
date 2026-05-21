@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SupplyCoreERP.Suppliers.Dtos;
 using Volo.Abp.Application.Dtos;
@@ -24,5 +25,6 @@ public interface ISupplierAppService : IApplicationService
     Task<SupplierProductDto> UpdateProductAsync(Guid supplierId, Guid productId, CreateUpdateSupplierProductDto input);
     Task RemoveProductAsync(Guid supplierId, Guid productId);
     Task ToggleProductActiveAsync(Guid supplierId, Guid productId);
+    Task<List<SourcingSuggestionDto>> GetSourcingSuggestionsAsync(List<Guid> productIds);
     #endregion
 }

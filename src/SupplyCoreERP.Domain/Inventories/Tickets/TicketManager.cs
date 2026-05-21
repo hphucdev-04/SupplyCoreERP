@@ -185,12 +185,12 @@ public class TicketManager : DomainService
 
     # region Ticket Line
     public async Task<InventoryTicketLine> CreateTicketLineAsync(
-        InventoryTicket ticket, 
-        Guid productId, 
-        Guid? purchaseOrderLineId, 
-        decimal quantity, 
-        Guid? unitId = null, 
-        int? conversionFactor = null, 
+        InventoryTicket ticket,
+        Guid productId,
+        Guid? purchaseOrderLineId,
+        decimal quantity,
+        Guid? unitId = null,
+        int? conversionFactor = null,
         Guid? salesOrderLineId = null)
     {
         if (ticket.Status == ApprovalStatus.Approved || ticket.Status == ApprovalStatus.Rejected)
@@ -230,7 +230,7 @@ public class TicketManager : DomainService
         }
 
         var line = new InventoryTicketLine(GuidGenerator.Create(), ticket.Id, productId, finalUnitId, finalConversionFactor, purchaseOrderLineId, quantity, salesOrderLineId);
-        
+
         return line;
     }
 
@@ -254,7 +254,10 @@ public class TicketManager : DomainService
 
         foreach (InventoryBalance? balance in validBalances)
         {
-            if (remaining <= 0) break;
+            if (remaining <= 0)
+            {
+                break;
+            }
 
             decimal available = balance.Quantity - balance.LockedQuantity;
             decimal toTake = Math.Min(available, remaining);
@@ -328,7 +331,7 @@ public class TicketManager : DomainService
         // Kiểm tra tổng số lượng chi tiết không được vượt quá số lượng dòng hàng
         IQueryable<InventoryTicketDetail> detailQuery = await _ticketDetailRepo.GetQueryableAsync();
         decimal currentDetailedBaseQty = detailQuery.Where(d => d.TicketLineId == line.Id).Sum(d => d.Quantity * d.ConversionFactor);
-        
+
         if (currentDetailedBaseQty + baseQty > line.Quantity)
         {
             Product product = await _productRepo.GetAsync(productId);
@@ -463,8 +466,11 @@ public class TicketManager : DomainService
     {
         IQueryable<SalesOrder> soQuery = await _salesOrderRepo.WithDetailsAsync(x => x.Lines);
         SalesOrder? so = await AsyncExecuter.FirstOrDefaultAsync(soQuery.Where(x => x.Id == soId));
-        
-        if (so == null) return;
+
+        if (so == null)
+        {
+            return;
+        }
 
         foreach (InventoryTicketLine tLine in ticketLines)
         {
@@ -497,7 +503,10 @@ public class TicketManager : DomainService
     {
         IQueryable<PurchaseOrder> poQuery = await _purchaseOrderRepo.WithDetailsAsync(x => x.Lines);
         PurchaseOrder? po = await AsyncExecuter.FirstOrDefaultAsync(poQuery.Where(x => x.Id == poId));
-        if (po == null) return;
+        if (po == null)
+        {
+            return;
+        }
 
         foreach (InventoryTicketLine tLine in ticketLines)
         {
@@ -541,7 +550,11 @@ public class TicketManager : DomainService
 
         foreach (InventoryBalance? balance in validBalances)
         {
-            if (remaining <= 0) break;
+            if (remaining <= 0)
+            {
+                break;
+            }
+
             decimal available = balance.Quantity - balance.LockedQuantity;
             decimal toTake = Math.Min(available, remaining);
             var detail = new InventoryTicketDetail(GuidGenerator.Create(), line.Id, productId, balance.ProductBatchId, balance.BinId, product.BaseUnitId, 1, toTake);

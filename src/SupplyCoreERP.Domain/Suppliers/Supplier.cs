@@ -151,12 +151,6 @@ public class Supplier : FullAuditedAggregateRoot<Guid>
             throw new UserFriendlyException("Sản phẩm này đã có trong danh mục của nhà cung cấp.");
         }
 
-        // Nếu isPreferred = true, bỏ preferred của product khác
-        if (isPreferred)
-        {
-            ClearPreferredForProduct(productId);
-        }
-
         SupplierProduct sp = new(
             id, Id, productId, defaultUnitId,
             defaultConversionFactor, standardPrice, leadTimeDays,
@@ -202,14 +196,6 @@ public class Supplier : FullAuditedAggregateRoot<Guid>
             ?? throw new UserFriendlyException("Không tìm thấy sản phẩm trong danh mục nhà cung cấp.");
 
         sp.SetActive(!sp.IsActive);
-    }
-
-    private void ClearPreferredForProduct(Guid productId)
-    {
-        foreach (SupplierProduct? sp in SupplierProducts.Where(x => x.IsPreferred))
-        {
-            sp.SetActive(false); // hoặc sp.SetPreferred(false) nếu thêm method
-        }
     }
     #endregion
 }

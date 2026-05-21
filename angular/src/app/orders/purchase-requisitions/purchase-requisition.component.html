@@ -1,0 +1,179 @@
+<!-- Main Card -->
+<div class="ph-card">
+  <div class="ph-card__header">
+    <div class="d-flex align-items-center">
+      <button class="btn btn-sm ph-btn-outline me-3" type="button" (click)="goBack()">
+        <i class="fa fa-arrow-left"></i>
+      </button>
+      <h5 class="ph-card-title">
+        {{ '::PurchaseRequisitions' | abpLocalization }}
+      </h5>
+    </div>
+    <div class="ph-card__header-actions">
+      <button class="btn btn-sm ph-btn-new" type="button" (click)="openCreateDrawer()">
+        <i class="fa fa-plus me-1"></i>
+        <span>{{ '::NewPurchaseRequisition' | abpLocalization }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="ph-card__body">
+    <!-- Filter Bar -->
+    <div class="ph-filter-bar">
+      <div class="ph-filter-bar__search">
+        <app-search
+          [placeholder]="'::SearchByCode' | abpLocalization"
+          [(value)]="filterText"
+          [debounceTime]="800"
+          (search)="onSearch($event)"
+        ></app-search>
+      </div>
+      <div class="ph-filter-bar__controls">
+        <select
+          class="form-select form-select-sm"
+          style="width: 200px"
+          [(ngModel)]="filterStatus"
+          (change)="onFilterChange()"
+        >
+          <option [ngValue]="null">{{ '::AllStatus' | abpLocalization }}</option>
+          <option *ngFor="let s of purchaseRequisitionStatusOptions" [ngValue]="s.value">
+            {{
+              '::Enum:PurchaseRequisitionStatus.' + enumName(PurchaseRequisitionStatus, s.value)
+                | abpLocalization
+            }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+      <ngx-datatable-column
+        [name]="'::Actions' | abpLocalization"
+        [maxWidth]="150"
+        [sortable]="false"
+      >
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button class="btn btn-sm ph-btn-actions dropdown-toggle" ngbDropdownToggle>
+              <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
+            </button>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem (click)="viewDetail(row.id)">
+                <i class="fa fa-eye me-1"></i>{{ '::View' | abpLocalization }}
+              </button>
+              <button
+                *ngIf="row.status === PurchaseRequisitionStatus.Draft"
+                ngbDropdownItem
+                class="text-danger"
+                (click)="delete(row.id, row.code)"
+              >
+                <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="180">
+        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+          <span class="ph-link" (click)="viewDetail(row.id)">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        [name]="'::Warehouse' | abpLocalization"
+        prop="warehouseName"
+        [width]="180"
+      >
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <span class="fw-bold">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        [name]="'::RequestedDate' | abpLocalization"
+        prop="requestedDate"
+        [width]="150"
+      >
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-text-muted">{{ row.requestedDate | date: 'dd/MM/yyyy' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column
+        [name]="'::RequiredDate' | abpLocalization"
+        prop="requiredDate"
+        [width]="150"
+      >
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span
+            class="ph-text-muted"
+            [class.ph-text-danger]="row.requiredDate && (row.requiredDate | date) < ('' | date)"
+          >
+            {{ row.requiredDate ? (row.requiredDate | date: 'dd/MM/yyyy') : 'N/A' }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="200">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <span class="ph-badge" [ngClass]="statusClass(value)">
+            <i class="fa me-1" [ngClass]="statusIcon(value)"></i>
+            {{
+              '::Enum:PurchaseRequisitionStatus.' + enumName(PurchaseRequisitionStatus, value)
+                | abpLocalization
+            }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.creationTime | date: 'medium' }}
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
+
+<!-- Create Drawer -->
+<app-drawer
+  [isOpen]="isDrawerOpen"
+  [title]="'::NewPurchaseRequisition' | abpLocalization"
+  [width]="'md'"
+  [saveDisabled]="form.invalid || isSaving"
+  (close)="closeDrawer()"
+  (save)="save()"
+>
+  <form [formGroup]="form">
+    <div class="row">
+      <div class="col-12 mb-3">
+        <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
+        <app-dropdown-search
+          formControlName="warehouseId"
+          [items]="warehouses"
+          [placeholder]="'::SelectWarehouse' | abpLocalization"
+        ></app-dropdown-search>
+      </div>
+      <div class="col-6 mb-3">
+        <label class="ph-label ph-label--required">{{ '::RequestedDate' | abpLocalization }}</label>
+        <input type="date" class="form-control form-control-sm" formControlName="requestedDate" />
+      </div>
+      <div class="col-6 mb-3">
+        <label class="ph-label">{{ '::RequiredDate' | abpLocalization }}</label>
+        <input type="date" class="form-control form-control-sm" formControlName="requiredDate" />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
+      <textarea
+        class="form-control form-control-sm"
+        formControlName="note"
+        rows="3"
+        [placeholder]="'::EnterNote' | abpLocalization"
+      ></textarea>
+    </div>
+  </form>
+</app-drawer>

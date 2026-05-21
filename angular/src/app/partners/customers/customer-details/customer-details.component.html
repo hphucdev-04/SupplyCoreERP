@@ -34,9 +34,9 @@
             >Tax: <strong>{{ customer.taxCode }}</strong></span
           >
           <span *ngIf="customer.type"
-            >Type: <strong>{{
-              ('::Enum:CustomerType.' + enumName(CustomerType, customer.type))
-                | abpLocalization
+            >Type:
+            <strong>{{
+              '::Enum:CustomerType.' + enumName(CustomerType, customer.type) | abpLocalization
             }}</strong></span
           >
         </div>
@@ -122,8 +122,7 @@
                 <span class="ph-field-meta">{{ '::CustomerType' | abpLocalization }}</span>
                 <div class="ph-field-value">
                   {{
-                    ('::Enum:CustomerType.' + enumName(CustomerType, customer.type))
-                      | abpLocalization
+                    '::Enum:CustomerType.' + enumName(CustomerType, customer.type) | abpLocalization
                   }}
                 </div>
               </div>

@@ -7,9 +7,11 @@ using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventories.Tickets;
 using SupplyCoreERP.Inventories.Warehouses;
+using SupplyCoreERP.Orders.PR;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Suppliers;
 using Volo.Abp;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 
@@ -46,7 +48,8 @@ public class PurchaseOrderManager : DomainService
     #region PurchaseOrder
     public async Task<PurchaseOrder> CreateOrderAsync(
      Guid supplierId, Guid warehouseId, DateTime orderDate,
-     DateTime? expectedDeliveryDate, DateTime? inputDueDate, string? note)
+     DateTime? expectedDeliveryDate, DateTime? inputDueDate, string? note,
+     Guid? purchaseRequisitionId = null)
     {
         await ValidateAsync(supplierId, warehouseId, orderDate, expectedDeliveryDate, inputDueDate);
 
@@ -62,7 +65,118 @@ public class PurchaseOrderManager : DomainService
             ?? (supplier.PaymentTermDays > 0 ? orderDate.AddDays(supplier.PaymentTermDays) : null);
 
         return new PurchaseOrder(GuidGenerator.Create(), code, supplierId, warehouseId,
-                                 orderDate, expectedDeliveryDate, finalDueDate, note);
+                                 orderDate, expectedDeliveryDate, finalDueDate, note, purchaseRequisitionId);
+    }
+
+    /// <summary>
+    /// Tạo danh sách các Đơn mua hàng (PO) từ Yêu cầu mua hàng (PR) dựa trên phân bổ chi tiết.
+    /// </summary>
+    public async Task<List<PurchaseOrder>> CreateOrdersFromRequisitionAsync(
+        PurchaseRequisition requisition,
+        List<(Guid RequisitionLineId, Guid SupplierId, Guid WarehouseId, decimal Quantity)> allocations,
+        DateTime orderDate,
+        string? note)
+    {
+        if (requisition.Status != PurchaseRequisitionStatus.Approved &&
+            requisition.Status != PurchaseRequisitionStatus.PartialOrdered)
+        {
+            throw new UserFriendlyException("Yêu cầu mua hàng chưa được duyệt hoặc đã hoàn tất.");
+        }
+
+        if (!allocations.Any())
+        {
+            throw new UserFriendlyException("Vui lòng cung cấp thông tin phân bổ sản phẩm.");
+        }
+
+        var createdOrders = new List<PurchaseOrder>();
+
+        // Nhóm theo (SupplierId, WarehouseId) để tạo PO
+        var groups = allocations.GroupBy(x => new { x.SupplierId, x.WarehouseId });
+
+        foreach (var group in groups)
+        {
+            // Tự động lấy ngày cần hàng từ PR
+            DateTime? expectedDeliveryDate = requisition.RequiredDate;
+
+            // Tạo PO thông qua CreateOrderAsync để tự động tính DueDate từ NCC
+            PurchaseOrder order = await CreateOrderAsync(
+                group.Key.SupplierId,
+                group.Key.WarehouseId,
+                orderDate,
+                expectedDeliveryDate,
+                null,
+                $"[Từ PR: {requisition.Code}] " + (note ?? ""),
+                requisition.Id); // Gắn PR Id để truy vết
+
+            IQueryable<Supplier> query = await _supplierRepo.WithDetailsAsync(x => x.SupplierProducts);
+            Supplier? supplier = await AsyncExecuter.FirstOrDefaultAsync(query, x => x.Id == group.Key.SupplierId);
+
+            if (supplier == null)
+            {
+                throw new EntityNotFoundException(typeof(Supplier), group.Key.SupplierId);
+            }
+
+            foreach ((Guid RequisitionLineId, Guid SupplierId, Guid WarehouseId, decimal Quantity) allocation in group)
+            {
+                PurchaseRequisitionLine? prLine = requisition.Lines.FirstOrDefault(x => x.Id == allocation.RequisitionLineId);
+                if (prLine == null)
+                {
+                    continue;
+                }
+
+                // Nạp thông tin sản phẩm để lấy tên (phục vụ hiển thị lỗi)
+                Product product = await _productRepo.GetAsync(prLine.ProductId);
+
+                SupplierProduct? supplierProduct = supplier.SupplierProducts
+                    .FirstOrDefault(sp => sp.ProductId == prLine.ProductId && sp.IsActive);
+
+                if (supplierProduct == null)
+                {
+                    throw new UserFriendlyException($"Sản phẩm '{product.Name}' không được cung cấp bởi '{supplier.Name}'.");
+                }
+
+                // Kiểm tra số lượng hợp lệ (không vượt quá số lượng còn lại trong yêu cầu)
+                decimal remainingQty = prLine.Quantity - prLine.OrderedQuantity;
+                if (allocation.Quantity > remainingQty + 0.0001m) // Chấp nhận sai số nhỏ do làm tròn
+                {
+                    throw new UserFriendlyException($"Sản phẩm '{product.Name}' yêu cầu đặt {allocation.Quantity} nhưng thực tế chỉ còn thiếu {remainingQty}.");
+                }
+
+                if (allocation.Quantity <= 0)
+                {
+                    continue;
+                }
+
+                // Thêm line vào PO với số lượng do người dùng nhập
+                order.AddLine(
+                    GuidGenerator.Create(),
+                    prLine.ProductId,
+                    prLine.UnitId,
+                    supplierProduct.DefaultConversionFactor,
+                    allocation.Quantity,
+                    supplierProduct.StandardPrice,
+                    0 // TaxRate mặc định là 0
+                );
+
+                // Cập nhật số lượng đã đặt trên PR Line
+                prLine.AddOrderedQuantity(allocation.Quantity);
+            }
+
+            if (order.Lines.Any())
+            {
+                createdOrders.Add(order);
+            }
+        }
+
+        if (!createdOrders.Any())
+        {
+            throw new UserFriendlyException("Không có sản phẩm nào hợp lệ để tạo đơn hàng.");
+        }
+
+        // Cập nhật trạng thái PR
+        requisition.UpdateOrderingStatus();
+
+        return createdOrders;
     }
 
     public async Task UpdateOrderAsync(PurchaseOrder order, Guid warehouseId,
@@ -222,14 +336,6 @@ public class PurchaseOrderManager : DomainService
         supplier.AddDebt(order.TotalAmount);
 
         return supplier;
-    }
-
-    public Task CancelAsync(PurchaseOrder order, string cancelReason)
-    {
-        order.Cancel();
-        order.UpdateInfo(order.WarehouseId, order.ExpectedDeliveryDate, order.DueDate,
-                           $"[Đã hủy: {cancelReason}] " + (order.Note ?? ""));
-        return Task.CompletedTask;
     }
     #endregion
 

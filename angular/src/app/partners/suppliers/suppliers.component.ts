@@ -4,7 +4,12 @@ import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subject, takeUntil } from 'rxjs';
 import { SupplierService } from 'src/app/proxy/suppliers';
-import { SupplierDto, SupplierDetailDto, CreateUpdateSupplierDto, GetSupplierListDto } from 'src/app/proxy/suppliers/dtos';
+import {
+  SupplierDto,
+  SupplierDetailDto,
+  CreateUpdateSupplierDto,
+  GetSupplierListDto,
+} from 'src/app/proxy/suppliers/dtos';
 import { LocationService } from 'src/app/proxy/locations';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
@@ -19,7 +24,7 @@ import { Router } from '@angular/router';
   imports: [SharedModule, DrawerComponent, SearchComponent, CurrencyFormatDirective],
   templateUrl: './suppliers.component.html',
   styleUrl: './suppliers.component.scss',
-  providers: [ListService]
+  providers: [ListService],
 })
 export class SuppliersComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -40,7 +45,7 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   countries: any[] = [];
   cities: any[] = [];
   areas: any[] = [];
-  gender = genderOptions
+  gender = genderOptions;
 
   //Enum
   Gender = Gender;
@@ -52,22 +57,24 @@ export class SuppliersComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
     this.loadInitialLookups();
-    const streamCreator = (query: GetSupplierListDto) => this.supplierService.getList({
-      ...query,
-      filter: this.filterText,
-      isActive: this.filterIsActive
-    });
+    const streamCreator = (query: GetSupplierListDto) =>
+      this.supplierService.getList({
+        ...query,
+        filter: this.filterText,
+        isActive: this.filterIsActive,
+      });
 
     this.list.maxResultCount = 10;
-    this.list.hookToQuery(streamCreator)
+    this.list
+      .hookToQuery(streamCreator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response) => {
+      .subscribe(response => {
         this.data = response;
       });
   }
@@ -79,13 +86,13 @@ export class SuppliersComponent implements OnInit, OnDestroy {
 
   // Khởi tạo ban đầu: Chỉ load danh sách Quốc gia
   loadInitialLookups() {
-    this.locationService.getAllCountries()
+    this.locationService
+      .getAllCountries()
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.countries = res.items;
       });
   }
-
 
   // Dropdown phụ thuộc
   onCountryChange() {
@@ -144,14 +151,16 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   }
 
   editSupplier(id: string): void {
-    this.supplierService.get(id)
+    this.supplierService
+      .get(id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
+      .subscribe(res => {
         this.selectedSupplier = res;
         this.form.patchValue(res);
 
         if (res.countryId) {
-          this.locationService.getCitiesByCountry(res.countryId)
+          this.locationService
+            .getCitiesByCountry(res.countryId)
             .pipe(takeUntil(this.destroy$))
             .subscribe(cityRes => {
               this.cities = cityRes.items;
@@ -161,7 +170,8 @@ export class SuppliersComponent implements OnInit, OnDestroy {
         }
 
         if (res.cityId) {
-          this.locationService.getAreasByCity(res.cityId)
+          this.locationService
+            .getAreasByCity(res.cityId)
             .pipe(takeUntil(this.destroy$))
             .subscribe(areaRes => {
               this.areas = areaRes.items;
@@ -175,40 +185,39 @@ export class SuppliersComponent implements OnInit, OnDestroy {
   }
 
   deleteSupplier(id: string): void {
-    this.confirmation
-      .warn('::AreYouSureToDelete', '::AreYouSure')
-      .subscribe((status) => {
-        if (status === Confirmation.Status.confirm) {
-          this.supplierService.delete(id)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe({
-              next: () => {
-                this.list.get();
-                this.toaster.success('::DeleteSuccess', '::Success');
-              },
-              error: (err) => {
-                this.toaster.error(err.error?.error?.message || '::Error');
-              }
-            });
-        }
-      });
+    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe(status => {
+      if (status === Confirmation.Status.confirm) {
+        this.supplierService
+          .delete(id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: () => {
+              this.list.get();
+              this.toaster.success('::DeleteSuccess', '::Success');
+            },
+            error: err => {
+              this.toaster.error(err.error?.error?.message || '::Error');
+            },
+          });
+      }
+    });
   }
 
   onToggleActive(row: SupplierDto, event: any): void {
     event.stopPropagation();
-    this.confirmation.warn(
-      row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
-      '::Confirm'
-    ).subscribe((status) => {
-      if (status === Confirmation.Status.confirm) {
-        this.supplierService.toggleActive(row.id).subscribe(() => this.list.get());
-        this.toaster.success(
-          row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
-        );
-      } else {
-        event.target.checked = row.isActive;
-      }
-    });
+    this.confirmation
+      .warn(row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate', '::Confirm')
+      .subscribe(status => {
+        if (status === Confirmation.Status.confirm) {
+          this.supplierService.toggleActive(row.id).subscribe(() => this.list.get());
+          this.toaster.success(
+            row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully',
+            '::Success',
+          );
+        } else {
+          event.target.checked = row.isActive;
+        }
+      });
   }
 
   // --- FORM HANDLING ---
@@ -247,14 +256,13 @@ export class SuppliersComponent implements OnInit, OnDestroy {
       ? this.supplierService.update(this.selectedSupplier.id, payload)
       : this.supplierService.create(payload);
 
-    request
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.closeDrawer();
-        this.list.get();
-        this.toaster.success(
-          this.selectedSupplier.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
-        );
-      });
+    request.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.closeDrawer();
+      this.list.get();
+      this.toaster.success(
+        this.selectedSupplier.id ? '::UpdateSuccess' : '::CreateSuccess',
+        '::Success',
+      );
+    });
   }
 }

@@ -14,7 +14,10 @@ import { SupplierService } from 'src/app/proxy/suppliers';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { SupplierDto } from 'src/app/proxy/suppliers/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
-import { PurchaseOrderStatus, purchaseOrderStatusOptions } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
+import {
+  PurchaseOrderStatus,
+  purchaseOrderStatusOptions,
+} from 'src/app/proxy/enums/orders/purchase-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 
@@ -53,8 +56,8 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
     private fb: FormBuilder,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -73,7 +76,7 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
     this.list
       .hookToQuery(streamCreator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.data = res));
+      .subscribe(res => (this.data = res));
   }
 
   ngOnDestroy(): void {
@@ -85,12 +88,12 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
     this.supplierService
       .getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.suppliers = res.items));
+      .subscribe(res => (this.suppliers = res.items));
 
     this.warehouseService
       .getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.warehouses = res.items));
+      .subscribe(res => (this.warehouses = res.items));
   }
 
   onSearch(value: string) {
@@ -100,6 +103,10 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
 
   onFilterChange() {
     this.list.get();
+  }
+
+  viewRequisitions() {
+    this.router.navigate(['/order/purchaserequisitions']);
   }
 
   viewDetail(id: string) {
@@ -113,7 +120,7 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
   delete(id: string, code: string) {
     this.confirmation
       .warn('::AreYouSureToDelete', '::AreYouSure', { messageLocalizationParams: [code] })
-      .subscribe((status) => {
+      .subscribe(status => {
         if (status === Confirmation.Status.confirm) {
           this.poService
             .delete(id)
@@ -137,13 +144,19 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
     });
 
     // Theo dõi thay đổi của supplierId và orderDate để tính DueDate
-    this.form.get('supplierId').valueChanges.pipe(takeUntil(this.destroy$)).subscribe(id => {
-      this.calculateDueDate();
-    });
+    this.form
+      .get('supplierId')
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(id => {
+        this.calculateDueDate();
+      });
 
-    this.form.get('orderDate').valueChanges.pipe(takeUntil(this.destroy$)).subscribe(date => {
-      this.calculateDueDate();
-    });
+    this.form
+      .get('orderDate')
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(date => {
+        this.calculateDueDate();
+      });
   }
 
   calculateDueDate() {
@@ -191,7 +204,7 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
       .create(this.form.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (newOrder) => {
+        next: newOrder => {
           this.isSaving = false;
           this.closeDrawer();
           this.list.get();
@@ -204,14 +217,14 @@ export class PurchaseOrdersComponent implements OnInit, OnDestroy {
 
   statusClass(status: PurchaseOrderStatus): string {
     const map: Record<number, string> = {
-      [PurchaseOrderStatus.Draft]: 'badge-secondary',
-      [PurchaseOrderStatus.PendingApproval]: 'badge-warning',
-      [PurchaseOrderStatus.Approved]: 'badge-info',
-      [PurchaseOrderStatus.Receiving]: 'badge-primary',
-      [PurchaseOrderStatus.Completed]: 'badge-success',
-      [PurchaseOrderStatus.Canceled]: 'badge-danger',
+      [PurchaseOrderStatus.Draft]: 'ph-badge--neutral',
+      [PurchaseOrderStatus.PendingApproval]: 'ph-badge--pending',
+      [PurchaseOrderStatus.Approved]: 'ph-badge--info',
+      [PurchaseOrderStatus.Receiving]: 'ph-badge--pending',
+      [PurchaseOrderStatus.Completed]: 'ph-badge--approved',
+      [PurchaseOrderStatus.Canceled]: 'ph-badge--rejected',
     };
-    return map[status] ?? 'badge-secondary';
+    return map[status] ?? 'ph-badge--neutral';
   }
 
   statusIcon(status: PurchaseOrderStatus): string {

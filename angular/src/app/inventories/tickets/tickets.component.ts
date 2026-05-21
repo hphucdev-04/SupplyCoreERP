@@ -7,7 +7,10 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { TicketType, ticketTypeOptions } from 'src/app/proxy/enums/warehouses/ticket-type.enum';
-import { ApprovalStatus, approvalStatusOptions } from 'src/app/proxy/enums/warehouses/approval-status.enum';
+import {
+  ApprovalStatus,
+  approvalStatusOptions,
+} from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
@@ -30,7 +33,7 @@ import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.
   imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
   providers: [ListService],
   templateUrl: './tickets.component.html',
-  styleUrls: ['./tickets.component.scss']
+  styleUrls: ['./tickets.component.scss'],
 })
 export class TicketsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -68,32 +71,35 @@ export class TicketsComponent implements OnInit, OnDestroy {
     private soService: SalesOrderService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
     this.loadLookups();
 
     // Lắng nghe sự thay đổi của loại phiếu để lọc chứng từ tham chiếu
-    this.form.get('type').valueChanges
-      .pipe(takeUntil(this.destroy$))
+    this.form
+      .get('type')
+      .valueChanges.pipe(takeUntil(this.destroy$))
       .subscribe(() => {
         this.onTypeChange();
       });
 
-    const streamCreator = (query: any) => this.ticketService.getList({
-      ...query,
-      filter: this.filterText,
-      type: this.filterType,
-      status: this.filterStatus,
-      warehouseId: this.filterWarehouseId
-    });
+    const streamCreator = (query: any) =>
+      this.ticketService.getList({
+        ...query,
+        filter: this.filterText,
+        type: this.filterType,
+        status: this.filterStatus,
+        warehouseId: this.filterWarehouseId,
+      });
 
     this.list.maxResultCount = 10;
-    this.list.hookToQuery(streamCreator)
+    this.list
+      .hookToQuery(streamCreator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response) => {
+      .subscribe(response => {
         this.data = response;
       });
   }
@@ -107,20 +113,30 @@ export class TicketsComponent implements OnInit, OnDestroy {
   // LOAD LOOKUPS
   // ============================================================
   loadLookups() {
-    this.warehouseService.getList({ maxResultCount: 1000, skipCount: 0 })
+    this.warehouseService
+      .getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.warehouses = res.items;
       });
 
     // Load POs Approved/Receiving
-    this.poService.getList({ maxResultCount: 1000, skipCount: 0 } as any)
+    this.poService
+      .getList({ maxResultCount: 1000, skipCount: 0 } as any)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.approvedPurchaseOrders = res.items
-          .filter(po => po.status === PurchaseOrderStatus.Approved || po.status === PurchaseOrderStatus.Receiving)
-          .map(po => ({ id: po.id, code: po.code, displayName: `${po.code} (${po.supplierName})` }));
-        
+          .filter(
+            po =>
+              po.status === PurchaseOrderStatus.Approved ||
+              po.status === PurchaseOrderStatus.Receiving,
+          )
+          .map(po => ({
+            id: po.id,
+            code: po.code,
+            displayName: `${po.code} (${po.supplierName})`,
+          }));
+
         // Nếu đang chọn GoodsReceipt thì cập nhật ngay list reference
         if (this.form.get('type').value === TicketType.GoodsReceipt) {
           this.selectableReferences = this.approvedPurchaseOrders;
@@ -128,13 +144,21 @@ export class TicketsComponent implements OnInit, OnDestroy {
       });
 
     // Load SOs Approved/Delivering
-    this.soService.getList({ maxResultCount: 1000, skipCount: 0 } as any)
+    this.soService
+      .getList({ maxResultCount: 1000, skipCount: 0 } as any)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.approvedSalesOrders = res.items
-          .filter(so => so.status === SalesOrderStatus.Approved || so.status === SalesOrderStatus.Delivering)
-          .map(so => ({ id: so.id, code: so.code, displayName: `${so.code} (${so.customerName})` }));
-        
+          .filter(
+            so =>
+              so.status === SalesOrderStatus.Approved || so.status === SalesOrderStatus.Delivering,
+          )
+          .map(so => ({
+            id: so.id,
+            code: so.code,
+            displayName: `${so.code} (${so.customerName})`,
+          }));
+
         // Nếu đang chọn GoodsIssue thì cập nhật ngay list reference
         if (this.form.get('type').value === TicketType.GoodsIssue) {
           this.selectableReferences = this.approvedSalesOrders;
@@ -146,7 +170,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
     const rawValue = this.form.get('type').value;
     // Quan trọng: Không dùng Number(rawValue) ngay vì Number(null) = 0
     const type = rawValue !== null && rawValue !== undefined ? Number(rawValue) : null;
-    
+
     this.form.get('referenceDocumentId').setValue(null);
 
     if (type === TicketType.GoodsReceipt) {
@@ -177,11 +201,12 @@ export class TicketsComponent implements OnInit, OnDestroy {
   deleteTicket(id: string, ticketNumber: string): void {
     this.confirmation
       .warn('::AreYouSureToDelete', '::AreYouSure', {
-        messageLocalizationParams: [ticketNumber]
+        messageLocalizationParams: [ticketNumber],
       })
-      .subscribe((status) => {
+      .subscribe(status => {
         if (status === Confirmation.Status.confirm) {
-          this.ticketService.delete(id)
+          this.ticketService
+            .delete(id)
             .pipe(takeUntil(this.destroy$))
             .subscribe(() => {
               this.list.get();
@@ -198,7 +223,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
       type: [null, [Validators.required]],
       warehouseId: [null, [Validators.required]],
       referenceDocumentId: [null, [Validators.required]], // Bắt buộc link
-      note: ['', [Validators.maxLength(1000)]]
+      note: ['', [Validators.maxLength(1000)]],
     });
   }
 
@@ -207,7 +232,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
       type: null,
       warehouseId: null,
       referenceDocumentId: null,
-      note: ''
+      note: '',
     });
     this.selectableReferences = [];
     this.isDrawerOpen = true;
@@ -222,17 +247,18 @@ export class TicketsComponent implements OnInit, OnDestroy {
     this.isSaving = true;
 
     const payload = { ...this.form.value };
-    
+
     // Tìm mã chứng từ tham chiếu
     const selectedRef = this.selectableReferences.find(r => r.id === payload.referenceDocumentId);
     if (selectedRef) {
       payload.referenceDocumentNumber = selectedRef.code;
     }
 
-    this.ticketService.create(payload)
+    this.ticketService
+      .create(payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (newTicket) => {
+        next: newTicket => {
           this.isSaving = false;
           this.closeDrawer();
           this.list.get();
@@ -240,7 +266,7 @@ export class TicketsComponent implements OnInit, OnDestroy {
         },
         error: () => {
           this.isSaving = false;
-        }
+        },
       });
   }
 }

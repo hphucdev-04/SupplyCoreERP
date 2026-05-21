@@ -60,6 +60,7 @@ export const APP_ROUTES = [
     { name: 'Customers', icon: 'fas fa-user-friends', requiredPolicy: 'Partner.Customer' },
   ]),
   ...createMenuGroup('Order', 'fas fa-clipboard-list', 4, [
+    { name: 'PurchaseRequisitions', icon: 'fas fa-file-medical' , requiredPolicy: 'Order.PurchaseRequisition'},
     { name: 'PurchaseOrders', icon: 'fas fa-file-invoice-dollar' , requiredPolicy: 'Order.PurchaseOrder'},
     { name: 'SaleOrders', icon: 'fas fa-shipping-fast' , requiredPolicy: 'Order.SaleOrder'},
   ]),
