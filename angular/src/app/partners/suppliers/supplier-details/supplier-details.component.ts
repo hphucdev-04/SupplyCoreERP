@@ -10,7 +10,7 @@ import { BaseUnitService } from 'src/app/proxy/base-units';
 import {
   SupplierDetailDto,
   SupplierProductDto,
-  CreateUpdateSupplierProductDto
+  CreateUpdateSupplierProductDto,
 } from 'src/app/proxy/suppliers/dtos';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { SharedModule } from 'src/app/shared/shared.module';
@@ -23,14 +23,9 @@ import { Gender } from 'src/app/proxy/enums/partner/gender.enum';
 @Component({
   selector: 'app-supplier-details',
   standalone: true,
-  imports: [
-    SharedModule,
-    DrawerComponent,
-    CurrencyFormatDirective,
-    DropdownSearchComponent
-  ],
+  imports: [SharedModule, DrawerComponent, CurrencyFormatDirective, DropdownSearchComponent],
   templateUrl: './supplier-details.component.html',
-  styleUrls: ['./supplier-details.component.scss']
+  styleUrls: ['./supplier-details.component.scss'],
 })
 export class SupplierDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -75,7 +70,7 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
     private unitService: BaseUnitService,
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
-    private toaster: ToasterService
+    private toaster: ToasterService,
   ) {
     this.initProductForm();
   }
@@ -103,38 +98,42 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
     this.loading = true;
     forkJoin({
       supplier: this.supplierService.get(supplierId),
-      products: this.supplierService.getProductList(supplierId, {maxResultCount: 10}),
+      products: this.supplierService.getProductList(supplierId, { maxResultCount: 10 }),
       medicines: this.medicineService.getList({ maxResultCount: 1000 }),
-      units: this.unitService.getList({ maxResultCount: 1000 })
-    }).pipe(takeUntil(this.destroy$))
+      units: this.unitService.getList({ maxResultCount: 1000 }),
+    })
+      .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res) => {
+        next: res => {
           this.supplier = res.supplier;
           this.products = res.products.items;
           this.allMedicines = res.medicines.items;
           this.allUnits = res.units.items;
           this.loading = false;
 
-          this.routesService.add([{
-            path: `/partner/suppliers/details/${this.supplier.id}`,
-            name: this.ROUTE_NAME,
-            parentName: '::Menu:Suppliers',
-            iconClass: 'fas fa-truck',
-            layout: eLayoutType.application,
-          }]);
+          this.routesService.add([
+            {
+              path: `/partner/suppliers/details/${this.supplier.id}`,
+              name: this.ROUTE_NAME,
+              parentName: '::Menu:Suppliers',
+              iconClass: 'fas fa-truck',
+              layout: eLayoutType.application,
+            },
+          ]);
         },
         error: () => {
           this.toaster.error('::FailedToLoadData');
           this.router.navigate(['/partner/suppliers']);
-        }
+        },
       });
   }
 
   refreshProducts() {
     if (this.supplier?.id) {
-      this.supplierService.getProductList(this.supplier.id, {maxResultCount: 10})
+      this.supplierService
+        .getProductList(this.supplier.id, { maxResultCount: 10 })
         .pipe(takeUntil(this.destroy$))
-        .subscribe(products => this.products = products.items);
+        .subscribe(products => (this.products = products.items));
     }
   }
 
@@ -146,7 +145,7 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
       leadTimeDays: [0, [Validators.min(0)]],
       minOrderQuantity: [0, [Validators.min(0)]],
       isPreferred: [false],
-      note: ['']
+      note: [''],
     });
   }
 
@@ -158,7 +157,7 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
       leadTimeDays: 0,
       minOrderQuantity: 0,
       isPreferred: false,
-      note: ''
+      note: '',
     });
     this.productForm.get('productId')?.enable();
     this.productForm.get('defaultUnitId')?.enable();
@@ -175,7 +174,7 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
       leadTimeDays: product.leadTimeDays,
       minOrderQuantity: product.minOrderQuantity,
       isPreferred: product.isPreferred,
-      note: product.note
+      note: product.note,
     });
     this.productForm.get('productId')?.disable();
     this.productForm.get('defaultUnitId')?.disable();
@@ -195,7 +194,7 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
       note: rawValue.note,
       defaultConversionFactor: 1,
       overDeliveryTolerancePct: 0,
-      underDeliveryTolerancePct: 0
+      underDeliveryTolerancePct: 0,
     };
 
     const request = this.isEditingProduct
@@ -206,23 +205,27 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
       next: () => {
         this.isProductDrawerOpen = false;
         this.refreshProducts();
-        this.toaster.success(this.isEditingProduct ? '::UpdateSuccess' : '::CreateSuccess', '::Success');
+        this.toaster.success(
+          this.isEditingProduct ? '::UpdateSuccess' : '::CreateSuccess',
+          '::Success',
+        );
       },
-      error: (err) => this.toaster.error(err.error?.error?.message || '::Error')
+      error: err => this.toaster.error(err.error?.error?.message || '::Error'),
     });
   }
 
   deleteProduct(productId: string) {
     this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe(status => {
       if (status === Confirmation.Status.confirm) {
-        this.supplierService.removeProduct(this.supplier.id, productId)
+        this.supplierService
+          .removeProduct(this.supplier.id, productId)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: () => {
               this.refreshProducts();
               this.toaster.success('::DeleteSuccess', '::Success');
             },
-            error: (err) => this.toaster.error(err.error?.error?.message || '::Error')
+            error: err => this.toaster.error(err.error?.error?.message || '::Error'),
           });
       }
     });
@@ -231,19 +234,22 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
   toggleProductActive(product: SupplierProductDto, event: any) {
     event.stopPropagation();
     const action = product.isActive ? 'deactivate' : 'activate';
-    const confirmKey = action === 'activate' ? '::AreYouSureToActivate' : '::AreYouSureToDeactivate';
+    const confirmKey =
+      action === 'activate' ? '::AreYouSureToActivate' : '::AreYouSureToDeactivate';
     this.confirmation.warn(confirmKey, '::Confirm').subscribe(status => {
       if (status === Confirmation.Status.confirm) {
         // Dùng product.productId
-        this.supplierService.toggleProductActive(this.supplier.id, product.productId)
+        this.supplierService
+          .toggleProductActive(this.supplier.id, product.productId)
           .pipe(takeUntil(this.destroy$))
           .subscribe({
             next: () => {
               this.refreshProducts();
-              const successKey = action === 'activate' ? '::ActivateSuccessfully' : '::DeactivateSuccessfully';
+              const successKey =
+                action === 'activate' ? '::ActivateSuccessfully' : '::DeactivateSuccessfully';
               this.toaster.success(successKey, '::Success');
             },
-            error: (err) => this.toaster.error(err.error?.error?.message || '::Error')
+            error: err => this.toaster.error(err.error?.error?.message || '::Error'),
           });
       } else {
         event.target.checked = product.isActive;

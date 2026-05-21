@@ -232,14 +232,6 @@ public class SalesOrderManager : DomainService
 
         return customer;
     }
-
-    public Task CancelAsync(SalesOrder order, string cancelReason)
-    {
-        order.Cancel();
-        order.UpdateInfo(order.WarehouseId, order.ExpectedDeliveryDate, order.DueDate,
-                           $"[Đã hủy: {cancelReason}] " + (order.Note ?? ""));
-        return Task.CompletedTask;
-    }
     #endregion
 
     #region Validate

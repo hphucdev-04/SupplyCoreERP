@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Inventories.Warehouses;
+using SupplyCoreERP.Orders.PR;
 using SupplyCoreERP.Suppliers;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -15,6 +16,9 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
 
     public Guid SupplierId { get; private set; }
     public virtual Supplier Supplier { get; private set; }
+
+    public Guid? PurchaseRequisitionId { get; private set; }
+    public virtual PurchaseRequisition? PurchaseRequisition { get; private set; }
 
     public DateTime OrderDate { get; private set; }
     public DateTime? ExpectedDeliveryDate { get; private set; }
@@ -35,11 +39,13 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
 
     public PurchaseOrder(
         Guid id, string code, Guid supplierId, Guid warehouseId,
-        DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note) : base(id)
+        DateTime orderDate, DateTime? expectedDeliveryDate, DateTime? dueDate, string? note,
+        Guid? purchaseRequisitionId = null) : base(id)
     {
         Code = code;
         SupplierId = supplierId;
         WarehouseId = warehouseId;
+        PurchaseRequisitionId = purchaseRequisitionId;
         OrderDate = orderDate;
         ExpectedDeliveryDate = expectedDeliveryDate;
         DueDate = dueDate;
@@ -71,7 +77,7 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
             throw new UserFriendlyException("Chỉ được thêm dòng hàng khi đơn đang Nháp hoặc Chờ duyệt.");
         }
 
-        var line = new PurchaseOrderLine(id, Id, productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
+        PurchaseOrderLine line = new(id, Id, productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
         Lines.Add(line);
 
         RecalculateTotal();
@@ -141,21 +147,6 @@ public class PurchaseOrder : FullAuditedAggregateRoot<Guid>
     public void Complete()
     {
         Status = PurchaseOrderStatus.Completed;
-    }
-
-    public void Cancel()
-    {
-        if (Status == PurchaseOrderStatus.Completed)
-        {
-            throw new UserFriendlyException("Đơn hàng đã hoàn tất, không thể hủy!");
-        }
-
-        if (Status == PurchaseOrderStatus.Receiving)
-        {
-            throw new UserFriendlyException("Đơn hàng đang nhập kho, yêu cầu Kho xóa phiếu trước!");
-        }
-
-        Status = PurchaseOrderStatus.Canceled;
     }
     #endregion
 

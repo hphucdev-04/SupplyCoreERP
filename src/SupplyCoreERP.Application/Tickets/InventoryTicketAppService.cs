@@ -159,7 +159,10 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
     public async Task AddLineFromPurchaseOrderAsync(Guid id, Guid poLineId, decimal quantity)
     {
         InventoryTicket ticket = await _ticketRepo.GetAsync(id);
-        if (ticket.Status != ApprovalStatus.Draft) throw new UserFriendlyException("Chỉ thêm dòng khi phiếu ở trạng thái Nháp!");
+        if (ticket.Status != ApprovalStatus.Draft)
+        {
+            throw new UserFriendlyException("Chỉ thêm dòng khi phiếu ở trạng thái Nháp!");
+        }
 
         IQueryable<PurchaseOrder> poQuery = await _purchaseOrderRepo.GetQueryableAsync();
         PurchaseOrder po = await poQuery.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Lines.Any(l => l.Id == poLineId))
@@ -209,7 +212,10 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
     public async Task AddLineFromSalesOrderAsync(Guid id, Guid soLineId, decimal quantity)
     {
         InventoryTicket ticket = await _ticketRepo.GetAsync(id);
-        if (ticket.Status != ApprovalStatus.Draft) throw new UserFriendlyException("Chỉ thêm dòng khi phiếu ở trạng thái Nháp!");
+        if (ticket.Status != ApprovalStatus.Draft)
+        {
+            throw new UserFriendlyException("Chỉ thêm dòng khi phiếu ở trạng thái Nháp!");
+        }
 
         IQueryable<SalesOrder> soQuery = await _salesOrderRepo.GetQueryableAsync();
         SalesOrder so = await soQuery.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Lines.Any(l => l.Id == soLineId))
@@ -276,7 +282,10 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
             .Include(x => x.Lines).ThenInclude(l => l.Details)
             .FirstOrDefaultAsync(x => x.Id == id);
 
-        if (ticket == null) throw new EntityNotFoundException(typeof(InventoryTicket), id);
+        if (ticket == null)
+        {
+            throw new EntityNotFoundException(typeof(InventoryTicket), id);
+        }
 
         if (ticket.Status != ApprovalStatus.Draft)
         {

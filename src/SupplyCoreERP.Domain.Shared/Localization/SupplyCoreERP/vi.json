@@ -26,7 +26,11 @@
     "Menu:Balances": "Số dư tồn kho",
     "Menu:Order": "Đơn hàng",
     "Menu:SaleOrders": "Đơn bán hàng",
+    "Menu:SaleOrderDetails": "Chi tiết đơn bán",
     "Menu:PurchaseOrders": "Đơn mua hàng",
+    "Menu:PurchaseOrderDetails": "Chi tiết đơn mua",
+    "Menu:PurchaseRequisitions": "Yêu cầu mua hàng",
+    "Menu:PurchaseRequisitionDetails": "Chi tiết yêu cầu",
 
     //Login Page
     "Login:Organization": "Tổ chức",

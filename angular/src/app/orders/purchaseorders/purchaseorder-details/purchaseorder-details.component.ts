@@ -7,11 +7,13 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
-import { PurchaseOrderDto, PurchaseOrderLineDto } from 'src/app/proxy/purchase-orders/dtos';
+import {
+  PurchaseOrderDto,
+  PurchaseOrderLineDto,
+  RelatedTicketDto,
+} from 'src/app/proxy/purchase-orders/dtos';
 import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
 import { SupplierService } from 'src/app/proxy/suppliers';
-import { InventoryTicketService } from 'src/app/proxy/tickets';
-import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
@@ -38,16 +40,10 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
 
   orderId: string;
   order: PurchaseOrderDto;
-  relatedTickets: InventoryTicketDto[] = [];
+  relatedTickets: RelatedTicketDto[] = [];
   warehouses: WarehouseDto[] = [];
   medicines: MedicineDto[] = [];
   loading = true;
-
-  // Cancel state (Drawer)
-  isCancelDrawerOpen = false;
-  ngModel_cancelReason = '';
-  showCancelError = false;
-  isCanceling = false;
 
   // Edit master drawer
   isEditDrawerOpen = false;
@@ -70,7 +66,6 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   constructor(
     private poService: PurchaseOrderService,
     private supplierService: SupplierService,
-    private ticketService: InventoryTicketService,
     private warehouseService: WarehouseService,
     private medicineService: MedicineService,
     private routesService: RoutesService,
@@ -78,8 +73,19 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
+
+  ngOnInit(): void {
+    this.orderId = this.route.snapshot.params['id'];
+    if (this.orderId) {
+      this.buildForms();
+      this.loadData();
+      this.loadMasterData();
+    } else {
+      this.goBack();
+    }
+  }
 
   ngOnInit(): void {
     this.orderId = this.route.snapshot.params['id'];
@@ -109,18 +115,22 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
       .get(this.orderId)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (res) => {
+        next: res => {
           this.order = res;
+          this.relatedTickets = res.relatedTickets || [];
           this.loading = false;
           this.loadMasterData();
 
-          this.routesService.add([{
-            path: `/orders/purchaseorders/details/${this.order.id}`,
-            name: this.ROUTE_NAME,
-            parentName: '::Menu:PurchaseOrders',
-            iconClass: 'fas fa-file-invoice',
-            layout: eLayoutType.application,
-          }]);
+          this.routesService.add([
+            {
+              path: `/order/purchaseorders/details/${this.order.id}`,
+              name: this.ROUTE_NAME,
+              parentName: '::Menu:PurchaseOrders',
+              iconClass: 'fas fa-file-invoice',
+              layout: eLayoutType.application,
+              requiredPolicy: 'Order.PurchaseOrder',
+            },
+          ]);
         },
         error: () => this.goBack(),
       });
@@ -136,7 +146,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     this.warehouseService
       .getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.warehouses = res.items));
+      .subscribe(res => (this.warehouses = res.items));
 
     if (this.order?.supplierId) {
       this.supplierService
@@ -146,14 +156,14 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
           isActive: true,
         } as any)
         .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
+        .subscribe(res => {
           this.medicines = res.items.map(
-            (sp) =>
+            sp =>
               ({
                 id: sp.productId,
                 code: sp.productCode,
                 name: sp.productName,
-              } as MedicineDto)
+              }) as MedicineDto,
           );
         });
     }
@@ -202,7 +212,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
       note: this.order.note ?? '',
     });
     this.isEditDrawerOpen = true;
-    
+
     // Tự động tính lại khi mở (để đảm bảo đồng bộ nếu cấu hình NCC thay đổi)
     this.calculateDueDate();
   }
@@ -247,14 +257,14 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     this.baseUnitName = '';
     this.quantityPreview = 0;
     this.isAutoFilled = false;
-    
+
     if (!medicineId) return;
 
     // 1. Load Medicine Units
     this.medicineService
       .get(medicineId)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((detail) => {
+      .subscribe(detail => {
         const baseUnit: ProductUnitLookup = {
           unitId: detail.baseUnitId,
           unitName: detail.baseUnitName,
@@ -264,29 +274,38 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
         let cumulative = 1;
         const others: ProductUnitLookup[] = (detail.units ?? [])
           .sort((a, b) => (a.level ?? 0) - (b.level ?? 0))
-          .map((u) => {
+          .map(u => {
             cumulative *= u.conversionFactor ?? 1;
-            return { unitId: u.unitId, unitName: u.unitName, conversionFactor: cumulative, isBaseUnit: false };
+            return {
+              unitId: u.unitId,
+              unitName: u.unitName,
+              conversionFactor: cumulative,
+              isBaseUnit: false,
+            };
           });
         this.units = [baseUnit, ...others];
         this.baseUnitName = detail.baseUnitName ?? '';
-        
+
         // 2. Tra cứu Supplier Product để điền tự động
-        this.supplierService.getProductList(this.order.supplierId, { productId: medicineId, maxResultCount: 1 } as any)
+        this.supplierService
+          .getProductList(this.order.supplierId, {
+            productId: medicineId,
+            maxResultCount: 1,
+          } as any)
           .subscribe(res => {
             const sp = res.items[0];
             if (sp && sp.isActive) {
-               this.isAutoFilled = true;
-               this.detailForm.patchValue({
-                  unitId: sp.defaultUnitId,
-                  conversionFactor: sp.defaultConversionFactor,
-                  unitPrice: sp.standardPrice || sp.lastPurchasePrice || 0
-               });
-               this.selectedConversionFactor = sp.defaultConversionFactor;
+              this.isAutoFilled = true;
+              this.detailForm.patchValue({
+                unitId: sp.defaultUnitId,
+                conversionFactor: sp.defaultConversionFactor,
+                unitPrice: sp.standardPrice || sp.lastPurchasePrice || 0,
+              });
+              this.selectedConversionFactor = sp.defaultConversionFactor;
             } else {
-               // Mặc định chọn BaseUnit nếu không có config nhà cung cấp
-               this.detailForm.patchValue({ unitId: baseUnit.unitId, conversionFactor: 1 });
-               this.selectedConversionFactor = 1;
+              // Mặc định chọn BaseUnit nếu không có config nhà cung cấp
+              this.detailForm.patchValue({ unitId: baseUnit.unitId, conversionFactor: 1 });
+              this.selectedConversionFactor = 1;
             }
             this.updateQuantityPreview();
           });
@@ -294,7 +313,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUnitChange(unitId: string) {
-    const unit = this.units.find((u) => u.unitId === unitId);
+    const unit = this.units.find(u => u.unitId === unitId);
     if (unit) {
       this.selectedConversionFactor = unit.conversionFactor;
       this.detailForm.patchValue({ conversionFactor: unit.conversionFactor });
@@ -328,7 +347,11 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   // ── Inline edit line quantity ───────────────────────────
-  onInlineLineChange(line: PurchaseOrderLineDto, field: 'quantity' | 'unitPrice' | 'taxRate', rawValue: string) {
+  onInlineLineChange(
+    line: PurchaseOrderLineDto,
+    field: 'quantity' | 'unitPrice' | 'taxRate',
+    rawValue: string,
+  ) {
     const value = parseFloat(rawValue);
     if (isNaN(value) || (field === 'quantity' && value <= 0)) {
       this.toaster.error('::InvalidValue', '::Error');
@@ -356,7 +379,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   removeLine(lineId: string) {
-    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe((status) => {
+    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe(status => {
       if (status === Confirmation.Status.confirm) {
         this.poService
           .removeLine(this.orderId, lineId)
@@ -374,7 +397,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
       this.toaster.error('::NoLinesError', '::Error');
       return;
     }
-    this.confirmation.info('::SendToApproveConfirmation', '::Confirm').subscribe((status) => {
+    this.confirmation.info('::SendToApproveConfirmation', '::Confirm').subscribe(status => {
       if (status !== Confirmation.Status.confirm) return;
       this.poService
         .sendToApprove(this.orderId)
@@ -386,7 +409,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   approve() {
-    this.confirmation.success('::ApproveConfirmation', '::Confirm').subscribe((status) => {
+    this.confirmation.success('::ApproveConfirmation', '::Confirm').subscribe(status => {
       if (status !== Confirmation.Status.confirm) return;
       this.poService
         .approve(this.orderId)
@@ -399,7 +422,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   }
 
   complete() {
-    this.confirmation.success('::CompleteConfirmation', '::Confirm').subscribe((status) => {
+    this.confirmation.success('::CompleteConfirmation', '::Confirm').subscribe(status => {
       if (status !== Confirmation.Status.confirm) return;
       this.poService
         .complete(this.orderId)
@@ -411,50 +434,11 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  openCancelModal() {
-    this.ngModel_cancelReason = '';
-    this.showCancelError = false;
-    this.isCanceling = false;
-    this.isCancelDrawerOpen = true;
-  }
-
-  closeCancelDrawer() {
-    this.isCancelDrawerOpen = false;
-  }
-
-  confirmCancel() {
-    if (!this.ngModel_cancelReason?.trim()) {
-      this.showCancelError = true;
-      return;
-    }
-    this.isCanceling = true;
-    this.poService
-      .cancel(this.orderId, this.ngModel_cancelReason.trim())
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.isCanceling = false;
-          this.closeCancelDrawer();
-          this.toaster.success('::CancelSuccess', '::Success');
-          this.loadData();
-        },
-        error: () => (this.isCanceling = false),
-      });
-  }
-
   // ── Helpers ───────────────────────────────────────────────
   isEditable(): boolean {
     return (
       this.order?.status === PurchaseOrderStatus.Draft ||
       this.order?.status === PurchaseOrderStatus.PendingApproval
-    );
-  }
-
-  isCancelable(): boolean {
-    return (
-      this.order?.status !== PurchaseOrderStatus.Completed &&
-      this.order?.status !== PurchaseOrderStatus.Canceled &&
-      this.order?.status !== PurchaseOrderStatus.Receiving
     );
   }
 
@@ -465,14 +449,14 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
 
   statusClass(status: PurchaseOrderStatus): string {
     const map: Record<number, string> = {
-      [PurchaseOrderStatus.Draft]: 'badge-secondary',
-      [PurchaseOrderStatus.PendingApproval]: 'badge-warning',
-      [PurchaseOrderStatus.Approved]: 'badge-info',
-      [PurchaseOrderStatus.Receiving]: 'badge-primary',
-      [PurchaseOrderStatus.Completed]: 'badge-success',
-      [PurchaseOrderStatus.Canceled]: 'badge-danger',
+      [PurchaseOrderStatus.Draft]: 'ph-badge--neutral',
+      [PurchaseOrderStatus.PendingApproval]: 'ph-badge--pending',
+      [PurchaseOrderStatus.Approved]: 'ph-badge--info',
+      [PurchaseOrderStatus.Receiving]: 'ph-badge--primary',
+      [PurchaseOrderStatus.Completed]: 'ph-badge--approved',
+      [PurchaseOrderStatus.Canceled]: 'ph-badge--rejected',
     };
-    return map[status] ?? 'badge-secondary';
+    return map[status] ?? 'ph-badge--neutral';
   }
 
   statusIcon(status: PurchaseOrderStatus): string {
@@ -487,4 +471,3 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     return map[status] ?? 'fa-circle';
   }
 }
-

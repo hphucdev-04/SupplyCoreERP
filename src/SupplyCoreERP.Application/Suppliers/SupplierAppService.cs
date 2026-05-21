@@ -227,5 +227,66 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
 
         await _supplierRepository.UpdateAsync(supplier);
     }
+
+    public async Task<List<SourcingSuggestionDto>> GetSourcingSuggestionsAsync(List<Guid> productIds)
+    {
+        // 1. Lấy tất cả danh mục sản phẩm của các NCC đang hoạt động cho danh sách thuốc yêu cầu
+        IQueryable<SupplierProduct> query = await _supplierProductRepo.GetQueryableAsync();
+        List<SupplierProduct> allSupplierProducts = await query
+            .Include(x => x.Supplier)
+            .Where(x => productIds.Contains(x.ProductId) && x.IsActive && x.Supplier.IsActive)
+            .ToListAsync();
+
+        if (!allSupplierProducts.Any())
+        {
+            return new List<SourcingSuggestionDto>();
+        }
+
+        var results = new List<SourcingSuggestionDto>();
+
+        // 2. Nhóm theo từng sản phẩm để chấm điểm đối đầu
+        IEnumerable<IGrouping<Guid, SupplierProduct>> productGroups = allSupplierProducts.GroupBy(x => x.ProductId);
+
+        foreach (IGrouping<Guid, SupplierProduct> group in productGroups)
+        {
+            Guid productId = group.Key;
+            var items = group.ToList();
+
+            // Tìm giá trị tối ưu trong nhóm để làm mốc (benchmark)
+            decimal minPrice = items.Min(x => x.StandardPrice);
+            int minLeadTime = items.Min(x => x.LeadTimeDays);
+
+            // Chấm điểm tất cả NCC cho sản phẩm này
+            var scoredItems = items.Select(sp =>
+            {
+                // Điểm Giá (70% - max 700): (MinPrice / CurrentPrice) * 700
+                double priceScore = sp.StandardPrice > 0
+                    ? (double)(minPrice / sp.StandardPrice) * 700
+                    : 700;
+
+                // Điểm Thời gian (30% - max 300): (MinTime / CurrentTime) * 300
+                double timeScore = sp.LeadTimeDays > 0
+                    ? (double)minLeadTime / sp.LeadTimeDays * 300
+                    : 300;
+
+                // Điểm thưởng ưu tiên thủ công
+                double bonusScore = sp.IsPreferred ? 500 : 0;
+
+                return new SourcingSuggestionDto
+                {
+                    ProductId = productId,
+                    SupplierId = sp.SupplierId,
+                    SupplierName = sp.Supplier.Name,
+                    Score = Math.Round(priceScore + timeScore + bonusScore, 2)
+                };
+            })
+            .OrderByDescending(x => x.Score)
+            .ToList();
+
+            results.AddRange(scoredItems);
+        }
+
+        return results;
+    }
     #endregion
 }

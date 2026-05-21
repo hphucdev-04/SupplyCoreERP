@@ -19,18 +19,7 @@
       <div>
         <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
           {{ order.code }}
-          <span
-            class="ph-badge"
-            [ngClass]="{
-              'ph-badge--neutral': order.status === PurchaseOrderStatus.Draft,
-              'ph-badge--pending': order.status === PurchaseOrderStatus.PendingApproval,
-              'ph-badge--info':
-                order.status === PurchaseOrderStatus.Approved ||
-                order.status === PurchaseOrderStatus.Receiving,
-              'ph-badge--approved': order.status === PurchaseOrderStatus.Completed,
-              'ph-badge--rejected': order.status === PurchaseOrderStatus.Canceled,
-            }"
-          >
+          <span class="ph-badge" [ngClass]="statusClass(order.status)">
             <i class="fa me-1" [ngClass]="statusIcon(order.status)"></i>
             {{
               '::Enum:PurchaseOrderStatus.' + enumName(PurchaseOrderStatus, order.status)
@@ -93,6 +82,14 @@
                 <span class="ph-field-meta">{{ '::OrderDate' | abpLocalization }}</span>
                 <div class="ph-field-value">{{ order.orderDate | date: 'dd/MM/yyyy' }}</div>
               </div>
+              <div class="col-md-6" *ngIf="order.purchaseRequisitionCode">
+                <span class="ph-field-meta">{{ '::PurchaseRequisition' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                   <span class="ph-link" (click)="router.navigate(['/order/purchaserequisitions/details', order.purchaseRequisitionId])">
+                      {{ order.purchaseRequisitionCode }}
+                   </span>
+                </div>
+              </div>
               <div class="col-md-6">
                 <span class="ph-field-meta">{{ '::ExpectedDeliveryDate' | abpLocalization }}</span>
                 <div
@@ -104,7 +101,7 @@
                   {{
                     order.expectedDeliveryDate
                       ? (order.expectedDeliveryDate | date: 'dd/MM/yyyy')
-                      : '—'
+                      : 'N/A'
                   }}
                 </div>
               </div>
@@ -114,7 +111,7 @@
                   class="ph-field-value"
                   [class.ph-text-danger]="order.dueDate && (order.dueDate | date) < ('' | date)"
                 >
-                  {{ order.dueDate ? (order.dueDate | date: 'dd/MM/yyyy') : '—' }}
+                  {{ order.dueDate ? (order.dueDate | date: 'dd/MM/yyyy') : 'N/A' }}
                 </div>
               </div>
               <div class="col-12" *ngIf="order.note">
@@ -128,32 +125,34 @@
 
       <div class="col-md-6">
         <!-- System Data Card (tầng trên) -->
-          <div class="ph-card mb-3">
-            <div class="ph-card__header">
-              <h6 class="ph-card__header-title">
-                <i class="fa fa-clock-rotate-left"></i> {{ '::SystemData' | abpLocalization }}
-              </h6>
+        <div class="ph-card mb-3">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-clock-rotate-left"></i> {{ '::SystemData' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="ph-field-meta">{{ '::CreationTime' | abpLocalization }}</span>
+              <span class="ph-field-value">{{
+                order.creationTime | date: 'HH:mm dd/MM/yyyy'
+              }}</span>
             </div>
-            <div class="ph-card__body">
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="ph-field-meta">{{ '::CreationTime' | abpLocalization }}</span>
-                <span class="ph-field-value">{{
-                  order.creationTime | date: 'HH:mm dd/MM/yyyy'
-                }}</span>
-              </div>
-              <hr class="ph-divider my-1" />
-              <div class="d-flex justify-content-between align-items-center">
-                <span class="ph-field-meta">{{ '::LastModificationTime' | abpLocalization }}</span>
-                <span class="ph-field-value">
-                  {{
-                    order.lastModificationTime
-                      ? (order.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
-                      : 'N/A'
-                  }}
-                </span>
-              </div>
+            <hr class="ph-divider my-1" />
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="ph-field-meta">{{ '::LastModificationTime' | abpLocalization }}</span>
+              <span class="ph-field-value">
+                {{
+                  order.lastModificationTime
+                    ? (order.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
+                    : 'N/A'
+                }}
+              </span>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
 
         <!-- Related Inventory Tickets Card (tầng dưới) -->
         <div class="ph-card">
@@ -177,7 +176,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let t of relatedTickets">
-                    <td class="font-mono fw-bold w-50">{{ t.ticketNumber }}</td>
+                    <td class="ph-text-primary ph-link" (click)="router.navigate(['/inventory/tickets/details', t.id])">{{ t.ticketNumber }}</td>
                     <td>{{ t.creationTime | date: 'HH:mm dd/MM/yyyy' }}</td>
                     <td>
                       <span
@@ -228,9 +227,6 @@
 
               <!-- PendingApproval actions -->
               <ng-container *ngIf="order.status === PurchaseOrderStatus.PendingApproval">
-                <button class="btn btn-sm ph-btn-cancel" (click)="openCancelModal()">
-                  <i class="fa fa-times me-1"></i>{{ '::Cancel' | abpLocalization }}
-                </button>
                 <button class="btn btn-sm ph-btn-save" (click)="approve()">
                   <i class="fa fa-check me-1"></i>{{ '::Approve' | abpLocalization }}
                 </button>
@@ -238,9 +234,6 @@
 
               <!-- Approved actions -->
               <ng-container *ngIf="order.status === PurchaseOrderStatus.Approved">
-                <button class="btn btn-sm ph-btn-cancel" (click)="openCancelModal()">
-                  <i class="fa fa-times me-1"></i>{{ '::Cancel' | abpLocalization }}
-                </button>
                 <button class="btn btn-sm ph-btn-save" (click)="complete()">
                   <i class="fa fa-check-square-o me-1"></i>{{ '::Complete' | abpLocalization }}
                 </button>
@@ -422,7 +415,7 @@
     </div>
   </div>
 
-  <!-- Drawers: Edit, Add Line, Cancel (giữ nguyên logic cũ) -->
+  <!-- Drawers: Edit, Add Line -->
   <app-drawer
     [isOpen]="isEditDrawerOpen"
     [title]="'::EditPurchaseOrder' | abpLocalization"
@@ -446,7 +439,7 @@
         </div>
         <div class="col-6 mb-3">
           <label class="ph-label">{{ '::DueDate' | abpLocalization }}</label>
-          <input type="date" class="form-control bg-light" formControlName="dueDate" readonly />
+          <input type="date" class="form-control" formControlName="dueDate" readonly />
           <div class="txt-muted txt-xs mt-1">
             {{ '::AutoCalcFromSupplierTerms' | abpLocalization }}
           </div>
@@ -544,32 +537,5 @@
         </div>
       </div>
     </form>
-  </app-drawer>
-
-  <app-drawer
-    [isOpen]="isCancelDrawerOpen"
-    [title]="'::CancelOrder' | abpLocalization"
-    [width]="'md'"
-    [saveDisabled]="isCanceling"
-    (close)="closeCancelDrawer()"
-    (save)="confirmCancel()"
-  >
-    <div class="ph-callout ph-callout--danger mb-3">
-      <i class="fa fa-exclamation-triangle ph-callout__icon"></i>
-      <div>{{ '::CancelOrderWarning' | abpLocalization }}</div>
-    </div>
-    <div class="mb-2">
-      <label class="ph-label ph-label--required">{{ '::CancelReason' | abpLocalization }}</label
-      ><textarea
-        class="form-control"
-        [(ngModel)]="ngModel_cancelReason"
-        rows="3"
-        [placeholder]="'::EnterReason' | abpLocalization"
-        autofocus
-      ></textarea>
-      <div *ngIf="showCancelError" class="ph-error-msg">
-        <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
-      </div>
-    </div>
   </app-drawer>
 </div>

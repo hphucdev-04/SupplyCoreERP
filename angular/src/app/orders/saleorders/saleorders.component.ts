@@ -13,7 +13,10 @@ import { CustomerService } from 'src/app/proxy/customers';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { CustomerDto } from 'src/app/proxy/customers/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
-import { SalesOrderStatus, salesOrderStatusOptions } from 'src/app/proxy/enums/orders/sales-order-status.enum';
+import {
+  SalesOrderStatus,
+  salesOrderStatusOptions,
+} from 'src/app/proxy/enums/orders/sales-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { Router } from '@angular/router';
 
@@ -53,8 +56,8 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
     private warehouseService: WarehouseService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -73,7 +76,7 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
     this.list
       .hookToQuery(streamCreator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.data = res));
+      .subscribe(res => (this.data = res));
   }
 
   ngOnDestroy(): void {
@@ -85,12 +88,12 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
     this.customerService
       .getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.customers = res.items));
+      .subscribe(res => (this.customers = res.items));
 
     this.warehouseService
       .getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => (this.warehouses = res.items));
+      .subscribe(res => (this.warehouses = res.items));
   }
 
   onSearch(value: string) {
@@ -113,7 +116,7 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
   delete(id: string, code: string) {
     this.confirmation
       .warn('::AreYouSureToDelete', '::AreYouSure', { messageLocalizationParams: [code] })
-      .subscribe((status) => {
+      .subscribe(status => {
         if (status === Confirmation.Status.confirm) {
           this.soService
             .delete(id)
@@ -157,7 +160,7 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
       .create(this.form.value)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
-        next: (newOrder) => {
+        next: newOrder => {
           this.isSaving = false;
           this.closeDrawer();
           this.list.get();
@@ -169,14 +172,14 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
 
   statusClass(status: SalesOrderStatus): string {
     const map: Record<number, string> = {
-      [SalesOrderStatus.Draft]: 'badge-secondary',
-      [SalesOrderStatus.PendingApproval]: 'badge-warning',
-      [SalesOrderStatus.Approved]: 'badge-info',
-      [SalesOrderStatus.Delivering]: 'badge-primary',
-      [SalesOrderStatus.Completed]: 'badge-success',
-      [SalesOrderStatus.Canceled]: 'badge-danger',
+      [SalesOrderStatus.Draft]: 'ph-badge--neutral',
+      [SalesOrderStatus.PendingApproval]: 'ph-badge--pending',
+      [SalesOrderStatus.Approved]: 'ph-badge--info',
+      [SalesOrderStatus.Delivering]: 'ph-badge--primary',
+      [SalesOrderStatus.Completed]: 'ph-badge--approved',
+      [SalesOrderStatus.Canceled]: 'ph-badge--rejected',
     };
-    return map[status] ?? 'badge-secondary';
+    return map[status] ?? 'ph-badge--neutral';
   }
 
   statusIcon(status: SalesOrderStatus): string {
@@ -184,7 +187,7 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
       [SalesOrderStatus.Draft]: 'fa-pencil',
       [SalesOrderStatus.PendingApproval]: 'fa-clock-o',
       [SalesOrderStatus.Approved]: 'fa-check',
-      [SalesOrderStatus.Delivering]: 'fa-truck',
+      [SalesOrderStatus.Delivering]: 'fa-road',
       [SalesOrderStatus.Completed]: 'fa-check-circle',
       [SalesOrderStatus.Canceled]: 'fa-times-circle',
     };

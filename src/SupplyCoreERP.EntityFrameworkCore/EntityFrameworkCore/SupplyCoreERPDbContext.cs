@@ -18,6 +18,7 @@ using SupplyCoreERP.Manufacturers;
 using SupplyCoreERP.Medicines;
 using SupplyCoreERP.Notifications;
 using SupplyCoreERP.Orders.PO;
+using SupplyCoreERP.Orders.PR;
 using SupplyCoreERP.Prices;
 using SupplyCoreERP.Products;
 using SupplyCoreERP.Sales.Orders;
@@ -117,11 +118,12 @@ public class SupplyCoreERPDbContext :
     // Orders
     public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
     public DbSet<PurchaseOrderLine> PurchaseOrderLines { get; set; }
-
     public DbSet<SalesOrder> SalesOrders { get; set; }
     public DbSet<SalesOrderLine> SalesOrderLines { get; set; }
+    public DbSet<PurchaseRequisition> PurchaseRequisitions { get; set; }
+    public DbSet<PurchaseRequisitionLine> PurchaseRequisitionLines { get; set; }
 
-    //DocumentSequence
+    // Document Sequence
     public DbSet<DocumentSequence> DocumentSequences { get; set; }
 
     // Notification
@@ -590,6 +592,8 @@ public class SupplyCoreERPDbContext :
             b.Property(x => x.TotalAmount).HasPrecision(18, 4);
 
             b.HasOne(x => x.Supplier).WithMany().HasForeignKey(x => x.SupplierId).IsRequired();
+            b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.PurchaseRequisition).WithMany().HasForeignKey(x => x.PurchaseRequisitionId).OnDelete(DeleteBehavior.SetNull);
 
             b.HasMany(x => x.Lines)
              .WithOne(x => x.PurchaseOrder)
@@ -608,6 +612,38 @@ public class SupplyCoreERPDbContext :
             b.Property(x => x.UnitPrice).HasPrecision(18, 4);
             b.Property(x => x.TaxRate).HasPrecision(5, 2); // % thuế (VD: 99.99)
             b.Property(x => x.ReceivedQuantity).HasPrecision(18, 4);
+
+            b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // PurchaseRequisition
+        builder.Entity<PurchaseRequisition>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseRequisitions", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+            b.Property(x => x.Note).HasMaxLength(1000);
+
+            b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+
+            b.HasMany(x => x.Lines)
+             .WithOne(x => x.PurchaseRequisition)
+             .HasForeignKey(x => x.PurchaseRequisitionId)
+             .IsRequired()
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // PurchaseRequisitionLine
+        builder.Entity<PurchaseRequisitionLine>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseRequisitionLines", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Quantity).HasPrecision(18, 4);
+            b.Property(x => x.OrderedQuantity).HasPrecision(18, 4);
+            b.Property(x => x.Note).HasMaxLength(500);
 
             b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);

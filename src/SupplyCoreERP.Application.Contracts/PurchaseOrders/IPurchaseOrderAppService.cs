@@ -24,5 +24,4 @@ public interface IPurchaseOrderAppService : IApplicationService
     Task SendToApproveAsync(Guid id);
     Task ApproveAsync(Guid id);
     Task CompleteAsync(Guid id);
-    Task CancelAsync(Guid id, string reason);
 }

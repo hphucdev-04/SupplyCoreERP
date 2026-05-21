@@ -13,6 +13,7 @@ public static class SupplyCoreERPConsts
     // Document types
     public const string DocumentTypeSalesOrder = "SO";
     public const string DocumentTypePurchaseOrder = "PO";
+    public const string DocumentTypePurchaseRequisition = "PR";
     public const string DocumentTypeBatch = "BA";
     public const string DocumentTypeManufacturer = "MA";
     public const string DocumentTypeWarehouse = "WH";

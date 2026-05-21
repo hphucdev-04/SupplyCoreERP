@@ -82,13 +82,13 @@
         [width]="150"
       >
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <span class="ph-text-muted">{{ value || '—' }}</span>
+          <span class="ph-text-muted">{{ value || 'N/A' }}</span>
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::City' | abpLocalization" prop="cityName" [width]="150">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <span class="ph-text-muted">{{ value || '—' }}</span>
+          <span class="ph-text-muted">{{ value || 'N/A' }}</span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -127,7 +127,6 @@
           {{ row.creationTime | date: 'medium' }}
         </ng-template>
       </ngx-datatable-column>
-      
     </ngx-datatable>
   </div>
 </div>

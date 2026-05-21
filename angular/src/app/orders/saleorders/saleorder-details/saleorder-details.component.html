@@ -19,21 +19,7 @@
       <div>
         <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
           {{ order.code }}
-          <span
-            class="ph-badge"
-            [ngClass]="{
-              'ph-badge--neutral': order.status === SalesOrderStatus.Draft,
-              'ph-badge--pending': order.status === SalesOrderStatus.PendingApproval,
-              'ph-badge--approved': order.status === SalesOrderStatus.Approved,
-              'ph-badge--info':
-                order.status === SalesOrderStatus.Picking ||
-                order.status === SalesOrderStatus.Packing,
-              'ph-badge--success':
-                order.status === SalesOrderStatus.Shipped ||
-                order.status === SalesOrderStatus.Completed,
-              'ph-badge--rejected': order.status === SalesOrderStatus.Canceled,
-            }"
-          >
+          <span class="ph-badge" [ngClass]="statusClass(order.status)">
             <i class="fa me-1" [ngClass]="statusIcon(order.status)"></i>
             {{
               '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, order.status)
@@ -108,7 +94,7 @@
                   {{
                     order.expectedDeliveryDate
                       ? (order.expectedDeliveryDate | date: 'dd/MM/yyyy')
-                      : '—'
+                      : 'N/A'
                   }}
                 </div>
               </div>
@@ -118,7 +104,7 @@
                   class="ph-field-value"
                   [class.ph-text-danger]="order.dueDate && (order.dueDate | date) < ('' | date)"
                 >
-                  {{ order.dueDate ? (order.dueDate | date: 'dd/MM/yyyy') : '—' }}
+                  {{ order.dueDate ? (order.dueDate | date: 'dd/MM/yyyy') : 'N/A' }}
                 </div>
               </div>
               <div class="col-12" *ngIf="order.note">
@@ -232,9 +218,6 @@
 
               <!-- PendingApproval actions -->
               <ng-container *ngIf="order.status === SalesOrderStatus.PendingApproval">
-                <button class="btn btn-sm ph-btn-cancel" (click)="openCancelModal()">
-                  <i class="fa fa-times me-1"></i>{{ '::Cancel' | abpLocalization }}
-                </button>
                 <button class="btn btn-sm ph-btn-save" (click)="approve()">
                   <i class="fa fa-check me-1"></i>{{ '::Approve' | abpLocalization }}
                 </button>
@@ -242,9 +225,6 @@
 
               <!-- Approved actions -->
               <ng-container *ngIf="order.status === SalesOrderStatus.Approved">
-                <button class="btn btn-sm ph-btn-cancel" (click)="openCancelModal()">
-                  <i class="fa fa-times me-1"></i>{{ '::Cancel' | abpLocalization }}
-                </button>
                 <button class="btn btn-sm ph-btn-save" (click)="complete()">
                   <i class="fa fa-check-square-o me-1"></i>{{ '::Complete' | abpLocalization }}
                 </button>
@@ -609,33 +589,5 @@
         </div>
       </div>
     </form>
-  </app-drawer>
-
-  <!-- Cancel Drawer -->
-  <app-drawer
-    [isOpen]="isCancelDrawerOpen"
-    [title]="'::CancelOrder' | abpLocalization"
-    [width]="'md'"
-    [saveDisabled]="isCanceling"
-    (close)="closeCancelDrawer()"
-    (save)="confirmCancel()"
-  >
-    <div class="ph-callout ph-callout--danger mb-3">
-      <i class="fa fa-exclamation-triangle ph-callout__icon"></i>
-      <div>{{ '::CancelOrderWarning' | abpLocalization }}</div>
-    </div>
-    <div class="mb-2">
-      <label class="ph-label ph-label--required">{{ '::CancelReason' | abpLocalization }}</label>
-      <textarea
-        class="form-control"
-        [(ngModel)]="cancelReason"
-        rows="3"
-        [placeholder]="'::EnterReason' | abpLocalization"
-        autofocus
-      ></textarea>
-      <div *ngIf="showCancelError" class="ph-error-msg">
-        <i class="fa fa-info-circle me-1"></i> {{ '::ThisFieldIsRequired' | abpLocalization }}
-      </div>
-    </div>
   </app-drawer>
 </div>

@@ -3,15 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using AutoMapper.Internal.Mappers;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Inventories.Tickets;
 using SupplyCoreERP.Orders.PO;
 using SupplyCoreERP.PurchaseOrders.Dtos;
 using SupplyCoreERP.Suppliers;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
@@ -46,7 +43,8 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
 
         query = query
             .Include(x => x.Supplier)
-            .Include(x => x.Warehouse);
+            .Include(x => x.Warehouse)
+            .Include(x => x.PurchaseRequisition);
 
         query = query
             .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Code.Contains(input.Filter) || x.Supplier.Name.Contains(input.Filter))
@@ -73,6 +71,7 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
         PurchaseOrder? entity = await query
             .Include(x => x.Supplier)
             .Include(x => x.Warehouse)
+            .Include(x => x.PurchaseRequisition)
             .Include(x => x.Lines).ThenInclude(d => d.Product)
             .Include(x => x.Lines).ThenInclude(d => d.Unit)
             .FirstOrDefaultAsync(x => x.Id == id);
@@ -82,7 +81,20 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
             throw new EntityNotFoundException(typeof(PurchaseOrder), id);
         }
 
-        return ObjectMapper.Map<PurchaseOrder, PurchaseOrderDto>(entity);
+        PurchaseOrderDto dto = ObjectMapper.Map<PurchaseOrder, PurchaseOrderDto>(entity);
+
+        // Traceability: PO -> Tickets
+        List<InventoryTicket> tickets = await _ticketRepo.GetListAsync(x => x.ReferenceDocumentId == id);
+        dto.RelatedTickets = tickets.Select(t => new RelatedTicketDto
+        {
+            Id = t.Id,
+            TicketNumber = t.TicketNumber,
+            Type = t.Type,
+            Status = t.Status,
+            CreationTime = t.CreationTime
+        }).ToList();
+
+        return dto;
     }
 
     public async Task<PurchaseOrderDto> CreateAsync(CreatePurchaseOrderDto input)
@@ -193,13 +205,6 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
         Supplier supplier = await _orderManager.CompleteAsync(entity);
 
         await _supplierRepo.UpdateAsync(supplier);
-        await _orderRepo.UpdateAsync(entity);
-    }
-
-    public async Task CancelAsync(Guid id, string reason)
-    {
-        PurchaseOrder entity = await _orderRepo.GetAsync(id);
-        await _orderManager.CancelAsync(entity, reason);
         await _orderRepo.UpdateAsync(entity);
     }
     #endregion

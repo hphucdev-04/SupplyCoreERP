@@ -190,13 +190,5 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
         await _customerRepo.UpdateAsync(customer);
         await _orderRepo.UpdateAsync(entity);
     }
-
-
-    public async Task CancelAsync(Guid id, string reason)
-    {
-        SalesOrder entity = await _orderRepo.GetAsync(id);
-        await _orderManager.CancelAsync(entity, reason);
-        await _orderRepo.UpdateAsync(entity);
-    }
     #endregion
 }

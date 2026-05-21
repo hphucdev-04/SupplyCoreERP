@@ -147,6 +147,17 @@ public static class SupplyCoreERPPermissions
             public const string Reject = Default + ".Reject";
         }
 
+        // PurchaseRequisition Permission
+        public static class PurchaseRequisition
+        {
+            public const string Default = GroupNameOrder + ".PurchaseRequisition";
+            public const string Create = Default + ".Create";
+            public const string Update = Default + ".Update";
+            public const string Delete = Default + ".Delete";
+            public const string Approve = Default + ".Approve";
+            public const string Reject = Default + ".Reject";
+        }
+
         // Sale Order Permission
         public static class SaleOrder
         {
