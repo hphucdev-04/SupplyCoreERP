@@ -1,47 +1,51 @@
 {
   "Culture": "en",
-  "Texts": {
-    "AppName": "RxLogistics",
-    "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
-    "Welcome": "Welcome",
+    "Texts": {
+        "AppName": "RxLogistics",
+        "LongWelcomeMessage": "Welcome to the application. This is a startup project based on the ABP framework. For more information visit",
+        "Welcome": "Welcome",
 
-    //Menus
-    "Menu:Dashboard": "Dashboard",
-    "Menu:Catalog": "Catalog",
-    "Menu:Categories": "Categories",
-    "Menu:Medicines": "Medicines",
-    "Menu:MedicineDetails": "Medicine Detail",
-    "Menu:Units": "Units",
-    "Menu:Ingredients": "Ingredients",
-    "Menu:DosageForms": "Dosage Form",
-    "Menu:Manufacturers": "Manufacturers",
-    "Menu:Partner": "Partner",
-    "Menu:Suppliers": "Suppliers",
-    "Menu:Customers": "Customers",
-    "Menu:Medicnes": "Medicnes",
-    "Menu:Warehouses": "Warehouses",
-    "Menu:Inventory": "Inventory",
-    "Menu:StorageLocations": "Warehouse Layout",
-    "Menu:Batches": "Batches",
-    "Menu:Tickets": "Tickets",
-    "Menu:Balances": "Balances",
-    "Menu:Order": "Order",
-    "Menu:SaleOrders": "Sale Orders",
-    "Menu:PurchaseOrders": "Purchase Orders",
+        //Menus
+        "Menu:Dashboard": "Dashboard",
+        "Menu:Catalog": "Catalog",
+        "Menu:Categories": "Categories",
+        "Menu:Medicines": "Medicines",
+        "Menu:MedicineDetails": "Medicine Detail",
+        "Menu:Units": "Units",
+        "Menu:Ingredients": "Ingredients",
+        "Menu:DosageForms": "Dosage Form",
+        "Menu:Manufacturers": "Manufacturers",
+        "Menu:Partner": "Partner",
+        "Menu:Suppliers": "Suppliers",
+        "Menu:Customers": "Customers",
+        "Menu:Medicnes": "Medicnes",
+        "Menu:Warehouses": "Warehouses",
+        "Menu:Inventory": "Inventory",
+        "Menu:StorageLocations": "Warehouse Layout",
+        "Menu:Batches": "Batches",
+        "Menu:Tickets": "Tickets",
+        "Menu:Balances": "Balances",
+        "Menu:Order": "Order",
+        "Menu:SaleOrders": "Sale Orders",
+        "Menu:SaleOrderDetails": "Sale Order Details",
+        "Menu:PurchaseOrders": "Purchase Orders",
+        "Menu:PurchaseOrderDetails": "Purchase Order Details",
+        "Menu:PurchaseRequisitions": "Purchase Requisitions",
+        "Menu:PurchaseRequisitionDetails": "Purchase Requisition Details",
 
-    //Login Page
-    "Login:Organization": "Organization",
-    "Login:SelectOrganization": "Select a company",
-    "Login:SelectOrgHint": "Select a company to log in",
-    "Login:EnterAccountInfo": "Please enter your account information",
-    "Login:NoAccount": "Don't have an account?",
-    "Login:RegisterNow": "Register now",
+        //Login Page
+        "Login:Organization": "Organization",
+        "Login:SelectOrganization": "Select a company",
+        "Login:SelectOrgHint": "Select a company to log in",
+        "Login:EnterAccountInfo": "Please enter your account information",
+        "Login:NoAccount": "Don't have an account?",
+        "Login:RegisterNow": "Register now",
 
-    //Brand Section
-    "Brand:AppName": "RxLogistics",
-    "Brand:AppDesc": "Streamline Operations. Connect Supply Chains",
-    "UserNameOrEmailAddress": "UserName Or EmailAddress",
-    "RememberMe": "Remember Me",
-    "ForgotPassword": "Forgot Password"
-  }
+        //Brand Section
+        "Brand:AppName": "RxLogistics",
+        "Brand:AppDesc": "Streamline Operations. Connect Supply Chains",
+        "UserNameOrEmailAddress": "UserName Or EmailAddress",
+        "RememberMe": "Remember Me",
+        "ForgotPassword": "Forgot Password"
+    }
 }

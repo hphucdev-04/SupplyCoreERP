@@ -28,15 +28,6 @@ export class SalesOrderService {
     { apiName: this.apiName,...config });
   
 
-  cancel = (id: string, reason: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
-      method: 'POST',
-      url: `/api/app/sales-order/${id}/cancel`,
-      params: { reason },
-    },
-    { apiName: this.apiName,...config });
-  
-
   complete = (id: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',

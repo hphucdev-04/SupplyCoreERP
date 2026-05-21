@@ -33,3 +33,11 @@ public class CreateUpdateSupplierProductDto
 
     public string? Note { get; set; }
 }
+
+public class SourcingSuggestionDto
+{
+    public Guid ProductId { get; set; }
+    public Guid SupplierId { get; set; }
+    public string SupplierName { get; set; }
+    public double Score { get; set; }
+}

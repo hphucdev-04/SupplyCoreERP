@@ -1,0 +1,484 @@
+<div *ngIf="loading" class="d-flex justify-content-center my-5">
+  <div class="spinner-border text-primary" role="status">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</div>
+
+<div *ngIf="!loading && requisition">
+  <!-- Back button -->
+  <button class="btn btn-sm ph-btn-secondary mb-3" (click)="goBack()">
+    <i class="fa fa-arrow-left me-1"></i> {{ '::Back' | abpLocalization }}
+  </button>
+
+  <!-- Page Header -->
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center gap-3">
+      <div class="ph-icon-avatar ph-icon-avatar--lg">
+        <i class="fa fa-clipboard-list fa-2x"></i>
+      </div>
+      <div>
+        <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
+          {{ requisition.code }}
+          <span class="ph-badge" [ngClass]="statusClass(requisition.status)">
+            <i class="fa me-1" [ngClass]="statusIcon(requisition.status)"></i>
+            {{
+              '::Enum:PurchaseRequisitionStatus.' +
+                enumName(PurchaseRequisitionStatus, requisition.status) | abpLocalization
+            }}
+          </span>
+        </h3>
+        <div class="ph-text-muted d-flex gap-3">
+          <span
+            ><i class="fa fa-warehouse me-1"></i> {{ '::Warehouse' | abpLocalization }}:
+            <strong>{{ requisition.warehouseName }}</strong></span
+          >
+          <span
+            ><i class="fa fa-calendar me-1"></i> {{ '::RequestedDate' | abpLocalization }}:
+            <strong>{{ requisition.requestedDate | date: 'dd/MM/yyyy' }}</strong></span
+          >
+        </div>
+      </div>
+    </div>
+    <div class="d-flex gap-2">
+      <!-- Workflow Buttons -->
+      <ng-container
+        *ngIf="
+          requisition.status === PurchaseRequisitionStatus.Draft ||
+          requisition.status === PurchaseRequisitionStatus.Rejected
+        "
+      >
+        <button class="btn ph-btn-primary btn-sm" (click)="sendToApprove()">
+          <i class="fa fa-paper-plane me-1"></i> {{ '::SendToApprove' | abpLocalization }}
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="requisition.status === PurchaseRequisitionStatus.PendingApproval">
+        <button class="btn ph-btn-reject btn-sm me-2" (click)="reject()">
+          <i class="fa fa-times me-1"></i> {{ '::Reject' | abpLocalization }}
+        </button>
+        <button class="btn ph-btn-approve btn-sm" (click)="approve()">
+          <i class="fa fa-check me-1"></i> {{ '::Approve' | abpLocalization }}
+        </button>
+      </ng-container>
+
+      <ng-container
+        *ngIf="
+          requisition.status === PurchaseRequisitionStatus.Approved ||
+          requisition.status === PurchaseRequisitionStatus.PartialOrdered
+        "
+      >
+        <button class="btn ph-btn-primary btn-sm" (click)="openConvertDrawer()">
+          <i class="fa fa-shopping-cart me-1"></i> {{ '::CreatePurchaseOrder' | abpLocalization }}
+        </button>
+      </ng-container>
+    </div>
+  </div>
+
+  <div class="container-fluid p-0">
+    <div class="row g-2">
+      <!-- Left Column: General Information & Related Orders -->
+      <div class="col-md-5">
+        <div class="d-flex flex-column gap-2 h-100">
+          <!-- General Information Card -->
+          <div class="ph-card">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}
+              </h6>
+              <button *ngIf="isEditable()" class="ph-btn-ghost" (click)="openEditDrawer()">
+                <i class="fa fa-pencil"></i>
+              </button>
+            </div>
+            <div class="ph-card__body">
+              <div class="row g-3">
+                <div class="col-12">
+                  <span class="ph-field-meta">{{ '::Warehouse' | abpLocalization }}</span>
+                  <div class="ph-field-value">{{ requisition.warehouseName }}</div>
+                </div>
+                <div class="col-12">
+                  <span class="ph-field-meta">{{ '::RequestedDate' | abpLocalization }}</span>
+                  <div class="ph-field-value">
+                    {{ (requisition.requestedDate | date: 'dd/MM/yyyy') || 'N/A' }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <span class="ph-field-meta">{{ '::RequiredDate' | abpLocalization }}</span>
+                  <div class="ph-field-value">
+                    {{ (requisition.requiredDate | date: 'dd/MM/yyyy') || 'N/A' }}
+                  </div>
+                </div>
+                <div class="col-12">
+                  <span class="ph-field-meta">{{ '::Note' | abpLocalization }}</span>
+                  <div class="ph-field-value small fst-italic">{{ requisition.note || 'N/A' }}</div>
+                </div>
+              </div>
+              <hr class="ph-divider my-2" />
+              <div class="ph-text-muted small">
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="ph-field-meta">{{ '::CreationTime' | abpLocalization }}</span>
+                  <span class="ph-field-value">{{
+                    requisition.creationTime | date: 'HH:mm dd/MM/yyyy'
+                  }}</span>
+                </div>
+                <div class="d-flex justify-content-between align-items-center">
+                  <span class="ph-field-meta">{{
+                    '::LastModificationTime' | abpLocalization
+                  }}</span>
+                  <span class="ph-field-value">{{
+                    requisition.lastModificationTime
+                      ? (requisition.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
+                      : 'N/A'
+                  }}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Related Purchase Orders Card -->
+          <div class="ph-card">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-link me-2"></i>{{ '::RelatedPurchaseOrders' | abpLocalization }}
+                <span class="ph-badge ph-badge--info ms-2">{{
+                  requisition?.relatedOrders?.length || 0
+                }}</span>
+              </h6>
+            </div>
+            <div class="ph-card__body--flush">
+              <div class="table-responsive">
+                <table class="ph-table">
+                  <thead>
+                    <tr>
+                      <th>{{ '::OrderCode' | abpLocalization }}</th>
+                      <th>{{ '::Supplier' | abpLocalization }}</th>
+                      <th class="text-end">{{ '::TotalAmount' | abpLocalization }}</th>
+                      <th>{{ '::CreationTime' | abpLocalization }}</th>
+                      <th>{{ '::Status' | abpLocalization }}</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      *ngFor="let order of requisition?.relatedOrders"
+                      class="ph-link"
+                      (click)="goToOrder(order.id)"
+                    >
+                      <td class="fw-bold ph-text-primary">{{ order.code }}</td>
+                      <td>{{ order.supplierName }}</td>
+                      <td class="text-end fw-bold">{{ order.totalAmount | number }} ₫</td>
+                      <td>{{ order.creationTime | date: 'dd/MM/yyyy HH:mm' }}</td>
+                      <td>
+                        <span class="ph-badge" [ngClass]="poStatusClass(order.status)">
+                          {{
+                            '::Enum:PurchaseOrderStatus.' +
+                              enumName(PurchaseOrderStatus, order.status) | abpLocalization
+                          }}
+                        </span>
+                      </td>
+                    </tr>
+                    <tr *ngIf="!requisition?.relatedOrders?.length">
+                      <td colspan="5" class="ph-empty-state">
+                        {{ '::NoRelatedOrders' | abpLocalization }}
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Order Lines -->
+      <div class="col-md-7">
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-list me-2"></i>{{ '::ProductList' | abpLocalization }}
+              <span class="ph-badge ph-badge--info ms-2">{{ requisition.lines?.length || 0 }}</span>
+            </h6>
+            <div class="ph-card__header-actions">
+              <button
+                *ngIf="isEditable()"
+                class="btn btn-sm ph-btn-new"
+                (click)="openAddLineDrawer()"
+              >
+                <i class="fa fa-plus me-1"></i> {{ '::AddProduct' | abpLocalization }}
+              </button>
+            </div>
+          </div>
+          <div class="ph-card__body--flush">
+            <div class="table-responsive">
+              <table class="ph-table">
+                <thead>
+                  <tr>
+                    <th style="width: 20px">#</th>
+                    <th style="width: 20%">{{ '::Product' | abpLocalization }}</th>
+                    <th style="width: 10%" class="text-end">
+                      {{ '::Quantity' | abpLocalization }}
+                    </th>
+                    <th style="width: 10%">{{ '::Unit' | abpLocalization }}</th>
+                    <th style="width: 20%">{{ '::Ordered' | abpLocalization }}</th>
+                    <th style="width: 15%">{{ '::CreationTime' | abpLocalization }}</th>
+                    <th style="width: 20%">{{ '::Note' | abpLocalization }}</th>
+                    <th *ngIf="isEditable()" style="width: 40px"></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let line of requisition.lines; let i = index">
+                    <td class="text-center">{{ i + 1 }}</td>
+                    <td>
+                      <div class="fw-bold ph-text-primary">{{ line.productName }}</div>
+                    </td>
+                    <td class="text-end">
+                      <div *ngIf="isEditable(); else qtyText">
+                        <input
+                          type="number"
+                          class="form-control form-control-sm text-end"
+                          style="width: 80px"
+                          [value]="line.quantity"
+                          min="0.01"
+                          step="1"
+                          (change)="onInlineLineChange(line, 'quantity', $event.target.value)"
+                        />
+                      </div>
+                      <ng-template #qtyText>
+                        <span class="fw-bold">{{ line.quantity | number }}</span>
+                      </ng-template>
+                    </td>
+                    <td>
+                      <span class="ph-badge ph-badge--neutral">{{ line.unitName }}</span>
+                    </td>
+                    <td>
+                      <div style="min-width: 100px">
+                        <div class="d-flex justify-content-between small mb-1">
+                          <span class="ph-text-muted"
+                            >{{ line.orderedQuantity | number }} /
+                            {{ line.quantity | number }}</span
+                          >
+                          <span
+                            class="fw-bold"
+                            [class.ph-text-success]="line.orderedQuantity >= line.quantity"
+                          >
+                            {{ (line.orderedQuantity / line.quantity) * 100 | number: '1.0-0' }}%
+                          </span>
+                        </div>
+                        <div class="progress" style="height: 4px">
+                          <div
+                            class="progress-bar"
+                            [class.bg-success]="line.orderedQuantity >= line.quantity"
+                            [class.bg-warning]="line.orderedQuantity < line.quantity"
+                            [style.width.%]="(line.orderedQuantity / line.quantity) * 100"
+                          ></div>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="ph-text-muted small">
+                      {{ line.creationTime | date: 'HH:mm dd/MM/yyyy' }}
+                    </td>
+                    <td>
+                      <div *ngIf="isEditable(); else noteText">
+                        <input
+                          type="text"
+                          class="form-control form-control-sm"
+                          [value]="line.note || ''"
+                          placeholder="{{ '::Note' | abpLocalization }}"
+                          (change)="onInlineLineChange(line, 'note', $event.target.value)"
+                        />
+                      </div>
+                      <ng-template #noteText>
+                        <span class="ph-text-muted small">{{ line.note || 'N/A' }}</span>
+                      </ng-template>
+                    </td>
+                    <td *ngIf="isEditable()" class="text-center">
+                      <button class="ph-btn-ghost text-danger" (click)="removeLine(line.id)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!requisition.lines?.length">
+                    <td colspan="8" class="ph-empty-state">
+                      {{ '::NoData' | abpLocalization }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Header Drawer -->
+  <app-drawer
+    [isOpen]="isEditDrawerOpen"
+    [title]="'::EditInformation' | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="editForm.invalid || isSavingEdit"
+    (close)="closeEditDrawer()"
+    (save)="saveEdit()"
+  >
+    <form *ngIf="editForm" [formGroup]="editForm">
+      <div class="mb-3">
+        <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
+        <select class="form-select" formControlName="warehouseId">
+          <option *ngFor="let w of warehouses" [ngValue]="w.id">{{ w.name }}</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="ph-label">{{ '::RequiredDate' | abpLocalization }}</label>
+        <input type="date" class="form-control" formControlName="requiredDate" />
+      </div>
+      <div class="mb-3">
+        <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
+        <textarea class="form-control" formControlName="note" rows="4"></textarea>
+      </div>
+    </form>
+  </app-drawer>
+
+  <!-- Add Line Drawer -->
+  <app-drawer
+    [isOpen]="isAddLineOpen"
+    [title]="'::AddProduct' | abpLocalization"
+    [width]="'md'"
+    [saveDisabled]="lineForm.invalid || isSavingLine"
+    (close)="closeAddLineDrawer()"
+    (save)="saveLine()"
+  >
+    <form *ngIf="lineForm" [formGroup]="lineForm">
+      <div class="mb-3">
+        <label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label>
+        <app-dropdown-search
+          formControlName="productId"
+          [items]="medicines"
+          [placeholder]="'::SelectProduct' | abpLocalization"
+          (valueChange)="onMedicineChange($event)"
+        ></app-dropdown-search>
+      </div>
+      <div class="row">
+        <div class="col-6 mb-3">
+          <label class="ph-label ph-label--required">{{ '::Quantity' | abpLocalization }}</label>
+          <input type="number" class="form-control" formControlName="quantity" />
+        </div>
+        <div class="col-6 mb-3">
+          <label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label>
+          <select class="form-select" formControlName="unitId">
+            <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+            <option *ngFor="let u of units" [ngValue]="u.unitId">{{ u.unitName }}</option>
+          </select>
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
+        <textarea class="form-control" formControlName="note" rows="2"></textarea>
+      </div>
+    </form>
+  </app-drawer>
+
+  <!-- Convert to PO Bottom Drawer -->
+  <app-drawer
+    [isOpen]="isConvertDrawerOpen"
+    [title]="'::CreatePurchaseOrderFromRequisition' | abpLocalization"
+    [position]="'bottom'"
+    [height]="'lg'"
+    [saveDisabled]="convertForm.invalid || isSavingConvert"
+    (close)="isConvertDrawerOpen = false"
+    (save)="saveConvert()"
+  >
+    <div class="row mb-4 g-3 align-items-end">
+      <div class="col-md-7">
+        <form [formGroup]="convertForm" class="row g-2">
+          <div class="col-4">
+            <label class="ph-label">{{ '::OrderDate' | abpLocalization }}</label>
+            <input type="date" class="form-control" formControlName="orderDate" readonly />
+          </div>
+          <div class="col-8">
+            <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="note"
+              placeholder="{{ '::Optional' | abpLocalization }}"
+            />
+          </div>
+        </form>
+      </div>
+      <div class="col-md-5 d-flex justify-content-end align-items-end">
+        <button
+          type="button"
+          class="btn btn-sm ph-btn-outline"
+          (click)="autoFillBestSuppliers()"
+          [title]="'::AutoSuggestBestSuppliers' | abpLocalization"
+        >
+          <i class="fa fa-magic text-primary me-2 fa-lg"></i>
+          <span class="fw-bold">{{ '::AutoFill' | abpLocalization }}</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="mt-2">
+      <label class="ph-label ph-label--required mb-2">{{
+        '::AllocateSuppliers' | abpLocalization
+      }}</label>
+      <div class="table-responsive" style="overflow: visible !important">
+        <table class="ph-table mb-0 align-middle">
+          <thead>
+            <tr>
+              <th style="width: 40px" class="text-center">
+                <i class="fa fa-check-square-o"></i>
+              </th>
+              <th style="width: 35%">{{ '::Product' | abpLocalization }}</th>
+              <th style="width: 15%" class="text-end">{{ '::Remaining' | abpLocalization }}</th>
+              <th style="width: 20%" class="text-end">{{ '::Quantity' | abpLocalization }}</th>
+              <th style="width: 30%">{{ '::Supplier' | abpLocalization }}</th>
+            </tr>
+          </thead>
+          <tbody [formGroup]="convertForm">
+            <ng-container formArrayName="allocations">
+              <tr *ngFor="let ctrl of allocations.controls; let i = index" [formGroupName]="i">
+                <td class="text-center">
+                  <input type="checkbox" formControlName="selected" class="form-check-input" />
+                </td>
+                <td>
+                  <div class="fw-bold ph-text-primary">{{ ctrl.get('productName').value }}</div>
+                  <div class="ph-text-muted small">{{ ctrl.get('unitName').value }}</div>
+                </td>
+                <td class="text-end fw-bold">
+                  {{ ctrl.get('remainingQty').value | number }}
+                </td>
+                <td class="text-end">
+                  <input
+                    type="number"
+                    class="form-control form-control-sm text-end fw-bold"
+                    formControlName="quantity"
+                    [attr.disabled]="!ctrl.get('selected').value ? 'disabled' : null"
+                  />
+                </td>
+                <td style="overflow: visible !important">
+                  <app-dropdown-search
+                    formControlName="supplierId"
+                    [items]="suppliersPerLine[ctrl.get('productId').value] || []"
+                    [placeholder]="'::SelectSupplier' | abpLocalization"
+                    [class.is-invalid]="
+                      ctrl.get('supplierId').invalid && ctrl.get('supplierId').touched
+                    "
+                  ></app-dropdown-search>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="mt-4 p-3 rounded border-start border-primary border-4">
+      <div class="small fw-bold mb-1">
+        <i class="fa fa-info-circle me-2"></i> {{ '::WorkflowSummary' | abpLocalization }}
+      </div>
+      <div class="ph-text-muted small">
+        {{ '::PRWillBeSplitIntoMultiplePOsBasedOnSupplierGroups' | abpLocalization }}
+        {{ '::ShipToWarehouse' | abpLocalization }}:
+        <strong>{{ requisition?.warehouseName }}</strong>
+      </div>
+    </div>
+  </app-drawer>
+</div>

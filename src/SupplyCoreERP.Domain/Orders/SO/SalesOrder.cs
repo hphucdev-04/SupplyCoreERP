@@ -141,21 +141,6 @@ public class SalesOrder : FullAuditedAggregateRoot<Guid>
     {
         Status = SalesOrderStatus.Completed;
     }
-
-    public void Cancel()
-    {
-        if (Status == SalesOrderStatus.Completed)
-        {
-            throw new UserFriendlyException("Đơn đã giao xong, không thể hủy!");
-        }
-
-        if (Status == SalesOrderStatus.Delivering)
-        {
-            throw new UserFriendlyException("Hàng đang giao, Kho phải thu hồi trước khi hủy!");
-        }
-
-        Status = SalesOrderStatus.Canceled;
-    }
     #endregion
 
     #region Helper 

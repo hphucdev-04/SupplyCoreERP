@@ -37,7 +37,7 @@ public class CategoryManager_Unit_Tests
     {
         // Arrange
         string categoryName = "New Category";
-        var expectedGuid = Guid.NewGuid();
+        Guid expectedGuid = Guid.NewGuid();
 
         _mockGuidGenerator.Create().Returns(expectedGuid);
         _mockCategoryRepo.IsNameExistsAsync(categoryName).Returns(Task.FromResult(false));
@@ -78,7 +78,7 @@ public class CategoryManager_Unit_Tests
     public async Task UpdateAsync_ValidInput_ShouldUpdateName()
     {
         // Arrange
-        var category = new Category(Guid.NewGuid(), "Old Name");
+        Category category = new(Guid.NewGuid(), "Old Name");
         string newName = "New Name";
 
         _mockCategoryRepo.IsNameExistsAsync(newName.Trim(), category.Id).Returns(Task.FromResult(false));
@@ -95,7 +95,7 @@ public class CategoryManager_Unit_Tests
     public async Task UpdateAsync_DuplicateName_ShouldThrowException()
     {
         // Arrange
-        var category = new Category(Guid.NewGuid(), "Electronics");
+        Category category = new(Guid.NewGuid(), "Electronics");
         string existingName = "Software";
 
         _mockCategoryRepo.IsNameExistsAsync(existingName, category.Id).Returns(Task.FromResult(true));
@@ -117,7 +117,7 @@ public class CategoryManager_Unit_Tests
     public async Task DeleteAsync_NoProducts_ShouldDelete()
     {
         // Arrange
-        var category = new Category(Guid.NewGuid(), "Electronics");
+        Category category = new(Guid.NewGuid(), "Electronics");
 
         _mockProductRepo.AnyAsync(Arg.Any<Expression<Func<Product, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(false));
@@ -133,7 +133,7 @@ public class CategoryManager_Unit_Tests
     public async Task DeleteAsync_WithProducts_ShouldThrowException()
     {
         // Arrange
-        var category = new Category(Guid.NewGuid(), "Electronics");
+        Category category = new(Guid.NewGuid(), "Electronics");
 
         _mockProductRepo.AnyAsync(Arg.Any<Expression<Func<Product, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(Task.FromResult(true));

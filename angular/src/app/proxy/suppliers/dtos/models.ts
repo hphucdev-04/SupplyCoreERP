@@ -48,6 +48,13 @@ export interface GetSupplierProductListDto extends PagedAndSortedResultRequestDt
   maxPrice?: number;
 }
 
+export interface SourcingSuggestionDto {
+  productId?: string;
+  supplierId?: string;
+  supplierName?: string;
+  score?: number;
+}
+
 export interface SupplierDetailDto extends SupplierDto {
   taxCode?: string;
   representativeName?: string;

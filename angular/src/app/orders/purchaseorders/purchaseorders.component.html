@@ -5,6 +5,10 @@
       {{ '::Menu:PurchaseOrders' | abpLocalization }}
     </h5>
     <div class="ph-card__header-actions">
+      <button class="btn btn-sm ph-btn-outline me-2" type="button" (click)="viewRequisitions()">
+        <i class="fa fa-list-alt me-1 text-primary"></i>
+        <span>{{ '::PurchaseRequisitions' | abpLocalization }}</span>
+      </button>
       <button class="btn btn-sm ph-btn-new" type="button" (click)="openCreateDrawer()">
         <i class="fa fa-plus me-1"></i>
         <span>{{ '::NewPurchaseOrder' | abpLocalization }}</span>
@@ -128,7 +132,7 @@
             class="ph-text-muted"
             [class.ph-text-danger]="row.dueDate && (row.dueDate | date) < ('' | date)"
           >
-            {{ row.dueDate ? (row.dueDate | date: 'dd/MM/yyyy') : '—' }}
+            {{ row.dueDate ? (row.dueDate | date: 'dd/MM/yyyy') : 'N/A' }}
           </span>
         </ng-template>
       </ngx-datatable-column>
@@ -145,17 +149,7 @@
 
       <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="160">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <span
-            class="ph-badge"
-            [ngClass]="{
-              'ph-badge--neutral': value === PurchaseOrderStatus.Draft,
-              'ph-badge--pending': value === PurchaseOrderStatus.PendingApproval,
-              'ph-badge--info':
-                value === PurchaseOrderStatus.Approved || value === PurchaseOrderStatus.Receiving,
-              'ph-badge--approved': value === PurchaseOrderStatus.Completed,
-              'ph-badge--rejected': value === PurchaseOrderStatus.Canceled,
-            }"
-          >
+          <span class="ph-badge" [ngClass]="statusClass(value)">
             <i class="fa me-1" [ngClass]="statusIcon(value)"></i>
             {{
               '::Enum:PurchaseOrderStatus.' + enumName(PurchaseOrderStatus, value) | abpLocalization

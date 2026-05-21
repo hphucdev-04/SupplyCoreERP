@@ -98,6 +98,17 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
             L("Permission:Order.PurchaseOrder.Reject")
         );
 
+        // PurchaseRequisition
+        PermissionDefinition purchaseRequisitionPermission = AddCrudPermissions(orderGroup, SupplyCoreERPPermissions.Order.PurchaseRequisition.Default, "PurchaseRequisition");
+        purchaseRequisitionPermission.AddChild(
+                SupplyCoreERPPermissions.Order.PurchaseRequisition.Approve,
+                L("Permission:Order.PurchaseRequisition.Approve")
+        );
+        purchaseRequisitionPermission.AddChild(
+            SupplyCoreERPPermissions.Order.PurchaseRequisition.Reject,
+            L("Permission:Order.PurchaseRequisition.Reject")
+        );
+
         // SaleOrder
         PermissionDefinition saleOrderPermisson = AddCrudPermissions(orderGroup, SupplyCoreERPPermissions.Order.SaleOrder.Default, "SaleOrder");
         // Add Child

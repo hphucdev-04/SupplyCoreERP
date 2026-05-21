@@ -131,7 +131,7 @@
             class="ph-text-muted"
             [class.ph-text-danger]="row.dueDate && (row.dueDate | date) < ('' | date)"
           >
-            {{ row.dueDate ? (row.dueDate | date: 'dd/MM/yyyy') : '—' }}
+            {{ row.dueDate ? (row.dueDate | date: 'dd/MM/yyyy') : 'N/A' }}
           </span>
         </ng-template>
       </ngx-datatable-column>
@@ -145,22 +145,9 @@
           <span class="fw-bold ph-text-primary">{{ row.totalAmount | number: '1.0-0' }}đ</span>
         </ng-template>
       </ngx-datatable-column>
-
       <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="160">
         <ng-template let-value="value" ngx-datatable-cell-template>
-          <span
-            class="ph-badge"
-            [ngClass]="{
-              'ph-badge--neutral': value === SalesOrderStatus.Draft,
-              'ph-badge--pending': value === SalesOrderStatus.PendingApproval,
-              'ph-badge--approved': value === SalesOrderStatus.Approved,
-              'ph-badge--info':
-                value === SalesOrderStatus.Picking || value === SalesOrderStatus.Packing,
-              'ph-badge--success':
-                value === SalesOrderStatus.Shipped || value === SalesOrderStatus.Completed,
-              'ph-badge--rejected': value === SalesOrderStatus.Canceled,
-            }"
-          >
+          <span class="ph-badge" [ngClass]="statusClass(value)">
             <i class="fa me-1" [ngClass]="statusIcon(value)"></i>
             {{ '::Enum:SalesOrderStatus.' + enumName(SalesOrderStatus, value) | abpLocalization }}
           </span>

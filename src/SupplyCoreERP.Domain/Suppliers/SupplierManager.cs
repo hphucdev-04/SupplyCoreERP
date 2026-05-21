@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using SupplyCoreERP.BaseUnits;
@@ -113,12 +114,14 @@ public class SupplierManager : DomainService
             throw new UserFriendlyException("Đơn vị tính không tồn tại.");
         }
 
-        return supplier.AddProduct(
+        SupplierProduct sp = supplier.AddProduct(
             GuidGenerator.Create(),
             productId, defaultUnitId,
             defaultConversionFactor, standardPrice, leadTimeDays,
             minOrderQuantity, overDeliveryTolerancePct, underDeliveryTolerancePct,
             isPreferred, note);
+
+        return sp;
     }
 
     public async Task UpdateProductAsync(
@@ -145,6 +148,7 @@ public class SupplierManager : DomainService
             overDeliveryTolerancePct, underDeliveryTolerancePct,
             isPreferred, note);
     }
+
     public async Task RemoveProductAsync(Supplier supplier, Guid productId)
     {
         if (!await _productRepo.AnyAsync(x => x.Id == productId))
@@ -152,25 +156,15 @@ public class SupplierManager : DomainService
             throw new UserFriendlyException("Sản phẩm không tồn tại trên hệ thống.");
         }
 
-        SupplierProduct? sp = supplier.SupplierProducts.FirstOrDefault(x => x.ProductId == productId);
-        if (sp != null && sp.IsPreferred)
-        {
-            throw new UserFriendlyException("Không thể xóa sản phẩm đang được đánh dấu là 'Ưu tiên'.");
-        }
-
         supplier.RemoveProduct(productId);
     }
+
     public void ToggleProductActive(Supplier supplier, Guid productId)
     {
         SupplierProduct? sp = supplier.SupplierProducts.FirstOrDefault(x => x.ProductId == productId);
         if (sp == null)
         {
             throw new UserFriendlyException("Sản phẩm không thuộc nhà cung cấp này.");
-        }
-
-        if (sp.IsActive && sp.IsPreferred)
-        {
-            throw new UserFriendlyException("Phải bỏ đánh dấu 'Ưu tiên' trước khi ngừng hoạt động sản phẩm này.");
         }
 
         supplier.ToggleProductActive(productId);

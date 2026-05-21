@@ -98,5 +98,10 @@ public class SupplierProduct : AuditedEntity<Guid>
         IsPreferred = isPreferred;
         Note = note;
     }
+
+    public void SetPreferred(bool isPreferred)
+    {
+        IsPreferred = isPreferred;
+    }
     public void SetActive(bool active) => IsActive = active;
 }

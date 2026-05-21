@@ -5,8 +5,18 @@ import { Subject, takeUntil } from 'rxjs';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Confirmation, ConfirmationService, ToasterService } from '@abp/ng.theme.shared';
 import { CustomerService } from 'src/app/proxy/customers';
-import { CustomerDto, CustomerDetailDto, CreateUpdateCustomerDto, GetCustomerListDto } from 'src/app/proxy/customers/dtos';
-import { Gender, CustomerType, genderOptions, customerTypeOptions } from 'src/app/proxy/enums/partner';
+import {
+  CustomerDto,
+  CustomerDetailDto,
+  CreateUpdateCustomerDto,
+  GetCustomerListDto,
+} from 'src/app/proxy/customers/dtos';
+import {
+  Gender,
+  CustomerType,
+  genderOptions,
+  customerTypeOptions,
+} from 'src/app/proxy/enums/partner';
 import { LocationService } from 'src/app/proxy/locations';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
@@ -19,7 +29,7 @@ import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-form
   imports: [SharedModule, DrawerComponent, SearchComponent, CurrencyFormatDirective],
   templateUrl: './customers.component.html',
   styleUrl: './customers.component.scss',
-  providers: [ListService]
+  providers: [ListService],
 })
 export class CustomersComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -39,8 +49,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
   countries: any[] = [];
   cities: any[] = [];
   areas: any[] = [];
-  genders = genderOptions
-  customerTypes = customerTypeOptions
+  genders = genderOptions;
+  customerTypes = customerTypeOptions;
 
   Gender = Gender;
   CustomerType = CustomerType;
@@ -52,22 +62,24 @@ export class CustomersComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
-    private router: Router
-  ) { }
+    private router: Router,
+  ) {}
 
   ngOnInit(): void {
     this.buildForm();
     this.loadInitialLookups();
-    const streamCreator = (query: GetCustomerListDto) => this.customerService.getList({
-      ...query,
-      filter: this.filterText,
-      isActive: this.filterIsActive
-    });
+    const streamCreator = (query: GetCustomerListDto) =>
+      this.customerService.getList({
+        ...query,
+        filter: this.filterText,
+        isActive: this.filterIsActive,
+      });
 
     this.list.maxResultCount = 10;
-    this.list.hookToQuery(streamCreator)
+    this.list
+      .hookToQuery(streamCreator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response) => {
+      .subscribe(response => {
         this.data = response;
       });
   }
@@ -78,7 +90,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   loadInitialLookups() {
-    this.locationService.getAllCountries()
+    this.locationService
+      .getAllCountries()
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         this.countries = res.items;
@@ -137,9 +150,10 @@ export class CustomersComponent implements OnInit, OnDestroy {
   }
 
   editCustomer(id: string): void {
-    this.customerService.get(id)
+    this.customerService
+      .get(id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
+      .subscribe(res => {
         this.selectedCustomer = res;
 
         // Patch data vào form (tách biệt với buildForm)
@@ -147,7 +161,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
 
         // Load cascading dropdowns nếu có sẵn
         if (res.countryId) {
-          this.locationService.getCitiesByCountry(res.countryId)
+          this.locationService
+            .getCitiesByCountry(res.countryId)
             .pipe(takeUntil(this.destroy$))
             .subscribe(cityRes => {
               this.cities = cityRes.items;
@@ -157,7 +172,8 @@ export class CustomersComponent implements OnInit, OnDestroy {
         }
 
         if (res.cityId) {
-          this.locationService.getAreasByCity(res.cityId)
+          this.locationService
+            .getAreasByCity(res.cityId)
             .pipe(takeUntil(this.destroy$))
             .subscribe(areaRes => {
               this.areas = areaRes.items;
@@ -170,42 +186,40 @@ export class CustomersComponent implements OnInit, OnDestroy {
       });
   }
 
-
   deleteCustomer(id: string): void {
-    this.confirmation
-      .warn('::AreYouSureToDelete', '::AreYouSure')
-      .subscribe((status) => {
-        if (status === Confirmation.Status.confirm) {
-          this.customerService.delete(id)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe({
-              next: () => {
-                this.list.get();
-                this.toaster.success('::DeleteSuccess', '::Success');
-              },
-              error: (err) => {
-                this.toaster.error(err.error?.error?.message || '::Error');
-              }
-            });
-        }
-      });
+    this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe(status => {
+      if (status === Confirmation.Status.confirm) {
+        this.customerService
+          .delete(id)
+          .pipe(takeUntil(this.destroy$))
+          .subscribe({
+            next: () => {
+              this.list.get();
+              this.toaster.success('::DeleteSuccess', '::Success');
+            },
+            error: err => {
+              this.toaster.error(err.error?.error?.message || '::Error');
+            },
+          });
+      }
+    });
   }
 
   onToggleActive(row: CustomerDto, event: any): void {
     event.stopPropagation();
-    this.confirmation.warn(
-      row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
-      '::Confirm'
-    ).subscribe((status) => {
-      if (status === Confirmation.Status.confirm) {
-        this.customerService.toggleActive(row.id).subscribe(() => this.list.get());
-        this.toaster.success(
-          row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
-        );
-      } else {
-        event.target.checked = row.isActive;
-      }
-    });
+    this.confirmation
+      .warn(row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate', '::Confirm')
+      .subscribe(status => {
+        if (status === Confirmation.Status.confirm) {
+          this.customerService.toggleActive(row.id).subscribe(() => this.list.get());
+          this.toaster.success(
+            row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully',
+            '::Success',
+          );
+        } else {
+          event.target.checked = row.isActive;
+        }
+      });
   }
 
   // --- FORM HANDLING ---
@@ -246,14 +260,13 @@ export class CustomersComponent implements OnInit, OnDestroy {
       ? this.customerService.update(this.selectedCustomer.id, payload)
       : this.customerService.create(payload);
 
-    request
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(() => {
-        this.closeDrawer();
-        this.list.get();
-        this.toaster.success(
-          this.selectedCustomer?.id ? '::UpdateSuccess' : '::CreateSuccess', '::Success'
-        );
-      });
+    request.pipe(takeUntil(this.destroy$)).subscribe(() => {
+      this.closeDrawer();
+      this.list.get();
+      this.toaster.success(
+        this.selectedCustomer?.id ? '::UpdateSuccess' : '::CreateSuccess',
+        '::Success',
+      );
+    });
   }
 }
