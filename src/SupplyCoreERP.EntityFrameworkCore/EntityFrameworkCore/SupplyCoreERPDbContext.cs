@@ -102,6 +102,7 @@ public class SupplyCoreERPDbContext :
     public DbSet<Customer> Customers { get; set; }
     public DbSet<Supplier> Suppliers { get; set; }
     public DbSet<SupplierProduct> SupplierProducts { get; set; }
+    public DbSet<SupplierProductCondition> SupplierProductConditions { get; set; }
 
     // Warehouse & Inventory
     public DbSet<Warehouse> Warehouses { get; set; }
@@ -389,6 +390,29 @@ public class SupplyCoreERPDbContext :
              .OnDelete(DeleteBehavior.Restrict);
 
             b.HasIndex(x => new { x.SupplierId, x.ProductId }).IsUnique();
+
+            // Cấu hình quan hệ 1-N với Conditions
+            b.HasMany(x => x.Conditions)
+             .WithOne(x => x.SupplierProduct)
+             .HasForeignKey(x => x.SupplierProductId)
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // Supplier Product Condition
+        builder.Entity<SupplierProductCondition>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "SupplierProductConditions", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.HasKey(x => x.Id);
+
+            b.HasOne(x => x.Unit)
+             .WithMany()
+             .HasForeignKey(x => x.UnitId)
+             .OnDelete(DeleteBehavior.Restrict);
+
+            // UNIQUE INDEX MỚI: Cho phép trùng UnitId nhưng cấm trùng MinOrderQuantity
+            b.HasIndex(x => new { x.SupplierProductId, x.UnitId, x.MinOrderQuantity }).IsUnique();
         });
 
         // Customer

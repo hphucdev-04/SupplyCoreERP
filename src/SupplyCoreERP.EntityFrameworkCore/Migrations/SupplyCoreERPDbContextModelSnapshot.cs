@@ -20,7 +20,7 @@ namespace SupplyCoreERP.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasAnnotation("_Abp_DatabaseProvider", EfCoreDatabaseProvider.PostgreSql)
-                .HasAnnotation("ProductVersion", "10.0.2")
+                .HasAnnotation("ProductVersion", "10.0.0")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -2350,9 +2350,6 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("CreatorId");
 
-                    b.Property<int>("DefaultConversionFactor")
-                        .HasColumnType("integer");
-
                     b.Property<Guid>("DefaultUnitId")
                         .HasColumnType("uuid");
 
@@ -2370,32 +2367,17 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("LastModifierId");
 
-                    b.Property<decimal>("LastPurchasePrice")
-                        .HasColumnType("numeric");
-
                     b.Property<int>("LeadTimeDays")
                         .HasColumnType("integer");
-
-                    b.Property<decimal>("MinOrderQuantity")
-                        .HasColumnType("numeric");
 
                     b.Property<string>("Note")
                         .HasColumnType("text");
 
-                    b.Property<decimal>("OverDeliveryTolerancePct")
-                        .HasColumnType("numeric");
-
                     b.Property<Guid>("ProductId")
                         .HasColumnType("uuid");
 
-                    b.Property<decimal>("StandardPrice")
-                        .HasColumnType("numeric");
-
                     b.Property<Guid>("SupplierId")
                         .HasColumnType("uuid");
-
-                    b.Property<decimal>("UnderDeliveryTolerancePct")
-                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 
@@ -2407,6 +2389,45 @@ namespace SupplyCoreERP.Migrations
                         .IsUnique();
 
                     b.ToTable("AppSupplierProducts", (string)null);
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Suppliers.SupplierProductCondition", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<int>("ConversionFactor")
+                        .HasColumnType("integer");
+
+                    b.Property<decimal>("LastPurchasePrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("MinOrderQuantity")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("OverDeliveryTolerancePct")
+                        .HasColumnType("numeric");
+
+                    b.Property<decimal>("StandardPrice")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("SupplierProductId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("UnderDeliveryTolerancePct")
+                        .HasColumnType("numeric");
+
+                    b.Property<Guid>("UnitId")
+                        .HasColumnType("uuid");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UnitId");
+
+                    b.HasIndex("SupplierProductId", "UnitId", "MinOrderQuantity")
+                        .IsUnique();
+
+                    b.ToTable("AppSupplierProductConditions", (string)null);
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Warehouses.Bin", b =>
@@ -4742,7 +4763,7 @@ namespace SupplyCoreERP.Migrations
 
             modelBuilder.Entity("SupplyCoreERP.Orders.PO.PurchaseOrder", b =>
                 {
-                    b.HasOne("SupplyCoreERP.Orders.PR.PurchaseRequisition", null)
+                    b.HasOne("SupplyCoreERP.Orders.PR.PurchaseRequisition", "PurchaseRequisition")
                         .WithMany()
                         .HasForeignKey("PurchaseRequisitionId")
                         .OnDelete(DeleteBehavior.SetNull);
@@ -4758,6 +4779,8 @@ namespace SupplyCoreERP.Migrations
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
+
+                    b.Navigation("PurchaseRequisition");
 
                     b.Navigation("Supplier");
 
@@ -4996,6 +5019,25 @@ namespace SupplyCoreERP.Migrations
                     b.Navigation("Supplier");
                 });
 
+            modelBuilder.Entity("SupplyCoreERP.Suppliers.SupplierProductCondition", b =>
+                {
+                    b.HasOne("SupplyCoreERP.Suppliers.SupplierProduct", "SupplierProduct")
+                        .WithMany("Conditions")
+                        .HasForeignKey("SupplierProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.BaseUnits.BaseUnit", "Unit")
+                        .WithMany()
+                        .HasForeignKey("UnitId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.Navigation("SupplierProduct");
+
+                    b.Navigation("Unit");
+                });
+
             modelBuilder.Entity("SupplyCoreERP.Warehouses.Bin", b =>
                 {
                     b.HasOne("SupplyCoreERP.Inventories.Warehouses.Warehouse", null)
@@ -5219,6 +5261,11 @@ namespace SupplyCoreERP.Migrations
             modelBuilder.Entity("SupplyCoreERP.Suppliers.Supplier", b =>
                 {
                     b.Navigation("SupplierProducts");
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Suppliers.SupplierProduct", b =>
+                {
+                    b.Navigation("Conditions");
                 });
 
             modelBuilder.Entity("Volo.Abp.AuditLogging.AuditLog", b =>

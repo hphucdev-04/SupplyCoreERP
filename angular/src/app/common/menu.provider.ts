@@ -4,7 +4,7 @@ function createMenuGroup(
   name: string,
   icon: string,
   order: number,
-  children?: { name: string; icon: string, requiredPolicy?: string }[],
+  children?: { name: string; icon: string; requiredPolicy?: string }[],
   policy?: string,
 ) {
   const parentName = `::Menu:${name}`;
@@ -56,19 +56,26 @@ export const APP_ROUTES = [
   ]),
 
   ...createMenuGroup('Partner', 'fas fa-handshake', 3, [
-    { name: 'Suppliers', icon: 'fas fa-truck' , requiredPolicy: 'Partner.Supplier' },
+    { name: 'Suppliers', icon: 'fas fa-truck', requiredPolicy: 'Partner.Supplier' },
     { name: 'Customers', icon: 'fas fa-user-friends', requiredPolicy: 'Partner.Customer' },
   ]),
   ...createMenuGroup('Order', 'fas fa-clipboard-list', 4, [
-    { name: 'PurchaseRequisitions', icon: 'fas fa-file-medical' , requiredPolicy: 'Order.PurchaseRequisition'},
-    { name: 'PurchaseOrders', icon: 'fas fa-file-invoice-dollar' , requiredPolicy: 'Order.PurchaseOrder'},
-    { name: 'SaleOrders', icon: 'fas fa-shipping-fast' , requiredPolicy: 'Order.SaleOrder'},
+    {
+      name: 'PurchaseRequisitions',
+      icon: 'fas fa-file-medical',
+      requiredPolicy: 'Order.PurchaseRequisition',
+    },
+    {
+      name: 'PurchaseOrders',
+      icon: 'fas fa-file-invoice-dollar',
+      requiredPolicy: 'Order.PurchaseOrder',
+    },
+    { name: 'SaleOrders', icon: 'fas fa-shipping-fast', requiredPolicy: 'Order.SaleOrder' },
   ]),
   ...createMenuGroup('Inventory', 'fas fa-warehouse', 5, [
-    { name: 'Warehouses', icon: 'fas fa-building' , requiredPolicy: 'Inventory.Warehouse'},        
-    { name: 'Batches', icon: 'fas fa-boxes' , requiredPolicy: 'Inventory.Batch'},              
-    { name: 'Tickets', icon: 'fas fa-file-invoice' , requiredPolicy: 'Inventory.Ticket'},        
-    { name: 'Balances', icon: 'fas fa-clipboard-list' ,},   
+    { name: 'Warehouses', icon: 'fas fa-building', requiredPolicy: 'Inventory.Warehouse' },
+    { name: 'Batches', icon: 'fas fa-boxes', requiredPolicy: 'Inventory.Batch' },
+    { name: 'Tickets', icon: 'fas fa-file-invoice', requiredPolicy: 'Inventory.Ticket' },
+    { name: 'Balances', icon: 'fas fa-clipboard-list' },
   ]),
-
 ];

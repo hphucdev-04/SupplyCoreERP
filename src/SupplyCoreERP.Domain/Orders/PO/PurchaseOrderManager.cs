@@ -24,8 +24,11 @@ public class PurchaseOrderManager : DomainService
     private readonly IRepository<Supplier, Guid> _supplierRepo;
     private readonly IRepository<Product, Guid> _productRepo;
     private readonly IRepository<Warehouse, Guid> _warehouseRepo;
+    private readonly IRepository<SupplierProduct, Guid> _supplierProductRepo;
+    private readonly IRepository<SupplierProductCondition, Guid> _conditionRepo;
     private readonly TicketManager _ticketManager;
     private readonly DocumentSequenceManager _documentManager;
+    private readonly UnitConversionManager _unitConversionManager;
 
     // DI
     public PurchaseOrderManager(
@@ -33,16 +36,22 @@ public class PurchaseOrderManager : DomainService
         IRepository<Supplier, Guid> supplierRepo,
         IRepository<Product, Guid> productRepo,
         IRepository<Warehouse, Guid> warehouseRepo,
+        IRepository<SupplierProduct, Guid> supplierProductRepo,
+        IRepository<SupplierProductCondition, Guid> conditionRepo,
         TicketManager ticketManager,
-        DocumentSequenceManager documentManager
+        DocumentSequenceManager documentManager,
+        UnitConversionManager unitConversionManager
     )
     {
         _orderRepo = orderRepo;
         _supplierRepo = supplierRepo;
         _productRepo = productRepo;
         _warehouseRepo = warehouseRepo;
+        _supplierProductRepo = supplierProductRepo;
+        _conditionRepo = conditionRepo;
         _ticketManager = ticketManager;
         _documentManager = documentManager;
+        _unitConversionManager = unitConversionManager;
     }
 
     #region PurchaseOrder
@@ -108,13 +117,7 @@ public class PurchaseOrderManager : DomainService
                 $"[Từ PR: {requisition.Code}] " + (note ?? ""),
                 requisition.Id); // Gắn PR Id để truy vết
 
-            IQueryable<Supplier> query = await _supplierRepo.WithDetailsAsync(x => x.SupplierProducts);
-            Supplier? supplier = await AsyncExecuter.FirstOrDefaultAsync(query, x => x.Id == group.Key.SupplierId);
-
-            if (supplier == null)
-            {
-                throw new EntityNotFoundException(typeof(Supplier), group.Key.SupplierId);
-            }
+            Supplier supplier = await _supplierRepo.GetAsync(group.Key.SupplierId);
 
             foreach ((Guid RequisitionLineId, Guid SupplierId, Guid WarehouseId, decimal Quantity) allocation in group)
             {
@@ -127,12 +130,41 @@ public class PurchaseOrderManager : DomainService
                 // Nạp thông tin sản phẩm để lấy tên (phục vụ hiển thị lỗi)
                 Product product = await _productRepo.GetAsync(prLine.ProductId);
 
-                SupplierProduct? supplierProduct = supplier.SupplierProducts
-                    .FirstOrDefault(sp => sp.ProductId == prLine.ProductId && sp.IsActive);
+                SupplierProduct? supplierProduct = await _supplierProductRepo.FirstOrDefaultAsync(sp =>
+                    sp.SupplierId == group.Key.SupplierId &&
+                    sp.ProductId == prLine.ProductId &&
+                    sp.IsActive);
 
                 if (supplierProduct == null)
                 {
                     throw new UserFriendlyException($"Sản phẩm '{product.Name}' không được cung cấp bởi '{supplier.Name}'.");
+                }
+
+                // Lấy toàn bộ các mức giá phân cấp của sản phẩm khớp đơn vị tính
+                IQueryable<SupplierProductCondition> conditionsQuery = (await _conditionRepo.GetQueryableAsync())
+                    .Where(c => c.SupplierProductId == supplierProduct.Id && c.UnitId == prLine.UnitId);
+                List<SupplierProductCondition> conditions = await _conditionRepo.AsyncExecuter.ToListAsync(conditionsQuery);
+
+                if (conditions == null || !conditions.Any())
+                {
+                    throw new UserFriendlyException($"Sản phẩm '{product.Name}' chưa được cấu hình bảng giá cho đơn vị tính yêu cầu với nhà cung cấp '{supplier.Name}'.");
+                }
+
+                // Sắp xếp theo MOQ tăng dần
+                var sortedConditions = conditions.OrderBy(c => c.MinOrderQuantity).ToList();
+
+                SupplierProductCondition condition;
+
+                // Lọc các mức giá thỏa mãn MOQ dựa trên số lượng đặt thực tế (allocation.Quantity)
+                var eligibleConditions = sortedConditions.Where(c => allocation.Quantity >= c.MinOrderQuantity).ToList();
+
+                if (eligibleConditions.Any())
+                {
+                    condition = eligibleConditions.Last(); // Lấy mức giá ưu đãi nhất thỏa mãn MOQ
+                }
+                else
+                {
+                    condition = sortedConditions.First(); // Phương án B: Áp mức giá của MOQ thấp nhất
                 }
 
                 // Kiểm tra số lượng hợp lệ (không vượt quá số lượng còn lại trong yêu cầu)
@@ -152,9 +184,9 @@ public class PurchaseOrderManager : DomainService
                     GuidGenerator.Create(),
                     prLine.ProductId,
                     prLine.UnitId,
-                    supplierProduct.DefaultConversionFactor,
+                    condition.ConversionFactor,
                     allocation.Quantity,
-                    supplierProduct.StandardPrice,
+                    condition.StandardPrice,
                     0 // TaxRate mặc định là 0
                 );
 
@@ -207,15 +239,17 @@ public class PurchaseOrderManager : DomainService
             throw new UserFriendlyException($"Sản phẩm '{product.Name}' chưa đủ điều kiện giao dịch!");
         }
 
-        // Ràng buộc sản phẩm theo nhà cung cấp
-        bool isProvidedBySupplier = await _supplierRepo.AnyAsync(s =>
-            s.Id == order.SupplierId &&
-            s.SupplierProducts.Any(sp => sp.ProductId == productId && sp.IsActive));
+        // Ràng buộc sản phẩm và đơn vị tính theo nhà cung cấp
+        bool isProvidedBySupplier = await _conditionRepo.AnyAsync(c =>
+            c.UnitId == unitId &&
+            c.SupplierProduct.SupplierId == order.SupplierId &&
+            c.SupplierProduct.ProductId == productId &&
+            c.SupplierProduct.IsActive);
 
         if (!isProvidedBySupplier)
         {
             Supplier supplier = await _supplierRepo.GetAsync(order.SupplierId);
-            throw new UserFriendlyException($"Sản phẩm '{product.Name}' không nằm trong danh mục cung cấp của nhà cung cấp '{supplier.Name}'!");
+            throw new UserFriendlyException($"Sản phẩm '{product.Name}' chưa được cấu hình bảng giá cho đơn vị tính được chọn với nhà cung cấp '{supplier.Name}'!");
         }
 
         order.AddLine(GuidGenerator.Create(), productId, unitId, conversionFactor, quantity, unitPrice, taxRate);
@@ -317,7 +351,9 @@ public class PurchaseOrderManager : DomainService
         foreach (PurchaseOrderLine line in order.Lines)
         {
             // So sánh theo BaseQuantity để tránh sai số làm tròn ở đơn vị PO
-            if (line.ReceivedQuantity * line.ConversionFactor < line.BaseQuantity - 0.0001m)
+            Product product = await _productRepo.GetAsync(line.ProductId);
+            decimal receivedBaseQuantity = _unitConversionManager.ConvertToBaseQuantity(product, line.UnitId, line.ReceivedQuantity);
+            if (receivedBaseQuantity < line.BaseQuantity - 0.0001m)
             {
                 throw new UserFriendlyException(
                     $"Sản phẩm '{line.Product?.Name}' mới nhận được {line.ReceivedQuantity} {line.Unit?.Name}, " +

@@ -18,19 +18,22 @@ public class CategoryTestDataSeedContributor : IDataSeedContributor, ITransientD
 
     public async Task SeedAsync(DataSeedContext context)
     {
-        if (await _categoryRepository.GetCountAsync() > 0)
+        var electronicsId = Guid.Parse("11111111-1111-1111-1111-111111111111");
+        if (await _categoryRepository.FindAsync(electronicsId) == null)
         {
-            return;
+            await _categoryRepository.InsertAsync(
+                new Category(electronicsId, "Electronics"),
+                autoSave: true
+            );
         }
 
-        await _categoryRepository.InsertAsync(
-            new Category(Guid.Parse("11111111-1111-1111-1111-111111111111"), "Electronics"),
-            autoSave: true
-        );
-
-        await _categoryRepository.InsertAsync(
-            new Category(Guid.Parse("22222222-2222-2222-2222-222222222222"), "Software"),
-            autoSave: true
-        );
+        var softwareId = Guid.Parse("22222222-2222-2222-2222-222222222222");
+        if (await _categoryRepository.FindAsync(softwareId) == null)
+        {
+            await _categoryRepository.InsertAsync(
+                new Category(softwareId, "Software"),
+                autoSave: true
+            );
+        }
     }
 }

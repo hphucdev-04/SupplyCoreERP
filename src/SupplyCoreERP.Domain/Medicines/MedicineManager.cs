@@ -114,6 +114,9 @@ public class MedicineManager : DomainService
         // Validate tất cả khóa ngoại bao gồm baseUnitId mới từ input
         await ValidateForeignKeysAsync(categoryId, manufacturerId, baseUnitId, dosageFormId);
 
+        // Kích hoạt kiểm soát BaseUnit qua ProductManager
+        await _productManager.ValidateBaseUnitChangeAsync(medicine, baseUnitId);
+
         medicine.UpdateInfo(name, categoryId, manufacturerId, baseUnitId);
 
         // Kiểm tra nếu số đăng ký thay đổi thì thêm bản ghi mới
@@ -173,5 +176,26 @@ public class MedicineManager : DomainService
         Check.NotNull(medicine, nameof(medicine));
         medicine.RemoveIngredient(activeIngredientId);
         await Task.CompletedTask;
+    }
+
+    public async Task AddUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level)
+    {
+        Check.NotNull(medicine, nameof(medicine));
+        await _productManager.ValidateUnitChangeAsync(medicine);
+        medicine.AddUnit(GuidGenerator.Create(), unitId, conversionFactor, level);
+    }
+
+    public async Task UpdateUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level)
+    {
+        Check.NotNull(medicine, nameof(medicine));
+        await _productManager.ValidateUnitChangeAsync(medicine);
+        medicine.UpdateUnit(unitId, conversionFactor, level);
+    }
+
+    public async Task RemoveUnitAsync(Medicine medicine, Guid unitId)
+    {
+        Check.NotNull(medicine, nameof(medicine));
+        await _productManager.ValidateUnitChangeAsync(medicine);
+        medicine.RemoveUnit(unitId);
     }
 }

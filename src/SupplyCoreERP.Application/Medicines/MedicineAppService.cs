@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Medicines.Dtos;
+using SupplyCoreERP.Products;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Content;
 using Volo.Abp.Domain.Entities;
@@ -17,17 +18,20 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
 {
     private readonly IRepository<Medicine, Guid> _medicineRepo;
     private readonly MedicineManager _medicineManager;
+    private readonly ProductManager _productManager;
 
     private readonly MedicineExcelService _excelService;
 
     public MedicineAppService(
         IRepository<Medicine, Guid> medicineRepo,
         MedicineManager medicineManager,
+        ProductManager productManager,
         MedicineExcelService excelService
         )
     {
         _medicineRepo = medicineRepo;
         _medicineManager = medicineManager;
+        _productManager = productManager;
         _excelService = excelService;
     }
     #region Medicine
@@ -86,7 +90,9 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        MedicineDetailDto dto = ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        dto.HasTransactions = await _productManager.HasTransactionsAsync(id);
+        return dto;
     }
 
 
@@ -109,7 +115,9 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
 
         await _medicineRepo.InsertAsync(entity);
 
-        return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        MedicineDetailDto dto = ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        dto.HasTransactions = false;
+        return dto;
     }
 
     public async Task<MedicineDetailDto> UpdateAsync(Guid id, CreateUpdateMedicineDto input)
@@ -142,7 +150,9 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
         entity.SetActive(input.IsActive);
 
         await _medicineRepo.UpdateAsync(entity);
-        return ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        MedicineDetailDto dto = ObjectMapper.Map<Medicine, MedicineDetailDto>(entity);
+        dto.HasTransactions = await _productManager.HasTransactionsAsync(id);
+        return dto;
     }
 
     public async Task DeleteAsync(Guid id)
@@ -243,7 +253,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        medicine.AddUnit(GuidGenerator.Create(), input.UnitId, input.ConversionFactor, input.Level);
+        await _medicineManager.AddUnitAsync(medicine, input.UnitId, input.ConversionFactor, input.Level);
 
         await _medicineRepo.UpdateAsync(medicine);
     }
@@ -261,7 +271,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        medicine.UpdateUnit(unitId, input.ConversionFactor, input.Level);
+        await _medicineManager.UpdateUnitAsync(medicine, unitId, input.ConversionFactor, input.Level);
 
         await _medicineRepo.UpdateAsync(medicine);
     }
@@ -279,7 +289,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        medicine.RemoveUnit(unitId);
+        await _medicineManager.RemoveUnitAsync(medicine, unitId);
         await _medicineRepo.UpdateAsync(medicine);
     }
     #endregion

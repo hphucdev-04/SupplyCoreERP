@@ -67,6 +67,11 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
 
     public void UpdateInfo(string name, Guid categoryId, Guid manufacturerId, Guid baseUnitId)
     {
+        if (Units.Any(u => u.UnitId == baseUnitId))
+        {
+            throw new BusinessException("SupplyCoreERP:DuplicateBaseUnitInUnits", "Đơn vị gốc không được trùng với các đơn vị quy đổi phụ đang có.");
+        }
+
         SetName(name);
         CategoryId = categoryId;
         ManufacturerId = manufacturerId;
@@ -77,25 +82,21 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
     {
         if (unitId == BaseUnitId)
         {
-            throw new BusinessException("SupplyCoreERP:Error", "Không được thêm đơn vị trùng với Đơn vị gốc.");
+            throw new BusinessException("SupplyCoreERP:DuplicateBaseUnit", "Không được thêm đơn vị trùng với Đơn vị gốc.");
         }
 
         if (Units.Any(u => u.UnitId == unitId))
         {
-            throw new BusinessException("SupplyCoreERP:Error", "Đơn vị quy đổi này đã tồn tại.");
+            throw new BusinessException("SupplyCoreERP:DuplicateUnit", "Đơn vị quy đổi này đã tồn tại.");
         }
 
         if (conversionFactor <= 1)
         {
-            throw new BusinessException("SupplyCoreERP:Error", "Hệ số quy đổi phải lớn hơn 1.");
+            throw new BusinessException("SupplyCoreERP:InvalidFactor", "Hệ số quy đổi phải lớn hơn 1.");
         }
 
-        if (level < 1)
-        {
-            throw new BusinessException("SupplyCoreERP:Error", "Cấp độ quy đổi (Level) phải từ 1 trở lên.");
-        }
-
-        Units.Add(new ProductUnit(id, Id, unitId, conversionFactor, level));
+        int nextLevel = Units.Any() ? Units.Max(u => u.Level) + 1 : 1;
+        Units.Add(new ProductUnit(id, Id, unitId, conversionFactor, nextLevel));
     }
 
     public void UpdateUnit(Guid unitId, int conversionFactor, int level)
@@ -106,15 +107,26 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
             throw new UserFriendlyException("Đơn vị không tồn tại.");
         }
 
-        unit.UpdateStats(conversionFactor, level);
+        unit.UpdateStats(conversionFactor, unit.Level);
     }
 
     public void RemoveUnit(Guid unitId)
     {
         ProductUnit? unit = Units.FirstOrDefault(u => u.UnitId == unitId);
-        if (unit != null)
+        if (unit == null)
         {
-            Units.Remove(unit);
+            return;
         }
+
+        int maxLevel = Units.Max(u => u.Level);
+        if (unit.Level < maxLevel)
+        {
+            throw new BusinessException(
+                "SupplyCoreERP:CannotDeleteLowerLevelUnit",
+                "Không thể xóa đơn vị ở cấp thấp hơn. Vui lòng xóa đơn vị có cấp độ cao nhất trước."
+            );
+        }
+
+        Units.Remove(unit);
     }
 }

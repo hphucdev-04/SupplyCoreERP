@@ -16,7 +16,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     PageModule,
     NgbModule,
-    NgxDatatableModule
+    NgxDatatableModule,
   ],
   exports: [
     CommonModule,
@@ -26,7 +26,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
     ReactiveFormsModule,
     PageModule,
     NgbModule,
-    NgxDatatableModule
-  ]
+    NgxDatatableModule,
+  ],
 })
-export class SharedModule { }
+export class SharedModule {}

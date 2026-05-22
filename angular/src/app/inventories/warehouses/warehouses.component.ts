@@ -15,14 +15,13 @@ import { SearchComponent } from 'src/app/shared/components/search-component/sear
 import { Router } from '@angular/router';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
-
 @Component({
   standalone: true,
   selector: 'app-warehouses',
   templateUrl: './warehouses.component.html',
   styleUrls: ['./warehouses.component.scss'],
   providers: [ListService],
-  imports: [SharedModule, DrawerComponent, SearchComponent]
+  imports: [SharedModule, DrawerComponent, SearchComponent],
 })
 export class WarehousesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -54,7 +53,7 @@ export class WarehousesComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private router: Router,
     private toaster: ToasterService,
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.buildForm();
@@ -81,14 +80,16 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   }
 
   loadWarehouses() {
-    const streamCreator = (query) => this.warehouseService.getList({
-      ...query,
-      filter: this.filterText
-    });
+    const streamCreator = query =>
+      this.warehouseService.getList({
+        ...query,
+        filter: this.filterText,
+      });
 
-    this.list.hookToQuery(streamCreator)
+    this.list
+      .hookToQuery(streamCreator)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((response) => {
+      .subscribe(response => {
         this.warehouse = response;
       });
   }
@@ -99,13 +100,14 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   }
 
   manageLocations(id: string): void {
-    this.router.navigate(['/inventory/warehouses','layouts', id]);
+    this.router.navigate(['/inventory/warehouses', 'layouts', id]);
   }
 
   loadCountries() {
-    this.locationService.getAllCountries()
+    this.locationService
+      .getAllCountries()
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
+      .subscribe(res => {
         this.countries = res.items;
       });
   }
@@ -118,9 +120,10 @@ export class WarehousesComponent implements OnInit, OnDestroy {
     this.areas = [];
 
     if (countryId) {
-      this.locationService.getCitiesByCountry(countryId) // Gọi API lấy city theo country
+      this.locationService
+        .getCitiesByCountry(countryId) // Gọi API lấy city theo country
         .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
+        .subscribe(res => {
           this.cities = res.items;
         });
     }
@@ -130,16 +133,17 @@ export class WarehousesComponent implements OnInit, OnDestroy {
     this.areas = [];
 
     if (cityId) {
-      this.locationService.getAreasByCity(cityId)
+      this.locationService
+        .getAreasByCity(cityId)
         .pipe(takeUntil(this.destroy$))
-        .subscribe((res) => {
+        .subscribe(res => {
           this.areas = res.items;
         });
     }
   }
 
   // ==============================================
-  // QUẢN LÝ FORM & NGHIỆP VỤ 
+  // QUẢN LÝ FORM & NGHIỆP VỤ
   // ==============================================
   buildForm() {
     this.form = this.fb.group({
@@ -162,32 +166,35 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   }
 
   editWarehouse(id: string) {
-    this.warehouseService.get(id)
+    this.warehouseService
+      .get(id)
       .pipe(takeUntil(this.destroy$))
-      .subscribe((res) => {
+      .subscribe(res => {
         this.selectedWarehouse = res;
 
         // Cần đổi từ Pixel (DB) sang Mét (Form) để hiển thị
         this.form.patchValue({
           ...res,
           mapWidth: this.toM(res.mapWidth),
-          mapLength: this.toM(res.mapLength)
+          mapLength: this.toM(res.mapLength),
         });
 
         // Cascading data cho form Edit
         if (res.countryId) {
-          this.locationService.getCitiesByCountry(res.countryId)
+          this.locationService
+            .getCitiesByCountry(res.countryId)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((cityRes) => {
+            .subscribe(cityRes => {
               this.cities = cityRes.items;
               this.form.get('cityId').setValue(res.cityId); // Set lại giá trị city sau khi list đã load xong
             });
         }
 
         if (res.cityId) {
-          this.locationService.getAreasByCity(res.cityId)
+          this.locationService
+            .getAreasByCity(res.cityId)
             .pipe(takeUntil(this.destroy$))
-            .subscribe((areaRes) => {
+            .subscribe(areaRes => {
               this.areas = areaRes.items;
               this.form.get('areaId').setValue(res.areaId); // Set lại giá trị area sau khi list đã load xong
             });
@@ -209,7 +216,7 @@ export class WarehousesComponent implements OnInit, OnDestroy {
     const payload = {
       ...this.form.value,
       mapWidth: this.toPx(this.form.value.mapWidth),
-      mapLength: this.toPx(this.form.value.mapLength)
+      mapLength: this.toPx(this.form.value.mapLength),
     };
 
     const request = this.selectedWarehouse?.id
@@ -223,39 +230,48 @@ export class WarehousesComponent implements OnInit, OnDestroy {
   }
 
   delete(id: string, name: string) {
-    this.confirmation.warn('::WarehouseDeletionConfirmationMessage', '::AreYouSure', {
-      messageLocalizationParams: [name]
-    }).subscribe((status) => {
-      if (status === Confirmation.Status.confirm) {
-        this.warehouseService.delete(id)
-          .pipe(takeUntil(this.destroy$))
-          .subscribe(() => this.list.get());
-      }
-    });
+    this.confirmation
+      .warn('::WarehouseDeletionConfirmationMessage', '::AreYouSure', {
+        messageLocalizationParams: [name],
+      })
+      .subscribe(status => {
+        if (status === Confirmation.Status.confirm) {
+          this.warehouseService
+            .delete(id)
+            .pipe(takeUntil(this.destroy$))
+            .subscribe(() => this.list.get());
+        }
+      });
   }
 
   approve(id: string) {
-    this.warehouseService.approve(id).pipe(takeUntil(this.destroy$)).subscribe(() => this.list.get());
+    this.warehouseService
+      .approve(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.list.get());
   }
 
   reject(id: string) {
-    this.warehouseService.reject(id).pipe(takeUntil(this.destroy$)).subscribe(() => this.list.get());
+    this.warehouseService
+      .reject(id)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.list.get());
   }
 
   onToggleActive(row: WarehouseDto, event: any): void {
     event.stopPropagation();
-    this.confirmation.warn(
-      row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate',
-      '::Confirm'
-    ).subscribe((status) => {
-      if (status === Confirmation.Status.confirm) {
-        this.warehouseService.toggleActive(row.id).subscribe(() => this.list.get());
-        this.toaster.success(
-          row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully', '::Success'
-        );
-      } else {
-        event.target.checked = row.isActive;
-      }
-    });
+    this.confirmation
+      .warn(row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate', '::Confirm')
+      .subscribe(status => {
+        if (status === Confirmation.Status.confirm) {
+          this.warehouseService.toggleActive(row.id).subscribe(() => this.list.get());
+          this.toaster.success(
+            row.isActive ? '::DeactivateSuccessfully' : '::ActivateSuccessfully',
+            '::Success',
+          );
+        } else {
+          event.target.checked = row.isActive;
+        }
+      });
   }
 }

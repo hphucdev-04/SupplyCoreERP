@@ -29,7 +29,7 @@ import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearc
 import { CopyDirective } from 'src/app/shared/directives/copy.directive';
 import { SupplierMedicineDto } from 'src/app/proxy/suppliers/dtos';
 import { SupplierService } from 'src/app/proxy/suppliers';
-import { SearchComponent } from "src/app/shared/components/search-component/search.component";
+import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 
 @Component({
   selector: 'app-medicine-detail',
@@ -41,7 +41,7 @@ import { SearchComponent } from "src/app/shared/components/search-component/sear
     DropdownSearchComponent,
     CopyDirective,
     SearchComponent,
-],
+  ],
   providers: [ListService],
   templateUrl: 'medicice-details.component.html',
   styleUrl: 'medicice-details.component.scss',
@@ -177,19 +177,20 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
   }
 
   loadSuppliers() {
-    const streamCreator = (query) => this.supplierService.getSupplierList(this.id, {
-      ...query,
-      filter: this.filterSupplierText,
-    });
+    const streamCreator = query =>
+      this.supplierService.getSupplierList(this.id, {
+        ...query,
+        filter: this.filterSupplierText,
+      });
     this.list.maxResultCount = 10;
-    this.list.hookToQuery(streamCreator).subscribe((response) => {
+    this.list.hookToQuery(streamCreator).subscribe(response => {
       this.suppliers = response;
     });
   }
 
   onSupplierSearch(searchValue: string): void {
     this.filterSupplierText = searchValue;
-    this.list.get(); 
+    this.list.get();
   }
 
   loadLookups(medicineData: MedicineDetailDto) {
@@ -233,7 +234,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
     this.unitForm = this.fb.group({
       unitId: [null, Validators.required],
       conversionFactor: [null, [Validators.required, Validators.min(2)]],
-      level: [null, [Validators.required, Validators.min(1)]],
+      level: [{ value: null, disabled: true }, [Validators.required, Validators.min(1)]],
     });
 
     //Price Form

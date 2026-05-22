@@ -24,6 +24,7 @@ import { ProductBatchService } from 'src/app/proxy/batches';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { PurchaseOrderLineDto } from 'src/app/proxy/purchase-orders/dtos';
 import { SalesOrderLineDto } from 'src/app/proxy/sales-orders/dtos';
+import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
 
 interface SelectablePOLineDto extends PurchaseOrderLineDto {
   importQuantity: number;
@@ -411,7 +412,15 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
 
   updateQuantityPreview() {
     const qty = this.detailForm.get('quantity')?.value || 0;
-    this.quantityPreview = qty * this.selectedConversionFactor;
+    const unitId = this.detailForm.get('unitId')?.value;
+    this.quantityPreview = UnitConversionHelper.convertToBaseQuantity(
+      {
+        baseUnitId: '',
+        units: [{ unitId: unitId, conversionFactor: this.selectedConversionFactor }],
+      },
+      unitId,
+      qty,
+    );
   }
 
   private loadUnitsForProduct(
@@ -459,12 +468,26 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
 
     // Tính toán số lượng còn lại
     const totalAssignedBaseQty = (line.details || []).reduce(
-      (sum, d) => sum + (d.quantity || 0) * (d.conversionFactor || 1),
+      (sum, d) =>
+        sum +
+        UnitConversionHelper.convertToBaseQuantity(
+          { baseUnitId: '', units: [{ unitId: d.unitId, conversionFactor: d.conversionFactor }] },
+          d.unitId,
+          d.quantity || 0,
+        ),
       0,
     );
-    const lineBaseQty = (line.quantity || 0) * (line.conversionFactor || 1);
+    const lineBaseQty = UnitConversionHelper.convertToBaseQuantity(
+      { baseUnitId: '', units: [{ unitId: line.unitId, conversionFactor: line.conversionFactor }] },
+      line.unitId,
+      line.quantity || 0,
+    );
     const remainingBaseQty = Math.max(0, lineBaseQty - totalAssignedBaseQty);
-    this.remainingQty = remainingBaseQty / (line.conversionFactor || 1);
+    this.remainingQty = UnitConversionHelper.convertFromBaseQuantity(
+      { baseUnitId: '', units: [{ unitId: line.unitId, conversionFactor: line.conversionFactor }] },
+      line.unitId,
+      remainingBaseQty,
+    );
 
     this.detailForm.reset({
       productId: line.productId,
@@ -641,10 +664,23 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     // Kiểm tra tính đầy đủ của các dòng hàng trước khi gửi duyệt
     for (const line of this.ticket.lines) {
       const totalAssignedBaseQty = (line.details || []).reduce(
-        (sum, d) => sum + (d.quantity || 0) * (d.conversionFactor || 1),
+        (sum, d) =>
+          sum +
+          UnitConversionHelper.convertToBaseQuantity(
+            { baseUnitId: '', units: [{ unitId: d.unitId, conversionFactor: d.conversionFactor }] },
+            d.unitId,
+            d.quantity || 0,
+          ),
         0,
       );
-      const lineBaseQty = (line.quantity || 0) * (line.conversionFactor || 1);
+      const lineBaseQty = UnitConversionHelper.convertToBaseQuantity(
+        {
+          baseUnitId: '',
+          units: [{ unitId: line.unitId, conversionFactor: line.conversionFactor }],
+        },
+        line.unitId,
+        line.quantity || 0,
+      );
 
       if (Math.abs(lineBaseQty - totalAssignedBaseQty) > 0.0001) {
         this.toaster.error('::Error:LineNotFullyAllocated', '::Error', {
@@ -700,7 +736,13 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
 
   getLineAssignedBaseQty(line: InventoryTicketLineDto): number {
     return (line.details || []).reduce(
-      (sum, d) => sum + (d.quantity || 0) * (d.conversionFactor || 1),
+      (sum, d) =>
+        sum +
+        UnitConversionHelper.convertToBaseQuantity(
+          { baseUnitId: '', units: [{ unitId: d.unitId, conversionFactor: d.conversionFactor }] },
+          d.unitId,
+          d.quantity || 0,
+        ),
       0,
     );
   }

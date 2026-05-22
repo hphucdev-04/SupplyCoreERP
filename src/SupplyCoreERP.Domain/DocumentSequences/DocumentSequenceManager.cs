@@ -16,7 +16,7 @@ public class DocumentSequenceManager : DomainService
     }
 
     [UnitOfWork]
-    public async Task<string> GenerateAsync(string prefix)
+    public virtual async Task<string> GenerateAsync(string prefix)
     {
         string todayStr = DateTime.Now.ToString("yyMMdd");
 

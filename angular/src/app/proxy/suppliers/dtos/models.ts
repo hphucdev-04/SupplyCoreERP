@@ -18,17 +18,23 @@ export interface CreateUpdateSupplierDto {
   isActive?: boolean;
 }
 
-export interface CreateUpdateSupplierProductDto {
-  productId: string;
-  defaultUnitId: string;
-  defaultConversionFactor?: number;
+export interface CreateUpdateSupplierProductConditionDto {
+  id?: string;
+  unitId: string;
+  conversionFactor?: number;
   standardPrice?: number;
-  leadTimeDays?: number;
   minOrderQuantity?: number;
   overDeliveryTolerancePct?: number;
   underDeliveryTolerancePct?: number;
+}
+
+export interface CreateUpdateSupplierProductDto {
+  productId: string;
+  defaultUnitId: string;
+  leadTimeDays?: number;
   isPreferred?: boolean;
   note?: string;
+  conditions?: CreateUpdateSupplierProductConditionDto[];
 }
 
 export interface GetSupplierListDto extends PagedAndSortedResultRequestDto {
@@ -93,6 +99,18 @@ export interface SupplierMedicineDto {
   isPreferred?: boolean;
 }
 
+export interface SupplierProductConditionDto extends EntityDto<string> {
+  supplierProductId?: string;
+  unitId?: string;
+  unitName?: string;
+  conversionFactor?: number;
+  standardPrice?: number;
+  lastPurchasePrice?: number;
+  minOrderQuantity?: number;
+  overDeliveryTolerancePct?: number;
+  underDeliveryTolerancePct?: number;
+}
+
 export interface SupplierProductDto extends EntityDto<string> {
   supplierId?: string;
   productId?: string;
@@ -100,14 +118,9 @@ export interface SupplierProductDto extends EntityDto<string> {
   productCode?: string;
   defaultUnitId?: string;
   defaultUnitName?: string;
-  defaultConversionFactor?: number;
-  standardPrice?: number;
-  lastPurchasePrice?: number;
   leadTimeDays?: number;
-  minOrderQuantity?: number;
-  overDeliveryTolerancePct?: number;
-  underDeliveryTolerancePct?: number;
   isPreferred?: boolean;
   isActive?: boolean;
   note?: string;
+  conditions?: SupplierProductConditionDto[];
 }

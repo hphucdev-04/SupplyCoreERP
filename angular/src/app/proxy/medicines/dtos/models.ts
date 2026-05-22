@@ -74,6 +74,7 @@ export interface MedicineDto extends EntityDto<string> {
   storageCondition?: StorageCondition;
   status?: MedicineStatus;
   isActive?: boolean;
+  hasTransactions?: boolean;
   creationTime?: string;
   lastModificationTime?: string;
 }

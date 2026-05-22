@@ -137,12 +137,7 @@ public class Supplier : FullAuditedAggregateRoot<Guid>
         Guid id,
         Guid productId,
         Guid defaultUnitId,
-        int defaultConversionFactor,
-        decimal standardPrice,
         int leadTimeDays,
-        decimal minOrderQuantity,
-        decimal overDeliveryTolerancePct = 0,
-        decimal underDeliveryTolerancePct = 0,
         bool isPreferred = false,
         string? note = null)
     {
@@ -152,10 +147,13 @@ public class Supplier : FullAuditedAggregateRoot<Guid>
         }
 
         SupplierProduct sp = new(
-            id, Id, productId, defaultUnitId,
-            defaultConversionFactor, standardPrice, leadTimeDays,
-            minOrderQuantity, overDeliveryTolerancePct, underDeliveryTolerancePct,
-            isPreferred, note);
+            id,
+            Id,
+            productId,
+            defaultUnitId,
+            leadTimeDays,
+            isPreferred,
+            note);
 
         SupplierProducts.Add(sp);
         return sp;
@@ -164,22 +162,14 @@ public class Supplier : FullAuditedAggregateRoot<Guid>
     public void UpdateProduct(
         Guid productId,
         Guid defaultUnitId,
-        int defaultConversionFactor,
-        decimal standardPrice,
         int leadTimeDays,
-        decimal minOrderQuantity,
-        decimal overDeliveryTolerancePct,
-        decimal underDeliveryTolerancePct,
         bool isPreferred,
         string? note)
     {
         SupplierProduct sp = SupplierProducts.FirstOrDefault(x => x.ProductId == productId)
             ?? throw new UserFriendlyException("Không tìm thấy sản phẩm trong danh mục nhà cung cấp.");
 
-        sp.UpdateInfo(defaultUnitId, defaultConversionFactor, standardPrice,
-            leadTimeDays, minOrderQuantity,
-            overDeliveryTolerancePct, underDeliveryTolerancePct,
-            isPreferred, note);
+        sp.UpdateInfo(defaultUnitId, leadTimeDays, isPreferred, note);
     }
 
     public void RemoveProduct(Guid productId)

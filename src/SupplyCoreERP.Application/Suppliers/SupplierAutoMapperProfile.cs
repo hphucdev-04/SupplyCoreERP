@@ -1,3 +1,4 @@
+using System.Linq;
 using AutoMapper;
 using SupplyCoreERP.Suppliers.Dtos;
 
@@ -19,7 +20,13 @@ public class SupplierAutoMapperProfile : Profile
 
         CreateMap<SupplierProduct, SupplierProductDto>()
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
-            .ForMember(dest => dest.DefaultUnitName, opt => opt.MapFrom(src => src.DefaultUnit != null ? src.DefaultUnit.Name : null));
+            .ForMember(dest => dest.DefaultUnitName, opt => opt.MapFrom(src => src.DefaultUnit != null ? src.DefaultUnit.Name : null))
+            .ForMember(dest => dest.Conditions, opt => opt.MapFrom(src => src.Conditions));
+
+        CreateMap<SupplierProductCondition, SupplierProductConditionDto>()
+            .ForMember(dest => dest.UnitName, opt => opt.MapFrom(src => src.Unit != null ? src.Unit.Name : null));
+
+        CreateMap<CreateUpdateSupplierProductConditionDto, SupplierProductCondition>();
 
         CreateMap<SupplierProduct, SupplierMedicineDto>()
             // Thông tin từ bảng Supplier
@@ -29,6 +36,16 @@ public class SupplierAutoMapperProfile : Profile
             .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Supplier.Country.Name))
 
             // Thông tin từ bảng Unit
-            .ForMember(dest => dest.DefaultUnitName, opt => opt.MapFrom(src => src.DefaultUnit.Name));
+            .ForMember(dest => dest.DefaultUnitName, opt => opt.MapFrom(src => src.DefaultUnit.Name))
+
+            // Lấy giá chuẩn và số lượng tối thiểu từ Condition khớp với DefaultUnitId
+            .ForMember(dest => dest.StandardPrice, opt => opt.MapFrom(src =>
+                src.Conditions != null && src.Conditions.Any(c => c.UnitId == src.DefaultUnitId)
+                ? src.Conditions.First(c => c.UnitId == src.DefaultUnitId).StandardPrice
+                : 0))
+            .ForMember(dest => dest.MinOrderQuantity, opt => opt.MapFrom(src =>
+                src.Conditions != null && src.Conditions.Any(c => c.UnitId == src.DefaultUnitId)
+                ? src.Conditions.First(c => c.UnitId == src.DefaultUnitId).MinOrderQuantity
+                : 0));
     }
 }
