@@ -91,12 +91,7 @@ public class SupplierManager : DomainService
         Supplier supplier,
         Guid productId,
         Guid defaultUnitId,
-        int defaultConversionFactor,
-        decimal standardPrice,
         int leadTimeDays,
-        decimal minOrderQuantity,
-        decimal overDeliveryTolerancePct = 0,
-        decimal underDeliveryTolerancePct = 0,
         bool isPreferred = false,
         string? note = null)
     {
@@ -116,10 +111,11 @@ public class SupplierManager : DomainService
 
         SupplierProduct sp = supplier.AddProduct(
             GuidGenerator.Create(),
-            productId, defaultUnitId,
-            defaultConversionFactor, standardPrice, leadTimeDays,
-            minOrderQuantity, overDeliveryTolerancePct, underDeliveryTolerancePct,
-            isPreferred, note);
+            productId,
+            defaultUnitId,
+            leadTimeDays,
+            isPreferred,
+            note);
 
         return sp;
     }
@@ -128,12 +124,7 @@ public class SupplierManager : DomainService
         Supplier supplier,
         Guid productId,
         Guid defaultUnitId,
-        int defaultConversionFactor,
-        decimal standardPrice,
         int leadTimeDays,
-        decimal minOrderQuantity,
-        decimal overDeliveryTolerancePct,
-        decimal underDeliveryTolerancePct,
         bool isPreferred,
         string? note)
     {
@@ -143,10 +134,11 @@ public class SupplierManager : DomainService
         }
 
         supplier.UpdateProduct(
-            productId, defaultUnitId, defaultConversionFactor, standardPrice,
-            leadTimeDays, minOrderQuantity,
-            overDeliveryTolerancePct, underDeliveryTolerancePct,
-            isPreferred, note);
+            productId,
+            defaultUnitId,
+            leadTimeDays,
+            isPreferred,
+            note);
     }
 
     public async Task RemoveProductAsync(Supplier supplier, Guid productId)

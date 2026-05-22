@@ -1,5 +1,4 @@
 <div class="sl-page">
-
   <!-- ══════════════════════════════════════════════════════════
        TOP TOOLBAR  (draw.io dark style)
   ══════════════════════════════════════════════════════════════ -->
@@ -10,8 +9,12 @@
       </button>
       <div class="tb-sep"></div>
       <div class="wh-info">
-        <span class="wh-name"><i class="fas fa-warehouse me-2 opacity-50"></i>{{ warehouse?.name }}</span>
-        <span class="wh-size">{{ toM(warehouse?.mapWidth) }} × {{ toM(warehouse?.mapLength) }} m</span>
+        <span class="wh-name"
+          ><i class="fas fa-warehouse me-2 opacity-50"></i>{{ warehouse?.name }}</span
+        >
+        <span class="wh-size"
+          >{{ toM(warehouse?.mapWidth) }} × {{ toM(warehouse?.mapLength) }} m</span
+        >
       </div>
     </div>
 
@@ -28,15 +31,30 @@
 
     <div class="tb-group">
       <!-- New bin -->
-      <button class="tb-btn accent" [disabled]="!activeZone" (click)="createBinInActiveZone()"
-        title="{{ activeZone ? 'Add bin to: ' + activeZone.name : 'Select a zone first' }}">
+      <button
+        class="tb-btn accent"
+        [disabled]="!activeZone"
+        (click)="createBinInActiveZone()"
+        title="{{ activeZone ? 'Add bin to: ' + activeZone.name : 'Select a zone first' }}"
+      >
         <i class="fa fa-plus-square me-1"></i>New Bin
       </button>
 
       <!-- Save -->
-      <button class="tb-btn" [class.warn]="hasUnsavedChanges" [class.ghost]="!hasUnsavedChanges"
-        [disabled]="!hasUnsavedChanges || isSaving" (click)="saveAllLayouts()" title="Save all layout changes">
-        <i class="fa" [class.fa-save]="!isSaving" [class.fa-spinner]="isSaving" [class.fa-spin]="isSaving"></i>
+      <button
+        class="tb-btn"
+        [class.warn]="hasUnsavedChanges"
+        [class.ghost]="!hasUnsavedChanges"
+        [disabled]="!hasUnsavedChanges || isSaving"
+        (click)="saveAllLayouts()"
+        title="Save all layout changes"
+      >
+        <i
+          class="fa"
+          [class.fa-save]="!isSaving"
+          [class.fa-spinner]="isSaving"
+          [class.fa-spin]="isSaving"
+        ></i>
         <span class="ms-1">{{ isSaving ? 'Saving…' : 'Save Layout' }}</span>
         <span class="dirty-dot" *ngIf="hasUnsavedChanges && !isSaving"></span>
       </button>
@@ -48,11 +66,21 @@
 
       <div class="tb-sep"></div>
       <!-- Zoom controls -->
-      <button class="tb-btn icon-only ghost" (click)="zoomOut()" [disabled]="scale <= 0.15" title="Zoom Out">
+      <button
+        class="tb-btn icon-only ghost"
+        (click)="zoomOut()"
+        [disabled]="scale <= 0.15"
+        title="Zoom Out"
+      >
         <i class="fa fa-search-minus"></i>
       </button>
       <span class="zoom-pct">{{ scalePercent }}%</span>
-      <button class="tb-btn icon-only ghost" (click)="zoomIn()" [disabled]="scale >= 2" title="Zoom In">
+      <button
+        class="tb-btn icon-only ghost"
+        (click)="zoomIn()"
+        [disabled]="scale >= 2"
+        title="Zoom In"
+      >
         <i class="fa fa-search-plus"></i>
       </button>
       <button class="tb-btn icon-only ghost" (click)="zoomFit()" title="Fit to screen (F)">
@@ -65,31 +93,39 @@
        BODY: Left panel · Canvas · Right sidebar
   ══════════════════════════════════════════════════════════════ -->
   <div class="sl-body">
-
     <!-- ── LEFT: Shape Library ──────────────────────────────── -->
     <div class="sl-shapes">
-      <div class="shapes-header">
-        <i class="fa fa-shapes opacity-40 me-2"></i>Shapes
-      </div>
+      <div class="shapes-header"><i class="fa fa-shapes opacity-40 me-2"></i>Shapes</div>
       <div class="shapes-scroll">
-
         <div class="shape-group">
           <div class="group-label">STORAGE</div>
           <div class="shapes-grid">
-            <button class="shape-tile storage-normal"
-              (click)="createZoneFromTemplate(ZoneType.Storage, StorageCondition.Normal)" title="Normal Storage">
+            <button
+              class="shape-tile storage-normal"
+              (click)="createZoneFromTemplate(ZoneType.Storage, StorageCondition.Normal)"
+              title="Normal Storage"
+            >
               <i class="fas fa-th-large"></i><span>Normal</span>
             </button>
-            <button class="shape-tile storage-cool"
-              (click)="createZoneFromTemplate(ZoneType.Storage, StorageCondition.Cool)" title="Cool Storage">
+            <button
+              class="shape-tile storage-cool"
+              (click)="createZoneFromTemplate(ZoneType.Storage, StorageCondition.Cool)"
+              title="Cool Storage"
+            >
               <i class="fas fa-snowflake"></i><span>Cool</span>
             </button>
-            <button class="shape-tile storage-cold"
-              (click)="createZoneFromTemplate(ZoneType.Storage, StorageCondition.Cold)" title="Cold Storage">
+            <button
+              class="shape-tile storage-cold"
+              (click)="createZoneFromTemplate(ZoneType.Storage, StorageCondition.Cold)"
+              title="Cold Storage"
+            >
               <i class="fas fa-temperature-low"></i><span>Cold</span>
             </button>
-            <button class="shape-tile storage-frozen"
-              (click)="createZoneFromTemplate(ZoneType.Storage, StorageCondition.Frozen)" title="Frozen">
+            <button
+              class="shape-tile storage-frozen"
+              (click)="createZoneFromTemplate(ZoneType.Storage, StorageCondition.Frozen)"
+              title="Frozen"
+            >
               <i class="fas fa-icicles"></i><span>Frozen</span>
             </button>
           </div>
@@ -98,29 +134,46 @@
         <div class="shape-group">
           <div class="group-label">OPERATIONAL</div>
           <div class="shapes-grid">
-            <button class="shape-tile zone-inbound"
-              (click)="createZoneFromTemplate(ZoneType.Inbound, StorageCondition.Other)" title="Inbound Dock">
+            <button
+              class="shape-tile zone-inbound"
+              (click)="createZoneFromTemplate(ZoneType.Inbound, StorageCondition.Other)"
+              title="Inbound Dock"
+            >
               <i class="fas fa-arrow-circle-down"></i><span>Inbound</span>
             </button>
-            <button class="shape-tile zone-outbound"
-              (click)="createZoneFromTemplate(ZoneType.Outbound, StorageCondition.Other)" title="Outbound Dock">
+            <button
+              class="shape-tile zone-outbound"
+              (click)="createZoneFromTemplate(ZoneType.Outbound, StorageCondition.Other)"
+              title="Outbound Dock"
+            >
               <i class="fas fa-arrow-circle-up"></i><span>Outbound</span>
             </button>
-            <button class="shape-tile zone-staging"
-              (click)="createZoneFromTemplate(ZoneType.Staging, StorageCondition.Other)" title="Staging Area">
+            <button
+              class="shape-tile zone-staging"
+              (click)="createZoneFromTemplate(ZoneType.Staging, StorageCondition.Other)"
+              title="Staging Area"
+            >
               <i class="fas fa-layer-group"></i><span>Staging</span>
             </button>
-            <button class="shape-tile zone-quarantine"
-              (click)="createZoneFromTemplate(ZoneType.Quarantine, StorageCondition.Other)" title="Quarantine">
+            <button
+              class="shape-tile zone-quarantine"
+              (click)="createZoneFromTemplate(ZoneType.Quarantine, StorageCondition.Other)"
+              title="Quarantine"
+            >
               <i class="fas fa-exclamation-circle"></i><span>Quarant.</span>
             </button>
-            <button class="shape-tile zone-parking"
+            <button
+              class="shape-tile zone-parking"
               (click)="createZoneFromTemplate(ZoneType.ForkliftParking, StorageCondition.Other)"
-              title="Forklift Parking">
+              title="Forklift Parking"
+            >
               <i class="fas fa-dolly"></i><span>Parking</span>
             </button>
-            <button class="shape-tile zone-office"
-              (click)="createZoneFromTemplate(ZoneType.Office, StorageCondition.Other)" title="Office Area">
+            <button
+              class="shape-tile zone-office"
+              (click)="createZoneFromTemplate(ZoneType.Office, StorageCondition.Other)"
+              title="Office Area"
+            >
               <i class="fas fa-building"></i><span>Office</span>
             </button>
           </div>
@@ -135,32 +188,54 @@
 
     <!-- ── CANVAS AREA ──────────────────────────────────────── -->
     <div class="sl-canvas-area">
-      <div class="canvas-scroll-area" (wheel)="onWheel($event)" (mousedown)="onCanvasMouseDown($event)"
-        (contextmenu)="$event.preventDefault()" [class.is-panning]="isPanning">
-
-        <div class="map-canvas" [style.width.px]="(warehouse?.mapWidth || 2000) * scale"
-          [style.height.px]="(warehouse?.mapLength || 2000) * scale" (click)="onCanvasClick($event)">
-
+      <div
+        class="canvas-scroll-area"
+        (wheel)="onWheel($event)"
+        (mousedown)="onCanvasMouseDown($event)"
+        (contextmenu)="$event.preventDefault()"
+        [class.is-panning]="isPanning"
+      >
+        <div
+          class="map-canvas"
+          [style.width.px]="(warehouse?.mapWidth || 2000) * scale"
+          [style.height.px]="(warehouse?.mapLength || 2000) * scale"
+          (click)="onCanvasClick($event)"
+        >
           <!-- Grid: minor (1m) -->
-          <div class="grid-minor" [style.background-size]="(PX_PER_M * scale) + 'px ' + (PX_PER_M * scale) + 'px'">
-          </div>
+          <div
+            class="grid-minor"
+            [style.background-size]="PX_PER_M * scale + 'px ' + PX_PER_M * scale + 'px'"
+          ></div>
           <!-- Grid: major (5m) -->
-          <div class="grid-major"
-            [style.background-size]="(PX_PER_M * 5 * scale) + 'px ' + (PX_PER_M * 5 * scale) + 'px'"></div>
+          <div
+            class="grid-major"
+            [style.background-size]="PX_PER_M * 5 * scale + 'px ' + PX_PER_M * 5 * scale + 'px'"
+          ></div>
 
           <!-- ── ZONES ── -->
-          <div *ngFor="let zone of zones; trackBy: trackById" cdkDrag
-            [cdkDragFreeDragPosition]="getDragPos(zone.id, zoneDragPos, zone.positionX * scale, zone.positionY * scale)"
-            (cdkDragEnded)="onZoneDragEnded($event, zone)" class="zone-drag-wrapper"
-            [style.width.px]="zone.width * scale" [style.height.px]="zone.length * scale"
-            [style.z-index]="activeZone?.id === zone.id ? 20 : 5">
-
-            <div class="zone-inner" [class.is-active]="activeZone?.id === zone.id"
-              [class.is-collision]="zone._hasCollision" [class.is-dirty]="zone._isDirty" [style.--zc]="zone.color"
-              [style.transform]="'rotate(' + (zone.rotation || 0) + 'deg)'" (click)="onZoneSingleClick(zone, $event)"
+          <div
+            *ngFor="let zone of zones; trackBy: trackById"
+            cdkDrag
+            [cdkDragFreeDragPosition]="
+              getDragPos(zone.id, zoneDragPos, zone.positionX * scale, zone.positionY * scale)
+            "
+            (cdkDragEnded)="onZoneDragEnded($event, zone)"
+            class="zone-drag-wrapper"
+            [style.width.px]="zone.width * scale"
+            [style.height.px]="zone.length * scale"
+            [style.z-index]="activeZone?.id === zone.id ? 20 : 5"
+          >
+            <div
+              class="zone-inner"
+              [class.is-active]="activeZone?.id === zone.id"
+              [class.is-collision]="zone._hasCollision"
+              [class.is-dirty]="zone._isDirty"
+              [style.--zc]="zone.color"
+              [style.transform]="'rotate(' + (zone.rotation || 0) + 'deg)'"
+              (click)="onZoneSingleClick(zone, $event)"
               (dblclick)="onZoneDoubleClick(zone, $event)"
-              title="Click to select · Double-click to edit · Drag to move">
-
+              title="Click to select · Double-click to edit · Drag to move"
+            >
               <!-- Background fill -->
               <div class="zone-fill"></div>
               <!-- Border -->
@@ -169,8 +244,12 @@
               <!-- Label block — font-size từ component method, scale theo zone size -->
               <div class="zone-label-block">
                 <span class="zone-name" [style.font-size.px]="getZoneFontSize(zone)">
-                  <i class="fas me-1" [class]="getZoneTypeIcon(zone.type)"
-                    [style.font-size.px]="getZoneFontSize(zone) * 0.85"></i>{{ zone.name }}
+                  <i
+                    class="fas me-1"
+                    [class]="getZoneTypeIcon(zone.type)"
+                    [style.font-size.px]="getZoneFontSize(zone) * 0.85"
+                  ></i
+                  >{{ zone.name }}
                 </span>
                 <span class="zone-dims" [style.font-size.px]="getZoneFontSize(zone) * 0.75">
                   {{ toM(zone.width) }}×{{ toM(zone.length) }}m
@@ -196,8 +275,11 @@
               <div class="rh rh-w" (mousedown)="onResizeStart($event, zone, 'zone', 'w')"></div>
 
               <!-- Rotate handle -->
-              <div class="rotate-handle" (mousedown)="onRotateStart($event, zone)"
-                title="Drag to rotate · Shift for 15° snap">
+              <div
+                class="rotate-handle"
+                (mousedown)="onRotateStart($event, zone)"
+                title="Drag to rotate · Shift for 15° snap"
+              >
                 <i class="fa fa-redo"></i>
               </div>
             </div>
@@ -205,17 +287,31 @@
 
           <!-- ── BINS ── -->
           <ng-container *ngFor="let zone of zones; trackBy: trackById">
-            <div *ngFor="let bin of getBinsOfZone(zone.id); trackBy: trackById" cdkDrag
-              [cdkDragFreeDragPosition]="getDragPos(bin.id, binDragPos, bin.positionX * scale, bin.positionY * scale)"
-              (cdkDragEnded)="onBinDragEnded($event, bin, zone)" class="bin-drag-wrapper"
-              [style.width.px]="bin.width * scale" [style.height.px]="bin.length * scale" [style.z-index]="25">
-
-              <div class="bin-inner" [class.is-blocked]="bin.isBlocked" [class.is-collision]="bin._hasCollision"
-                [style.--zc]="zone.color" [style.transform]="'rotate(' + (bin.rotation || 0) + 'deg)'"
+            <div
+              *ngFor="let bin of getBinsOfZone(zone.id); trackBy: trackById"
+              cdkDrag
+              [cdkDragFreeDragPosition]="
+                getDragPos(bin.id, binDragPos, bin.positionX * scale, bin.positionY * scale)
+              "
+              (cdkDragEnded)="onBinDragEnded($event, bin, zone)"
+              class="bin-drag-wrapper"
+              [style.width.px]="bin.width * scale"
+              [style.height.px]="bin.length * scale"
+              [style.z-index]="25"
+            >
+              <div
+                class="bin-inner"
+                [class.is-blocked]="bin.isBlocked"
+                [class.is-collision]="bin._hasCollision"
+                [style.--zc]="zone.color"
+                [style.transform]="'rotate(' + (bin.rotation || 0) + 'deg)'"
                 (click)="$event.stopPropagation(); onZoneSingleClick(zone, $event)"
-                (dblclick)="onBinDoubleClick(bin, $event)" title="{{ bin.code }} — Double-click to edit">
-
-                <span class="bin-label" [style.font-size.px]="getBinFontSize(bin)">{{ bin.code }}</span>
+                (dblclick)="onBinDoubleClick(bin, $event)"
+                title="{{ bin.code }} — Double-click to edit"
+              >
+                <span class="bin-label" [style.font-size.px]="getBinFontSize(bin)">{{
+                  bin.code
+                }}</span>
                 <i class="fa fa-ban bin-blocked-icon" *ngIf="bin.isBlocked"></i>
 
                 <!-- Resize handles -->
@@ -242,15 +338,21 @@
             <p>Canvas is empty</p>
             <small>Click a shape in the left panel to add your first zone</small>
           </div>
-
-        </div><!-- .map-canvas -->
-      </div><!-- .canvas-scroll-area -->
-    </div><!-- .sl-canvas-area -->
+        </div>
+        <!-- .map-canvas -->
+      </div>
+      <!-- .canvas-scroll-area -->
+    </div>
+    <!-- .sl-canvas-area -->
 
     <!-- ── RIGHT SIDEBAR ───────────────────────────────────── -->
     <div class="sl-sidebar">
       <div class="sidebar-tabs">
-        <button class="stab" [class.active]="activeTab === 'zones'" (click)="activeTab = 'zones'; activeZone = null">
+        <button
+          class="stab"
+          [class.active]="activeTab === 'zones'"
+          (click)="activeTab = 'zones'; activeZone = null"
+        >
           <i class="fa fa-vector-square"></i> Zones
           <span class="stab-badge">{{ zones.length }}</span>
         </button>
@@ -261,16 +363,19 @@
       </div>
 
       <div class="sidebar-scroll">
-
         <!-- ─ ZONES TAB ─ -->
         <ng-container *ngIf="activeTab === 'zones'">
           <div class="empty-msg" *ngIf="zones.length === 0">
             <i class="fa fa-vector-square fa-2x mb-2 d-block opacity-20"></i>
-            No zones yet.<br>Click a shape to add one.
+            No zones yet.<br />Click a shape to add one.
           </div>
 
-          <div class="zone-row" *ngFor="let zone of zones; trackBy: trackById"
-            [class.selected]="activeZone?.id === zone.id" (click)="onZoneSingleClick(zone, $event)">
+          <div
+            class="zone-row"
+            *ngFor="let zone of zones; trackBy: trackById"
+            [class.selected]="activeZone?.id === zone.id"
+            (click)="onZoneSingleClick(zone, $event)"
+          >
             <div class="zr-accent" [style.background]="zone.color"></div>
             <div class="zr-body">
               <div class="zr-name">{{ zone.name }}</div>
@@ -285,7 +390,11 @@
               </div>
             </div>
             <div class="zr-actions">
-              <button class="act-btn" (click)="openZoneDrawer(zone); $event.stopPropagation()" title="Edit">
+              <button
+                class="act-btn"
+                (click)="openZoneDrawer(zone); $event.stopPropagation()"
+                title="Edit"
+              >
                 <i class="fa fa-pencil"></i>
               </button>
               <button class="act-btn danger" (click)="deleteZone(zone, $event)" title="Delete">
@@ -303,7 +412,11 @@
           </div>
 
           <ng-container *ngFor="let zone of zones; trackBy: trackById">
-            <div class="bins-group-header" [class.open]="isZoneExpanded(zone.id)" (click)="toggleZoneDropdown(zone.id)">
+            <div
+              class="bins-group-header"
+              [class.open]="isZoneExpanded(zone.id)"
+              (click)="toggleZoneDropdown(zone.id)"
+            >
               <i class="fa fa-chevron-right chev" [class.chev-open]="isZoneExpanded(zone.id)"></i>
               <span class="bgh-dot" [style.background]="zone.color"></span>
               <span class="bgh-name">{{ zone.name }}</span>
@@ -311,8 +424,11 @@
             </div>
 
             <ng-container *ngIf="isZoneExpanded(zone.id)">
-              <div class="bin-row" *ngFor="let bin of getBinsOfZone(zone.id); trackBy: trackById"
-                (click)="activeZone = zone; openBinDrawer(bin)">
+              <div
+                class="bin-row"
+                *ngFor="let bin of getBinsOfZone(zone.id); trackBy: trackById"
+                (click)="activeZone = zone; openBinDrawer(bin)"
+              >
                 <div class="br-info">
                   <span class="br-code">{{ bin.code }}</span>
                   <span class="br-size">{{ toM(bin.width) }}×{{ toM(bin.length) }}m</span>
@@ -320,9 +436,12 @@
                   <span class="br-blocked" *ngIf="bin.isBlocked">BLOCKED</span>
                 </div>
                 <div class="zr-actions" (click)="$event.stopPropagation()">
-                  <button class="act-btn" (click)="activeZone = zone; openBinDrawer(bin)"><i
-                      class="fa fa-pencil"></i></button>
-                  <button class="act-btn danger" (click)="deleteBin(bin, $event)"><i class="fa fa-trash"></i></button>
+                  <button class="act-btn" (click)="activeZone = zone; openBinDrawer(bin)">
+                    <i class="fa fa-pencil"></i>
+                  </button>
+                  <button class="act-btn danger" (click)="deleteBin(bin, $event)">
+                    <i class="fa fa-trash"></i>
+                  </button>
                 </div>
               </div>
               <div class="bins-empty" *ngIf="getBinCount(zone.id) === 0">
@@ -331,41 +450,50 @@
             </ng-container>
           </ng-container>
         </ng-container>
-
-      </div><!-- sidebar-scroll -->
-    </div><!-- sl-sidebar -->
-
-  </div><!-- sl-body -->
-</div><!-- sl-page -->
-
+      </div>
+      <!-- sidebar-scroll -->
+    </div>
+    <!-- sl-sidebar -->
+  </div>
+  <!-- sl-body -->
+</div>
+<!-- sl-page -->
 
 <!-- ══════════════════════════════════════════════════════════
      ZONE DRAWER
 ══════════════════════════════════════════════════════════════ -->
-<app-drawer *ngIf="drawerType === 'ZONE'" [isOpen]="true" [title]="selectedZone?.id ? '::EditZone' : '::NewZone'"
-  width="sm" [saveDisabled]="form?.invalid" (close)="closeDrawer()" (save)="saveZone()">
+<app-drawer
+  *ngIf="drawerType === 'ZONE'"
+  [isOpen]="true"
+  [title]="selectedZone?.id ? '::EditZone' : '::NewZone'"
+  width="sm"
+  [saveDisabled]="form?.invalid"
+  (close)="closeDrawer()"
+  (save)="saveZone()"
+>
   <form [formGroup]="form" (ngSubmit)="saveZone()">
-
     <div class="color-bar" [style.background]="form.get('color')?.value"></div>
 
     <div class="df mb-3">
       <label class="dl">{{ '::Name' | abpLocalization }} <span class="req">*</span></label>
-      <input class="form-control form-control-sm" formControlName="name" placeholder="Zone name…">
+      <input class="form-control form-control-sm" formControlName="name" placeholder="Zone name…" />
     </div>
 
     <div class="df-row mb-3">
       <div class="df">
         <label class="dl">{{ '::Type' | abpLocalization }} <span class="req">*</span></label>
         <select class="form-select form-select-sm" formControlName="type">
-          <option *ngFor="let t of zoneTypes" [value]="t.value">{{ '::Enum:ZoneType.' + t.key | abpLocalization }}
+          <option *ngFor="let t of zoneTypes" [value]="t.value">
+            {{ '::Enum:ZoneType.' + t.key | abpLocalization }}
           </option>
         </select>
       </div>
       <div class="df" *ngIf="isStorageZoneType(form.get('type').value)">
         <label class="dl">{{ '::Condition' | abpLocalization }} <span class="req">*</span></label>
         <select class="form-select form-select-sm" formControlName="storageCondition">
-          <option *ngFor="let s of storageConditions" [value]="s.value">{{ '::Enum:StorageCondition.' + s.key |
-            abpLocalization }}</option>
+          <option *ngFor="let s of storageConditions" [value]="s.value">
+            {{ '::Enum:StorageCondition.' + s.key | abpLocalization }}
+          </option>
         </select>
       </div>
     </div>
@@ -373,30 +501,68 @@
     <div class="df mb-3">
       <label class="dl">{{ '::Color' | abpLocalization }}</label>
       <div class="color-row">
-        <input type="color" class="color-swatch" formControlName="color">
+        <input type="color" class="color-swatch" formControlName="color" />
         <code class="color-hex">{{ form.get('color')?.value }}</code>
       </div>
     </div>
 
     <div class="drawer-divider">Position &amp; Size</div>
     <div class="df-row mb-3">
-      <div class="df"><label class="dl">X (m)</label><input type="number" step="0.5"
-          class="form-control form-control-sm" formControlName="positionX"></div>
-      <div class="df"><label class="dl">Y (m)</label><input type="number" step="0.5"
-          class="form-control form-control-sm" formControlName="positionY"></div>
+      <div class="df">
+        <label class="dl">X (m)</label
+        ><input
+          type="number"
+          step="0.5"
+          class="form-control form-control-sm"
+          formControlName="positionX"
+        />
+      </div>
+      <div class="df">
+        <label class="dl">Y (m)</label
+        ><input
+          type="number"
+          step="0.5"
+          class="form-control form-control-sm"
+          formControlName="positionY"
+        />
+      </div>
     </div>
     <div class="df-row mb-3">
-      <div class="df"><label class="dl">Width (m)</label><input type="number" step="0.5" min="1"
-          class="form-control form-control-sm" formControlName="width"></div>
-      <div class="df"><label class="dl">Length (m)</label><input type="number" step="0.5" min="1"
-          class="form-control form-control-sm" formControlName="length"></div>
+      <div class="df">
+        <label class="dl">Width (m)</label
+        ><input
+          type="number"
+          step="0.5"
+          min="1"
+          class="form-control form-control-sm"
+          formControlName="width"
+        />
+      </div>
+      <div class="df">
+        <label class="dl">Length (m)</label
+        ><input
+          type="number"
+          step="0.5"
+          min="1"
+          class="form-control form-control-sm"
+          formControlName="length"
+        />
+      </div>
     </div>
 
     <div class="df mb-0">
-      <label class="dl">{{ '::Rotation' | abpLocalization }}
+      <label class="dl"
+        >{{ '::Rotation' | abpLocalization }}
         <span class="dl-val">{{ form.get('rotation')?.value }}°</span>
       </label>
-      <input type="range" class="form-range" formControlName="rotation" min="0" max="360" step="1">
+      <input
+        type="range"
+        class="form-range"
+        formControlName="rotation"
+        min="0"
+        max="360"
+        step="1"
+      />
       <div class="rot-presets">
         <button type="button" class="rp" (click)="form.get('rotation').setValue(0)">0°</button>
         <button type="button" class="rp" (click)="form.get('rotation').setValue(45)">45°</button>
@@ -405,17 +571,22 @@
         <button type="button" class="rp" (click)="form.get('rotation').setValue(270)">270°</button>
       </div>
     </div>
-
   </form>
 </app-drawer>
 
 <!-- ══════════════════════════════════════════════════════════
      BIN DRAWER
 ══════════════════════════════════════════════════════════════ -->
-<app-drawer *ngIf="drawerType === 'BIN'" [isOpen]="true" [title]="selectedBin?.id ? '::EditBin' : '::NewBin'" width="sm"
-  [saveDisabled]="form?.invalid" (close)="closeDrawer()" (save)="saveBin()">
+<app-drawer
+  *ngIf="drawerType === 'BIN'"
+  [isOpen]="true"
+  [title]="selectedBin?.id ? '::EditBin' : '::NewBin'"
+  width="sm"
+  [saveDisabled]="form?.invalid"
+  (close)="closeDrawer()"
+  (save)="saveBin()"
+>
   <form [formGroup]="form" (ngSubmit)="saveBin()">
-
     <div class="df mb-3">
       <label class="dl">{{ '::Zone' | abpLocalization }} <span class="req">*</span></label>
       <select class="form-select form-select-sm" formControlName="zoneId">
@@ -426,39 +597,82 @@
 
     <div class="drawer-divider">Position</div>
     <div class="df-row mb-3">
-      <div class="df"><label class="dl">X (m)</label><input type="number" step="0.1"
-          class="form-control form-control-sm" formControlName="positionX"></div>
-      <div class="df"><label class="dl">Y (m)</label><input type="number" step="0.1"
-          class="form-control form-control-sm" formControlName="positionY"></div>
+      <div class="df">
+        <label class="dl">X (m)</label
+        ><input
+          type="number"
+          step="0.1"
+          class="form-control form-control-sm"
+          formControlName="positionX"
+        />
+      </div>
+      <div class="df">
+        <label class="dl">Y (m)</label
+        ><input
+          type="number"
+          step="0.1"
+          class="form-control form-control-sm"
+          formControlName="positionY"
+        />
+      </div>
     </div>
 
     <div class="drawer-divider">Dimensions</div>
     <div class="df-row mb-3">
-      <div class="df"><label class="dl">Width (m)</label><input type="number" step="0.5" min="0.5"
-          class="form-control form-control-sm" formControlName="width"></div>
-      <div class="df"><label class="dl">Length (m)</label><input type="number" step="0.5" min="0.5"
-          class="form-control form-control-sm" formControlName="length"></div>
+      <div class="df">
+        <label class="dl">Width (m)</label
+        ><input
+          type="number"
+          step="0.5"
+          min="0.5"
+          class="form-control form-control-sm"
+          formControlName="width"
+        />
+      </div>
+      <div class="df">
+        <label class="dl">Length (m)</label
+        ><input
+          type="number"
+          step="0.5"
+          min="0.5"
+          class="form-control form-control-sm"
+          formControlName="length"
+        />
+      </div>
     </div>
 
     <div class="df mb-3">
-      <label class="dl">{{ '::Rotation' | abpLocalization }}
+      <label class="dl"
+        >{{ '::Rotation' | abpLocalization }}
         <span class="dl-val">{{ form.get('rotation')?.value }}°</span>
       </label>
-      <input type="range" class="form-range" formControlName="rotation" min="0" max="360" step="1">
+      <input
+        type="range"
+        class="form-range"
+        formControlName="rotation"
+        min="0"
+        max="360"
+        step="1"
+      />
     </div>
 
     <div class="drawer-divider">Settings</div>
     <div class="df mb-3">
       <label class="dl">Max SKU <span class="dl-hint">(0 = unlimited)</span></label>
-      <input type="number" min="0" step="1" class="form-control form-control-sm" formControlName="maxSKU">
+      <input
+        type="number"
+        min="0"
+        step="1"
+        class="form-control form-control-sm"
+        formControlName="maxSKU"
+      />
     </div>
 
     <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" id="binBlocked" formControlName="isBlocked">
+      <input class="form-check-input" type="checkbox" id="binBlocked" formControlName="isBlocked" />
       <label class="form-check-label text-danger small fw-semibold" for="binBlocked">
         <i class="fa fa-ban me-1"></i>{{ '::IsBlocked' | abpLocalization }}
       </label>
     </div>
-
   </form>
 </app-drawer>

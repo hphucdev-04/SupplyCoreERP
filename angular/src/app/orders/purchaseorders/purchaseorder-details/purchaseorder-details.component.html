@@ -85,9 +85,17 @@
               <div class="col-md-6" *ngIf="order.purchaseRequisitionCode">
                 <span class="ph-field-meta">{{ '::PurchaseRequisition' | abpLocalization }}</span>
                 <div class="ph-field-value">
-                   <span class="ph-link" (click)="router.navigate(['/order/purchaserequisitions/details', order.purchaseRequisitionId])">
-                      {{ order.purchaseRequisitionCode }}
-                   </span>
+                  <span
+                    class="ph-link"
+                    (click)="
+                      router.navigate([
+                        '/order/purchaserequisitions/details',
+                        order.purchaseRequisitionId,
+                      ])
+                    "
+                  >
+                    {{ order.purchaseRequisitionCode }}
+                  </span>
                 </div>
               </div>
               <div class="col-md-6">
@@ -174,7 +182,12 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let t of relatedTickets">
-                    <td class="ph-text-primary ph-link" (click)="router.navigate(['/inventory/tickets/details', t.id])">{{ t.ticketNumber }}</td>
+                    <td
+                      class="ph-text-primary ph-link"
+                      (click)="router.navigate(['/inventory/tickets/details', t.id])"
+                    >
+                      {{ t.ticketNumber }}
+                    </td>
                     <td>{{ t.creationTime | date: 'HH:mm dd/MM/yyyy' }}</td>
                     <td>
                       <span
@@ -476,7 +489,7 @@
           <select
             class="form-select"
             formControlName="unitId"
-            [attr.disabled]="isAutoFilled || !units.length ? 'disabled' : null"
+            [attr.disabled]="!units.length ? 'disabled' : null"
             (change)="onUnitChange($event.target.value)"
           >
             <option [ngValue]="null">{{ '::SelectUnit' | abpLocalization }}</option>

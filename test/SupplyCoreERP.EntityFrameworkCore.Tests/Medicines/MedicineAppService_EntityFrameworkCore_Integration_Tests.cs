@@ -1,0 +1,9 @@
+using SupplyCoreERP.EntityFrameworkCore;
+using Xunit;
+
+namespace SupplyCoreERP.Medicines;
+
+[Collection(SupplyCoreERPTestConsts.CollectionDefinitionName)]
+public class MedicineAppService_EntityFrameworkCore_Integration_Tests : MedicineAppService_Integration_Tests<SupplyCoreERPEntityFrameworkCoreTestModule>
+{
+}

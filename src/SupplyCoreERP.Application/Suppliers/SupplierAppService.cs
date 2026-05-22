@@ -113,14 +113,15 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
         query = query
             .Include(x => x.Product).ThenInclude(p => p.BaseUnit)
             .Include(x => x.DefaultUnit)
+            .Include(x => x.Conditions).ThenInclude(c => c.Unit)
             .Where(x => x.SupplierId == supplierId)
             .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
                 x.Product.Name.Contains(input.Filter) ||
                 x.Product.Code.Contains(input.Filter))
             .WhereIf(input.IsPreferred.HasValue, x => x.IsPreferred == input.IsPreferred)
             .WhereIf(input.IsActive.HasValue, x => x.IsActive == input.IsActive)
-            .WhereIf(input.MinPrice.HasValue, x => x.StandardPrice >= input.MinPrice)
-            .WhereIf(input.MaxPrice.HasValue, x => x.StandardPrice <= input.MaxPrice);
+            .WhereIf(input.MinPrice.HasValue, x => x.Conditions.Any(c => c.StandardPrice >= input.MinPrice))
+            .WhereIf(input.MaxPrice.HasValue, x => x.Conditions.Any(c => c.StandardPrice <= input.MaxPrice));
 
         int totalCount = await query.CountAsync();
 
@@ -142,6 +143,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
         query = query
             .Include(x => x.Supplier).ThenInclude(s => s.Country)
             .Include(x => x.DefaultUnit)
+            .Include(x => x.Conditions)
             .Where(x => x.ProductId == productId && x.IsActive)
             .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
                 x.Supplier.Name.Contains(input.Filter) ||
@@ -150,7 +152,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
         int totalCount = await query.CountAsync();
 
         List<SupplierProduct> list = await query
-            .OrderBy(input.Sorting ?? "IsPreferred DESC, StandardPrice ASC")
+            .OrderBy(input.Sorting != null && input.Sorting.Contains("StandardPrice") ? "IsPreferred DESC" : (input.Sorting ?? "IsPreferred DESC"))
             .PageBy(input)
             .ToListAsync();
 
@@ -163,6 +165,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
     {
         IQueryable<Supplier> query = await _supplierRepository.GetQueryableAsync();
         Supplier supplier = await query.Include(x => x.SupplierProducts)
+                                  .ThenInclude(sp => sp.Conditions)
                                   .FirstOrDefaultAsync(x => x.Id == supplierId)
             ?? throw new EntityNotFoundException(typeof(Supplier), supplierId);
 
@@ -170,39 +173,114 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
             supplier,
             input.ProductId,
             input.DefaultUnitId,
-            input.DefaultConversionFactor,
-            input.StandardPrice,
             input.LeadTimeDays,
-            input.MinOrderQuantity,
-            input.OverDeliveryTolerancePct,
-            input.UnderDeliveryTolerancePct,
             input.IsPreferred,
             input.Note);
 
-        await _supplierRepository.UpdateAsync(supplier);
+        if (input.Conditions != null && input.Conditions.Any())
+        {
+            foreach (CreateUpdateSupplierProductConditionDto condInput in input.Conditions)
+            {
+                var condition = new SupplierProductCondition(
+                    GuidGenerator.Create(),
+                    sp.Id,
+                    condInput.UnitId,
+                    condInput.ConversionFactor,
+                    condInput.StandardPrice,
+                    condInput.MinOrderQuantity,
+                    condInput.OverDeliveryTolerancePct,
+                    condInput.UnderDeliveryTolerancePct
+                );
+                sp.AddCondition(condition);
+            }
+        }
 
-        return ObjectMapper.Map<SupplierProduct, SupplierProductDto>(sp);
+        sp.ValidateConditions();
+
+        await _supplierRepository.UpdateAsync(supplier, autoSave: true);
+
+        IQueryable<SupplierProduct> spQuery = await _supplierProductRepo.GetQueryableAsync();
+        SupplierProduct loadedSp = await spQuery
+            .Include(x => x.Product)
+            .Include(x => x.DefaultUnit)
+            .Include(x => x.Conditions).ThenInclude(c => c.Unit)
+            .FirstAsync(x => x.Id == sp.Id);
+
+        return ObjectMapper.Map<SupplierProduct, SupplierProductDto>(loadedSp);
     }
 
     public async Task<SupplierProductDto> UpdateProductAsync(Guid supplierId, Guid productId, CreateUpdateSupplierProductDto input)
     {
         IQueryable<Supplier> query = await _supplierRepository.GetQueryableAsync();
         Supplier supplier = await query.Include(x => x.SupplierProducts)
+                                  .ThenInclude(sp => sp.Conditions)
                                   .FirstOrDefaultAsync(x => x.Id == supplierId)
             ?? throw new EntityNotFoundException(typeof(Supplier), supplierId);
 
         await _supplierManager.UpdateProductAsync(
             supplier,
             productId,
-            input.DefaultUnitId, input.DefaultConversionFactor, input.StandardPrice,
-            input.LeadTimeDays, input.MinOrderQuantity,
-            input.OverDeliveryTolerancePct, input.UnderDeliveryTolerancePct,
-            input.IsPreferred, input.Note);
-
-        await _supplierRepository.UpdateAsync(supplier);
+            input.DefaultUnitId,
+            input.LeadTimeDays,
+            input.IsPreferred,
+            input.Note);
 
         SupplierProduct sp = supplier.SupplierProducts.First(x => x.ProductId == productId);
-        return ObjectMapper.Map<SupplierProduct, SupplierProductDto>(sp);
+
+        if (input.Conditions != null)
+        {
+            var inputIds = input.Conditions.Where(c => c.Id.HasValue).Select(c => c.Id.Value).ToList();
+
+            var conditionsToRemove = sp.Conditions.Where(c => !inputIds.Contains(c.Id)).ToList();
+            foreach (SupplierProductCondition? cond in conditionsToRemove)
+            {
+                sp.RemoveCondition(cond.Id);
+            }
+
+            foreach (CreateUpdateSupplierProductConditionDto condInput in input.Conditions)
+            {
+                if (condInput.Id.HasValue)
+                {
+                    SupplierProductCondition? existingCond = sp.Conditions.FirstOrDefault(c => c.Id == condInput.Id.Value);
+                    if (existingCond != null)
+                    {
+                        existingCond.UpdateCondition(
+                            condInput.StandardPrice,
+                            condInput.MinOrderQuantity,
+                            condInput.OverDeliveryTolerancePct,
+                            condInput.UnderDeliveryTolerancePct
+                        );
+                    }
+                }
+                else
+                {
+                    var newCondition = new SupplierProductCondition(
+                        GuidGenerator.Create(),
+                        sp.Id,
+                        condInput.UnitId,
+                        condInput.ConversionFactor,
+                        condInput.StandardPrice,
+                        condInput.MinOrderQuantity,
+                        condInput.OverDeliveryTolerancePct,
+                        condInput.UnderDeliveryTolerancePct
+                    );
+                    sp.AddCondition(newCondition);
+                }
+            }
+        }
+
+        sp.ValidateConditions();
+
+        await _supplierRepository.UpdateAsync(supplier, autoSave: true);
+
+        IQueryable<SupplierProduct> spQuery = await _supplierProductRepo.GetQueryableAsync();
+        SupplierProduct loadedSp = await spQuery
+            .Include(x => x.Product)
+            .Include(x => x.DefaultUnit)
+            .Include(x => x.Conditions).ThenInclude(c => c.Unit)
+            .FirstAsync(x => x.ProductId == productId && x.SupplierId == supplierId);
+
+        return ObjectMapper.Map<SupplierProduct, SupplierProductDto>(loadedSp);
     }
 
     public async Task RemoveProductAsync(Guid supplierId, Guid productId)
@@ -234,6 +312,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
         IQueryable<SupplierProduct> query = await _supplierProductRepo.GetQueryableAsync();
         List<SupplierProduct> allSupplierProducts = await query
             .Include(x => x.Supplier)
+            .Include(x => x.Conditions)
             .Where(x => productIds.Contains(x.ProductId) && x.IsActive && x.Supplier.IsActive)
             .ToListAsync();
 
@@ -252,16 +331,26 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
             Guid productId = group.Key;
             var items = group.ToList();
 
-            // Tìm giá trị tối ưu trong nhóm để làm mốc (benchmark)
-            decimal minPrice = items.Min(x => x.StandardPrice);
+            var benchmarkList = items.Select(sp => new
+            {
+                SupplierProduct = sp,
+                Price = sp.Conditions != null && sp.Conditions.Any(c => c.UnitId == sp.DefaultUnitId)
+                    ? sp.Conditions.First(c => c.UnitId == sp.DefaultUnitId).StandardPrice
+                    : 0
+            }).ToList();
+
+            decimal minPrice = benchmarkList.Min(x => x.Price);
             int minLeadTime = items.Min(x => x.LeadTimeDays);
 
             // Chấm điểm tất cả NCC cho sản phẩm này
-            var scoredItems = items.Select(sp =>
+            var scoredItems = benchmarkList.Select(b =>
             {
+                SupplierProduct sp = b.SupplierProduct;
+                decimal currentPrice = b.Price;
+
                 // Điểm Giá (70% - max 700): (MinPrice / CurrentPrice) * 700
-                double priceScore = sp.StandardPrice > 0
-                    ? (double)(minPrice / sp.StandardPrice) * 700
+                double priceScore = currentPrice > 0
+                    ? (double)(minPrice / currentPrice) * 700
                     : 700;
 
                 // Điểm Thời gian (30% - max 300): (MinTime / CurrentTime) * 300

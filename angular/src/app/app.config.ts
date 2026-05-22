@@ -7,7 +7,7 @@ import { provideIdentityConfig } from '@abp/ng.identity/config';
 import { provideAccountConfig } from '@abp/ng.account/config';
 import { provideThemeLeptonX } from '@abp/ng.theme.lepton-x';
 import { provideSideMenuLayout } from '@abp/ng.theme.lepton-x/layouts';
-import { provideLogo, withEnvironmentOptions } from "@abp/ng.theme.shared";
+import { provideLogo, withEnvironmentOptions } from '@abp/ng.theme.shared';
 import { ApplicationConfig } from '@angular/core';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { provideRouter } from '@angular/router';
@@ -38,5 +38,5 @@ export const appConfig: ApplicationConfig = {
     provideLogo(withEnvironmentOptions(environment)),
     provideAccountConfig(),
     provideAbpThemeShared(),
-  ]
+  ],
 };

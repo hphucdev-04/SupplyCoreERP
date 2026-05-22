@@ -28,6 +28,7 @@ public class SalesOrderManager : DomainService
     private readonly PriceManager _priceManager;
     private readonly TicketManager _ticketManager;
     private readonly DocumentSequenceManager _documentManager;
+    private readonly UnitConversionManager _unitConversionManager;
 
     // DI
     public SalesOrderManager(
@@ -38,7 +39,8 @@ public class SalesOrderManager : DomainService
         IRepository<InventoryBalance, Guid> balanceRepo,
         PriceManager priceManager,
         TicketManager ticketManager,
-        DocumentSequenceManager documentManager
+        DocumentSequenceManager documentManager,
+        UnitConversionManager unitConversionManager
         )
     {
         _orderRepo = orderRepo;
@@ -49,6 +51,7 @@ public class SalesOrderManager : DomainService
         _priceManager = priceManager;
         _ticketManager = ticketManager;
         _documentManager = documentManager;
+        _unitConversionManager = unitConversionManager;
     }
 
     #region SaleOrder
@@ -102,7 +105,7 @@ public class SalesOrderManager : DomainService
         }
 
         // Kiểm tra tồn kho khả dụng tổng quát (không quan tâm lô hàng/QA ở bước này)
-        decimal requiredBaseQty = quantity * conversionFactor;
+        decimal requiredBaseQty = _unitConversionManager.ConvertToBaseQuantity(product, unitId, quantity);
 
         IQueryable<InventoryBalance> balanceQuery = await _balanceRepo.GetQueryableAsync();
         decimal totalAvailable = await AsyncExecuter.SumAsync(

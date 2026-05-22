@@ -14,12 +14,14 @@ import {
 } from 'src/app/proxy/purchase-orders/dtos';
 import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
 import { SupplierService } from 'src/app/proxy/suppliers';
+import { SupplierProductConditionDto } from 'src/app/proxy/suppliers/dtos';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseOrderStatus } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
+import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
 
 interface ProductUnitLookup {
   unitId: string;
@@ -59,6 +61,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   baseUnitName = '';
   quantityPreview = 0;
   isAutoFilled = false;
+  activeConditions: SupplierProductConditionDto[] = [];
 
   PurchaseOrderStatus = PurchaseOrderStatus;
   readonly enumName = enumName;
@@ -236,6 +239,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   onMedicineChange(medicineId: string) {
     this.detailForm.patchValue({ unitId: null, conversionFactor: 1, unitPrice: 0 });
     this.units = [];
+    this.activeConditions = [];
     this.selectedConversionFactor = 1;
     this.baseUnitName = '';
     this.quantityPreview = 0;
@@ -248,6 +252,8 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
       .get(medicineId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(detail => {
+        this.baseUnitName = detail.baseUnitName ?? '';
+
         const baseUnit: ProductUnitLookup = {
           unitId: detail.baseUnitId,
           unitName: detail.baseUnitName,
@@ -266,8 +272,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
               isBaseUnit: false,
             };
           });
-        this.units = [baseUnit, ...others];
-        this.baseUnitName = detail.baseUnitName ?? '';
+        const medicineUnits = [baseUnit, ...others];
 
         // 2. Tra cứu Supplier Product để điền tự động
         this.supplierService
@@ -277,16 +282,34 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
           } as any)
           .subscribe(res => {
             const sp = res.items[0];
-            if (sp && sp.isActive) {
+            if (sp && sp.isActive && sp.conditions && sp.conditions.length > 0) {
               this.isAutoFilled = true;
+              this.activeConditions = sp.conditions;
+
+              // Chỉ nạp các đơn vị đã thỏa thuận giá
+              this.units = sp.conditions.map(c => ({
+                unitId: c.unitId,
+                unitName: c.unitName,
+                conversionFactor: c.conversionFactor || 1,
+                isBaseUnit: c.unitId === sp.defaultUnitId,
+              }));
+
+              // Chọn đơn vị mặc định
+              const defaultUnitId = sp.defaultUnitId;
+              const matchedCondition =
+                sp.conditions.find(c => c.unitId === defaultUnitId) || sp.conditions[0];
+
               this.detailForm.patchValue({
-                unitId: sp.defaultUnitId,
-                conversionFactor: sp.defaultConversionFactor,
-                unitPrice: sp.standardPrice || sp.lastPurchasePrice || 0,
+                unitId: matchedCondition.unitId,
+                conversionFactor: matchedCondition.conversionFactor,
+                unitPrice:
+                  matchedCondition.standardPrice || matchedCondition.lastPurchasePrice || 0,
               });
-              this.selectedConversionFactor = sp.defaultConversionFactor;
+              this.selectedConversionFactor = matchedCondition.conversionFactor || 1;
             } else {
-              // Mặc định chọn BaseUnit nếu không có config nhà cung cấp
+              // Fallback về toàn bộ đơn vị của thuốc nếu không có config nhà cung cấp
+              this.units = medicineUnits;
+              this.activeConditions = [];
               this.detailForm.patchValue({ unitId: baseUnit.unitId, conversionFactor: 1 });
               this.selectedConversionFactor = 1;
             }
@@ -299,14 +322,34 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     const unit = this.units.find(u => u.unitId === unitId);
     if (unit) {
       this.selectedConversionFactor = unit.conversionFactor;
-      this.detailForm.patchValue({ conversionFactor: unit.conversionFactor });
+
+      let unitPrice = this.detailForm.get('unitPrice')?.value || 0;
+      if (this.isAutoFilled && this.activeConditions.length > 0) {
+        const cond = this.activeConditions.find(c => c.unitId === unitId);
+        if (cond) {
+          unitPrice = cond.standardPrice || cond.lastPurchasePrice || 0;
+        }
+      }
+
+      this.detailForm.patchValue({
+        conversionFactor: unit.conversionFactor,
+        unitPrice: unitPrice,
+      });
     }
     this.updateQuantityPreview();
   }
 
   updateQuantityPreview() {
     const qty = this.detailForm.get('quantity')?.value || 0;
-    this.quantityPreview = qty * this.selectedConversionFactor;
+    const unitId = this.detailForm.get('unitId')?.value;
+    this.quantityPreview = UnitConversionHelper.convertToBaseQuantity(
+      {
+        baseUnitId: '',
+        units: [{ unitId: unitId, conversionFactor: this.selectedConversionFactor }],
+      },
+      unitId,
+      qty,
+    );
   }
 
   saveLine() {

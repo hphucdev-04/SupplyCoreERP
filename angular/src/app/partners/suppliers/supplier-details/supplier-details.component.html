@@ -298,9 +298,7 @@
                     <th>{{ '::ProductCode' | abpLocalization }}</th>
                     <th>{{ '::ProductName' | abpLocalization }}</th>
                     <th>{{ '::DefaultUnit' | abpLocalization }}</th>
-                    <th class="text-end">{{ '::StandardPrice' | abpLocalization }}</th>
                     <th>{{ '::LeadTimeDays' | abpLocalization }}</th>
-                    <th>{{ '::MinOrderQty' | abpLocalization }}</th>
                     <th>{{ '::Preferred' | abpLocalization }}</th>
                     <th>{{ '::Active' | abpLocalization }}</th>
                     <th class="text-end">{{ '::Actions' | abpLocalization }}</th>
@@ -308,14 +306,12 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let product of products">
-                    <td>{{ product.productCode }}</td>
-                    <td>{{ product.productName }}</td>
-                    <td>{{ product.defaultUnitName }}</td>
-                    <td class="text-end text-success fw-semibold">
-                      {{ product.standardPrice || 0 | number: '1.0-0' }} ₫
+                    <td class="ph-link" (click)="openEditProductDrawer(product)">
+                      {{ product.productCode }}
                     </td>
-                    <td>{{ product.leadTimeDays || '-' }}</td>
-                    <td>{{ product.minOrderQuantity || '-' }}</td>
+                    <td>{{ product.productName }}</td>
+                    <td (click)="openConditionsDrawer(product)">{{ product.defaultUnitName }}</td>
+                    <td>{{ product.leadTimeDays || 'N/A' }}</td>
                     <td>
                       <i
                         class="fa"
@@ -340,6 +336,10 @@
                           <i class="fa fa-ellipsis-v"></i>
                         </button>
                         <div ngbDropdownMenu class="dropdown-menu-end">
+                          <button ngbDropdownItem (click)="openConditionsDrawer(product)">
+                            <i class="fa fa-tags me-2 text-info"></i
+                            >{{ '::ManageConditions' | abpLocalization }}
+                          </button>
                           <button ngbDropdownItem (click)="openEditProductDrawer(product)">
                             <i class="fa fa-pencil me-2 text-primary"></i
                             >{{ '::Edit' | abpLocalization }}
@@ -400,37 +400,20 @@
       </select>
     </div>
 
-    <div class="row">
-      <div class="col-6 mb-3">
-        <label class="ph-label ph-label--required">{{ '::StandardPrice' | abpLocalization }}</label>
-        <div class="input-group">
-          <input
-            type="text"
-            class="form-control ph-text-success fw-semibold"
-            formControlName="standardPrice"
-            appCurrencyFormat
-          />
-          <span class="input-group-text">₫</span>
-        </div>
-      </div>
-      <div class="col-6 mb-3">
+    <div class="row mb-3">
+      <div class="col-6">
         <label class="ph-label">{{ '::LeadTimeDays' | abpLocalization }}</label>
         <input type="number" class="form-control" formControlName="leadTimeDays" />
       </div>
-    </div>
-
-    <div class="row">
-      <div class="col-6 mb-3">
-        <label class="ph-label">{{ '::MinOrderQuantity' | abpLocalization }}</label>
-        <input type="number" class="form-control" formControlName="minOrderQuantity" />
-      </div>
-      <div class="col-6 mb-3">
+      <div class="col-6">
         <div
           class="border rounded p-2 d-flex justify-content-between align-items-center h-100 bg-light-subtle"
         >
           <div>
-            <label class="fw-bold mb-0 text-dark">{{ '::IsPreferred' | abpLocalization }}</label>
-            <small class="d-block text-muted">{{
+            <label class="fw-bold mb-0 text-dark" style="font-size: 0.85rem">{{
+              '::IsPreferred' | abpLocalization
+            }}</label>
+            <small class="d-block text-muted" style="font-size: 0.7rem">{{
               '::PreferredSupplierHint' | abpLocalization
             }}</small>
           </div>
@@ -449,6 +432,155 @@
     <div class="mb-3">
       <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
       <textarea class="form-control" formControlName="note" rows="2"></textarea>
+    </div>
+  </form>
+</app-drawer>
+
+<!-- Conditions (Bottom) Drawer -->
+<app-drawer
+  [isOpen]="isConditionsDrawerOpen"
+  [title]="
+    selectedProduct
+      ? ('::ManageConditionsFor' | abpLocalization) + ' ' + selectedProduct.productName
+      : ('::ManageConditions' | abpLocalization)
+  "
+  [position]="'bottom'"
+  [height]="'lg'"
+  [saveDisabled]="conditionsForm.invalid"
+  (close)="isConditionsDrawerOpen = false"
+  (save)="saveConditions()"
+>
+  <form [formGroup]="conditionsForm">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <div>
+        <h6 class="mb-1 text-primary fw-bold">
+          <i class="fa fa-info-circle me-1"></i>
+          {{ '::ProductCode' | abpLocalization }}: {{ selectedProduct?.productCode }} |
+          {{ '::DefaultUnit' | abpLocalization }}: {{ selectedProduct?.defaultUnitName }}
+        </h6>
+        <small class="text-muted">
+          {{ '::ConditionsHint' | abpLocalization }}
+        </small>
+      </div>
+      <button type="button" class="btn btn-sm btn-outline-primary" (click)="addCondition()">
+        <i class="fa fa-plus me-1"></i> {{ '::AddCondition' | abpLocalization }}
+      </button>
+    </div>
+
+    <div class="table-responsive" style="max-height: 40vh; overflow-y: auto">
+      <table class="table table-bordered table-striped table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th style="width: 25%">{{ '::Unit' | abpLocalization }}</th>
+            <th style="width: 15%">{{ '::ConversionFactor' | abpLocalization }}</th>
+            <th style="width: 18%">{{ '::StandardPrice' | abpLocalization }}</th>
+            <th style="width: 15%">{{ '::MinOrderQty' | abpLocalization }}</th>
+            <th style="width: 12%">{{ '::OverTolerance' | abpLocalization }} (%)</th>
+            <th style="width: 12%">{{ '::UnderTolerance' | abpLocalization }} (%)</th>
+            <th style="width: 3%" class="text-center"></th>
+          </tr>
+        </thead>
+        <tbody formArrayName="conditions">
+          <tr *ngFor="let cond of conditionsFormArray.controls; let i = index" [formGroupName]="i">
+            <td>
+              <select
+                class="form-select form-select-sm"
+                formControlName="unitId"
+                (change)="onUnitChange(i)"
+              >
+                <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
+                <option *ngFor="let unit of allowedUnits" [ngValue]="unit.id">
+                  {{ unit.name }}
+                  <span *ngIf="isDefaultUnit(unit.id)">({{ '::Default' | abpLocalization }})</span>
+                </option>
+              </select>
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                formControlName="conversionFactor"
+                step="0.0001"
+                min="0.0001"
+              />
+            </td>
+            <td>
+              <div class="input-group input-group-sm">
+                <input
+                  type="text"
+                  class="form-control"
+                  [class.is-invalid]="cond.get('standardPrice')?.errors?.priceNotDescending"
+                  formControlName="standardPrice"
+                  appCurrencyFormat
+                />
+                <span class="input-group-text">₫</span>
+              </div>
+              <div
+                *ngIf="cond.get('standardPrice')?.errors?.priceNotDescending"
+                class="text-danger small mt-1"
+                style="font-size: 10px; line-height: 1.2"
+              >
+                <i class="fa fa-exclamation-circle me-1"></i> Giá thỏa thuận phải nhỏ hơn hoặc bằng
+                giá của mốc số lượng nhỏ hơn.
+              </div>
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                [class.is-invalid]="cond.get('minOrderQuantity')?.errors?.duplicateMoq"
+                formControlName="minOrderQuantity"
+                min="0"
+              />
+              <div
+                *ngIf="cond.get('minOrderQuantity')?.errors?.duplicateMoq"
+                class="text-danger small mt-1"
+                style="font-size: 10px; line-height: 1.2"
+              >
+                <i class="fa fa-exclamation-circle me-1"></i> Trùng mốc MOQ.
+              </div>
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                formControlName="overDeliveryTolerancePct"
+                min="0"
+                max="100"
+              />
+            </td>
+            <td>
+              <input
+                type="number"
+                class="form-control form-control-sm"
+                formControlName="underDeliveryTolerancePct"
+                min="0"
+                max="100"
+              />
+            </td>
+            <td class="text-center">
+              <button
+                type="button"
+                class="btn btn-sm btn-link text-danger p-0"
+                (click)="removeCondition(i)"
+                [disabled]="isDefaultUnit(cond.get('unitId')?.value)"
+                [title]="
+                  isDefaultUnit(cond.get('unitId')?.value)
+                    ? ('::CannotDeleteDefaultUnitCondition' | abpLocalization)
+                    : ''
+                "
+              >
+                <i class="fa fa-trash"></i>
+              </button>
+            </td>
+          </tr>
+          <tr *ngIf="conditionsFormArray.length === 0">
+            <td colspan="7" class="text-center text-muted py-3">
+              {{ '::NoConditionsConfigured' | abpLocalization }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </form>
 </app-drawer>

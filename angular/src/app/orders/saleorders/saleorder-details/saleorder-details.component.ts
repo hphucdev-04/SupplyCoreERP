@@ -20,6 +20,7 @@ import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { ProductPriceDto } from 'src/app/proxy/prices/dtos';
 import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
+import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
 
 interface ProductUnitLookup {
   unitId: string;
@@ -282,7 +283,15 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
 
   updateQuantityPreview() {
     const qty = this.lineForm.get('quantity')?.value || 0;
-    this.quantityPreview = qty * this.selectedConversionFactor;
+    const unitId = this.lineForm.get('unitId')?.value;
+    this.quantityPreview = UnitConversionHelper.convertToBaseQuantity(
+      {
+        baseUnitId: '',
+        units: [{ unitId: unitId, conversionFactor: this.selectedConversionFactor }],
+      },
+      unitId,
+      qty,
+    );
     this.filterAvailablePrices();
   }
 

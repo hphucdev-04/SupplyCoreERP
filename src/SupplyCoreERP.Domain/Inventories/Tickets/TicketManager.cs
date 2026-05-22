@@ -35,6 +35,7 @@ public class TicketManager : DomainService
     private readonly InventoryBalanceManager _balanceManager;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
     private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly UnitConversionManager _unitConversionManager;
 
     public TicketManager(
         IRepository<InventoryTicket, Guid> ticketRepo,
@@ -51,7 +52,8 @@ public class TicketManager : DomainService
         IRepository<SalesOrderLine, Guid> soLineRepo,
         WarehouseManager warehouseManager,
         InventoryBalanceManager balanceManager,
-        DocumentSequenceManager documentSequenceManager)
+        DocumentSequenceManager documentSequenceManager,
+        UnitConversionManager unitConversionManager)
     {
         _ticketRepo = ticketRepo;
         _ticketLineRepo = ticketLineRepo;
@@ -68,6 +70,7 @@ public class TicketManager : DomainService
         _warehouseManager = warehouseManager;
         _balanceManager = balanceManager;
         _documentSequenceManager = documentSequenceManager;
+        _unitConversionManager = unitConversionManager;
     }
 
     #region Helpers
@@ -236,8 +239,8 @@ public class TicketManager : DomainService
 
     public async Task AllocateFEFOForLineAsync(InventoryTicket ticket, InventoryTicketLine line)
     {
-        decimal requiredBaseQuantity = line.Quantity * line.ConversionFactor;
         Product product = await _productRepo.GetAsync(line.ProductId);
+        decimal requiredBaseQuantity = _unitConversionManager.ConvertToBaseQuantity(product, line.UnitId, line.Quantity);
 
         List<InventoryBalance> balances = await _balanceRepo.GetListAsync(x => x.WarehouseId == ticket.WarehouseId && x.ProductId == line.ProductId && x.Quantity > x.LockedQuantity);
 
@@ -326,7 +329,8 @@ public class TicketManager : DomainService
             await ValidateBatchForIssueAsync(productBatchId);
         }
 
-        decimal baseQty = quantity * conversionFactor;
+        Product product = await _productRepo.GetAsync(productId);
+        decimal baseQty = _unitConversionManager.ConvertToBaseQuantity(product, unitId, quantity);
 
         // Kiểm tra tổng số lượng chi tiết không được vượt quá số lượng dòng hàng
         IQueryable<InventoryTicketDetail> detailQuery = await _ticketDetailRepo.GetQueryableAsync();
@@ -334,7 +338,6 @@ public class TicketManager : DomainService
 
         if (currentDetailedBaseQty + baseQty > line.Quantity)
         {
-            Product product = await _productRepo.GetAsync(productId);
             throw new UserFriendlyException($"Không thể thêm chi tiết cho '{product.Name}'. Tổng số lượng phân bổ ({currentDetailedBaseQty + baseQty}) vượt quá số lượng yêu cầu của dòng hàng ({line.Quantity})!");
         }
 
@@ -354,7 +357,8 @@ public class TicketManager : DomainService
         }
 
         decimal oldBaseQty = detail.BaseQuantity;
-        decimal newBaseQty = actualQuantity * detail.ConversionFactor;
+        Product product = await _productRepo.GetAsync(detail.ProductId);
+        decimal newBaseQty = _unitConversionManager.ConvertToBaseQuantity(product, detail.UnitId, actualQuantity);
         decimal diff = newBaseQty - oldBaseQty;
 
         if (ticket.Status == ApprovalStatus.Pending && IsIssueTicket(ticket.Type))
@@ -479,12 +483,27 @@ public class TicketManager : DomainService
                 SalesOrderLine? soLine = so.Lines.FirstOrDefault(x => x.Id == tLine.SalesOrderLineId.Value);
                 if (soLine != null)
                 {
-                    soLine.AddDeliveredQuantity(Math.Round(tLine.Quantity / soLine.ConversionFactor, 4));
+                    Product product = await _productRepo.GetAsync(tLine.ProductId);
+                    decimal baseQty = _unitConversionManager.ConvertToBaseQuantity(product, tLine.UnitId, tLine.Quantity);
+                    decimal deliveredQty = _unitConversionManager.ConvertFromBaseQuantity(product, soLine.UnitId, baseQty, 4);
+                    soLine.AddDeliveredQuantity(deliveredQty);
                 }
             }
         }
 
-        if (so.Lines.All(x => x.DeliveredQuantity * x.ConversionFactor >= x.BaseQuantity - 0.0001m))
+        bool allDelivered = true;
+        foreach (SalesOrderLine x in so.Lines)
+        {
+            Product product = await _productRepo.GetAsync(x.ProductId);
+            decimal deliveredBaseQty = _unitConversionManager.ConvertToBaseQuantity(product, x.UnitId, x.DeliveredQuantity);
+            if (deliveredBaseQty < x.BaseQuantity - 0.0001m)
+            {
+                allDelivered = false;
+                break;
+            }
+        }
+
+        if (allDelivered)
         {
             so.Complete();
         }
@@ -515,7 +534,10 @@ public class TicketManager : DomainService
                 PurchaseOrderLine? poLine = po.Lines.FirstOrDefault(x => x.Id == tLine.PurchaseOrderLineId.Value);
                 if (poLine != null)
                 {
-                    poLine.AddReceivedQuantity(Math.Round(tLine.Quantity / poLine.ConversionFactor, 4));
+                    Product product = await _productRepo.GetAsync(tLine.ProductId);
+                    decimal baseQty = _unitConversionManager.ConvertToBaseQuantity(product, tLine.UnitId, tLine.Quantity);
+                    decimal receivedQty = _unitConversionManager.ConvertFromBaseQuantity(product, poLine.UnitId, baseQty, 4);
+                    poLine.AddReceivedQuantity(receivedQty);
                 }
             }
         }
