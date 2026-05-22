@@ -89,6 +89,17 @@ export class SaleOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngOnInit(): void {
+    this.orderId = this.route.snapshot.params['id'];
+    if (this.orderId) {
+      this.buildForms();
+      this.loadData();
+      this.loadMasterData();
+    } else {
+      this.goBack();
+    }
+  }
+
   ngOnDestroy(): void {
     this.routesService.remove([this.ROUTE_NAME]);
     this.destroy$.next();

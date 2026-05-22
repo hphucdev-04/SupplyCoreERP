@@ -90,6 +90,17 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngOnInit(): void {
+    this.orderId = this.route.snapshot.params['id'];
+    if (this.orderId) {
+      this.buildForms();
+      this.loadData();
+      this.loadMasterData();
+    } else {
+      this.goBack();
+    }
+  }
+
   ngOnDestroy(): void {
     this.routesService.remove([this.ROUTE_NAME]);
     this.destroy$.next();
@@ -126,6 +137,12 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
         },
         error: () => this.goBack(),
       });
+
+
+    this.ticketService
+      .getRelatedTicketsByPurchaseOrder(this.orderId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe((res) => (this.relatedTickets = res));
   }
 
   loadMasterData() {

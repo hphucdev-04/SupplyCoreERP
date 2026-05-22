@@ -143,6 +143,17 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
+  ngOnInit(): void {
+    this.ticketId = this.route.snapshot.params['id'];
+    if (this.ticketId) {
+      this.buildForms();
+      this.loadTicketData();
+      this.loadMasterData();
+    } else {
+      this.goBack();
+    }
+  }
+
   ngOnDestroy(): void {
     this.routesService.remove([this.ROUTE_NAME]);
     this.destroy$.next();
@@ -401,7 +412,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
   }
 
   onUnitChange(unitId: string) {
-    const unit = this.units.find(u => u.unitId === unitId);
+    const unit = this.units.find((u) => u.unitId === unitId);
     if (unit) {
       this.selectedConversionFactor = unit.conversionFactor;
       this.selectedUnitName = unit.unitName;
