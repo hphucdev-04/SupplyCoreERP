@@ -4,8 +4,8 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SupplyCoreERP.Orders.PO;
-using SupplyCoreERP.Orders.PR;
+using SupplyCoreERP.Procurement.PurchaseOrders;
+using SupplyCoreERP.Procurement.PurchaseRequisitions;
 using SupplyCoreERP.PurchaseRequisitions.Dtos;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
@@ -72,7 +72,6 @@ public class PurchaseRequisitionAppService : SupplyCore, IPurchaseRequisitionApp
 
         PurchaseRequisitionDto dto = ObjectMapper.Map<PurchaseRequisition, PurchaseRequisitionDto>(entity);
 
-        // Nạp thêm danh sách PO liên quan
         IQueryable<PurchaseOrder> relatedOrders = await _orderRepo.GetQueryableAsync();
         List<PurchaseOrder> orders = await relatedOrders
             .Include(o => o.Supplier)
@@ -118,7 +117,7 @@ public class PurchaseRequisitionAppService : SupplyCore, IPurchaseRequisitionApp
         PurchaseRequisition entity = await _requisitionRepo.GetAsync(id);
         if (entity.Status != Enums.Orders.PurchaseRequisitionStatus.Draft)
         {
-            throw new UserFriendlyException("Chỉ có thể xóa yêu cầu đang ở trạng thái Nháp.");
+            throw new UserFriendlyException("Chá»‰ cÃ³ thá»ƒ xÃ³a yÃªu cáº§u Ä‘ang á»Ÿ tráº¡ng thÃ¡i NhÃ¡p.");
         }
         await _requisitionRepo.DeleteAsync(entity);
     }
@@ -214,3 +213,4 @@ public class PurchaseRequisitionAppService : SupplyCore, IPurchaseRequisitionApp
         await _requisitionRepo.UpdateAsync(requisition);
     }
 }
+

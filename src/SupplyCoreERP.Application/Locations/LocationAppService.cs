@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using SupplyCoreERP.Locations.Areas;
 using SupplyCoreERP.Locations.Cities;
@@ -9,7 +8,6 @@ using SupplyCoreERP.Locations.Continents;
 using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Locations.Dtos;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Locations;
@@ -99,3 +97,4 @@ public class LocationAppService : SupplyCore, ILocationAppService
         );
     }
 }
+

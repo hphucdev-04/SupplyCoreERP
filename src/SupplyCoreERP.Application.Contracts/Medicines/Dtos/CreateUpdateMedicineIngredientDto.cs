@@ -8,3 +8,4 @@ public class CreateUpdateMedicineIngredientDto
     [Required]
     public Guid ActiveIngredientId { get; set; }
 }
+

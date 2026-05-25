@@ -1,7 +1,6 @@
 using System;
 using System.Threading.Tasks;
 using SupplyCoreERP.Batches.Dtos;
-using SupplyCoreERP.Warehouses.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
 
@@ -19,3 +18,4 @@ public interface IProductBatchAppService : IApplicationService
     Task RejectQAAsync(Guid id);
     Task RecallAsync(Guid id);
 }
+

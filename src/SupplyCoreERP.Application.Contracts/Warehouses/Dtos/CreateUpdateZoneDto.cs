@@ -35,3 +35,4 @@ public class CreateUpdateZoneDto
 
     public float Rotation { get; set; }
 }
+

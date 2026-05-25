@@ -13,3 +13,9 @@ public class NullSupplyCoreERPDbSchemaMigrator : ISupplyCoreERPDbSchemaMigrator,
         return Task.CompletedTask;
     }
 }
+
+
+
+
+
+

@@ -29,3 +29,4 @@ public class MedicineDto : EntityDto<Guid>
     public DateTime? LastModificationTime { get; set; }
 
 }
+

@@ -12,3 +12,4 @@ public abstract class SupplyCoreERPController : AbpControllerBase
         LocalizationResource = typeof(SupplyCoreERPResource);
     }
 }
+

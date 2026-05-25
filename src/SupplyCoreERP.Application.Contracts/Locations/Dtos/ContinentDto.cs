@@ -7,3 +7,4 @@ public class ContinentDto : EntityDto<Guid>
 {
     public string Name { get; set; }
 }
+

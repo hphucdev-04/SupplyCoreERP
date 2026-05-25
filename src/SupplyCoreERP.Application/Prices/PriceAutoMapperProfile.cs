@@ -1,5 +1,6 @@
 using AutoMapper;
 using SupplyCoreERP.Prices.Dtos;
+using SupplyCoreERP.Sales.PriceLists;
 
 namespace SupplyCoreERP.Prices;
 
@@ -16,3 +17,4 @@ public class PriceAutoMapperProfile : Profile
             .ForMember(dest => dest.UnitName, opt => opt.MapFrom(src => src.Unit.Name));
     }
 }
+

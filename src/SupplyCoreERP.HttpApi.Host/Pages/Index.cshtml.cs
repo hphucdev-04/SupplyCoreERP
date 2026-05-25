@@ -33,3 +33,4 @@ public class IndexModel : AbpPageModel
         CurrentLanguage = CultureInfo.CurrentCulture.DisplayName;
     }
 }
+

@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using SupplyCoreERP.Common.Notifications;
 using SupplyCoreERP.Enums.Notificaitons;
 using SupplyCoreERP.Notifications.Dtos;
+using SupplyCoreERP.Permissions;
 using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Authorization.Permissions;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Users;
-using static SupplyCoreERP.Permissions.SupplyCoreERPPermissions;
 
 namespace SupplyCoreERP.Notifications;
 
@@ -70,8 +71,8 @@ public class NotificationAppService : SupplyCore, INotificationAppService
         List<string> grantedPerms = new();
         foreach (string? perm in new[]
         {
-            Catalog.Medicine.Approve,
-            Catalog.Medicine.Reject
+            SupplyCoreERPPermissions.Catalog.Medicine.Approve,
+            SupplyCoreERPPermissions.Catalog.Medicine.Reject
         })
         {
             if (await _permissionChecker.IsGrantedAsync(perm))
@@ -80,7 +81,6 @@ public class NotificationAppService : SupplyCore, INotificationAppService
             }
         }
 
-        // Lấy các notification user này đã xóa
         HashSet<Guid> deletedIds = (await _userNotifRepo
             .GetListAsync(x => x.UserId == userId && x.IsDelete))
             .Select(x => x.NotificationId)
@@ -98,7 +98,6 @@ public class NotificationAppService : SupplyCore, INotificationAppService
 
         List<Notification> allCandidates = await AsyncExecuter.ToListAsync(query);
 
-        // Filter trên memory: permission + loại bỏ đã xóa
         List<Notification> filtered = allCandidates
             .Where(n => !deletedIds.Contains(n.Id))
             .Where(n =>
@@ -117,7 +116,6 @@ public class NotificationAppService : SupplyCore, INotificationAppService
         List<NotificationDto> dtos = ObjectMapper
             .Map<List<Notification>, List<NotificationDto>>(items);
 
-        // Gán IsRead
         List<Guid> notifIds = items.Select(x => x.Id).ToList();
 
         HashSet<Guid> readIds = (await _userNotifRepo
@@ -153,3 +151,4 @@ public class NotificationAppService : SupplyCore, INotificationAppService
     public async Task MarkAllDeleteAsync(List<Guid> ids)
         => await _notificationManager.MarkManyDeleteAsync(ids, _currentUser.GetId());
 }
+

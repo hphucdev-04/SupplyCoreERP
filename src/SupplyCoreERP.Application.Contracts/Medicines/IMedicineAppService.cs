@@ -43,3 +43,4 @@ public interface IMedicineAppService : IApplicationService
     Task ImportExcelAsync(IRemoteStreamContent file);
     Task<IRemoteStreamContent> GetImportTemplateAsync();
 }
+

@@ -1,7 +1,7 @@
 using System;
 using AutoMapper;
 using SupplyCoreERP.Balances.Dtos;
-using SupplyCoreERP.Inventories.Balances;
+using SupplyCoreERP.Inventory.Balances;
 
 namespace SupplyCoreERP.Balances;
 
@@ -33,3 +33,4 @@ public class InventoryBalanceAutoMapperProfile : Profile
             .ForMember(dest => dest.BinCode, opt => opt.MapFrom(src => src.Bin != null ? src.Bin.Code : null));
     }
 }
+

@@ -9,3 +9,4 @@ public class UpdatePurchaseRequisitionLineDto
     public decimal Quantity { get; set; }
     public string? Note { get; set; }
 }
+

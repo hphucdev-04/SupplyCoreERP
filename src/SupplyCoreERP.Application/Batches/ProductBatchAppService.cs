@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using SupplyCoreERP.Batches.Dtos;
-using SupplyCoreERP.Inventories.Batches;
+using SupplyCoreERP.Inventory.Batches;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 
@@ -79,9 +79,6 @@ public class ProductBatchAppService : SupplyCore, IProductBatchAppService
         await _batchRepo.DeleteAsync(id);
     }
 
-    // ==========================================
-    // CÁC HÀM DUYỆT QA (Thay đổi Status)
-    // ==========================================
     public async Task ApproveQAAsync(Guid id)
     {
         ProductBatch batch = await _batchRepo.GetAsync(id);
@@ -103,3 +100,4 @@ public class ProductBatchAppService : SupplyCore, IProductBatchAppService
         await _batchRepo.UpdateAsync(batch);
     }
 }
+

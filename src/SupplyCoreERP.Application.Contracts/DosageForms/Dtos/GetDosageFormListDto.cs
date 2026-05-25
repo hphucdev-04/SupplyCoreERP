@@ -9,3 +9,4 @@ public class GetDosageFormListDto : PagedAndSortedResultRequestDto
 {
     public string? Filter { get; set; }
 }
+

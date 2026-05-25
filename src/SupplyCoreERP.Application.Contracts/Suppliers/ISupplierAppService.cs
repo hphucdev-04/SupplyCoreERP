@@ -28,3 +28,4 @@ public interface ISupplierAppService : IApplicationService
     Task<List<SourcingSuggestionDto>> GetSourcingSuggestionsAsync(List<Guid> productIds);
     #endregion
 }
+

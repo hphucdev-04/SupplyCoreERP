@@ -1,6 +1,5 @@
 using AutoMapper;
-using NPOI;
-using SupplyCoreERP.Inventories.Warehouses;
+using SupplyCoreERP.Inventory.Warehouses;
 using SupplyCoreERP.Warehouses.Dtos;
 
 namespace SupplyCoreERP.Warehouses;
@@ -24,3 +23,4 @@ public class WarehouseAutoMapperProfile : Profile
             .ForMember(dest => dest.ZoneStorageCondition, opt => opt.MapFrom(src => src.Zone.StorageCondition));
     }
 }
+

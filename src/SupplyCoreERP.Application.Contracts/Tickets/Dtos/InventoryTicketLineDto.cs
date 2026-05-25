@@ -21,3 +21,4 @@ public class InventoryTicketLineDto : AuditedEntityDto<Guid>
 
     public List<InventoryTicketDetailDto> Details { get; set; } = new List<InventoryTicketDetailDto>();
 }
+

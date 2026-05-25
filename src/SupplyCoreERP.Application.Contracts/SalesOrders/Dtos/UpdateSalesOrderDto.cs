@@ -12,3 +12,4 @@ public class UpdateSalesOrderDto
     public DateTime? DueDate { get; set; }
     [MaxLength(1000)] public string? Note { get; set; }
 }
+

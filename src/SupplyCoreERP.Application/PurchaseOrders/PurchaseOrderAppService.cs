@@ -4,10 +4,10 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SupplyCoreERP.Inventories.Tickets;
-using SupplyCoreERP.Orders.PO;
+using SupplyCoreERP.Inventory.Tickets;
+using SupplyCoreERP.Partner.Suppliers;
+using SupplyCoreERP.Procurement.PurchaseOrders;
 using SupplyCoreERP.PurchaseOrders.Dtos;
-using SupplyCoreERP.Suppliers;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
@@ -22,8 +22,7 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
     private readonly IRepository<Supplier, Guid> _supplierRepo;
     private readonly PurchaseOrderManager _orderManager;
 
-
-    // DI
+    // Constructor injection
     public PurchaseOrderAppService(
     IRepository<PurchaseOrder, Guid> orderRepo,
     IRepository<InventoryTicket, Guid> ticketRepo,
@@ -209,3 +208,4 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
     }
     #endregion
 }
+

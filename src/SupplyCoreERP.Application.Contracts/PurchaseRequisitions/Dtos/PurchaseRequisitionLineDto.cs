@@ -13,3 +13,4 @@ public class PurchaseRequisitionLineDto : AuditedEntityDto<Guid>
     public decimal OrderedQuantity { get; set; }
     public string? Note { get; set; }
 }
+

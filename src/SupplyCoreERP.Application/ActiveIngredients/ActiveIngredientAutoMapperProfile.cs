@@ -1,5 +1,6 @@
 using AutoMapper;
 using SupplyCoreERP.ActiveIngredients.Dtos;
+using SupplyCoreERP.Catalog.ActiveIngredients;
 
 namespace SupplyCoreERP.ActiveIngredients;
 
@@ -11,3 +12,4 @@ public class ActiveIngredientAutoMapperProfile : Profile
         CreateMap<CreateUpdateActiveIngredientDto, ActiveIngredient>();
     }
 }
+

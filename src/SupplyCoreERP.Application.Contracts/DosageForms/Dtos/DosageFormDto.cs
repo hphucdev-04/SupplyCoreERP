@@ -11,3 +11,4 @@ public class DosageFormDto : FullAuditedEntityDto<Guid>
     public string Code { get; set; }
     public string Name { get; set; }
 }
+

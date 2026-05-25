@@ -1,5 +1,5 @@
 using AutoMapper;
-using SupplyCoreERP.Orders.PO;
+using SupplyCoreERP.Procurement.PurchaseOrders;
 using SupplyCoreERP.PurchaseOrders.Dtos;
 
 namespace SupplyCoreERP.PurchaseOrders;
@@ -22,3 +22,4 @@ public class PurchaseOrderAutoMapperProfile : Profile
             .ForMember(dest => dest.BaseUnitName, opt => opt.MapFrom(src => src.Product != null && src.Product.BaseUnit != null ? src.Product.BaseUnit.Name : null));
     }
 }
+

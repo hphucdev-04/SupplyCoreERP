@@ -21,3 +21,9 @@ public class LocalizationSettingProvider : SettingDefinitionProvider
         return LocalizableString.Create<AbpLocalizationResource>(name);
     }
 }
+
+
+
+
+
+

@@ -30,3 +30,4 @@ public class SupplyCoreERPDatabaseCheck : IHealthCheck, ITransientDependency
         }
     }
 }
+

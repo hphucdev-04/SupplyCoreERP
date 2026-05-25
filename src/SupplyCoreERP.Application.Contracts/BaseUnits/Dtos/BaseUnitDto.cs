@@ -8,3 +8,4 @@ public class BaseUnitDto : FullAuditedEntityDto<Guid>
     public string Code { get; set; }
     public string Name { get; set; }
 }
+

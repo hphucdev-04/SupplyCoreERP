@@ -10,3 +10,4 @@ public class UpdatePurchaseRequisitionDto
     public DateTime? RequiredDate { get; set; }
     public string? Note { get; set; }
 }
+

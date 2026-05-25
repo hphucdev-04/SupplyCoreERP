@@ -12,3 +12,4 @@ public class CustomerSummaryDto
     public int TotalOrganization { get; set; }
     public int TotalIndividual { get; set; }
 }
+

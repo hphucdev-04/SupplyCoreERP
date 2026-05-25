@@ -13,3 +13,4 @@ public class AddPurchaseOrderLineDto
     public decimal UnitPrice { get; set; }
     public decimal TaxRate { get; set; }
 }
+

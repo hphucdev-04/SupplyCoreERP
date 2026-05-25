@@ -9,15 +9,16 @@ using MiniExcelLibs;
 using NPOI.SS.UserModel;
 using NPOI.SS.Util;
 using NPOI.XSSF.UserModel;
-using SupplyCoreERP.ActiveIngredients;
-using SupplyCoreERP.BaseUnits;
-using SupplyCoreERP.Categories;
-using SupplyCoreERP.DosageForms;
+using SupplyCoreERP.Catalog.ActiveIngredients;
+using SupplyCoreERP.Catalog.BaseUnits;
+using SupplyCoreERP.Catalog.Categories;
+using SupplyCoreERP.Catalog.DosageForms;
+using SupplyCoreERP.Catalog.Manufacturers;
+using SupplyCoreERP.Catalog.Medicines;
+using SupplyCoreERP.Catalog.Medicines.Events;
 using SupplyCoreERP.Enums.Medicines;
-using SupplyCoreERP.Manufacturers;
 using SupplyCoreERP.Medicines.Dtos;
-using SupplyCoreERP.Medicines.Events;
-using SupplyCoreERP.Prices;
+using SupplyCoreERP.Sales.PriceLists;
 using Volo.Abp;
 using Volo.Abp.Content;
 using Volo.Abp.Domain.Repositories;
@@ -102,29 +103,29 @@ public class MedicineExcelService : SupplyCore
             //Enum
             UsageRoute = x.UsageRoute switch
             {
-                UsageRoute.Oral => "Uống",
-                UsageRoute.Injection => "Tiêm",
-                UsageRoute.External => "Ngoài da",
-                UsageRoute.Other => "Khác"
+                UsageRoute.Oral => "Uá»‘ng",
+                UsageRoute.Injection => "TiÃªm",
+                UsageRoute.External => "NgoÃ i da",
+                UsageRoute.Other => "KhÃ¡c"
             },
             StorageCondition = x.StorageCondition switch
             {
-                StorageCondition.Normal => "Bình thường",
-                StorageCondition.Cool => "Mát",
-                StorageCondition.Cold => "Lạnh",
-                StorageCondition.Frozen => "Đông"
+                StorageCondition.Normal => "BÃ¬nh thÆ°á»ng",
+                StorageCondition.Cool => "MÃ¡t",
+                StorageCondition.Cold => "Láº¡nh",
+                StorageCondition.Frozen => "ÄÃ´ng"
             },
-            IsPrescriptionDrug = x.IsPrescriptionDrug ? "Có (Rx)" : "Không",
+            IsPrescriptionDrug = x.IsPrescriptionDrug ? "CÃ³ (Rx)" : "KhÃ´ng",
 
             //Status
             Status = x.Status switch
             {
-                MedicineStatus.Pending => "Chờ duyệt",
-                MedicineStatus.Approved => "Đã duyệt",
-                MedicineStatus.Rejected => "Từ chối",
+                MedicineStatus.Pending => "Chá» duyá»‡t",
+                MedicineStatus.Approved => "ÄÃ£ duyá»‡t",
+                MedicineStatus.Rejected => "Tá»« chá»‘i",
                 _ => ""
             },
-            IsActive = x.IsActive ? "Hoạt động" : "Ngừng",
+            IsActive = x.IsActive ? "Hoáº¡t Ä‘á»™ng" : "Ngá»«ng",
 
             //Ingredients
             Ingredients = x.Ingredients != null && x.Ingredients.Any()
@@ -167,8 +168,8 @@ public class MedicineExcelService : SupplyCore
         MemoryStream memoryStream = new();
         Dictionary<string, object> sheets = new()
         {
-            { "Danh sách thuốc", medicineData },
-            { "Bảng giá chi tiết", priceData }
+            { "Danh sÃ¡ch thuá»‘c", medicineData },
+            { "Báº£ng giÃ¡ chi tiáº¿t", priceData }
         };
 
         await memoryStream.SaveAsAsync(sheets);
@@ -187,7 +188,7 @@ public class MedicineExcelService : SupplyCore
     {
         using Stream stream = file.GetStream();
 
-        // Cache db lên RAM
+        // Cache db lÃªn RAM
         Dictionary<string, Guid> categories = (await _categoryRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
         Dictionary<string, Guid> manufacturers = (await _manufacturerRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
         Dictionary<string, Guid> units = (await _baseUnitRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
@@ -196,7 +197,7 @@ public class MedicineExcelService : SupplyCore
         Dictionary<string, Guid> priceLists = (await _priceListRepo.GetListAsync()).ToDictionary(x => x.Name.ToLower().Trim(), x => x.Id);
 
         // Map tempCode ra medicineId
-        // Dùng để sheet price tham chiếu 
+        // DÃ¹ng Ä‘á»ƒ sheet price tham chiáº¿u 
         Dictionary<string, Guid> tempCodeToMedicineId = new(StringComparer.OrdinalIgnoreCase);
 
         List<string> errors = new();
@@ -204,8 +205,8 @@ public class MedicineExcelService : SupplyCore
 
         int rowIndex = 1;
 
-        // Sheet 1 Danh sách thuốc
-        List<MedicineImportDto> medRows = stream.Query<MedicineImportDto>("Danh sách thuốc").ToList();
+        // Sheet 1 Danh sÃ¡ch thuá»‘c
+        List<MedicineImportDto> medRows = stream.Query<MedicineImportDto>("Danh sÃ¡ch thuá»‘c").ToList();
         if (!medRows.Any())
         {
             medRows = stream.Query<MedicineImportDto>().ToList();
@@ -216,21 +217,21 @@ public class MedicineExcelService : SupplyCore
             rowIndex++;
             try
             {
-                // ĐÃ XÓA DÒNG SKIP ROWINDEX == 2 Ở ĐÂY
+                // ÄÃƒ XÃ“A DÃ’NG SKIP ROWINDEX == 2 á»ž ÄÃ‚Y
 
-                // Bỏ qua dòng trống
+                // Bá» qua dÃ²ng trá»‘ng
                 if (string.IsNullOrWhiteSpace(row.Name))
                 {
                     continue;
                 }
 
-                // Tìm ID
-                Guid catId = GetId(categories, row.Category, $"Dòng {rowIndex}: Nhóm hàng '{row.Category}' không tồn tại");
-                Guid manuId = GetId(manufacturers, row.Manufacturer, $"Dòng {rowIndex}: NSX '{row.Manufacturer}' không tồn tại");
-                Guid baseUnitId = GetId(units, row.BaseUnit, $"Dòng {rowIndex}: Đơn vị '{row.BaseUnit}' không tồn tại");
-                Guid dosageId = GetId(dosages, row.DosageForm, $"Dòng {rowIndex}: Dạng bào chế '{row.DosageForm}' không tồn tại");
+                // TÃ¬m ID
+                Guid catId = GetId(categories, row.Category, $"DÃ²ng {rowIndex}: NhÃ³m hÃ ng '{row.Category}' khÃ´ng tá»“n táº¡i");
+                Guid manuId = GetId(manufacturers, row.Manufacturer, $"DÃ²ng {rowIndex}: NSX '{row.Manufacturer}' khÃ´ng tá»“n táº¡i");
+                Guid baseUnitId = GetId(units, row.BaseUnit, $"DÃ²ng {rowIndex}: ÄÆ¡n vá»‹ '{row.BaseUnit}' khÃ´ng tá»“n táº¡i");
+                Guid dosageId = GetId(dosages, row.DosageForm, $"DÃ²ng {rowIndex}: Dáº¡ng bÃ o cháº¿ '{row.DosageForm}' khÃ´ng tá»“n táº¡i");
 
-                // Manager tạo entity với đầy đủ thông tin ngay từ đầu
+                // Manager táº¡o entity vá»›i Ä‘áº§y Ä‘á»§ thÃ´ng tin ngay tá»« Ä‘áº§u
                 Medicine medicine = await _medicineManager.CreateAsync(
                     row.Name, catId, manuId, baseUnitId, dosageId,
                     row.RegistrationNumber,
@@ -270,8 +271,8 @@ public class MedicineExcelService : SupplyCore
                 importedItems.Add(new MedicineImportedItem(medicine.Id, medicine.Name, medicine.Code));
 
 
-                // Lưu mapping TempCode -> Id để Sheet giá dùng
-                // Nếu không có TempCode thì dùng Name làm key dự phòng
+                // LÆ°u mapping TempCode -> Id Ä‘á»ƒ Sheet giÃ¡ dÃ¹ng
+                // Náº¿u khÃ´ng cÃ³ TempCode thÃ¬ dÃ¹ng Name lÃ m key dá»± phÃ²ng
                 string tempKey = !string.IsNullOrWhiteSpace(row.TempCode)
                     ? row.TempCode.Trim()
                     : row.Name.Trim();
@@ -283,15 +284,15 @@ public class MedicineExcelService : SupplyCore
             }
             catch (Exception ex)
             {
-                errors.Add($"[Thuốc] Dòng {rowIndex}: {ex.Message}");
+                errors.Add($"[Thuá»‘c] DÃ²ng {rowIndex}: {ex.Message}");
             }
         }
 
-        // Sheet 2 Bảng giá chi tiết
+        // Sheet 2 Báº£ng giÃ¡ chi tiáº¿t
         rowIndex = 1;
         try
         {
-            List<MedicinePriceImportDto> priceRows = stream.Query<MedicinePriceImportDto>("Bảng giá chi tiết").ToList();
+            List<MedicinePriceImportDto> priceRows = stream.Query<MedicinePriceImportDto>("Báº£ng giÃ¡ chi tiáº¿t").ToList();
             foreach (MedicinePriceImportDto row in priceRows)
             {
                 rowIndex++;
@@ -302,10 +303,10 @@ public class MedicineExcelService : SupplyCore
                         continue;
                     }
 
-                    // Tìm medicine.id đã được map theo tempCode
+                    // TÃ¬m medicine.id Ä‘Ã£ Ä‘Æ°á»£c map theo tempCode
                     if (!tempCodeToMedicineId.TryGetValue(row.MedicineCode.ToUpper().Trim(), out Guid pId))
                     {
-                        continue; // Thuốc chưa có -> Bỏ qua
+                        continue; // Thuá»‘c chÆ°a cÃ³ -> Bá» qua
                     }
 
                     if (!priceLists.TryGetValue(row.PriceListName.ToLower().Trim(), out Guid plId))
@@ -320,15 +321,15 @@ public class MedicineExcelService : SupplyCore
 
                     int minQty = row.MinQuantity > 0 ? row.MinQuantity : 1;
 
-                    // Check trùng giá
-                    // Nếu giá này đã có rồi thì bỏ qua, không update đè
+                    // Check trÃ¹ng giÃ¡
+                    // Náº¿u giÃ¡ nÃ y Ä‘Ã£ cÃ³ rá»“i thÃ¬ bá» qua, khÃ´ng update Ä‘Ã¨
                     bool existsPrice = await _productPriceRepo.AnyAsync(x =>
                         x.PriceListId == plId && x.ProductId == pId &&
                         x.UnitId == uId && x.MinQuantity == minQty);
 
                     if (existsPrice)
                     {
-                        errors.Add($"[Giá] Dòng {rowIndex}: Giá cho '{row.MedicineCode}' đã tồn tại. Bỏ qua.");
+                        errors.Add($"[GiÃ¡] DÃ²ng {rowIndex}: GiÃ¡ cho '{row.MedicineCode}' Ä‘Ã£ tá»“n táº¡i. Bá» qua.");
                         continue;
                     }
 
@@ -338,11 +339,11 @@ public class MedicineExcelService : SupplyCore
                 }
                 catch (Exception ex)
                 {
-                    errors.Add($"[Giá] Dòng {rowIndex} (Mã {row.MedicineCode}): {ex.Message}");
+                    errors.Add($"[GiÃ¡] DÃ²ng {rowIndex} (MÃ£ {row.MedicineCode}): {ex.Message}");
                 }
             }
         }
-        catch { /*Không có sheet giá thì thôi */ }
+        catch { /*KhÃ´ng cÃ³ sheet giÃ¡ thÃ¬ thÃ´i */ }
 
         if (importedItems.Any())
         {
@@ -351,10 +352,10 @@ public class MedicineExcelService : SupplyCore
 
         if (errors.Any())
         {
-            string errorMsg = $"Kết quả nhập liệu:\n- " + string.Join("\n- ", errors.Take(15));
+            string errorMsg = $"Káº¿t quáº£ nháº­p liá»‡u:\n- " + string.Join("\n- ", errors.Take(15));
             if (errors.Count > 15)
             {
-                errorMsg += $"\n... và {errors.Count - 15} lỗi khác.";
+                errorMsg += $"\n... vÃ  {errors.Count - 15} lá»—i khÃ¡c.";
             }
 
             throw new UserFriendlyException(errorMsg);
@@ -372,8 +373,8 @@ public class MedicineExcelService : SupplyCore
         List<string> priceLists = (await _priceListRepo.GetListAsync()).Select(x => x.Name).ToList();
 
         XSSFWorkbook workbook = new();
-        ISheet sheetMain = workbook.CreateSheet("Danh sách thuốc");
-        ISheet sheetPrice = workbook.CreateSheet("Bảng giá chi tiết");
+        ISheet sheetMain = workbook.CreateSheet("Danh sÃ¡ch thuá»‘c");
+        ISheet sheetPrice = workbook.CreateSheet("Báº£ng giÃ¡ chi tiáº¿t");
         ISheet sheetData = workbook.CreateSheet("MasterData");
         ICellStyle headerStyle = CreateHeaderStyle(workbook);
 
@@ -414,43 +415,43 @@ public class MedicineExcelService : SupplyCore
         CreateNamedRange(workbook, "ListDosageForms", "MasterData", 3, dosageForms.Count, startRow: 0);
         CreateNamedRange(workbook, "ListPriceLists", "MasterData", 4, priceLists.Count, startRow: 0);
 
-        // Sửa startRow thành 0 để ListTempCodes map đúng từ dòng 2 của Excel
-        CreateNamedRange(workbook, "ListTempCodes", "Danh sách thuốc", 0, 1000, startRow: 1);
+        // Sá»­a startRow thÃ nh 0 Ä‘á»ƒ ListTempCodes map Ä‘Ãºng tá»« dÃ²ng 2 cá»§a Excel
+        CreateNamedRange(workbook, "ListTempCodes", "Danh sÃ¡ch thuá»‘c", 0, 1000, startRow: 1);
 
         workbook.SetSheetHidden(workbook.GetSheetIndex("MasterData"), true);
 
         // Sheet 1
         string[] headers1 = new[]
         {
-            "Mã tạm",           // 0
-            "Tên thuốc",        // 1
-            "Nhóm hàng",        // 2
-            "Nhà sản xuất",     // 3
-            "Đơn vị cơ bản",   // 4
-            "Dạng bào chế",     // 5
-            "Số đăng ký",       // 6
-            "Đường dùng",       // 7
-            "Điều kiện bảo quản", // 8
-            "Thuốc kê đơn",     // 9
-            "Hoạt chất",        // 10
-            "Đơn vị quy đổi"   // 11
+            "MÃ£ táº¡m",           // 0
+            "TÃªn thuá»‘c",        // 1
+            "NhÃ³m hÃ ng",        // 2
+            "NhÃ  sáº£n xuáº¥t",     // 3
+            "ÄÆ¡n vá»‹ cÆ¡ báº£n",   // 4
+            "Dáº¡ng bÃ o cháº¿",     // 5
+            "Sá»‘ Ä‘Äƒng kÃ½",       // 6
+            "ÄÆ°á»ng dÃ¹ng",       // 7
+            "Äiá»u kiá»‡n báº£o quáº£n", // 8
+            "Thuá»‘c kÃª Ä‘Æ¡n",     // 9
+            "Hoáº¡t cháº¥t",        // 10
+            "ÄÆ¡n vá»‹ quy Ä‘á»•i"   // 11
         };
 
-        // Tooltip hover vào header để biết cách điền
+        // Tooltip hover vÃ o header Ä‘á»ƒ biáº¿t cÃ¡ch Ä‘iá»n
         string[] tooltips1 = new[]
         {
-            "Mã tạm do bạn tự đặt, dùng để ghép với Sheet 'Bảng giá'.\nVD: MED001, PANADOL_1",
-            "Tên thuốc. Bắt buộc điền.",
-            "Chọn từ danh sách dropdown.",
-            "Chọn từ danh sách dropdown.",
-            "Chọn từ danh sách dropdown.",
-            "Chọn từ danh sách dropdown.",
-            "Số đăng ký lưu hành. Tùy chọn.\nVD: VD-12345-21",
-            "Chọn từ danh sách:\nUống / Tiêm / Ngoài da / Khác",
-            "Chọn từ danh sách:\nBình thường / Mát / Lạnh / Đông",
-            "Chọn từ danh sách:\nCó / Không",
-            "Nhiều hoạt chất cách nhau bằng dấu ;\nVD: Paracetamol; Caffeine",
-            "Nhiều đơn vị cách nhau bằng dấu ;\nVD: Vỉ (x10); Hộp (x100)\n Lưu ý: Tên đơn vị phải có trong đơn vị cơ bản"
+            "MÃ£ táº¡m do báº¡n tá»± Ä‘áº·t, dÃ¹ng Ä‘á»ƒ ghÃ©p vá»›i Sheet 'Báº£ng giÃ¡'.\nVD: MED001, PANADOL_1",
+            "TÃªn thuá»‘c. Báº¯t buá»™c Ä‘iá»n.",
+            "Chá»n tá»« danh sÃ¡ch dropdown.",
+            "Chá»n tá»« danh sÃ¡ch dropdown.",
+            "Chá»n tá»« danh sÃ¡ch dropdown.",
+            "Chá»n tá»« danh sÃ¡ch dropdown.",
+            "Sá»‘ Ä‘Äƒng kÃ½ lÆ°u hÃ nh. TÃ¹y chá»n.\nVD: VD-12345-21",
+            "Chá»n tá»« danh sÃ¡ch:\nUá»‘ng / TiÃªm / NgoÃ i da / KhÃ¡c",
+            "Chá»n tá»« danh sÃ¡ch:\nBÃ¬nh thÆ°á»ng / MÃ¡t / Láº¡nh / ÄÃ´ng",
+            "Chá»n tá»« danh sÃ¡ch:\nCÃ³ / KhÃ´ng",
+            "Nhiá»u hoáº¡t cháº¥t cÃ¡ch nhau báº±ng dáº¥u ;\nVD: Paracetamol; Caffeine",
+            "Nhiá»u Ä‘Æ¡n vá»‹ cÃ¡ch nhau báº±ng dáº¥u ;\nVD: Vá»‰ (x10); Há»™p (x100)\n LÆ°u Ã½: TÃªn Ä‘Æ¡n vá»‹ pháº£i cÃ³ trong Ä‘Æ¡n vá»‹ cÆ¡ báº£n"
         };
 
         IRow headerRow1 = sheetMain.CreateRow(0);
@@ -462,36 +463,36 @@ public class MedicineExcelService : SupplyCore
             cell.CellStyle = headerStyle;
             sheetMain.SetColumnWidth(i, 6500);
 
-            // Tooltip trên header
+            // Tooltip trÃªn header
             AddCellComment(sheetMain, cell, tooltips1[i]);
         }
 
-        // Sửa startRow về 1 để ăn khớp với dòng ngay dưới header
+        // Sá»­a startRow vá» 1 Ä‘á»ƒ Äƒn khá»›p vá»›i dÃ²ng ngay dÆ°á»›i header
         AddValidationFromRow(sheetMain, "ListCategories", 2, 1);
         AddValidationFromRow(sheetMain, "ListManufacturers", 3, 1);
         AddValidationFromRow(sheetMain, "ListUnits", 4, 1);
         AddValidationFromRow(sheetMain, "ListDosageForms", 5, 1);
-        AddValidationListFromRow(sheetMain, new[] { "Uống", "Tiêm", "Ngoài da", "Khác" }, 7, 1);
-        AddValidationListFromRow(sheetMain, new[] { "Bình thường", "Mát", "Lạnh", "Đông" }, 8, 1);
-        AddValidationListFromRow(sheetMain, new[] { "Có", "Không" }, 9, 1);
+        AddValidationListFromRow(sheetMain, new[] { "Uá»‘ng", "TiÃªm", "NgoÃ i da", "KhÃ¡c" }, 7, 1);
+        AddValidationListFromRow(sheetMain, new[] { "BÃ¬nh thÆ°á»ng", "MÃ¡t", "Láº¡nh", "ÄÃ´ng" }, 8, 1);
+        AddValidationListFromRow(sheetMain, new[] { "CÃ³", "KhÃ´ng" }, 9, 1);
 
         // Sheet 2
         string[] headers2 = new[]
         {
-            "Mã tạm",       // 0
-            "Bảng giá",     // 1
-            "Đơn vị tính",  // 2
-            "Giá bán",      // 3
-            "SL tối thiểu"  // 4
+            "MÃ£ táº¡m",       // 0
+            "Báº£ng giÃ¡",     // 1
+            "ÄÆ¡n vá»‹ tÃ­nh",  // 2
+            "GiÃ¡ bÃ¡n",      // 3
+            "SL tá»‘i thiá»ƒu"  // 4
         };
 
         string[] tooltips2 = new[]
         {
-            "Điền Mã tạm giống Sheet 'Danh sách thuốc'.\nChọn từ dropdown để tránh nhập sai.",
-            "Chọn từ danh sách dropdown.",
-            "Chọn từ danh sách dropdown.",
-            "Giá bán, nhập số.\nVD: 5000",
-            "Số lượng tối thiểu áp dụng giá này.\nVD: 1"
+            "Äiá»n MÃ£ táº¡m giá»‘ng Sheet 'Danh sÃ¡ch thuá»‘c'.\nChá»n tá»« dropdown Ä‘á»ƒ trÃ¡nh nháº­p sai.",
+            "Chá»n tá»« danh sÃ¡ch dropdown.",
+            "Chá»n tá»« danh sÃ¡ch dropdown.",
+            "GiÃ¡ bÃ¡n, nháº­p sá»‘.\nVD: 5000",
+            "Sá»‘ lÆ°á»£ng tá»‘i thiá»ƒu Ã¡p dá»¥ng giÃ¡ nÃ y.\nVD: 1"
         };
 
         IRow headerRow2 = sheetPrice.CreateRow(0);
@@ -506,7 +507,7 @@ public class MedicineExcelService : SupplyCore
             AddCellComment(sheetPrice, cell, tooltips2[i]);
         }
 
-        // Sửa startRow về 1 
+        // Sá»­a startRow vá» 1 
         AddValidationFromRow(sheetPrice, "ListTempCodes", 0, 1);
         AddValidationFromRow(sheetPrice, "ListPriceLists", 1, 1);
         AddValidationFromRow(sheetPrice, "ListUnits", 2, 1);
@@ -538,8 +539,8 @@ public class MedicineExcelService : SupplyCore
     }
     private void CreateNamedRange(IWorkbook wb, string name, string sheetName, int colIndex, int count, int startRow = 0)
     {
-        // Nếu là cột dữ liệu động (như ListTempCodes) thì cho phép range dài
-        // Nếu là MasterData thì phải có ít nhất 1 phần tử
+        // Náº¿u lÃ  cá»™t dá»¯ liá»‡u Ä‘á»™ng (nhÆ° ListTempCodes) thÃ¬ cho phÃ©p range dÃ i
+        // Náº¿u lÃ  MasterData thÃ¬ pháº£i cÃ³ Ã­t nháº¥t 1 pháº§n tá»­
         if (count <= 0 && startRow == 0 && name != "ListTempCodes")
         {
             return;
@@ -549,10 +550,10 @@ public class MedicineExcelService : SupplyCore
         namedRange.NameName = name;
         string colLetter = CellReference.ConvertNumToColString(colIndex);
 
-        // Excel dòng bắt đầu từ 1. 
-        // Header ở row 0 -> Data bắt đầu từ row 1 (Excel gọi là dòng 2)
+        // Excel dÃ²ng báº¯t Ä‘áº§u tá»« 1. 
+        // Header á»Ÿ row 0 -> Data báº¯t Ä‘áº§u tá»« row 1 (Excel gá»i lÃ  dÃ²ng 2)
         int excelStartRow = startRow + 1;
-        int excelEndRow = startRow + (count > 0 ? count : 1000); // Nếu count=0 thì mặc định 1000 dòng cho cột Mã tạm
+        int excelEndRow = startRow + (count > 0 ? count : 1000); // Náº¿u count=0 thÃ¬ máº·c Ä‘á»‹nh 1000 dÃ²ng cho cá»™t MÃ£ táº¡m
 
         namedRange.RefersToFormula = $"'{sheetName}'!${colLetter}${excelStartRow}:${colLetter}${excelEndRow}";
     }
@@ -560,15 +561,15 @@ public class MedicineExcelService : SupplyCore
     private void AddValidation(ISheet sheet, string namedRange, int colIndex)
     {
         IDataValidationHelper helper = sheet.GetDataValidationHelper();
-        // Tạo constraint từ Named Range
+        // Táº¡o constraint tá»« Named Range
         IDataValidationConstraint constraint = helper.CreateFormulaListConstraint(namedRange);
 
-        // Áp dụng từ dòng 1 đến dòng 1000 (Bỏ qua header dòng 0)
+        // Ãp dá»¥ng tá»« dÃ²ng 1 Ä‘áº¿n dÃ²ng 1000 (Bá» qua header dÃ²ng 0)
         CellRangeAddressList addressList = new(1, 1000, colIndex, colIndex);
         IDataValidation validation = helper.CreateValidation(constraint, addressList);
 
         validation.ShowErrorBox = true;
-        validation.CreateErrorBox("Lỗi nhập liệu", "Vui lòng chọn giá trị từ danh sách.");
+        validation.CreateErrorBox("Lá»—i nháº­p liá»‡u", "Vui lÃ²ng chá»n giÃ¡ trá»‹ tá»« danh sÃ¡ch.");
         sheet.AddValidationData(validation);
     }
 
@@ -580,12 +581,12 @@ public class MedicineExcelService : SupplyCore
         IDataValidation validation = helper.CreateValidation(constraint, addressList);
 
         validation.ShowErrorBox = true;
-        validation.CreateErrorBox("Lỗi nhập liệu", "Vui lòng chọn giá trị từ danh sách.");
+        validation.CreateErrorBox("Lá»—i nháº­p liá»‡u", "Vui lÃ²ng chá»n giÃ¡ trá»‹ tá»« danh sÃ¡ch.");
         sheet.AddValidationData(validation);
     }
     private Guid GetId(Dictionary<string, Guid> dict, string name, string err)
     {
-        // Tìm trong Dict (Key đã lower + trim), nếu có trả về ID, không có ném lỗi
+        // TÃ¬m trong Dict (Key Ä‘Ã£ lower + trim), náº¿u cÃ³ tráº£ vá» ID, khÃ´ng cÃ³ nÃ©m lá»—i
         return dict.TryGetValue(name?.ToLower().Trim() ?? "", out Guid id) ? id : throw new Exception(err);
     }
 
@@ -593,32 +594,32 @@ public class MedicineExcelService : SupplyCore
     {
         if (string.IsNullOrWhiteSpace(input))
         {
-            return false; // Mặc định false
+            return false; // Máº·c Ä‘á»‹nh false
         }
 
         string s = input.ToLower().Trim();
-        return s == "có" || s == "true" || s == "1" || s == "yes" || s.Contains("hoạt động");
+        return s == "cÃ³" || s == "true" || s == "1" || s == "yes" || s.Contains("hoáº¡t Ä‘á»™ng");
     }
 
     private UsageRoute ParseUsageRoute(string input)
     {
         if (string.IsNullOrWhiteSpace(input))
         {
-            return UsageRoute.Oral; // Mặc định Uống
+            return UsageRoute.Oral; // Máº·c Ä‘á»‹nh Uá»‘ng
         }
 
         string s = input.ToLower().Trim();
-        if (s.Contains("tiêm"))
+        if (s.Contains("tiÃªm"))
         {
             return UsageRoute.Injection;
         }
 
-        if (s.Contains("ngoài"))
+        if (s.Contains("ngoÃ i"))
         {
             return UsageRoute.External;
         }
 
-        if (s.Contains("khác"))
+        if (s.Contains("khÃ¡c"))
         {
             return UsageRoute.Other;
         }
@@ -630,21 +631,21 @@ public class MedicineExcelService : SupplyCore
     {
         if (string.IsNullOrWhiteSpace(input))
         {
-            return StorageCondition.Normal; // Mặc định Bình thường
+            return StorageCondition.Normal; // Máº·c Ä‘á»‹nh BÃ¬nh thÆ°á»ng
         }
 
         string s = input.ToLower().Trim();
-        if (s.Contains("mát"))
+        if (s.Contains("mÃ¡t"))
         {
             return StorageCondition.Cool;
         }
 
-        if (s.Contains("lạnh"))
+        if (s.Contains("láº¡nh"))
         {
             return StorageCondition.Cold;
         }
 
-        if (s.Contains("đông"))
+        if (s.Contains("Ä‘Ã´ng"))
         {
             return StorageCondition.Frozen;
         }
@@ -653,7 +654,7 @@ public class MedicineExcelService : SupplyCore
     }
 
 
-    // Thêm tooltip (comment) vào 1 cell
+    // ThÃªm tooltip (comment) vÃ o 1 cell
     private void AddCellComment(ISheet sheet, ICell cell, string commentText)
     {
         IClientAnchor anchor = sheet.Workbook.GetCreationHelper().CreateClientAnchor();
@@ -665,12 +666,12 @@ public class MedicineExcelService : SupplyCore
         IDrawing<IShape> drawing = sheet.CreateDrawingPatriarch();
         IComment comment = drawing.CreateCellComment(anchor);
         comment.String = new XSSFRichTextString(commentText);
-        comment.Author = "Hướng dẫn";
-        comment.Visible = false; // chỉ hiện khi hover
+        comment.Author = "HÆ°á»›ng dáº«n";
+        comment.Visible = false; // chá»‰ hiá»‡n khi hover
         cell.CellComment = comment;
     }
 
-    // Validation từ row chỉ định (để bỏ qua dòng gợi ý ở row 1)
+    // Validation tá»« row chá»‰ Ä‘á»‹nh (Ä‘á»ƒ bá» qua dÃ²ng gá»£i Ã½ á»Ÿ row 1)
     private void AddValidationFromRow(ISheet sheet, string namedRange, int colIndex, int startRow = 1)
     {
         IDataValidationHelper helper = sheet.GetDataValidationHelper();
@@ -678,7 +679,7 @@ public class MedicineExcelService : SupplyCore
         CellRangeAddressList addressList = new(startRow, 1000, colIndex, colIndex);
         IDataValidation validation = helper.CreateValidation(constraint, addressList);
         validation.ShowErrorBox = true;
-        validation.CreateErrorBox("Lỗi nhập liệu", "Vui lòng chọn giá trị từ danh sách.");
+        validation.CreateErrorBox("Lá»—i nháº­p liá»‡u", "Vui lÃ²ng chá»n giÃ¡ trá»‹ tá»« danh sÃ¡ch.");
         sheet.AddValidationData(validation);
     }
 
@@ -689,8 +690,9 @@ public class MedicineExcelService : SupplyCore
         CellRangeAddressList addressList = new(startRow, 1000, colIndex, colIndex);
         IDataValidation validation = helper.CreateValidation(constraint, addressList);
         validation.ShowErrorBox = true;
-        validation.CreateErrorBox("Lỗi nhập liệu", "Vui lòng chọn giá trị từ danh sách.");
+        validation.CreateErrorBox("Lá»—i nháº­p liá»‡u", "Vui lÃ²ng chá»n giÃ¡ trá»‹ tá»« danh sÃ¡ch.");
         sheet.AddValidationData(validation);
     }
     #endregion
 }
+

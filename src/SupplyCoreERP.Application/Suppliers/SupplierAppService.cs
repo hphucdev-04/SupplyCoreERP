@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.Partner.Suppliers;
 using SupplyCoreERP.Suppliers.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
@@ -18,7 +19,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
     private readonly IRepository<SupplierProduct, Guid> _supplierProductRepo;
     private readonly SupplierManager _supplierManager;
 
-    // Constructor dependency injection
+    // Constructor injection
     public SupplierAppService(
         IRepository<Supplier, Guid> supplierRepository,
         IRepository<SupplierProduct, Guid> supplierProductRepo,
@@ -181,7 +182,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
         {
             foreach (CreateUpdateSupplierProductConditionDto condInput in input.Conditions)
             {
-                var condition = new SupplierProductCondition(
+                SupplierProductCondition condition = new(
                     GuidGenerator.Create(),
                     sp.Id,
                     condInput.UnitId,
@@ -229,9 +230,9 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
 
         if (input.Conditions != null)
         {
-            var inputIds = input.Conditions.Where(c => c.Id.HasValue).Select(c => c.Id.Value).ToList();
+            List<Guid> inputIds = input.Conditions.Where(c => c.Id.HasValue).Select(c => c.Id.Value).ToList();
 
-            var conditionsToRemove = sp.Conditions.Where(c => !inputIds.Contains(c.Id)).ToList();
+            List<SupplierProductCondition> conditionsToRemove = sp.Conditions.Where(c => !inputIds.Contains(c.Id)).ToList();
             foreach (SupplierProductCondition? cond in conditionsToRemove)
             {
                 sp.RemoveCondition(cond.Id);
@@ -254,7 +255,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
                 }
                 else
                 {
-                    var newCondition = new SupplierProductCondition(
+                    SupplierProductCondition newCondition = new(
                         GuidGenerator.Create(),
                         sp.Id,
                         condInput.UnitId,
@@ -308,7 +309,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
 
     public async Task<List<SourcingSuggestionDto>> GetSourcingSuggestionsAsync(List<Guid> productIds)
     {
-        // 1. Lấy tất cả danh mục sản phẩm của các NCC đang hoạt động cho danh sách thuốc yêu cầu
+        // 1. Láº¥y táº¥t cáº£ danh má»¥c sáº£n pháº©m cá»§a cÃ¡c NCC Ä‘ang hoáº¡t Ä‘á»™ng cho danh sÃ¡ch thuá»‘c yÃªu cáº§u
         IQueryable<SupplierProduct> query = await _supplierProductRepo.GetQueryableAsync();
         List<SupplierProduct> allSupplierProducts = await query
             .Include(x => x.Supplier)
@@ -321,15 +322,15 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
             return new List<SourcingSuggestionDto>();
         }
 
-        var results = new List<SourcingSuggestionDto>();
+        List<SourcingSuggestionDto> results = new();
 
-        // 2. Nhóm theo từng sản phẩm để chấm điểm đối đầu
+        // 2. NhÃ³m theo tá»«ng sáº£n pháº©m Ä‘á»ƒ cháº¥m Ä‘iá»ƒm Ä‘á»‘i Ä‘áº§u
         IEnumerable<IGrouping<Guid, SupplierProduct>> productGroups = allSupplierProducts.GroupBy(x => x.ProductId);
 
         foreach (IGrouping<Guid, SupplierProduct> group in productGroups)
         {
             Guid productId = group.Key;
-            var items = group.ToList();
+            List<SupplierProduct> items = group.ToList();
 
             var benchmarkList = items.Select(sp => new
             {
@@ -342,23 +343,23 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
             decimal minPrice = benchmarkList.Min(x => x.Price);
             int minLeadTime = items.Min(x => x.LeadTimeDays);
 
-            // Chấm điểm tất cả NCC cho sản phẩm này
-            var scoredItems = benchmarkList.Select(b =>
+            // Cháº¥m Ä‘iá»ƒm táº¥t cáº£ NCC cho sáº£n pháº©m nÃ y
+            List<SourcingSuggestionDto> scoredItems = benchmarkList.Select(b =>
             {
                 SupplierProduct sp = b.SupplierProduct;
                 decimal currentPrice = b.Price;
 
-                // Điểm Giá (70% - max 700): (MinPrice / CurrentPrice) * 700
+                // Äiá»ƒm GiÃ¡ (70% - max 700): (MinPrice / CurrentPrice) * 700
                 double priceScore = currentPrice > 0
                     ? (double)(minPrice / currentPrice) * 700
                     : 700;
 
-                // Điểm Thời gian (30% - max 300): (MinTime / CurrentTime) * 300
+                // Äiá»ƒm Thá»i gian (30% - max 300): (MinTime / CurrentTime) * 300
                 double timeScore = sp.LeadTimeDays > 0
                     ? (double)minLeadTime / sp.LeadTimeDays * 300
                     : 300;
 
-                // Điểm thưởng ưu tiên thủ công
+                // Äiá»ƒm thÆ°á»Ÿng Æ°u tiÃªn thá»§ cÃ´ng
                 double bonusScore = sp.IsPreferred ? 500 : 0;
 
                 return new SourcingSuggestionDto
@@ -379,3 +380,4 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
     }
     #endregion
 }
+

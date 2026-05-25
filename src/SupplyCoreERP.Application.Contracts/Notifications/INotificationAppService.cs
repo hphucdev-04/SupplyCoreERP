@@ -24,3 +24,4 @@ public interface INotificationAppService : IApplicationService
         NotificationSeverity severity,
         List<string> targetPermissions);
 }
+

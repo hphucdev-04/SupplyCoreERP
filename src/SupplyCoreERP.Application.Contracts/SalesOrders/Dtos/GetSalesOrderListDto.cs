@@ -13,3 +13,4 @@ public class GetSalesOrderListDto : PagedAndSortedResultRequestDto
     public Guid? WarehouseId { get; set; }
     public SalesOrderStatus? Status { get; set; }
 }
+

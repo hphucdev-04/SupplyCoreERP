@@ -5,7 +5,7 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Balances.Dtos;
-using SupplyCoreERP.Inventories.Balances;
+using SupplyCoreERP.Inventory.Balances;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Repositories;
 
@@ -24,7 +24,6 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
 
     public async Task<PagedResultDto<InventoryBalanceDto>> GetListAsync(GetInventoryBalanceListDto input)
     {
-        // Sử dụng GetQueryableAsync và Include sâu vào BaseUnit
         IQueryable<InventoryBalance> query = await _balanceRepo.GetQueryableAsync();
         query = query
             .Include(x => x.Warehouse)
@@ -40,7 +39,6 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
             .WhereIf(!string.IsNullOrWhiteSpace(input.BatchNumber), x => x.ProductBatch.BatchNumber.Contains(input.BatchNumber))
             .WhereIf(input.HideZeroQuantity == true, x => x.Quantity > 0);
 
-        // Logic lọc Cận Date: Giả sử cận date là dưới 180 ngày (6 tháng)
         if (input.IsNearExpiry == true)
         {
             DateTime nearExpiryDate = DateTime.Now.AddDays(180);
@@ -61,7 +59,6 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
     {
         IQueryable<InventoryBalance> query = await _balanceRepo.GetQueryableAsync();
 
-        // Nối sâu vào City, Area, và Supplier
         query = query
             .Include(x => x.Warehouse).ThenInclude(w => w.City)
             .Include(x => x.Warehouse).ThenInclude(w => w.Area)
@@ -83,7 +80,6 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
         IQueryable<InventoryReservation> query = await _reservationRepo.GetQueryableAsync();
         query = query.Include(x => x.Warehouse).Include(x => x.Bin);
 
-        // Bộ lọc đa năng (Multi-dimensional Filter)
         query = query
             .WhereIf(input.ReferenceDocumentId.HasValue, x => x.ReferenceDocumentId == input.ReferenceDocumentId)
             .WhereIf(!string.IsNullOrWhiteSpace(input.ReferenceDocumentNumber), x => x.ReferenceDocumentNumber.Contains(input.ReferenceDocumentNumber))
@@ -108,4 +104,5 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
 
     }
 }
+
 

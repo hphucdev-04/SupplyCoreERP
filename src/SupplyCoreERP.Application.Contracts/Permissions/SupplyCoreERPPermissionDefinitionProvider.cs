@@ -171,3 +171,4 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
         return LocalizableString.Create<SupplyCoreERPResource>(name);
     }
 }
+

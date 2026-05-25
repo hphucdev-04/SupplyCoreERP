@@ -19,4 +19,9 @@
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.14.1" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="EntityFrameworkCore\Applications\" />
+    <Folder Include="EntityFrameworkCore\Domains\" />
+  </ItemGroup>
+
 </Project>

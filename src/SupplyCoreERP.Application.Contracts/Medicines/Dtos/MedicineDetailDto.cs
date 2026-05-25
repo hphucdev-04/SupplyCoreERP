@@ -19,3 +19,4 @@ public class MedicineDetailDto : MedicineDto
     public List<MedicineUnitDto> Units { get; set; }
     public List<MedicineRegistrationDto> Registrations { get; set; }
 }
+

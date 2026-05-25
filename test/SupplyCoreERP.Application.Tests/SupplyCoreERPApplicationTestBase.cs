@@ -7,3 +7,4 @@ public abstract class SupplyCoreERPApplicationTestBase<TStartupModule> : SupplyC
 {
 
 }
+

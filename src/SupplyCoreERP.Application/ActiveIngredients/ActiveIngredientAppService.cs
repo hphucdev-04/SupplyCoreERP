@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using SupplyCoreERP.ActiveIngredients.Dtos;
+using SupplyCoreERP.Catalog.ActiveIngredients;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
@@ -26,18 +27,14 @@ public class ActiveIngredientAppService : CrudAppService<
 
     public override async Task<ActiveIngredientDto> CreateAsync(CreateUpdateActiveIngredientDto input)
     {
-        //Manager check và tạo entity
         ActiveIngredient ingredient = await _activeIngredientManager.CreateAsync(input.Name);
-        //Repository save vào DB
         await Repository.InsertAsync(ingredient);
         return ObjectMapper.Map<ActiveIngredient, ActiveIngredientDto>(ingredient);
     }
 
     public override async Task<ActiveIngredientDto> UpdateAsync(Guid id, CreateUpdateActiveIngredientDto input)
     {
-        // Manager để đảm bảo tính hợp lệ của entity
         ActiveIngredient ingredient = await Repository.GetAsync(id);
-        //Repository update vào DB
         await _activeIngredientManager.UpdateAsync(ingredient, input.Name);
         return ObjectMapper.Map<ActiveIngredient, ActiveIngredientDto>(ingredient);
     }
@@ -60,3 +57,4 @@ public class ActiveIngredientAppService : CrudAppService<
         return query;
     }
 }
+

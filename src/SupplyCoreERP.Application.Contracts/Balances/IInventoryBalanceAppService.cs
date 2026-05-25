@@ -13,3 +13,4 @@ public interface IInventoryBalanceAppService : IApplicationService
     Task<InventoryBalanceDetailDto> GetAsync(Guid id);
     Task<PagedResultDto<InventoryReservationDto>> GetReservationListAsync(GetInventoryReservationListDto input);
 }
+

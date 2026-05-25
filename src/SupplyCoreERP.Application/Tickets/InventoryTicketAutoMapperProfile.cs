@@ -1,6 +1,6 @@
 using System;
 using AutoMapper;
-using SupplyCoreERP.Inventories.Tickets;
+using SupplyCoreERP.Inventory.Tickets;
 using SupplyCoreERP.Tickets.Dtos;
 
 namespace SupplyCoreERP.Tickets;
@@ -49,8 +49,9 @@ public class InventoryTicketAutoMapperProfile : Profile
             // Unit
             .ForMember(dest => dest.UnitName,
                 opt => opt.MapFrom(src => src.Unit != null ? src.Unit.Name : null))
-            // ConversionFactor ánh xạ thẳng từ entity
+            // ConversionFactor Ã¡nh xáº¡ tháº³ng tá»« entity
             .ForMember(dest => dest.ConversionFactor,
                 opt => opt.MapFrom(src => src.ConversionFactor));
     }
 }
+

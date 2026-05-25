@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using SupplyCoreERP.BaseUnits.Dtos;
+using SupplyCoreERP.Catalog.BaseUnits;
 using Volo.Abp.Application.Services;
 using Volo.Abp.Domain.Repositories;
 
@@ -27,9 +28,7 @@ public class BaseUnitAppService : CrudAppService<
 
     public override async Task<BaseUnitDto> CreateAsync(CreateUpdateBaseUnitDto input)
     {
-        // Manager check và tạo entity 
         BaseUnit unit = await _baseUnitManager.CreateAsync(input.Name);
-        //Repository save vào DB
         await Repository.InsertAsync(unit);
 
         return ObjectMapper.Map<BaseUnit, BaseUnitDto>(unit);
@@ -38,9 +37,7 @@ public class BaseUnitAppService : CrudAppService<
     public override async Task<BaseUnitDto> UpdateAsync(Guid id, CreateUpdateBaseUnitDto input)
     {
         BaseUnit unit = await Repository.GetAsync(id);
-        // Manager để đảm bảo tính hợp lệ của entity
         await _baseUnitManager.UpdateAsync(unit, input.Name);
-        //Repository update vào DB
         await Repository.UpdateAsync(unit);
 
         return ObjectMapper.Map<BaseUnit, BaseUnitDto>(unit);
@@ -65,3 +62,4 @@ public class BaseUnitAppService : CrudAppService<
         return query;
     }
 }
+

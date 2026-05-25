@@ -9,11 +9,11 @@ public class SupplierProductDto : EntityDto<Guid>
     public Guid SupplierId { get; set; }
 
     public Guid ProductId { get; set; }
-    public string ProductName { get; set; } // Tự động map từ Product.Name
-    public string ProductCode { get; set; } // Tự động map từ Product.Code (nếu có)
+    public string ProductName { get; set; } // Tá»± Ä‘á»™ng map tá»« Product.Name
+    public string ProductCode { get; set; } // Tá»± Ä‘á»™ng map tá»« Product.Code (náº¿u cÃ³)
 
     public Guid DefaultUnitId { get; set; }
-    public string DefaultUnitName { get; set; } // Tự động map từ DefaultUnit.Name
+    public string DefaultUnitName { get; set; } // Tá»± Ä‘á»™ng map tá»« DefaultUnit.Name
 
     public int LeadTimeDays { get; set; }
 
@@ -23,3 +23,4 @@ public class SupplierProductDto : EntityDto<Guid>
 
     public List<SupplierProductConditionDto> Conditions { get; set; } = new();
 }
+

@@ -23,3 +23,4 @@ public interface ISalesOrderAppService : IApplicationService
     Task ApproveAsync(Guid id);
     Task CompleteAsync(Guid id);
 }
+

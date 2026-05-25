@@ -14,3 +14,4 @@ public class PurchaseOrderAllocationDto
     [Required]
     public decimal Quantity { get; set; }
 }
+

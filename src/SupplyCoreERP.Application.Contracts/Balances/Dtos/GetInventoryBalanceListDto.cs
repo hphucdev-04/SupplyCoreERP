@@ -10,6 +10,7 @@ public class GetInventoryBalanceListDto : PagedAndSortedResultRequestDto
     public Guid? ProductId { get; set; }
     public Guid? ProductBatchId { get; set; }
     public string? BatchNumber { get; set; }
-    public bool? IsNearExpiry { get; set; } // Lọc thuốc sắp hết hạn (VD: Còn dưới 6 tháng)
-    public bool? HideZeroQuantity { get; set; } = true; // Mặc định ẩn các kệ đã hết hàng
+    public bool? IsNearExpiry { get; set; } // Lá»c thuá»‘c sáº¯p háº¿t háº¡n (VD: CÃ²n dÆ°á»›i 6 thÃ¡ng)
+    public bool? HideZeroQuantity { get; set; } = true; // Máº·c Ä‘á»‹nh áº©n cÃ¡c ká»‡ Ä‘Ã£ háº¿t hÃ ng
 }
+

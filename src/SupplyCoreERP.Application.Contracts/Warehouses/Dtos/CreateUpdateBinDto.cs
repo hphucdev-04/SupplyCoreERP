@@ -25,3 +25,4 @@ public class CreateUpdateBinDto
     public int MaxSKU { get; set; }
     public bool IsBlocked { get; set; }
 }
+

@@ -4,40 +4,41 @@ namespace SupplyCoreERP.Medicines.Dtos;
 
 public class MedicineImportDto
 {
-    [ExcelColumnName("Mã thuốc")]
+    [ExcelColumnName("MÃ£ thuá»‘c")]
     public string TempCode { get; set; }
 
-    [ExcelColumnName("Tên thuốc")]
+    [ExcelColumnName("TÃªn thuá»‘c")]
     public string Name { get; set; }
 
-    [ExcelColumnName("Nhóm hàng")]
+    [ExcelColumnName("NhÃ³m hÃ ng")]
     public string Category { get; set; }
 
-    [ExcelColumnName("Nhà sản xuất")]
+    [ExcelColumnName("NhÃ  sáº£n xuáº¥t")]
     public string Manufacturer { get; set; }
 
-    [ExcelColumnName("Đơn vị cơ bản")]
+    [ExcelColumnName("ÄÆ¡n vá»‹ cÆ¡ báº£n")]
     public string BaseUnit { get; set; }
 
-    [ExcelColumnName("Dạng bào chế")]
+    [ExcelColumnName("Dáº¡ng bÃ o cháº¿")]
     public string DosageForm { get; set; }
 
-    [ExcelColumnName("Số đăng ký")]
+    [ExcelColumnName("Sá»‘ Ä‘Äƒng kÃ½")]
     public string RegistrationNumber { get; set; }
 
-    [ExcelColumnName("Đường dùng")]
+    [ExcelColumnName("ÄÆ°á»ng dÃ¹ng")]
     public string UsageRoute { get; set; }
 
-    [ExcelColumnName("Điều kiện bảo quản")]
+    [ExcelColumnName("Äiá»u kiá»‡n báº£o quáº£n")]
     public string StorageCondition { get; set; }
 
-    [ExcelColumnName("Thuốc kê đơn")]
+    [ExcelColumnName("Thuá»‘c kÃª Ä‘Æ¡n")]
     public string IsPrescriptionDrug { get; set; }
 
-    [ExcelColumnName("Hoạt chất")]
+    [ExcelColumnName("Hoáº¡t cháº¥t")]
     public string Ingredients { get; set; }
 
-    [ExcelColumnName("Đơn vị quy đổi")]
+    [ExcelColumnName("ÄÆ¡n vá»‹ quy Ä‘á»•i")]
     public string Units { get; set; }
 
 }
+

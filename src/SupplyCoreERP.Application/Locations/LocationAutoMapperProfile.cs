@@ -17,3 +17,4 @@ public class LocationAutoMapperProfile : Profile
         CreateMap<Area, AreaDto>();
     }
 }
+

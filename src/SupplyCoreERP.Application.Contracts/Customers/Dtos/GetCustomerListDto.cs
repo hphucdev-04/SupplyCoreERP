@@ -8,3 +8,4 @@ public class GetCustomerListDto : PagedAndSortedResultRequestDto
     public string? Filter { get; set; }
     public bool? IsActive { get; set; }
 }
+

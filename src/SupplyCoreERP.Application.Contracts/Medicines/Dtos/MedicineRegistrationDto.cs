@@ -12,3 +12,4 @@ public class MedicineRegistrationDto : EntityDto<Guid>
     public string? Note { get; set; }
     public DateTime CreationTime { get; set; }
 }
+

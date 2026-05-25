@@ -8,7 +8,7 @@ public class SupplierProductConditionDto : EntityDto<Guid>
     public Guid SupplierProductId { get; set; }
 
     public Guid UnitId { get; set; }
-    public string UnitName { get; set; } // Tự động map từ Unit.Name
+    public string UnitName { get; set; } // Tá»± Ä‘á»™ng map tá»« Unit.Name
 
     public int ConversionFactor { get; set; }
 
@@ -19,3 +19,4 @@ public class SupplierProductConditionDto : EntityDto<Guid>
     public decimal OverDeliveryTolerancePct { get; set; }
     public decimal UnderDeliveryTolerancePct { get; set; }
 }
+

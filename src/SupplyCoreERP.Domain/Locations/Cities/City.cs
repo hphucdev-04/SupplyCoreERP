@@ -20,3 +20,9 @@ public class City : FullAuditedAggregateRoot<Guid>
         Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 100);
     }
 }
+
+
+
+
+
+

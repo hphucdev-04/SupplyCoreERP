@@ -15,22 +15,23 @@ public class AddTicketDetailDto
     public Guid BinId { get; set; }
 
     /// <summary>
-    /// Đơn vị người dùng chọn (Viên, Vỉ, Hộp...).
-    /// Phải là BaseUnitId hoặc một ProductUnit hợp lệ của sản phẩm.
+    /// ÄÆ¡n vá»‹ ngÆ°á»i dÃ¹ng chá»n (ViÃªn, Vá»‰, Há»™p...).
+    /// Pháº£i lÃ  BaseUnitId hoáº·c má»™t ProductUnit há»£p lá»‡ cá»§a sáº£n pháº©m.
     /// </summary>
     [Required]
     public Guid UnitId { get; set; }
 
     /// <summary>
-    /// Tỉ lệ quy đổi về BaseUnit, snapshot tại thời điểm tạo.
-    /// Truyền 1 nếu UnitId là BaseUnit.
+    /// Tá»‰ lá»‡ quy Ä‘á»•i vá» BaseUnit, snapshot táº¡i thá»i Ä‘iá»ƒm táº¡o.
+    /// Truyá»n 1 náº¿u UnitId lÃ  BaseUnit.
     /// </summary>
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "ConversionFactor phải >= 1")]
+    [Range(1, int.MaxValue, ErrorMessage = "ConversionFactor pháº£i >= 1")]
     public int ConversionFactor { get; set; } = 1;
 
-    /// <summary>Số lượng theo đơn vị đã chọn.</summary>
+    /// <summary>Sá»‘ lÆ°á»£ng theo Ä‘Æ¡n vá»‹ Ä‘Ã£ chá»n.</summary>
     [Required]
-    [Range(0.01, double.MaxValue, ErrorMessage = "Số lượng phải lớn hơn 0")]
+    [Range(0.01, double.MaxValue, ErrorMessage = "Sá»‘ lÆ°á»£ng pháº£i lá»›n hÆ¡n 0")]
     public decimal Quantity { get; set; }
 }
+

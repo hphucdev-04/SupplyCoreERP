@@ -22,3 +22,4 @@ public class SalesOrderAutoMapperProfile : Profile
             .ForMember(dest => dest.BaseUnitName, opt => opt.MapFrom(src => src.Product != null && src.Product.BaseUnit != null ? src.Product.BaseUnit.Name : null));
     }
 }
+

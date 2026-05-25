@@ -11,3 +11,4 @@ public class MedicineUnitDto
     public int ConversionFactor { get; set; }
     public int Level { get; set; }
 }
+

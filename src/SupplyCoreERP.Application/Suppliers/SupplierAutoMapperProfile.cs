@@ -1,5 +1,6 @@
 using System.Linq;
 using AutoMapper;
+using SupplyCoreERP.Partner.Suppliers;
 using SupplyCoreERP.Suppliers.Dtos;
 
 namespace SupplyCoreERP.Suppliers;
@@ -12,7 +13,7 @@ public class SupplierAutoMapperProfile : Profile
             .ForMember(x => x.CityName, opt => opt.MapFrom(s => s.City != null ? s.City.Name : null));
 
         CreateMap<Supplier, SupplierDetailDto>()
-            .IncludeBase<Supplier, SupplierDto>() // Kế thừa việc map CityName ở trên
+            .IncludeBase<Supplier, SupplierDto>()
             .ForMember(x => x.CountryName, opt => opt.MapFrom(s => s.Country != null ? s.Country.Name : null))
             .ForMember(x => x.AreaName, opt => opt.MapFrom(s => s.Area != null ? s.Area.Name : null));
 
@@ -29,16 +30,13 @@ public class SupplierAutoMapperProfile : Profile
         CreateMap<CreateUpdateSupplierProductConditionDto, SupplierProductCondition>();
 
         CreateMap<SupplierProduct, SupplierMedicineDto>()
-            // Thông tin từ bảng Supplier
             .ForMember(dest => dest.SupplierCode, opt => opt.MapFrom(src => src.Supplier.Code))
             .ForMember(dest => dest.SupplierName, opt => opt.MapFrom(src => src.Supplier.Name))
             .ForMember(dest => dest.CountryId, opt => opt.MapFrom(src => src.Supplier.CountryId))
             .ForMember(dest => dest.CountryName, opt => opt.MapFrom(src => src.Supplier.Country.Name))
 
-            // Thông tin từ bảng Unit
             .ForMember(dest => dest.DefaultUnitName, opt => opt.MapFrom(src => src.DefaultUnit.Name))
 
-            // Lấy giá chuẩn và số lượng tối thiểu từ Condition khớp với DefaultUnitId
             .ForMember(dest => dest.StandardPrice, opt => opt.MapFrom(src =>
                 src.Conditions != null && src.Conditions.Any(c => c.UnitId == src.DefaultUnitId)
                 ? src.Conditions.First(c => c.UnitId == src.DefaultUnitId).StandardPrice
@@ -49,3 +47,4 @@ public class SupplierAutoMapperProfile : Profile
                 : 0));
     }
 }
+

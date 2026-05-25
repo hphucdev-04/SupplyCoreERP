@@ -1,4 +1,3 @@
-using System.CodeDom;
 using Volo.Abp.Identity;
 
 namespace SupplyCoreERP;
@@ -28,3 +27,9 @@ public static class SupplyCoreERPConsts
     public const string DocumentTypeInventoryTicket = "IT";
 
 }
+
+
+
+
+
+

@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Threading.Tasks;
 using SupplyCoreERP.Prices.Dtos;
 using Volo.Abp.Application.Services;
@@ -15,3 +14,4 @@ public interface IPriceAppService : IApplicationService
     Task UpdateAsync(Guid id, CreateUpdateProductPriceDto input);
     Task DeleteAsync(Guid id);
 }
+

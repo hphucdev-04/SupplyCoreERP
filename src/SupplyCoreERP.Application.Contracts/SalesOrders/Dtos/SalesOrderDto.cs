@@ -30,3 +30,4 @@ public class SalesOrderDto : FullAuditedEntityDto<Guid>
 
     public List<SalesOrderLineDto> Lines { get; set; } = new List<SalesOrderLineDto>();
 }
+

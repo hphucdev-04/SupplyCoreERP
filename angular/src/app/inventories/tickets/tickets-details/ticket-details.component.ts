@@ -153,7 +153,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/inventory/tickets']);
   }
 
-  // ── Accordion Logic ──────────────────────────────────────
+  // Accordion Logic 
   toggleLine(id: string) {
     if (this.expandedLineIds.has(id)) {
       this.expandedLineIds.delete(id);
@@ -162,7 +162,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ── Data loading ──────────────────────────────────────────
+  // Data loading 
   loadTicketData() {
     this.loading = true;
     this.ticketService

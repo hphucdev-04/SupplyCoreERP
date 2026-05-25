@@ -127,6 +127,14 @@ export class WarehouseService {
     { apiName: this.apiName,...config });
   
 
+  sendToApprove = (id: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/warehouse/${id}/send-to-approve`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   toggleActive = (id: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',

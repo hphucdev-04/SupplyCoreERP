@@ -12,3 +12,4 @@ public class CreatePurchaseRequisitionDto
     public DateTime? RequiredDate { get; set; }
     public string? Note { get; set; }
 }
+

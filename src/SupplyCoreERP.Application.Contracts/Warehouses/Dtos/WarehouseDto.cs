@@ -24,3 +24,4 @@ public class WarehouseDto : FullAuditedEntityDto<Guid>
     public ApprovalStatus Status { get; set; }
     public bool IsActive { get; set; }
 }
+

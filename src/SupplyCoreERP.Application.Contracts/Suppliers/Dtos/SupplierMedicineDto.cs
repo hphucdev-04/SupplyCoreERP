@@ -16,3 +16,4 @@ public class SupplierMedicineDto
     public string DefaultUnitName { get; set; }
     public bool IsPreferred { get; set; }
 }
+

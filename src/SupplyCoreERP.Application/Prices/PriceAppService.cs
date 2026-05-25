@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Prices.Dtos;
+using SupplyCoreERP.Sales.PriceLists;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Prices;
@@ -65,15 +66,7 @@ public class PriceAppService : SupplyCore, IPriceAppService
     {
         ProductPrice entity = await _productPriceRepo.GetAsync(id);
 
-        // Update chỉ cập nhật Giá và Số lượng
-        // KHÔNG cập nhật PriceListId, ProductId, UnitId dù DTO có gửi lên
-        // (Nếu muốn đổi mấy cái đó, user phải xóa đi tạo mới)
-
         entity.UpdatePrice(input.Price);
-        // Nếu bạn chưa viết hàm UpdatePrice trong Entity thì dùng: entity.Price = input.Price;
-
-        // Cập nhật số lượng min (nếu có logic này)
-        // entity.MinQuantity = input.MinQuantity; 
 
         await _productPriceRepo.UpdateAsync(entity);
     }
@@ -83,3 +76,4 @@ public class PriceAppService : SupplyCore, IPriceAppService
         await _productPriceRepo.DeleteAsync(id);
     }
 }
+

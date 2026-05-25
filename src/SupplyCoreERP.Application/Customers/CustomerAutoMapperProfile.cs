@@ -1,8 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using AutoMapper;
 using SupplyCoreERP.Customers.Dtos;
+using SupplyCoreERP.Partner.Customers;
 
 namespace SupplyCoreERP.Customers;
 
@@ -22,3 +20,4 @@ public class CustomerAutoMapperProfile : Profile
         CreateMap<CreateUpdateCustomerDto, Customer>();
     }
 }
+

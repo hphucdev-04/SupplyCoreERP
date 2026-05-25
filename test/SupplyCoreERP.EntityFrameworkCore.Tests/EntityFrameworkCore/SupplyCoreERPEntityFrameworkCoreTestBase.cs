@@ -6,3 +6,4 @@ public abstract class SupplyCoreERPEntityFrameworkCoreTestBase : SupplyCoreERPTe
 {
 
 }
+

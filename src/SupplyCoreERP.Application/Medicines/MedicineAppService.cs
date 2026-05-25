@@ -4,9 +4,10 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.Catalog.Medicines;
+using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Medicines.Dtos;
-using SupplyCoreERP.Products;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Content;
 using Volo.Abp.Domain.Entities;
@@ -40,7 +41,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
         //Queryable
         IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
 
-        //JOIN BẢNG 
+        //JOIN Báº¢NG 
         query = query
             .Include(x => x.Category)
             .Include(x => x.Manufacturer).ThenInclude(m => m.Country)
@@ -61,7 +62,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             .OrderBy(input.Sorting ?? nameof(Medicine.CreationTime) + " DESC")
             .PageBy(input);
 
-        // Load vào RAM
+        // Load vÃ o RAM
         List<Medicine> items = await AsyncExecuter.ToListAsync(query);
 
         //Map to DTO 
@@ -122,7 +123,6 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
 
     public async Task<MedicineDetailDto> UpdateAsync(Guid id, CreateUpdateMedicineDto input)
     {
-        // Ép buộc nạp kèm danh sách Registrations từ Database
         IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
         Medicine? entity = await query.Include(x => x.Registrations).FirstOrDefaultAsync(x => x.Id == id);
 
@@ -308,7 +308,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
         return ObjectMapper.Map<List<MedicineRegistration>, List<MedicineRegistrationDto>>(medicine.Registrations.ToList());
     }
 
-    public virtual async Task AddRegistrationAsync(Guid id, AddMedicineRegistrationDto input)
+    public async Task AddRegistrationAsync(Guid id, AddMedicineRegistrationDto input)
     {
         IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
         Medicine? medicine = await query.Include(x => x.Registrations).FirstOrDefaultAsync(x => x.Id == id);
@@ -318,8 +318,8 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        medicine.AddRegistration(
-            GuidGenerator.Create(),
+        await _medicineManager.AddRegistrationAsync(
+            medicine,
             input.RegistrationNumber,
             input.ValidFrom,
             input.ValidTo,
@@ -347,3 +347,4 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
     }
     #endregion
 }
+

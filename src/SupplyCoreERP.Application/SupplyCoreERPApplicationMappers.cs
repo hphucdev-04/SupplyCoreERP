@@ -13,3 +13,4 @@ namespace SupplyCoreERP;
  *    public override partial void Map(BookDto source, CreateUpdateBookDto destination);
  * }
  */
+

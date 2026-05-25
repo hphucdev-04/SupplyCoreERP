@@ -6,3 +6,4 @@ public class GetBaseUnitListDto : PagedAndSortedResultRequestDto
 {
     public string? Filter { get; set; }
 }
+

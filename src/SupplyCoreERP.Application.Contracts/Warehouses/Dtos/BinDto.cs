@@ -22,3 +22,4 @@ public class BinDto : EntityDto<Guid>
     public int MaxSKU { get; set; }
     public bool IsBlocked { get; set; }
 }
+

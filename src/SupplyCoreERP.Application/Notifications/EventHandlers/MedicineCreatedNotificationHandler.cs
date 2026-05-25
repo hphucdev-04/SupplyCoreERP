@@ -1,12 +1,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using SupplyCoreERP.Catalog.Medicines.Events;
 using SupplyCoreERP.Enums.Notificaitons;
-using SupplyCoreERP.Medicines.Events;
 using SupplyCoreERP.Notifications.Jobs;
+using SupplyCoreERP.Permissions;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.EventBus;
-using static SupplyCoreERP.Permissions.SupplyCoreERPPermissions;
 
 namespace SupplyCoreERP.Notifications.Handlers;
 
@@ -30,8 +30,8 @@ public class MedicineCreatedNotificationHandler
             Level = NotificationLevel.Permission,
             TargetPermissions = new List<string>
             {
-                Catalog.Medicine.Approve,
-                Catalog.Medicine.Reject,
+                SupplyCoreERPPermissions.Catalog.Medicine.Approve,
+                SupplyCoreERPPermissions.Catalog.Medicine.Reject,
             }
         });
     }

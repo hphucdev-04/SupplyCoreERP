@@ -11,3 +11,4 @@ public class GetProductBatchListDto : PagedAndSortedResultRequestDto
     public Guid? SupplierId { get; set; }
     public BatchQAStatus? Status { get; set; }
 }
+

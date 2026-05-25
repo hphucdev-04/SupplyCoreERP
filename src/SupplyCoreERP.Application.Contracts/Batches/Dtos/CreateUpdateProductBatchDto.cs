@@ -22,3 +22,4 @@ public class CreateUpdateProductBatchDto
 
     public Guid? MedicineRegistrationId { get; set; }
 }
+

@@ -41,3 +41,4 @@ public interface IInventoryTicketAppService : IApplicationService
     Task<List<InventoryTicketDto>> GetRelatedTicketsByPurchaseOrderAsync(Guid poId);
     Task<List<InventoryTicketDto>> GetRelatedTicketsBySaleOrderAsync(Guid soId);
 }
+

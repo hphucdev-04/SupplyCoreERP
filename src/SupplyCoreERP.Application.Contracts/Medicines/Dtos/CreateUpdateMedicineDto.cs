@@ -30,3 +30,4 @@ public class CreateUpdateMedicineDto
     public bool IsPrescriptionDrug { get; set; }
     public bool IsActive { get; set; } = true;
 }
+
