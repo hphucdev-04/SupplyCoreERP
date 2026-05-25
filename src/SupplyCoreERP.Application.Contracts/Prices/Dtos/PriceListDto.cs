@@ -11,3 +11,4 @@ public class PriceListDto : EntityDto<Guid>
     public CurrencyType Currency { get; set; }
     public bool IsBase { get; set; }
 }
+

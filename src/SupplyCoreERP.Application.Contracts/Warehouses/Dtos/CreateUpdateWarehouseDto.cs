@@ -22,3 +22,4 @@ public class CreateUpdateWarehouseDto
     [Range(100, 10000)]
     public int MapLength { get; set; } = 1000;
 }
+

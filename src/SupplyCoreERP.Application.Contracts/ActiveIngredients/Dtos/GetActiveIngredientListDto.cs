@@ -9,3 +9,4 @@ public class GetActiveIngredientListDto : PagedAndSortedResultRequestDto
 {
     public string? Filter { get; set; }
 }
+

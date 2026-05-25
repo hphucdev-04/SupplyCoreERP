@@ -1,6 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Text;
 using SupplyCoreERP.Manufacturers.Dtos;
 using Volo.Abp.Application.Services;
 
@@ -15,3 +13,4 @@ public interface IManufacturerAppService :
 {
 
 }
+

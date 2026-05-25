@@ -244,6 +244,16 @@ export class WarehousesComponent implements OnInit, OnDestroy {
       });
   }
 
+  sendToApprove(id: string) {
+    this.confirmation
+      .warn('::SendWarehouseToApprovalConfirmationMessage', '::AreYouSure')
+      .subscribe(status => {
+        if (status === Confirmation.Status.confirm) {
+          this.warehouseService.sendToApprove(id).subscribe(() => this.list.get());
+        }
+      });
+  }
+
   approve(id: string) {
     this.warehouseService
       .approve(id)

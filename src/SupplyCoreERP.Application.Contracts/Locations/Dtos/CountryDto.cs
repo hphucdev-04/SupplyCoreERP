@@ -9,3 +9,4 @@ public class CountryDto : EntityDto<Guid>
     public string ISO { get; set; }
     public string Name { get; set; }
 }
+

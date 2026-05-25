@@ -47,6 +47,13 @@
               <button
                 *ngIf="row.status === approvalStatus.Pending"
                 ngbDropdownItem
+                (click)="sendToApprove(row.id)"
+              >
+                <i class="fa fa-check me-1"></i> {{ '::SendToApprove' | abpLocalization }}
+              </button>
+              <button
+                *ngIf="row.status === approvalStatus.Pending"
+                ngbDropdownItem
                 (click)="approve(row.id)"
               >
                 <i class="fa fa-check me-1"></i> {{ '::Approve' | abpLocalization }}

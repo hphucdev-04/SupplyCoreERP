@@ -24,3 +24,4 @@ public interface IPurchaseRequisitionAppService : IApplicationService
 
     Task ConvertToPurchaseOrderAsync(Guid id, ConvertToPurchaseOrderDto input);
 }
+

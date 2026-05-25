@@ -14,3 +14,4 @@ public class CustomerDto : FullAuditedEntityDto<Guid>
     public decimal CurrentDebt { get; set; }
     public bool IsActive { get; set; }
 }
+

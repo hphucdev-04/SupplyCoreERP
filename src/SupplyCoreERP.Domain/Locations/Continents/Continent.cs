@@ -16,3 +16,9 @@ public class Continent : FullAuditedAggregateRoot<Guid>
         Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 100);
     }
 }
+
+
+
+
+
+

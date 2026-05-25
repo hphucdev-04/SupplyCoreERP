@@ -1,8 +1,8 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using SupplyCoreERP.Permissions;
 using Volo.Abp.AspNetCore.SignalR;
 using Volo.Abp.Authorization.Permissions;
-using static SupplyCoreERP.Permissions.SupplyCoreERPPermissions;
 
 namespace SupplyCoreERP.SignalR.Notifications;
 
@@ -24,8 +24,8 @@ public class NotificationHub : AbpHub
         // Join từng permission-group nếu được cấp quyền
         string[] allPermissions =
         [
-            Catalog.Medicine.Reject,
-            Catalog.Medicine.Approve,
+            SupplyCoreERPPermissions.Catalog.Medicine.Reject,
+            SupplyCoreERPPermissions.Catalog.Medicine.Approve,
             // Thêm permission mới tại đây khi có feature mới
         ];
 
@@ -40,3 +40,4 @@ public class NotificationHub : AbpHub
         await base.OnConnectedAsync();
     }
 }
+

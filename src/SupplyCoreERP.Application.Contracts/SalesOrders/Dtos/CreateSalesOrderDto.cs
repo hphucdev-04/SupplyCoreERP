@@ -18,3 +18,4 @@ public class CreateSalesOrderDto
     [MaxLength(1000)]
     public string? Note { get; set; }
 }
+

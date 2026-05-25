@@ -4,6 +4,7 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.Catalog.Categories;
 using SupplyCoreERP.Categories.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Application.Services;
@@ -20,28 +21,23 @@ public class CategoryAppService : CrudAppService<
     CreateUpdateCategoryDto>,
     ICategoryAppService
 {
-    private readonly ICategoryRepository _categoryRepository;
-    private readonly ICategoryManager _categoryManager;
-    private readonly IObjectMapper _objectMapper;
+    private readonly IRepository<Category, Guid> _categoryRepository;
+    private readonly CategoryManager _categoryManager;
 
     public CategoryAppService(
-        ICategoryRepository categoryRepository,
-        ICategoryManager categoryManager,
+        IRepository<Category, Guid> categoryRepository,
+        CategoryManager categoryManager,
         IObjectMapper objectMapper) : base(categoryRepository)
     {
         _categoryRepository = categoryRepository;
         _categoryManager = categoryManager;
-        _objectMapper = objectMapper;
     }
 
     public override async Task<CategoryDto> CreateAsync(CreateUpdateCategoryDto input)
     {
-        //Manager để lấy Entity hợp lệ 
         Category category = await _categoryManager.CreateAsync(input.Name);
         await _categoryRepository.InsertAsync(category, autoSave: true);
-
-        //Map ra DTO bằng mapper được inject trực tiếp
-        return _objectMapper.Map<Category, CategoryDto>(category);
+        return ObjectMapper.Map<Category, CategoryDto>(category);
     }
 
     public override async Task<CategoryDto> UpdateAsync(Guid id, CreateUpdateCategoryDto input)
@@ -51,7 +47,7 @@ public class CategoryAppService : CrudAppService<
         await _categoryManager.UpdateAsync(category, input.Name);
         await _categoryRepository.UpdateAsync(category, autoSave: true);
 
-        return _objectMapper.Map<Category, CategoryDto>(category);
+        return ObjectMapper.Map<Category, CategoryDto>(category);
     }
 
     public override async Task DeleteAsync(Guid id)
@@ -97,3 +93,4 @@ public class CategoryAppService : CrudAppService<
         return new PagedResultDto<CategoryDto>(totalCount, items);
     }
 }
+

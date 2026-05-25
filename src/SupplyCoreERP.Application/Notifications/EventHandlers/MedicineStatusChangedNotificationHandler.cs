@@ -1,7 +1,7 @@
 using System.Threading.Tasks;
+using SupplyCoreERP.Catalog.Medicines.Events;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Enums.Notificaitons;
-using SupplyCoreERP.Medicines.Events;
 using SupplyCoreERP.Notifications.Jobs;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;

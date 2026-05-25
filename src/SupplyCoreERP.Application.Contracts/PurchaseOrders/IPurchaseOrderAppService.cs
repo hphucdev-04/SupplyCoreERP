@@ -25,3 +25,4 @@ public interface IPurchaseOrderAppService : IApplicationService
     Task ApproveAsync(Guid id);
     Task CompleteAsync(Guid id);
 }
+

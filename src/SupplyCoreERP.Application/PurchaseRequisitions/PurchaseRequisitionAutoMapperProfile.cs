@@ -1,5 +1,5 @@
 using AutoMapper;
-using SupplyCoreERP.Orders.PR;
+using SupplyCoreERP.Procurement.PurchaseRequisitions;
 using SupplyCoreERP.PurchaseRequisitions.Dtos;
 
 namespace SupplyCoreERP.PurchaseRequisitions;
@@ -15,3 +15,4 @@ public class PurchaseRequisitionAutoMapperProfile : Profile
             .ForMember(dest => dest.UnitName, opt => opt.MapFrom(src => src.Unit != null ? src.Unit.Name : null));
     }
 }
+

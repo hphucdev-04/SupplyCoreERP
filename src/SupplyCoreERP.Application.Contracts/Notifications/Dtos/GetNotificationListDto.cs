@@ -8,3 +8,4 @@ public class GetNotificationListDto : PagedAndSortedResultRequestDto
     public bool? IsRead { get; set; }
     public NotificationLevel? Level { get; set; }
 }
+

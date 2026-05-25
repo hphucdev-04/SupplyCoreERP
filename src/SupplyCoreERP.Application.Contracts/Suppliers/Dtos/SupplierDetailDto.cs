@@ -17,3 +17,4 @@ public class SupplierDetailDto : SupplierDto
     public decimal DebtLimit { get; set; }
     public int PaymentTermDays { get; set; }
 }
+

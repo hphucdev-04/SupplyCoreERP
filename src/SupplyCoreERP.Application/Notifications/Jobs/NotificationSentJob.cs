@@ -22,14 +22,12 @@ public class NotificationSentJob
 
     public override async Task ExecuteAsync(NotificationSentJobArgs args)
     {
-        // Persist vào DB qua interface (không gọi concrete AppService)
         NotificationDto dto = args.Level == NotificationLevel.Global
             ? await _notificationAppService.CreateGlobalAsync(
                 args.Title, args.Content, args.Severity)
             : await _notificationAppService.CreateForPermissionAsync(
                 args.Title, args.Content, args.Severity, args.TargetPermissions);
 
-        // Gửi real-time — Application chỉ biết interface, không biết SignalR
         if (args.Level == NotificationLevel.Global)
         {
             await _notificationRealTime.SendToGlobalAsync(dto);
@@ -40,3 +38,4 @@ public class NotificationSentJob
         }
     }
 }
+

@@ -20,3 +20,4 @@ public class ZoneDto : EntityDto<Guid>
     public int Length { get; set; }
     public float Rotation { get; set; }
 }
+

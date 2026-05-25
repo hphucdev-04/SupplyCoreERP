@@ -10,3 +10,4 @@ public class ActiveIngredientDto : FullAuditedEntityDto<Guid>
     public string Code { get; set; }
     public string Name { get; set; }
 }
+

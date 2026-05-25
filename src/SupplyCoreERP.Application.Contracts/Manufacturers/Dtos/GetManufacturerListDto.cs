@@ -9,3 +9,4 @@ public class GetManufacturerListDto : PagedAndSortedResultRequestDto
 {
     public string? Filter { get; set; }
 }
+

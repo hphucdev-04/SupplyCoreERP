@@ -17,3 +17,4 @@ public class PurchaseRequisitionDto : FullAuditedEntityDto<Guid>
     public List<PurchaseRequisitionLineDto> Lines { get; set; }
     public List<RelatedPurchaseOrderDto> RelatedOrders { get; set; }
 }
+

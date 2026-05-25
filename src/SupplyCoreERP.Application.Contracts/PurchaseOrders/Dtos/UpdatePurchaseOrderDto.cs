@@ -14,3 +14,4 @@ public class UpdatePurchaseOrderDto
     [MaxLength(1000)]
     public string? Note { get; set; }
 }
+

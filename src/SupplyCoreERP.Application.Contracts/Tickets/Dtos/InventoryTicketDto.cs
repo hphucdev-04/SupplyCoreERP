@@ -20,3 +20,4 @@ public class InventoryTicketDto : FullAuditedEntityDto<Guid>
 
     public List<InventoryTicketLineDto> Lines { get; set; } = new List<InventoryTicketLineDto>();
 }
+

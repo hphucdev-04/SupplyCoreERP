@@ -10,3 +10,9 @@ public class SupplyCoreERPSettingDefinitionProvider : SettingDefinitionProvider
         //context.Add(new SettingDefinition(SupplyCoreERPSettings.MySetting1));
     }
 }
+
+
+
+
+
+

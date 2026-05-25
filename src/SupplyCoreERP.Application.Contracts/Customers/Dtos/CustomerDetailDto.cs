@@ -25,3 +25,4 @@ public class CustomerDetailDto : CustomerDto
     public Guid? PriceListId { get; set; }
     public string? PriceName { get; set; }
 }
+

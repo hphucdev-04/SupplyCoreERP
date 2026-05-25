@@ -22,3 +22,4 @@ public class ProductBatchDto : FullAuditedEntityDto<Guid>
 
     public string? RegistrationNumber { get; set; }
 }
+

@@ -17,3 +17,4 @@ public class SupplyCoreERPBrandingProvider : DefaultBrandingProvider
 
     public override string AppName => _localizer["AppName"];
 }
+

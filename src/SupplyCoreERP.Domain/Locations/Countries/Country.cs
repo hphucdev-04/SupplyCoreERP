@@ -23,3 +23,9 @@ public class Country : FullAuditedAggregateRoot<Guid>
         Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 100);
     }
 }
+
+
+
+
+
+

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Customers.Dtos;
 using SupplyCoreERP.Enums.Partner;
+using SupplyCoreERP.Partner.Customers;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
@@ -134,3 +135,4 @@ public class CustomerAppService : SupplyCore, ICustomerAppService
     }
     #endregion
 }
+

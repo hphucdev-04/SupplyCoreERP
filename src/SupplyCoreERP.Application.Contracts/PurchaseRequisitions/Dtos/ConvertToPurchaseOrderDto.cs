@@ -11,3 +11,4 @@ public class ConvertToPurchaseOrderDto
     public DateTime OrderDate { get; set; } = DateTime.Now;
     public string? Note { get; set; }
 }
+

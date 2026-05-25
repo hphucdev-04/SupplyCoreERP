@@ -1,4 +1,5 @@
 using AutoMapper;
+using SupplyCoreERP.Common.Notifications;
 using SupplyCoreERP.Notifications.Dtos;
 
 namespace SupplyCoreERP.Notifications;
@@ -11,3 +12,4 @@ public class NotificationApplicationAutoMapperProfile : Profile
             .ForMember(d => d.IsRead, opt => opt.Ignore());
     }
 }
+

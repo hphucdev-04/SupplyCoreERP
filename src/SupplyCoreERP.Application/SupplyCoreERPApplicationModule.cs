@@ -24,8 +24,8 @@ public class SupplyCoreERPApplicationModule : AbpModule
     {
         Configure<AbpAutoMapperOptions>(options =>
         {
-            //Quét project để đăng ký tất cả các profile được định nghĩa
             options.AddMaps<SupplyCoreERPApplicationModule>();
         });
     }
 }
+

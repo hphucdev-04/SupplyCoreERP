@@ -8,16 +8,17 @@ namespace SupplyCoreERP.Balances.Dtos;
 
 public class GetInventoryReservationListDto : PagedAndSortedResultRequestDto
 {
-    // Tìm theo Đơn hàng / Phiếu kho
+    // TÃ¬m theo ÄÆ¡n hÃ ng / Phiáº¿u kho
     public Guid? ReferenceDocumentId { get; set; }
     public string? ReferenceDocumentNumber { get; set; }
 
-    // Tìm theo Tồn kho
+    // TÃ¬m theo Tá»“n kho
     public Guid? WarehouseId { get; set; }
     public Guid? BinId { get; set; }
     public Guid? ProductId { get; set; }
     public Guid? ProductBatchId { get; set; }
 
-    // Trạng thái giữ chỗ
+    // Tráº¡ng thÃ¡i giá»¯ chá»—
     public ReservationStatus? Status { get; set; }
 }
+

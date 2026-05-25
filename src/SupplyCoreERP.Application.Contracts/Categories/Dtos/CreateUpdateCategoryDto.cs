@@ -7,7 +7,8 @@ namespace SupplyCoreERP.Categories.Dtos;
 
 public class CreateUpdateCategoryDto
 {
-    [Required(ErrorMessage = "Tên danh mục là bắt buộc")]
+    [Required(ErrorMessage = "TÃªn danh má»¥c lÃ  báº¯t buá»™c")]
     [StringLength(100)]
     public string Name { get; set; }
 }
+

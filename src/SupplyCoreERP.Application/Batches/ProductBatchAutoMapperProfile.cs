@@ -1,6 +1,6 @@
 using AutoMapper;
 using SupplyCoreERP.Batches.Dtos;
-using SupplyCoreERP.Inventories.Batches;
+using SupplyCoreERP.Inventory.Batches;
 
 namespace SupplyCoreERP.Batches;
 
@@ -16,3 +16,4 @@ public class ProductBatchAutoMapperProfile : Profile
 
     }
 }
+

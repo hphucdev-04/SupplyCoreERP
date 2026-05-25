@@ -10,6 +10,7 @@ public class NotificationSentJobArgs
     public NotificationSeverity Severity { get; set; }
     public NotificationLevel Level { get; set; }
 
-    /// <summary>Chỉ set khi Level = Permission.</summary>
+    /// <summary>Chá»‰ set khi Level = Permission.</summary>
     public List<string> TargetPermissions { get; set; } = new();
 }
+

@@ -75,3 +75,4 @@ public class SupplyCoreERPEntityFrameworkCoreTestModule : AbpModule
         return connection;
     }
 }
+

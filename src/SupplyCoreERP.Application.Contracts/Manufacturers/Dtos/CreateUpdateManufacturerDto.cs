@@ -17,3 +17,4 @@ public class CreateUpdateManufacturerDto
     [Required]
     public Guid CountryId { get; set; }
 }
+

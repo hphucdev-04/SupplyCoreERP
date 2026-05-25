@@ -23,3 +23,4 @@ public class InventoryBalanceDto : FullAuditedEntityDto<Guid>
     public decimal LockedQuantity { get; set; }
     public decimal AvailableQuantity { get; set; }
 }
+

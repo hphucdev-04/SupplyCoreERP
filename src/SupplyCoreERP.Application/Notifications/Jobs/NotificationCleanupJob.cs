@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SupplyCoreERP.Common.Notifications;
 using Volo.Abp.BackgroundJobs;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
@@ -51,3 +52,4 @@ public class NotificationCleanupJob
         await _notificationRepo.DeleteManyAsync(oldNotifications, autoSave: true);
     }
 }
+

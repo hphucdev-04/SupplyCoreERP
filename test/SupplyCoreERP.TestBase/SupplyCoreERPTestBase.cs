@@ -57,3 +57,4 @@ public abstract class SupplyCoreERPTestBase<TStartupModule> : AbpIntegratedTest<
         return result;
     }
 }
+

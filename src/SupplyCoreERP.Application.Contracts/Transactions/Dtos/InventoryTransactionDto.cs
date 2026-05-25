@@ -31,3 +31,4 @@ public class InventoryTransactionDto : CreationAuditedEntityDto<Guid>
 
     public string Note { get; set; }
 }
+

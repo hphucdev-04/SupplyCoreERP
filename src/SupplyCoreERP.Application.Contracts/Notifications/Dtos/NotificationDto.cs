@@ -15,3 +15,4 @@ public class NotificationDto : EntityDto<Guid>
     public DateTime CreationTime { get; set; }
     public bool IsRead { get; set; }
 }
+

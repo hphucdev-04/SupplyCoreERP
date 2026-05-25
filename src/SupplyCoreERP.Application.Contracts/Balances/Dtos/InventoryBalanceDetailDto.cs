@@ -10,9 +10,10 @@ public class InventoryBalanceDetailDto : InventoryBalanceDto
     public string? CityName { get; set; }
     public string? AreaName { get; set; }
 
-    // Thông tin sâu của Thuốc & Lô
+    // ThÃ´ng tin sÃ¢u cá»§a Thuá»‘c & LÃ´
     public string? ProductCode { get; set; }
     public DateTime? ManufacturingDate { get; set; }
     public DateTime? ExpiryDate { get; set; }
     public string? SupplierName { get; set; }
 }
+

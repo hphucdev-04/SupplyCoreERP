@@ -8,3 +8,4 @@ public class GetSupplierListDto : PagedAndSortedResultRequestDto
     public bool? IsActive { get; set; }
 
 }
+

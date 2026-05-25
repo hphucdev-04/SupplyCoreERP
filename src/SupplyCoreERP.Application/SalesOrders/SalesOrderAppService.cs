@@ -4,8 +4,8 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SupplyCoreERP.Customers;
-using SupplyCoreERP.Inventories.Tickets;
+using SupplyCoreERP.Inventory.Tickets;
+using SupplyCoreERP.Partner.Customers;
 using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.SalesOrders.Dtos;
 using Volo.Abp.Application.Dtos;
@@ -23,7 +23,7 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     private readonly IRepository<Customer, Guid> _customerRepo;
     private readonly SalesOrderManager _orderManager;
 
-    // DI
+    // Constructor injection
     public SalesOrderAppService(
         IRepository<SalesOrder, Guid> orderRepo,
         IRepository<InventoryTicket, Guid> ticketRepo,
@@ -174,7 +174,7 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
         SalesOrder entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == id)
             ?? throw new EntityNotFoundException(typeof(SalesOrder), id);
 
-        // Manager validate tồn kho tổng quát + tạo ticket Header (Draft)
+        // Manager validate tá»“n kho tá»•ng quÃ¡t + táº¡o ticket Header (Draft)
         InventoryTicket ticket = await _orderManager.ApproveAsync(entity);
 
         await _ticketRepo.InsertAsync(ticket);
@@ -192,3 +192,4 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     }
     #endregion
 }
+

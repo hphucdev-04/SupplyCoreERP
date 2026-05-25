@@ -12,3 +12,4 @@ public class GetInventoryTicketListDto : PagedAndSortedResultRequestDto
     public Guid? WarehouseId { get; set; }
     public Guid? ReferenceDocumentId { get; set; }
 }
+

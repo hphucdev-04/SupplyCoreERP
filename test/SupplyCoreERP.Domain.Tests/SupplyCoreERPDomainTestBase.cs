@@ -8,3 +8,4 @@ public abstract class SupplyCoreERPDomainTestBase<TStartupModule> : SupplyCoreER
 {
 
 }
+

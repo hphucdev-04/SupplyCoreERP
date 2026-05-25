@@ -11716,6 +11716,23 @@
                   }
                 },
                 {
+                  "name": "SendToApproveAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
                   "name": "ApproveAsync",
                   "parametersOnMethod": [
                     {
@@ -12238,6 +12255,80 @@
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Warehouses.IWarehouseAppService"
             },
+            "ToggleActiveAsyncById": {
+              "uniqueName": "ToggleActiveAsyncById",
+              "name": "ToggleActiveAsync",
+              "httpMethod": "POST",
+              "url": "api/app/warehouse/{id}/toggle-active",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Warehouses.IWarehouseAppService"
+            },
+            "SendToApproveAsyncById": {
+              "uniqueName": "SendToApproveAsyncById",
+              "name": "SendToApproveAsync",
+              "httpMethod": "POST",
+              "url": "api/app/warehouse/{id}/send-to-approve",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Warehouses.IWarehouseAppService"
+            },
             "ApproveAsyncById": {
               "uniqueName": "ApproveAsyncById",
               "name": "ApproveAsync",
@@ -12280,43 +12371,6 @@
               "name": "RejectAsync",
               "httpMethod": "POST",
               "url": "api/app/warehouse/{id}/reject",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "id",
-                  "typeAsString": "System.Guid, System.Private.CoreLib",
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "id",
-                  "name": "id",
-                  "jsonName": null,
-                  "type": "System.Guid",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": [],
-                  "bindingSourceId": "Path",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
-              },
-              "allowAnonymous": null,
-              "implementFrom": "SupplyCoreERP.Warehouses.IWarehouseAppService"
-            },
-            "ToggleActiveAsyncById": {
-              "uniqueName": "ToggleActiveAsyncById",
-              "name": "ToggleActiveAsync",
-              "httpMethod": "POST",
-              "url": "api/app/warehouse/{id}/toggle-active",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {

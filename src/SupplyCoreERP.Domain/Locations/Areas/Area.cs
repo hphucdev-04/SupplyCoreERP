@@ -22,3 +22,9 @@ public class Area : FullAuditedAggregateRoot<Guid>
         Name = Check.NotNullOrWhiteSpace(name, nameof(Name), 100);
     }
 }
+
+
+
+
+
+

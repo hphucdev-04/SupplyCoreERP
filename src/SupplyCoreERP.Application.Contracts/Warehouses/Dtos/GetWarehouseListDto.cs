@@ -9,3 +9,4 @@ public class GetWarehouseListDto : PagedAndSortedResultRequestDto
     public ApprovalStatus? Status { get; set; }
     public bool? IsActive { get; set; }
 }
+

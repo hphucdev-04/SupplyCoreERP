@@ -6,3 +6,9 @@ public interface ISupplyCoreERPDbSchemaMigrator
 {
     Task MigrateAsync();
 }
+
+
+
+
+
+

@@ -12,3 +12,4 @@ public class RelatedPurchaseOrderDto
     public decimal TotalAmount { get; set; }
     public DateTime CreationTime { get; set; }
 }
+

@@ -25,3 +25,4 @@ public class AddSalesOrderLineDto
     [Range(0, 100)]
     public decimal TaxRate { get; set; }
 }
+

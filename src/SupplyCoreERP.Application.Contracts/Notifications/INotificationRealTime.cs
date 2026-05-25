@@ -9,3 +9,4 @@ public interface INotificationRealTime
     Task SendToGlobalAsync(NotificationDto dto);
     Task SendToPermissionGroupsAsync(IEnumerable<string> permissions, NotificationDto dto);
 }
+

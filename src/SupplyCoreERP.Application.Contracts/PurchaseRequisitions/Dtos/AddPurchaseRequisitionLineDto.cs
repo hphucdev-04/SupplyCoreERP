@@ -14,3 +14,4 @@ public class AddPurchaseRequisitionLineDto
     public decimal Quantity { get; set; }
     public string? Note { get; set; }
 }
+

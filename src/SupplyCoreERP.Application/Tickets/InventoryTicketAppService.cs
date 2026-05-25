@@ -6,8 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
-using SupplyCoreERP.Inventories.Tickets;
-using SupplyCoreERP.Orders.PO;
+using SupplyCoreERP.Inventory.Tickets;
+using SupplyCoreERP.Procurement.PurchaseOrders;
 using SupplyCoreERP.PurchaseOrders.Dtos;
 using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.SalesOrders.Dtos;
@@ -29,7 +29,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
     private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
     private readonly TicketManager _ticketManager;
 
-    // DI
+    // Constructor injection
     public InventoryTicketAppService(
         IRepository<InventoryTicket, Guid> ticketRepo,
         IRepository<InventoryTicketLine, Guid> ticketLineRepo,
@@ -312,7 +312,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
                 line.Details.Clear();
             }
 
-            // 2. Cấp phát FEFO mới
+            // 2. Cập phát FEFO mới
             await _ticketManager.AllocateFEFOForLineAsync(ticket, line);
         }
     }
@@ -364,3 +364,4 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
     }
     #endregion
 }
+

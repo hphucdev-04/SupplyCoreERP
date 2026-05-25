@@ -31,3 +31,4 @@ public class CreateUpdateCustomerDto
 
     public bool IsActive { get; set; } = true;
 }
+

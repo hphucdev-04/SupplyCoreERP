@@ -4,10 +4,10 @@ using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using SupplyCoreERP.Inventories.Transactions;
+using SupplyCoreERP.Inventory.Transactions;
 using SupplyCoreERP.Transactions.Dtos;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Transactions;
@@ -25,20 +25,17 @@ public class InventoryTransactionAppService : SupplyCore, IInventoryTransactionA
     {
         IQueryable<InventoryTransaction> query = await _transactionRepo.GetQueryableAsync();
 
-        // 1. Chỉ Include Master Data
         query = query
             .Include(x => x.Warehouse)
             .Include(x => x.Product)
             .Include(x => x.ProductBatch)
             .Include(x => x.Bin);
 
-        // 2. Lọc dữ liệu
         query = query
             .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x =>
                 x.Product.Name.Contains(input.Filter) ||
                 x.Product.Code.Contains(input.Filter) ||
                 x.ProductBatch.BatchNumber.Contains(input.Filter) ||
-                // Search thẳng vào cột String (rất nhanh)
                 (x.ReferenceDocumentNumber != null && x.ReferenceDocumentNumber.Contains(input.Filter)))
             .WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
             .WhereIf(input.ProductId.HasValue, x => x.ProductId == input.ProductId)
@@ -76,9 +73,10 @@ public class InventoryTransactionAppService : SupplyCore, IInventoryTransactionA
 
         if (entity == null)
         {
-            throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(InventoryTransaction), id);
+            throw new EntityNotFoundException(typeof(InventoryTransaction), id);
         }
 
         return ObjectMapper.Map<InventoryTransaction, InventoryTransactionDto>(entity);
     }
 }
+

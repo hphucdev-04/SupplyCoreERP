@@ -1,7 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Text;
 using AutoMapper;
+using SupplyCoreERP.Catalog.DosageForms;
 using SupplyCoreERP.DosageForms.Dtos;
 
 namespace SupplyCoreERP.DosageForms;
@@ -14,3 +12,4 @@ public class DosageFormAutoMapperProfile : Profile
         CreateMap<CreateUpdateDosageFormDto, DosageForm>();
     }
 }
+

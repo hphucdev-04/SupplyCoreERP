@@ -10,3 +10,4 @@ public class UpdatePurchaseOrderLineDto
     public decimal UnitPrice { get; set; }
     public decimal TaxRate { get; set; }
 }
+

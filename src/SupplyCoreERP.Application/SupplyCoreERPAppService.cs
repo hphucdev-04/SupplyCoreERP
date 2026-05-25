@@ -12,3 +12,4 @@ public abstract class SupplyCore : ApplicationService
         LocalizationResource = typeof(SupplyCoreERPResource);
     }
 }
+

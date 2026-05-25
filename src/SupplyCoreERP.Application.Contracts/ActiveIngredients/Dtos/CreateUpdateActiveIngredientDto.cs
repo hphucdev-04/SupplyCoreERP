@@ -11,3 +11,4 @@ public class CreateUpdateActiveIngredientDto
     [StringLength(255)]
     public string Name { get; set; }
 }
+

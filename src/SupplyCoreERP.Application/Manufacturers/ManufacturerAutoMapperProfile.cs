@@ -1,4 +1,5 @@
 using AutoMapper;
+using SupplyCoreERP.Catalog.Manufacturers;
 using SupplyCoreERP.Manufacturers.Dtos;
 
 namespace SupplyCoreERP.Manufacturers;
@@ -11,3 +12,4 @@ public class ManufacturerAutoMapperProfile : Profile
         CreateMap<CreateUpdateManufacturerDto, Manufacturer>();
     }
 }
+

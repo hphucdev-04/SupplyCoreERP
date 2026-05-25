@@ -23,3 +23,4 @@ public class InventoryReservationDto : CreationAuditedEntityDto<Guid>
     public decimal ReservedQuantity { get; set; }
     public ReservationStatus Status { get; set; }
 }
+

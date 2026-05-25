@@ -9,3 +9,4 @@ public class AreaDto : EntityDto<Guid>
     public string ZipCode { get; set; }
     public string Name { get; set; }
 }
+

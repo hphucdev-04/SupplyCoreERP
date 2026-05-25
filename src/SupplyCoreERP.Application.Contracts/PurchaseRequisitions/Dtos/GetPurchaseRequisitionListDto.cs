@@ -8,3 +8,4 @@ public class GetPurchaseRequisitionListDto : PagedAndSortedResultRequestDto
     public string? Filter { get; set; }
     public PurchaseRequisitionStatus? Status { get; set; }
 }
+

@@ -16,3 +16,4 @@ public interface ICustomerAppService : IApplicationService
     Task ToggleActiveAsync(Guid id);
     Task<CustomerSummaryDto> GetSummaryAsync();
 }
+

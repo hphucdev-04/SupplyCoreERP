@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
-using SupplyCoreERP.Inventories.Warehouses;
+using SupplyCoreERP.Inventory.Warehouses;
 using SupplyCoreERP.Warehouses.Dtos;
 using Volo.Abp.Application.Dtos;
-using Volo.Abp.Application.Services;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Warehouses;
 
 public class WarehouseAppService : SupplyCore, IWarehouseAppService
 {
+    //Dependencies
     private readonly IRepository<Warehouse, Guid> _warehouseRepo;
     private readonly IRepository<Zone, Guid> _zoneRepo;
     private readonly IRepository<Bin, Guid> _binRepo;
     private readonly WarehouseManager _warehouseManager;
 
+    // Constructor injection
     public WarehouseAppService(
         IRepository<Warehouse, Guid> warehouseRepo,
         IRepository<Zone, Guid> zoneRepo,
@@ -81,25 +83,30 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
         await _warehouseManager.DeleteAsync(id);
     }
 
-    public async Task ApproveAsync(Guid id)
-    {
-        Warehouse warehouse = await _warehouseRepo.GetAsync(id);
-        warehouse.Approve();
-        await _warehouseRepo.UpdateAsync(warehouse);
-    }
-
-    public async Task RejectAsync(Guid id)
-    {
-        Warehouse warehouse = await _warehouseRepo.GetAsync(id);
-        warehouse.Reject();
-        await _warehouseRepo.UpdateAsync(warehouse);
-    }
-
     public async Task ToggleActiveAsync(Guid id)
     {
         Warehouse warehouse = await _warehouseRepo.GetAsync(id);
         warehouse.SetActive(!warehouse.IsActive);
         await _warehouseRepo.UpdateAsync(warehouse);
+    }
+    #endregion
+
+    #region Warehouse Workflow
+    public async Task SendToApproveAsync(Guid id)
+    {
+        Warehouse warehouse = await _warehouseRepo.GetAsync(id);
+        await _warehouseManager.SendToApproveAsync(warehouse);
+    }
+    public async Task ApproveAsync(Guid id)
+    {
+        Warehouse warehouse = await _warehouseRepo.GetAsync(id);
+        await _warehouseManager.ApproveAsync(warehouse);
+    }
+
+    public async Task RejectAsync(Guid id)
+    {
+        Warehouse warehouse = await _warehouseRepo.GetAsync(id);
+        await _warehouseManager.RejectAsync(warehouse);
     }
     #endregion
 
@@ -162,7 +169,7 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
 
         if (bin == null)
         {
-            throw new Volo.Abp.UserFriendlyException("Không tìm thấy vị trí (Bin) này!");
+            throw new EntityNotFoundException(typeof(Bin), id);
         }
 
         return ObjectMapper.Map<Bin, BinDto>(bin);
@@ -186,7 +193,7 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
 
         if (bin == null)
         {
-            throw new Volo.Abp.UserFriendlyException("Không tìm thấy vị trí (Bin) này!");
+            throw new EntityNotFoundException(typeof(Bin), id);
         }
 
         await _warehouseManager.UpdateBinAsync(
@@ -196,7 +203,6 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
 
         await _binRepo.UpdateAsync(bin);
 
-        // Nếu ZoneId thay đổi, cần reload details để map ZoneName mới
         if (bin.Zone == null || bin.Zone.Id != input.ZoneId)
         {
             bin = await _binRepo.GetAsync(id, includeDetails: true);
@@ -218,3 +224,4 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
     }
     #endregion
 }
+

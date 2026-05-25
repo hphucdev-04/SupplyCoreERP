@@ -15,3 +15,4 @@ public class AddMedicineRegistrationDto
 
     public string? Note { get; set; }
 }
+

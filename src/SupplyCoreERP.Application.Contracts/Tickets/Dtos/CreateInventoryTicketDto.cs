@@ -19,3 +19,4 @@ public class CreateInventoryTicketDto
     [MaxLength(1000)]
     public string? Note { get; set; }
 }
+

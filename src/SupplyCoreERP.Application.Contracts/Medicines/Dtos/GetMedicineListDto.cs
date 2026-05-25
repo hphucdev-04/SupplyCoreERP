@@ -12,3 +12,4 @@ public class GetMedicineListDto : PagedAndSortedResultRequestDto
     public MedicineStatus? Status { get; set; }
     public bool? IsActive { get; set; }
 }
+

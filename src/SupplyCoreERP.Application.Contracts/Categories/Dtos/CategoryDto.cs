@@ -10,3 +10,4 @@ public class CategoryDto : FullAuditedEntityDto<Guid>
     public string Name { get; set; }
     public int ProductCount { get; set; }
 }
+

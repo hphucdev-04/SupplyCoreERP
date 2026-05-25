@@ -1,5 +1,5 @@
 using AutoMapper;
-using SupplyCoreERP.Inventories.Transactions;
+using SupplyCoreERP.Inventory.Transactions;
 using SupplyCoreERP.Transactions.Dtos;
 
 namespace SupplyCoreERP;
@@ -13,8 +13,7 @@ public class SupplyCoreERPApplicationAutoMapperProfile : Profile
             .ForMember(dest => dest.ProductName, opt => opt.MapFrom(src => src.Product != null ? src.Product.Name : null))
             .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.Product != null ? src.Product.Code : null))
             .ForMember(dest => dest.BatchNumber, opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.BatchNumber : null))
-            .ForMember(dest => dest.BinCode, opt => opt.MapFrom(src => src.Bin != null ? src.Bin.Code : null))
-            // Map lệch tên biến
             .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.QuantityChanged));
     }
 }
+

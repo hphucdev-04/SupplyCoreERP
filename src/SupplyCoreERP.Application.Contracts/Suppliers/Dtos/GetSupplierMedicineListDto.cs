@@ -6,3 +6,4 @@ public class GetSupplierMedicineListDto : PagedAndSortedResultRequestDto
 {
     public string? Filter { get; set; }
 }
+

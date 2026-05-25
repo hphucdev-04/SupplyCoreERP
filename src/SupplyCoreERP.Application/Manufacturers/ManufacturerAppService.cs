@@ -1,9 +1,8 @@
-
-
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SupplyCoreERP.Catalog.Manufacturers;
 using SupplyCoreERP.Locations.Continents;
 using SupplyCoreERP.Locations.Countries;
 using SupplyCoreERP.Manufacturers.Dtos;
@@ -60,18 +59,14 @@ public class ManufacturerAppService :
                  .PageBy(input)
         );
 
-        //Map sang DTO cơ bản
         List<ManufacturerDto> dtos = ObjectMapper.Map<List<Manufacturer>, List<ManufacturerDto>>(entities);
 
-        //Lấy danh sách ID cần tìm tên (Để tối ưu query, tránh N+1)
         Guid[] countryIds = dtos.Select(x => x.CountryId).Distinct().ToArray();
         Guid[] continentIds = dtos.Select(x => x.ContinentId).Distinct().ToArray();
 
-        //Truy vấn lấy tên
         List<Country> countries = await _countryRepository.GetListAsync(x => countryIds.Contains(x.Id));
         List<Continent> continents = await _continentRepository.GetListAsync(x => continentIds.Contains(x.Id));
 
-        //Gán tên vào DTO
         foreach (ManufacturerDto dto in dtos)
         {
             dto.CountryName = countries.FirstOrDefault(x => x.Id == dto.CountryId)?.Name;
@@ -116,3 +111,4 @@ public class ManufacturerAppService :
         await _manager.DeleteAsync(entity);
     }
 }
+

@@ -17,3 +17,4 @@ public interface ILocationAppService : IApplicationService
     Task<ListResultDto<CityDto>> GetAllCitiesAsync();
     Task<ListResultDto<AreaDto>> GetAreasByCityAsync(Guid cityId);
 }
+

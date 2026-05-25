@@ -17,9 +17,10 @@ public class CreateUpdateProductPriceDto
     public Guid UnitId { get; set; }
 
     [Required]
-    [Range(0, double.MaxValue, ErrorMessage = "Giá bán phải >= 0")]
+    [Range(0, double.MaxValue, ErrorMessage = "GiÃ¡ bÃ¡n pháº£i >= 0")]
     public decimal Price { get; set; }
 
-    [Range(1, int.MaxValue, ErrorMessage = "Số lượng tối thiểu phải >= 1")]
+    [Range(1, int.MaxValue, ErrorMessage = "Sá»‘ lÆ°á»£ng tá»‘i thiá»ƒu pháº£i >= 1")]
     public int MinQuantity { get; set; } = 1;
 }
+

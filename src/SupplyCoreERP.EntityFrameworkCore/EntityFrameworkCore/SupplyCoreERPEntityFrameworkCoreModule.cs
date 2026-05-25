@@ -12,7 +12,6 @@ using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
 using Volo.Abp.Studio;
-using Volo.Abp.Uow;
 
 namespace SupplyCoreERP.EntityFrameworkCore;
 

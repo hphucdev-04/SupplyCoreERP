@@ -25,3 +25,4 @@ public class PurchaseOrderLineDto : AuditedEntityDto<Guid>
     public decimal TaxAmount { get; set; }
     public decimal FinalPrice { get; set; }
 }
+

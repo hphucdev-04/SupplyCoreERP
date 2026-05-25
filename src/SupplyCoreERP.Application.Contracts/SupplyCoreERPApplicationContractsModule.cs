@@ -22,3 +22,4 @@ public class SupplyCoreERPApplicationContractsModule : AbpModule
         SupplyCoreERPDtoExtensions.Configure();
     }
 }
+

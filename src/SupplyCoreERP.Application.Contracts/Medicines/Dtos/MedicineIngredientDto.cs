@@ -10,3 +10,4 @@ public class MedicineIngredientDto
     public string ActiveIngredientName { get; set; }
     public string ActiveIngredientCode { get; set; }
 }
+

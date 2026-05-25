@@ -11,3 +11,4 @@ public class RelatedTicketDto
     public ApprovalStatus Status { get; set; }
     public DateTime CreationTime { get; set; }
 }
+

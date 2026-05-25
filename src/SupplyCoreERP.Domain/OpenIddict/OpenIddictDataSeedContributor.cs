@@ -137,3 +137,9 @@ public class OpenIddictDataSeedContributor : OpenIddictDataSeedContributorBase, 
 
     }
 }
+
+
+
+
+
+

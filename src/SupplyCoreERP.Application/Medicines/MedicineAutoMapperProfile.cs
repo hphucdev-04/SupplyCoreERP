@@ -1,6 +1,7 @@
 using AutoMapper;
+using SupplyCoreERP.Catalog.Medicines;
+using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Medicines.Dtos;
-using SupplyCoreERP.Products;
 
 namespace SupplyCoreERP.Medicines;
 
@@ -36,3 +37,4 @@ public class MedicineAutoMapperProfile : Profile
             .ForMember(d => d.UnitName, o => o.MapFrom(s => s.Unit.Name));
     }
 }
+

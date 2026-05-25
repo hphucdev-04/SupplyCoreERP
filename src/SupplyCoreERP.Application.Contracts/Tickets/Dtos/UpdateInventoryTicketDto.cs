@@ -7,3 +7,4 @@ public class UpdateInventoryTicketDto
     [MaxLength(1000)]
     public string? Note { get; set; }
 }
+

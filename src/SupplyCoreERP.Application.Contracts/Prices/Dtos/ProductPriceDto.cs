@@ -17,3 +17,4 @@ public class ProductPriceDto : EntityDto<Guid>
     public decimal Price { get; set; }
     public int MinQuantity { get; set; }
 }
+

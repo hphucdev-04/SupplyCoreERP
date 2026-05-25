@@ -33,3 +33,4 @@ public class PurchaseOrderDto : FullAuditedEntityDto<Guid>
     public List<PurchaseOrderLineDto> Lines { get; set; } = new List<PurchaseOrderLineDto>();
     public List<RelatedTicketDto> RelatedTickets { get; set; } = new List<RelatedTicketDto>();
 }
+
