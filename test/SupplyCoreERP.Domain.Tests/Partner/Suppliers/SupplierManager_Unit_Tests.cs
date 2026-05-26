@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -59,7 +60,7 @@ public class SupplierManager_Unit_Tests
             .GetProperty("LazyServiceProvider", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public)
             ?.SetValue(_supplierManager, lazyServiceProvider);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi xóa nhà cung cấp vẫn còn dư nợ.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Delete_Supplier_With_Outstanding_Debt()
     {
@@ -79,7 +80,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:CannotDeleteSupplierWithOutstandingDebt");
     }
-
+    [QATest(scenario: "Xóa nhà cung cấp thành công khi không có dư nợ.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Delete_Supplier_Successfully()
     {
@@ -96,7 +97,7 @@ public class SupplierManager_Unit_Tests
         // Assert
         await _supplierRepository.Received(1).DeleteAsync(supplier);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi validate vị trí có tỉnh/thành phố không thuộc quốc gia.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_Country_City_Mismatch()
     {
@@ -121,7 +122,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:CityCountryMismatch");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi validate vị trí có quốc gia không tồn tại.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_Country_NotFound()
     {
@@ -141,7 +142,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:CountryNotFound");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi validate vị trí có tỉnh/thành phố không tồn tại.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_City_NotFound()
     {
@@ -161,7 +162,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:CityNotFound");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi validate vị trí có quận/huyện không tồn tại.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_Area_NotFound()
     {
@@ -181,7 +182,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:AreaNotFound");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi validate vị trí có quận/huyện không thuộc thành phố.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_Area_City_Mismatch()
     {
@@ -207,7 +208,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:AreaCityMismatch");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi tạo NCC trùng mã đã tồn tại.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Supplier_Code_Exists()
     {
@@ -221,7 +222,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:SupplierCodeExists");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi tạo NCC trùng tên đã tồn tại.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Supplier_Name_Exists()
     {
@@ -250,7 +251,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:SupplierNameExists");
     }
-
+    [QATest(scenario: "Tạo mới nhà cung cấp thành công qua Manager.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Create_Supplier_Successfully()
     {
@@ -278,7 +279,7 @@ public class SupplierManager_Unit_Tests
         supplier.DebtLimit.ShouldBe(10000000m);
         supplier.PaymentTermDays.ShouldBe(30);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi thêm sản phẩm không tồn tại trên hệ thống vào NCC.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_AddProduct_Product_NotFound()
     {
@@ -296,7 +297,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:ProductNotFound");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi thêm sản phẩm chưa được duyệt hoạt động vào NCC.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_AddProduct_Product_NotAvailable()
     {
@@ -318,7 +319,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:ProductNotAvailable");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi thêm sản phẩm có đơn vị tính mặc định không tồn tại.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_AddProduct_Unit_NotFound()
     {
@@ -344,7 +345,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:UnitNotFound");
     }
-
+    [QATest(scenario: "Thêm sản phẩm thành công vào danh mục của NCC.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_AddProduct_Successfully()
     {
@@ -375,7 +376,7 @@ public class SupplierManager_Unit_Tests
         sp.Note.ShouldBe("Note A");
         supplier.SupplierProducts.ShouldContain(sp);
     }
-
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi Cập nhật sản phẩm đơn vị tính not found.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_UpdateProduct_Unit_NotFound()
     {
@@ -393,7 +394,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:UnitNotFound");
     }
-
+    [QATest(scenario: "Cập nhật sản phẩm thành công.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_UpdateProduct_Successfully()
     {
@@ -423,7 +424,7 @@ public class SupplierManager_Unit_Tests
         sp.IsPreferred.ShouldBeTrue();
         sp.Note.ShouldBe("Note B");
     }
-
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi Loại bỏ sản phẩm sản phẩm not found.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_RemoveProduct_Product_NotFound()
     {
@@ -441,7 +442,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:ProductNotFound");
     }
-
+    [QATest(scenario: "Loại bỏ sản phẩm thành công.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_RemoveProduct_Successfully()
     {
@@ -461,7 +462,7 @@ public class SupplierManager_Unit_Tests
         // Assert
         supplier.SupplierProducts.ShouldBeEmpty();
     }
-
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi toggle sản phẩm hoạt động sản phẩm not found.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_ToggleProductActive_Product_NotFound()
     {
@@ -477,7 +478,7 @@ public class SupplierManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:ProductNotFound");
     }
-
+    [QATest(scenario: "Toggle sản phẩm hoạt động thành công.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_ToggleProductActive_Successfully()
     {

@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -38,7 +39,7 @@ public class ProductManager_Unit_Tests
             _productRepository, _balanceRepo, _ticketLineRepo, _poLineRepo, _soLineRepo, _prLineRepo
         );
     }
-
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi check mã code trùng lặp.", feature: "SupplierProduct", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_CheckCode_Duplicate()
     {
@@ -52,7 +53,7 @@ public class ProductManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:DuplicateProductCode");
     }
-
+    [QATest(scenario: "Not Ném ngoại lệ khi check mã code is unique.", feature: "SupplierProduct", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Not_Throw_When_CheckCode_Is_Unique()
     {
@@ -63,7 +64,7 @@ public class ProductManager_Unit_Tests
         await _productManager.CheckCodeAsync("MED-001");
         await Task.CompletedTask;
     }
-
+    [QATest(scenario: "Return true for has transactions khi balance tồn tại.", feature: "SupplierProduct", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Return_True_For_HasTransactions_When_Balance_Exists()
     {
@@ -77,7 +78,7 @@ public class ProductManager_Unit_Tests
         // Assert
         result.ShouldBeTrue();
     }
-
+    [QATest(scenario: "Return true for has transactions khi ticket line tồn tại.", feature: "SupplierProduct", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Return_True_For_HasTransactions_When_TicketLine_Exists()
     {
@@ -92,7 +93,7 @@ public class ProductManager_Unit_Tests
         // Assert
         result.ShouldBeTrue();
     }
-
+    [QATest(scenario: "Return false for has transactions khi no transactions exist.", feature: "SupplierProduct", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Return_False_For_HasTransactions_When_No_Transactions_Exist()
     {

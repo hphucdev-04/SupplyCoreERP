@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -53,7 +54,7 @@ public class CustomerManager_Unit_Tests
             .GetProperty("LazyServiceProvider", System.Reflection.BindingFlags.Instance | System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Public)
             ?.SetValue(_customerManager, lazyServiceProvider);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi xóa khách hàng vẫn còn dư nợ.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Delete_Customer_With_Outstanding_Debt()
     {
@@ -73,7 +74,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:CannotDeleteCustomerWithOutstandingDebt");
     }
-
+    [QATest(scenario: "Xóa khách hàng thành công khi không có dư nợ.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Delete_Customer_Successfully()
     {
@@ -90,7 +91,7 @@ public class CustomerManager_Unit_Tests
         // Assert
         await _customerRepository.Received(1).DeleteAsync(customer);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi validate vị trí có quốc gia không tồn tại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_Country_NotFound()
     {
@@ -111,7 +112,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:InvalidCountry");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi validate vị trí có tỉnh/thành phố không tồn tại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_City_NotFound()
     {
@@ -132,7 +133,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:InvalidCity");
     }
-
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi vị trí city country mismatch.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_CityCountry_Mismatch()
     {
@@ -157,7 +158,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:InvalidCityCountry");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi validate vị trí có quận/huyện không tồn tại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_Area_NotFound()
     {
@@ -178,7 +179,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:InvalidArea");
     }
-
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi vị trí area city mismatch.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Location_AreaCity_Mismatch()
     {
@@ -205,7 +206,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:InvalidAreaCity");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi chọn bảng giá không tồn tại trên hệ thống.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_PriceList_NotFound()
     {
@@ -226,7 +227,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:InvalidPriceList");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi tạo KH trùng mã đã tồn tại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Customer_Code_Exists()
     {
@@ -240,7 +241,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:CustomerCodeAlreadyExists");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi tạo KH trùng tên đã tồn tại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Customer_Name_Exists()
     {
@@ -269,7 +270,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:CustomerNameAlreadyExists");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi tạo KH trùng số điện thoại đã tồn tại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_PhoneNumber_Exists()
     {
@@ -297,7 +298,7 @@ public class CustomerManager_Unit_Tests
         });
         ex.Code.ShouldBe("SupplyCoreERP:PhoneNumberAlreadyExists");
     }
-
+    [QATest(scenario: "Tạo mới khách hàng thành công qua Manager.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Create_Customer_Successfully()
     {
@@ -327,7 +328,7 @@ public class CustomerManager_Unit_Tests
         customer.DebtLimit.ShouldBe(10000000m);
         customer.PaymentTermDays.ShouldBe(30);
     }
-
+    [QATest(scenario: "Cập nhật thông tin khách hàng thành công khi không thay đổi số điện thoại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Update_Customer_Successfully_Without_Phone_Change()
     {
@@ -358,7 +359,7 @@ public class CustomerManager_Unit_Tests
         // Ensure no AnyAsync was called since phone wasn't changed
         await _customerRepository.DidNotReceive().AnyAsync(Arg.Any<Expression<Func<Customer, bool>>>());
     }
-
+    [QATest(scenario: "Cập nhật thông tin khách hàng thành công khi thay đổi số điện thoại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Update_Customer_Successfully_With_Phone_Change()
     {

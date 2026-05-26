@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Threading.Tasks;
 using Shouldly;
 using SupplyCoreERP.Enums.Partner;
@@ -21,7 +22,7 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
         _customerManager = GetRequiredService<CustomerManager>();
         _customerRepository = GetRequiredService<IRepository<Customer, Guid>>();
     }
-
+    [QATest(scenario: "Tạo khách hàng thành công và tự động sinh mã code tăng dần.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Create_Customer_And_Generate_Customer_Code()
     {
@@ -54,7 +55,7 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
             customer.PriceListId.ShouldBe(TestDataConsts.PriceListOfficialId);
         });
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi tạo trùng số điện thoại khách hàng.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Phone_Number_Already_Exists()
     {
@@ -81,7 +82,7 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
             ex.Code.ShouldBe("SupplyCoreERP:PhoneNumberAlreadyExists");
         });
     }
-
+    [QATest(scenario: "Xóa khách hàng thành công khi không có dư nợ.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Delete_Customer_Successfully()
     {
@@ -114,7 +115,7 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
             deleted.ShouldBeNull();
         });
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi tạo khách hàng liên kết bảng giá không tồn tại.", feature: "Customer", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_Exception_When_Create_Customer_With_NonExistent_PriceList()
     {
@@ -147,7 +148,7 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
             ex.Code.ShouldBe("SupplyCoreERP:InvalidPriceList");
         });
     }
-
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi deleting khách hàng với còn dư nợ.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Deleting_Customer_With_Outstanding_Debt()
     {
@@ -174,7 +175,7 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
             ex.Code.ShouldBe("SupplyCoreERP:CannotDeleteCustomerWithOutstandingDebt");
         });
     }
-
+    [QATest(scenario: "Cập nhật khách hàng thành công.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Update_Customer_Successfully()
     {
@@ -223,7 +224,7 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
             updated.PriceListId.ShouldBe(TestDataConsts.PriceListOfficialId);
         });
     }
-
+    [QATest(scenario: "Check mã code and tên Ném ngoại lệ business ngoại lệ khi mã code tồn tại.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_CheckCodeAndName_Throw_BusinessException_When_Code_Exists()
     {
@@ -237,7 +238,7 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
             ex.Code.ShouldBe("SupplyCoreERP:CustomerCodeAlreadyExists");
         });
     }
-
+    [QATest(scenario: "Check mã code and tên Ném ngoại lệ business ngoại lệ khi tên tồn tại.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_CheckCodeAndName_Throw_BusinessException_When_Name_Exists()
     {

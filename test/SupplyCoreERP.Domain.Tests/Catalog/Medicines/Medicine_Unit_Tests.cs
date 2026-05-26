@@ -10,24 +10,26 @@ namespace SupplyCoreERP.Catalog.Medicines;
 
 public class Medicine_Unit_Tests
 {
+
+    [QATest(scenario: "Tạo mới medicine với hợp lệ tham số.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Create_Medicine_With_Valid_Parameters()
     {
         // Arrange
-        var id = Guid.NewGuid();
-        var categoryId = Guid.NewGuid();
-        var manufacturerId = Guid.NewGuid();
+        Guid id = Guid.NewGuid();
+        Guid categoryId = Guid.NewGuid();
+        Guid manufacturerId = Guid.NewGuid();
         string code = "MED-PARA";
         string name = "Paracetamol 500mg";
-        var baseUnitId = Guid.NewGuid();
-        var dosageFormId = Guid.NewGuid();
+        Guid baseUnitId = Guid.NewGuid();
+        Guid dosageFormId = Guid.NewGuid();
         string initialRegNumber = "SDK-001";
         UsageRoute usageRoute = UsageRoute.Oral;
         StorageCondition storageCondition = StorageCondition.Normal;
         bool isPrescription = false;
 
         // Act
-        var medicine = new Medicine(
+        Medicine medicine = new(
             id, categoryId, manufacturerId, code, name, baseUnitId, dosageFormId,
             initialRegNumber, usageRoute, storageCondition, isPrescription
         );
@@ -53,14 +55,15 @@ public class Medicine_Unit_Tests
         reg.IsActive.ShouldBeTrue();
     }
 
+    [QATest(scenario: "Cập nhật medicine info.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Update_Medicine_Info()
     {
         // Arrange
         Medicine medicine = CreateSampleMedicine();
-        var newCategoryId = Guid.NewGuid();
-        var newManufacturerId = Guid.NewGuid();
-        var newBaseUnitId = Guid.NewGuid();
+        Guid newCategoryId = Guid.NewGuid();
+        Guid newManufacturerId = Guid.NewGuid();
+        Guid newBaseUnitId = Guid.NewGuid();
 
         // Act
         medicine.UpdateInfo("Paracetamol Extra", newCategoryId, newManufacturerId, newBaseUnitId);
@@ -72,6 +75,7 @@ public class Medicine_Unit_Tests
         medicine.BaseUnitId.ShouldBe(newBaseUnitId);
     }
 
+    [QATest(scenario: "Thêm số đăng ký khi reg number changes.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Add_Registration_When_RegNumber_Changes()
     {
@@ -94,6 +98,7 @@ public class Medicine_Unit_Tests
         old.IsActive.ShouldBeFalse();
     }
 
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi reg number is trùng lặp.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_BusinessException_When_RegNumber_Is_Duplicate()
     {
@@ -107,12 +112,13 @@ public class Medicine_Unit_Tests
         }).Code.ShouldBe("SupplyCoreERP:DuplicateRegistration");
     }
 
+    [QATest(scenario: "Cập nhật pharma info với hợp lệ tham số.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Update_PharmaInfo_With_Valid_Parameters()
     {
         // Arrange
         Medicine medicine = CreateSampleMedicine();
-        var newDosageFormId = Guid.NewGuid();
+        Guid newDosageFormId = Guid.NewGuid();
 
         // Act
         medicine.UpdatePharmaInfo(newDosageFormId, UsageRoute.Injection, StorageCondition.Cool, true);
@@ -124,12 +130,13 @@ public class Medicine_Unit_Tests
         medicine.IsPrescriptionDrug.ShouldBeTrue();
     }
 
+    [QATest(scenario: "Thêm ingredient to medicine.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Add_Ingredient_To_Medicine()
     {
         // Arrange
         Medicine medicine = CreateSampleMedicine();
-        var ingredientId = Guid.NewGuid();
+        Guid ingredientId = Guid.NewGuid();
 
         // Act
         medicine.AddIngredient(ingredientId);
@@ -139,12 +146,13 @@ public class Medicine_Unit_Tests
         medicine.Ingredients.First().ActiveIngredientId.ShouldBe(ingredientId);
     }
 
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi ingredient is trùng lặp.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_BusinessException_When_Ingredient_Is_Duplicate()
     {
         // Arrange
         Medicine medicine = CreateSampleMedicine();
-        var ingredientId = Guid.NewGuid();
+        Guid ingredientId = Guid.NewGuid();
         medicine.AddIngredient(ingredientId);
 
         // Act & Assert
@@ -154,12 +162,13 @@ public class Medicine_Unit_Tests
         }).Code.ShouldBe("SupplyCoreERP:DuplicateIngredient");
     }
 
+    [QATest(scenario: "Loại bỏ ingredient from medicine.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Remove_Ingredient_From_Medicine()
     {
         // Arrange
         Medicine medicine = CreateSampleMedicine();
-        var ingredientId = Guid.NewGuid();
+        Guid ingredientId = Guid.NewGuid();
         medicine.AddIngredient(ingredientId);
 
         // Act
@@ -169,12 +178,13 @@ public class Medicine_Unit_Tests
         medicine.Ingredients.Count.ShouldBe(0);
     }
 
+    [QATest(scenario: "Thêm đơn vị tính với conversion factor.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Add_Unit_With_Conversion_Factor()
     {
         // Arrange
         Medicine medicine = CreateSampleMedicine();
-        var unitId = Guid.NewGuid();
+        Guid unitId = Guid.NewGuid();
 
         // Act
         medicine.AddUnit(Guid.NewGuid(), unitId, 10, 1);
@@ -186,17 +196,18 @@ public class Medicine_Unit_Tests
         unit.ConversionFactor.ShouldBe(10);
     }
 
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi Thêm đơn vị tính is trùng lặp of base đơn vị tính.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_BusinessException_When_AddUnit_Is_Duplicate_Of_BaseUnit()
     {
         // Arrange
-        var baseUnitId = Guid.NewGuid();
-        var id = Guid.NewGuid();
-        var categoryId = Guid.NewGuid();
-        var manufacturerId = Guid.NewGuid();
-        var dosageFormId = Guid.NewGuid();
+        Guid baseUnitId = Guid.NewGuid();
+        Guid id = Guid.NewGuid();
+        Guid categoryId = Guid.NewGuid();
+        Guid manufacturerId = Guid.NewGuid();
+        Guid dosageFormId = Guid.NewGuid();
 
-        var medicine = new Medicine(
+        Medicine medicine = new(
             id, categoryId, manufacturerId, "MED-001", "Paracetamol", baseUnitId, dosageFormId,
             "SDK-001", UsageRoute.Oral, StorageCondition.Normal, false
         );
@@ -208,6 +219,7 @@ public class Medicine_Unit_Tests
         }).Code.ShouldBe("SupplyCoreERP:DuplicateBaseUnit");
     }
 
+    [QATest(scenario: "Approve pending medicine.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Approve_Pending_Medicine()
     {
@@ -223,6 +235,7 @@ public class Medicine_Unit_Tests
         medicine.IsAvailableForInventory.ShouldBeTrue();
     }
 
+    [QATest(scenario: "Reject pending medicine.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Reject_Pending_Medicine()
     {

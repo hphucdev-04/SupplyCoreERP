@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Linq;
 using Shouldly;
 using Volo.Abp;
@@ -13,7 +14,7 @@ public class SupplierProduct_Unit_Tests
     private static readonly Guid UnitId = Guid.NewGuid();
 
     #region Constructor / UpdateInfo
-
+    [QATest(scenario: "Tạo mới nhà cung cấp sản phẩm với hợp lệ tham số.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Create_SupplierProduct_With_Valid_Parameters()
     {
@@ -32,7 +33,7 @@ public class SupplierProduct_Unit_Tests
         sp.Conditions.ShouldNotBeNull();
         sp.Conditions.Count.ShouldBe(0);
     }
-
+    [QATest(scenario: "Clamp bị âm lead time days to bằng 0.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Clamp_Negative_LeadTimeDays_To_Zero()
     {
@@ -40,7 +41,7 @@ public class SupplierProduct_Unit_Tests
 
         sp.LeadTimeDays.ShouldBe(0);
     }
-
+    [QATest(scenario: "Cập nhật info.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Update_Info()
     {
@@ -54,7 +55,7 @@ public class SupplierProduct_Unit_Tests
         sp.IsPreferred.ShouldBeTrue();
         sp.Note.ShouldBe("Updated note");
     }
-
+    [QATest(scenario: "Clamp bị âm lead time days on Cập nhật info.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Clamp_Negative_LeadTimeDays_On_UpdateInfo()
     {
@@ -68,7 +69,7 @@ public class SupplierProduct_Unit_Tests
     #endregion
 
     #region AddCondition / RemoveCondition
-
+    [QATest(scenario: "Thêm condition.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Add_Condition()
     {
@@ -80,7 +81,7 @@ public class SupplierProduct_Unit_Tests
         sp.Conditions.Count.ShouldBe(1);
         sp.Conditions.First().ShouldBe(condition);
     }
-
+    [QATest(scenario: "Loại bỏ existing condition.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Remove_Existing_Condition()
     {
@@ -92,7 +93,7 @@ public class SupplierProduct_Unit_Tests
 
         sp.Conditions.Count.ShouldBe(0);
     }
-
+    [QATest(scenario: "Do nothing khi Loại bỏ non existent condition.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Do_Nothing_When_Remove_NonExistent_Condition()
     {
@@ -108,7 +109,7 @@ public class SupplierProduct_Unit_Tests
     #endregion
 
     #region SetPreferred / SetActive
-
+    [QATest(scenario: "Set ưu tiên.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Set_Preferred()
     {
@@ -121,7 +122,7 @@ public class SupplierProduct_Unit_Tests
         sp.SetPreferred(false);
         sp.IsPreferred.ShouldBeFalse();
     }
-
+    [QATest(scenario: "Set hoạt động.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Set_Active()
     {
@@ -138,7 +139,7 @@ public class SupplierProduct_Unit_Tests
     #endregion
 
     #region ValidateConditions
-
+    [QATest(scenario: "Pass Validate điều kiện khi Empty.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Pass_ValidateConditions_When_Empty()
     {
@@ -147,7 +148,7 @@ public class SupplierProduct_Unit_Tests
         // Không throw
         sp.ValidateConditions();
     }
-
+    [QATest(scenario: "Pass validate conditions với hợp lệ conditions.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Pass_ValidateConditions_With_Valid_Conditions()
     {
@@ -159,7 +160,7 @@ public class SupplierProduct_Unit_Tests
 
         // Không throw = pass
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi inconsistent conversion factors.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_InconsistentConversionFactors()
     {
@@ -170,7 +171,7 @@ public class SupplierProduct_Unit_Tests
         Assert.Throws<BusinessException>(() => sp.ValidateConditions())
             .Code.ShouldBe("SupplyCoreERP:InconsistentConversionFactors");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi trùng lặp min order quantity.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_DuplicateMinOrderQuantity()
     {
@@ -181,7 +182,7 @@ public class SupplierProduct_Unit_Tests
         Assert.Throws<BusinessException>(() => sp.ValidateConditions())
             .Code.ShouldBe("SupplyCoreERP:DuplicateMinOrderQuantity");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi inconsistent pricing.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_InconsistentPricing()
     {

@@ -76,6 +76,7 @@ public class MedicineManager_Unit_Tests
             ?.SetValue(_medicineManager, lazyServiceProvider);
     }
 
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi foreign keys are không hợp lệ.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Foreign_Keys_Are_Invalid()
     {
@@ -93,6 +94,7 @@ public class MedicineManager_Unit_Tests
         ex.Code.ShouldBe("SupplyCoreERP:InvalidCategory");
     }
 
+    [QATest(scenario: "Tạo mới Medicine thành công qua Domain Service.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Create_Medicine_Successfully()
     {
@@ -136,6 +138,7 @@ public class MedicineManager_Unit_Tests
         reg.Note.ShouldBe("Initial Registration");
     }
 
+    [QATest(scenario: "Cập nhật medicine thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Update_Medicine_Successfully()
     {
@@ -176,6 +179,7 @@ public class MedicineManager_Unit_Tests
         reg.Note.ShouldBe("Updated validity and storage");
     }
 
+    [QATest(scenario: "Cập nhật medicine với new số đăng ký thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Update_Medicine_With_New_Registration_Successfully()
     {
@@ -209,6 +213,7 @@ public class MedicineManager_Unit_Tests
         medicine.Registrations.Count.ShouldBe(2); // Có 2 bản ghi số đăng ký
     }
 
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi Thêm non existent ingredient.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Add_NonExistent_Ingredient()
     {
@@ -228,6 +233,7 @@ public class MedicineManager_Unit_Tests
         ex.Code.ShouldBe("SupplyCoreERP:InvalidActiveIngredient");
     }
 
+    [QATest(scenario: "Thêm ingredient thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Add_Ingredient_Successfully()
     {
@@ -247,6 +253,7 @@ public class MedicineManager_Unit_Tests
         medicine.Ingredients.First().ActiveIngredientId.ShouldBe(activeIngredientId);
     }
 
+    [QATest(scenario: "Loại bỏ ingredient thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Remove_Ingredient_Successfully()
     {
@@ -266,6 +273,7 @@ public class MedicineManager_Unit_Tests
         medicine.Ingredients.Count.ShouldBe(0);
     }
 
+    [QATest(scenario: "Thêm đơn vị quy đổi thành công cho thuốc.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Add_Unit_Successfully()
     {
@@ -287,6 +295,7 @@ public class MedicineManager_Unit_Tests
         medicine.Units.First().Level.ShouldBe(1);
     }
 
+    [QATest(scenario: "Cập nhật đơn vị quy đổi thành công cho thuốc.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Update_Unit_Successfully()
     {
@@ -307,6 +316,7 @@ public class MedicineManager_Unit_Tests
         medicine.Units.First().Level.ShouldBe(1);
     }
 
+    [QATest(scenario: "Xóa đơn vị quy đổi thành công khỏi thuốc.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Remove_Unit_Successfully()
     {
@@ -326,6 +336,7 @@ public class MedicineManager_Unit_Tests
         medicine.Units.Count.ShouldBe(0);
     }
 
+    [QATest(scenario: "Thêm số đăng ký mới thành công cho thuốc qua Manager.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Add_Registration_Via_Manager_Successfully()
     {
@@ -351,7 +362,7 @@ public class MedicineManager_Unit_Tests
         currentReg.RegistrationNumber.ShouldBe("SDK-002");
         currentReg.Note.ShouldBe("Ghi chu moi qua Manager");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi thêm trùng số đăng ký qua Manager.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Throw_Exception_When_Adding_Duplicate_Registration_Via_Manager()
     {

@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Linq;
 using System.Threading.Tasks;
 using Shouldly;
@@ -21,7 +22,7 @@ public abstract class CustomerAppService_Integration_Tests<TStartupModule> : Sup
     {
         _customerAppService = GetRequiredService<ICustomerAppService>();
     }
-
+    [QATest(scenario: "Lấy danh sách khách hàng phân trang thành công qua API.", feature: "CustomerAppService", layer: "Application", priority: "Medium")]
     [Fact]
     public async Task Should_Get_List_Of_Customers()
     {
@@ -36,7 +37,7 @@ public abstract class CustomerAppService_Integration_Tests<TStartupModule> : Sup
         result.TotalCount.ShouldBeGreaterThan(0);
         result.Items.ShouldContain(x => x.Id == TestDataConsts.CustomerAId);
     }
-
+    [QATest(scenario: "Tạo mới khách hàng thành công qua API với dữ liệu hợp lệ.", feature: "CustomerAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Create_Customer_With_Valid_DTO()
     {
@@ -64,7 +65,7 @@ public abstract class CustomerAppService_Integration_Tests<TStartupModule> : Sup
         result.Code.ShouldNotBeNullOrWhiteSpace();
         result.PriceListId.ShouldBe(TestDataConsts.PriceListOfficialId);
     }
-
+    [QATest(scenario: "Cập nhật thông tin khách hàng thành công qua API.", feature: "CustomerAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Update_Customer_Successfully()
     {

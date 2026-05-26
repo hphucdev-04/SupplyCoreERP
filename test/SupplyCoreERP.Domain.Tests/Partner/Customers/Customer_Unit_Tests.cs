@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using Shouldly;
 using SupplyCoreERP.Enums.Partner;
 using Volo.Abp;
@@ -8,6 +9,7 @@ namespace SupplyCoreERP.Partner.Customers;
 
 public class Customer_Unit_Tests
 {
+    [QATest(scenario: "Tạo mới khách hàng với hợp lệ tham số.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Create_Customer_With_Valid_Parameters()
     {
@@ -37,7 +39,7 @@ public class Customer_Unit_Tests
         customer.IsActive.ShouldBeTrue();
         customer.CurrentDebt.ShouldBe(0m);
     }
-
+    [QATest(scenario: "Cập nhật khách hàng info.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Update_Customer_Info()
     {
@@ -60,7 +62,7 @@ public class Customer_Unit_Tests
         customer.TaxCode.ShouldBe("MST-CUS-2");
         customer.Note.ShouldBe("New Note");
     }
-
+    [QATest(scenario: "Set vị trí.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Set_Location()
     {
@@ -79,7 +81,7 @@ public class Customer_Unit_Tests
         customer.CityId.ShouldBe(cityId);
         customer.AreaId.ShouldBe(areaId);
     }
-
+    [QATest(scenario: "Set nợ info.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Set_DebtInfo()
     {
@@ -93,7 +95,7 @@ public class Customer_Unit_Tests
         customer.DebtLimit.ShouldBe(600000000m);
         customer.PaymentTermDays.ShouldBe(45);
     }
-
+    [QATest(scenario: "Set price list.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Set_PriceList()
     {
@@ -109,7 +111,7 @@ public class Customer_Unit_Tests
     }
 
     #region AddDebt / PayDebt
-
+    [QATest(scenario: "Thêm nợ thành công.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Add_Debt_Successfully()
     {
@@ -120,7 +122,7 @@ public class Customer_Unit_Tests
 
         customer.CurrentDebt.ShouldBe(5_000_000m);
     }
-
+    [QATest(scenario: "Thêm nợ khi no limit.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Add_Debt_When_No_Limit()
     {
@@ -131,7 +133,7 @@ public class Customer_Unit_Tests
 
         customer.CurrentDebt.ShouldBe(999_999_999m);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi Thêm nợ với không hợp lệ amount.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_AddDebt_With_Invalid_Amount()
     {
@@ -143,7 +145,7 @@ public class Customer_Unit_Tests
         Assert.Throws<BusinessException>(() => customer.AddDebt(-100m))
             .Code.ShouldBe("SupplyCoreERP:InvalidDebtAmount");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi Thêm nợ exceeds credit limit.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_AddDebt_Exceeds_Credit_Limit()
     {
@@ -154,7 +156,7 @@ public class Customer_Unit_Tests
         Assert.Throws<BusinessException>(() => customer.AddDebt(300_000m))
             .Code.ShouldBe("SupplyCoreERP:ExceedsCreditLimit");
     }
-
+    [QATest(scenario: "Thanh toán nợ thành công.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Pay_Debt_Successfully()
     {
@@ -165,7 +167,7 @@ public class Customer_Unit_Tests
 
         customer.CurrentDebt.ShouldBe(3_000_000m);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi Thanh toán nợ với không hợp lệ amount.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_PayDebt_With_Invalid_Amount()
     {
@@ -182,7 +184,7 @@ public class Customer_Unit_Tests
     #endregion
 
     #region SetActive / SetDebtInfo edge cases
-
+    [QATest(scenario: "Set hoạt động.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Set_Active()
     {
@@ -195,7 +197,7 @@ public class Customer_Unit_Tests
         customer.SetActive(true);
         customer.IsActive.ShouldBeTrue();
     }
-
+    [QATest(scenario: "Clamp bị âm nợ info to bằng 0.", feature: "Customer", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Clamp_Negative_DebtInfo_To_Zero()
     {

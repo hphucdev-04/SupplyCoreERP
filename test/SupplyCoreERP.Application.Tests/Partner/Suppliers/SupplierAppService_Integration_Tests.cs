@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Linq;
 using System.Threading.Tasks;
 using Shouldly;
@@ -21,7 +22,7 @@ public abstract class SupplierAppService_Integration_Tests<TStartupModule> : Sup
     {
         _supplierAppService = GetRequiredService<ISupplierAppService>();
     }
-
+    [QATest(scenario: "Lấy danh sách nhà cung cấp phân trang thành công qua API.", feature: "SupplierAppService", layer: "Application", priority: "Medium")]
     [Fact]
     public async Task Should_Get_List_Of_Suppliers()
     {
@@ -36,7 +37,7 @@ public abstract class SupplierAppService_Integration_Tests<TStartupModule> : Sup
         result.TotalCount.ShouldBeGreaterThan(0);
         result.Items.ShouldContain(x => x.Id == TestDataConsts.SupplierAId);
     }
-
+    [QATest(scenario: "Tạo mới nhà cung cấp thành công qua API với dữ liệu hợp lệ.", feature: "SupplierAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Create_Supplier_With_Valid_DTO()
     {
@@ -61,7 +62,7 @@ public abstract class SupplierAppService_Integration_Tests<TStartupModule> : Sup
         result.Name.ShouldBe("Supplier New E2E");
         result.Code.ShouldNotBeNullOrWhiteSpace();
     }
-
+    [QATest(scenario: "Cập nhật thông tin nhà cung cấp thành công qua API.", feature: "SupplierAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Update_Supplier_Successfully()
     {

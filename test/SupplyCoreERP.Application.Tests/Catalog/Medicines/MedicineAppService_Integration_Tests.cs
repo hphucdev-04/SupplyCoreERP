@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -22,7 +23,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
     {
         _medicineAppService = GetRequiredService<IMedicineAppService>();
     }
-
+    [QATest(scenario: "Lấy danh sách thuốc phân trang thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "Medium")]
     [Fact]
     public async Task Should_Get_List_Of_Medicines()
     {
@@ -37,7 +38,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         result.TotalCount.ShouldBeGreaterThan(0);
         result.Items.ShouldContain(x => x.Id == TestDataConsts.MedicineParacetamolId);
     }
-
+    [QATest(scenario: "Tạo mới thuốc thành công qua API với thông tin hợp lệ.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Create_Medicine_When_Input_Is_Valid()
     {
@@ -61,7 +62,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         result.Name.ShouldBe("Ibuprofen 400mg");
         result.Code.ShouldNotBeNullOrWhiteSpace();
     }
-
+    [QATest(scenario: "Cập nhật thông tin thuốc thành công qua API với thông tin hợp lệ.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Update_Medicine_When_Input_Is_Valid()
     {
@@ -86,7 +87,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         result.ShouldNotBeNull();
         result.Name.ShouldBe("Paracetamol Extra 650mg");
     }
-
+    [QATest(scenario: "Duyệt thuốc đang chờ duyệt thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Approve_Pending_Medicine()
     {
@@ -111,7 +112,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         MedicineDetailDto updated = await _medicineAppService.GetAsync(newMedicine.Id);
         updated.Status.ShouldBe(MedicineStatus.Approved);
     }
-
+    [QATest(scenario: "Lấy thông tin chi tiết thuốc theo ID thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "Medium")]
     [Fact]
     public async Task Should_Get_Medicine_Detail_Successfully()
     {
@@ -125,7 +126,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         result.Code.ShouldBe("MED-001");
         result.HasTransactions.ShouldBeFalse(); // SQLite in-memory mới khởi tạo chưa có giao dịch
     }
-
+    [QATest(scenario: "Ném ngoại lệ EntityNotFoundException khi lấy thuốc không tồn tại qua API.", feature: "MedicineAppService", layer: "Application", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine()
     {
@@ -138,7 +139,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
             await _medicineAppService.GetAsync(nonExistentId);
         });
     }
-
+    [QATest(scenario: "Xóa thuốc thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Delete_Medicine_Successfully()
     {
@@ -165,7 +166,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
             await _medicineAppService.GetAsync(newMedicine.Id);
         });
     }
-
+    [QATest(scenario: "Từ chối duyệt thuốc thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Reject_Pending_Medicine_Successfully()
     {
@@ -190,7 +191,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         MedicineDetailDto updated = await _medicineAppService.GetAsync(newMedicine.Id);
         updated.Status.ShouldBe(MedicineStatus.Rejected);
     }
-
+    [QATest(scenario: "Bật/Tắt trạng thái hoạt động thuốc thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Toggle_Active_Medicine_Successfully()
     {
@@ -205,7 +206,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         MedicineDetailDto updated = await _medicineAppService.GetAsync(TestDataConsts.MedicineParacetamolId);
         updated.IsActive.ShouldBe(!originalActiveState);
     }
-
+    [QATest(scenario: "Lấy thông tin tổng quan thuốc thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "Medium")]
     [Fact]
     public async Task Should_Get_Medicine_Summary_Successfully()
     {
@@ -217,7 +218,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         result.TotalCount.ShouldBeGreaterThan(0);
         result.TotalActive.ShouldBeGreaterThan(0);
     }
-
+    [QATest(scenario: "Quản lý (thêm/cập nhật/xóa) hoạt chất thuốc thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Manage_Ingredients_Via_AppService_Successfully()
     {
@@ -239,7 +240,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         MedicineDetailDto updatedMedicine = await _medicineAppService.GetAsync(TestDataConsts.MedicineParacetamolId);
         updatedMedicine.Ingredients.Count.ShouldBe(0);
     }
-
+    [QATest(scenario: "Quản lý (thêm/cập nhật/xóa) đơn vị quy đổi thuốc thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Manage_Units_Via_AppService_Successfully()
     {
@@ -275,7 +276,7 @@ public abstract class MedicineAppService_Integration_Tests<TStartupModule> : Sup
         MedicineDetailDto medicineDeleted = await _medicineAppService.GetAsync(TestDataConsts.MedicineParacetamolId);
         medicineDeleted.Units.Count.ShouldBe(0);
     }
-
+    [QATest(scenario: "Quản lý (thêm/cập nhật/xóa) số đăng ký thuốc thành công qua API.", feature: "MedicineAppService", layer: "Application", priority: "High")]
     [Fact]
     public async Task Should_Manage_Registrations_Via_AppService_Successfully()
     {
