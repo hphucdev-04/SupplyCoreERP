@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using Shouldly;
 using Volo.Abp;
 using Xunit;
@@ -11,7 +12,7 @@ public class SupplierProductCondition_Unit_Tests
     private static readonly Guid UnitId = Guid.NewGuid();
 
     #region Constructor
-
+    [QATest(scenario: "Tạo mới condition với hợp lệ tham số.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Create_Condition_With_Valid_Parameters()
     {
@@ -35,7 +36,7 @@ public class SupplierProductCondition_Unit_Tests
         condition.OverDeliveryTolerancePct.ShouldBe(5m);
         condition.UnderDeliveryTolerancePct.ShouldBe(3m);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi conversion factor không hợp lệ.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_ConversionFactor_Invalid()
     {
@@ -47,7 +48,7 @@ public class SupplierProductCondition_Unit_Tests
             new SupplierProductCondition(Guid.NewGuid(), SupplierProductId, UnitId, -1, 100_000m, 10m))
             .Code.ShouldBe("SupplyCoreERP:InvalidConversionFactor");
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi standard price bị âm.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_StandardPrice_Negative()
     {
@@ -55,7 +56,7 @@ public class SupplierProductCondition_Unit_Tests
             new SupplierProductCondition(Guid.NewGuid(), SupplierProductId, UnitId, 1, -1m, 10m))
             .Code.ShouldBe("SupplyCoreERP:InvalidStandardPrice");
     }
-
+    [QATest(scenario: "Allow standard price bằng 0.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Allow_StandardPrice_Zero()
     {
@@ -64,7 +65,7 @@ public class SupplierProductCondition_Unit_Tests
 
         condition.StandardPrice.ShouldBe(0m);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi min order quantity không hợp lệ.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_MinOrderQuantity_Invalid()
     {
@@ -80,7 +81,7 @@ public class SupplierProductCondition_Unit_Tests
     #endregion
 
     #region UpdateCondition
-
+    [QATest(scenario: "Cập nhật condition thành công.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Update_Condition_Successfully()
     {
@@ -93,7 +94,7 @@ public class SupplierProductCondition_Unit_Tests
         condition.OverDeliveryTolerancePct.ShouldBe(10m);
         condition.UnderDeliveryTolerancePct.ShouldBe(8m);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi Cập nhật condition với không hợp lệ values.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_UpdateCondition_With_Invalid_Values()
     {
@@ -111,7 +112,7 @@ public class SupplierProductCondition_Unit_Tests
     #endregion
 
     #region UpdateLastPurchasePrice
-
+    [QATest(scenario: "Cập nhật last purchase price thành công.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Update_LastPurchasePrice_Successfully()
     {
@@ -121,7 +122,7 @@ public class SupplierProductCondition_Unit_Tests
 
         condition.LastPurchasePrice.ShouldBe(95_000m);
     }
-
+    [QATest(scenario: "Ném ngoại lệ khi Cập nhật last purchase price bị âm.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public void Should_Throw_When_UpdateLastPurchasePrice_Negative()
     {

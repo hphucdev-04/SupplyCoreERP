@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP;
 using System.Threading.Tasks;
 using Shouldly;
 using SupplyCoreERP.Catalog.Products;
@@ -21,7 +22,7 @@ public abstract class ProductManager_Integration_Tests<TStartupModule> : SupplyC
         _productManager = GetRequiredService<ProductManager>();
         _balanceRepository = GetRequiredService<IRepository<InventoryBalance, Guid>>();
     }
-
+    [QATest(scenario: "Return false khi sản phẩm has no transactions.", feature: "SupplierProduct", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Return_False_When_Product_Has_No_Transactions()
     {

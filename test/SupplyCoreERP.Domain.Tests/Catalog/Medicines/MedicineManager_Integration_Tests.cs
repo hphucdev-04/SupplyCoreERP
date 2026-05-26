@@ -24,6 +24,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         _medicineRepository = GetRequiredService<IRepository<Medicine, Guid>>();
     }
 
+    [QATest(scenario: "Tạo mới medicine khi tham số are hợp lệ.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Create_Medicine_When_Parameters_Are_Valid()
     {
@@ -51,6 +52,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Cập nhật medicine thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Update_Medicine_Successfully()
     {
@@ -80,6 +82,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Thêm ingredient thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Add_Ingredient_Successfully()
     {
@@ -97,6 +100,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Loại bỏ ingredient thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Remove_Ingredient_Successfully()
     {
@@ -114,6 +118,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Thêm đơn vị quy đổi thành công cho thuốc.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Add_Unit_Successfully()
     {
@@ -132,6 +137,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Cập nhật đơn vị quy đổi thành công cho thuốc.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Update_Unit_Successfully()
     {
@@ -149,6 +155,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Xóa đơn vị quy đổi thành công khỏi thuốc.", feature: "Medicine", layer: "Domain", priority: "High")]
     [Fact]
     public async Task Should_Remove_Unit_Successfully()
     {
@@ -166,6 +173,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Approve pending medicine thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Approve_Pending_Medicine_Successfully()
     {
@@ -184,6 +192,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Reject pending medicine thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Reject_Pending_Medicine_Successfully()
     {
@@ -202,6 +211,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi approve non pending medicine.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Approve_Non_Pending_Medicine()
     {
@@ -221,6 +231,7 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
         });
     }
 
+    [QATest(scenario: "Ném ngoại lệ business ngoại lệ khi Tạo mới trùng lặp mã code.", feature: "Medicine", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_Throw_BusinessException_When_Create_Duplicate_Code()
     {

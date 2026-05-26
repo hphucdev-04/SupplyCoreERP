@@ -277,7 +277,7 @@ tempkey.jwk
 .gitignore
 
 #docs
-docs/
+docs/superpowers/
 ai-rules/
 .antigravitycli/
 .agents/
