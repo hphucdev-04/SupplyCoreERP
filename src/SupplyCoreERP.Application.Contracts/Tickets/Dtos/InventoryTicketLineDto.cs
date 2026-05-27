@@ -19,6 +19,5 @@ public class InventoryTicketLineDto : AuditedEntityDto<Guid>
 
     public decimal Quantity { get; set; }
 
-    public List<InventoryTicketDetailDto> Details { get; set; } = new List<InventoryTicketDetailDto>();
 }
 
