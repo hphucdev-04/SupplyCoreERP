@@ -34,6 +34,7 @@
     "@angular/platform-browser-dynamic": "~20.0.0",
     "@angular/router": "~20.0.0",
     "@microsoft/signalr": "^10.0.0",
+    "deep-chat": "^2.4.2",
     "rxjs": "~7.8.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.15.0"
@@ -54,7 +55,7 @@
     "@typescript-eslint/parser": "^7.0.0",
     "eslint": "^8.0.0",
     "jasmine-core": "~4.0.0",
-    "karma": "~6.3.0",
+    "karma": "^6.4.4",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage": "~2.1.0",
     "karma-jasmine": "~4.0.0",

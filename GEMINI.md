@@ -7,12 +7,11 @@
 
 ## Rule & Skill Loading
 - Always read and follow the rules at: `./ai-rules/`
-- Use specific skills at: `./.agent/skills/`
+- Use specific skills at: `./.agents/skills/`
 
 ## Coding Standards
 - Strictly adhere to the ABP application layer structure.
 - Strictly adhere to all five SOLID principles
-- Follow the specialized testing standards in the agent-tester documentation at: ./.agents/agents/agent-tester/agent.mdc
 - Before editing the file, please explain your plan and wait for my confirmation.
 
 ## Language & Communication
