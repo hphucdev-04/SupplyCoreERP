@@ -1,5 +1,4 @@
 using System;
-using SupplyCoreERP;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -73,7 +72,7 @@ public class ProductManager_Unit_Tests
         _balanceRepo.AnyAsync(Arg.Any<Expression<Func<InventoryBalance, bool>>>()).Returns(true);
 
         // Act
-        var result = await _productManager.HasTransactionsAsync(productId);
+        bool result = await _productManager.HasTransactionsAsync(productId);
 
         // Assert
         result.ShouldBeTrue();
@@ -88,7 +87,7 @@ public class ProductManager_Unit_Tests
         _ticketLineRepo.AnyAsync(Arg.Any<Expression<Func<InventoryTicketLine, bool>>>()).Returns(true);
 
         // Act
-        var result = await _productManager.HasTransactionsAsync(productId);
+        bool result = await _productManager.HasTransactionsAsync(productId);
 
         // Assert
         result.ShouldBeTrue();
@@ -106,7 +105,7 @@ public class ProductManager_Unit_Tests
         _prLineRepo.AnyAsync(Arg.Any<Expression<Func<PurchaseRequisitionLine, bool>>>()).Returns(false);
 
         // Act
-        var result = await _productManager.HasTransactionsAsync(productId);
+        bool result = await _productManager.HasTransactionsAsync(productId);
 
         // Assert
         result.ShouldBeFalse();

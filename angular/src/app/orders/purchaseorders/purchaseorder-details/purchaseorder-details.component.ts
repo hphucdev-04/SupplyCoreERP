@@ -27,6 +27,7 @@ interface ProductUnitLookup {
   unitId: string;
   unitName: string;
   conversionFactor: number;
+  displayFactor?: number;
   isBaseUnit: boolean;
 }
 
@@ -172,6 +173,17 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
       unitPrice: [0, [Validators.required, Validators.min(0)]],
       taxRate: [0, [Validators.min(0)]],
     });
+
+    // Lắng nghe Reactive thay đổi quantity để tự động tính preview và đơn giá
+    this.detailForm.get('quantity')?.valueChanges.subscribe(() => {
+      this.updateQuantityPreview();
+      this.updatePriceTier();
+    });
+
+    // Lắng nghe Reactive thay đổi unitId để tự động tính đơn giá
+    this.detailForm.get('unitId')?.valueChanges.subscribe(() => {
+      this.updatePriceTier();
+    });
   }
 
   calculateDueDate() {
@@ -269,6 +281,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
               unitId: u.unitId,
               unitName: u.unitName,
               conversionFactor: cumulative,
+              displayFactor: u.conversionFactor || 1,
               isBaseUnit: false,
             };
           });
@@ -286,26 +299,42 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
               this.isAutoFilled = true;
               this.activeConditions = sp.conditions;
 
-              // Chỉ nạp các đơn vị đã thỏa thuận giá
-              this.units = sp.conditions.map(c => ({
-                unitId: c.unitId,
-                unitName: c.unitName,
-                conversionFactor: c.conversionFactor || 1,
-                isBaseUnit: c.unitId === sp.defaultUnitId,
-              }));
+              // Chỉ nạp các đơn vị đã thỏa thuận giá và loại bỏ trùng lặp unitId
+              const uniqueUnitsMap = new Map<string, ProductUnitLookup>();
+              sp.conditions.forEach(c => {
+                if (!uniqueUnitsMap.has(c.unitId)) {
+                  // Tra cứu hệ số quy đổi tuyệt đối lũy kế từ danh mục thuốc
+                  const matchedMedicineUnit = medicineUnits.find(mu => mu.unitId === c.unitId);
+                  const finalFactor = matchedMedicineUnit ? matchedMedicineUnit.conversionFactor : (c.conversionFactor || 1);
+                  const displayFactor = matchedMedicineUnit ? (matchedMedicineUnit.displayFactor || matchedMedicineUnit.conversionFactor) : (c.conversionFactor || 1);
+
+                  uniqueUnitsMap.set(c.unitId, {
+                    unitId: c.unitId,
+                    unitName: c.unitName,
+                    conversionFactor: finalFactor,
+                    displayFactor: displayFactor,
+                    isBaseUnit: c.unitId === sp.defaultUnitId,
+                  });
+                }
+              });
+              this.units = Array.from(uniqueUnitsMap.values());
 
               // Chọn đơn vị mặc định
               const defaultUnitId = sp.defaultUnitId;
               const matchedCondition =
                 sp.conditions.find(c => c.unitId === defaultUnitId) || sp.conditions[0];
 
+              // Lấy conversionFactor tuyệt đối đã chuẩn hóa từ this.units
+              const matchedNormalizedUnit = this.units.find(u => u.unitId === matchedCondition.unitId);
+              const finalConversionFactor = matchedNormalizedUnit ? matchedNormalizedUnit.conversionFactor : (matchedCondition.conversionFactor || 1);
+
               this.detailForm.patchValue({
                 unitId: matchedCondition.unitId,
-                conversionFactor: matchedCondition.conversionFactor,
+                conversionFactor: finalConversionFactor,
                 unitPrice:
                   matchedCondition.standardPrice || matchedCondition.lastPurchasePrice || 0,
               });
-              this.selectedConversionFactor = matchedCondition.conversionFactor || 1;
+              this.selectedConversionFactor = finalConversionFactor;
             } else {
               // Fallback về toàn bộ đơn vị của thuốc nếu không có config nhà cung cấp
               this.units = medicineUnits;
@@ -350,6 +379,34 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
       unitId,
       qty,
     );
+  }
+
+  updatePriceTier() {
+    const qty = this.detailForm.get('quantity')?.value || 0;
+    const unitId = this.detailForm.get('unitId')?.value;
+
+    if (this.isAutoFilled && this.activeConditions.length > 0 && unitId) {
+      const unitConditions = this.activeConditions.filter(c => c.unitId === unitId);
+
+      if (unitConditions.length > 0) {
+        // Sắp xếp các mốc MOQ giảm dần
+        const matchedCond = unitConditions
+          .sort((a, b) => (b.minOrderQuantity || 0) - (a.minOrderQuantity || 0))
+          .find(c => qty >= (c.minOrderQuantity || 0));
+
+        if (matchedCond) {
+          const unitPrice = matchedCond.standardPrice || matchedCond.lastPurchasePrice || 0;
+          this.detailForm.patchValue({ unitPrice: unitPrice }, { emitEvent: false });
+        } else {
+          // Fallback về mốc MOQ nhỏ nhất
+          const minCond = unitConditions.sort((a, b) => (a.minOrderQuantity || 0) - (b.minOrderQuantity || 0))[0];
+          if (minCond) {
+            const unitPrice = minCond.standardPrice || minCond.lastPurchasePrice || 0;
+            this.detailForm.patchValue({ unitPrice: unitPrice }, { emitEvent: false });
+          }
+        }
+      }
+    }
   }
 
   saveLine() {

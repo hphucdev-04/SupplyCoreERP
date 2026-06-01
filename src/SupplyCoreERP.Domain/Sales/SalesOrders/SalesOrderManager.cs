@@ -12,12 +12,13 @@ using SupplyCoreERP.Inventory.Warehouses;
 using SupplyCoreERP.Partner.Customers;
 using SupplyCoreERP.Sales.PriceLists;
 using Volo.Abp;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 
 namespace SupplyCoreERP.Sales.Orders;
 
-public class SalesOrderManager : DomainService
+public class SalesOrderManager : DomainService, ISalesOrderManager
 {
     // Dependencies
     private readonly IRepository<SalesOrder, Guid> _orderRepo;
@@ -26,8 +27,8 @@ public class SalesOrderManager : DomainService
     private readonly IRepository<Warehouse, Guid> _warehouseRepo;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
     private readonly PriceManager _priceManager;
-    private readonly TicketManager _ticketManager;
-    private readonly DocumentSequenceManager _documentManager;
+    private readonly ITicketManager _ticketManager;
+    private readonly IDocumentSequenceManager _documentManager;
     private readonly UnitConversionManager _unitConversionManager;
 
     // Constructor injection
@@ -38,8 +39,8 @@ public class SalesOrderManager : DomainService
         IRepository<Warehouse, Guid> warehouseRepo,
         IRepository<InventoryBalance, Guid> balanceRepo,
         PriceManager priceManager,
-        TicketManager ticketManager,
-        DocumentSequenceManager documentManager,
+        ITicketManager ticketManager,
+        IDocumentSequenceManager documentManager,
         UnitConversionManager unitConversionManager
         )
     {
@@ -98,7 +99,13 @@ public class SalesOrderManager : DomainService
     public async Task AddLineAsync(SalesOrder order, Guid productId, Guid unitId,
         int conversionFactor, decimal quantity, decimal? unitPrice, decimal discountRate, decimal taxRate)
     {
-        Product product = await _productRepo.GetAsync(productId);
+        IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+        Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == productId);
+        if (product == null)
+        {
+            throw new EntityNotFoundException(typeof(Product), productId);
+        }
+
         if (!product.IsAvailableForInventory)
         {
             throw new BusinessException("SupplyCoreERP:ProductNotAvailable", $"Sản phẩm '{product.Name}' chưa đủ điều kiện giao dịch!");

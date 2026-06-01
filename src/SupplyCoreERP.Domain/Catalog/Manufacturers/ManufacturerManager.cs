@@ -17,7 +17,7 @@ public class ManufacturerManager : DomainService
     private readonly IRepository<Continent, Guid> _continentRepository;
     private readonly IRepository<Country, Guid> _countryRepository;
     private readonly IRepository<Medicine, Guid> _medicineRepository;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public ManufacturerManager(
@@ -25,7 +25,7 @@ public class ManufacturerManager : DomainService
         IRepository<Continent, Guid> continentRepository,
         IRepository<Country, Guid> countryRepository,
         IRepository<Medicine, Guid> medicineRepository,
-        DocumentSequenceManager documentSequenceManager)
+        IDocumentSequenceManager documentSequenceManager)
     {
         _repository = repository;
         _continentRepository = continentRepository;

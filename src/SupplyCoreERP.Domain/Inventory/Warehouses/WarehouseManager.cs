@@ -17,7 +17,7 @@ public class WarehouseManager : DomainService
     private readonly IRepository<Zone, Guid> _zoneRepo;
     private readonly IRepository<Bin, Guid> _binRepo;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public WarehouseManager(
@@ -25,7 +25,7 @@ public class WarehouseManager : DomainService
         IRepository<Zone, Guid> zoneRepo,
         IRepository<Bin, Guid> binRepo,
         IRepository<InventoryBalance, Guid> balanceRepo,
-        DocumentSequenceManager documentSequenceManager
+        IDocumentSequenceManager documentSequenceManager
         )
     {
         _warehouseRepo = warehouseRepo;

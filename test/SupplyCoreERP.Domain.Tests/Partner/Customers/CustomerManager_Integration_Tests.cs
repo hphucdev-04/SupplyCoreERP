@@ -1,5 +1,4 @@
 using System;
-using SupplyCoreERP;
 using System.Threading.Tasks;
 using Shouldly;
 using SupplyCoreERP.Enums.Partner;
@@ -14,12 +13,12 @@ namespace SupplyCoreERP.Partner.Customers;
 public abstract class CustomerManager_Integration_Tests<TStartupModule> : SupplyCoreERPDomainTestBase<TStartupModule>
     where TStartupModule : IAbpModule
 {
-    private readonly CustomerManager _customerManager;
+    private readonly ICustomerManager _customerManager;
     private readonly IRepository<Customer, Guid> _customerRepository;
 
     protected CustomerManager_Integration_Tests()
     {
-        _customerManager = GetRequiredService<CustomerManager>();
+        _customerManager = GetRequiredService<ICustomerManager>();
         _customerRepository = GetRequiredService<IRepository<Customer, Guid>>();
     }
     [QATest(scenario: "Tạo khách hàng thành công và tự động sinh mã code tăng dần.", feature: "Customer", layer: "Domain", priority: "High")]

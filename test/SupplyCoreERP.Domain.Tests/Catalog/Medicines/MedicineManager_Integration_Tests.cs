@@ -15,12 +15,12 @@ namespace SupplyCoreERP.Catalog.Medicines;
 public abstract class MedicineManager_Integration_Tests<TStartupModule> : SupplyCoreERPDomainTestBase<TStartupModule>
     where TStartupModule : IAbpModule
 {
-    private readonly MedicineManager _medicineManager;
+    private readonly IMedicineManager _medicineManager;
     private readonly IRepository<Medicine, Guid> _medicineRepository;
 
     protected MedicineManager_Integration_Tests()
     {
-        _medicineManager = GetRequiredService<MedicineManager>();
+        _medicineManager = GetRequiredService<IMedicineManager>();
         _medicineRepository = GetRequiredService<IRepository<Medicine, Guid>>();
     }
 

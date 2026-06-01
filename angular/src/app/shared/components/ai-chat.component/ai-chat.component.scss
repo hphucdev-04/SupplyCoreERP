@@ -1,14 +1,31 @@
-.animate-fade-in {
-  animation: fadeIn 0.25s ease-out forwards;
+.toggle-button {
+  width: auto;                // tự động co giãn theo nội dung
+  height: 48px;               // giảm chiều cao cho cân đối với chữ
+  border-radius: 40px;        // bo tròn như pill
+  padding: 0 20px;            // padding ngang
+  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 99, 235, 0.4);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: transform 0.25s cubic-bezier(0.2, 0.9, 0.4, 1.1), box-shadow 0.25s ease;
+  margin-left: auto;
+  font-weight: 500;
+  font-size: 14px;
+  white-space: nowrap;
+
+  &:hover {
+    transform: scale(1.05);
+    box-shadow: 0 6px 18px rgba(37, 99, 235, 0.5);
+  }
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+.icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
 }

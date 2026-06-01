@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Common.DocumentSequences;
-using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventory.Balances;
 using SupplyCoreERP.Inventory.Batches;
@@ -17,7 +16,7 @@ using Volo.Abp.Domain.Services;
 
 namespace SupplyCoreERP.Inventory.Tickets;
 
-public class TicketManager : DomainService
+public class TicketManager : DomainService, ITicketManager
 {
     // Dependencies
     private readonly IRepository<InventoryTicket, Guid> _ticketRepo;
@@ -27,14 +26,12 @@ public class TicketManager : DomainService
     private readonly IRepository<Bin, Guid> _binRepo;
     private readonly IRepository<Warehouse, Guid> _warehouseRepo;
     private readonly IRepository<Product, Guid> _productRepo;
-    private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo;
     private readonly IRepository<PurchaseOrderLine, Guid> _poLineRepo;
-    private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
     private readonly IRepository<SalesOrderLine, Guid> _soLineRepo;
     private readonly WarehouseManager _warehouseManager;
     private readonly InventoryBalanceManager _balanceManager;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
     private readonly UnitConversionManager _unitConversionManager;
 
     // Constructor injection
@@ -47,13 +44,11 @@ public class TicketManager : DomainService
         IRepository<Bin, Guid> binRepo,
         IRepository<Warehouse, Guid> warehouseRepo,
         IRepository<Product, Guid> productRepo,
-        IRepository<PurchaseOrder, Guid> purchaseOrderRepo,
         IRepository<PurchaseOrderLine, Guid> poLineRepo,
-        IRepository<SalesOrder, Guid> salesOrderRepo,
         IRepository<SalesOrderLine, Guid> soLineRepo,
         WarehouseManager warehouseManager,
         InventoryBalanceManager balanceManager,
-        DocumentSequenceManager documentSequenceManager,
+        IDocumentSequenceManager documentSequenceManager,
         UnitConversionManager unitConversionManager)
     {
         _ticketRepo = ticketRepo;
@@ -64,9 +59,7 @@ public class TicketManager : DomainService
         _binRepo = binRepo;
         _warehouseRepo = warehouseRepo;
         _productRepo = productRepo;
-        _purchaseOrderRepo = purchaseOrderRepo;
         _poLineRepo = poLineRepo;
-        _salesOrderRepo = salesOrderRepo;
         _soLineRepo = soLineRepo;
         _warehouseManager = warehouseManager;
         _balanceManager = balanceManager;
@@ -191,11 +184,10 @@ public class TicketManager : DomainService
     public async Task<InventoryTicketLine> CreateTicketLineAsync(
         InventoryTicket ticket,
         Guid productId,
-        Guid? purchaseOrderLineId,
+        Guid? referenceDocumentLineId,
         decimal quantity,
         Guid? unitId = null,
-        int? conversionFactor = null,
-        Guid? salesOrderLineId = null)
+        int? conversionFactor = null)
     {
         if (ticket.Status == ApprovalStatus.Approved || ticket.Status == ApprovalStatus.Rejected)
         {
@@ -211,82 +203,35 @@ public class TicketManager : DomainService
         Guid finalUnitId = unitId ?? product.BaseUnitId;
         int finalConversionFactor = conversionFactor ?? 1;
 
-        if (purchaseOrderLineId.HasValue)
+        if (referenceDocumentLineId.HasValue)
         {
-            PurchaseOrderLine poLine = await _poLineRepo.GetAsync(purchaseOrderLineId.Value);
-            if (poLine.ProductId != productId)
+            if (ticket.Type == TicketType.GoodsReceipt)
             {
-                throw new BusinessException("SupplyCoreERP:InvalidProduct", "Sản phẩm không khớp với dòng đơn mua!");
+                PurchaseOrderLine poLine = await _poLineRepo.GetAsync(referenceDocumentLineId.Value);
+                if (poLine.ProductId != productId)
+                {
+                    throw new BusinessException("SupplyCoreERP:InvalidProduct", "Sản phẩm không khớp với dòng đơn mua!");
+                }
+                finalUnitId = unitId ?? poLine.UnitId;
+                finalConversionFactor = conversionFactor ?? poLine.ConversionFactor;
             }
-            finalUnitId = unitId ?? poLine.UnitId;
-            finalConversionFactor = conversionFactor ?? poLine.ConversionFactor;
+            else if (IsIssueTicket(ticket.Type))
+            {
+                SalesOrderLine soLine = await _soLineRepo.GetAsync(referenceDocumentLineId.Value);
+                if (soLine.ProductId != productId)
+                {
+                    throw new BusinessException("SupplyCoreERP:InvalidProduct", "Sản phẩm không khớp với dòng đơn bán!");
+                }
+                finalUnitId = unitId ?? soLine.UnitId;
+                finalConversionFactor = conversionFactor ?? soLine.ConversionFactor;
+            }
         }
 
-        if (salesOrderLineId.HasValue)
-        {
-            SalesOrderLine soLine = await _soLineRepo.GetAsync(salesOrderLineId.Value);
-            if (soLine.ProductId != productId)
-            {
-                throw new BusinessException("SupplyCoreERP:InvalidProduct", "Sản phẩm không khớp với dòng đơn bán!");
-            }
-            finalUnitId = unitId ?? soLine.UnitId;
-            finalConversionFactor = conversionFactor ?? soLine.ConversionFactor;
-        }
-
-        InventoryTicketLine line = new(GuidGenerator.Create(), ticket.Id, productId, finalUnitId, finalConversionFactor, purchaseOrderLineId, quantity, salesOrderLineId);
+        InventoryTicketLine line = new(GuidGenerator.Create(), ticket.Id, productId, finalUnitId, finalConversionFactor, referenceDocumentLineId, quantity);
 
         return line;
     }
 
-    public async Task AllocateFEFOForLineAsync(InventoryTicket ticket, InventoryTicketLine line)
-    {
-        Product product = await _productRepo.GetAsync(line.ProductId);
-        decimal requiredBaseQuantity = _unitConversionManager.ConvertToBaseQuantity(product, line.UnitId, line.Quantity);
-
-        List<InventoryBalance> balances = await _balanceRepo.GetListAsync(x => x.WarehouseId == ticket.WarehouseId && x.ProductId == line.ProductId && x.Quantity > x.LockedQuantity);
-
-        List<Guid> batchIds = balances.Select(x => x.ProductBatchId).Distinct().ToList();
-        List<ProductBatch> batches = await _batchRepo.GetListAsync(x => batchIds.Contains(x.Id) && x.Status == BatchQAStatus.Approved && x.ExpiryDate > DateTime.Now);
-
-        List<InventoryBalance> validBalances = (from b in balances
-                                                join ba in batches on b.ProductBatchId equals ba.Id
-                                                orderby ba.ExpiryDate ascending
-                                                select b).ToList();
-
-        List<InventoryTicketDetail> details = new();
-        decimal remaining = requiredBaseQuantity;
-
-        foreach (InventoryBalance? balance in validBalances)
-        {
-            if (remaining <= 0)
-            {
-                break;
-            }
-
-            decimal available = balance.Quantity - balance.LockedQuantity;
-            decimal toTake = Math.Min(available, remaining);
-
-            InventoryTicketDetail detail = new(GuidGenerator.Create(), line.Id, line.ProductId, balance.ProductBatchId, balance.BinId, product.BaseUnitId, 1, toTake);
-            details.Add(detail);
-
-            remaining -= toTake;
-        }
-
-        if (remaining > 0)
-        {
-            decimal rawTotal = balances.Sum(x => x.Quantity - x.LockedQuantity);
-            if (rawTotal >= requiredBaseQuantity)
-            {
-                throw new BusinessException("SupplyCoreERP:InsufficientStock", $"Khôn th thể xuất hàng FEFO cho '{product.Name}'. " +
-                    $"Tổng kho hiện tại ({rawTotal}) đủ số lượng nhưng các lô hàng chưa được Duyệt QA hoặc đã hết hạn sử dụng.");
-            }
-
-            throw new BusinessException("SupplyCoreERP:InsufficientStock", $"Khôn th thể xuất hàng FEFO cho '{product.Name}'. " +
-                $"Tổng kho hiện tại ({rawTotal}) không đủ số lượng.");
-        }
-
-        await _ticketDetailRepo.InsertManyAsync(details);
-    }
 
     public void UpdateLineQuantity(InventoryTicket ticket, InventoryTicketLine line, decimal newQuantity)
     {
@@ -330,7 +275,12 @@ public class TicketManager : DomainService
             await ValidateBatchForIssueAsync(productBatchId);
         }
 
-        Product product = await _productRepo.GetAsync(productId);
+        IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+        Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == productId);
+        if (product == null)
+        {
+            throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(Product), productId);
+        }
 
         // Kiểm tra chéo ConversionFactor với GetConversionFactor của hệ thống quy đổi đơn vị tuyến tính
         int expectedAbsoluteFactor = _unitConversionManager.GetConversionFactor(product, unitId);
@@ -348,9 +298,9 @@ public class TicketManager : DomainService
         IQueryable<InventoryTicketDetail> detailQuery = await _ticketDetailRepo.GetQueryableAsync();
         decimal currentDetailedBaseQty = detailQuery.Where(d => d.TicketLineId == line.Id).Sum(d => d.Quantity * d.ConversionFactor);
 
-        if (currentDetailedBaseQty + baseQty > line.Quantity)
+        if (currentDetailedBaseQty + baseQty > line.BaseQuantity)
         {
-            throw new BusinessException("SupplyCoreERP:InvalidDetail", $"Khôn th thể th thêm chi tiết cho '{product.Name}'. Tổng số lượng phân bổ ({currentDetailedBaseQty + baseQty}) vượt quá số lượng yêu cầu của dòng hàng ({line.Quantity})!");
+            throw new BusinessException("SupplyCoreERP:InvalidDetail", $"Khôn th thể th thêm chi tiết cho '{product.Name}'. Tổng số lượng phân bổ ({currentDetailedBaseQty + baseQty}) vượt quá số lượng yêu cầu của dòng hàng ({line.BaseQuantity})!");
         }
 
         if (ticket.Status == ApprovalStatus.Pending && IsIssueTicket(ticket.Type))
@@ -369,7 +319,13 @@ public class TicketManager : DomainService
         }
 
         decimal oldBaseQty = detail.BaseQuantity;
-        Product product = await _productRepo.GetAsync(detail.ProductId);
+        IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+        Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == detail.ProductId);
+        if (product == null)
+        {
+            throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(Product), detail.ProductId);
+        }
+
         decimal newBaseQty = _unitConversionManager.ConvertToBaseQuantity(product, detail.UnitId, actualQuantity);
         decimal diff = newBaseQty - oldBaseQty;
 
@@ -420,10 +376,10 @@ public class TicketManager : DomainService
         foreach (InventoryTicketLine? line in ticketLines)
         {
             decimal detailedQty = line.Details.Sum(x => x.BaseQuantity);
-            if (detailedQty != line.Quantity)
+            if (detailedQty != line.BaseQuantity)
             {
                 Product product = await _productRepo.GetAsync(line.ProductId);
-                throw new BusinessException("SupplyCoreERP:InvalidDetail", $"Sản phẩm '{product.Name}' có tổng chi tiết ({detailedQty}) không khớp với số lượng dòng hàng ({line.Quantity})!");
+                throw new BusinessException("SupplyCoreERP:InvalidDetail", $"Sản phẩm '{product.Name}' có tổng chi tiết ({detailedQty}) không khớp với số lượng dòng hàng ({line.BaseQuantity})!");
             }
         }
 
@@ -465,120 +421,32 @@ public class TicketManager : DomainService
         InventoryTransactionType transType = MapTicketToTransaction(ticket.Type);
         await _balanceManager.ExecuteStockMovementAsync(ticket, allDetails, transType, IsIssueTicket(ticket.Type));
 
-        if (ticket.Type == TicketType.GoodsReceipt && ticket.ReferenceDocumentId.HasValue)
-        {
-            await SyncPurchaseOrderProgressAsync(ticket.ReferenceDocumentId.Value, ticketLines);
-        }
-
-        if (IsIssueTicket(ticket.Type) && ticket.ReferenceDocumentId.HasValue)
-        {
-            await SyncSalesOrderProgressAsync(ticket.ReferenceDocumentId.Value, ticketLines);
-        }
-
-        ticket.Execute();
-    }
-
-    public async Task SyncSalesOrderProgressAsync(Guid soId, List<InventoryTicketLine> ticketLines)
-    {
-        IQueryable<SalesOrder> soQuery = await _salesOrderRepo.WithDetailsAsync(x => x.Lines);
-        SalesOrder? so = await AsyncExecuter.FirstOrDefaultAsync(soQuery.Where(x => x.Id == soId));
-
-        if (so == null)
-        {
-            return;
-        }
-
-        foreach (InventoryTicketLine tLine in ticketLines)
-        {
-            if (tLine.SalesOrderLineId.HasValue)
-            {
-                SalesOrderLine? soLine = so.Lines.FirstOrDefault(x => x.Id == tLine.SalesOrderLineId.Value);
-                if (soLine != null)
-                {
-                    Product product = await _productRepo.GetAsync(tLine.ProductId);
-                    decimal baseQty = _unitConversionManager.ConvertToBaseQuantity(product, tLine.UnitId, tLine.Quantity);
-                    decimal deliveredQty = _unitConversionManager.ConvertFromBaseQuantity(product, soLine.UnitId, baseQty, 4);
-                    soLine.AddDeliveredQuantity(deliveredQty);
-                }
-            }
-        }
-
-        bool allDelivered = true;
-        foreach (SalesOrderLine x in so.Lines)
-        {
-            Product product = await _productRepo.GetAsync(x.ProductId);
-            decimal deliveredBaseQty = _unitConversionManager.ConvertToBaseQuantity(product, x.UnitId, x.DeliveredQuantity);
-            if (deliveredBaseQty < x.BaseQuantity - 0.0001m)
-            {
-                allDelivered = false;
-                break;
-            }
-        }
-
-        if (allDelivered)
-        {
-            so.Complete();
-        }
-        else if (so.Lines.Any(x => x.DeliveredQuantity > 0))
-        {
-            if (so.Status != SalesOrderStatus.Delivering && so.Status != SalesOrderStatus.Completed)
-            {
-                so.StartDelivering();
-            }
-        }
-
-        await _salesOrderRepo.UpdateAsync(so);
-    }
-
-    public async Task SyncPurchaseOrderProgressAsync(Guid poId, List<InventoryTicketLine> ticketLines)
-    {
-        IQueryable<PurchaseOrder> poQuery = await _purchaseOrderRepo.WithDetailsAsync(x => x.Lines);
-        PurchaseOrder? po = await AsyncExecuter.FirstOrDefaultAsync(poQuery.Where(x => x.Id == poId));
-        if (po == null)
-        {
-            return;
-        }
-
-        foreach (InventoryTicketLine tLine in ticketLines)
-        {
-            if (tLine.PurchaseOrderLineId.HasValue)
-            {
-                PurchaseOrderLine? poLine = po.Lines.FirstOrDefault(x => x.Id == tLine.PurchaseOrderLineId.Value);
-                if (poLine != null)
-                {
-                    Product product = await _productRepo.GetAsync(tLine.ProductId);
-                    decimal baseQty = _unitConversionManager.ConvertToBaseQuantity(product, tLine.UnitId, tLine.Quantity);
-                    decimal receivedQty = _unitConversionManager.ConvertFromBaseQuantity(product, poLine.UnitId, baseQty, 4);
-                    poLine.AddReceivedQuantity(receivedQty);
-                }
-            }
-        }
-
-        if (po.Lines.Any(x => x.ReceivedQuantity > 0))
-        {
-            if (po.Status != PurchaseOrderStatus.Receiving && po.Status != PurchaseOrderStatus.Completed)
-            {
-                po.StartReceiving();
-            }
-        }
-
-        await _purchaseOrderRepo.UpdateAsync(po);
+        ticket.Execute(ticketLines);
     }
     #endregion
 
     #region FEFO
-    public async Task<IList<InventoryTicketDetail>> AllocateFEFOAsync(InventoryTicket ticket, Guid productId, decimal requiredBaseQuantity)
+    public async Task AllocateFEFOForLineAsync(InventoryTicket ticket, InventoryTicketLine line)
     {
-        await ValidateProductForInventoryAsync(productId);
-        Product product = await _productRepo.GetAsync(productId);
-        InventoryTicketLine line = new(GuidGenerator.Create(), ticket.Id, productId, product.BaseUnitId, 1, null, requiredBaseQuantity);
-        await _ticketLineRepo.InsertAsync(line);
+        IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+        Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == line.ProductId);
+        if (product == null)
+        {
+            throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(Product), line.ProductId);
+        }
 
-        List<InventoryBalance> balances = await _balanceRepo.GetListAsync(x => x.WarehouseId == ticket.WarehouseId && x.ProductId == productId && x.Quantity > x.LockedQuantity);
+        decimal requiredBaseQuantity = _unitConversionManager.ConvertToBaseQuantity(product, line.UnitId, line.Quantity);
+
+        List<InventoryBalance> balances = await _balanceRepo.GetListAsync(x => x.WarehouseId == ticket.WarehouseId && x.ProductId == line.ProductId && x.Quantity > x.LockedQuantity);
+
         List<Guid> batchIds = balances.Select(x => x.ProductBatchId).Distinct().ToList();
         List<ProductBatch> batches = await _batchRepo.GetListAsync(x => batchIds.Contains(x.Id) && x.Status == BatchQAStatus.Approved && x.ExpiryDate > DateTime.Now);
 
-        List<InventoryBalance> validBalances = (from b in balances join ba in batches on b.ProductBatchId equals ba.Id orderby ba.ExpiryDate ascending select b).ToList();
+        List<InventoryBalance> validBalances = (from b in balances
+                                                join ba in batches on b.ProductBatchId equals ba.Id
+                                                orderby ba.ExpiryDate ascending
+                                                select b).ToList();
+
         List<InventoryTicketDetail> details = new();
         decimal remaining = requiredBaseQuantity;
 
@@ -591,8 +459,10 @@ public class TicketManager : DomainService
 
             decimal available = balance.Quantity - balance.LockedQuantity;
             decimal toTake = Math.Min(available, remaining);
-            InventoryTicketDetail detail = new(GuidGenerator.Create(), line.Id, productId, balance.ProductBatchId, balance.BinId, product.BaseUnitId, 1, toTake);
+
+            InventoryTicketDetail detail = new(GuidGenerator.Create(), line.Id, line.ProductId, balance.ProductBatchId, balance.BinId, product.BaseUnitId, 1, toTake);
             details.Add(detail);
+
             remaining -= toTake;
         }
 
@@ -601,14 +471,17 @@ public class TicketManager : DomainService
             decimal rawTotal = balances.Sum(x => x.Quantity - x.LockedQuantity);
             if (rawTotal >= requiredBaseQuantity)
             {
-                throw new BusinessException("SupplyCoreERP:InvalidFEFO", $"Khôn th thể xuất hàng FEFO cho '{product.Name}'. Tồn kho hiện tại ({rawTotal}) đủ nhưng chưa duyệt QA hoặc hết hạn.");
+                throw new BusinessException("SupplyCoreERP:InsufficientStock", $"Khôn th thể xuất hàng FEFO cho '{product.Name}'. " +
+                    $"Tổng kho hiện tại ({rawTotal}) đủ số lượng nhưng các lô hàng chưa được Duyệt QA hoặc đã hết hạn sử dụng.");
             }
-            throw new BusinessException("SupplyCoreERP:InvalidFEFO", $"Khôn th thể xuất hàng FEFO cho '{product.Name}'!");
+
+            throw new BusinessException("SupplyCoreERP:InsufficientStock", $"Khôn th thể xuất hàng FEFO cho '{product.Name}'. " +
+                $"Tổng kho hiện tại ({rawTotal}) không đủ số lượng.");
         }
 
         await _ticketDetailRepo.InsertManyAsync(details);
-        return details;
     }
+
     #endregion
 }
 

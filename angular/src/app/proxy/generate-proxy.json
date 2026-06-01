@@ -22733,19 +22733,7 @@
           "regex": null
         },
         {
-          "name": "PurchaseOrderLineId",
-          "jsonName": null,
-          "type": "System.Guid?",
-          "typeSimple": "string?",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "SalesOrderLineId",
+          "name": "ReferenceDocumentLineId",
           "jsonName": null,
           "type": "System.Guid?",
           "typeSimple": "string?",
@@ -22794,6 +22782,18 @@
         },
         {
           "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BaseQuantity",
           "jsonName": null,
           "type": "System.Decimal",
           "typeSimple": "number",

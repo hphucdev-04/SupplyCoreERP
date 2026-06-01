@@ -27,7 +27,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
     private readonly IRepository<InventoryTicketDetail, Guid> _ticketDetailRepo;
     private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo;
     private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
-    private readonly TicketManager _ticketManager;
+    private readonly ITicketManager _ticketManager;
 
     // Constructor injection
     public InventoryTicketAppService(
@@ -36,7 +36,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
         IRepository<InventoryTicketDetail, Guid> ticketDetailRepo,
         IRepository<PurchaseOrder, Guid> purchaseOrderRepo,
         IRepository<SalesOrder, Guid> salesOrderRepo,
-        TicketManager ticketManager)
+        ITicketManager ticketManager)
     {
         _ticketRepo = ticketRepo;
         _ticketLineRepo = ticketLineRepo;
@@ -77,10 +77,8 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
 
         InventoryTicket? ticket = await query
             .Include(x => x.Warehouse)
-            .Include(x => x.Lines).ThenInclude(l => l.Product)
+            .Include(x => x.Lines).ThenInclude(l => l.Product).ThenInclude(p => p.BaseUnit)
             .Include(x => x.Lines).ThenInclude(l => l.Unit)
-            .Include(x => x.Lines).ThenInclude(l => l.PurchaseOrderLine)
-            .Include(x => x.Lines).ThenInclude(l => l.SalesOrderLine)
             .Include(x => x.Lines).ThenInclude(l => l.Details).ThenInclude(d => d.ProductBatch).ThenInclude(pb => pb.MedicineRegistration)
             .Include(x => x.Lines).ThenInclude(l => l.Details).ThenInclude(d => d.Bin)
             .Include(x => x.Lines).ThenInclude(l => l.Details).ThenInclude(d => d.Unit)
@@ -135,14 +133,16 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
         List<Guid> poLineIds = po.Lines.Select(x => x.Id).ToList();
 
         var existingAllocations = await ticketLineQuery
-            .Where(x => x.PurchaseOrderLineId.HasValue && poLineIds.Contains(x.PurchaseOrderLineId.Value) && x.Ticket.Status != ApprovalStatus.Rejected)
-            .Select(x => new { x.PurchaseOrderLineId, x.Quantity })
+            .Where(x => x.ReferenceDocumentLineId.HasValue && poLineIds.Contains(x.ReferenceDocumentLineId.Value) && x.Ticket.Status != ApprovalStatus.Rejected)
+            .Select(x => new { x.ReferenceDocumentLineId, x.Quantity, x.ConversionFactor })
             .ToListAsync();
 
         List<PurchaseOrderLineDto> result = new();
         foreach (PurchaseOrderLine poLine in po.Lines)
         {
-            decimal alreadyAllocatedBase = existingAllocations.Where(a => a.PurchaseOrderLineId == poLine.Id).Sum(a => a.Quantity);
+            decimal alreadyAllocatedBase = existingAllocations
+                .Where(a => a.ReferenceDocumentLineId == poLine.Id)
+                .Sum(a => a.Quantity * a.ConversionFactor);
             decimal remainingBase = poLine.BaseQuantity - alreadyAllocatedBase;
 
             if (remainingBase > 0.0001m)
@@ -169,7 +169,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
             ?? throw new EntityNotFoundException(typeof(PurchaseOrderLine), poLineId);
 
         PurchaseOrderLine poLine = po.Lines.First(x => x.Id == poLineId);
-        InventoryTicketLine line = await _ticketManager.CreateTicketLineAsync(ticket, poLine.ProductId, poLine.Id, quantity * poLine.ConversionFactor);
+        InventoryTicketLine line = await _ticketManager.CreateTicketLineAsync(ticket, poLine.ProductId, poLine.Id, quantity);
         await _ticketLineRepo.InsertAsync(line);
     }
 
@@ -188,14 +188,16 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
         List<Guid> soLineIds = so.Lines.Select(x => x.Id).ToList();
 
         var existingAllocations = await ticketLineQuery
-            .Where(x => x.SalesOrderLineId.HasValue && soLineIds.Contains(x.SalesOrderLineId.Value) && x.Ticket.Status != ApprovalStatus.Rejected)
-            .Select(x => new { x.SalesOrderLineId, x.Quantity })
+            .Where(x => x.ReferenceDocumentLineId.HasValue && soLineIds.Contains(x.ReferenceDocumentLineId.Value) && x.Ticket.Status != ApprovalStatus.Rejected)
+            .Select(x => new { x.ReferenceDocumentLineId, x.Quantity, x.ConversionFactor })
             .ToListAsync();
 
         List<SalesOrderLineDto> result = new();
         foreach (SalesOrderLine soLine in so.Lines)
         {
-            decimal alreadyAllocatedBase = existingAllocations.Where(a => a.SalesOrderLineId == soLine.Id).Sum(a => a.Quantity);
+            decimal alreadyAllocatedBase = existingAllocations
+                .Where(a => a.ReferenceDocumentLineId == soLine.Id)
+                .Sum(a => a.Quantity * a.ConversionFactor);
             decimal remainingBase = soLine.BaseQuantity - alreadyAllocatedBase;
 
             if (remainingBase > 0.0001m)
@@ -222,7 +224,7 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
             ?? throw new EntityNotFoundException(typeof(SalesOrderLine), soLineId);
 
         SalesOrderLine soLine = so.Lines.First(x => x.Id == soLineId);
-        InventoryTicketLine line = await _ticketManager.CreateTicketLineAsync(ticket, soLine.ProductId, null, quantity * soLine.ConversionFactor, null, null, soLine.Id);
+        InventoryTicketLine line = await _ticketManager.CreateTicketLineAsync(ticket, soLine.ProductId, soLine.Id, quantity);
         await _ticketLineRepo.InsertAsync(line);
     }
 

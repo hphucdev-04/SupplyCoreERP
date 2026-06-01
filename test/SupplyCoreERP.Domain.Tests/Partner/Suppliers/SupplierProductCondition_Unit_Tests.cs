@@ -1,5 +1,4 @@
 using System;
-using SupplyCoreERP;
 using Shouldly;
 using Volo.Abp;
 using Xunit;
@@ -16,9 +15,9 @@ public class SupplierProductCondition_Unit_Tests
     [Fact]
     public void Should_Create_Condition_With_Valid_Parameters()
     {
-        var id = Guid.NewGuid();
+        Guid id = Guid.NewGuid();
 
-        var condition = new SupplierProductCondition(
+        SupplierProductCondition condition = new(
             id, SupplierProductId, UnitId,
             conversionFactor: 50,
             standardPrice: 100_000m,
@@ -60,7 +59,7 @@ public class SupplierProductCondition_Unit_Tests
     [Fact]
     public void Should_Allow_StandardPrice_Zero()
     {
-        var condition = new SupplierProductCondition(
+        SupplierProductCondition condition = new(
             Guid.NewGuid(), SupplierProductId, UnitId, 1, 0m, 10m);
 
         condition.StandardPrice.ShouldBe(0m);

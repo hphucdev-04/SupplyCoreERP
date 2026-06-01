@@ -19,9 +19,8 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     // Dependencies
     private readonly IRepository<SalesOrder, Guid> _orderRepo;
     private readonly IRepository<InventoryTicket, Guid> _ticketRepo;
-    private readonly IRepository<InventoryTicketDetail, Guid> _ticketDetailRepo;
     private readonly IRepository<Customer, Guid> _customerRepo;
-    private readonly SalesOrderManager _orderManager;
+    private readonly ISalesOrderManager _orderManager;
 
     // Constructor injection
     public SalesOrderAppService(
@@ -29,11 +28,10 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
         IRepository<InventoryTicket, Guid> ticketRepo,
         IRepository<InventoryTicketDetail, Guid> ticketDetailRepo,
         IRepository<Customer, Guid> customerRepo,
-        SalesOrderManager orderManager)
+        ISalesOrderManager orderManager)
     {
         _orderRepo = orderRepo;
         _ticketRepo = ticketRepo;
-        _ticketDetailRepo = ticketDetailRepo;
         _customerRepo = customerRepo;
         _orderManager = orderManager;
     }

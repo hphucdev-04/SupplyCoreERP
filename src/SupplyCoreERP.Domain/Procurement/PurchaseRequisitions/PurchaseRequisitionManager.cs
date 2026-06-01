@@ -9,20 +9,20 @@ using Volo.Abp.Domain.Services;
 
 namespace SupplyCoreERP.Procurement.PurchaseRequisitions;
 
-public class PurchaseRequisitionManager : DomainService
+public class PurchaseRequisitionManager : DomainService, IPurchaseRequisitionManager
 {
     //Dependencies
     private readonly IRepository<PurchaseRequisition, Guid> _requisitionRepo;
     private readonly IRepository<Product, Guid> _productRepo;
     private readonly IRepository<Warehouse, Guid> _warehouseRepo;
-    private readonly DocumentSequenceManager _documentManager;
+    private readonly IDocumentSequenceManager _documentManager;
 
     // Constructor injection
     public PurchaseRequisitionManager(
         IRepository<PurchaseRequisition, Guid> requisitionRepo,
         IRepository<Product, Guid> productRepo,
         IRepository<Warehouse, Guid> warehouseRepo,
-        DocumentSequenceManager documentManager)
+        IDocumentSequenceManager documentManager)
     {
         _requisitionRepo = requisitionRepo;
         _productRepo = productRepo;

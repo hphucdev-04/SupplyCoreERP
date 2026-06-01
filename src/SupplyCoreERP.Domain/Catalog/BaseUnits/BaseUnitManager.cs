@@ -14,14 +14,14 @@ public class BaseUnitManager : DomainService
     private readonly IRepository<BaseUnit, Guid> _repository;
     private readonly IRepository<Product, Guid> _productRepository;
     private readonly IRepository<ProductUnit, Guid> _productUnitRepository;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public BaseUnitManager(
         IRepository<BaseUnit, Guid> repository,
         IRepository<Product, Guid> productRepository,
         IRepository<ProductUnit, Guid> productUnitRepository,
-        DocumentSequenceManager documentSequenceManager
+        IDocumentSequenceManager documentSequenceManager
         )
     {
         _repository = repository;

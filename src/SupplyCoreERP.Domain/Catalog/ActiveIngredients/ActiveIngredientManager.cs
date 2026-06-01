@@ -14,13 +14,13 @@ public class ActiveIngredientManager : DomainService
     // Dependencies
     private readonly IRepository<ActiveIngredient, Guid> _repository;
     private readonly IRepository<MedicineIngredient, Guid> _medIngredientRepo;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public ActiveIngredientManager(
         IRepository<ActiveIngredient, Guid> repository,
         IRepository<MedicineIngredient, Guid> medIngredientRepo,
-        DocumentSequenceManager documentSequenceManager
+        IDocumentSequenceManager documentSequenceManager
         )
     {
         _repository = repository;

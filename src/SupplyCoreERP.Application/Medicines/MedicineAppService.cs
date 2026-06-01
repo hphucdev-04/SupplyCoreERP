@@ -18,14 +18,14 @@ namespace SupplyCoreERP.Medicines;
 public class MedicineAppService : SupplyCore, IMedicineAppService
 {
     private readonly IRepository<Medicine, Guid> _medicineRepo;
-    private readonly MedicineManager _medicineManager;
+    private readonly IMedicineManager _medicineManager;
     private readonly ProductManager _productManager;
 
     private readonly MedicineExcelService _excelService;
 
     public MedicineAppService(
         IRepository<Medicine, Guid> medicineRepo,
-        MedicineManager medicineManager,
+        IMedicineManager medicineManager,
         ProductManager productManager,
         MedicineExcelService excelService
         )

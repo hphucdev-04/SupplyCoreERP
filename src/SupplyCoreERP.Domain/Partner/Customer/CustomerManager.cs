@@ -12,7 +12,7 @@ using Volo.Abp.Domain.Services;
 
 namespace SupplyCoreERP.Partner.Customers;
 
-public class CustomerManager : DomainService
+public class CustomerManager : DomainService, ICustomerManager
 {
     // Dependencies
     private readonly IRepository<Customer, Guid> _customerRepository;
@@ -20,7 +20,7 @@ public class CustomerManager : DomainService
     private readonly IRepository<City, Guid> _cityRepo;
     private readonly IRepository<Area, Guid> _areaRepo;
     private readonly IRepository<PriceList, Guid> _priceListRepo;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public CustomerManager(
@@ -29,7 +29,7 @@ public class CustomerManager : DomainService
         IRepository<City, Guid> cityRepo,
         IRepository<Area, Guid> areaRepo,
         IRepository<PriceList, Guid> priceListRepo,
-        DocumentSequenceManager documentSequenceManager)
+        IDocumentSequenceManager documentSequenceManager)
     {
         _customerRepository = customerRepository;
         _countryRepo = countryRepo;

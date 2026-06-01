@@ -101,29 +101,29 @@ public class LocationDataSeedContributor : IDataSeedContributor, ITransientDepen
 
         // 3. SEED CITIES 
         #region 34 CITIES IN VIETNAM
-        City hcm = await CreateCityAsync(vietnam.Id, "Tp. Há»“ ChÃ­ Minh");
-        City hanoi = await CreateCityAsync(vietnam.Id, "HÃ  Ná»™i");
-        City danang = await CreateCityAsync(vietnam.Id, "Tp. ÄÃ  Náºµng");
-        City haiphong = await CreateCityAsync(vietnam.Id, "Tp. Háº£i PhÃ²ng");
-        City cantho = await CreateCityAsync(vietnam.Id, "Tp. Cáº§n ThÆ¡");
-        City tuyenquang = await CreateCityAsync(vietnam.Id, "TuyÃªn Quang");
-        City laocai = await CreateCityAsync(vietnam.Id, "LÃ o Cai");
-        City thainguyen = await CreateCityAsync(vietnam.Id, "ThÃ¡i NguyÃªn");
-        City phutho = await CreateCityAsync(vietnam.Id, "PhÃº Thá»");
-        City bacninh = await CreateCityAsync(vietnam.Id, "Báº¯c Ninh");
-        City hungyen = await CreateCityAsync(vietnam.Id, "HÆ°ng YÃªn");
-        City ninhbinh = await CreateCityAsync(vietnam.Id, "Ninh BÃ¬nh");
-        City quangtri = await CreateCityAsync(vietnam.Id, "Quáº£ng Trá»‹");
-        City quangngai = await CreateCityAsync(vietnam.Id, "Quáº£ng NgÃ£i");
+        City hcm = await CreateCityAsync(vietnam.Id, "Tp. Hồ Chí Minh");
+        City hanoi = await CreateCityAsync(vietnam.Id, "Hà Nội");
+        City danang = await CreateCityAsync(vietnam.Id, "Tp. Đà Nẵng");
+        City haiphong = await CreateCityAsync(vietnam.Id, "Tp. Hải Phòng");
+        City cantho = await CreateCityAsync(vietnam.Id, "Tp. Cần Thơ");
+        City tuyenquang = await CreateCityAsync(vietnam.Id, "Tuyên Quang");
+        City laocai = await CreateCityAsync(vietnam.Id, "Lào Cai");
+        City thainguyen = await CreateCityAsync(vietnam.Id, "Thái Nguyên");
+        City phutho = await CreateCityAsync(vietnam.Id, "Phú Thọ");
+        City bacninh = await CreateCityAsync(vietnam.Id, "Bắc Ninh");
+        City hungyen = await CreateCityAsync(vietnam.Id, "Hưng Yên");
+        City ninhbinh = await CreateCityAsync(vietnam.Id, "Ninh Bình");
+        City quangtri = await CreateCityAsync(vietnam.Id, "Quảng Trị");
+        City quangngai = await CreateCityAsync(vietnam.Id, "Quảng Ngãi");
         City gialai = await CreateCityAsync(vietnam.Id, "Gia Lai");
-        City khanhhoa = await CreateCityAsync(vietnam.Id, "KhÃ¡nh HÃ²a");
-        City lamdong = await CreateCityAsync(vietnam.Id, "LÃ¢m Äá»“ng");
-        City daklak = await CreateCityAsync(vietnam.Id, "Äáº¯k Láº¯k");
-        City dongnai = await CreateCityAsync(vietnam.Id, "Äá»“ng Nai");
-        City tayninh = await CreateCityAsync(vietnam.Id, "TÃ¢y Ninh");
-        City vinhlong = await CreateCityAsync(vietnam.Id, "VÄ©nh Long");
-        City dongthap = await CreateCityAsync(vietnam.Id, "Äá»“ng ThÃ¡p");
-        City camau = await CreateCityAsync(vietnam.Id, "CÃ  Mau");
+        City khanhhoa = await CreateCityAsync(vietnam.Id, "Khánh Hòa");
+        City lamdong = await CreateCityAsync(vietnam.Id, "Lâm Đồng");
+        City daklak = await CreateCityAsync(vietnam.Id, "Đắk Lắk");
+        City dongnai = await CreateCityAsync(vietnam.Id, "Đồng Nai");
+        City tayninh = await CreateCityAsync(vietnam.Id, "Tây Ninh");
+        City vinhlong = await CreateCityAsync(vietnam.Id, "Vĩnh Long");
+        City dongthap = await CreateCityAsync(vietnam.Id, "Đồng Tháp");
+        City camau = await CreateCityAsync(vietnam.Id, "Cà Mau");
         City angiang = await CreateCityAsync(vietnam.Id, "An Giang");
         #endregion
 
@@ -306,28 +306,28 @@ public class LocationDataSeedContributor : IDataSeedContributor, ITransientDepen
 
         // 4. SEED AREAS 
         #region AREAS IN HCM
-        await CreateAreaAsync(hcm.Id, "70001", "Quáº­n 1");
-        await CreateAreaAsync(hcm.Id, "70003", "Quáº­n 3");
-        await CreateAreaAsync(hcm.Id, "70004", "Quáº­n 4");
-        await CreateAreaAsync(hcm.Id, "70005", "Quáº­n 5");
-        await CreateAreaAsync(hcm.Id, "70006", "Quáº­n 6");
-        await CreateAreaAsync(hcm.Id, "70007", "Quáº­n 7");
-        await CreateAreaAsync(hcm.Id, "70008", "Quáº­n 8");
-        await CreateAreaAsync(hcm.Id, "70010", "Quáº­n 10");
-        await CreateAreaAsync(hcm.Id, "70011", "Quáº­n 11");
-        await CreateAreaAsync(hcm.Id, "70012", "Quáº­n 12");
-        await CreateAreaAsync(hcm.Id, "70013", "Quáº­n BÃ¬nh Tháº¡nh");
-        await CreateAreaAsync(hcm.Id, "70014", "Quáº­n PhÃº Nhuáº­n");
-        await CreateAreaAsync(hcm.Id, "70015", "Quáº­n GÃ² Váº¥p");
-        await CreateAreaAsync(hcm.Id, "70016", "Quáº­n TÃ¢n BÃ¬nh");
-        await CreateAreaAsync(hcm.Id, "70017", "Quáº­n TÃ¢n PhÃº");
-        await CreateAreaAsync(hcm.Id, "70018", "Quáº­n BÃ¬nh TÃ¢n");
-        await CreateAreaAsync(hcm.Id, "70019", "Huyá»‡n BÃ¬nh ChÃ¡nh");
-        await CreateAreaAsync(hcm.Id, "70020", "Huyá»‡n Cá»§ Chi");
-        await CreateAreaAsync(hcm.Id, "70021", "Huyá»‡n HÃ³c MÃ´n");
-        await CreateAreaAsync(hcm.Id, "70022", "Huyá»‡n NhÃ  BÃ¨");
-        await CreateAreaAsync(hcm.Id, "70023", "Huyá»‡n Cáº§n Giá»");
-        await CreateAreaAsync(hcm.Id, "70024", "Tp. Thá»§ Äá»©c");
+        await CreateAreaAsync(hcm.Id, "70001", "Quận 1");
+        await CreateAreaAsync(hcm.Id, "70003", "Quận 3");
+        await CreateAreaAsync(hcm.Id, "70004", "Quận 4");
+        await CreateAreaAsync(hcm.Id, "70005", "Quận 5");
+        await CreateAreaAsync(hcm.Id, "70006", "Quận 6");
+        await CreateAreaAsync(hcm.Id, "70007", "Quận 7");
+        await CreateAreaAsync(hcm.Id, "70008", "Quận 8");
+        await CreateAreaAsync(hcm.Id, "70010", "Quận 10");
+        await CreateAreaAsync(hcm.Id, "70011", "Quận 11");
+        await CreateAreaAsync(hcm.Id, "70012", "Quận 12");
+        await CreateAreaAsync(hcm.Id, "70013", "Quận Bình Thạnh");
+        await CreateAreaAsync(hcm.Id, "70014", "Quận Phú Nhuận");
+        await CreateAreaAsync(hcm.Id, "70015", "Quận Gò Vấp");
+        await CreateAreaAsync(hcm.Id, "70016", "Quận Tân Bình");
+        await CreateAreaAsync(hcm.Id, "70017", "Quận Tân Phú");
+        await CreateAreaAsync(hcm.Id, "70018", "Quận Bình Tân");
+        await CreateAreaAsync(hcm.Id, "70019", "Huyện Bình Chánh");
+        await CreateAreaAsync(hcm.Id, "70020", "Huyện Củ Chi");
+        await CreateAreaAsync(hcm.Id, "70021", "Huyện Hóc Môn");
+        await CreateAreaAsync(hcm.Id, "70022", "Huyện Nhà Bè");
+        await CreateAreaAsync(hcm.Id, "70023", "Huyện Cần Giờ");
+        await CreateAreaAsync(hcm.Id, "70024", "Tp. Thủ Đức");
         #endregion 
     }
 

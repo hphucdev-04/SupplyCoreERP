@@ -1,5 +1,4 @@
 using System;
-using SupplyCoreERP;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using NSubstitute;
@@ -25,7 +24,7 @@ public class CustomerManager_Unit_Tests
     private readonly IRepository<City, Guid> _cityRepo;
     private readonly IRepository<Area, Guid> _areaRepo;
     private readonly IRepository<PriceList, Guid> _priceListRepo;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
     private readonly CustomerManager _customerManager;
 
     public CustomerManager_Unit_Tests()
@@ -36,9 +35,7 @@ public class CustomerManager_Unit_Tests
         _areaRepo = Substitute.For<IRepository<Area, Guid>>();
         _priceListRepo = Substitute.For<IRepository<PriceList, Guid>>();
 
-        _documentSequenceManager = Substitute.For<DocumentSequenceManager>(
-            Substitute.For<IRepository<DocumentSequence, Guid>>()
-        );
+        _documentSequenceManager = Substitute.For<IDocumentSequenceManager>();
 
         _customerManager = new CustomerManager(
             _customerRepository, _countryRepo, _cityRepo, _areaRepo, _priceListRepo, _documentSequenceManager
@@ -59,8 +56,8 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Throw_BusinessException_When_Delete_Customer_With_Outstanding_Debt()
     {
         // Arrange
-        var id = Guid.NewGuid();
-        var customer = new Customer(
+        Guid id = Guid.NewGuid();
+        Customer customer = new(
             id, "CUS-001", "Customer A", null, null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
         customer.AddDebt(1000000m); // Add debt
@@ -79,8 +76,8 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Delete_Customer_Successfully()
     {
         // Arrange
-        var id = Guid.NewGuid();
-        var customer = new Customer(
+        Guid id = Guid.NewGuid();
+        Customer customer = new(
             id, "CUS-001", "Customer A", null, null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
         _customerRepository.GetAsync(id).Returns(customer);
@@ -96,10 +93,10 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Throw_BusinessException_When_Location_Country_NotFound()
     {
         // Arrange
-        var customer = new Customer(
+        Customer customer = new(
             Guid.NewGuid(), "CUS-001", "Customer A", null, null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
-        var countryId = Guid.NewGuid();
+        Guid countryId = Guid.NewGuid();
         _countryRepo.AnyAsync(Arg.Any<Expression<Func<Country, bool>>>()).Returns(false);
 
         // Act & Assert
@@ -117,10 +114,10 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Throw_BusinessException_When_Location_City_NotFound()
     {
         // Arrange
-        var customer = new Customer(
+        Customer customer = new(
             Guid.NewGuid(), "CUS-001", "Customer A", null, null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
-        var cityId = Guid.NewGuid();
+        Guid cityId = Guid.NewGuid();
         _cityRepo.FindAsync(cityId).Returns((City)null);
 
         // Act & Assert
@@ -138,14 +135,14 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Throw_BusinessException_When_Location_CityCountry_Mismatch()
     {
         // Arrange
-        var customer = new Customer(
+        Customer customer = new(
             Guid.NewGuid(), "CUS-001", "Customer A", null, null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
-        var countryId = Guid.NewGuid();
-        var cityId = Guid.NewGuid();
+        Guid countryId = Guid.NewGuid();
+        Guid cityId = Guid.NewGuid();
 
         _countryRepo.AnyAsync(Arg.Any<Expression<Func<Country, bool>>>()).Returns(true);
-        var city = new City(cityId, Guid.NewGuid(), "Tp. Ho Chi Minh"); // Different CountryId
+        City city = new(cityId, Guid.NewGuid(), "Tp. Ho Chi Minh"); // Different CountryId
         _cityRepo.FindAsync(cityId).Returns(city);
 
         // Act & Assert
@@ -163,10 +160,10 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Throw_BusinessException_When_Location_Area_NotFound()
     {
         // Arrange
-        var customer = new Customer(
+        Customer customer = new(
             Guid.NewGuid(), "CUS-001", "Customer A", null, null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
-        var areaId = Guid.NewGuid();
+        Guid areaId = Guid.NewGuid();
         _areaRepo.FindAsync(areaId).Returns((Area)null);
 
         // Act & Assert
@@ -184,16 +181,16 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Throw_BusinessException_When_Location_AreaCity_Mismatch()
     {
         // Arrange
-        var customer = new Customer(
+        Customer customer = new(
             Guid.NewGuid(), "CUS-001", "Customer A", null, null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
-        var cityId = Guid.NewGuid();
-        var areaId = Guid.NewGuid();
+        Guid cityId = Guid.NewGuid();
+        Guid areaId = Guid.NewGuid();
 
-        var city = new City(cityId, Guid.NewGuid(), "Tp. Ho Chi Minh");
+        City city = new(cityId, Guid.NewGuid(), "Tp. Ho Chi Minh");
         _cityRepo.FindAsync(cityId).Returns(city);
 
-        var area = new Area(areaId, Guid.NewGuid(), "70000", "District 1"); // Different CityId
+        Area area = new(areaId, Guid.NewGuid(), "70000", "District 1"); // Different CityId
         _areaRepo.FindAsync(areaId).Returns(area);
 
         // Act & Assert
@@ -211,10 +208,10 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Throw_BusinessException_When_PriceList_NotFound()
     {
         // Arrange
-        var customer = new Customer(
+        Customer customer = new(
             Guid.NewGuid(), "CUS-001", "Customer A", null, null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
-        var priceListId = Guid.NewGuid();
+        Guid priceListId = Guid.NewGuid();
         _priceListRepo.AnyAsync(Arg.Any<Expression<Func<PriceList, bool>>>()).Returns(false);
 
         // Act & Assert
@@ -249,7 +246,7 @@ public class CustomerManager_Unit_Tests
         _customerRepository.AnyAsync(Arg.Any<Expression<Func<Customer, bool>>>())
             .Returns(x =>
             {
-                var exprStr = x.Arg<Expression<Func<Customer, bool>>>().ToString();
+                string exprStr = x.Arg<Expression<Func<Customer, bool>>>().ToString();
                 if (exprStr.Contains("Code"))
                 {
                     return false;
@@ -279,7 +276,7 @@ public class CustomerManager_Unit_Tests
         _customerRepository.AnyAsync(Arg.Any<Expression<Func<Customer, bool>>>())
             .Returns(x =>
             {
-                var exprStr = x.Arg<Expression<Func<Customer, bool>>>().ToString();
+                string exprStr = x.Arg<Expression<Func<Customer, bool>>>().ToString();
                 if (exprStr.Contains("PhoneNumber"))
                 {
                     return true;
@@ -333,7 +330,7 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Update_Customer_Successfully_Without_Phone_Change()
     {
         // Arrange
-        var customer = new Customer(
+        Customer customer = new(
             Guid.NewGuid(), "CUS-001", "Customer A", "0909999999", null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
 
@@ -364,7 +361,7 @@ public class CustomerManager_Unit_Tests
     public async Task Should_Update_Customer_Successfully_With_Phone_Change()
     {
         // Arrange
-        var customer = new Customer(
+        Customer customer = new(
             Guid.NewGuid(), "CUS-001", "Customer A", "0909999999", null, null, null, CustomerType.Individual, null, null, null, null, null, null
         );
         _customerRepository.AnyAsync(Arg.Any<Expression<Func<Customer, bool>>>()).Returns(false);

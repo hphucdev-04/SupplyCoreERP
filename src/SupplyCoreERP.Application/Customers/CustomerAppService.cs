@@ -16,11 +16,11 @@ namespace SupplyCoreERP.Customers;
 public class CustomerAppService : SupplyCore, ICustomerAppService
 {
     private readonly IRepository<Customer, Guid> _customerRepository;
-    private readonly CustomerManager _customerManager;
+    private readonly ICustomerManager _customerManager;
 
     public CustomerAppService(
         IRepository<Customer, Guid> customerRepository,
-        CustomerManager customerManager)
+        ICustomerManager customerManager)
     {
         _customerRepository = customerRepository;
         _customerManager = customerManager;

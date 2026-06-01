@@ -1,4 +1,5 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { trigger, transition, style, animate } from '@angular/animations';
 import 'deep-chat';
 import { SharedModule } from '../../shared.module';
 
@@ -8,17 +9,40 @@ import { SharedModule } from '../../shared.module';
   imports: [SharedModule],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: 'ai-chat.component.html',
-  styleUrls: ['./ai-chat.component.scss']
+  styleUrls: ['./ai-chat.component.scss'],
+  animations: [
+    trigger('chatAnimation', [
+      // Mở ra: mượt mà trượt lên + phóng to
+      transition(':enter', [
+        style({ opacity: 0, transform: 'translateY(20px) scale(0.95)' }),
+        animate('0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
+          style({ opacity: 1, transform: 'translateY(0) scale(1)' }))
+      ]),
+      // Đóng lại: mờ dần + thu nhỏ nhanh
+      transition(':leave', [
+        animate('0.2s ease-in',
+          style({ opacity: 0, transform: 'translateY(15px) scale(0.97)' }))
+      ])
+    ])
+  ]
 })
 export class AiChatComponent {
   isOpen = false;
 
-  // Cấu hình UI cho Deep Chat
   chatInitialMessages = [
     { role: 'ai', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống RxLogistics. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
   ];
 
   toggleChat() {
     this.isOpen = !this.isOpen;
+  }
+
+  // Giữ hover effect bằng function (không cần thiết nếu đã có CSS :hover, nhưng để giữ code gốc)
+  onMouseEnter(event: MouseEvent) {
+    (event.currentTarget as HTMLElement).style.transform = 'scale(1.05)';
+  }
+
+  onMouseLeave(event: MouseEvent) {
+    (event.currentTarget as HTMLElement).style.transform = 'scale(1)';
   }
 }

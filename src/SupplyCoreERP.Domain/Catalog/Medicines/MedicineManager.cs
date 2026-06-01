@@ -15,7 +15,7 @@ using Volo.Abp.Domain.Services;
 
 namespace SupplyCoreERP.Catalog.Medicines;
 
-public class MedicineManager : DomainService
+public class MedicineManager : DomainService, IMedicineManager
 {
     // Dependencies
     private readonly ProductManager _productManager;
@@ -24,7 +24,7 @@ public class MedicineManager : DomainService
     private readonly IRepository<BaseUnit, Guid> _unitRepository;
     private readonly IRepository<DosageForm, Guid> _dosageFormRepository;
     private readonly IRepository<ActiveIngredient, Guid> _activeIngredientRepository;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public MedicineManager(
@@ -35,7 +35,7 @@ public class MedicineManager : DomainService
         IRepository<DosageForm, Guid> dosageFormRepository,
         IRepository<ActiveIngredient, Guid> activeIngredientRepository,
         IRepository<Country, Guid> countryRepository,
-        DocumentSequenceManager documentSequenceManager
+        IDocumentSequenceManager documentSequenceManager
         )
     {
         _productManager = productManager;

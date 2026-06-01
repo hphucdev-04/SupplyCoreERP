@@ -11,12 +11,13 @@ using SupplyCoreERP.Inventory.Warehouses;
 using SupplyCoreERP.Partner.Suppliers;
 using SupplyCoreERP.Procurement.PurchaseRequisitions;
 using Volo.Abp;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 
 namespace SupplyCoreERP.Procurement.PurchaseOrders;
 
-public class PurchaseOrderManager : DomainService
+public class PurchaseOrderManager : DomainService, IPurchaseOrderManager
 {
     // Dependencies
     private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
@@ -25,8 +26,8 @@ public class PurchaseOrderManager : DomainService
     private readonly IRepository<Warehouse, Guid> _warehouseRepo;
     private readonly IRepository<SupplierProduct, Guid> _supplierProductRepo;
     private readonly IRepository<SupplierProductCondition, Guid> _conditionRepo;
-    private readonly TicketManager _ticketManager;
-    private readonly DocumentSequenceManager _documentManager;
+    private readonly ITicketManager _ticketManager;
+    private readonly IDocumentSequenceManager _documentManager;
     private readonly UnitConversionManager _unitConversionManager;
 
     // DI
@@ -37,8 +38,8 @@ public class PurchaseOrderManager : DomainService
         IRepository<Warehouse, Guid> warehouseRepo,
         IRepository<SupplierProduct, Guid> supplierProductRepo,
         IRepository<SupplierProductCondition, Guid> conditionRepo,
-        TicketManager ticketManager,
-        DocumentSequenceManager documentManager,
+        ITicketManager ticketManager,
+        IDocumentSequenceManager documentManager,
         UnitConversionManager unitConversionManager
     )
     {
@@ -232,7 +233,13 @@ public class PurchaseOrderManager : DomainService
     public async Task AddLineAsync(PurchaseOrder order, Guid productId, Guid unitId,
         int conversionFactor, decimal quantity, decimal unitPrice, decimal taxRate)
     {
-        Product product = await _productRepo.GetAsync(productId);
+        IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+        Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == productId);
+        if (product == null)
+        {
+            throw new EntityNotFoundException(typeof(Product), productId);
+        }
+
         if (!product.IsAvailableForInventory)
         {
             throw new BusinessException("SupplyCoreERP:ProductNotAvailable", $"Sản phẩm '{product.Name}' chưa đủ điều kiện giao dịch!");
@@ -359,7 +366,13 @@ public class PurchaseOrderManager : DomainService
         foreach (PurchaseOrderLine line in order.Lines)
         {
             // So sánh theo BaseQuantity để tránh sai số làm tròn ở đơn vị PO
-            Product product = await _productRepo.GetAsync(line.ProductId);
+            IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+            Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == line.ProductId);
+            if (product == null)
+            {
+                throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(Product), line.ProductId);
+            }
+
             decimal receivedBaseQuantity = _unitConversionManager.ConvertToBaseQuantity(product, line.UnitId, line.ReceivedQuantity);
             if (receivedBaseQuantity < line.BaseQuantity - 0.0001m)
             {

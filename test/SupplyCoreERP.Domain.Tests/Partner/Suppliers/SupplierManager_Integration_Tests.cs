@@ -1,5 +1,4 @@
 using System;
-using SupplyCoreERP;
 using System.Linq;
 using System.Threading.Tasks;
 using Shouldly;
@@ -18,14 +17,14 @@ namespace SupplyCoreERP.Partner.Suppliers;
 public abstract class SupplierManager_Integration_Tests<TStartupModule> : SupplyCoreERPDomainTestBase<TStartupModule>
     where TStartupModule : IAbpModule
 {
-    private readonly SupplierManager _supplierManager;
-    private readonly MedicineManager _medicineManager;
+    private readonly ISupplierManager _supplierManager;
+    private readonly IMedicineManager _medicineManager;
     private readonly IRepository<Supplier, Guid> _supplierRepository;
 
     protected SupplierManager_Integration_Tests()
     {
-        _supplierManager = GetRequiredService<SupplierManager>();
-        _medicineManager = GetRequiredService<MedicineManager>();
+        _supplierManager = GetRequiredService<ISupplierManager>();
+        _medicineManager = GetRequiredService<IMedicineManager>();
         _supplierRepository = GetRequiredService<IRepository<Supplier, Guid>>();
     }
     [QATest(scenario: "Tạo nhà cung cấp thành công và tự động sinh mã code tăng dần.", feature: "Supplier", layer: "Domain", priority: "High")]
@@ -307,7 +306,7 @@ public abstract class SupplierManager_Integration_Tests<TStartupModule> : Supply
                 "Supplier For NonExistent Product", "SUP-NONPROD", null, null, null, null, null, null, null, null, null
             );
             await _supplierRepository.InsertAsync(supplier, autoSave: true);
-            var invalidProductId = Guid.NewGuid();
+            Guid invalidProductId = Guid.NewGuid();
 
             // Act & Assert
             BusinessException ex = await Assert.ThrowsAsync<BusinessException>(async () =>

@@ -494,7 +494,7 @@
           >
             <option [ngValue]="null">{{ '::SelectUnit' | abpLocalization }}</option>
             <option *ngFor="let u of units" [value]="u.unitId">
-              {{ u.unitName }} (×{{ u.conversionFactor }})
+              {{ u.unitName }} (×{{ u.displayFactor || u.conversionFactor }})
             </option>
           </select>
         </div>

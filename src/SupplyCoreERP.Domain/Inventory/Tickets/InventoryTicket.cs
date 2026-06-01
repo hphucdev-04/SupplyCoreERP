@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using SupplyCoreERP.Enums.Warehouses;
+using SupplyCoreERP.Inventory.Tickets.Events;
 using SupplyCoreERP.Inventory.Warehouses;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -19,7 +20,10 @@ public class InventoryTicket : FullAuditedAggregateRoot<Guid>
     public string? Note { get; private set; }
     public virtual ICollection<InventoryTicketLine> Lines { get; protected set; }
 
-    protected InventoryTicket() { Lines = new List<InventoryTicketLine>(); }
+    protected InventoryTicket()
+    {
+        Lines = new List<InventoryTicketLine>();
+    }
 
     public InventoryTicket(Guid id, string ticketNumber, TicketType type, Guid warehouseId, Guid? refDocId, string? refDocNumber, string? note) : base(id)
     {
@@ -43,14 +47,28 @@ public class InventoryTicket : FullAuditedAggregateRoot<Guid>
         Status = ApprovalStatus.Pending;
     }
 
-    public void Execute()
+    public void Execute(List<InventoryTicketLine> ticketLines)
     {
-        if (Status != ApprovalStatus.Approved)
+        if (Status != ApprovalStatus.Pending)
         {
-            throw new BusinessException("SupplyCoreERP:InvalidTicketStatus", "Chỉ các phiếu đã được phê duyệt mới có thể được thực hiện.");
+            throw new BusinessException("SupplyCoreERP:InvalidTicketStatus", "Chỉ các phiếu ở trạng thái Chờ duyệt mới có thể được thực hiện.");
         }
 
         Status = ApprovalStatus.Approved;
+
+        var lineEtos = new List<Events.InventoryTicketLineEto>();
+        foreach (InventoryTicketLine line in ticketLines)
+        {
+            lineEtos.Add(new Events.InventoryTicketLineEto
+            {
+                ProductId = line.ProductId,
+                UnitId = line.UnitId,
+                Quantity = line.Quantity,
+                ReferenceDocumentLineId = line.ReferenceDocumentLineId
+            });
+        }
+
+        AddLocalEvent(new InventoryTicketExecutedDomainEvent(Id, Type, ReferenceDocumentId, lineEtos));
     }
     public void Reject()
     {

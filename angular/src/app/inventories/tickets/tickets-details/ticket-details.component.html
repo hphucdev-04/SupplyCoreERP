@@ -13,26 +13,20 @@
       <div>
         <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
           {{ ticket.ticketNumber }}
-          <span
-            class="ph-badge"
-            [ngClass]="{
+          <span class="ph-badge" [ngClass]="{
               'ph-badge--neutral': ticket.status === ApprovalStatus.Draft,
               'ph-badge--pending': ticket.status === ApprovalStatus.Pending,
               'ph-badge--approved': ticket.status === ApprovalStatus.Approved,
               'ph-badge--rejected': ticket.status === ApprovalStatus.Rejected,
-            }"
-          >
-            <i
-              class="fa me-1"
-              [ngClass]="{
+            }">
+            <i class="fa me-1" [ngClass]="{
                 'fa-pencil': ticket.status === ApprovalStatus.Draft,
                 'fa-clock-o': ticket.status === ApprovalStatus.Pending,
                 'fa-check-circle': ticket.status === ApprovalStatus.Approved,
                 'fa-times-circle': ticket.status === ApprovalStatus.Rejected,
-              }"
-            ></i>
+              }"></i>
             {{
-              '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, ticket.status) | abpLocalization
+            '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, ticket.status) | abpLocalization
             }}
           </span>
         </h3>
@@ -57,14 +51,11 @@
   </div>
 
   <!-- Cảnh báo khóa kho -->
-  <div
-    class="ph-callout ph-callout--warning d-flex align-items-center mb-3"
-    *ngIf="ticket.status === ApprovalStatus.Pending && isIssueTicket()"
-  >
+  <div class="ph-callout ph-callout--warning d-flex align-items-center mb-3"
+    *ngIf="ticket.status === ApprovalStatus.Pending && isIssueTicket()">
     <i class="fa fa-lock fa-lg ph-callout__icon me-3"></i>
     <div>
-      <strong>{{ '::StockLockedWarning' | abpLocalization }}</strong
-      ><br />
+      <strong>{{ '::StockLockedWarning' | abpLocalization }}</strong><br />
       <span class="ph-text-muted">{{ '::StockLockedDescription' | abpLocalization }}</span>
     </div>
   </div>
@@ -80,11 +71,8 @@
       <div class="row g-3">
         <div class="col-md-3">
           <span class="ph-field-meta">{{ '::Type' | abpLocalization }}</span>
-          <div
-            class="ph-field-value fw-bold"
-            [class.ph-text-success]="!isIssueTicket()"
-            [class.ph-text-danger]="isIssueTicket()"
-          >
+          <div class="ph-field-value fw-bold" [class.ph-text-success]="!isIssueTicket()"
+            [class.ph-text-danger]="isIssueTicket()">
             <i class="fa me-1" [ngClass]="isIssueTicket() ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
             {{ '::Enum:TicketType.' + enumName(TicketType, ticket.type) | abpLocalization }}
           </div>
@@ -98,11 +86,8 @@
         <div class="col-md-3">
           <span class="ph-field-meta">{{ '::Source' | abpLocalization }}</span>
           <div class="ph-field-value">
-            <span
-              *ngIf="ticket.referenceDocumentNumber"
-              class="ph-badge ph-badge--info ph-link"
-              (click)="openLinkedOrder()"
-            >
+            <span *ngIf="ticket.referenceDocumentNumber" class="ph-badge ph-badge--info ph-link"
+              (click)="openLinkedOrder()">
               <i class="fa fa-link me-1"></i> {{ ticket.referenceDocumentNumber }}
             </span>
             <span *ngIf="!ticket.referenceDocumentNumber" class="ph-text-muted fst-italic">
@@ -129,28 +114,18 @@
       </h6>
       <div class="ph-card__header-actions">
         <ng-container *ngIf="ticket.status === ApprovalStatus.Draft">
-          <button
-            *ngIf="ticket.referenceDocumentId && ticket.type === TicketType.GoodsReceipt"
-            class="btn btn-sm ph-btn-actions"
-            (click)="openPoLineDrawer()"
-          >
+          <button *ngIf="ticket.referenceDocumentId && ticket.type === TicketType.GoodsReceipt"
+            class="btn btn-sm ph-btn-actions" (click)="openPoLineDrawer()">
             <i class="fa fa-list-check me-1"></i> {{ '::SelectFromPO' | abpLocalization }}
           </button>
-          <button
-            *ngIf="ticket.referenceDocumentId && ticket.type === TicketType.GoodsIssue"
-            class="btn btn-sm ph-btn-actions"
-            (click)="openSoLineDrawer()"
-          >
+          <button *ngIf="ticket.referenceDocumentId && ticket.type === TicketType.GoodsIssue"
+            class="btn btn-sm ph-btn-actions" (click)="openSoLineDrawer()">
             <i class="fa fa-list-check me-1"></i> {{ '::SelectFromSO' | abpLocalization }}
           </button>
 
           <!-- Nút Gợi ý FEFO -->
-          <button
-            *ngIf="isIssueTicket()"
-            class="btn btn-sm ph-btn-outline"
-            (click)="applyFEFO()"
-            [title]="'::ApplyFEFOHint' | abpLocalization"
-          >
+          <button *ngIf="isIssueTicket()" class="btn btn-sm ph-btn-outline" (click)="applyFEFO()"
+            [title]="'::ApplyFEFOHint' | abpLocalization">
             <i class="fa fa-magic me-1"></i> {{ '::AutoFEFO' | abpLocalization }}
           </button>
 
@@ -158,11 +133,7 @@
             <i class="fa fa-paper-plane me-1"></i> {{ '::SendToApprove' | abpLocalization }}
           </button>
         </ng-container>
-        <button
-          *ngIf="ticket.status === ApprovalStatus.Pending"
-          class="btn btn-sm ph-btn-save"
-          (click)="execute()"
-        >
+        <button *ngIf="ticket.status === ApprovalStatus.Pending" class="btn btn-sm ph-btn-save" (click)="execute()">
           <i class="fa fa-check-square-o me-1"></i> {{ '::ExecuteAndSave' | abpLocalization }}
         </button>
       </div>
@@ -170,90 +141,69 @@
 
     <div class="ph-card__body--flush">
       <div class="accordion-container">
-        <div
-          class="ph-table-header d-none d-md-grid align-items-center"
-          style="
+        <div class="ph-table-header d-none d-md-grid align-items-center" style="
             display: grid;
-            grid-template-columns: 44px 2fr 150px 110px 160px 60px;
+            grid-template-columns: 44px 1fr 120px 120px 100px 80px;
             gap: 8px;
             padding: 8px 12px;
-          "
-        >
+          ">
           <div></div>
           <div>{{ '::Medicine' | abpLocalization }}</div>
-          <div>{{ '::Unit' | abpLocalization }}</div>
+          <div class="text-center">{{ '::RequestedQuantity' | abpLocalization }}</div>
           <div class="text-center">{{ '::ConversionFactor' | abpLocalization }}</div>
-          <div class="text-end">{{ '::RequestedQuantity' | abpLocalization }}</div>
+          <div class="text-center">{{ '::BaseUnit' | abpLocalization }}</div>
           <div></div>
         </div>
 
         <!-- Accordion Rows -->
-        <div
-          *ngFor="let line of ticket.lines"
-          class="ph-accordion-row"
-          [class.is-expanded]="expandedLineIds.has(line.id)"
-        >
-          <div
-            class="ph-accordion-row__main"
-            style="
+        <div *ngFor="let line of ticket.lines" class="ph-accordion-row"
+          [class.is-expanded]="expandedLineIds.has(line.id)">
+          <div class="ph-accordion-row__main" style="
               display: grid;
-              grid-template-columns: 44px 2fr 150px 110px 160px 60px;
+              grid-template-columns: 44px 1fr 120px 120px 100px 80px;
               gap: 8px;
               align-items: center;
               padding: 8px 12px;
               cursor: pointer;
-            "
-            (click)="toggleLine(line.id)"
-          >
+            " (click)="toggleLine(line.id)">
             <!-- Icon toggle -->
             <div class="ph-accordion-row__toggle text-center">
-              <i
-                class="fa fa-chevron-right"
-                [class.fa-rotate-90]="expandedLineIds.has(line.id)"
-              ></i>
+              <i class="fa fa-chevron-right" [class.fa-rotate-90]="expandedLineIds.has(line.id)"></i>
             </div>
 
             <!-- Medicine Info -->
             <div>
               <div class="fw-bold ph-text-primary">
                 {{ line.productName }}
-                <i
-                  class="fa fa-exclamation-triangle ph-text-warning ms-1"
-                  *ngIf="
+                <i class="fa fa-exclamation-triangle ph-text-warning ms-1" *ngIf="
                     ticket.status === ApprovalStatus.Draft &&
                     line.quantity * line.conversionFactor > getLineAssignedBaseQty(line)
-                  "
-                  [title]="'::LineNotFullyAllocated' | abpLocalization"
-                ></i>
+                  " [title]="'::LineNotFullyAllocated' | abpLocalization"></i>
               </div>
               <small class="ph-text-muted ph-font-mono">{{ line.productCode }}</small>
             </div>
 
-            <!-- Unit -->
+            <!-- Requested Quantity -->
             <div>
+              <span class="text-center fw-bold ph-field-value me-1"> {{ line.quantity}}</span>
               <span class="ph-badge ph-badge--neutral">{{ line.unitName }}</span>
-              <div class="ph-text-muted" style="font-size: 10px" *ngIf="line.conversionFactor > 1">
-                (1 {{ line.unitName }} = {{ line.conversionFactor }} {{ line.productBaseUnitName }})
-              </div>
             </div>
 
             <!-- Conversion Factor -->
             <div class="text-center fw-bold ph-field-value">
-              x{{ line.conversionFactor | number }}
+              x{{ line.conversionFactor}}
             </div>
 
-            <!-- Requested Quantity -->
+            <!-- Unit -->
             <div class="text-end fw-bold ph-field-value">
-              {{ line.quantity / (line.conversionFactor || 1) | number }} {{ line.unitName }}
+              <span class="text-center fw-bold ph-field-value me-1"> {{ line.baseQuantity}}</span>
+              <span class="ph-badge ph-badge--neutral">{{ line.baseUnitName }}</span>
             </div>
 
             <!-- Actions -->
             <div class="text-center">
-              <button
-                *ngIf="ticket.status === ApprovalStatus.Draft"
-                class="btn ph-btn-ghost ph-text-danger btn-sm"
-                (click)="$event.stopPropagation(); deleteLine(line.id)"
-              >
+              <button *ngIf="ticket.status === ApprovalStatus.Draft" class="btn ph-btn-ghost ph-text-danger btn-sm"
+                (click)="$event.stopPropagation(); deleteLine(line.id)">
                 <i class="fa fa-trash-alt"></i>
               </button>
             </div>
@@ -266,11 +216,8 @@
                 <span class="title">
                   <i class="fa fa-cubes me-1"></i> {{ '::BatchesAndBins' | abpLocalization }}
                 </span>
-                <button
-                  *ngIf="ticket.status === ApprovalStatus.Draft"
-                  class="btn btn-sm ph-btn-outline"
-                  (click)="openAddDetailDrawer(line)"
-                >
+                <button *ngIf="ticket.status === ApprovalStatus.Draft" class="btn btn-sm ph-btn-outline"
+                  (click)="openAddDetailDrawer(line)">
                   <i class="fa fa-plus me-1"></i> {{ '::AddBatch' | abpLocalization }}
                 </button>
               </div>
@@ -307,20 +254,16 @@
                         <span *ngIf="det.registrationNumber; else noReg">
                           {{ det.registrationNumber }}
                         </span>
-                        <ng-template #noReg
-                          ><span class="ph-text-muted fst-italic">—</span></ng-template
-                        >
+                        <ng-template #noReg><span class="ph-text-muted fst-italic">—</span></ng-template>
                       </td>
                       <td>
                         <small class="ph-field-value">{{
                           det.manufacturingDate | date: 'dd/MM/yyyy'
-                        }}</small>
+                          }}</small>
                       </td>
                       <td>
-                        <small
-                          class="ph-field-value"
-                          [class.ph-text-danger]="det.expiryDate < (ticket.creationTime || '')"
-                        >
+                        <small class="ph-field-value"
+                          [class.ph-text-danger]="det.expiryDate < (ticket.creationTime || '')">
                           {{ det.expiryDate | date: 'dd/MM/yyyy' }}
                         </small>
                       </td>
@@ -339,11 +282,8 @@
                         <small class="fw-normal">{{ det.baseUnitName }}</small>
                       </td>
                       <td class="text-center">
-                        <button
-                          *ngIf="ticket.status === ApprovalStatus.Draft"
-                          class="btn ph-btn-ghost ph-text-danger btn-sm p-0"
-                          (click)="deleteDetail(det.id)"
-                        >
+                        <button *ngIf="ticket.status === ApprovalStatus.Draft"
+                          class="btn ph-btn-ghost ph-text-danger btn-sm p-0" (click)="deleteDetail(det.id)">
                           <i class="fa fa-times"></i>
                         </button>
                       </td>
@@ -370,14 +310,8 @@
   </div>
 
   <!-- PO Lines Drawer -->
-  <app-drawer
-    [isOpen]="isPoLineDrawerOpen"
-    [title]="'::ImportFromPurchaseOrder' | abpLocalization"
-    [height]="'lg'"
-    [position]="'bottom'"
-    [showFooter]="false"
-    (close)="closePoLineDrawer()"
-  >
+  <app-drawer [isOpen]="isPoLineDrawerOpen" [title]="'::ImportFromPurchaseOrder' | abpLocalization" [height]="'lg'"
+    [position]="'bottom'" [showFooter]="false" (close)="closePoLineDrawer()">
     <div class="ph-drawer__body--flush">
       <div class="p-4 ph-bg-subtle border-bottom">
         <h5 class="mb-1 fw-bold">{{ '::SelectProductsToImport' | abpLocalization }}</h5>
@@ -430,21 +364,13 @@
                 {{ pl.finalPrice | number: '1.0-0' }}
               </td>
               <td class="px-2">
-                <input
-                  type="number"
-                  class="form-control form-control-sm text-end fw-bold"
-                  [(ngModel)]="pl.importQuantity"
-                  [min]="0"
-                  [max]="pl.quantity"
-                  style="max-width: 120px; margin: 0 auto"
-                />
+                <input type="number" class="form-control form-control-sm text-end fw-bold"
+                  [(ngModel)]="pl.importQuantity" [min]="0" [max]="pl.quantity"
+                  style="max-width: 120px; margin: 0 auto" />
               </td>
               <td class="text-center">
-                <button
-                  class="btn btn-sm ph-btn-new w-100"
-                  [disabled]="!pl.importQuantity || pl.importQuantity <= 0"
-                  (click)="addPoLineToTicket(pl)"
-                >
+                <button class="btn btn-sm ph-btn-new w-100" [disabled]="!pl.importQuantity || pl.importQuantity <= 0"
+                  (click)="addPoLineToTicket(pl)">
                   <i class="fa fa-plus me-1"></i> {{ '::Import' | abpLocalization }}
                 </button>
               </td>
@@ -456,14 +382,8 @@
   </app-drawer>
 
   <!-- SO Lines Drawer -->
-  <app-drawer
-    [isOpen]="isSoLineDrawerOpen"
-    [title]="'::ExportFromSalesOrder' | abpLocalization"
-    [height]="'lg'"
-    [position]="'bottom'"
-    [showFooter]="false"
-    (close)="closeSoLineDrawer()"
-  >
+  <app-drawer [isOpen]="isSoLineDrawerOpen" [title]="'::ExportFromSalesOrder' | abpLocalization" [height]="'lg'"
+    [position]="'bottom'" [showFooter]="false" (close)="closeSoLineDrawer()">
     <div class="ph-drawer__body--flush">
       <div class="p-4 ph-bg-subtle border-bottom">
         <h5 class="mb-1 fw-bold">{{ '::SelectProductsToExport' | abpLocalization }}</h5>
@@ -495,20 +415,12 @@
                 {{ sl.quantity | number }} <small>{{ sl.unitName }}</small>
               </td>
               <td class="px-4">
-                <input
-                  type="number"
-                  class="form-control form-control-sm text-end fw-bold"
-                  [(ngModel)]="sl.exportQuantity"
-                  [min]="0"
-                  [max]="sl.quantity"
-                />
+                <input type="number" class="form-control form-control-sm text-end fw-bold"
+                  [(ngModel)]="sl.exportQuantity" [min]="0" [max]="sl.quantity" />
               </td>
               <td class="text-center pe-4">
-                <button
-                  class="btn btn-sm ph-btn-new"
-                  [disabled]="!sl.exportQuantity || sl.exportQuantity <= 0"
-                  (click)="addSoLineToTicket(sl)"
-                >
+                <button class="btn btn-sm ph-btn-new" [disabled]="!sl.exportQuantity || sl.exportQuantity <= 0"
+                  (click)="addSoLineToTicket(sl)">
                   <i class="fa fa-truck me-1"></i> {{ '::Export' | abpLocalization }}
                 </button>
               </td>
@@ -520,37 +432,24 @@
   </app-drawer>
 
   <!-- Add Detail Drawer -->
-  <app-drawer
-    [isOpen]="isAddDetailDrawerOpen"
-    [title]="'::AddBatchAndBin' | abpLocalization"
-    [width]="'md'"
-    [saveDisabled]="detailForm?.invalid || isSavingDetail"
-    (close)="closeAddDetailDrawer()"
-    (save)="saveDetail()"
-  >
+  <app-drawer [isOpen]="isAddDetailDrawerOpen" [title]="'::AddBatchAndBin' | abpLocalization" [width]="'md'"
+    [saveDisabled]="detailForm?.invalid || isSavingDetail" (close)="closeAddDetailDrawer()" (save)="saveDetail()">
     <div *ngIf="detailForm">
       <form [formGroup]="detailForm">
         <div class="mb-3">
           <label class="ph-label ph-label--required">{{ '::Medicine' | abpLocalization }}</label>
-          <app-dropdown-search
-            formControlName="productId"
-            [items]="medicines"
-            [placeholder]="'::SelectMedicine' | abpLocalization"
-            [disabled]="!!selectedTicketLine"
-            (valueChange)="onMedicineChange($event)"
-          >
+          <app-dropdown-search formControlName="productId" [items]="medicines"
+            [placeholder]="'::SelectMedicine' | abpLocalization" [disabled]="!!selectedTicketLine"
+            (valueChange)="onMedicineChange($event)">
           </app-dropdown-search>
         </div>
 
         <div class="row">
           <div class="col-6 mb-3">
             <label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label>
-            <select
-              class="form-select form-select-sm"
-              formControlName="unitId"
+            <select class="form-select form-select-sm" formControlName="unitId"
               (change)="onUnitChange($event.target.value)"
-              [attr.disabled]="selectedTicketLine || !units.length ? 'disabled' : null"
-            >
+              [attr.disabled]="selectedTicketLine || !units.length ? 'disabled' : null">
               <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
               <option *ngFor="let u of units" [value]="u.unitId">
                 {{ u.unitName }} (×{{ u.conversionFactor }})
@@ -559,27 +458,16 @@
           </div>
           <div class="col-6 mb-3">
             <label class="ph-label ph-label--required">{{ '::Quantity' | abpLocalization }}</label>
-            <input
-              type="number"
-              step="1"
-              min="0.01"
-              class="form-control form-control-sm text-end fw-bold"
-              formControlName="quantity"
-              (input)="updateQuantityPreview()"
-            />
+            <input type="number" step="1" min="0.01" class="form-control form-control-sm text-end fw-bold"
+              formControlName="quantity" (input)="updateQuantityPreview()" />
           </div>
         </div>
 
-        <div
-          class="ph-callout ph-callout--info mb-3"
-          *ngIf="quantityPreview > 0 && selectedConversionFactor > 1"
-        >
+        <div class="ph-callout ph-callout--info mb-3" *ngIf="quantityPreview > 0 && selectedConversionFactor > 1">
           <i class="fa fa-calculator ph-callout__icon"></i>
           <div>
             {{ '::EquivalentTo' | abpLocalization }}:
-            <strong class="ph-field-value"
-              >{{ quantityPreview | number }} {{ baseUnitName }}</strong
-            >
+            <strong class="ph-field-value">{{ quantityPreview | number }} {{ baseUnitName }}</strong>
           </div>
         </div>
 
@@ -587,25 +475,15 @@
           <div class="d-flex justify-content-between align-items-center mb-1">
             <label class="ph-label ph-label--required mb-0">{{
               '::BatchNumber' | abpLocalization
-            }}</label>
-            <button
-              type="button"
-              class="btn btn-sm ph-btn-ghost ph-text-primary p-0"
-              *ngIf="detailForm.get('productId').value && !isCreatingBatch"
-              (click)="openQuickBatchForm()"
-            >
+              }}</label>
+            <button type="button" class="btn btn-sm ph-btn-ghost ph-text-primary p-0"
+              *ngIf="detailForm.get('productId').value && !isCreatingBatch" (click)="openQuickBatchForm()">
               <i class="fa fa-plus-circle"></i> {{ '::CreateBatch' | abpLocalization }}
             </button>
           </div>
 
-          <app-dropdown-search
-            *ngIf="!isCreatingBatch"
-            formControlName="productBatchId"
-            [items]="batches"
-            [labelKey]="'batchNumber'"
-            [placeholder]="'::SelectBatch' | abpLocalization"
-            [disabled]="!batches.length"
-          >
+          <app-dropdown-search *ngIf="!isCreatingBatch" formControlName="productBatchId" [items]="batches"
+            [labelKey]="'batchNumber'" [placeholder]="'::SelectBatch' | abpLocalization" [disabled]="!batches.length">
           </app-dropdown-search>
 
           <div class="ph-hint-warning mt-1" *ngIf="isIssueTicket() && hiddenBatchCount > 0">
@@ -615,24 +493,15 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label txt-sm fw-semibold"
-            >{{ '::Bin' | abpLocalization }} <span class="txt-danger">*</span></label
-          >
-          <app-dropdown-search
-            formControlName="binId"
-            [items]="filteredBins"
-            [labelKey]="'code'"
-            [placeholder]="'::SelectBin' | abpLocalization"
-            [disabled]="!detailForm.get('productId').value"
-          >
+          <label class="form-label txt-sm fw-semibold">{{ '::Bin' | abpLocalization }} <span
+              class="txt-danger">*</span></label>
+          <app-dropdown-search formControlName="binId" [items]="filteredBins" [labelKey]="'code'"
+            [placeholder]="'::SelectBin' | abpLocalization" [disabled]="!detailForm.get('productId').value">
           </app-dropdown-search>
-          <div
-            class="form-text text-danger txt-sm mt-1"
-            *ngIf="detailForm.get('productId').value && filteredBins.length === 0"
-          >
+          <div class="form-text text-danger txt-sm mt-1"
+            *ngIf="detailForm.get('productId').value && filteredBins.length === 0">
             <i class="fa fa-exclamation-triangle me-1"></i>
-            <strong class="text-uppercase">{{ '::NoBinAvailable' | abpLocalization }}</strong
-            >:
+            <strong class="text-uppercase">{{ '::NoBinAvailable' | abpLocalization }}</strong>:
             {{ '::NoBinMatchConditionWarning' | abpLocalization }}
           </div>
         </div>
@@ -640,9 +509,7 @@
 
       <!-- Quick Batch Form (Moved outside main form to avoid nesting) -->
       <div class="ph-card border-ph-brand-500 mt-2" *ngIf="isCreatingBatch && quickBatchForm">
-        <div
-          class="ph-card__header ph-bg-success d-flex justify-content-between align-items-center py-2 px-3"
-        >
+        <div class="ph-card__header ph-bg-success d-flex justify-content-between align-items-center py-2 px-3">
           <span class="ph-text-success fw-bold">
             <i class="fa fa-plus me-1"></i> {{ '::NewBatch' | abpLocalization }}
           </span>
@@ -654,11 +521,7 @@
           <div [formGroup]="quickBatchForm">
             <div class="mb-2">
               <label class="ph-label">{{ '::BatchNumber' | abpLocalization }}</label>
-              <input
-                type="text"
-                class="form-control form-control-sm text-uppercase"
-                formControlName="batchNumber"
-              />
+              <input type="text" class="form-control form-control-sm text-uppercase" formControlName="batchNumber" />
             </div>
             <div class="mb-2" *ngIf="registrations.length > 0">
               <label class="ph-label">{{ '::MedicineRegistration' | abpLocalization }}</label>
@@ -673,27 +536,15 @@
             <div class="row">
               <div class="col-6 mb-2">
                 <label class="ph-label">{{ '::ManufacturingDate' | abpLocalization }}</label>
-                <input
-                  type="date"
-                  class="form-control form-control-sm"
-                  formControlName="manufacturingDate"
-                />
+                <input type="date" class="form-control form-control-sm" formControlName="manufacturingDate" />
               </div>
               <div class="col-6 mb-2">
                 <label class="ph-label">{{ '::ExpiryDate' | abpLocalization }}</label>
-                <input
-                  type="date"
-                  class="form-control form-control-sm"
-                  formControlName="expiryDate"
-                />
+                <input type="date" class="form-control form-control-sm" formControlName="expiryDate" />
               </div>
             </div>
-            <button
-              type="button"
-              class="btn btn-sm ph-btn-save w-100"
-              [disabled]="quickBatchForm.invalid || isSavingQuickBatch"
-              (click)="saveQuickBatch()"
-            >
+            <button type="button" class="btn btn-sm ph-btn-save w-100"
+              [disabled]="quickBatchForm.invalid || isSavingQuickBatch" (click)="saveQuickBatch()">
               <i class="fa" [ngClass]="isSavingQuickBatch ? 'fa-spinner fa-spin' : 'fa-check'"></i>
               {{ '::SaveAndSelect' | abpLocalization }}
             </button>

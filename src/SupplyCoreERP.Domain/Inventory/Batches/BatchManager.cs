@@ -14,13 +14,13 @@ public class BatchManager : DomainService
     // Dependencies
     private readonly IRepository<ProductBatch, Guid> _batchRepo;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public BatchManager(
         IRepository<ProductBatch, Guid> batchRepo,
         IRepository<InventoryBalance, Guid> balanceRepo,
-        DocumentSequenceManager documentSequenceManager)
+        IDocumentSequenceManager documentSequenceManager)
     {
         _batchRepo = batchRepo;
         _balanceRepo = balanceRepo;

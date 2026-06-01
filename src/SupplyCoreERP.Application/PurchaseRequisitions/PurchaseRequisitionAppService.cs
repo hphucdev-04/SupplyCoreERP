@@ -18,14 +18,14 @@ public class PurchaseRequisitionAppService : SupplyCore, IPurchaseRequisitionApp
 {
     private readonly IRepository<PurchaseRequisition, Guid> _requisitionRepo;
     private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
-    private readonly PurchaseRequisitionManager _requisitionManager;
-    private readonly PurchaseOrderManager _orderManager;
+    private readonly IPurchaseRequisitionManager _requisitionManager;
+    private readonly IPurchaseOrderManager _orderManager;
 
     public PurchaseRequisitionAppService(
         IRepository<PurchaseRequisition, Guid> requisitionRepo,
         IRepository<PurchaseOrder, Guid> orderRepo,
-        PurchaseRequisitionManager requisitionManager,
-        PurchaseOrderManager orderManager)
+        IPurchaseRequisitionManager requisitionManager,
+        IPurchaseOrderManager orderManager)
     {
         _requisitionRepo = requisitionRepo;
         _orderRepo = orderRepo;

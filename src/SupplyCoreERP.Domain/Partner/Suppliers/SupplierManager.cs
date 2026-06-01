@@ -14,7 +14,7 @@ using Volo.Abp.Domain.Services;
 
 namespace SupplyCoreERP.Partner.Suppliers;
 
-public class SupplierManager : DomainService
+public class SupplierManager : DomainService, ISupplierManager
 {
     // Dependencies
     private readonly IRepository<Supplier, Guid> _supplierRepository;
@@ -23,7 +23,7 @@ public class SupplierManager : DomainService
     private readonly IRepository<Country, Guid> _countryRepo;
     private readonly IRepository<City, Guid> _cityRepo;
     private readonly IRepository<Area, Guid> _areaRepo;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public SupplierManager(
@@ -33,7 +33,7 @@ public class SupplierManager : DomainService
         IRepository<Country, Guid> countryRepo,
         IRepository<City, Guid> cityRepo,
         IRepository<Area, Guid> areaRepo,
-        DocumentSequenceManager documentSequenceManager)
+        IDocumentSequenceManager documentSequenceManager)
     {
         _supplierRepository = supplierRepository;
         _productRepo = productRepo;

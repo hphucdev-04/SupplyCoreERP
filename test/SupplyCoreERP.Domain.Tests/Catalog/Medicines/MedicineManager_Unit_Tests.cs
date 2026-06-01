@@ -30,7 +30,7 @@ public class MedicineManager_Unit_Tests
     private readonly IRepository<DosageForm, Guid> _dosageFormRepository;
     private readonly IRepository<ActiveIngredient, Guid> _activeIngredientRepository;
     private readonly IRepository<Country, Guid> _countryRepository;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
     private readonly MedicineManager _medicineManager;
 
     public MedicineManager_Unit_Tests()
@@ -50,9 +50,7 @@ public class MedicineManager_Unit_Tests
         _dosageFormRepository = Substitute.For<IRepository<DosageForm, Guid>>();
         _activeIngredientRepository = Substitute.For<IRepository<ActiveIngredient, Guid>>();
         _countryRepository = Substitute.For<IRepository<Country, Guid>>();
-        _documentSequenceManager = Substitute.For<DocumentSequenceManager>(
-            Substitute.For<IRepository<DocumentSequence, Guid>>()
-        );
+        _documentSequenceManager = Substitute.For<IDocumentSequenceManager>();
 
         _medicineManager = new MedicineManager(
             _productManager,

@@ -17,13 +17,13 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
     // Dependency
     private readonly IRepository<Supplier, Guid> _supplierRepository;
     private readonly IRepository<SupplierProduct, Guid> _supplierProductRepo;
-    private readonly SupplierManager _supplierManager;
+    private readonly ISupplierManager _supplierManager;
 
     // Constructor injection
     public SupplierAppService(
         IRepository<Supplier, Guid> supplierRepository,
         IRepository<SupplierProduct, Guid> supplierProductRepo,
-        SupplierManager supplierManager)
+        ISupplierManager supplierManager)
     {
         _supplierRepository = supplierRepository;
         _supplierProductRepo = supplierProductRepo;

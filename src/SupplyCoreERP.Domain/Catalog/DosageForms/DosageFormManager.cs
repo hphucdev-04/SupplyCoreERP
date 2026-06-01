@@ -14,13 +14,13 @@ public class DosageFormManager : DomainService
     // Dependencies
     private readonly IRepository<DosageForm, Guid> _repository;
     private readonly IRepository<Medicine, Guid> _medicineRepository;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
     public DosageFormManager(
         IRepository<DosageForm, Guid> repository,
         IRepository<Medicine, Guid> medicineRepository,
-        DocumentSequenceManager documentSequenceManager)
+        IDocumentSequenceManager documentSequenceManager)
     {
         _repository = repository;
         _medicineRepository = medicineRepository;

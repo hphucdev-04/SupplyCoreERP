@@ -13,7 +13,6 @@ public class CategoryManager : DomainService
     // Dependencies
     private readonly IRepository<Category, Guid> _categoryRepository;
     private readonly IRepository<Product, Guid> _productRepository;
-    private readonly IGuidGenerator _guidGenerator;
 
     // Constructor injection
     public CategoryManager(
@@ -23,7 +22,6 @@ public class CategoryManager : DomainService
     {
         _categoryRepository = categoryRepository;
         _productRepository = productRepository;
-        _guidGenerator = guidGenerator;
     }
 
     public virtual async Task<Category> CreateAsync(string name)
@@ -37,7 +35,7 @@ public class CategoryManager : DomainService
         }
 
         return new Category(
-            _guidGenerator.Create(),
+            GuidGenerator.Create(),
             name
         );
     }

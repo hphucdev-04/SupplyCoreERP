@@ -2,11 +2,10 @@ using System;
 using System.Threading.Tasks;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
-using Volo.Abp.Uow;
 
 namespace SupplyCoreERP.Common.DocumentSequences;
 
-public class DocumentSequenceManager : DomainService
+public class DocumentSequenceManager : DomainService, IDocumentSequenceManager
 {
     // Dependencies
     private readonly IRepository<DocumentSequence, Guid> _sequenceRepo;
@@ -17,8 +16,7 @@ public class DocumentSequenceManager : DomainService
         _sequenceRepo = sequenceRepo;
     }
 
-    [UnitOfWork]
-    public virtual async Task<string> GenerateAsync(string prefix)
+    public async Task<string> GenerateAsync(string prefix)
     {
         string todayStr = DateTime.Now.ToString("yyMMdd");
 

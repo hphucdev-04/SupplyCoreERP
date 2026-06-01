@@ -1,5 +1,4 @@
 using System;
-using SupplyCoreERP;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -30,7 +29,7 @@ public class SupplierManager_Unit_Tests
     private readonly IRepository<Country, Guid> _countryRepo;
     private readonly IRepository<City, Guid> _cityRepo;
     private readonly IRepository<Area, Guid> _areaRepo;
-    private readonly DocumentSequenceManager _documentSequenceManager;
+    private readonly IDocumentSequenceManager _documentSequenceManager;
     private readonly SupplierManager _supplierManager;
 
     public SupplierManager_Unit_Tests()
@@ -42,9 +41,7 @@ public class SupplierManager_Unit_Tests
         _cityRepo = Substitute.For<IRepository<City, Guid>>();
         _areaRepo = Substitute.For<IRepository<Area, Guid>>();
 
-        _documentSequenceManager = Substitute.For<DocumentSequenceManager>(
-            Substitute.For<IRepository<DocumentSequence, Guid>>()
-        );
+        _documentSequenceManager = Substitute.For<IDocumentSequenceManager>();
 
         _supplierManager = new SupplierManager(
             _supplierRepository, _productRepo, _unitRepo, _countryRepo, _cityRepo, _areaRepo, _documentSequenceManager
@@ -230,7 +227,7 @@ public class SupplierManager_Unit_Tests
         _supplierRepository.AnyAsync(Arg.Any<Expression<Func<Supplier, bool>>>())
             .Returns(x =>
             {
-                var exprStr = x.Arg<Expression<Func<Supplier, bool>>>().ToString();
+                string exprStr = x.Arg<Expression<Func<Supplier, bool>>>().ToString();
                 if (exprStr.Contains("Code"))
                 {
                     return false;

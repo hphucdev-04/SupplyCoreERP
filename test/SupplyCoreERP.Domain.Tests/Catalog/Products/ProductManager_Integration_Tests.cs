@@ -1,8 +1,6 @@
 using System;
-using SupplyCoreERP;
 using System.Threading.Tasks;
 using Shouldly;
-using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Inventory.Balances;
 using SupplyCoreERP.SeedData;
 using Volo.Abp.Domain.Repositories;
@@ -29,7 +27,7 @@ public abstract class ProductManager_Integration_Tests<TStartupModule> : SupplyC
         await WithUnitOfWorkAsync(async () =>
         {
             // Act
-            var hasTransactions = await _productManager.HasTransactionsAsync(TestDataConsts.MedicineParacetamolId);
+            bool hasTransactions = await _productManager.HasTransactionsAsync(TestDataConsts.MedicineParacetamolId);
 
             // Assert
             hasTransactions.ShouldBeFalse();

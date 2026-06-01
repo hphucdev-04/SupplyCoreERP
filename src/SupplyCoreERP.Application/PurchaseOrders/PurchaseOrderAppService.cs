@@ -20,14 +20,14 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
     private readonly IRepository<PurchaseOrder, Guid> _orderRepo;
     private readonly IRepository<InventoryTicket, Guid> _ticketRepo;
     private readonly IRepository<Supplier, Guid> _supplierRepo;
-    private readonly PurchaseOrderManager _orderManager;
+    private readonly IPurchaseOrderManager _orderManager;
 
     // Constructor injection
     public PurchaseOrderAppService(
     IRepository<PurchaseOrder, Guid> orderRepo,
     IRepository<InventoryTicket, Guid> ticketRepo,
     IRepository<Supplier, Guid> supplierRepo,
-    PurchaseOrderManager orderManager)
+    IPurchaseOrderManager orderManager)
     {
         _orderRepo = orderRepo;
         _ticketRepo = ticketRepo;
@@ -71,7 +71,7 @@ public class PurchaseOrderAppService : SupplyCore, IPurchaseOrderAppService
             .Include(x => x.Supplier)
             .Include(x => x.Warehouse)
             .Include(x => x.PurchaseRequisition)
-            .Include(x => x.Lines).ThenInclude(d => d.Product)
+            .Include(x => x.Lines).ThenInclude(d => d.Product).ThenInclude(p => p.BaseUnit)
             .Include(x => x.Lines).ThenInclude(d => d.Unit)
             .FirstOrDefaultAsync(x => x.Id == id);
 
