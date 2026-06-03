@@ -25,6 +25,9 @@ public static class SupplyCoreERPConsts
     public const string DocumentTypeUnit = "UN";
     public const string DocumentTypeDosageForm = "DF";
     public const string DocumentTypeInventoryTicket = "IT";
+    public const string DocumentTypePurchaseReturn = "RO";
+    public const string DocumentTypePurchaseReturnRequest = "ROR";
+    public const string DocumentTypeSalesRecall = "RC";
 
 }
 

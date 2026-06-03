@@ -1,0 +1,234 @@
+<div class="ph-card">
+  <div class="ph-card__header">
+    <h5 class="ph-card-title">
+      {{ '::Menu:Sales-Recalls' | abpLocalization }}
+    </h5>
+    <div class="ph-card__header-actions">
+      <button class="btn btn-sm ph-btn-new" type="button" (click)="openCreateDrawer()">
+        <i class="fa fa-plus me-1"></i>
+        <span>{{ '::NewSalesRecall' | abpLocalization }}</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="ph-card__body">
+    <!-- Filter Bar -->
+    <div class="ph-filter-bar">
+      <div class="ph-filter-bar__search">
+        <app-search [placeholder]="'::SearchByCodeOrDecisionNumber' | abpLocalization" [(value)]="filterText"
+          [debounceTime]="800" (search)="onSearch($event)"></app-search>
+      </div>
+      <div class="ph-filter-bar__controls">
+        <select class="form-select form-select-sm" style="width: 160px" [(ngModel)]="filterStatus"
+          (change)="onFilterChange()">
+          <option [ngValue]="null">{{ '::AllStatus' | abpLocalization }}</option>
+          <option *ngFor="let s of salesRecallStatusOptions" [ngValue]="s.value">
+            {{
+            '::Enum:SalesRecallStatus.' + enumName(SalesRecallStatus, s.value)
+            | abpLocalization
+            }}
+          </option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Table -->
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+      <ngx-datatable-column [name]="'::Actions' | abpLocalization" [maxWidth]="150" [sortable]="false">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div ngbDropdown container="body" class="d-inline-block">
+            <button class="btn btn-sm ph-btn-actions dropdown-toggle" ngbDropdownToggle>
+              <i class="fa fa-cog me-1"></i>{{ '::Actions' | abpLocalization }}
+            </button>
+            <div ngbDropdownMenu>
+              <button ngbDropdownItem (click)="viewDetail(row.id)">
+                <i class="fa fa-eye me-1"></i>{{ '::View' | abpLocalization }}
+              </button>
+              <button *ngIf="row.status === SalesRecallStatus.Draft" ngbDropdownItem class="text-danger"
+                (click)="delete(row.id, row.code)">
+                <i class="fa fa-trash me-1"></i>{{ '::Delete' | abpLocalization }}
+              </button>
+            </div>
+          </div>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="180">
+        <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
+          <span class="ph-link" (click)="viewDetail(row.id)">{{ value }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::DecisionNumber' | abpLocalization" prop="recallDecisionNumber" [width]="160">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="fw-bold text-dark">{{ row.recallDecisionNumber }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Product' | abpLocalization" prop="productName" [width]="220">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <div class="fw-bold text-dark">{{ row.productName }}</div>
+          <span class="badge bg-light text-dark font-monospace">{{ row.productCode }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::BatchNumber' | abpLocalization" prop="batchNumber" [width]="120">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="badge bg-secondary font-monospace">{{ row.batchNumber || 'N/A' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::RecallLevel' | abpLocalization" prop="level" [width]="140">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="badge text-white" [class.bg-danger]="row.level === RecallLevel.Level1"
+            [class.bg-warning]="row.level === RecallLevel.Level2"
+            [style.background-color]="row.level === RecallLevel.Level3 ? '#eab308' : null">
+            <i class="fa" [class.fa-radiation]="row.level === RecallLevel.Level1"
+              [class.fa-exclamation-triangle]="row.level === RecallLevel.Level2"></i>
+            {{ '::Enum:RecallLevel.' + enumName(RecallLevel, row.level) | abpLocalization }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Deadline' | abpLocalization" prop="deadline" [width]="120">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="ph-text-muted">{{ row.deadline | date: 'dd/MM/yyyy' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Compliance' | abpLocalization" prop="isOverdue" [width]="140">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span *ngIf="row.isOverdue && row.status !== SalesRecallStatus.Completed"
+            class="badge bg-danger animate-pulse" style="animation: pulse 1.5s infinite;">
+            ⚠️ {{ '::OverdueCompliance' | abpLocalization }}
+          </span>
+          <span *ngIf="!row.isOverdue || row.status === SalesRecallStatus.Completed" class="badge bg-success">
+            ✓ {{ '::OnTime' | abpLocalization }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="140">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          <span class="badge" [class.bg-secondary]="row.status === SalesRecallStatus.Draft"
+            [class.bg-warning]="row.status === SalesRecallStatus.PendingApproval"
+            [class.bg-info]="row.status === SalesRecallStatus.Approved"
+            [class.bg-primary]="row.status === SalesRecallStatus.Recalling"
+            [class.bg-success]="row.status === SalesRecallStatus.Completed"
+            [class.bg-danger]="row.status === SalesRecallStatus.Rejected">
+            {{ '::Enum:SalesRecallStatus.' + enumName(SalesRecallStatus, row.status) | abpLocalization }}
+          </span>
+        </ng-template>
+      </ngx-datatable-column>
+    </ngx-datatable>
+  </div>
+</div>
+
+<!-- Create Drawer -->
+<app-drawer [isOpen]="isDrawerOpen" [title]="'::NewSalesRecall' | abpLocalization" [showFooter]="true"
+  [saveDisabled]="form.invalid || isSaving" [saveButtonText]="'::Save' | abpLocalization"
+  [cancelButtonText]="'::Cancel' | abpLocalization" width="md" (close)="closeDrawer()" (save)="save()">
+  <form [formGroup]="form" class="p-3">
+    <!-- Decision Number -->
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::RecallDecisionNumber' | abpLocalization }}</label>
+      <input type="text" class="form-control" formControlName="recallDecisionNumber"
+        [placeholder]="'::EnterRecallDecisionNumber' | abpLocalization" />
+      <div *ngIf="form.get('recallDecisionNumber').invalid && form.get('recallDecisionNumber').touched"
+        class="ph-error-msg">
+        {{ '::FieldRequired' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Product -->
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::MedicineProduct' | abpLocalization }}</label>
+      <select class="form-select" formControlName="productId" (change)="onMedicineChange($event.target.value)">
+        <option [ngValue]="null" disabled>{{ '::SelectProduct' | abpLocalization }}</option>
+        <option *ngFor="let p of medicines" [value]="p.id">{{ p.name }} ({{ p.code }})</option>
+      </select>
+      <div *ngIf="form.get('productId').invalid && form.get('productId').touched" class="ph-error-msg">
+        {{ '::FieldRequired' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Product Batch -->
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::ProductBatch' | abpLocalization }}</label>
+      <select class="form-select" formControlName="productBatchId">
+        <option [ngValue]="null" disabled>{{ '::SelectBatch' | abpLocalization }}</option>
+        <option *ngFor="let b of batches" [value]="b.id">
+          {{ b.batchNumber }} (HSD: {{ b.expiryDate | date: 'dd/MM/yyyy' }})
+        </option>
+      </select>
+      <div *ngIf="form.get('productBatchId').invalid && form.get('productBatchId').touched" class="ph-error-msg">
+        {{ '::FieldRequired' | abpLocalization }}
+      </div>
+      <div class="ph-hint-msg" *ngIf="batches.length === 0 && form.get('productId').value">
+        {{ '::NoBatchesFoundForProduct' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Warehouse -->
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::WarehouseToReceive' | abpLocalization }}</label>
+      <select class="form-select" formControlName="warehouseId">
+        <option [ngValue]="null" disabled>{{ '::SelectWarehouse' | abpLocalization }}</option>
+        <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
+      </select>
+      <div *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched" class="ph-error-msg">
+        {{ '::FieldRequired' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Recall Date -->
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::DecisionDate' | abpLocalization }}</label>
+      <input type="date" class="form-control" formControlName="recallDate" />
+    </div>
+
+    <!-- Recall Level -->
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::RecallLevel' | abpLocalization }}</label>
+      <select class="form-select" formControlName="level">
+        <option *ngFor="let l of recallLevelOptions" [value]="l.value">
+          {{ '::Enum:RecallLevel.' + enumName(RecallLevel, l.value) | abpLocalization }}
+        </option>
+      </select>
+      <!-- Hướng dẫn Luật dược trực quan trên UI -->
+      <div class="ph-hint-warning mt-2 small" *ngIf="form.get('level').value === RecallLevel.Level1">
+        🚨 <strong>Luật Dược:</strong> Phải ban hành quyết định trong 24 giờ và hoàn tất thu hồi tối đa <strong>3
+          ngày</strong>!
+      </div>
+      <div class="ph-hint-msg mt-2 small" *ngIf="form.get('level').value === RecallLevel.Level2">
+        ⚠️ <strong>Luật Dược:</strong> Hoàn tất thu hồi tối đa <strong>15 ngày</strong>!
+      </div>
+      <div class="ph-hint-msg mt-2 small" *ngIf="form.get('level').value === RecallLevel.Level3">
+        📋 <strong>Luật Dược:</strong> Hoàn tất thu hồi tối đa <strong>30 ngày</strong>!
+      </div>
+    </div>
+
+    <!-- Note -->
+    <div class="mb-3">
+      <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
+      <textarea class="form-control" formControlName="note" rows="3"></textarea>
+    </div>
+  </form>
+</app-drawer>
+
+<!-- CSS Keyframes for flashing overdue text -->
+<style>
+  @keyframes pulse {
+
+    0%,
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    50% {
+      opacity: 0.5;
+      transform: scale(0.95);
+    }
+  }
+</style>

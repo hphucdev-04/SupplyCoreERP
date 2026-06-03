@@ -63,7 +63,7 @@ export interface InventoryTicketLineDto extends AuditedEntityDto<string> {
   productId?: string;
   productCode?: string;
   productName?: string;
-  productBaseUnitName?: string;
+  baseUnitName?: string;
   referenceDocumentLineId?: string;
   unitId?: string;
   unitName?: string;

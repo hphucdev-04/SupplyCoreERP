@@ -168,6 +168,39 @@ public static class SupplyCoreERPPermissions
             public const string Approve = Default + ".Approve";
             public const string Reject = Default + ".Reject";
         }
+
+        // PurchaseReturn Permission
+        public static class PurchaseReturn
+        {
+            public const string Default = GroupNameOrder + ".PurchaseReturn";
+            public const string Create = Default + ".Create";
+            public const string Update = Default + ".Update";
+            public const string Delete = Default + ".Delete";
+            public const string Approve = Default + ".Approve";
+            public const string Reject = Default + ".Reject";
+        }
+
+        // PurchaseReturnRequest Permission
+        public static class PurchaseReturnRequest
+        {
+            public const string Default = GroupNameOrder + ".PurchaseReturnRequest";
+            public const string Create = Default + ".Create";
+            public const string Update = Default + ".Update";
+            public const string Delete = Default + ".Delete";
+            public const string Approve = Default + ".Approve";
+            public const string Reject = Default + ".Reject";
+        }
+
+        // SalesRecall Permission
+        public static class SalesRecall
+        {
+            public const string Default = GroupNameOrder + ".SalesRecall";
+            public const string Create = Default + ".Create";
+            public const string Update = Default + ".Update";
+            public const string Delete = Default + ".Delete";
+            public const string Approve = Default + ".Approve";
+            public const string Reject = Default + ".Reject";
+        }
     }
     #endregion
 }

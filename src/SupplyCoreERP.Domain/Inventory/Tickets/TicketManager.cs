@@ -9,7 +9,9 @@ using SupplyCoreERP.Inventory.Balances;
 using SupplyCoreERP.Inventory.Batches;
 using SupplyCoreERP.Inventory.Warehouses;
 using SupplyCoreERP.Procurement.PurchaseOrders;
+using SupplyCoreERP.Procurement.PurchaseReturns;
 using SupplyCoreERP.Sales.Orders;
+using SupplyCoreERP.Sales.SalesRecalls;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
@@ -28,6 +30,9 @@ public class TicketManager : DomainService, ITicketManager
     private readonly IRepository<Product, Guid> _productRepo;
     private readonly IRepository<PurchaseOrderLine, Guid> _poLineRepo;
     private readonly IRepository<SalesOrderLine, Guid> _soLineRepo;
+    private readonly IRepository<PurchaseReturnLine, Guid> _purchaseReturnLineRepo;
+    private readonly IRepository<SalesRecallLine, Guid> _salesRecallLineRepo;
+    private readonly IRepository<SalesRecall, Guid> _salesRecallRepo;
     private readonly WarehouseManager _warehouseManager;
     private readonly InventoryBalanceManager _balanceManager;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
@@ -46,6 +51,9 @@ public class TicketManager : DomainService, ITicketManager
         IRepository<Product, Guid> productRepo,
         IRepository<PurchaseOrderLine, Guid> poLineRepo,
         IRepository<SalesOrderLine, Guid> soLineRepo,
+        IRepository<PurchaseReturnLine, Guid> purchaseReturnLineRepo,
+        IRepository<SalesRecallLine, Guid> salesRecallLineRepo,
+        IRepository<SalesRecall, Guid> salesRecallRepo,
         WarehouseManager warehouseManager,
         InventoryBalanceManager balanceManager,
         IDocumentSequenceManager documentSequenceManager,
@@ -61,6 +69,9 @@ public class TicketManager : DomainService, ITicketManager
         _productRepo = productRepo;
         _poLineRepo = poLineRepo;
         _soLineRepo = soLineRepo;
+        _purchaseReturnLineRepo = purchaseReturnLineRepo;
+        _salesRecallLineRepo = salesRecallLineRepo;
+        _salesRecallRepo = salesRecallRepo;
         _warehouseManager = warehouseManager;
         _balanceManager = balanceManager;
         _documentSequenceManager = documentSequenceManager;
@@ -215,7 +226,7 @@ public class TicketManager : DomainService, ITicketManager
                 finalUnitId = unitId ?? poLine.UnitId;
                 finalConversionFactor = conversionFactor ?? poLine.ConversionFactor;
             }
-            else if (IsIssueTicket(ticket.Type))
+            else if (ticket.Type == TicketType.GoodsIssue)
             {
                 SalesOrderLine soLine = await _soLineRepo.GetAsync(referenceDocumentLineId.Value);
                 if (soLine.ProductId != productId)
@@ -224,6 +235,27 @@ public class TicketManager : DomainService, ITicketManager
                 }
                 finalUnitId = unitId ?? soLine.UnitId;
                 finalConversionFactor = conversionFactor ?? soLine.ConversionFactor;
+            }
+            else if (ticket.Type == TicketType.ReturnOutward)
+            {
+                PurchaseReturnLine prLine = await _purchaseReturnLineRepo.GetAsync(referenceDocumentLineId.Value);
+                if (prLine.ProductId != productId)
+                {
+                    throw new BusinessException("SupplyCoreERP:InvalidProduct", "Sản phẩm không khớp với dòng phiếu trả hàng mua!");
+                }
+                finalUnitId = unitId ?? prLine.UnitId;
+                finalConversionFactor = conversionFactor ?? prLine.ConversionFactor;
+            }
+            else if (ticket.Type == TicketType.RecallReceipt)
+            {
+                SalesRecallLine recallLine = await _salesRecallLineRepo.GetAsync(referenceDocumentLineId.Value);
+                SalesRecall recall = await _salesRecallRepo.GetAsync(recallLine.SalesRecallId);
+                if (recall.ProductId != productId)
+                {
+                    throw new BusinessException("SupplyCoreERP:InvalidProduct", "Sản phẩm không khớp với phiếu thu hồi hàng bán!");
+                }
+                finalUnitId = unitId ?? recallLine.UnitId;
+                finalConversionFactor = conversionFactor ?? recallLine.ConversionFactor;
             }
         }
 
@@ -259,7 +291,21 @@ public class TicketManager : DomainService, ITicketManager
         }
 
         await ValidateProductForInventoryAsync(productId);
-        Bin bin = await _binRepo.GetAsync(binId);
+        var binQuery = await _binRepo.WithDetailsAsync(b => b.Zone);
+        Bin bin = await AsyncExecuter.FirstOrDefaultAsync(binQuery, b => b.Id == binId);
+        if (bin == null)
+        {
+            throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(Bin), binId);
+        }
+
+        if (ticket.Type == TicketType.RecallReceipt)
+        {
+            if (bin.Zone == null || bin.Zone.Type != ZoneType.Quarantine)
+            {
+                throw new BusinessException("SupplyCoreERP:QuarantineEnforced", "Sản phẩm thu hồi bắt buộc phải đưa vào Vùng Biệt Trữ Cách Ly (Recall Zone / Quarantine)!");
+            }
+        }
+
         if (bin.WarehouseId != ticket.WarehouseId)
         {
             throw new BusinessException("SupplyCoreERP:InvalidBin", "Vị trí (Bin) không thuộc kho của phiếu này!");

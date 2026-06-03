@@ -21,8 +21,11 @@ using SupplyCoreERP.Partner.Customers;
 using SupplyCoreERP.Partner.Suppliers;
 using SupplyCoreERP.Procurement.PurchaseOrders;
 using SupplyCoreERP.Procurement.PurchaseRequisitions;
+using SupplyCoreERP.Procurement.PurchaseReturnRequests;
+using SupplyCoreERP.Procurement.PurchaseReturns;
 using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.Sales.PriceLists;
+using SupplyCoreERP.Sales.SalesRecalls;
 using Volo.Abp.AuditLogging.EntityFrameworkCore;
 using Volo.Abp.BackgroundJobs.EntityFrameworkCore;
 using Volo.Abp.BlobStoring.Database.EntityFrameworkCore;
@@ -122,6 +125,15 @@ public class SupplyCoreERPDbContext :
     public DbSet<SalesOrderLine> SalesOrderLines { get; set; }
     public DbSet<PurchaseRequisition> PurchaseRequisitions { get; set; }
     public DbSet<PurchaseRequisitionLine> PurchaseRequisitionLines { get; set; }
+
+    // Purchase Returns & Sales Recalls
+    public DbSet<PurchaseReturn> PurchaseReturns { get; set; }
+    public DbSet<PurchaseReturnLine> PurchaseReturnLines { get; set; }
+    public DbSet<PurchaseReturnRequest> PurchaseReturnRequests { get; set; }
+    public DbSet<PurchaseReturnRequestLine> PurchaseReturnRequestLines { get; set; }
+    public DbSet<SalesRecall> SalesRecalls { get; set; }
+    public DbSet<SalesRecallLine> SalesRecallLines { get; set; }
+
 
     // Document Sequence
     public DbSet<DocumentSequence> DocumentSequences { get; set; }
@@ -711,6 +723,130 @@ public class SupplyCoreERPDbContext :
             b.Property(x => x.DeliveredQuantity).HasPrecision(18, 4);
 
             b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // PurchaseReturn
+        builder.Entity<PurchaseReturn>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseReturns", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+            b.Property(x => x.Note).HasMaxLength(1000);
+
+            b.Property(x => x.SubTotal).HasPrecision(18, 4);
+            b.Property(x => x.TaxAmount).HasPrecision(18, 4);
+            b.Property(x => x.TotalAmount).HasPrecision(18, 4);
+
+            b.HasOne(x => x.Supplier).WithMany().HasForeignKey(x => x.SupplierId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.PurchaseReturnRequest).WithMany().HasForeignKey(x => x.PurchaseReturnRequestId).OnDelete(DeleteBehavior.SetNull);
+
+            b.HasMany(x => x.Lines)
+             .WithOne(x => x.PurchaseReturn)
+             .HasForeignKey(x => x.PurchaseReturnId)
+             .IsRequired()
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // PurchaseReturnLine
+        builder.Entity<PurchaseReturnLine>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseReturnLines", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Quantity).HasPrecision(18, 4);
+            b.Property(x => x.OriginalUnitPrice).HasPrecision(18, 4);
+            b.Property(x => x.DepreciationRate).HasPrecision(5, 2);
+            b.Property(x => x.TaxRate).HasPrecision(5, 2);
+
+            b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // PurchaseReturnRequest
+        builder.Entity<PurchaseReturnRequest>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseReturnRequests", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+            b.Property(x => x.Note).HasMaxLength(1000);
+
+            b.Property(x => x.SubTotal).HasPrecision(18, 4);
+            b.Property(x => x.TaxAmount).HasPrecision(18, 4);
+            b.Property(x => x.TotalAmount).HasPrecision(18, 4);
+
+            b.HasOne(x => x.Supplier).WithMany().HasForeignKey(x => x.SupplierId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+
+            b.HasMany(x => x.Lines)
+             .WithOne(x => x.PurchaseReturnRequest)
+             .HasForeignKey(x => x.PurchaseReturnRequestId)
+             .IsRequired()
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // PurchaseReturnRequestLine
+        builder.Entity<PurchaseReturnRequestLine>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseReturnRequestLines", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Quantity).HasPrecision(18, 4);
+            b.Property(x => x.BaseQuantity).HasPrecision(18, 4);
+            b.Property(x => x.OriginalUnitPrice).HasPrecision(18, 4);
+            b.Property(x => x.ReturnUnitPrice).HasPrecision(18, 4);
+            b.Property(x => x.DepreciationRate).HasPrecision(5, 2);
+            b.Property(x => x.TaxRate).HasPrecision(5, 2);
+            b.Property(x => x.TotalPrice).HasPrecision(18, 4);
+            b.Property(x => x.TaxAmount).HasPrecision(18, 4);
+            b.Property(x => x.FinalPrice).HasPrecision(18, 4);
+
+            b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne<PurchaseOrder>().WithMany().HasForeignKey(x => x.PurchaseOrderId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne<PurchaseOrderLine>().WithMany().HasForeignKey(x => x.PurchaseOrderLineId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+        });
+
+        // SalesRecall
+
+        builder.Entity<SalesRecall>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "SalesRecalls", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+            b.Property(x => x.RecallDecisionNumber).IsRequired().HasMaxLength(256);
+            b.Property(x => x.Note).HasMaxLength(1000);
+
+            b.Property(x => x.TotalAmount).HasPrecision(18, 4);
+            b.Property(x => x.Deadline).IsRequired();
+
+            b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.ProductBatch).WithMany().HasForeignKey(x => x.ProductBatchId).OnDelete(DeleteBehavior.SetNull);
+            b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+
+            b.HasMany(x => x.Lines)
+             .WithOne(x => x.SalesRecall)
+             .HasForeignKey(x => x.SalesRecallId)
+             .IsRequired()
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // SalesRecallLine
+        builder.Entity<SalesRecallLine>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "SalesRecallLines", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Quantity).HasPrecision(18, 4);
+            b.Property(x => x.OriginalUnitPrice).HasPrecision(18, 4);
+            b.Property(x => x.TaxRate).HasPrecision(5, 2);
+
+            b.HasOne(x => x.Customer).WithMany().HasForeignKey(x => x.CustomerId).IsRequired().OnDelete(DeleteBehavior.Restrict);
+            b.HasOne(x => x.SalesOrder).WithMany().HasForeignKey(x => x.SalesOrderId).IsRequired().OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).IsRequired().OnDelete(DeleteBehavior.Restrict);
         });
 

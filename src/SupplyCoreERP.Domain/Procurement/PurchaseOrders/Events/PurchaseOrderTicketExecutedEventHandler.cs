@@ -53,7 +53,7 @@ public class PurchaseOrderTicketExecutedEventHandler
                 PurchaseOrderLine? poLine = po.Lines.FirstOrDefault(x => x.Id == tLine.ReferenceDocumentLineId.Value);
                 if (poLine != null)
                 {
-                    var productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+                    IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
                     Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == tLine.ProductId);
                     if (product == null)
                     {

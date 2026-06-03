@@ -120,6 +120,39 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
             SupplyCoreERPPermissions.Order.SaleOrder.Reject,
             L("Permission:Order.SaleOrder.Reject")
         );
+
+        // PurchaseReturn
+        PermissionDefinition purchaseReturnPermission = AddCrudPermissions(orderGroup, SupplyCoreERPPermissions.Order.PurchaseReturn.Default, "PurchaseReturn");
+        purchaseReturnPermission.AddChild(
+                SupplyCoreERPPermissions.Order.PurchaseReturn.Approve,
+                L("Permission:Order.PurchaseReturn.Approve")
+        );
+        purchaseReturnPermission.AddChild(
+            SupplyCoreERPPermissions.Order.PurchaseReturn.Reject,
+            L("Permission:Order.PurchaseReturn.Reject")
+        );
+
+        // PurchaseReturnRequest
+        PermissionDefinition purchaseReturnRequestPermission = AddCrudPermissions(orderGroup, SupplyCoreERPPermissions.Order.PurchaseReturnRequest.Default, "PurchaseReturnRequest");
+        purchaseReturnRequestPermission.AddChild(
+                SupplyCoreERPPermissions.Order.PurchaseReturnRequest.Approve,
+                L("Permission:Order.PurchaseReturnRequest.Approve")
+        );
+        purchaseReturnRequestPermission.AddChild(
+            SupplyCoreERPPermissions.Order.PurchaseReturnRequest.Reject,
+            L("Permission:Order.PurchaseReturnRequest.Reject")
+        );
+
+        // SalesRecall
+        PermissionDefinition salesRecallPermission = AddCrudPermissions(orderGroup, SupplyCoreERPPermissions.Order.SalesRecall.Default, "SalesRecall");
+        salesRecallPermission.AddChild(
+                SupplyCoreERPPermissions.Order.SalesRecall.Approve,
+                L("Permission:Order.SalesRecall.Approve")
+        );
+        salesRecallPermission.AddChild(
+            SupplyCoreERPPermissions.Order.SalesRecall.Reject,
+            L("Permission:Order.SalesRecall.Reject")
+        );
         #endregion
 
 

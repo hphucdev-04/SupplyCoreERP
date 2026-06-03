@@ -46,6 +46,7 @@ export const APP_ROUTES = [
     layout: eLayoutType.application,
   },
 
+  // Catalog
   ...createMenuGroup('Catalog', 'fas fa-layer-group', 2, [
     { name: 'Categories', icon: 'fas fa-sitemap', requiredPolicy: 'Catalog.Category' },
     { name: 'Medicines', icon: 'fas fa-pills', requiredPolicy: 'Catalog.Medicine' },
@@ -55,27 +56,53 @@ export const APP_ROUTES = [
     { name: 'Manufacturers', icon: 'fas fa-industry', requiredPolicy: 'Catalog.Manufacturer' },
   ]),
 
+  // Partner
   ...createMenuGroup('Partner', 'fas fa-handshake', 3, [
     { name: 'Suppliers', icon: 'fas fa-truck', requiredPolicy: 'Partner.Supplier' },
     { name: 'Customers', icon: 'fas fa-user-friends', requiredPolicy: 'Partner.Customer' },
   ]),
-  ...createMenuGroup('Order', 'fas fa-clipboard-list', 4, [
+
+  ...createMenuGroup('Procurement', 'fas fa-clipboard-list', 4, [
     {
-      name: 'PurchaseRequisitions',
+      name: 'Purchase-Requisitions',
       icon: 'fas fa-file-medical',
       requiredPolicy: 'Order.PurchaseRequisition',
     },
     {
-      name: 'PurchaseOrders',
+      name: 'Purchase-Orders',
       icon: 'fas fa-file-invoice-dollar',
       requiredPolicy: 'Order.PurchaseOrder',
     },
-    { name: 'SaleOrders', icon: 'fas fa-shipping-fast', requiredPolicy: 'Order.SaleOrder' },
+     {
+      name: 'Purchase-Return-Requests',
+      icon: 'fas fa-file-invoice-dollar',
+      // requiredPolicy: 'Order.PurchaseReturnRequest',
+    },
+    {
+      name: 'Purchase-Returns',
+      icon: 'fas fa-file-invoice-dollar',
+      requiredPolicy: 'Order.PurchaseReturn',
+    },
   ]),
-  ...createMenuGroup('Inventory', 'fas fa-warehouse', 5, [
+
+  ...createMenuGroup('Sales', 'fas fa-clipboard-list', 5, [
+    { name: 'Sales-Orders', icon: 'fas fa-shipping-fast', requiredPolicy: 'Order.SaleOrder' },
+    {
+      name: 'Sales-Recalls',
+      icon: 'fas fa-shipping-fast',
+      // requiredPolicy: 'Order.SaleRecall'
+    },
+  ]),
+
+  // Inventory
+  ...createMenuGroup('Inventory', 'fas fa-warehouse', 6, [
     { name: 'Warehouses', icon: 'fas fa-building', requiredPolicy: 'Inventory.Warehouse' },
     { name: 'Batches', icon: 'fas fa-boxes', requiredPolicy: 'Inventory.Batch' },
-    { name: 'Tickets', icon: 'fas fa-file-invoice', requiredPolicy: 'Inventory.Ticket' },
+    {
+      name: 'Tickets',
+      icon: 'fas fa-file-invoice',
+      requiredPolicy: 'Inventory.Ticket',
+    },
     { name: 'Balances', icon: 'fas fa-clipboard-list' },
   ]),
 ];
