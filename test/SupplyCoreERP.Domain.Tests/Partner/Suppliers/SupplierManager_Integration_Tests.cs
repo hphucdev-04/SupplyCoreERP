@@ -9,6 +9,7 @@ using SupplyCoreERP.Enums.Partner;
 using SupplyCoreERP.SeedData;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Linq;
 using Volo.Abp.Modularity;
 using Xunit;
 
@@ -20,12 +21,14 @@ public abstract class SupplierManager_Integration_Tests<TStartupModule> : Supply
     private readonly ISupplierManager _supplierManager;
     private readonly IMedicineManager _medicineManager;
     private readonly IRepository<Supplier, Guid> _supplierRepository;
+    private readonly IAsyncQueryableExecuter _asyncExecuter;
 
     protected SupplierManager_Integration_Tests()
     {
         _supplierManager = GetRequiredService<ISupplierManager>();
         _medicineManager = GetRequiredService<IMedicineManager>();
         _supplierRepository = GetRequiredService<IRepository<Supplier, Guid>>();
+        _asyncExecuter = GetRequiredService<IAsyncQueryableExecuter>();
     }
     [QATest(scenario: "Tạo nhà cung cấp thành công và tự động sinh mã code tăng dần.", feature: "Supplier", layer: "Domain", priority: "High")]
     [Fact]
@@ -160,13 +163,11 @@ public abstract class SupplierManager_Integration_Tests<TStartupModule> : Supply
     [Fact]
     public async Task Should_Throw_Exception_When_AddProduct_With_Unavailable_Product()
     {
+        // Tách việc insert data ra khỏi UoW chính
+        Guid pendingMedId = Guid.Empty;
+
         await WithUnitOfWorkAsync(async () =>
         {
-            // Arrange
-            IQueryable<Supplier> supplierQuery = await _supplierRepository.WithDetailsAsync(x => x.SupplierProducts);
-            Supplier? supplier = supplierQuery.FirstOrDefault(x => x.Id == TestDataConsts.SupplierAId);
-
-            // Tạo thuốc nháp (Pending) để test sản phẩm chưa sẵn sàng giao dịch
             Medicine pendingMed = await _medicineManager.CreateAsync(
                 "Pending Paracetamol",
                 TestDataConsts.CategoryMedicineId,
@@ -178,16 +179,31 @@ public abstract class SupplierManager_Integration_Tests<TStartupModule> : Supply
                 StorageCondition.Normal,
                 false
             );
-            IRepository<Product, Guid> productRepository = GetRequiredService<IRepository<Product, Guid>>();
+
+            IRepository<Product, Guid> productRepository =
+                GetRequiredService<IRepository<Product, Guid>>();
             await productRepository.InsertAsync(pendingMed, autoSave: true);
 
-            // Act & Assert
+            pendingMedId = pendingMed.Id;
+        });
+
+        // UoW riêng để test, tránh nested transaction
+        await WithUnitOfWorkAsync(async () =>
+        {
+            // Dùng FirstOrDefaultAsync thay vì FirstOrDefault trên IQueryable
+            IQueryable<Supplier> supplierQuery =
+                await _supplierRepository.WithDetailsAsync(x => x.SupplierProducts);
+            Supplier? supplier = await _asyncExecuter.FirstOrDefaultAsync(
+                supplierQuery, x => x.Id == TestDataConsts.SupplierAId
+            );
+
             BusinessException ex = await Should.ThrowAsync<BusinessException>(async () =>
             {
                 await _supplierManager.AddProductAsync(
-                    supplier, pendingMed.Id, TestDataConsts.UnitBoxId, 5
+                    supplier!, pendingMedId, TestDataConsts.UnitBoxId, 5
                 );
             });
+
             ex.Code.ShouldBe("SupplyCoreERP:ProductNotAvailable");
         });
     }

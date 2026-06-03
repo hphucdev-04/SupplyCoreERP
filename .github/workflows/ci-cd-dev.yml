@@ -15,14 +15,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
           dotnet-version: '10.0.x'
 
+      - name: Restore dependencies
+        run: dotnet restore
+
       - name: Format Code
-        run: dotnet format
+        run: dotnet format 
 
   build-and-test:
     name: Build & Test (Full Stack)
@@ -31,7 +34,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # --- BACKEND BUILD & TEST ---
       - name: Setup .NET
         uses: actions/setup-dotnet@v4
         with:
@@ -40,7 +42,7 @@ jobs:
       - name: Restore .NET dependencies
         run: dotnet restore
 
-      - name: Build Backend 
+      - name: Build solution
         run: dotnet build --no-restore --configuration Release
 
       - name: Run Domain Unit Tests
@@ -50,7 +52,7 @@ jobs:
             --no-restore \
             --configuration Release \
             --verbosity normal \
-            --logger "trx;LogFileName=domain-test-results.trx" \
+            --logger trx \
             --blame-hang \
             --blame-hang-timeout 60s
 
@@ -61,11 +63,10 @@ jobs:
             --no-restore \
             --configuration Release \
             --verbosity normal \
-            --logger "trx;LogFileName=ef-test-results.trx" \
+            --logger trx \
             --blame-hang \
             --blame-hang-timeout 120s
 
-      # --- FRONTEND BUILD CHECK ---
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
@@ -86,7 +87,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: "**/test-results.trx"
+          path: "**/TestResults/*.trx"
 
   database-migration:
     name: Database Migration (Neon)
@@ -102,11 +103,18 @@ jobs:
         with:
           dotnet-version: '10.0.x'
 
+      - name: Restore dependencies
+        run: dotnet restore
+
       - name: Execute Migrator
         env:
+          ASPNETCORE_ENVIRONMENT: Production
           ConnectionStrings__Default: ${{ secrets.DB_CONNECTION_STRING }}
         run: |
-          dotnet run --project src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj --configuration Release -- --skip-db-migrations-project-check
+          dotnet run \
+            --project src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj \
+            --configuration Release \
+            --no-restore
 
   deploy-backend:
     name: Deploy to Railway
@@ -115,7 +123,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
@@ -131,7 +139,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      
+
       - name: Deploy to Vercel
         uses: amondnet/vercel-action@v25
         with:
