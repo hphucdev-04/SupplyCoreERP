@@ -1,3 +1,4 @@
+using System;
 using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
@@ -20,8 +21,6 @@ namespace SupplyCoreERP.EntityFrameworkCore;
 )]
 public class SupplyCoreERPEntityFrameworkCoreTestModule : AbpModule
 {
-    private SqliteConnection? _sqliteConnection;
-
     public override void ConfigureServices(ServiceConfigurationContext context)
     {
         Configure<FeatureManagementOptions>(options =>
@@ -37,42 +36,45 @@ public class SupplyCoreERPEntityFrameworkCoreTestModule : AbpModule
         context.Services.AddAlwaysDisableUnitOfWorkTransaction();
 
         ConfigureInMemorySqlite(context.Services);
-
     }
 
-    private void ConfigureInMemorySqlite(IServiceCollection services)
+    private static void ConfigureInMemorySqlite(IServiceCollection services)
     {
-        _sqliteConnection = CreateDatabaseAndGetConnection();
+        // Mỗi lần DI container resolve DbContext sẽ tạo connection mới
+        // Dùng tên unique per-registration thay vì shared connection field
+        string connectionString = $"Data Source=SupplyCoreERP_{Guid.NewGuid():N};Mode=Memory;Cache=Shared";
 
-        services.Configure<AbpDbContextOptions>(options =>
+        var connection = new SqliteConnection(connectionString);
+        connection.Open();
+
+        DbContextOptions<SupplyCoreERPDbContext> options =
+            new DbContextOptionsBuilder<SupplyCoreERPDbContext>()
+                .UseSqlite(connection)
+                .Options;
+
+        using (var dbContext = new SupplyCoreERPDbContext(options))
         {
-            options.Configure(context =>
+            dbContext.GetService<IRelationalDatabaseCreator>().CreateTables();
+        }
+
+        // Register connection như singleton trong DI
+        // Mỗi test class tạo DI scope riêng → connection riêng
+        services.AddSingleton(connection);
+
+        services.Configure<AbpDbContextOptions>(opts =>
+        {
+            opts.Configure(ctx =>
             {
-                context.DbContextOptions.UseSqlite(_sqliteConnection);
+                ctx.DbContextOptions.UseSqlite(connection);
             });
         });
     }
 
     public override void OnApplicationShutdown(ApplicationShutdownContext context)
     {
-        _sqliteConnection?.Dispose();
-    }
-
-    private static SqliteConnection CreateDatabaseAndGetConnection()
-    {
-        var connection = new SqliteConnection("Data Source=:memory:");
-        connection.Open();
-
-        DbContextOptions<SupplyCoreERPDbContext> options = new DbContextOptionsBuilder<SupplyCoreERPDbContext>()
-            .UseSqlite(connection)
-            .Options;
-
-        using (var context = new SupplyCoreERPDbContext(options))
-        {
-            context.GetService<IRelationalDatabaseCreator>().CreateTables();
-        }
-
-        return connection;
+        // Dispose connection từ DI thay vì field
+        var connection = context.ServiceProvider
+            .GetService<SqliteConnection>();
+        connection?.Dispose();
     }
 }
-
