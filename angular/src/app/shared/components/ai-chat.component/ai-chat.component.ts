@@ -2,6 +2,7 @@ import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import 'deep-chat';
 import { SharedModule } from '../../shared.module';
+import { AiChatService } from '../../../proxy/ai-chats/ai-chat.service';
 
 @Component({
   selector: 'app-ai-chat',
@@ -32,6 +33,36 @@ export class AiChatComponent {
   chatInitialMessages = [
     { role: 'ai', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống RxLogistics. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
   ];
+
+  chatRequest = {
+    handler: (body: any, signals: any) => {
+      const messages = body.messages || [];
+      if (messages.length === 0) {
+        signals.onResponse({ error: 'Không có tin nhắn gửi đi!' });
+        return;
+      }
+
+      const currentMessage = messages[messages.length - 1];
+      const history = messages.slice(0, messages.length - 1).map((m: any) => ({
+        role: m.role === 'ai' ? 'model' : 'user',
+        text: m.text
+      }));
+
+      this.aiChatService.sendMessage({
+        text: currentMessage.text,
+        history: history
+      }).subscribe({
+        next: (response) => {
+          signals.onResponse({ text: response.text });
+        },
+        error: (err) => {
+          signals.onResponse({ error: err?.message || 'Có lỗi xảy ra khi kết nối tới Trợ lý AI!' });
+        }
+      });
+    }
+  };
+
+  constructor(private aiChatService: AiChatService) {}
 
   toggleChat() {
     this.isOpen = !this.isOpen;

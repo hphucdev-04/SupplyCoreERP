@@ -3,7 +3,7 @@
 
     <!-- Chat window dùng Angular animation thay vì CSS class -->
     <div *ngIf="isOpen" @chatAnimation class="chat-window" style="margin-bottom: 15px;">
-        <deep-chat [demo]="true" [initialMessages]="chatInitialMessages" placeholder="Nhập câu hỏi tại đây..." [style]="{
+        <deep-chat [request]="chatRequest" [initialMessages]="chatInitialMessages" placeholder="Nhập câu hỏi tại đây..." [style]="{
         'width': '380px',
         'height': '550px',
         'border-radius': '16px',

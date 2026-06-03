@@ -1225,6 +1225,78 @@
             }
           }
         },
+        "SupplyCoreERP.AiChats.AiChatAppService": {
+          "controllerName": "AiChat",
+          "controllerGroupName": "AiChat",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "SupplyCoreERP.AiChats.AiChatAppService",
+          "interfaces": [
+            {
+              "type": "SupplyCoreERP.AiChats.IAiChatAppService",
+              "name": "IAiChatAppService",
+              "methods": [
+                {
+                  "name": "SendMessageAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                      "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto",
+                    "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "SendMessageAsyncByInput": {
+              "uniqueName": "SendMessageAsyncByInput",
+              "name": "SendMessageAsync",
+              "httpMethod": "POST",
+              "url": "api/app/ai-chat/send-message",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                  "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                  "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto",
+                "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.AiChats.IAiChatAppService"
+            }
+          }
+        },
         "SupplyCoreERP.Balances.InventoryBalanceAppService": {
           "controllerName": "InventoryBalance",
           "controllerGroupName": "InventoryBalance",
@@ -17648,6 +17720,93 @@
       "properties": [
         {
           "name": "Filter",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.AiChats.Dtos.ChatMessageDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Role",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Text",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Text",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "History",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.AiChats.Dtos.ChatMessageDto]",
+          "typeSimple": "[SupplyCoreERP.AiChats.Dtos.ChatMessageDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Text",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",

@@ -50,6 +50,7 @@
     <ProjectReference Include="..\SupplyCoreERP.Application\SupplyCoreERP.Application.csproj" />
     <ProjectReference Include="..\SupplyCoreERP.HttpApi\SupplyCoreERP.HttpApi.csproj" />
     <ProjectReference Include="..\SupplyCoreERP.EntityFrameworkCore\SupplyCoreERP.EntityFrameworkCore.csproj" />
+    <ProjectReference Include="..\SupplyCoreERP.Mcp.Client\SupplyCoreERP.Mcp.Client.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -18,6 +18,7 @@ using SupplyCoreERP.EntityFrameworkCore;
 using SupplyCoreERP.HealthChecks;
 using SupplyCoreERP.MultiTenancy;
 using SupplyCoreERP.SignalR.Notifications;
+using SupplyCoreERP.Mcp.Client;
 using Volo.Abp;
 using Volo.Abp.Account;
 using Volo.Abp.Account.Web;
@@ -54,7 +55,8 @@ namespace SupplyCoreERP;
     typeof(AbpSwashbuckleModule),
     typeof(AbpAspNetCoreSerilogModule),
     typeof(AbpBackgroundJobsHangfireModule),
-    typeof(AbpAspNetCoreSignalRModule)
+    typeof(AbpAspNetCoreSignalRModule),
+    typeof(SupplyCoreERPMcpClientModule)
     )]
 public class SupplyCoreERPHttpApiHostModule : AbpModule
 {
@@ -126,6 +128,7 @@ public class SupplyCoreERPHttpApiHostModule : AbpModule
         ConfigureCors(context, configuration);
         ConfigureHangfire(context, configuration);
         ConfigureSignalR(context);
+        context.Services.AddHttpClient();
     }
 
     private void ConfigureAuthentication(ServiceConfigurationContext context)

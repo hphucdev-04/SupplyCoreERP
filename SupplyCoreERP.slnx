@@ -9,6 +9,7 @@
         <Project Path="src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.csproj" />
         <Project Path="src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj" />
         <Project Path="src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.csproj" />
+        <Project Path="src/SupplyCoreERP.Mcp.Client/SupplyCoreERP.Mcp.Client.csproj" />
     </Folder>
     <Folder Name="/test/">
         <Project Path="test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.csproj" />
