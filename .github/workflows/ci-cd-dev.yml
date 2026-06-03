@@ -40,11 +40,30 @@ jobs:
       - name: Restore .NET dependencies
         run: dotnet restore
 
-      - name: Build Backend (Host Project)
-        run: dotnet build src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.csproj --no-restore --configuration Release
+      - name: Build Backend 
+        run: dotnet build --no-restore --configuration Release
 
-      - name: Run Unit & Integration Tests
-        run: dotnet test --no-restore --configuration Release --verbosity normal --logger "trx;LogFileName=test-results.trx"
+      - name: Run Domain Unit Tests
+        run: |
+          dotnet test test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.csproj \
+            --no-build \
+            --no-restore \
+            --configuration Release \
+            --verbosity normal \
+            --logger "trx;LogFileName=domain-test-results.trx" \
+            --blame-hang \
+            --blame-hang-timeout 60s
+
+      - name: Run EntityFramework Integration Tests
+        run: |
+          dotnet test test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj \
+            --no-build \
+            --no-restore \
+            --configuration Release \
+            --verbosity normal \
+            --logger "trx;LogFileName=ef-test-results.trx" \
+            --blame-hang \
+            --blame-hang-timeout 120s
 
       # --- FRONTEND BUILD CHECK ---
       - name: Setup Node.js
