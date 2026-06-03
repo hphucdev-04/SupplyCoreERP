@@ -1,8 +1,8 @@
 using System;
-using SupplyCoreERP;
 using System.Linq;
 using System.Threading.Tasks;
 using Shouldly;
+using SupplyCoreERP;
 using SupplyCoreERP.Customers;
 using SupplyCoreERP.Customers.Dtos;
 using SupplyCoreERP.Enums.Partner;

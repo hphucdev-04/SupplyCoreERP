@@ -67,7 +67,7 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
         // Nếu chuyển sang loại bể vỡ, tự động cập nhật khấu hao các dòng về 0
         if (ReturnType == PurchaseReturnType.Defective)
         {
-            foreach (var line in Lines)
+            foreach (PurchaseReturnRequestLine line in Lines)
             {
                 line.UpdateInfo(line.Quantity, 0); // Khấu hao bắt buộc = 0
             }
@@ -128,7 +128,7 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
             throw new BusinessException("SupplyCoreERP:InvalidStatus", "Chỉ có thể xóa dòng hàng khi yêu cầu ở trạng thái Nháp hoặc Chờ duyệt!");
         }
 
-        var line = Lines.FirstOrDefault(x => x.Id == lineId);
+        PurchaseReturnRequestLine? line = Lines.FirstOrDefault(x => x.Id == lineId);
         if (line == null)
         {
             throw new BusinessException("SupplyCoreERP:LineNotFound", "Không tìm thấy dòng chi tiết yêu cầu.");
@@ -145,7 +145,7 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
             throw new BusinessException("SupplyCoreERP:InvalidStatus", "Chỉ có thể sửa dòng hàng khi yêu cầu ở trạng thái Nháp hoặc Chờ duyệt!");
         }
 
-        var line = Lines.FirstOrDefault(x => x.Id == lineId);
+        PurchaseReturnRequestLine? line = Lines.FirstOrDefault(x => x.Id == lineId);
         if (line == null)
         {
             throw new BusinessException("SupplyCoreERP:LineNotFound", "Không tìm thấy dòng chi tiết yêu cầu!");

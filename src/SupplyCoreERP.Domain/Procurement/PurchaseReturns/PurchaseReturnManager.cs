@@ -122,7 +122,7 @@ public class PurchaseReturnManager : DomainService, IPurchaseReturnManager
         decimal quantity,
         decimal depreciationRate)
     {
-        var line = purchaseReturn.Lines.FirstOrDefault(x => x.Id == lineId);
+        PurchaseReturnLine? line = purchaseReturn.Lines.FirstOrDefault(x => x.Id == lineId);
         if (line == null)
         {
             throw new BusinessException("SupplyCoreERP:LineNotFound", "Không tìm thấy dòng chứng từ xuất trả!");
@@ -151,7 +151,7 @@ public class PurchaseReturnManager : DomainService, IPurchaseReturnManager
         purchaseReturn.StartReturning(); // Chuyển sang trạng thái Returning (Đang xuất trả)
 
         // 1. Tự động sinh Phiếu xuất kho liên kết (TicketType = ReturnOutward)
-        var ticket = await _ticketManager.CreateTicketAsync(
+        InventoryTicket ticket = await _ticketManager.CreateTicketAsync(
             TicketType.ReturnOutward,
             purchaseReturn.WarehouseId,
             purchaseReturn.Id,
@@ -163,9 +163,9 @@ public class PurchaseReturnManager : DomainService, IPurchaseReturnManager
         await _ticketRepo.InsertAsync(ticket);
 
         // 2. Tự động tạo các dòng phiếu kho tương ứng
-        foreach (var line in purchaseReturn.Lines)
+        foreach (PurchaseReturnLine line in purchaseReturn.Lines)
         {
-            var ticketLine = await _ticketManager.CreateTicketLineAsync(
+            InventoryTicketLine ticketLine = await _ticketManager.CreateTicketLineAsync(
                 ticket,
                 line.ProductId,
                 line.Id, // Link ReferenceDocumentLineId to PurchaseReturnLine.Id
@@ -198,8 +198,8 @@ public class PurchaseReturnManager : DomainService, IPurchaseReturnManager
         int conversionFactor)
     {
         // Lấy tổng số lượng đã xuất trả lũy tiến trước đó (chỉ trừ các phiếu bị Từ chối - Rejected)
-        var lineQuery = await _lineRepo.GetQueryableAsync();
-        var returnedQtyQuery = lineQuery.Where(x =>
+        IQueryable<PurchaseReturnLine> lineQuery = await _lineRepo.GetQueryableAsync();
+        IQueryable<PurchaseReturnLine> returnedQtyQuery = lineQuery.Where(x =>
             x.PurchaseOrderLineId == purchaseOrderLineId &&
             x.PurchaseReturnId != purchaseReturnId &&
             x.PurchaseReturn.Status != PurchaseReturnStatus.Rejected);
@@ -209,7 +209,7 @@ public class PurchaseReturnManager : DomainService, IPurchaseReturnManager
             x => x.Quantity * x.ConversionFactor
         );
 
-        var poLine = await _poLineRepo.GetAsync(purchaseOrderLineId);
+        PurchaseOrderLine poLine = await _poLineRepo.GetAsync(purchaseOrderLineId);
         decimal requestBase = requestQty * conversionFactor;
 
         if (alreadyReturnedBase + requestBase > poLine.BaseQuantity)

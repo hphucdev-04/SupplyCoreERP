@@ -68,10 +68,10 @@ public class PurchaseReturnAppService : SupplyCore, IPurchaseReturnAppService
         if (dtos.Any())
         {
             var poIds = dtos.Select(d => d.PurchaseOrderId).Distinct().ToList();
-            var pos = await _purchaseOrderRepo.GetListAsync(x => poIds.Contains(x.Id));
+            List<PurchaseOrder> pos = await _purchaseOrderRepo.GetListAsync(x => poIds.Contains(x.Id));
             var poDict = pos.ToDictionary(x => x.Id, x => x.Code);
 
-            foreach (var dto in dtos)
+            foreach (PurchaseReturnDto dto in dtos)
             {
                 if (poDict.TryGetValue(dto.PurchaseOrderId, out string? poCode))
                 {
@@ -102,7 +102,7 @@ public class PurchaseReturnAppService : SupplyCore, IPurchaseReturnAppService
         PurchaseReturnDto dto = ObjectMapper.Map<PurchaseReturn, PurchaseReturnDto>(entity);
 
         // Map PurchaseOrderCode
-        var po = await _purchaseOrderRepo.FindAsync(entity.PurchaseOrderId);
+        PurchaseOrder? po = await _purchaseOrderRepo.FindAsync(entity.PurchaseOrderId);
         if (po != null)
         {
             dto.PurchaseOrderCode = po.Code;

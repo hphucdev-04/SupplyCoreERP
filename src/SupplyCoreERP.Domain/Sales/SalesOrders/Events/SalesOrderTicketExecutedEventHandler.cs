@@ -54,7 +54,7 @@ public class SalesOrderTicketExecutedEventHandler
                 SalesOrderLine? soLine = so.Lines.FirstOrDefault(x => x.Id == tLine.ReferenceDocumentLineId.Value);
                 if (soLine != null)
                 {
-                    var productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+                    IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
                     Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == tLine.ProductId);
                     if (product == null)
                     {
@@ -71,7 +71,7 @@ public class SalesOrderTicketExecutedEventHandler
         bool allDelivered = true;
         foreach (SalesOrderLine x in so.Lines)
         {
-            var productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+            IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
             Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == x.ProductId);
             if (product == null)
             {

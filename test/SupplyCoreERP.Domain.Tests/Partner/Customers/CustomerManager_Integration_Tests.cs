@@ -151,9 +151,10 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
     [Fact]
     public async Task Should_Throw_BusinessException_When_Deleting_Customer_With_Outstanding_Debt()
     {
+        Guid customerId = Guid.Empty;
+
         await WithUnitOfWorkAsync(async () =>
         {
-            // Arrange
             Customer customer = await _customerManager.CreateAsync(
                 "Customer Temp To Delete Debt",
                 "0901112224",
@@ -165,11 +166,14 @@ public abstract class CustomerManager_Integration_Tests<TStartupModule> : Supply
             );
             customer.AddDebt(50000m);
             await _customerRepository.InsertAsync(customer, autoSave: true);
+            customerId = customer.Id;
+        });
 
-            // Act & Assert
+        await WithUnitOfWorkAsync(async () =>
+        {
             BusinessException ex = await Assert.ThrowsAsync<BusinessException>(async () =>
             {
-                await _customerManager.DeleteAsync(customer.Id);
+                await _customerManager.DeleteAsync(customerId);
             });
             ex.Code.ShouldBe("SupplyCoreERP:CannotDeleteCustomerWithOutstandingDebt");
         });

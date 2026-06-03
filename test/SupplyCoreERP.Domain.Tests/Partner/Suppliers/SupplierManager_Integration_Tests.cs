@@ -262,19 +262,25 @@ public abstract class SupplierManager_Integration_Tests<TStartupModule> : Supply
     [Fact]
     public async Task Should_Throw_BusinessException_When_Deleting_Supplier_With_Outstanding_Debt()
     {
+        Guid supplierId = Guid.Empty;
+
         await WithUnitOfWorkAsync(async () =>
         {
-            // Arrange
             Supplier supplier = await _supplierManager.CreateAsync(
-                "Supplier For Delete Debt", "SUP-DEL-DEBT", null, null, null, null, null, null, null, null, null, 1000000m, 30
+                "Supplier For Delete Debt", "SUP-DEL-DEBT",
+                null, null, null, null, null, null, null, null, null,
+                1000000m, 30
             );
             supplier.AddDebt(50000m);
             await _supplierRepository.InsertAsync(supplier, autoSave: true);
+            supplierId = supplier.Id;
+        });
 
-            // Act & Assert
+        await WithUnitOfWorkAsync(async () =>
+        {
             BusinessException ex = await Assert.ThrowsAsync<BusinessException>(async () =>
             {
-                await _supplierManager.DeleteAsync(supplier.Id);
+                await _supplierManager.DeleteAsync(supplierId);
             });
             ex.Code.ShouldBe("SupplyCoreERP:CannotDeleteSupplierWithOutstandingDebt");
         });

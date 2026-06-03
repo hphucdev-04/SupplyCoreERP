@@ -62,7 +62,7 @@ public class SalesRecallTicketExecutedEventHandler
         await _salesRecallRepo.UpdateAsync(rr);
 
         // 2. Tự động hoàn trả công nợ cho từng khách hàng theo số lượng thực tế trả về
-        foreach (var line in rr.Lines)
+        foreach (SalesRecallLine line in rr.Lines)
         {
             Customer customer = await _customerRepo.GetAsync(line.CustomerId);
             customer.PayDebt(line.FinalPrice); // Giảm nợ phải thu của khách hàng tương ứng
@@ -78,7 +78,7 @@ public class SalesRecallTicketExecutedEventHandler
         }
 
         // 4. Khóa/Thu hồi các Lô thuốc lỗi liên quan
-        
+
         // A. Khóa lô thuốc bị chỉ định trực tiếp (nếu có)
         if (rr.ProductBatchId.HasValue)
         {
@@ -91,9 +91,9 @@ public class SalesRecallTicketExecutedEventHandler
         }
 
         // B. Khóa/Thu hồi các Lô thuốc lỗi thực tế đã nhập kho về theo chi tiết phiếu kho
-        var detailQuery = await _ticketDetailRepo.GetQueryableAsync();
-        var ticketDetailQuery = detailQuery.Where(d => d.TicketLine.TicketId == eventData.TicketId);
-        
+        IQueryable<InventoryTicketDetail> detailQuery = await _ticketDetailRepo.GetQueryableAsync();
+        IQueryable<InventoryTicketDetail> ticketDetailQuery = detailQuery.Where(d => d.TicketLine.TicketId == eventData.TicketId);
+
         List<Guid> batchIds = await AsyncExecuter.ToListAsync(
             ticketDetailQuery
                 .Select(d => d.ProductBatchId)
@@ -109,7 +109,7 @@ public class SalesRecallTicketExecutedEventHandler
         if (batchIds.Any())
         {
             List<ProductBatch> batches = await _batchRepo.GetListAsync(x => batchIds.Contains(x.Id));
-            foreach (var b in batches)
+            foreach (ProductBatch b in batches)
             {
                 b.Recall(); // Cập nhật trạng thái Batch thành Recalled
             }

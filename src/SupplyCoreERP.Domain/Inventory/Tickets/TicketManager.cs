@@ -291,7 +291,7 @@ public class TicketManager : DomainService, ITicketManager
         }
 
         await ValidateProductForInventoryAsync(productId);
-        var binQuery = await _binRepo.WithDetailsAsync(b => b.Zone);
+        IQueryable<Bin> binQuery = await _binRepo.WithDetailsAsync(b => b.Zone);
         Bin bin = await AsyncExecuter.FirstOrDefaultAsync(binQuery, b => b.Id == binId);
         if (bin == null)
         {

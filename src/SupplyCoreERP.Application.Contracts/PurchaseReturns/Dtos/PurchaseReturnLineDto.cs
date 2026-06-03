@@ -6,7 +6,7 @@ namespace SupplyCoreERP.PurchaseReturns.Dtos;
 public class PurchaseReturnLineDto : AuditedEntityDto<Guid>
 {
     public Guid PurchaseOrderLineId { get; set; }
-    
+
     public Guid ProductId { get; set; }
     public string? ProductCode { get; set; }
     public string? ProductName { get; set; }

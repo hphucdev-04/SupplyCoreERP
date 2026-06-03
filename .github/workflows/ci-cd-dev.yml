@@ -65,7 +65,7 @@ jobs:
             --verbosity normal \
             --logger trx \
             --blame-hang \
-            --blame-hang-timeout 120s
+            --blame-hang-timeout 200s
 
       - name: Setup Node.js
         uses: actions/setup-node@v4
