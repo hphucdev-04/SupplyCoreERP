@@ -1,0 +1,15 @@
+**/.git
+**/.github
+**/.vs
+**/.vscode
+**/bin
+**/obj
+**/Logs
+**/node_modules
+**/build_output.txt
+**/*.user
+**/*.suo
+**/angular/node_modules
+**/angular/dist
+**/mcp-server/node_modules
+**/mcp-server/dist

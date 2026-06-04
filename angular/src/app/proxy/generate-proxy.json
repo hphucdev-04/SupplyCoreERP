@@ -1225,33 +1225,67 @@
             }
           }
         },
-        "SupplyCoreERP.AiChats.AiChatAppService": {
-          "controllerName": "AiChat",
-          "controllerGroupName": "AiChat",
+        "SupplyCoreERP.Agent.AgentAppService": {
+          "controllerName": "Agent",
+          "controllerGroupName": "Agent",
           "isRemoteService": true,
           "isIntegrationService": false,
           "apiVersion": null,
-          "type": "SupplyCoreERP.AiChats.AiChatAppService",
+          "type": "SupplyCoreERP.Agent.AgentAppService",
           "interfaces": [
             {
-              "type": "SupplyCoreERP.AiChats.IAiChatAppService",
-              "name": "IAiChatAppService",
+              "type": "SupplyCoreERP.Agent.IAgentAppService",
+              "name": "IAgentAppService",
               "methods": [
                 {
                   "name": "SendMessageAsync",
                   "parametersOnMethod": [
                     {
                       "name": "input",
-                      "typeAsString": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto, SupplyCoreERP.Application.Contracts",
-                      "type": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
-                      "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                      "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto",
+                      "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto",
                       "isOptional": false,
                       "defaultValue": null
                     }
                   ],
                   "returnValue": {
-                    "type": "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto",
-                    "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto"
+                    "type": "System.Object",
+                    "typeSimple": "object"
+                  }
+                },
+                {
+                  "name": "ApproveAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                      "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Object",
+                    "typeSimple": "object"
+                  }
+                },
+                {
+                  "name": "RejectAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                      "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Object",
+                    "typeSimple": "object"
                   }
                 }
               ]
@@ -1262,14 +1296,14 @@
               "uniqueName": "SendMessageAsyncByInput",
               "name": "SendMessageAsync",
               "httpMethod": "POST",
-              "url": "api/app/ai-chat/send-message",
+              "url": "api/app/agent/send-message",
               "supportedVersions": [],
               "parametersOnMethod": [
                 {
                   "name": "input",
-                  "typeAsString": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto, SupplyCoreERP.Application.Contracts",
-                  "type": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
-                  "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                  "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto",
                   "isOptional": false,
                   "defaultValue": null
                 }
@@ -1279,8 +1313,8 @@
                   "nameOnMethod": "input",
                   "name": "input",
                   "jsonName": null,
-                  "type": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
-                  "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto",
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto",
                   "isOptional": false,
                   "defaultValue": null,
                   "constraintTypes": null,
@@ -1289,11 +1323,85 @@
                 }
               ],
               "returnValue": {
-                "type": "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto",
-                "typeSimple": "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto"
+                "type": "System.Object",
+                "typeSimple": "object"
               },
               "allowAnonymous": false,
-              "implementFrom": "SupplyCoreERP.AiChats.IAiChatAppService"
+              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
+            },
+            "ApproveAsyncByInput": {
+              "uniqueName": "ApproveAsyncByInput",
+              "name": "ApproveAsync",
+              "httpMethod": "POST",
+              "url": "api/app/agent/approve",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Object",
+                "typeSimple": "object"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
+            },
+            "RejectAsyncByInput": {
+              "uniqueName": "RejectAsyncByInput",
+              "name": "RejectAsync",
+              "httpMethod": "POST",
+              "url": "api/app/agent/reject",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Object",
+                "typeSimple": "object"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
             }
           }
         },
@@ -17732,7 +17840,7 @@
         }
       ]
     },
-    "SupplyCoreERP.AiChats.Dtos.ChatMessageDto": {
+    "SupplyCoreERP.Agent.Dtos.AgentMessageDto": {
       "baseType": null,
       "isEnum": false,
       "enumNames": null,
@@ -17756,7 +17864,31 @@
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
-          "isRequired": true,
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ToolCalls",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Agent.Dtos.AgentToolCallMessageDto]",
+          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentToolCallMessageDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ToolResponses",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Agent.Dtos.AgentToolResponseMessageDto]",
+          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentToolResponseMessageDto]",
+          "isRequired": false,
           "minLength": null,
           "maxLength": null,
           "minimum": null,
@@ -17765,7 +17897,7 @@
         }
       ]
     },
-    "SupplyCoreERP.AiChats.Dtos.ChatRequestInputDto": {
+    "SupplyCoreERP.Agent.Dtos.AgentRequestInputDto": {
       "baseType": null,
       "isEnum": false,
       "enumNames": null,
@@ -17787,8 +17919,8 @@
         {
           "name": "History",
           "jsonName": null,
-          "type": "[SupplyCoreERP.AiChats.Dtos.ChatMessageDto]",
-          "typeSimple": "[SupplyCoreERP.AiChats.Dtos.ChatMessageDto]",
+          "type": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
+          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -17798,7 +17930,7 @@
         }
       ]
     },
-    "SupplyCoreERP.AiChats.Dtos.ChatResponseOutputDto": {
+    "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto": {
       "baseType": null,
       "isEnum": false,
       "enumNames": null,
@@ -17806,7 +17938,73 @@
       "genericArguments": null,
       "properties": [
         {
-          "name": "Text",
+          "name": "SessionId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Agent.Dtos.AgentToolCallMessageDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Arguments",
+          "jsonName": null,
+          "type": "{System.String:System.Text.Json.Nodes.JsonNode}",
+          "typeSimple": "{string:System.Text.Json.Nodes.JsonNode}",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Agent.Dtos.AgentToolResponseMessageDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Content",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -29382,6 +29580,96 @@
           "jsonName": null,
           "type": "T",
           "typeSimple": "T",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "System.Text.Json.Nodes.JsonNode": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Options",
+          "jsonName": null,
+          "type": "System.Text.Json.Nodes.JsonNodeOptions?",
+          "typeSimple": "System.Text.Json.Nodes.JsonNodeOptions?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Parent",
+          "jsonName": null,
+          "type": "System.Text.Json.Nodes.JsonNode",
+          "typeSimple": "System.Text.Json.Nodes.JsonNode",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Root",
+          "jsonName": null,
+          "type": "System.Text.Json.Nodes.JsonNode",
+          "typeSimple": "System.Text.Json.Nodes.JsonNode",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Item",
+          "jsonName": null,
+          "type": "System.Text.Json.Nodes.JsonNode",
+          "typeSimple": "System.Text.Json.Nodes.JsonNode",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Item",
+          "jsonName": null,
+          "type": "System.Text.Json.Nodes.JsonNode",
+          "typeSimple": "System.Text.Json.Nodes.JsonNode",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "System.Text.Json.Nodes.JsonNodeOptions": {
+      "baseType": "System.ValueType",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "PropertyNameCaseInsensitive",
+          "jsonName": null,
+          "type": "System.Boolean",
+          "typeSimple": "boolean",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,

@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SupplyCoreERP.Application.Contracts\SupplyCoreERP.Application.Contracts.csproj" />
+    <ProjectReference Include="..\SupplyCoreERP.Domain\SupplyCoreERP.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Volo.Abp.Core" Version="10.0.2" />
+    <PackageReference Include="Volo.Abp.Ddd.Domain" Version="10.0.1" />
   </ItemGroup>
 
 </Project>

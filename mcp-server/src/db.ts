@@ -1,12 +1,16 @@
 import pg from 'pg';
 import dotenv from 'dotenv';
 import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const nodeEnv = process.env.NODE_ENV || 'development';
 
 // Load cấu hình biến môi trường tương ứng (.env cho local dev và .env.production cho production)
 dotenv.config({
-  path: path.resolve(process.cwd(), nodeEnv === 'production' ? '.env.production' : '.env')
+  path: path.resolve(__dirname, nodeEnv === 'production' ? '../.env.production' : '../.env')
 });
 
 const { Pool } = pg;
@@ -27,7 +31,7 @@ export const queryDb = async (text: string, params?: any[]): Promise<any[]> => {
   try {
     const res = await pool.query(text, params);
     const duration = Date.now() - start;
-    console.log('[Database] Executed query:', { 
+    console.error('[Database] Executed query:', { 
       durationMs: duration, 
       rowsCount: res.rowCount 
     });

@@ -2,8 +2,8 @@
     style="position: fixed; bottom: 25px; right: 25px; z-index: 1000; font-family: sans-serif;">
 
     <!-- Chat window dùng Angular animation thay vì CSS class -->
-    <div *ngIf="isOpen" @chatAnimation class="chat-window" style="margin-bottom: 15px;">
-        <deep-chat [request]="chatRequest" [initialMessages]="chatInitialMessages" placeholder="Nhập câu hỏi tại đây..." [style]="{
+    <div *ngIf="isOpen" @chatAnimation class="chat-window" style="margin-bottom: 15px; position: relative;">
+        <deep-chat #chatElement [request]="chatRequest" [history]="chatInitialMessages" [markdown]="true" placeholder="Nhập câu hỏi tại đây..." [style]="{
         'width': '380px',
         'height': '550px',
         'border-radius': '16px',
@@ -22,6 +22,38 @@
         'border-bottom-right-radius': '16px'
       }" [file]="{ 'images': true }">
         </deep-chat>
+
+        <!-- Overlay phê duyệt tác vụ nhạy cảm (Human-in-the-loop) -->
+        <div *ngIf="pendingApprovalInfo" class="approval-overlay">
+            <div class="approval-card" *ngIf="!isExecutingApproval">
+                <div class="approval-header">
+                    <svg class="approval-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <h4>Yêu cầu phê duyệt tác vụ</h4>
+                </div>
+                <div class="approval-body">
+                    <p>Trợ lý AI đang yêu cầu thực thi một tác vụ hệ thống nhạy cảm:</p>
+                    <div class="tool-info">
+                        <strong>Tên tác vụ:</strong> <code>{{ pendingApprovalInfo.toolName }}</code>
+                    </div>
+                    <div class="tool-args" *ngIf="pendingApprovalInfo.arguments">
+                        <strong>Tham số đi kèm:</strong>
+                        <pre>{{ pendingApprovalInfo.arguments | json }}</pre>
+                    </div>
+                </div>
+                <div class="approval-actions">
+                    <button class="btn-reject" (click)="onReject()">Từ chối</button>
+                    <button class="btn-approve" (click)="onApprove()">Đồng ý</button>
+                </div>
+            </div>
+
+            <!-- Trạng thái đang gọi API Approve/Reject -->
+            <div class="approval-card executing-state" *ngIf="isExecutingApproval">
+                <div class="spinner"></div>
+                <span>Đang thực thi tác vụ trên hệ thống...</span>
+            </div>
+        </div>
     </div>
 
     <!-- Nút bấm: pill chứa icon + chữ -->

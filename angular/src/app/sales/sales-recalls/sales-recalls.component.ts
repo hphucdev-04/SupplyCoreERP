@@ -24,7 +24,7 @@ import { enumName } from 'src/app/shared/untils/enum.util';
 @Component({
   selector: 'app-sales-recalls',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   providers: [ListService],
   templateUrl: './sales-recalls.component.html',
 })

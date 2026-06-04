@@ -1,8 +1,8 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import 'deep-chat';
 import { SharedModule } from '../../shared.module';
-import { AiChatService } from '../../../proxy/ai-chats/ai-chat.service';
+import { AgentService } from 'src/app/proxy/agent/agent.service';
 
 @Component({
   selector: 'app-ai-chat',
@@ -28,7 +28,17 @@ import { AiChatService } from '../../../proxy/ai-chats/ai-chat.service';
   ]
 })
 export class AiChatComponent {
+  @ViewChild('chatElement') chatElementRef!: ElementRef;
+
   isOpen = false;
+
+  pendingApprovalInfo: {
+    sessionId: string;
+    toolName: string;
+    arguments: any;
+  } | null = null;
+
+  isExecutingApproval = false;
 
   chatInitialMessages = [
     { role: 'ai', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống RxLogistics. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
@@ -48,12 +58,21 @@ export class AiChatComponent {
         text: m.text
       }));
 
-      this.aiChatService.sendMessage({
+      this.agentService.sendMessage({
         text: currentMessage.text,
         history: history
       }).subscribe({
-        next: (response) => {
-          signals.onResponse({ text: response.text });
+        next: (response: any) => {
+          if (response && response.status === 'PendingApproval') {
+            this.pendingApprovalInfo = {
+              sessionId: response.sessionId,
+              toolName: response.toolName,
+              arguments: response.arguments
+            };
+            signals.onResponse({ text: '🤖 *Tác vụ yêu cầu phê duyệt...*' });
+          } else {
+            signals.onResponse({ text: response.text || '' });
+          }
         },
         error: (err) => {
           signals.onResponse({ error: err?.message || 'Có lỗi xảy ra khi kết nối tới Trợ lý AI!' });
@@ -62,13 +81,93 @@ export class AiChatComponent {
     }
   };
 
-  constructor(private aiChatService: AiChatService) {}
+  constructor(private agentService: AgentService) {}
 
   toggleChat() {
     this.isOpen = !this.isOpen;
   }
 
-  // Giữ hover effect bằng function (không cần thiết nếu đã có CSS :hover, nhưng để giữ code gốc)
+  onApprove() {
+    if (!this.pendingApprovalInfo) return;
+    this.isExecutingApproval = true;
+
+    this.agentService.approve({
+      sessionId: this.pendingApprovalInfo.sessionId
+    }).subscribe({
+      next: (response: any) => {
+        this.isExecutingApproval = false;
+        this.pendingApprovalInfo = null;
+
+        if (response && response.status === 'PendingApproval') {
+          this.pendingApprovalInfo = {
+            sessionId: response.sessionId,
+            toolName: response.toolName,
+            arguments: response.arguments
+          };
+          this.chatElementRef.nativeElement.addMessage({
+            text: '🤖 *Tác vụ tiếp theo yêu cầu phê duyệt...*',
+            role: 'ai'
+          });
+        } else {
+          const finalText = response.text || '';
+          this.chatElementRef.nativeElement.addMessage({
+            text: finalText,
+            role: 'ai'
+          });
+        }
+      },
+      error: (err) => {
+        this.isExecutingApproval = false;
+        this.pendingApprovalInfo = null;
+        this.chatElementRef.nativeElement.addMessage({
+          text: `❌ Lỗi thực thi phê duyệt: ${err?.message || 'Không xác định'}`,
+          role: 'ai'
+        });
+      }
+    });
+  }
+
+  onReject() {
+    if (!this.pendingApprovalInfo) return;
+    this.isExecutingApproval = true;
+
+    this.agentService.reject({
+      sessionId: this.pendingApprovalInfo.sessionId
+    }).subscribe({
+      next: (response: any) => {
+        this.isExecutingApproval = false;
+        this.pendingApprovalInfo = null;
+
+        if (response && response.status === 'PendingApproval') {
+          this.pendingApprovalInfo = {
+            sessionId: response.sessionId,
+            toolName: response.toolName,
+            arguments: response.arguments
+          };
+          this.chatElementRef.nativeElement.addMessage({
+            text: '🤖 *Tác vụ tiếp theo yêu cầu phê duyệt...*',
+            role: 'ai'
+          });
+        } else {
+          const finalText = response.text || '';
+          this.chatElementRef.nativeElement.addMessage({
+            text: finalText,
+            role: 'ai'
+          });
+        }
+      },
+      error: (err) => {
+        this.isExecutingApproval = false;
+        this.pendingApprovalInfo = null;
+        this.chatElementRef.nativeElement.addMessage({
+          text: `❌ Lỗi khi từ chối tác vụ: ${err?.message || 'Không xác định'}`,
+          role: 'ai'
+        });
+      }
+    });
+  }
+
+  // Giữ hover effect bằng function (để giữ tương thích ngược CSS cũ nếu cần)
   onMouseEnter(event: MouseEvent) {
     (event.currentTarget as HTMLElement).style.transform = 'scale(1.05)';
   }

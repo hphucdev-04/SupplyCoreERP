@@ -1,82 +1,104 @@
 import express from "express";
-import { Server } from "@modelcontextprotocol/sdk/server/index.js";
-import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
-import { CallToolRequestSchema, ListToolsRequestSchema } from "@modelcontextprotocol/sdk/types.js";
-import { getToolsDefinition, executeTool } from "./tools.js";
+import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { StreamableHTTPServerTransport } from "@modelcontextprotocol/sdk/server/streamableHttp.js";
+import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
 import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-dotenv.config();
+// Import các hàm đăng ký tools
+import { registerProductTools } from "./tools/product.js";
+import { registerWarehouseTools } from "./tools/warehouse.js";
+import { registerSupplierTools } from "./tools/supplier.js";
+import { registerCustomerTools } from "./tools/customer.js";
+import { registerBatchTools } from "./tools/batch.js";
+import { registerUnitTools } from "./tools/unit.js";
+import { registerBalanceTools } from "./tools/balance.js";
 
-const app = express();
-const port = process.env.PORT || 3000;
+// Import các hàm đăng ký resources và prompts
+import { registerDatabaseResources } from "./resources/dbSchema.js";
+import { registerPrompts } from "./prompts/assistant.js";
 
-// 1. Khởi tạo MCP Server với mô tả metadata
-const server = new Server(
-  {
-    name: "supplycore-mcp-server",
-    version: "1.0.0",
-  },
-  {
-    capabilities: {
-      tools: {}, // Báo cho client biết server có khả năng cung cấp tools
-    },
-  }
-);
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-// 2. Đăng ký API Handler cho yêu cầu lấy danh sách Tools
-server.setRequestHandler(ListToolsRequestSchema, async () => {
-  console.log("[MCP-Server] Received request: list tools");
-  return {
-    tools: getToolsDefinition(),
-  };
+// Load cấu hình biến môi trường bằng đường dẫn tuyệt đối
+dotenv.config({ path: path.resolve(__dirname, "../.env") });
+
+// 1. Khởi tạo McpServer instance mới
+const server = new McpServer({
+  name: "supplycore-mcp-server",
+  version: "1.0.0"
 });
 
-// 3. Đăng ký API Handler cho yêu cầu thực thi Tool cụ thể
-server.setRequestHandler(CallToolRequestSchema, async (request) => {
-  const { name, arguments: args } = request.params;
-  console.log(`[MCP-Server] Received request: call tool -> ${name}`, { args });
-  
-  try {
-    const result = await executeTool(name, args);
-    return result;
-  } catch (error: any) {
-    console.error(`[MCP-Server] Error executing tool '${name}':`, error);
-    return {
-      isError: true,
-      content: [{ type: "text", text: `Error: ${error.message}` }],
-    };
-  }
-});
+// 2. Đăng ký toàn bộ Tools, Resources và Prompts vào server
+registerProductTools(server);
+registerWarehouseTools(server);
+registerSupplierTools(server);
+registerCustomerTools(server);
+registerBatchTools(server);
+registerUnitTools(server);
+registerBalanceTools(server);
+registerDatabaseResources(server);
+registerPrompts(server);
 
-// 4. Quản lý các kết nối SSE (Server-Sent Events) từ client
-let transport: SSEServerTransport | null = null;
+// 3. Phân nhánh chế độ chạy (STDIO hoặc Streamable HTTP)
+const isStdio = process.argv.includes("--stdio");
 
-// Endpoint HTTP GET /sse: Thiết lập đường ống SSE
-app.get("/sse", async (req, res) => {
-  console.log("[MCP-Server] Client connecting via SSE...");
-  transport = new SSEServerTransport("/messages", res);
+if (isStdio) {
+  // Chạy chế độ STDIO (Phục vụ cho local CLI và IDE extension)
+  const transport = new StdioServerTransport();
   await server.connect(transport);
-  
-  req.on("close", () => {
-    console.log("[MCP-Server] SSE connection closed by client");
+  console.error("[MCP-Server] SupplyCore MCP Server is running on STDIO mode.");
+} else {
+  // Chạy chế độ Streamable HTTP (Phục vụ remote connection cho C# Backend)
+  const app = express();
+  app.use(express.json());
+
+  // Endpoint duy nhất POST /mcp xử lý các yêu cầu JSON-RPC từ C# Client
+  app.post("/mcp", async (req, res) => {
+    // Khởi tạo một transport mới cho mỗi request ở chế độ stateless
+    const transport = new StreamableHTTPServerTransport({
+      sessionIdGenerator: undefined, // Stateless mode
+      enableJsonResponse: true      // Trả về JSON body thuần túy thay vì SSE stream
+    });
+
+    try {
+      console.log(`[MCP-Debug] === Nhận request ===`);
+      console.log(`[MCP-Debug] Method: ${req.body?.method}`);
+      console.log(`[MCP-Debug] Payload: ${JSON.stringify(req.body)}`);
+
+      // Kết nối transport này với server
+      await server.connect(transport);
+
+      // Xử lý request
+      await transport.handleRequest(req, res, req.body);
+
+      console.log(`[MCP-Debug] Status trả về: ${res.statusCode}`);
+      console.log(`[MCP-Debug] =======================`);
+    } catch (err) {
+      console.error("[MCP-Error] Lỗi khi xử lý request tại endpoint /mcp:", err);
+      if (!res.headersSent) {
+        res.status(500).json({
+          jsonrpc: "2.0",
+          error: {
+            code: -32603,
+            message: err instanceof Error ? err.message : String(err)
+          },
+          id: req.body?.id || null
+        });
+      }
+    } finally {
+      // Đóng transport để giải phóng tài nguyên sau khi hoàn tất request
+      await transport.close();
+    }
   });
-});
 
-// Endpoint HTTP POST /messages: Nhận các tin nhắn điều khiển từ client
-app.post("/messages", async (req, res) => {
-  if (!transport) {
-    res.status(400).send("No active SSE connection found. Initialize connection on /sse first.");
-    return;
-  }
-  await transport.handlePostMessage(req, res);
-});
-
-// 5. Khởi chạy server lắng nghe kết nối
-app.listen(port, () => {
-  console.log("=============================================================");
-  console.log(`[MCP-Server] SupplyCore MCP Server is running!`);
-  console.log(`[MCP-Server] Local Base URL: http://localhost:${port}`);
-  console.log(`[MCP-Server] SSE Connection Endpoint: http://localhost:${port}/sse`);
-  console.log(`[MCP-Server] Messages POST Endpoint: http://localhost:${port}/messages`);
-  console.log("=============================================================");
-});
+  const port = process.env.PORT || 3000;
+  app.listen(port, () => {
+    console.log("=============================================================");
+    console.log(`[MCP-Server] SupplyCore MCP Server is running (Streamable HTTP)`);
+    console.log(`[MCP-Server] Endpoint POST: http://127.0.0.1:${port}/mcp`);
+    console.log("=============================================================");
+  });
+}

@@ -39,6 +39,7 @@ using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
+using SupplyCoreERP.Ai;
 
 namespace SupplyCoreERP.EntityFrameworkCore;
 
@@ -142,6 +143,9 @@ public class SupplyCoreERPDbContext :
     public DbSet<Notification> Notifications { get; set; }
     public DbSet<UserNotification> UserNotifications { get; set; }
 
+    // AI Chat MCP Sessions
+    public DbSet<AgentSession> AgentSessions { get; set; }
+
     #endregion
 
     public SupplyCoreERPDbContext(DbContextOptions<SupplyCoreERPDbContext> options)
@@ -167,12 +171,13 @@ public class SupplyCoreERPDbContext :
 
         /* Configure your own tables/entities inside here */
 
-        //builder.Entity<YourEntity>(b =>
-        //{
-        //    b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "YourEntities", SupplyCoreERPConsts.DbSchema);
-        //    b.ConfigureByConvention(); //auto configure for the base class props
-        //    //...
-        //});
+        builder.Entity<AgentSession>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "AgentSessions", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.ConversationHistoryJson).IsRequired();
+            b.Property(x => x.IsPendingApproval).HasDefaultValue(false);
+        });
 
         // Location
         builder.Entity<Continent>(b =>

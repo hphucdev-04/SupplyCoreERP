@@ -22,7 +22,7 @@ import { enumName } from 'src/app/shared/untils/enum.util';
 @Component({
   selector: 'app-purchase-return-requests',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   providers: [ListService],
   templateUrl: './purchase-return-requests.component.html',
 })

@@ -1,5 +1,5 @@
 import * as ActiveIngredients from './active-ingredients';
-import * as AiChats from './ai-chats';
+import * as Agent from './agent';
 import * as Balances from './balances';
 import * as BaseUnits from './base-units';
 import * as Batches from './batches';
@@ -19,7 +19,8 @@ import * as PurchaseReturns from './purchase-returns';
 import * as SalesOrders from './sales-orders';
 import * as SalesRecalls from './sales-recalls';
 import * as Suppliers from './suppliers';
+import * as System from './system';
 import * as Tickets from './tickets';
 import * as Transactions from './transactions';
 import * as Warehouses from './warehouses';
-export { ActiveIngredients, AiChats, Balances, BaseUnits, Batches, Categories, Customers, DosageForms, Enums, Locations, Manufacturers, Medicines, Notifications, Prices, PurchaseOrders, PurchaseRequisitions, PurchaseReturnRequests, PurchaseReturns, SalesOrders, SalesRecalls, Suppliers, Tickets, Transactions, Warehouses };
+export { ActiveIngredients, Agent, Balances, BaseUnits, Batches, Categories, Customers, DosageForms, Enums, Locations, Manufacturers, Medicines, Notifications, Prices, PurchaseOrders, PurchaseRequisitions, PurchaseReturnRequests, PurchaseReturns, SalesOrders, SalesRecalls, Suppliers, System, Tickets, Transactions, Warehouses };

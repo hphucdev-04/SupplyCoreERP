@@ -24,7 +24,7 @@ import { PurchaseReturnRequestsComponent } from '../purchase-return-requests/pur
 @Component({
   selector: 'app-purchase-returns',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent, PurchaseReturnRequestsComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent],
   providers: [ListService],
   templateUrl: './purchase-returns.component.html',
 })
