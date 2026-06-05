@@ -1,4 +1,4 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs/promises";

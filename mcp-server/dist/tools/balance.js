@@ -1,12 +1,19 @@
 import { z } from "zod";
 import { queryDb } from "../db.js";
+import { sanitizeRows } from "../utils/sanitize.js";
 export const registerBalanceTools = (server) => {
     server.registerTool("get_inventory_balance", {
         description: "Query the physical stock inventory of a product/medicine by product code and warehouse code.",
         inputSchema: z.object({
             productCode: z.string().describe("Product/medicine code to query (e.g., SP001, MEDICINE002)"),
             warehouseCode: z.string().optional().describe("Warehouse code to filter by (e.g., KHO_HCM). If omitted, searches across all warehouses.")
-        })
+        }),
+        annotations: {
+            readOnlyHint: true,
+            destructiveHint: false,
+            idempotentHint: true,
+            openWorldHint: false
+        }
     }, async ({ productCode, warehouseCode }) => {
         let query = `
         SELECT w."Name" as "WarehouseName", b."Quantity", p."Name" as "ProductName"
@@ -30,7 +37,8 @@ export const registerBalanceTools = (server) => {
                         }]
                 };
             }
-            const resultText = rows
+            const sanitizedRows = sanitizeRows(rows);
+            const resultText = sanitizedRows
                 .map((r) => `Product: ${r.ProductName} | Warehouse: ${r.WarehouseName} | Quantity: ${Number(r.Quantity).toLocaleString('en-US')}`)
                 .join("\n");
             return {

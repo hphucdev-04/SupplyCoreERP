@@ -1,4 +1,4 @@
-import type { AgentRequestInputDto, AgentSessionInputDto } from './dtos/models';
+import type { AgentMessageDto, AgentRequestInputDto, AgentSessionInputDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
 
@@ -15,6 +15,15 @@ export class AgentService {
       method: 'POST',
       url: '/api/app/agent/approve',
       body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getHistory = (input: AgentSessionInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, AgentMessageDto[]>({
+      method: 'GET',
+      url: '/api/app/agent/history',
+      params: { sessionId: input.sessionId },
     },
     { apiName: this.apiName,...config });
   

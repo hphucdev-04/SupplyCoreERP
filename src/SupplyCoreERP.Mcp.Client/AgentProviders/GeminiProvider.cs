@@ -45,7 +45,10 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
             geminiPayload.Add("tools", new[] { new { functionDeclarations = geminiTools } });
         }
 
-        using StringContent requestContent = new(JsonSerializer.Serialize(geminiPayload), Encoding.UTF8, "application/json");
+        string payloadJson = JsonSerializer.Serialize(geminiPayload);
+        Console.WriteLine($"[Gemini-Payload] Gửi lên: {payloadJson}");
+
+        using StringContent requestContent = new(payloadJson, Encoding.UTF8, "application/json");
         using HttpResponseMessage response = await _httpClient.PostAsync(geminiUrl, requestContent);
 
         string responseContent = await response.Content.ReadAsStringAsync();

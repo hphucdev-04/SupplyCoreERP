@@ -31,13 +31,26 @@ public class AgentAppService : SupplyCore, IAgentAppService
 
     public async Task<object> SendMessageAsync(AgentRequestInputDto input)
     {
-        // 1. Khởi tạo AgentContext từ input.History và input.Text
+        // 1. Khởi tạo AgentContext từ DB (nếu có SessionId) hoặc input.History
         AgentContext context = new()
         {
             Steps = new List<AgentMessageDto>()
         };
 
-        if (input.History != null)
+        if (input.SessionId.HasValue && input.SessionId.Value != Guid.Empty)
+        {
+            AgentSession? session = await _sessionRepository.FindAsync(input.SessionId.Value);
+            if (session != null && !string.IsNullOrEmpty(session.ConversationHistoryJson))
+            {
+                Console.WriteLine($"[AgentAppService] Raw History JSON from DB: {session.ConversationHistoryJson}");
+                List<AgentMessageDto>? dbHistory = JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson);
+                if (dbHistory != null)
+                {
+                    context.Steps.AddRange(dbHistory);
+                }
+            }
+        }
+        else if (input.History != null)
         {
             context.Steps.AddRange(input.History);
         }
@@ -48,29 +61,50 @@ public class AgentAppService : SupplyCore, IAgentAppService
             Text = input.Text
         });
 
+        Console.WriteLine($"[AgentAppService] Steps gửi cho Agent: {JsonSerializer.Serialize(context.Steps)}");
+
         // 2. Chạy Agent
         AgentResultDto result = await _agent.RunAsync(context);
 
-        // 3. Xử lý kết quả trả về từ Agent
+        // 3. Xử lý kết quả trả về từ Agent và lưu lịch sử vào Database
         if (result.RequiresApproval)
         {
-            AgentSession session = new(
-                GuidGenerator.Create(),
-                CurrentUser.Id ?? Guid.Empty,
-                JsonSerializer.Serialize(context.Steps)
-            )
+            AgentSession session;
+            if (input.SessionId.HasValue && input.SessionId.Value != Guid.Empty)
             {
-                IsPendingApproval = true,
-                PendingToolCallJson = JsonSerializer.Serialize(new AgentToolCallMessageDto
+                // Nếu đã có session, lấy ra và cập nhật
+                session = await _sessionRepository.GetAsync(input.SessionId.Value);
+                session.IsPendingApproval = true;
+                session.PendingToolCallJson = JsonSerializer.Serialize(new AgentToolCallMessageDto
                 {
                     Name = result.PendingToolName!,
                     Arguments = result.PendingToolArguments != null
                         ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
                         : new JsonObject()
-                })
-            };
-
-            await _sessionRepository.InsertAsync(session);
+                });
+                session.ConversationHistoryJson = JsonSerializer.Serialize(context.Steps);
+                await _sessionRepository.UpdateAsync(session);
+            }
+            else
+            {
+                // Nếu chưa có session, tạo session mới ở trạng thái chờ duyệt
+                session = new(
+                    GuidGenerator.Create(),
+                    CurrentUser.Id ?? Guid.Empty,
+                    JsonSerializer.Serialize(context.Steps)
+                )
+                {
+                    IsPendingApproval = true,
+                    PendingToolCallJson = JsonSerializer.Serialize(new AgentToolCallMessageDto
+                    {
+                        Name = result.PendingToolName!,
+                        Arguments = result.PendingToolArguments != null
+                            ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
+                            : new JsonObject()
+                    })
+                };
+                await _sessionRepository.InsertAsync(session);
+            }
 
             return new
             {
@@ -84,9 +118,35 @@ public class AgentAppService : SupplyCore, IAgentAppService
         }
         else
         {
+            AgentSession session;
+            if (input.SessionId.HasValue && input.SessionId.Value != Guid.Empty)
+            {
+                // Nếu đã có session, lấy ra và cập nhật
+                session = await _sessionRepository.GetAsync(input.SessionId.Value);
+                session.IsPendingApproval = false;
+                session.PendingToolCallJson = null;
+                session.ConversationHistoryJson = JsonSerializer.Serialize(context.Steps);
+                await _sessionRepository.UpdateAsync(session);
+            }
+            else
+            {
+                // Nếu chưa có session, tạo session mới ở trạng thái bình thường để lưu lịch sử
+                session = new(
+                    GuidGenerator.Create(),
+                    CurrentUser.Id ?? Guid.Empty,
+                    JsonSerializer.Serialize(context.Steps)
+                )
+                {
+                    IsPendingApproval = false,
+                    PendingToolCallJson = null
+                };
+                await _sessionRepository.InsertAsync(session);
+            }
+
             return new AgentResponseOutputDto
             {
-                Text = result.FinalText ?? ""
+                Text = result.FinalText ?? "",
+                SessionId = session.Id
             };
         }
     }
@@ -241,5 +301,17 @@ public class AgentAppService : SupplyCore, IAgentAppService
                 Text = result.FinalText ?? ""
             };
         }
+    }
+
+    public async Task<List<AgentMessageDto>> GetHistoryAsync(AgentSessionInputDto input)
+    {
+        AgentSession session = await _sessionRepository.GetAsync(input.SessionId);
+        if (string.IsNullOrEmpty(session.ConversationHistoryJson))
+        {
+            return new List<AgentMessageDto>();
+        }
+
+        return JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson)
+               ?? new List<AgentMessageDto>();
     }
 }

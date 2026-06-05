@@ -1287,6 +1287,23 @@
                     "type": "System.Object",
                     "typeSimple": "object"
                   }
+                },
+                {
+                  "name": "GetHistoryAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                      "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Agent.Dtos.AgentMessageDto>",
+                    "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]"
+                  }
                 }
               ]
             }
@@ -1399,6 +1416,43 @@
               "returnValue": {
                 "type": "System.Object",
                 "typeSimple": "object"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
+            },
+            "GetHistoryAsyncByInput": {
+              "uniqueName": "GetHistoryAsyncByInput",
+              "name": "GetHistoryAsync",
+              "httpMethod": "GET",
+              "url": "api/app/agent/history",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "SessionId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Agent.Dtos.AgentMessageDto>",
+                "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]"
               },
               "allowAnonymous": false,
               "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
@@ -17921,6 +17975,18 @@
           "jsonName": null,
           "type": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
           "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SessionId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,

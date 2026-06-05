@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using SupplyCoreERP.Agent.Dtos;
 using Volo.Abp.Application.Services;
@@ -11,4 +12,6 @@ public interface IAgentAppService : IApplicationService
     Task<object> ApproveAsync(AgentSessionInputDto input);
 
     Task<object> RejectAsync(AgentSessionInputDto input);
+
+    Task<List<AgentMessageDto>> GetHistoryAsync(AgentSessionInputDto input);
 }

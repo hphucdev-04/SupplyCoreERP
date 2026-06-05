@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import { queryDb } from "../db.js";
+import { sanitizeRows } from "../utils/sanitize.js";
 
 export const registerWarehouseTools = (server: McpServer) => {
   server.registerTool(
@@ -11,7 +12,13 @@ export const registerWarehouseTools = (server: McpServer) => {
         name: z.string().optional().describe("Warehouse name to search for"),
         code: z.string().optional().describe("Warehouse code to search for (e.g., KHO_HCM)"),
         limit: z.number().optional().default(10).describe("Maximum number of rows to retrieve (default 10, max 50)")
-      })
+      }),
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false
+      }
     },
     async ({ name, code, limit }) => {
       let query = `SELECT "Id", "Code", "Name", "Address" FROM "AppWarehouses" WHERE "IsDeleted" = false`;
@@ -35,7 +42,8 @@ export const registerWarehouseTools = (server: McpServer) => {
           return { content: [{ type: "text", text: "No warehouses found matching the criteria." }] };
         }
 
-        const text = rows.map(r => `Code: ${r.Code} | Name: ${r.Name} | Address: ${r.Address || 'N/A'}`).join("\n");
+        const sanitizedRows = sanitizeRows(rows);
+        const text = sanitizedRows.map(r => `Code: ${r.Code} | Name: ${r.Name} | Address: ${r.Address || 'N/A'}`).join("\n");
         return { content: [{ type: "text", text: `Warehouse List:\n${text}` }] };
       } catch (error: any) {
         return {

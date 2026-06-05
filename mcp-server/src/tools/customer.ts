@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import { queryDb } from "../db.js";
+import { sanitizeRows } from "../utils/sanitize.js";
 
 export const registerCustomerTools = (server: McpServer) => {
   server.registerTool(
@@ -11,7 +12,13 @@ export const registerCustomerTools = (server: McpServer) => {
         name: z.string().optional().describe("Customer name to search for"),
         phoneNumber: z.string().optional().describe("Customer phone number to search for"),
         limit: z.number().optional().default(10).describe("Maximum number of rows to retrieve (default 10, max 50)")
-      })
+      }),
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false
+      }
     },
     async ({ name, phoneNumber, limit }) => {
       let query = `SELECT "Id", "Code", "Name", "PhoneNumber" FROM "AppCustomers" WHERE "IsDeleted" = false`;
@@ -35,7 +42,8 @@ export const registerCustomerTools = (server: McpServer) => {
           return { content: [{ type: "text", text: "No customers found matching the criteria." }] };
         }
 
-        const text = rows.map(r => `Code: ${r.Code} | Name: ${r.Name} | Phone: ${r.PhoneNumber || 'N/A'}`).join("\n");
+        const sanitizedRows = sanitizeRows(rows);
+        const text = sanitizedRows.map(r => `Code: ${r.Code} | Name: ${r.Name} | Phone: ${r.PhoneNumber || 'N/A'}`).join("\n");
         return { content: [{ type: "text", text: `Customer List:\n${text}` }] };
       } catch (error: any) {
         return {

@@ -1,4 +1,4 @@
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 
 export const registerPrompts = (server: McpServer) => {
@@ -6,9 +6,9 @@ export const registerPrompts = (server: McpServer) => {
     "analyze_inventory_balance",
     {
       description: "Prompt scenario guiding the AI to analyze and report inventory status",
-      argsSchema: {
+      argsSchema: z.object({
         productName: z.string().describe("The name or code of the product/medicine to analyze")
-      }
+      })
     },
     async ({ productName }) => {
       return {

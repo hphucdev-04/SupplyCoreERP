@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import { queryDb } from "../db.js";
+import { sanitizeRows } from "../utils/sanitize.js";
 
 export const registerBatchTools = (server: McpServer) => {
   server.registerTool(
@@ -11,7 +12,13 @@ export const registerBatchTools = (server: McpServer) => {
         batchNumber: z.string().optional().describe("Product batch/lot number to search for (e.g., LOT123)"),
         code: z.string().optional().describe("Product batch management code to search for"),
         limit: z.number().optional().default(10).describe("Maximum number of rows to retrieve (default 10, max 50)")
-      })
+      }),
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false
+      }
     },
     async ({ batchNumber, code, limit }) => {
       let query = `SELECT "Id", "Code", "BatchNumber", "ExpiryDate", "Status" FROM "AppProductBatches" WHERE "IsDeleted" = false`;
@@ -35,7 +42,8 @@ export const registerBatchTools = (server: McpServer) => {
           return { content: [{ type: "text", text: "No product batches found matching the criteria." }] };
         }
 
-        const text = rows.map(r => {
+        const sanitizedRows = sanitizeRows(rows);
+        const text = sanitizedRows.map(r => {
           const expiryDateStr = r.ExpiryDate ? new Date(r.ExpiryDate).toLocaleDateString('en-US') : 'N/A';
           return `Code: ${r.Code} | Batch Number: ${r.BatchNumber} | Expiry Date: ${expiryDateStr} | Status: ${r.Status || 'N/A'}`;
         }).join("\n");

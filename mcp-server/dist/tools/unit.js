@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { queryDb } from "../db.js";
+import { sanitizeRows } from "../utils/sanitize.js";
 export const registerUnitTools = (server) => {
     server.registerTool("get_units", {
         description: "Retrieve the list of base units of measure (Base Units) in the SupplyCoreERP system.",
@@ -7,7 +8,13 @@ export const registerUnitTools = (server) => {
             name: z.string().optional().describe("Unit name to search for (e.g., Box, Tablet)"),
             code: z.string().optional().describe("Unit code to search for"),
             limit: z.number().optional().default(10).describe("Maximum number of rows to retrieve (default 10, max 50)")
-        })
+        }),
+        annotations: {
+            readOnlyHint: true,
+            destructiveHint: false,
+            idempotentHint: true,
+            openWorldHint: false
+        }
     }, async ({ name, code, limit }) => {
         let query = `SELECT "Id", "Code", "Name" FROM "AppBaseUnits" WHERE "IsDeleted" = false`;
         const params = [];
@@ -26,7 +33,8 @@ export const registerUnitTools = (server) => {
             if (rows.length === 0) {
                 return { content: [{ type: "text", text: "No units found matching the criteria." }] };
             }
-            const text = rows.map(r => `Code: ${r.Code} | Name: ${r.Name} | ID: ${r.Id}`).join("\n");
+            const sanitizedRows = sanitizeRows(rows);
+            const text = sanitizedRows.map(r => `Code: ${r.Code} | Name: ${r.Name} | ID: ${r.Id}`).join("\n");
             return { content: [{ type: "text", text: `Unit List:\n${text}` }] };
         }
         catch (error) {

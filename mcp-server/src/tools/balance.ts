@@ -1,6 +1,7 @@
 import { z } from "zod";
-import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
+import { McpServer } from "@modelcontextprotocol/server";
 import { queryDb } from "../db.js";
+import { sanitizeRows } from "../utils/sanitize.js";
 
 export const registerBalanceTools = (server: McpServer) => {
   server.registerTool(
@@ -10,7 +11,13 @@ export const registerBalanceTools = (server: McpServer) => {
       inputSchema: z.object({
         productCode: z.string().describe("Product/medicine code to query (e.g., SP001, MEDICINE002)"),
         warehouseCode: z.string().optional().describe("Warehouse code to filter by (e.g., KHO_HCM). If omitted, searches across all warehouses.")
-      })
+      }),
+      annotations: {
+        readOnlyHint: true,
+        destructiveHint: false,
+        idempotentHint: true,
+        openWorldHint: false
+      }
     },
     async ({ productCode, warehouseCode }) => {
       let query = `
@@ -39,7 +46,8 @@ export const registerBalanceTools = (server: McpServer) => {
           };
         }
 
-        const resultText = rows
+        const sanitizedRows = sanitizeRows(rows);
+        const resultText = sanitizedRows
           .map((r: any) => `Product: ${r.ProductName} | Warehouse: ${r.WarehouseName} | Quantity: ${Number(r.Quantity).toLocaleString('en-US')}`)
           .join("\n");
 

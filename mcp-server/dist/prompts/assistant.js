@@ -2,9 +2,9 @@ import { z } from "zod";
 export const registerPrompts = (server) => {
     server.registerPrompt("analyze_inventory_balance", {
         description: "Prompt scenario guiding the AI to analyze and report inventory status",
-        argsSchema: {
+        argsSchema: z.object({
             productName: z.string().describe("The name or code of the product/medicine to analyze")
-        }
+        })
     }, async ({ productName }) => {
         return {
             description: `Scenario guiding the AI to analyze and report inventory status for product: ${productName}`,

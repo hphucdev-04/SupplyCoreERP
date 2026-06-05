@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, OnInit } from '@angular/core';
 import { trigger, transition, style, animate } from '@angular/animations';
 import 'deep-chat';
 import { SharedModule } from '../../shared.module';
@@ -27,10 +27,11 @@ import { AgentService } from 'src/app/proxy/agent/agent.service';
     ])
   ]
 })
-export class AiChatComponent {
+export class AiChatComponent implements OnInit {
   @ViewChild('chatElement') chatElementRef!: ElementRef;
 
   isOpen = false;
+  currentSessionId: string | null = null;
 
   pendingApprovalInfo: {
     sessionId: string;
@@ -40,7 +41,7 @@ export class AiChatComponent {
 
   isExecutingApproval = false;
 
-  chatInitialMessages = [
+  chatInitialMessages: any[] = [
     { role: 'ai', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống RxLogistics. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
   ];
 
@@ -60,9 +61,14 @@ export class AiChatComponent {
 
       this.agentService.sendMessage({
         text: currentMessage.text,
-        history: history
+        history: history,
+        sessionId: this.currentSessionId || undefined
       }).subscribe({
         next: (response: any) => {
+          if (response && response.sessionId) {
+            this.setSessionId(response.sessionId);
+          }
+
           if (response && response.status === 'PendingApproval') {
             this.pendingApprovalInfo = {
               sessionId: response.sessionId,
@@ -83,6 +89,45 @@ export class AiChatComponent {
 
   constructor(private agentService: AgentService) {}
 
+  ngOnInit() {
+    const savedSessionId = localStorage.getItem('rx_ai_chat_session_id');
+    if (savedSessionId) {
+      this.currentSessionId = savedSessionId;
+      this.loadChatHistory(savedSessionId);
+    }
+  }
+
+  setSessionId(sessionId: string) {
+    this.currentSessionId = sessionId;
+    localStorage.setItem('rx_ai_chat_session_id', sessionId);
+  }
+
+  loadChatHistory(sessionId: string) {
+    this.agentService.getHistory({ sessionId: sessionId }).subscribe({
+      next: (history: any[]) => {
+        const deepChatHistory: any[] = [];
+        if (history && history.length > 0) {
+          for (const step of history) {
+            // Chỉ hiển thị tin nhắn dạng text của user và model lên UI, loại bỏ tool call trung gian
+            if (step.role === 'user' && step.text) {
+              deepChatHistory.push({ role: 'user', text: step.text });
+            } else if (step.role === 'model' && step.text) {
+              deepChatHistory.push({ role: 'ai', text: step.text });
+            }
+          }
+        }
+        
+        // Nếu có lịch sử thực tế trong DB, gán đè lên tin nhắn chào mặc định
+        if (deepChatHistory.length > 0) {
+          this.chatInitialMessages = deepChatHistory;
+        }
+      },
+      error: (err) => {
+        console.error('Lỗi khi tải lịch sử chat từ server:', err);
+      }
+    });
+  }
+
   toggleChat() {
     this.isOpen = !this.isOpen;
   }
@@ -96,6 +141,10 @@ export class AiChatComponent {
     }).subscribe({
       next: (response: any) => {
         this.isExecutingApproval = false;
+        
+        if (response && response.sessionId) {
+          this.setSessionId(response.sessionId);
+        }
         this.pendingApprovalInfo = null;
 
         if (response && response.status === 'PendingApproval') {
@@ -136,6 +185,10 @@ export class AiChatComponent {
     }).subscribe({
       next: (response: any) => {
         this.isExecutingApproval = false;
+
+        if (response && response.sessionId) {
+          this.setSessionId(response.sessionId);
+        }
         this.pendingApprovalInfo = null;
 
         if (response && response.status === 'PendingApproval') {

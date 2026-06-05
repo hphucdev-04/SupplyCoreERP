@@ -9,6 +9,7 @@ export interface AgentMessageDto {
 export interface AgentRequestInputDto {
   text: string;
   history?: AgentMessageDto[];
+  sessionId?: string;
 }
 
 export interface AgentSessionInputDto {
