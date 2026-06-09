@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SupplyCoreERP.EntityFrameworkCore;
@@ -13,9 +14,11 @@ using Volo.Abp.EntityFrameworkCore;
 namespace SupplyCoreERP.Migrations
 {
     [DbContext(typeof(SupplyCoreERPDbContext))]
-    partial class SupplyCoreERPDbContextModelSnapshot : ModelSnapshot
+    [Migration("20260607082807_Add_Elicitation_To_AgentSession")]
+    partial class Add_Elicitation_To_AgentSession
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -42,47 +45,29 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("CreatorId");
 
+                    b.Property<string>("ElicitationFormJson")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsPendingApproval")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("boolean")
+                        .HasDefaultValue(false);
+
+                    b.Property<bool>("IsPendingElicitation")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("PendingToolCallJson")
+                        .HasColumnType("text");
+
+                    b.Property<string>("SuspendedToolCallJson")
+                        .HasColumnType("text");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
 
                     b.ToTable("AppAgentSessions", (string)null);
-                });
-
-            modelBuilder.Entity("SupplyCoreERP.Ai.AgentTask", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
-                    b.Property<DateTime>("CreationTime")
-                        .HasColumnType("timestamp without time zone")
-                        .HasColumnName("CreationTime");
-
-                    b.Property<Guid?>("CreatorId")
-                        .HasColumnType("uuid")
-                        .HasColumnName("CreatorId");
-
-                    b.Property<string>("FormJson")
-                        .HasColumnType("text");
-
-                    b.Property<Guid>("SessionId")
-                        .HasColumnType("uuid");
-
-                    b.Property<int>("Status")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasDefaultValue(1);
-
-                    b.Property<string>("SuspendedDataJson")
-                        .HasColumnType("text");
-
-                    b.Property<int>("TaskType")
-                        .HasColumnType("integer");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("AppAgentTasks", (string)null);
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Catalog.ActiveIngredients.ActiveIngredient", b =>

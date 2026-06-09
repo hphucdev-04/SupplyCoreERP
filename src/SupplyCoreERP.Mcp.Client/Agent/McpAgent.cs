@@ -101,6 +101,27 @@ public class McpAgent : IAgent, ITransientDependency
                         }
                         else if (resultObj != null)
                         {
+                            // Kiểm tra nếu kết quả là yêu cầu Elicitation từ Server (Form Mode)
+                            if (resultObj["elicitation"] != null)
+                            {
+                                context.Steps.Add(new AgentMessageDto
+                                {
+                                    Role = "model",
+                                    ToolCalls = new List<AgentToolCallMessageDto>
+                                    {
+                                        new() { Name = toolCall.Name, Arguments = toolCall.Arguments }
+                                    }
+                                });
+
+                                return new AgentResultDto
+                                {
+                                    RequiresElicitation = true,
+                                    ElicitationFormJson = resultObj["elicitation"]?.ToJsonString(),
+                                    PendingToolName = toolCall.Name,
+                                    PendingToolArguments = JsonSerializer.Serialize(toolCall.Arguments)
+                                };
+                            }
+
                             bool isToolError = resultObj["isError"]?.GetValue<bool>() ?? false;
                             var contentArray = resultObj["content"]?.AsArray();
                             

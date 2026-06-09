@@ -1289,6 +1289,23 @@
                   }
                 },
                 {
+                  "name": "SubmitElicitationAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto",
+                      "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Object",
+                    "typeSimple": "object"
+                  }
+                },
+                {
                   "name": "GetHistoryAsync",
                   "parametersOnMethod": [
                     {
@@ -1453,6 +1470,43 @@
               "returnValue": {
                 "type": "System.Collections.Generic.List<SupplyCoreERP.Agent.Dtos.AgentMessageDto>",
                 "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
+            },
+            "SubmitElicitationAsyncByInput": {
+              "uniqueName": "SubmitElicitationAsyncByInput",
+              "name": "SubmitElicitationAsync",
+              "httpMethod": "POST",
+              "url": "api/app/agent/submit-elicitation",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Object",
+                "typeSimple": "object"
               },
               "allowAnonymous": false,
               "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
@@ -17885,6 +17939,39 @@
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Agent.Dtos.AgentElicitationInputDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "SessionId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "FormValues",
+          "jsonName": null,
+          "type": "{System.String:System.String}",
+          "typeSimple": "{string:string}",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,

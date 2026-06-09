@@ -41,8 +41,29 @@ export class AiChatComponent implements OnInit {
 
   isExecutingApproval = false;
 
+  // Thuộc tính phục vụ Elicitation Form
+  pendingElicitationInfo: {
+    sessionId: string;
+    elicitationForm: {
+      type: string;
+      action: string;
+      title: string;
+      description: string;
+      fields: Array<{
+        name: string;
+        label: string;
+        type: string;
+        required: boolean;
+        secret: boolean;
+        placeholder?: string;
+      }>
+    };
+  } | null = null;
+
+  elicitationFormValues: { [key: string]: string } = {};
+
   chatInitialMessages: any[] = [
-    { role: 'ai', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống RxLogistics. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
+    { role: 'ai', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống SupplyCoreERP. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
   ];
 
   chatRequest = {
@@ -76,6 +97,19 @@ export class AiChatComponent implements OnInit {
               arguments: response.arguments
             };
             signals.onResponse({ text: '🤖 *Tác vụ yêu cầu phê duyệt...*' });
+          } else if (response && response.status === 'PendingElicitation') {
+            const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
+            this.pendingElicitationInfo = {
+              sessionId: response.sessionId,
+              elicitationForm: transformedForm
+            };
+            this.elicitationFormValues = {};
+            if (transformedForm?.fields) {
+              transformedForm.fields.forEach((f: any) => {
+                this.elicitationFormValues[f.name] = '';
+              });
+            }
+            signals.onResponse({ text: '🤖 *Yêu cầu cung cấp thông tin tác vụ...*' });
           } else {
             signals.onResponse({ text: response.text || '' });
           }
@@ -157,6 +191,22 @@ export class AiChatComponent implements OnInit {
             text: '🤖 *Tác vụ tiếp theo yêu cầu phê duyệt...*',
             role: 'ai'
           });
+        } else if (response && response.status === 'PendingElicitation') {
+          const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
+          this.pendingElicitationInfo = {
+            sessionId: response.sessionId,
+            elicitationForm: transformedForm
+          };
+          this.elicitationFormValues = {};
+          if (transformedForm?.fields) {
+            transformedForm.fields.forEach((f: any) => {
+              this.elicitationFormValues[f.name] = '';
+            });
+          }
+          this.chatElementRef.nativeElement.addMessage({
+            text: '🤖 *Tác vụ tiếp theo yêu cầu cung cấp thông tin...*',
+            role: 'ai'
+          });
         } else {
           const finalText = response.text || '';
           this.chatElementRef.nativeElement.addMessage({
@@ -201,6 +251,22 @@ export class AiChatComponent implements OnInit {
             text: '🤖 *Tác vụ tiếp theo yêu cầu phê duyệt...*',
             role: 'ai'
           });
+        } else if (response && response.status === 'PendingElicitation') {
+          const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
+          this.pendingElicitationInfo = {
+            sessionId: response.sessionId,
+            elicitationForm: transformedForm
+          };
+          this.elicitationFormValues = {};
+          if (transformedForm?.fields) {
+            transformedForm.fields.forEach((f: any) => {
+              this.elicitationFormValues[f.name] = '';
+            });
+          }
+          this.chatElementRef.nativeElement.addMessage({
+            text: '🤖 *Tác vụ tiếp theo yêu cầu cung cấp thông tin...*',
+            role: 'ai'
+          });
         } else {
           const finalText = response.text || '';
           this.chatElementRef.nativeElement.addMessage({
@@ -218,6 +284,112 @@ export class AiChatComponent implements OnInit {
         });
       }
     });
+  }
+
+  onSubmitElicitation() {
+    if (!this.pendingElicitationInfo) return;
+    this.isExecutingApproval = true; // Sử dụng chung trạng thái loading
+
+    this.agentService.submitElicitation({
+      sessionId: this.pendingElicitationInfo.sessionId,
+      formValues: this.elicitationFormValues
+    }).subscribe({
+      next: (response: any) => {
+        this.isExecutingApproval = false;
+        
+        if (response && response.sessionId) {
+          this.setSessionId(response.sessionId);
+        }
+        this.pendingElicitationInfo = null;
+
+        if (response && response.status === 'PendingApproval') {
+          this.pendingApprovalInfo = {
+            sessionId: response.sessionId,
+            toolName: response.toolName,
+            arguments: response.arguments
+          };
+          this.chatElementRef.nativeElement.addMessage({
+            text: '🤖 *Tác vụ yêu cầu phê duyệt...*',
+            role: 'ai'
+          });
+        } else if (response && response.status === 'PendingElicitation') {
+          const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
+          this.pendingElicitationInfo = {
+            sessionId: response.sessionId,
+            elicitationForm: transformedForm
+          };
+          this.elicitationFormValues = {};
+          if (transformedForm?.fields) {
+            transformedForm.fields.forEach((f: any) => {
+              this.elicitationFormValues[f.name] = '';
+            });
+          }
+          this.chatElementRef.nativeElement.addMessage({
+            text: '🤖 *Yêu cầu thêm thông tin...*',
+            role: 'ai'
+          });
+        } else {
+          const finalText = response.text || '';
+          this.chatElementRef.nativeElement.addMessage({
+            text: finalText,
+            role: 'ai'
+          });
+        }
+      },
+      error: (err) => {
+        this.isExecutingApproval = false;
+        this.pendingElicitationInfo = null;
+        this.chatElementRef.nativeElement.addMessage({
+          text: `❌ Lỗi nộp thông tin Form: ${err?.message || 'Không xác định'}`,
+          role: 'ai'
+        });
+      }
+    });
+  }
+
+  onCancelElicitation() {
+    this.pendingElicitationInfo = null;
+    this.elicitationFormValues = {};
+    this.chatElementRef.nativeElement.addMessage({
+      text: '❌ Đã hủy cung cấp thông tin tác vụ.',
+      role: 'ai'
+    });
+  }
+
+  transformJsonSchemaToForm(schema: any): any {
+    if (!schema) return null;
+    
+    // Nếu schema đã có sẵn cấu trúc UI (có fields) thì giữ nguyên
+    if (schema.fields && Array.isArray(schema.fields)) {
+      return schema;
+    }
+
+    // Nếu schema có cấu trúc JSON Schema (properties)
+    const fields: any[] = [];
+    if (schema.properties) {
+      const requiredList = schema.required || [];
+      for (const key in schema.properties) {
+        if (schema.properties.hasOwnProperty(key)) {
+          const prop = schema.properties[key];
+          fields.push({
+            name: key,
+            label: prop.title || key,
+            type: prop.type || 'string',
+            required: requiredList.includes(key),
+            secret: prop.secret || false,
+            placeholder: prop.description || ''
+          });
+        }
+      }
+    }
+
+    return {
+      type: schema.type || 'object',
+      action: 'accept',
+      title: schema.title || 'Yêu cầu cung cấp thông tin',
+      description: schema.description || 'Vui lòng điền các thông tin bắt buộc dưới đây để hệ thống tiếp tục thực thi tác vụ.',
+      fields: fields
+    };
   }
 
   // Giữ hover effect bằng function (để giữ tương thích ngược CSS cũ nếu cần)

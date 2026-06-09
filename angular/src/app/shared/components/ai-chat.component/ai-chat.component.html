@@ -54,6 +54,45 @@
                 <span>Đang thực thi tác vụ trên hệ thống...</span>
             </div>
         </div>
+
+        <!-- Overlay cung cấp thông tin nhạy cảm (Elicitation Form) -->
+        <div *ngIf="pendingElicitationInfo" class="approval-overlay">
+            <div class="approval-card" *ngIf="!isExecutingApproval">
+                <div class="approval-header" style="background-color: #0284c7; color: #ffffff;">
+                    <svg class="approval-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                    <h4>{{ pendingElicitationInfo.elicitationForm.title }}</h4>
+                </div>
+                <div class="approval-body" style="max-height: 280px; overflow-y: auto;">
+                    <p style="font-size: 13px; color: #64748b; margin-bottom: 12px; line-height: 1.4;">
+                        {{ pendingElicitationInfo.elicitationForm.description }}
+                    </p>
+                    <div *ngFor="let field of pendingElicitationInfo.elicitationForm.fields" class="form-group" style="margin-bottom: 12px; text-align: left;">
+                        <label [for]="field.name" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">
+                            {{ field.label }} <span *ngIf="field.required" style="color: #ef4444;">*</span>
+                        </label>
+                        <input 
+                            [type]="field.secret ? 'password' : 'text'" 
+                            [id]="field.name" 
+                            [(ngModel)]="elicitationFormValues[field.name]" 
+                            [placeholder]="field.placeholder || ''" 
+                            style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;"
+                        />
+                    </div>
+                </div>
+                <div class="approval-actions" style="border-top: 1px solid #f1f5f9; padding-top: 10px; display: flex; justify-content: flex-end; gap: 8px;">
+                    <button class="btn-reject" (click)="onCancelElicitation()" style="background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0;">Hủy bỏ</button>
+                    <button class="btn-approve" (click)="onSubmitElicitation()" style="background-color: #0284c7; color: #ffffff; border: none;">Xác nhận</button>
+                </div>
+            </div>
+
+            <!-- Trạng thái đang gửi Form -->
+            <div class="approval-card executing-state" *ngIf="isExecutingApproval">
+                <div class="spinner"></div>
+                <span style="font-size: 13px; color: #64748b;">Đang nộp thông tin và thực thi tác vụ...</span>
+            </div>
+        </div>
     </div>
 
     <!-- Nút bấm: pill chứa icon + chữ -->

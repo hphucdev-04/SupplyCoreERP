@@ -1,4 +1,4 @@
-import type { AgentMessageDto, AgentRequestInputDto, AgentSessionInputDto } from './dtos/models';
+import type { AgentElicitationInputDto, AgentMessageDto, AgentRequestInputDto, AgentSessionInputDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
 
@@ -41,6 +41,15 @@ export class AgentService {
     this.restService.request<any, object>({
       method: 'POST',
       url: '/api/app/agent/send-message',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  submitElicitation = (input: AgentElicitationInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, object>({
+      method: 'POST',
+      url: '/api/app/agent/submit-elicitation',
       body: input,
     },
     { apiName: this.apiName,...config });

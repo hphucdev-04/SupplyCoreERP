@@ -77,7 +77,10 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                     string name = node["name"]?.ToString() ?? "";
                     string desc = node["description"]?.ToString() ?? "";
                     JsonObject inputSchema = node["inputSchema"]?.AsObject() ?? new JsonObject();
-                    bool requiresApproval = node["requiresApproval"]?.GetValue<bool>() ?? false;
+                    
+                    // Xác định cờ duyệt thông qua readOnlyHint trong annotations (chuẩn MCP)
+                    bool readOnly = node["annotations"]?["readOnlyHint"]?.GetValue<bool>() ?? true;
+                    bool requiresApproval = !readOnly;
 
                     mcpTools.Add(new McpToolDto
                     {
@@ -150,7 +153,10 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                     protocolVersion = "2025-06-18", // Phiên bản giao thức MCP mới nhất
                     capabilities = new
                     {
-                        // Khai báo rõ ràng client hiện không có capabilities bổ sung (như sampling)
+                        elicitation = new
+                        {
+                            form = new { }
+                        }
                     },
                     clientInfo = new
                     {
@@ -404,6 +410,12 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                         {
                             _logger.LogInformation("StartSseListenerAsync: Nhận sự kiện thay đổi tools từ Server! Xóa cache tools...");
                             _cachedTools = null;
+                        }
+                        // Nếu nhận được sự kiện thay đổi danh sách resources
+                        else if (line.StartsWith("data:") && line.Contains("notifications/resources/list_changed"))
+                        {
+                            _logger.LogInformation("StartSseListenerAsync: Nhận sự kiện thay đổi resources từ Server!");
+                            // Nơi thực hiện reset cache resources khi client hỗ trợ caching resources
                         }
                     }
                 }

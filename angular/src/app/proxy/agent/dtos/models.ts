@@ -1,4 +1,9 @@
 
+export interface AgentElicitationInputDto {
+  sessionId?: string;
+  formValues?: Record<string, string>;
+}
+
 export interface AgentMessageDto {
   role: string;
   text?: string;

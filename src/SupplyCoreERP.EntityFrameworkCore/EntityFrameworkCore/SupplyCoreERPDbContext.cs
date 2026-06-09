@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using SupplyCoreERP.Agent;
 using SupplyCoreERP.Catalog.ActiveIngredients;
 using SupplyCoreERP.Catalog.BaseUnits;
 using SupplyCoreERP.Catalog.Categories;
@@ -8,6 +9,7 @@ using SupplyCoreERP.Catalog.Medicines;
 using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Common.DocumentSequences;
 using SupplyCoreERP.Common.Notifications;
+using SupplyCoreERP.Enums.Agent;
 using SupplyCoreERP.Inventory.Balances;
 using SupplyCoreERP.Inventory.Batches;
 using SupplyCoreERP.Inventory.Tickets;
@@ -39,7 +41,6 @@ using Volo.Abp.Identity.EntityFrameworkCore;
 using Volo.Abp.OpenIddict.EntityFrameworkCore;
 using Volo.Abp.PermissionManagement.EntityFrameworkCore;
 using Volo.Abp.SettingManagement.EntityFrameworkCore;
-using SupplyCoreERP.Ai;
 
 namespace SupplyCoreERP.EntityFrameworkCore;
 
@@ -145,6 +146,7 @@ public class SupplyCoreERPDbContext :
 
     // AI Chat MCP Sessions
     public DbSet<AgentSession> AgentSessions { get; set; }
+    public DbSet<AgentTask> AgentTasks { get; set; }
 
     #endregion
 
@@ -176,7 +178,15 @@ public class SupplyCoreERPDbContext :
             b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "AgentSessions", SupplyCoreERPConsts.DbSchema);
             b.ConfigureByConvention();
             b.Property(x => x.ConversationHistoryJson).IsRequired();
-            b.Property(x => x.IsPendingApproval).HasDefaultValue(false);
+        });
+
+        builder.Entity<AgentTask>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "AgentTasks", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.SessionId).IsRequired();
+            b.Property(x => x.TaskType).IsRequired();
+            b.Property(x => x.Status).IsRequired().HasDefaultValue(AgentTaskStatus.Pending);
         });
 
         // Location

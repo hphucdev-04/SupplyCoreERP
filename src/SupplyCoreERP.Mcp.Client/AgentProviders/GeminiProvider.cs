@@ -45,6 +45,15 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
             geminiPayload.Add("tools", new[] { new { functionDeclarations = geminiTools } });
         }
 
+        // Tắt thinking budget để tránh lỗi thought_signature và cải thiện hiệu năng phản hồi của LLM
+        geminiPayload.Add("generationConfig", new
+        {
+            thinkingConfig = new
+            {
+                thinkingBudget = 0
+            }
+        });
+
         string payloadJson = JsonSerializer.Serialize(geminiPayload);
         Console.WriteLine($"[Gemini-Payload] Gửi lên: {payloadJson}");
 

@@ -1,7 +1,10 @@
 import { z } from "zod";
 import { queryDb } from "../db.js";
 import { sanitizeRows } from "../utils/sanitize.js";
+import crypto from "crypto";
+import { elicitInput } from "../utils/elicitation.js";
 export const registerSupplierTools = (server) => {
+    // Lấy nhà cung cấp
     server.registerTool("get_suppliers", {
         description: "Retrieve the list of suppliers in the SupplyCoreERP system.",
         inputSchema: z.object({
@@ -41,6 +44,105 @@ export const registerSupplierTools = (server) => {
             return {
                 isError: true,
                 content: [{ type: "text", text: `Database query error: ${error.message}` }]
+            };
+        }
+    });
+    // Tool tạo nhà cung cấp mới hỗ trợ Elicitation Form
+    server.registerTool("create_supplier", {
+        description: "Create a new supplier. ALWAYS invoke this tool immediately with just the supplier name. DO NOT ask the user for code, taxCode, phone, email, or address in the chat; the tool's form will collect them automatically.",
+        inputSchema: z.object({
+            name: z.string().describe("The name of the supplier to create"),
+            code: z.string().optional().describe("The unique code of the supplier"),
+            taxCode: z.string().optional().describe("Tax code of the supplier"),
+            phoneNumber: z.string().optional().describe("Phone number of the supplier"),
+            email: z.string().optional().describe("Email address of the supplier"),
+            address: z.string().optional().describe("Physical address of the supplier")
+        }),
+        annotations: {
+            readOnlyHint: false,
+            destructiveHint: false,
+            idempotentHint: false,
+            openWorldHint: false
+        }
+    }, async ({ name, code, taxCode, phoneNumber, email, address }) => {
+        // 1. Kiểm tra Elicitation bằng Helper chuẩn MCP
+        const result = await elicitInput(server, {
+            mode: "form",
+            message: "Vui lòng nhập các thông tin chi tiết dưới đây để hoàn tất hồ sơ tạo nhà cung cấp mới.",
+            requestedSchema: {
+                type: "object",
+                properties: {
+                    code: {
+                        type: "string",
+                        title: "Mã nhà cung cấp (Bắt buộc)",
+                        description: "Ví dụ: NCC001"
+                    },
+                    taxCode: {
+                        type: "string",
+                        title: "Mã số thuế",
+                        description: "Ví dụ: 0102030405"
+                    },
+                    phoneNumber: {
+                        type: "string",
+                        title: "Số điện thoại liên hệ",
+                        description: "Ví dụ: 0901234567"
+                    },
+                    email: {
+                        type: "string",
+                        title: "Địa chỉ Email",
+                        description: "Ví dụ: partner@company.com"
+                    },
+                    address: {
+                        type: "string",
+                        title: "Địa chỉ văn phòng",
+                        description: "Ví dụ: 123 Đường Nguyễn Huệ, Quận 1, TP.HCM"
+                    }
+                },
+                required: ["code"]
+            }
+        }, { code, taxCode, phoneNumber, email, address });
+        // Gán lại các đối số thu thập được từ Form ở lần gọi 2 để chạy tiếp logic ghi DB
+        code = result.content.code;
+        taxCode = result.content.taxCode;
+        phoneNumber = result.content.phoneNumber;
+        email = result.content.email;
+        address = result.content.address;
+        // 2. Thực hiện insert dữ liệu vào bảng AppSuppliers
+        const newId = crypto.randomUUID();
+        const concurrencyStamp = crypto.randomUUID();
+        const insertQuery = `
+        INSERT INTO "AppSuppliers" (
+          "Id", "Code", "Name", "TaxCode", "PhoneNumber", "Email", "Address",
+          "IsActive", "DebtLimit", "PaymentTermDays", "CurrentDebt",
+          "ExtraProperties", "ConcurrencyStamp", "CreationTime", "IsDeleted"
+        ) VALUES (
+          $1, $2, $3, $4, $5, $6, $7,
+          true, 0, 0, 0,
+          '{}', $8, NOW(), false
+        )
+      `;
+        try {
+            await queryDb(insertQuery, [
+                newId,
+                code,
+                name,
+                taxCode || null,
+                phoneNumber || null,
+                email || null,
+                address || null,
+                concurrencyStamp
+            ]);
+            return {
+                content: [{
+                        type: "text",
+                        text: `Đã tạo nhà cung cấp thành công:\n- Tên: ${name}\n- Mã: ${code}\n- Mã số thuế: ${taxCode || 'N/A'}\n- Số điện thoại: ${phoneNumber || 'N/A'}\n- Email: ${email || 'N/A'}\n- Địa chỉ: ${address || 'N/A'}`
+                    }]
+            };
+        }
+        catch (error) {
+            return {
+                isError: true,
+                content: [{ type: "text", text: `Database insert error: ${error.message}` }]
             };
         }
     });

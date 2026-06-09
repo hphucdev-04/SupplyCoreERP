@@ -70,7 +70,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [maxWidth]="200">
+      <ngx-datatable-column [name]="'::Name' | abpLocalization" prop="name" [maxWidth]="500">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span class="ph-badge ph-badge--neutral">{{ row.name }}</span>
         </ng-template>
@@ -86,7 +86,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::City' | abpLocalization" prop="cityName" [width]="150">
+      <ngx-datatable-column [name]="'::City' | abpLocalization" prop="cityName">
         <ng-template let-value="value" ngx-datatable-cell-template>
           <span class="ph-text-muted">{{ value || 'N/A' }}</span>
         </ng-template>
@@ -113,11 +113,11 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Active' | abpLocalization" prop="isActive" [width]="80">
+      <ngx-datatable-column [name]="'::Active' | abpLocalization" prop="isActive">
         <ng-template let-row="row" let-value="value" ngx-datatable-cell-template>
           <div class="form-check form-switch d-flex justify-content-center">
             <input
-              class="form-check-input"
+              class="form-check-input"  
               type="checkbox"
               [checked]="value"
               (click)="onToggleActive(row, $event)"
