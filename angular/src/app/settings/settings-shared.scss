@@ -1,4 +1,4 @@
-.dlp-settings-container {
+.settings-tab-container {
   padding: 1.5rem;
   background-color: #ffffff;
   border-radius: 12px;
@@ -10,7 +10,7 @@
     display: flex;
     gap: 1rem;
     align-items: flex-start;
-    margin-bottom: 1.5rem;
+    margin-bottom: 2rem;
 
     .header-icon {
       display: flex;
@@ -39,6 +39,107 @@
     }
   }
 
+  .loading-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 3rem 0;
+    gap: 1rem;
+    color: #64748b;
+    font-size: 0.9rem;
+
+    .spinner {
+      width: 28px;
+      height: 28px;
+      border: 3px solid #e2e8f0;
+      border-top-color: #2563eb;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+  }
+
+  .form-section {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    max-width: 600px;
+
+    .actions-section {
+      display: flex;
+      justify-content: flex-start;
+      gap: 0.75rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid #e2e8f0;
+      margin-top: 1rem;
+
+      .btn {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1.25rem;
+        border-radius: 6px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        cursor: pointer;
+        transition: all 0.2s ease;
+        border: none;
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+
+        &.btn-reset {
+          background-color: #ffffff;
+          border: 1px solid #cbd5e1;
+          color: #475569;
+
+          &:hover:not(:disabled) {
+            background-color: #f1f5f9;
+            color: #1e293b;
+          }
+        }
+
+        &.btn-danger-outline {
+          background-color: transparent;
+          border: 1px solid #ef4444;
+          color: #ef4444;
+
+          &:hover:not(:disabled) {
+            background-color: #fef2f2;
+            color: #b91c1c;
+          }
+        }
+
+        &.btn-save {
+          background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+          color: #ffffff;
+          box-shadow: 0 2px 8px rgba(37, 99, 235, 0.2);
+
+          &:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+          }
+
+          &:active:not(:disabled) {
+            transform: translateY(0);
+          }
+
+          .btn-spinner {
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #ffffff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+          }
+        }
+      }
+    }
+  }
+
+  /* --- DLP Settings specific styles --- */
   .alert {
     display: flex;
     gap: 0.75rem;
@@ -76,26 +177,6 @@
           }
         }
       }
-    }
-  }
-
-  .loading-state {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 3rem 0;
-    gap: 1rem;
-    color: #64748b;
-    font-size: 0.9rem;
-
-    .spinner {
-      width: 28px;
-      height: 28px;
-      border: 3px solid #e2e8f0;
-      border-top-color: #2563eb;
-      border-radius: 50%;
-      animation: spin 0.8s linear infinite;
     }
   }
 
@@ -198,7 +279,7 @@
 
     .actions-section {
       display: flex;
-      justify-content: flex-end;
+      justify-content: flex-start;
       gap: 0.75rem;
       padding: 0.75rem 1rem;
       background-color: #f8fafc;
@@ -229,6 +310,17 @@
           &:hover:not(:disabled) {
             background-color: #f1f5f9;
             color: #1e293b;
+          }
+        }
+
+        &.btn-danger-outline {
+          background-color: transparent;
+          border: 1px solid #ef4444;
+          color: #ef4444;
+
+          &:hover:not(:disabled) {
+            background-color: #fef2f2;
+            color: #b91c1c;
           }
         }
 

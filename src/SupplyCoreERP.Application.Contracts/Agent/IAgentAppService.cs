@@ -15,8 +15,4 @@ public interface IAgentAppService : IApplicationService
     Task<object> SubmitElicitationAsync(AgentElicitationInputDto input);
 
     Task<AgentHistoryDto> GetHistoryAsync(AgentSessionInputDto input);
-
-    Task<string> GetDlpRulesJsonAsync();
-
-    Task UpdateDlpRulesJsonAsync(string dlpRulesJson);
 }

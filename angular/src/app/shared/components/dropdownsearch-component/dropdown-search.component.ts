@@ -18,8 +18,8 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 
 export interface DropdownItem {
-  id: string | number | null;
-  name: string;
+  id?: string | number | null;
+  name?: string;
   [key: string]: any;
 }
 

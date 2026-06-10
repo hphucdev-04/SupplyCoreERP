@@ -13,7 +13,6 @@ using SupplyCoreERP.Mcp;
 using SupplyCoreERP.Settings;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
 
 namespace SupplyCoreERP.Agent;
@@ -26,7 +25,6 @@ public class AgentAppService : SupplyCore, IAgentAppService
     private readonly IRepository<AgentSession, Guid> _sessionRepository;
     private readonly AgentManager _agentManager;
     private readonly ISettingProvider _settingProvider;
-    private readonly ISettingManager _settingManager;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -39,15 +37,13 @@ public class AgentAppService : SupplyCore, IAgentAppService
         IMcpClientService mcpClientService,
         IRepository<AgentSession, Guid> sessionRepository,
         AgentManager agentManager,
-        ISettingProvider settingProvider,
-        ISettingManager settingManager)
+        ISettingProvider settingProvider)
     {
         _agent = agent;
         _mcpClientService = mcpClientService;
         _sessionRepository = sessionRepository;
         _agentManager = agentManager;
         _settingProvider = settingProvider;
-        _settingManager = settingManager;
     }
 
     public async Task<object> SendMessageAsync(AgentRequestInputDto input)
@@ -656,25 +652,6 @@ public class AgentAppService : SupplyCore, IAgentAppService
                 SessionId = session.Id
             };
         }
-    }
-
-    public async Task<string> GetDlpRulesJsonAsync()
-    {
-        return await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.DlpRules) ?? "[]";
-    }
-
-    public async Task UpdateDlpRulesJsonAsync(string dlpRulesJson)
-    {
-        try
-        {
-            JsonSerializer.Deserialize<List<DlpRule>>(dlpRulesJson, _jsonOptions);
-        }
-        catch (Exception ex)
-        {
-            throw new UserFriendlyException("Định dạng JSON của DLP Rules không hợp lệ: " + ex.Message);
-        }
-
-        await _settingManager.SetGlobalAsync(SupplyCoreERPSettings.DlpRules, dlpRulesJson);
     }
 
     private async Task<string> RedactSensitiveTextAsync(string text)

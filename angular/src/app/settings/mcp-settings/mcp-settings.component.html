@@ -1,0 +1,45 @@
+<div class="settings-tab-container">
+  <div class="settings-header">
+    <div class="header-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="8" x="2" y="2" rx="2"/><rect width="20" height="8" x="2" y="14" rx="2"/><line x1="6" x2="6" y1="6" y2="6.01"/><line x1="6" x2="6" y1="18" y2="18.01"/></svg>
+    </div>
+    <div class="header-text">
+      <h2>{{ '::Settings:McpSettings' | abpLocalization }}</h2>
+      <p>{{ '::Settings:McpDescription' | abpLocalization }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <span>{{ '::Settings:Loading' | abpLocalization }}</span>
+  </div>
+
+  <div *ngIf="!isLoading" class="form-section">
+    <div class="form-group">
+      <label class="form-label" for="mcp-url">Server Base URL</label>
+      <input 
+        id="mcp-url"
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="baseUrl" 
+      />
+      <small class="ph-hint-msg">
+        {{ '::Settings:McpUrlHelp' | abpLocalization }}
+      </small>
+    </div>
+
+    <div class="actions-section">
+      <button 
+        class="btn ph-btn-save" 
+        (click)="saveSettings()">
+        <span *ngIf="isSaving" class="btn-spinner"></span>
+        {{ (isSaving ? '::Settings:Saving' : '::Settings:Save') | abpLocalization }}
+      </button>
+      <button 
+        class="btn ph-btn-cancel" 
+        (click)="resetSettings()">
+        {{ (isResetting ? '::Settings:Restoring' : '::Settings:RestoreDefault') | abpLocalization }}
+      </button>
+    </div>
+  </div>
+</div>

@@ -1321,31 +1321,6 @@
                     "type": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto",
                     "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto"
                   }
-                },
-                {
-                  "name": "GetDlpRulesJsonAsync",
-                  "parametersOnMethod": [],
-                  "returnValue": {
-                    "type": "System.String",
-                    "typeSimple": "string"
-                  }
-                },
-                {
-                  "name": "UpdateDlpRulesJsonAsync",
-                  "parametersOnMethod": [
-                    {
-                      "name": "dlpRulesJson",
-                      "typeAsString": "System.String, System.Private.CoreLib",
-                      "type": "System.String",
-                      "typeSimple": "string",
-                      "isOptional": false,
-                      "defaultValue": null
-                    }
-                  ],
-                  "returnValue": {
-                    "type": "System.Void",
-                    "typeSimple": "System.Void"
-                  }
                 }
               ]
             }
@@ -1532,58 +1507,6 @@
               "returnValue": {
                 "type": "System.Object",
                 "typeSimple": "object"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
-            },
-            "GetDlpRulesJsonAsync": {
-              "uniqueName": "GetDlpRulesJsonAsync",
-              "name": "GetDlpRulesJsonAsync",
-              "httpMethod": "GET",
-              "url": "api/app/agent/dlp-rules-json",
-              "supportedVersions": [],
-              "parametersOnMethod": [],
-              "parameters": [],
-              "returnValue": {
-                "type": "System.String",
-                "typeSimple": "string"
-              },
-              "allowAnonymous": false,
-              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
-            },
-            "UpdateDlpRulesJsonAsyncByDlpRulesJson": {
-              "uniqueName": "UpdateDlpRulesJsonAsyncByDlpRulesJson",
-              "name": "UpdateDlpRulesJsonAsync",
-              "httpMethod": "PUT",
-              "url": "api/app/agent/dlp-rules-json",
-              "supportedVersions": [],
-              "parametersOnMethod": [
-                {
-                  "name": "dlpRulesJson",
-                  "typeAsString": "System.String, System.Private.CoreLib",
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null
-                }
-              ],
-              "parameters": [
-                {
-                  "nameOnMethod": "dlpRulesJson",
-                  "name": "dlpRulesJson",
-                  "jsonName": null,
-                  "type": "System.String",
-                  "typeSimple": "string",
-                  "isOptional": false,
-                  "defaultValue": null,
-                  "constraintTypes": null,
-                  "bindingSourceId": "ModelBinding",
-                  "descriptorName": ""
-                }
-              ],
-              "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
               },
               "allowAnonymous": false,
               "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
@@ -11940,6 +11863,424 @@
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.SalesRecalls.ISalesRecallAppService"
+            }
+          }
+        },
+        "SupplyCoreERP.Settings.SettingAppService": {
+          "controllerName": "Setting",
+          "controllerGroupName": "Setting",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "SupplyCoreERP.Settings.SettingAppService",
+          "interfaces": [
+            {
+              "type": "SupplyCoreERP.Settings.ISettingAppService",
+              "name": "ISettingAppService",
+              "methods": [
+                {
+                  "name": "GetDlpSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                    "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto"
+                  }
+                },
+                {
+                  "name": "UpdateDlpSettingsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                      "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "GetLlmProviderSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                    "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto"
+                  }
+                },
+                {
+                  "name": "UpdateLlmProviderSettingsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                      "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "GetMcpSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                    "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto"
+                  }
+                },
+                {
+                  "name": "UpdateMcpSettingsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Settings.Dtos.McpSettingsDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                      "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "GetInventorySettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                    "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto"
+                  }
+                },
+                {
+                  "name": "UpdateInventorySettingsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                      "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ResetDlpSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ResetLlmProviderSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ResetMcpSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ResetInventorySettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "GetDlpSettingsAsync": {
+              "uniqueName": "GetDlpSettingsAsync",
+              "name": "GetDlpSettingsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/setting/dlp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "UpdateDlpSettingsAsyncByInput": {
+              "uniqueName": "UpdateDlpSettingsAsyncByInput",
+              "name": "UpdateDlpSettingsAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/setting/dlp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "ResetDlpSettingsAsync": {
+              "uniqueName": "ResetDlpSettingsAsync",
+              "name": "ResetDlpSettingsAsync",
+              "httpMethod": "POST",
+              "url": "api/app/setting/reset-dlp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "GetLlmProviderSettingsAsync": {
+              "uniqueName": "GetLlmProviderSettingsAsync",
+              "name": "GetLlmProviderSettingsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/setting/llm-provider-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "UpdateLlmProviderSettingsAsyncByInput": {
+              "uniqueName": "UpdateLlmProviderSettingsAsyncByInput",
+              "name": "UpdateLlmProviderSettingsAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/setting/llm-provider-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "ResetLlmProviderSettingsAsync": {
+              "uniqueName": "ResetLlmProviderSettingsAsync",
+              "name": "ResetLlmProviderSettingsAsync",
+              "httpMethod": "POST",
+              "url": "api/app/setting/reset-llm-provider-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "GetMcpSettingsAsync": {
+              "uniqueName": "GetMcpSettingsAsync",
+              "name": "GetMcpSettingsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/setting/mcp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "UpdateMcpSettingsAsyncByInput": {
+              "uniqueName": "UpdateMcpSettingsAsyncByInput",
+              "name": "UpdateMcpSettingsAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/setting/mcp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Settings.Dtos.McpSettingsDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "ResetMcpSettingsAsync": {
+              "uniqueName": "ResetMcpSettingsAsync",
+              "name": "ResetMcpSettingsAsync",
+              "httpMethod": "POST",
+              "url": "api/app/setting/reset-mcp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "GetInventorySettingsAsync": {
+              "uniqueName": "GetInventorySettingsAsync",
+              "name": "GetInventorySettingsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/setting/inventory-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "UpdateInventorySettingsAsyncByInput": {
+              "uniqueName": "UpdateInventorySettingsAsyncByInput",
+              "name": "UpdateInventorySettingsAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/setting/inventory-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "ResetInventorySettingsAsync": {
+              "uniqueName": "ResetInventorySettingsAsync",
+              "name": "ResetInventorySettingsAsync",
+              "httpMethod": "POST",
+              "url": "api/app/setting/reset-inventory-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
             }
           }
         },
@@ -26789,6 +27130,147 @@
           "maxLength": null,
           "minimum": "0,0001",
           "maximum": "1,7976931348623157E+308",
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.DlpRuleDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Pattern",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Replacement",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.DlpSettingsDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Rules",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Settings.Dtos.DlpRuleDto]",
+          "typeSimple": "[SupplyCoreERP.Settings.Dtos.DlpRuleDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.InventorySettingsDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "ExpirationAlertDays",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Model",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ApiKey",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.McpSettingsDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "BaseUrl",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
           "regex": null
         }
       ]

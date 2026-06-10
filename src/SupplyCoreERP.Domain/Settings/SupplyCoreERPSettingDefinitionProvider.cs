@@ -13,6 +13,30 @@ public class SupplyCoreERPSettingDefinitionProvider : SettingDefinitionProvider
             defaultValue: """[{"Name":"TAXCODE","Pattern":"\\b\\d{10}(?:-\\d{3})?\\b","Replacement":"[REDACTED_TAXCODE]"},{"Name":"PHONENUMBER","Pattern":"(?:\\+84|0)[35789]\\d{8}\\b","Replacement":"[REDACTED_PHONENUMBER]"},{"Name":"EMAIL","Pattern":"[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}","Replacement":"[REDACTED_EMAIL]"}]""",
             isVisibleToClients: false
         ));
+
+        context.Add(new SettingDefinition(
+            SupplyCoreERPSettings.LlmProviderModel,
+            defaultValue: "",
+            isVisibleToClients: false
+        ));
+
+        context.Add(new SettingDefinition(
+            SupplyCoreERPSettings.LlmProviderApiKey,
+            defaultValue: "",
+            isVisibleToClients: false
+        ));
+
+        context.Add(new SettingDefinition(
+            SupplyCoreERPSettings.McpServerBaseUrl,
+            defaultValue: "http://localhost:3000",
+            isVisibleToClients: false
+        ));
+
+        context.Add(new SettingDefinition(
+            SupplyCoreERPSettings.ExpirationAlertDays,
+            defaultValue: "30",
+            isVisibleToClients: false
+        ));
     }
 }
 

@@ -1,10 +1,12 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using Microsoft.Extensions.Configuration;
 using SupplyCoreERP.Mcp.Client.AgentProviders.Dtos;
 using SupplyCoreERP.Mcp.Dtos;
+using SupplyCoreERP.Settings;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Security.Encryption;
+using Volo.Abp.Settings;
 
 namespace SupplyCoreERP.Mcp.Client.AgentProviders;
 
@@ -12,22 +14,31 @@ namespace SupplyCoreERP.Mcp.Client.AgentProviders;
 public class GeminiProvider : IAgentProvider, ITransientDependency
 {
     private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
+    private readonly ISettingProvider _settingProvider;
+    private readonly IStringEncryptionService _stringEncryptionService;
 
-    public GeminiProvider(HttpClient httpClient, IConfiguration configuration)
+    public GeminiProvider(
+        HttpClient httpClient,
+        ISettingProvider settingProvider,
+        IStringEncryptionService stringEncryptionService)
     {
         _httpClient = httpClient;
-        _configuration = configuration;
+        _settingProvider = settingProvider;
+        _stringEncryptionService = stringEncryptionService;
     }
 
     public async Task<AgentResponseDto> GenerateContentAsync(List<AgentChatMessageDto> chatHistory, List<McpToolDto> tools)
     {
-        string? geminiApiKey = _configuration["Gemini:ApiKey"];
-        string geminiModel = _configuration["Gemini:Model"] ?? "gemini-1.5-pro";
+        string? encryptedApiKey = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.LlmProviderApiKey);
+        string? geminiApiKey = string.IsNullOrEmpty(encryptedApiKey)
+            ? null
+            : _stringEncryptionService.Decrypt(encryptedApiKey);
+
+        string geminiModel = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.LlmProviderModel) ?? "gemini-2.5-flash";
 
         if (string.IsNullOrEmpty(geminiApiKey))
         {
-            throw new Exception("Chưa cấu hình Gemini API Key (Gemini:ApiKey) trong file appsettings.json!");
+            throw new Exception("Chưa cấu hình API Key cho LLM Provider trong phần cài đặt hệ thống!");
         }
 
         string geminiUrl = $"https://generativelanguage.googleapis.com/v1beta/models/{geminiModel}:generateContent?key={geminiApiKey}";

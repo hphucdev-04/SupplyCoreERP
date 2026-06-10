@@ -19,15 +19,6 @@ export class AgentService {
     { apiName: this.apiName,...config });
   
 
-  getDlpRulesJson = (config?: Partial<Rest.Config>) =>
-    this.restService.request<any, string>({
-      method: 'GET',
-      responseType: 'text',
-      url: '/api/app/agent/dlp-rules-json',
-    },
-    { apiName: this.apiName,...config });
-  
-
   getHistory = (input: AgentSessionInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AgentHistoryDto>({
       method: 'GET',
@@ -60,15 +51,6 @@ export class AgentService {
       method: 'POST',
       url: '/api/app/agent/submit-elicitation',
       body: input,
-    },
-    { apiName: this.apiName,...config });
-  
-
-  updateDlpRulesJson = (dlpRulesJson: string, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
-      method: 'PUT',
-      url: '/api/app/agent/dlp-rules-json',
-      params: { dlpRulesJson },
     },
     { apiName: this.apiName,...config });
 }

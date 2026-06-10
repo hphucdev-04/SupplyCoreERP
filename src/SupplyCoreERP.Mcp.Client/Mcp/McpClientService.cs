@@ -1,18 +1,25 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using Microsoft.Extensions.Configuration;
+using System.Threading;
+using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using SupplyCoreERP.Mcp.Dtos;
+using SupplyCoreERP.Settings;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Settings;
 
 namespace SupplyCoreERP.Mcp.Client.Mcp;
 
 public class McpClientService : IMcpClientService, ISingletonDependency, IDisposable
 {
     private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
+    private readonly ISettingProvider _settingProvider;
     private readonly ILogger<McpClientService> _logger;
+    private string _mcpBaseUrl = string.Empty;
 
     // Quản lý trạng thái kết nối Streamable HTTP
     private string? _sessionId;
@@ -26,11 +33,11 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
 
     public McpClientService(
         HttpClient httpClient,
-        IConfiguration configuration,
+        ISettingProvider settingProvider,
         ILogger<McpClientService> logger)
     {
         _httpClient = httpClient;
-        _configuration = configuration;
+        _settingProvider = settingProvider;
         _logger = logger;
 
         // Thiết lập timeout mặc định cho HttpClient là 30 giây theo đặc tả
@@ -142,8 +149,9 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                 return;
             }
 
-            string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-            string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+            _mcpBaseUrl = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.McpServerBaseUrl)
+                ?? throw new InvalidOperationException("Chưa cấu hình MCP Server Base URL trong cài đặt hệ thống.");
+            string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
             // BƯỚC 1: Gửi request POST initialize để bắt đầu handshake
             var initPayload = new
@@ -250,8 +258,7 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
 
         try
         {
-            string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-            string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+            string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
             using HttpRequestMessage request = new(HttpMethod.Post, mcpUrl);
             request.Content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
@@ -330,8 +337,7 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
 
     private async Task<string> RetrySendAsync(object payload, string requestId)
     {
-        string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-        string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+        string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
         using HttpRequestMessage request = new(HttpMethod.Post, mcpUrl);
         request.Content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
@@ -384,8 +390,7 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
             {
                 try
                 {
-                    string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-                    string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+                    string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
                     using HttpRequestMessage request = new(HttpMethod.Get, mcpUrl);
                     request.Headers.Add("mcp-session-id", sessionId);
@@ -456,8 +461,7 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
         {
             try
             {
-                string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-                string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+                string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
                 using HttpRequestMessage request = new(HttpMethod.Delete, mcpUrl);
                 request.Headers.Add("mcp-session-id", _sessionId);
