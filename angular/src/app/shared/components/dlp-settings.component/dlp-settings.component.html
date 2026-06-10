@@ -1,0 +1,70 @@
+<div class="dlp-settings-container">
+  <div class="settings-header">
+    <div class="header-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="18" height="11" x="3" y="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+    </div>
+    <div class="header-text">
+      <h2>Data Loss Prevention (DLP) Settings</h2>
+      <p>Cấu hình các quy tắc lọc dữ liệu nhạy cảm (mã số thuế, số điện thoại, email...) bằng biểu thức chính quy (Regex) trước khi lưu vào lịch sử trò chuyện của Agent.</p>
+    </div>
+  </div>
+
+  <div class="alert alert-info">
+    <div class="alert-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+    </div>
+    <div class="alert-content">
+      <strong>Mẹo cấu hình:</strong> Dữ liệu được cấu hình dưới dạng một mảng các đối tượng JSON. Mỗi đối tượng bắt buộc phải có đủ 3 thuộc tính:
+      <ul>
+        <li><code>Name</code>: Tên định danh viết hoa (ví dụ: TAXCODE, EMAIL, PHONENUMBER).</li>
+        <li><code>Pattern</code>: Biểu thức Regex dùng để nhận diện (lưu ý thoát dấu <code>\</code> bằng cách viết <code>\\</code>).</li>
+        <li><code>Replacement</code>: Chuỗi văn bản sẽ được dùng để ghi đè (ví dụ: [REDACTED_TAXCODE]).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <span>Đang tải dữ liệu cấu hình...</span>
+  </div>
+
+  <div *ngIf="!isLoading" class="editor-section">
+    <div class="editor-header">
+      <span class="editor-title">DlpRulesConfiguration.json</span>
+      <span class="status-indicator" [class.valid]="isValidJson" [class.invalid]="!isValidJson">
+        {{ isValidJson ? 'JSON Hợp lệ' : 'Lỗi Cú pháp' }}
+      </span>
+    </div>
+
+    <div class="textarea-wrapper">
+      <textarea
+        [ngModel]="dlpJson"
+        (ngModelChange)="onJsonChange($event)"
+        placeholder="Nhập cấu hình JSON tại đây..."
+        spellcheck="false"
+        rows="12"
+      ></textarea>
+    </div>
+
+    <div *ngIf="validationError" class="validation-message">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+      <span>{{ validationError }}</span>
+    </div>
+
+    <div class="actions-section">
+      <button 
+        class="btn btn-reset" 
+        (click)="resetChanges()" 
+        [disabled]="isSaving">
+        Đặt lại
+      </button>
+      <button 
+        class="btn btn-save" 
+        (click)="saveDlpRules()" 
+        [disabled]="!isValidJson || isSaving">
+        <span *ngIf="isSaving" class="btn-spinner"></span>
+        {{ isSaving ? 'Đang lưu...' : 'Lưu thay đổi' }}
+      </button>
+    </div>
+  </div>
+</div>

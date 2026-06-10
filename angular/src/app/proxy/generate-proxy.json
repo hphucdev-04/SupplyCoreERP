@@ -1321,6 +1321,31 @@
                     "type": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto",
                     "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto"
                   }
+                },
+                {
+                  "name": "GetDlpRulesJsonAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.String",
+                    "typeSimple": "string"
+                  }
+                },
+                {
+                  "name": "UpdateDlpRulesJsonAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "dlpRulesJson",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
                 }
               ]
             }
@@ -1507,6 +1532,58 @@
               "returnValue": {
                 "type": "System.Object",
                 "typeSimple": "object"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
+            },
+            "GetDlpRulesJsonAsync": {
+              "uniqueName": "GetDlpRulesJsonAsync",
+              "name": "GetDlpRulesJsonAsync",
+              "httpMethod": "GET",
+              "url": "api/app/agent/dlp-rules-json",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.String",
+                "typeSimple": "string"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
+            },
+            "UpdateDlpRulesJsonAsyncByDlpRulesJson": {
+              "uniqueName": "UpdateDlpRulesJsonAsyncByDlpRulesJson",
+              "name": "UpdateDlpRulesJsonAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/agent/dlp-rules-json",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "dlpRulesJson",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "dlpRulesJson",
+                  "name": "dlpRulesJson",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
               },
               "allowAnonymous": false,
               "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"

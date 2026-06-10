@@ -142,7 +142,10 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
     private List<object> MapMcpToolsToGemini(List<McpToolDto> tools)
     {
         List<object> list = new();
-        if (tools == null) return list;
+        if (tools == null)
+        {
+            return list;
+        }
 
         foreach (McpToolDto tool in tools)
         {

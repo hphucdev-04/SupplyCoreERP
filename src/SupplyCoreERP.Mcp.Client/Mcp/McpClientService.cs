@@ -72,12 +72,15 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
             {
                 foreach (JsonNode? node in toolsArray)
                 {
-                    if (node == null) continue;
+                    if (node == null)
+                    {
+                        continue;
+                    }
 
                     string name = node["name"]?.ToString() ?? "";
                     string desc = node["description"]?.ToString() ?? "";
                     JsonObject inputSchema = node["inputSchema"]?.AsObject() ?? new JsonObject();
-                    
+
                     // Xác định cờ duyệt thông qua readOnlyHint trong annotations (chuẩn MCP)
                     bool readOnly = node["annotations"]?["readOnlyHint"]?.GetValue<bool>() ?? true;
                     bool requiresApproval = !readOnly;
@@ -402,8 +405,15 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                     while (!token.IsCancellationRequested)
                     {
                         string? line = await reader.ReadLineAsync(token);
-                        if (line == null) break;
-                        if (string.IsNullOrEmpty(line)) continue;
+                        if (line == null)
+                        {
+                            break;
+                        }
+
+                        if (string.IsNullOrEmpty(line))
+                        {
+                            continue;
+                        }
 
                         // Nếu nhận được sự kiện thay đổi danh sách tool
                         if (line.StartsWith("data:") && line.Contains("notifications/tools/list_changed"))

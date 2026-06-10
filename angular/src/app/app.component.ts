@@ -2,9 +2,11 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { DynamicLayoutComponent } from '@abp/ng.core';
 import { LoaderBarComponent } from '@abp/ng.theme.shared';
+import { SettingTabsService } from '@abp/ng.setting-management/config';
 import { NotificationComponent } from './shared/components/notification-component/notification.component';
 import { AiChatComponent } from './shared/components/ai-chat.component/ai-chat.component'; 
 import { DrawerComponent } from './shared/components/drawer-component/drawer.component';
+import { DlpSettingsComponent } from './shared/components/dlp-settings.component/dlp-settings.component';
 
 @Component({
   selector: 'app-root',
@@ -41,4 +43,14 @@ import { DrawerComponent } from './shared/components/drawer-component/drawer.com
 })
 export class AppComponent {
   isChatOpen = false;
+
+  constructor(private settingTabs: SettingTabsService) {
+    this.settingTabs.add([
+      {
+        name: 'AI Agent Settings',
+        order: 100,
+        component: DlpSettingsComponent,
+      }
+    ]);
+  }
 }

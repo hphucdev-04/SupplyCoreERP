@@ -92,8 +92,8 @@ public class McpAgent : IAgent, ITransientDependency
                     try
                     {
                         JsonNode? resultNode = JsonNode.Parse(toolResult);
-                        var resultObj = resultNode?["result"];
-                        var errorObj = resultNode?["error"];
+                        JsonNode? resultObj = resultNode?["result"];
+                        JsonNode? errorObj = resultNode?["error"];
 
                         if (errorObj != null)
                         {
@@ -123,11 +123,11 @@ public class McpAgent : IAgent, ITransientDependency
                             }
 
                             bool isToolError = resultObj["isError"]?.GetValue<bool>() ?? false;
-                            var contentArray = resultObj["content"]?.AsArray();
-                            
+                            JsonArray? contentArray = resultObj["content"]?.AsArray();
+
                             if (contentArray != null && contentArray.Count > 0)
                             {
-                                var texts = contentArray
+                                IEnumerable<string?> texts = contentArray
                                     .Select(c => c?["text"]?.ToString())
                                     .Where(t => !string.IsNullOrEmpty(t));
                                 processedResult = string.Join("\n", texts);
@@ -241,7 +241,10 @@ public class McpAgent : IAgent, ITransientDependency
     private List<AgentChatMessageDto> MapHistoryToAgentFormat(List<AgentMessageDto> history)
     {
         List<AgentChatMessageDto> list = new();
-        if (history == null) return list;
+        if (history == null)
+        {
+            return list;
+        }
 
         foreach (AgentMessageDto msg in history)
         {

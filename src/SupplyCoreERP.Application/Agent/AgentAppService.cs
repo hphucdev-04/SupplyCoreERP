@@ -13,6 +13,7 @@ using SupplyCoreERP.Mcp;
 using SupplyCoreERP.Settings;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.SettingManagement;
 using Volo.Abp.Settings;
 
 namespace SupplyCoreERP.Agent;
@@ -25,6 +26,7 @@ public class AgentAppService : SupplyCore, IAgentAppService
     private readonly IRepository<AgentSession, Guid> _sessionRepository;
     private readonly AgentManager _agentManager;
     private readonly ISettingProvider _settingProvider;
+    private readonly ISettingManager _settingManager;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -37,13 +39,15 @@ public class AgentAppService : SupplyCore, IAgentAppService
         IMcpClientService mcpClientService,
         IRepository<AgentSession, Guid> sessionRepository,
         AgentManager agentManager,
-        ISettingProvider settingProvider)
+        ISettingProvider settingProvider,
+        ISettingManager settingManager)
     {
         _agent = agent;
         _mcpClientService = mcpClientService;
         _sessionRepository = sessionRepository;
         _agentManager = agentManager;
         _settingProvider = settingProvider;
+        _settingManager = settingManager;
     }
 
     public async Task<object> SendMessageAsync(AgentRequestInputDto input)
@@ -212,10 +216,10 @@ public class AgentAppService : SupplyCore, IAgentAppService
         {
             try
             {
-                var keys = pendingToolCall.Arguments.Select(x => x.Key).ToList();
+                List<string> keys = pendingToolCall.Arguments.Select(x => x.Key).ToList();
                 foreach (string key in keys)
                 {
-                    var valNode = pendingToolCall.Arguments[key];
+                    JsonNode? valNode = pendingToolCall.Arguments[key];
                     if (valNode != null)
                     {
                         if (valNode is JsonValue jsonValue && jsonValue.TryGetValue<string>(out string? originalValue) && originalValue != null)
@@ -422,7 +426,7 @@ public class AgentAppService : SupplyCore, IAgentAppService
 
     public async Task<AgentHistoryDto> GetHistoryAsync(AgentSessionInputDto input)
     {
-        var output = new AgentHistoryDto();
+        AgentHistoryDto output = new();
 
         if (input.SessionId == Guid.Empty)
         {
@@ -438,7 +442,7 @@ public class AgentAppService : SupplyCore, IAgentAppService
         }
 
         // B. Tìm và tích hợp tác vụ pending (nếu có) để khôi phục trạng thái
-        var pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Approval);
+        AgentTask? pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Approval);
         if (pendingTask == null)
         {
             pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Elicitation);
@@ -446,7 +450,7 @@ public class AgentAppService : SupplyCore, IAgentAppService
 
         if (pendingTask != null)
         {
-            var suspendedToolCall = !string.IsNullOrEmpty(pendingTask.SuspendedDataJson)
+            AgentToolCallMessageDto? suspendedToolCall = !string.IsNullOrEmpty(pendingTask.SuspendedDataJson)
                 ? JsonSerializer.Deserialize<AgentToolCallMessageDto>(pendingTask.SuspendedDataJson, _jsonOptions)
                 : null;
 
@@ -549,10 +553,10 @@ public class AgentAppService : SupplyCore, IAgentAppService
         // 4. Khử nhạy cảm thông tin đối số trước khi lưu vào lịch sử DB để bảo vệ an toàn thông tin (DLP)
         try
         {
-            var keys = arguments.Select(x => x.Key).ToList();
+            List<string> keys = arguments.Select(x => x.Key).ToList();
             foreach (string key in keys)
             {
-                var valNode = arguments[key];
+                JsonNode? valNode = arguments[key];
                 if (valNode != null)
                 {
                     if (valNode is JsonValue jsonValue && jsonValue.TryGetValue<string>(out string? originalValue) && originalValue != null)
@@ -652,6 +656,25 @@ public class AgentAppService : SupplyCore, IAgentAppService
                 SessionId = session.Id
             };
         }
+    }
+
+    public async Task<string> GetDlpRulesJsonAsync()
+    {
+        return await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.DlpRules) ?? "[]";
+    }
+
+    public async Task UpdateDlpRulesJsonAsync(string dlpRulesJson)
+    {
+        try
+        {
+            JsonSerializer.Deserialize<List<DlpRule>>(dlpRulesJson, _jsonOptions);
+        }
+        catch (Exception ex)
+        {
+            throw new UserFriendlyException("Định dạng JSON của DLP Rules không hợp lệ: " + ex.Message);
+        }
+
+        await _settingManager.SetGlobalAsync(SupplyCoreERPSettings.DlpRules, dlpRulesJson);
     }
 
     private async Task<string> RedactSensitiveTextAsync(string text)
