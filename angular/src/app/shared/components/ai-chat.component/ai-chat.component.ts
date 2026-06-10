@@ -1,6 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, ViewChild, ElementRef, OnInit } from '@angular/core';
-import { trigger, transition, style, animate } from '@angular/animations';
-import 'deep-chat';
+import { Component, ViewChild, ElementRef, OnInit, AfterViewChecked } from '@angular/core';
 import { SharedModule } from '../../shared.module';
 import { AgentService } from 'src/app/proxy/agent/agent.service';
 
@@ -8,30 +6,17 @@ import { AgentService } from 'src/app/proxy/agent/agent.service';
   selector: 'app-ai-chat',
   standalone: true,
   imports: [SharedModule],
-  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   templateUrl: 'ai-chat.component.html',
-  styleUrls: ['./ai-chat.component.scss'],
-  animations: [
-    trigger('chatAnimation', [
-      // Mở ra: mượt mà trượt lên + phóng to
-      transition(':enter', [
-        style({ opacity: 0, transform: 'translateY(20px) scale(0.95)' }),
-        animate('0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1)',
-          style({ opacity: 1, transform: 'translateY(0) scale(1)' }))
-      ]),
-      // Đóng lại: mờ dần + thu nhỏ nhanh
-      transition(':leave', [
-        animate('0.2s ease-in',
-          style({ opacity: 0, transform: 'translateY(15px) scale(0.97)' }))
-      ])
-    ])
-  ]
+  styleUrls: ['./ai-chat.component.scss']
 })
-export class AiChatComponent implements OnInit {
-  @ViewChild('chatElement') chatElementRef!: ElementRef;
+export class AiChatComponent implements OnInit, AfterViewChecked {
+  @ViewChild('scrollContainer') scrollContainer!: ElementRef;
 
-  isOpen = false;
   currentSessionId: string | null = null;
+  messages: Array<{ role: 'user' | 'model'; text: string }> = [];
+  userInput = '';
+  isLoading = false;
+  isExecutingTask = false; // Trạng thái loading khi bấm các nút phẳng trên slide panel
 
   pendingApprovalInfo: {
     sessionId: string;
@@ -39,9 +24,6 @@ export class AiChatComponent implements OnInit {
     arguments: any;
   } | null = null;
 
-  isExecutingApproval = false;
-
-  // Thuộc tính phục vụ Elicitation Form
   pendingElicitationInfo: {
     sessionId: string;
     elicitationForm: {
@@ -62,65 +44,6 @@ export class AiChatComponent implements OnInit {
 
   elicitationFormValues: { [key: string]: string } = {};
 
-  chatInitialMessages: any[] = [
-    { role: 'ai', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống SupplyCoreERP. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
-  ];
-
-  chatRequest = {
-    handler: (body: any, signals: any) => {
-      const messages = body.messages || [];
-      if (messages.length === 0) {
-        signals.onResponse({ error: 'Không có tin nhắn gửi đi!' });
-        return;
-      }
-
-      const currentMessage = messages[messages.length - 1];
-      const history = messages.slice(0, messages.length - 1).map((m: any) => ({
-        role: m.role === 'ai' ? 'model' : 'user',
-        text: m.text
-      }));
-
-      this.agentService.sendMessage({
-        text: currentMessage.text,
-        history: history,
-        sessionId: this.currentSessionId || undefined
-      }).subscribe({
-        next: (response: any) => {
-          if (response && response.sessionId) {
-            this.setSessionId(response.sessionId);
-          }
-
-          if (response && response.status === 'PendingApproval') {
-            this.pendingApprovalInfo = {
-              sessionId: response.sessionId,
-              toolName: response.toolName,
-              arguments: response.arguments
-            };
-            signals.onResponse({ text: '🤖 *Tác vụ yêu cầu phê duyệt...*' });
-          } else if (response && response.status === 'PendingElicitation') {
-            const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
-            this.pendingElicitationInfo = {
-              sessionId: response.sessionId,
-              elicitationForm: transformedForm
-            };
-            this.elicitationFormValues = {};
-            if (transformedForm?.fields) {
-              transformedForm.fields.forEach((f: any) => {
-                this.elicitationFormValues[f.name] = '';
-              });
-            }
-            signals.onResponse({ text: '🤖 *Yêu cầu cung cấp thông tin tác vụ...*' });
-          } else {
-            signals.onResponse({ text: response.text || '' });
-          }
-        },
-        error: (err) => {
-          signals.onResponse({ error: err?.message || 'Có lỗi xảy ra khi kết nối tới Trợ lý AI!' });
-        }
-      });
-    }
-  };
-
   constructor(private agentService: AgentService) {}
 
   ngOnInit() {
@@ -128,7 +51,16 @@ export class AiChatComponent implements OnInit {
     if (savedSessionId) {
       this.currentSessionId = savedSessionId;
       this.loadChatHistory(savedSessionId);
+    } else {
+      // Tin nhắn chào mừng mặc định nếu không có session
+      this.messages = [
+        { role: 'model', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống SupplyCoreERP. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
+      ];
     }
+  }
+
+  ngAfterViewChecked() {
+    this.scrollToBottom();
   }
 
   setSessionId(sessionId: string) {
@@ -136,50 +68,98 @@ export class AiChatComponent implements OnInit {
     localStorage.setItem('rx_ai_chat_session_id', sessionId);
   }
 
+  scrollToBottom(): void {
+    try {
+      if (this.scrollContainer) {
+        this.scrollContainer.nativeElement.scrollTop = this.scrollContainer.nativeElement.scrollHeight;
+      }
+    } catch (err) {
+      // Bỏ qua lỗi scroll
+    }
+  }
+
   loadChatHistory(sessionId: string) {
+    this.isLoading = true;
     this.agentService.getHistory({ sessionId: sessionId }).subscribe({
-      next: (history: any[]) => {
-        const deepChatHistory: any[] = [];
-        if (history && history.length > 0) {
-          for (const step of history) {
-            // Chỉ hiển thị tin nhắn dạng text của user và model lên UI, loại bỏ tool call trung gian
-            if (step.role === 'user' && step.text) {
-              deepChatHistory.push({ role: 'user', text: step.text });
-            } else if (step.role === 'model' && step.text) {
-              deepChatHistory.push({ role: 'ai', text: step.text });
+      next: (response: any) => {
+        this.isLoading = false;
+        const chatHistory: any[] = [];
+        const steps = response?.steps || [];
+        
+        if (steps.length > 0) {
+          for (const step of steps) {
+            if (step.text) {
+              chatHistory.push({ role: step.role, text: step.text });
             }
           }
         }
         
-        // Nếu có lịch sử thực tế trong DB, gán đè lên tin nhắn chào mặc định
-        if (deepChatHistory.length > 0) {
-          this.chatInitialMessages = deepChatHistory;
+        if (chatHistory.length > 0) {
+          this.messages = chatHistory;
+        } else {
+          this.messages = [
+            { role: 'model', text: 'Xin chào! Tôi là Trợ lý AI của hệ thống SupplyCoreERP. Hôm nay tôi có thể hỗ trợ gì cho bạn ?' }
+          ];
+        }
+
+        // Tự động khôi phục trạng thái tác vụ pending (nếu có) khi F5
+        const pendingTask = response?.pendingTask;
+        if (pendingTask) {
+          if (pendingTask.status === 'PendingApproval') {
+            this.pendingApprovalInfo = {
+              sessionId: pendingTask.sessionId,
+              toolName: pendingTask.toolName,
+              arguments: pendingTask.arguments
+            };
+          } else if (pendingTask.status === 'PendingElicitation') {
+            const transformedForm = this.transformJsonSchemaToForm(pendingTask.elicitationForm);
+            this.pendingElicitationInfo = {
+              sessionId: pendingTask.sessionId,
+              elicitationForm: transformedForm
+            };
+            this.elicitationFormValues = {};
+            if (transformedForm?.fields) {
+              transformedForm.fields.forEach((f: any) => {
+                this.elicitationFormValues[f.name] = pendingTask.arguments?.[f.name] || '';
+              });
+            }
+          }
         }
       },
       error: (err) => {
+        this.isLoading = false;
         console.error('Lỗi khi tải lịch sử chat từ server:', err);
       }
     });
   }
 
-  toggleChat() {
-    this.isOpen = !this.isOpen;
-  }
+  sendChatMessage() {
+    const text = this.userInput.trim();
+    if (!text || this.isLoading) return;
 
-  onApprove() {
-    if (!this.pendingApprovalInfo) return;
-    this.isExecutingApproval = true;
+    // 1. Thêm tin nhắn của User vào khung chat
+    this.messages.push({ role: 'user', text: text });
+    this.userInput = '';
+    this.isLoading = true;
 
-    this.agentService.approve({
-      sessionId: this.pendingApprovalInfo.sessionId
+    // Chuẩn bị history DTO
+    const history = this.messages.slice(0, this.messages.length - 1).map(m => ({
+      role: m.role,
+      text: m.text
+    }));
+
+    // 2. Gọi API gửi tin nhắn tới Agent
+    this.agentService.sendMessage({
+      text: text,
+      history: history,
+      sessionId: this.currentSessionId || undefined
     }).subscribe({
       next: (response: any) => {
-        this.isExecutingApproval = false;
-        
+        this.isLoading = false;
+
         if (response && response.sessionId) {
           this.setSessionId(response.sessionId);
         }
-        this.pendingApprovalInfo = null;
 
         if (response && response.status === 'PendingApproval') {
           this.pendingApprovalInfo = {
@@ -187,9 +167,9 @@ export class AiChatComponent implements OnInit {
             toolName: response.toolName,
             arguments: response.arguments
           };
-          this.chatElementRef.nativeElement.addMessage({
-            text: '🤖 *Tác vụ tiếp theo yêu cầu phê duyệt...*',
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: '🤖 *Tác vụ yêu cầu phê duyệt...*'
           });
         } else if (response && response.status === 'PendingElicitation') {
           const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
@@ -203,24 +183,89 @@ export class AiChatComponent implements OnInit {
               this.elicitationFormValues[f.name] = '';
             });
           }
-          this.chatElementRef.nativeElement.addMessage({
-            text: '🤖 *Tác vụ tiếp theo yêu cầu cung cấp thông tin...*',
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: '🤖 *Yêu cầu cung cấp thông tin tác vụ...*'
           });
         } else {
-          const finalText = response.text || '';
-          this.chatElementRef.nativeElement.addMessage({
-            text: finalText,
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: response.text || ''
           });
         }
       },
       error: (err) => {
-        this.isExecutingApproval = false;
+        this.isLoading = false;
+        this.messages.push({
+          role: 'model',
+          text: `❌ Có lỗi xảy ra khi kết nối tới Trợ lý AI: ${err?.message || 'Không xác định'}`
+        });
+      }
+    });
+  }
+
+  handleEnterKey(event: Event) {
+    const keyboardEvent = event as KeyboardEvent;
+    if (keyboardEvent.key === 'Enter' && !keyboardEvent.shiftKey) {
+      keyboardEvent.preventDefault();
+      this.sendChatMessage();
+    }
+  }
+
+  onApprove() {
+    if (!this.pendingApprovalInfo) return;
+    this.isExecutingTask = true;
+
+    this.agentService.approve({
+      sessionId: this.pendingApprovalInfo.sessionId
+    }).subscribe({
+      next: (response: any) => {
+        this.isExecutingTask = false;
+        
+        if (response && response.sessionId) {
+          this.setSessionId(response.sessionId);
+        }
         this.pendingApprovalInfo = null;
-        this.chatElementRef.nativeElement.addMessage({
-          text: `❌ Lỗi thực thi phê duyệt: ${err?.message || 'Không xác định'}`,
-          role: 'ai'
+
+        if (response && response.status === 'PendingApproval') {
+          this.pendingApprovalInfo = {
+            sessionId: response.sessionId,
+            toolName: response.toolName,
+            arguments: response.arguments
+          };
+          this.messages.push({
+            role: 'model',
+            text: '🤖 *Tác vụ tiếp theo yêu cầu phê duyệt...*'
+          });
+        } else if (response && response.status === 'PendingElicitation') {
+          const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
+          this.pendingElicitationInfo = {
+            sessionId: response.sessionId,
+            elicitationForm: transformedForm
+          };
+          this.elicitationFormValues = {};
+          if (transformedForm?.fields) {
+            transformedForm.fields.forEach((f: any) => {
+              this.elicitationFormValues[f.name] = '';
+            });
+          }
+          this.messages.push({
+            role: 'model',
+            text: '🤖 *Tác vụ tiếp theo yêu cầu cung cấp thông tin...*'
+          });
+        } else {
+          this.messages.push({
+            role: 'model',
+            text: response.text || ''
+          });
+        }
+      },
+      error: (err) => {
+        this.isExecutingTask = false;
+        this.pendingApprovalInfo = null;
+        this.messages.push({
+          role: 'model',
+          text: `❌ Lỗi thực thi phê duyệt: ${err?.message || 'Không xác định'}`
         });
       }
     });
@@ -228,14 +273,14 @@ export class AiChatComponent implements OnInit {
 
   onReject() {
     if (!this.pendingApprovalInfo) return;
-    this.isExecutingApproval = true;
+    this.isExecutingTask = true;
 
     this.agentService.reject({
       sessionId: this.pendingApprovalInfo.sessionId
     }).subscribe({
       next: (response: any) => {
-        this.isExecutingApproval = false;
-
+        this.isExecutingTask = false;
+        
         if (response && response.sessionId) {
           this.setSessionId(response.sessionId);
         }
@@ -247,9 +292,9 @@ export class AiChatComponent implements OnInit {
             toolName: response.toolName,
             arguments: response.arguments
           };
-          this.chatElementRef.nativeElement.addMessage({
-            text: '🤖 *Tác vụ tiếp theo yêu cầu phê duyệt...*',
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: '🤖 *Tác vụ tiếp theo yêu cầu phê duyệt...*'
           });
         } else if (response && response.status === 'PendingElicitation') {
           const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
@@ -263,24 +308,23 @@ export class AiChatComponent implements OnInit {
               this.elicitationFormValues[f.name] = '';
             });
           }
-          this.chatElementRef.nativeElement.addMessage({
-            text: '🤖 *Tác vụ tiếp theo yêu cầu cung cấp thông tin...*',
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: '🤖 *Tác vụ tiếp theo yêu cầu cung cấp thông tin...*'
           });
         } else {
-          const finalText = response.text || '';
-          this.chatElementRef.nativeElement.addMessage({
-            text: finalText,
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: response.text || ''
           });
         }
       },
       error: (err) => {
-        this.isExecutingApproval = false;
+        this.isExecutingTask = false;
         this.pendingApprovalInfo = null;
-        this.chatElementRef.nativeElement.addMessage({
-          text: `❌ Lỗi khi từ chối tác vụ: ${err?.message || 'Không xác định'}`,
-          role: 'ai'
+        this.messages.push({
+          role: 'model',
+          text: `❌ Lỗi khi từ chối tác vụ: ${err?.message || 'Không xác định'}`
         });
       }
     });
@@ -288,14 +332,14 @@ export class AiChatComponent implements OnInit {
 
   onSubmitElicitation() {
     if (!this.pendingElicitationInfo) return;
-    this.isExecutingApproval = true; // Sử dụng chung trạng thái loading
+    this.isExecutingTask = true;
 
     this.agentService.submitElicitation({
       sessionId: this.pendingElicitationInfo.sessionId,
       formValues: this.elicitationFormValues
     }).subscribe({
       next: (response: any) => {
-        this.isExecutingApproval = false;
+        this.isExecutingTask = false;
         
         if (response && response.sessionId) {
           this.setSessionId(response.sessionId);
@@ -308,9 +352,9 @@ export class AiChatComponent implements OnInit {
             toolName: response.toolName,
             arguments: response.arguments
           };
-          this.chatElementRef.nativeElement.addMessage({
-            text: '🤖 *Tác vụ yêu cầu phê duyệt...*',
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: '🤖 *Tác vụ yêu cầu phê duyệt...*'
           });
         } else if (response && response.status === 'PendingElicitation') {
           const transformedForm = this.transformJsonSchemaToForm(response.elicitationForm);
@@ -324,24 +368,23 @@ export class AiChatComponent implements OnInit {
               this.elicitationFormValues[f.name] = '';
             });
           }
-          this.chatElementRef.nativeElement.addMessage({
-            text: '🤖 *Yêu cầu thêm thông tin...*',
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: '🤖 *Yêu cầu thêm thông tin...*'
           });
         } else {
-          const finalText = response.text || '';
-          this.chatElementRef.nativeElement.addMessage({
-            text: finalText,
-            role: 'ai'
+          this.messages.push({
+            role: 'model',
+            text: response.text || ''
           });
         }
       },
       error: (err) => {
-        this.isExecutingApproval = false;
+        this.isExecutingTask = false;
         this.pendingElicitationInfo = null;
-        this.chatElementRef.nativeElement.addMessage({
-          text: `❌ Lỗi nộp thông tin Form: ${err?.message || 'Không xác định'}`,
-          role: 'ai'
+        this.messages.push({
+          role: 'model',
+          text: `❌ Lỗi nộp thông tin Form: ${err?.message || 'Không xác định'}`
         });
       }
     });
@@ -350,21 +393,19 @@ export class AiChatComponent implements OnInit {
   onCancelElicitation() {
     this.pendingElicitationInfo = null;
     this.elicitationFormValues = {};
-    this.chatElementRef.nativeElement.addMessage({
-      text: '❌ Đã hủy cung cấp thông tin tác vụ.',
-      role: 'ai'
+    this.messages.push({
+      role: 'model',
+      text: '❌ Đã hủy cung cấp thông tin tác vụ.'
     });
   }
 
   transformJsonSchemaToForm(schema: any): any {
     if (!schema) return null;
     
-    // Nếu schema đã có sẵn cấu trúc UI (có fields) thì giữ nguyên
     if (schema.fields && Array.isArray(schema.fields)) {
       return schema;
     }
 
-    // Nếu schema có cấu trúc JSON Schema (properties)
     const fields: any[] = [];
     if (schema.properties) {
       const requiredList = schema.required || [];
@@ -392,12 +433,33 @@ export class AiChatComponent implements OnInit {
     };
   }
 
-  // Giữ hover effect bằng function (để giữ tương thích ngược CSS cũ nếu cần)
-  onMouseEnter(event: MouseEvent) {
-    (event.currentTarget as HTMLElement).style.transform = 'scale(1.05)';
-  }
+  renderMarkdown(text: string): string {
+    if (!text) return '';
+    
+    // 1. Thoát HTML thô của user để chống XSS
+    let html = text
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
 
-  onMouseLeave(event: MouseEvent) {
-    (event.currentTarget as HTMLElement).style.transform = 'scale(1)';
+    // 2. Chuyển đổi Code Blocks: ```code```
+    html = html.replace(/```([\s\S]*?)```/g, '<pre><code>$1</code></pre>');
+
+    // 3. Chuyển đổi Inline Code: `code`
+    html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+
+    // 4. Chuyển đổi Bold: **text**
+    html = html.replace(/\*\*([^*]+)\*\*/g, '<strong>$1</strong>');
+
+    // 5. Chuyển đổi Italic: *text*
+    html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+
+    // 6. Chuyển đổi Lists dạng dấu gạch đầu dòng
+    html = html.replace(/^\s*[\-\*]\s+(.+)$/gm, '<li>$1</li>');
+
+    // 7. Chuyển đổi xuống dòng
+    html = html.replace(/\n/g, '<br/>');
+
+    return html;
   }
 }

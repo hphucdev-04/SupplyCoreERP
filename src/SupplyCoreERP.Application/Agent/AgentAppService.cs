@@ -4,13 +4,16 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using SupplyCoreERP.Agent.Dtos;
 using SupplyCoreERP.Enums.Agent;
 using SupplyCoreERP.Mcp;
+using SupplyCoreERP.Settings;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
+using Volo.Abp.Settings;
 
 namespace SupplyCoreERP.Agent;
 
@@ -21,6 +24,7 @@ public class AgentAppService : SupplyCore, IAgentAppService
     private readonly IMcpClientService _mcpClientService;
     private readonly IRepository<AgentSession, Guid> _sessionRepository;
     private readonly AgentManager _agentManager;
+    private readonly ISettingProvider _settingProvider;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -32,12 +36,14 @@ public class AgentAppService : SupplyCore, IAgentAppService
         IAgent agent,
         IMcpClientService mcpClientService,
         IRepository<AgentSession, Guid> sessionRepository,
-        AgentManager agentManager)
+        AgentManager agentManager,
+        ISettingProvider settingProvider)
     {
         _agent = agent;
         _mcpClientService = mcpClientService;
         _sessionRepository = sessionRepository;
         _agentManager = agentManager;
+        _settingProvider = settingProvider;
     }
 
     public async Task<object> SendMessageAsync(AgentRequestInputDto input)
@@ -201,6 +207,31 @@ public class AgentAppService : SupplyCore, IAgentAppService
         // Hoàn thành tác vụ Approval cũ
         await _agentManager.CompleteTaskAsync(pendingTask);
 
+        // Khử nhạy cảm thông tin đối số trước khi lưu vào lịch sử DB để bảo vệ an toàn thông tin (DLP)
+        if (pendingToolCall.Arguments != null)
+        {
+            try
+            {
+                var keys = pendingToolCall.Arguments.Select(x => x.Key).ToList();
+                foreach (string key in keys)
+                {
+                    var valNode = pendingToolCall.Arguments[key];
+                    if (valNode != null)
+                    {
+                        if (valNode is JsonValue jsonValue && jsonValue.TryGetValue<string>(out string? originalValue) && originalValue != null)
+                        {
+                            string redactedValue = await RedactSensitiveTextAsync(originalValue);
+                            pendingToolCall.Arguments[key] = JsonValue.Create(redactedValue);
+                        }
+                    }
+                }
+            }
+            catch
+            {
+                // Bỏ qua lỗi làm sạch
+            }
+        }
+
         // 3. Cập nhật lịch sử cuộc trò chuyện (lượt gọi tool và kết quả của tool)
         steps.Add(new AgentMessageDto
         {
@@ -208,12 +239,14 @@ public class AgentAppService : SupplyCore, IAgentAppService
             ToolCalls = new List<AgentToolCallMessageDto> { pendingToolCall }
         });
 
+        string redactedToolResult = await RedactSensitiveTextAsync(toolResult);
+
         steps.Add(new AgentMessageDto
         {
             Role = "user",
             ToolResponses = new List<AgentToolResponseMessageDto>
             {
-                new() { Name = pendingToolCall.Name, Content = toolResult }
+                new() { Name = pendingToolCall.Name, Content = redactedToolResult }
             }
         });
 
@@ -387,21 +420,49 @@ public class AgentAppService : SupplyCore, IAgentAppService
         }
     }
 
-    public async Task<List<AgentMessageDto>> GetHistoryAsync(AgentSessionInputDto input)
+    public async Task<AgentHistoryDto> GetHistoryAsync(AgentSessionInputDto input)
     {
+        var output = new AgentHistoryDto();
+
         if (input.SessionId == Guid.Empty)
         {
-            return new List<AgentMessageDto>();
+            return output;
         }
 
+        // A. Lấy lịch sử cuộc trò chuyện từ DB
         AgentSession? session = await _sessionRepository.FindAsync(input.SessionId);
-        if (session == null || string.IsNullOrEmpty(session.ConversationHistoryJson))
+        if (session != null && !string.IsNullOrEmpty(session.ConversationHistoryJson))
         {
-            return new List<AgentMessageDto>();
+            output.Steps = JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson, _jsonOptions)
+                           ?? new List<AgentMessageDto>();
         }
 
-        return JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson, _jsonOptions)
-               ?? new List<AgentMessageDto>();
+        // B. Tìm và tích hợp tác vụ pending (nếu có) để khôi phục trạng thái
+        var pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Approval);
+        if (pendingTask == null)
+        {
+            pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Elicitation);
+        }
+
+        if (pendingTask != null)
+        {
+            var suspendedToolCall = !string.IsNullOrEmpty(pendingTask.SuspendedDataJson)
+                ? JsonSerializer.Deserialize<AgentToolCallMessageDto>(pendingTask.SuspendedDataJson, _jsonOptions)
+                : null;
+
+            output.PendingTask = new
+            {
+                status = pendingTask.TaskType == AgentTaskType.Approval ? "PendingApproval" : "PendingElicitation",
+                sessionId = pendingTask.SessionId,
+                toolName = suspendedToolCall?.Name,
+                arguments = suspendedToolCall?.Arguments,
+                elicitationForm = pendingTask.FormJson != null
+                    ? JsonSerializer.Deserialize<JsonObject>(pendingTask.FormJson)
+                    : null
+            };
+        }
+
+        return output;
     }
 
     public async Task<object> SubmitElicitationAsync(AgentElicitationInputDto input)
@@ -486,24 +547,25 @@ public class AgentAppService : SupplyCore, IAgentAppService
         }
 
         // 4. Khử nhạy cảm thông tin đối số trước khi lưu vào lịch sử DB để bảo vệ an toàn thông tin (DLP)
-        if (!string.IsNullOrEmpty(pendingTask.FormJson))
+        try
         {
-            try
+            var keys = arguments.Select(x => x.Key).ToList();
+            foreach (string key in keys)
             {
-                // Làm sạch các đối số nhạy cảm phổ biến điền qua Form
-                string[] sensitiveKeys = { "taxCode", "phoneNumber", "email", "address", "concurrencyStamp" };
-                foreach (string key in sensitiveKeys)
+                var valNode = arguments[key];
+                if (valNode != null)
                 {
-                    if (arguments.ContainsKey(key))
+                    if (valNode is JsonValue jsonValue && jsonValue.TryGetValue<string>(out string? originalValue) && originalValue != null)
                     {
-                        arguments[key] = JsonValue.Create($"[REDACTED_{key.ToUpper()}]");
+                        string redactedValue = await RedactSensitiveTextAsync(originalValue);
+                        arguments[key] = JsonValue.Create(redactedValue);
                     }
                 }
             }
-            catch
-            {
-                // Bỏ qua lỗi làm sạch
-            }
+        }
+        catch
+        {
+            // Bỏ qua lỗi làm sạch
         }
 
         steps.Add(new AgentMessageDto
@@ -515,12 +577,14 @@ public class AgentAppService : SupplyCore, IAgentAppService
             }
         });
 
+        string redactedProcessedResult = await RedactSensitiveTextAsync(processedResult);
+
         steps.Add(new AgentMessageDto
         {
             Role = "user",
             ToolResponses = new List<AgentToolResponseMessageDto>
             {
-                new() { Name = suspendedToolCall.Name, Content = processedResult }
+                new() { Name = suspendedToolCall.Name, Content = redactedProcessedResult }
             }
         });
 
@@ -589,4 +653,49 @@ public class AgentAppService : SupplyCore, IAgentAppService
             };
         }
     }
+
+    private async Task<string> RedactSensitiveTextAsync(string text)
+    {
+        if (string.IsNullOrEmpty(text))
+        {
+            return text;
+        }
+
+        try
+        {
+            string? dlpRulesJson = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.DlpRules);
+            if (string.IsNullOrEmpty(dlpRulesJson))
+            {
+                return text;
+            }
+
+            List<DlpRule>? rules = JsonSerializer.Deserialize<List<DlpRule>>(dlpRulesJson, _jsonOptions);
+            if (rules == null || !rules.Any())
+            {
+                return text;
+            }
+
+            foreach (DlpRule rule in rules)
+            {
+                if (!string.IsNullOrEmpty(rule.Pattern) && !string.IsNullOrEmpty(rule.Replacement))
+                {
+                    text = Regex.Replace(text, rule.Pattern, rule.Replacement, RegexOptions.IgnoreCase | RegexOptions.Multiline);
+                }
+            }
+        }
+        catch
+        {
+            // Bỏ qua lỗi trong quá trình redact
+        }
+
+        return text;
+    }
+
+}
+
+public class DlpRule
+{
+    public string Name { get; set; } = string.Empty;
+    public string Pattern { get; set; } = string.Empty;
+    public string Replacement { get; set; } = string.Empty;
 }
