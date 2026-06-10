@@ -15,5 +15,5 @@ public interface IAgentAppService : IApplicationService
 
     Task<object> SubmitElicitationAsync(AgentElicitationInputDto input);
 
-    Task<List<AgentMessageDto>> GetHistoryAsync(AgentSessionInputDto input);
+    Task<AgentHistoryDto> GetHistoryAsync(AgentSessionInputDto input);
 }

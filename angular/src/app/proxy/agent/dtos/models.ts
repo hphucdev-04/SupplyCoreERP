@@ -4,6 +4,11 @@ export interface AgentElicitationInputDto {
   formValues?: Record<string, string>;
 }
 
+export interface AgentHistoryDto {
+  steps?: AgentMessageDto[];
+  pendingTask?: object;
+}
+
 export interface AgentMessageDto {
   role: string;
   text?: string;

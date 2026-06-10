@@ -1,117 +1,103 @@
-<div class="ai-widget-container"
-    style="position: fixed; bottom: 25px; right: 25px; z-index: 1000; font-family: sans-serif;">
+<div class="ai-chat-wrapper">
+  <!-- 1. Danh sách lịch sử tin nhắn cuộn -->
+  <div class="chat-messages" #scrollContainer>
+    <div *ngFor="let msg of messages" class="message-row" [class.message-row--user]="msg.role === 'user'">
+      <div class="message-bubble" [innerHTML]="renderMarkdown(msg.text)"></div>
+    </div>
+    
+    <!-- Hiển thị hiệu ứng loading (AI đang gõ) -->
+    <div *ngIf="isLoading" class="message-row">
+      <div class="message-bubble typing-indicator">
+        <span></span><span></span><span></span>
+      </div>
+    </div>
+  </div>
 
-    <!-- Chat window dùng Angular animation thay vì CSS class -->
-    <div *ngIf="isOpen" @chatAnimation class="chat-window" style="margin-bottom: 15px; position: relative;">
-        <deep-chat #chatElement [request]="chatRequest" [history]="chatInitialMessages" [markdown]="true" placeholder="Nhập câu hỏi tại đây..." [style]="{
-        'width': '380px',
-        'height': '550px',
-        'border-radius': '16px',
-        'box-shadow': '0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1)',
-        'border': '1px solid #e2e8f0',
-        'background-color': '#ffffff'
-      }" [messageStyles]="{
-        'default': {
-          'ai': { 'bubble': { 'background-color': '#f1f5f9', 'color': '#1e293b' } },
-          'user': { 'bubble': { 'background-color': '#0284c7', 'color': '#ffffff' } }
-        }
-      }" [inputAreaStyle]="{
-        'background-color': '#f8fafc',
-        'border-top': '1px solid #e2e8f0',
-        'border-bottom-left-radius': '16px',
-        'border-bottom-right-radius': '16px'
-      }" [file]="{ 'images': true }">
-        </deep-chat>
-
-        <!-- Overlay phê duyệt tác vụ nhạy cảm (Human-in-the-loop) -->
-        <div *ngIf="pendingApprovalInfo" class="approval-overlay">
-            <div class="approval-card" *ngIf="!isExecutingApproval">
-                <div class="approval-header">
-                    <svg class="approval-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                    </svg>
-                    <h4>Yêu cầu phê duyệt tác vụ</h4>
-                </div>
-                <div class="approval-body">
-                    <p>Trợ lý AI đang yêu cầu thực thi một tác vụ hệ thống nhạy cảm:</p>
-                    <div class="tool-info">
-                        <strong>Tên tác vụ:</strong> <code>{{ pendingApprovalInfo.toolName }}</code>
-                    </div>
-                    <div class="tool-args" *ngIf="pendingApprovalInfo.arguments">
-                        <strong>Tham số đi kèm:</strong>
-                        <pre>{{ pendingApprovalInfo.arguments | json }}</pre>
-                    </div>
-                </div>
-                <div class="approval-actions">
-                    <button class="btn-reject" (click)="onReject()">Từ chối</button>
-                    <button class="btn-approve" (click)="onApprove()">Đồng ý</button>
-                </div>
-            </div>
-
-            <!-- Trạng thái đang gọi API Approve/Reject -->
-            <div class="approval-card executing-state" *ngIf="isExecutingApproval">
-                <div class="spinner"></div>
-                <span>Đang thực thi tác vụ trên hệ thống...</span>
-            </div>
+  <!-- 2. Vùng chân trang chứa Panel trượt và Ô nhập chat -->
+  <div class="chat-footer">
+    
+    <!-- 2.1 Inline Slide-up Panel (Kiểu Claude) -->
+    <div class="slide-panel" [class.slide-panel--active]="pendingApprovalInfo || pendingElicitationInfo">
+      
+      <!-- Giao diện Approval trượt lên tối giản -->
+      <div *ngIf="pendingApprovalInfo" class="panel-content">
+        <div class="panel-header">
+          <!-- Icon Alert cảnh báo -->
+          <svg class="panel-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+          </svg>
+          <h6>Yêu cầu xác nhận phê duyệt</h6>
         </div>
-
-        <!-- Overlay cung cấp thông tin nhạy cảm (Elicitation Form) -->
-        <div *ngIf="pendingElicitationInfo" class="approval-overlay">
-            <div class="approval-card" *ngIf="!isExecutingApproval">
-                <div class="approval-header" style="background-color: #0284c7; color: #ffffff;">
-                    <svg class="approval-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                    </svg>
-                    <h4>{{ pendingElicitationInfo.elicitationForm.title }}</h4>
-                </div>
-                <div class="approval-body" style="max-height: 280px; overflow-y: auto;">
-                    <p style="font-size: 13px; color: #64748b; margin-bottom: 12px; line-height: 1.4;">
-                        {{ pendingElicitationInfo.elicitationForm.description }}
-                    </p>
-                    <div *ngFor="let field of pendingElicitationInfo.elicitationForm.fields" class="form-group" style="margin-bottom: 12px; text-align: left;">
-                        <label [for]="field.name" style="display: block; font-size: 12px; font-weight: 600; color: #334155; margin-bottom: 4px;">
-                            {{ field.label }} <span *ngIf="field.required" style="color: #ef4444;">*</span>
-                        </label>
-                        <input 
-                            [type]="field.secret ? 'password' : 'text'" 
-                            [id]="field.name" 
-                            [(ngModel)]="elicitationFormValues[field.name]" 
-                            [placeholder]="field.placeholder || ''" 
-                            style="width: 100%; padding: 8px 12px; font-size: 13px; border: 1px solid #cbd5e1; border-radius: 6px; box-sizing: border-box;"
-                        />
-                    </div>
-                </div>
-                <div class="approval-actions" style="border-top: 1px solid #f1f5f9; padding-top: 10px; display: flex; justify-content: flex-end; gap: 8px;">
-                    <button class="btn-reject" (click)="onCancelElicitation()" style="background-color: #f1f5f9; color: #475569; border: 1px solid #e2e8f0;">Hủy bỏ</button>
-                    <button class="btn-approve" (click)="onSubmitElicitation()" style="background-color: #0284c7; color: #ffffff; border: none;">Xác nhận</button>
-                </div>
-            </div>
-
-            <!-- Trạng thái đang gửi Form -->
-            <div class="approval-card executing-state" *ngIf="isExecutingApproval">
-                <div class="spinner"></div>
-                <span style="font-size: 13px; color: #64748b;">Đang nộp thông tin và thực thi tác vụ...</span>
-            </div>
+        <div class="panel-body">
+          <p>Hệ thống cần xác nhận từ bạn để thực thi tác vụ ghi dữ liệu này.</p>
         </div>
+        <div class="panel-actions">
+          <button type="button" class="btn btn-flat-reject" (click)="onReject()" [disabled]="isExecutingTask">
+            Từ chối
+          </button>
+          <button type="button" class="btn btn-flat-approve" (click)="onApprove()" [disabled]="isExecutingTask">
+            Đồng ý
+          </button>
+        </div>
+      </div>
+
+      <!-- Giao diện Elicitation Form trượt lên -->
+      <div *ngIf="pendingElicitationInfo" class="panel-content">
+        <div class="panel-header info">
+          <!-- Icon Form thông tin -->
+          <svg class="panel-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+          </svg>
+          <h6>{{ pendingElicitationInfo.elicitationForm.title }}</h6>
+        </div>
+        <div class="panel-body">
+          <p class="desc">{{ pendingElicitationInfo.elicitationForm.description }}</p>
+          <div *ngFor="let field of pendingElicitationInfo.elicitationForm.fields" class="form-field">
+            <label [for]="field.name">
+              {{ field.label }} <span *ngIf="field.required" style="color: #ef4444;">*</span>
+            </label>
+            <input 
+              [type]="field.secret ? 'password' : 'text'" 
+              [id]="field.name" 
+              [(ngModel)]="elicitationFormValues[field.name]"
+              [placeholder]="field.placeholder || ''"
+              [disabled]="isExecutingTask"
+            />
+          </div>
+        </div>
+        <div class="panel-actions">
+          <button type="button" class="btn btn-flat-reject" (click)="onCancelElicitation()" [disabled]="isExecutingTask">
+            Hủy bỏ
+          </button>
+          <button type="button" class="btn btn-flat-submit" (click)="onSubmitElicitation()" [disabled]="isExecutingTask">
+            Xác nhận
+          </button>
+        </div>
+      </div>
+
     </div>
 
-    <!-- Nút bấm: pill chứa icon + chữ -->
-    <button (click)="toggleChat()" class="toggle-button" (mouseenter)="onMouseEnter($event)"
-        (mouseleave)="onMouseLeave($event)">
-
-        <!-- Icon chat khi đóng -->
-        <svg *ngIf="!isOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-            stroke="currentColor" class="icon">
-            <path stroke-linecap="round" stroke-linejoin="round"
-                d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
+    <!-- 2.2 Ô nhập chat chính (Input Box) -->
+    <div class="input-container" [class.input-container--disabled]="pendingApprovalInfo || pendingElicitationInfo">
+      <textarea 
+        [(ngModel)]="userInput" 
+        (keydown.enter)="handleEnterKey($event)"
+        [disabled]="pendingApprovalInfo || pendingElicitationInfo"
+        placeholder="Nhập tin nhắn chat tại đây...">
+      </textarea>
+      
+      <!-- Nút gửi tin nhắn (Chỉ hiện khi không có tác vụ pending) -->
+      <button 
+        *ngIf="!(pendingApprovalInfo || pendingElicitationInfo)" 
+        (click)="sendChatMessage()" 
+        [disabled]="!userInput.trim() || isLoading" 
+        class="btn-send">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <line x1="22" y1="2" x2="11" y2="13" />
+          <polygon points="22 2 15 22 11 13 2 9 22 2" />
         </svg>
+      </button>
+    </div>
 
-        <!-- Icon đóng khi mở -->
-        <svg *ngIf="isOpen" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
-            stroke="currentColor" class="icon">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18 18 6M6 6l12 12" />
-        </svg>
-
-        <span class="button-text">Trợ lý AI</span>
-    </button>
+  </div>
 </div>

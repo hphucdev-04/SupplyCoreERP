@@ -1318,8 +1318,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "System.Collections.Generic.List<SupplyCoreERP.Agent.Dtos.AgentMessageDto>",
-                    "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]"
+                    "type": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto",
+                    "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto"
                   }
                 }
               ]
@@ -1468,8 +1468,8 @@
                 }
               ],
               "returnValue": {
-                "type": "System.Collections.Generic.List<SupplyCoreERP.Agent.Dtos.AgentMessageDto>",
-                "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]"
+                "type": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto",
+                "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto"
               },
               "allowAnonymous": false,
               "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
@@ -17972,6 +17972,39 @@
           "jsonName": null,
           "type": "{System.String:System.String}",
           "typeSimple": "{string:string}",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Agent.Dtos.AgentHistoryDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Steps",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
+          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PendingTask",
+          "jsonName": null,
+          "type": "System.Object",
+          "typeSimple": "object",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
