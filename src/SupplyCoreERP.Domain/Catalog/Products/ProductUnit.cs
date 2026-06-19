@@ -13,6 +13,7 @@ public class ProductUnit : AuditedEntity<Guid>
     public virtual BaseUnit Unit { get; private set; }
     public int ConversionFactor { get; private set; }
     public int Level { get; private set; }
+    public decimal Volume { get; private set; }
 
     private ProductUnit() { }
 
@@ -21,14 +22,16 @@ public class ProductUnit : AuditedEntity<Guid>
         Guid productId,
         Guid unitId,
         int conversionFactor,
-        int level)
+        int level,
+        decimal volume = 0)
         : base(id)
     {
         ProductId = productId;
-        UpdateInternal(unitId, conversionFactor, level);
+        Volume = volume;
+        UpdateInternal(unitId, conversionFactor, level, volume);
     }
 
-    internal void UpdateInternal(Guid unitId, int conversionFactor, int level)
+    internal void UpdateInternal(Guid unitId, int conversionFactor, int level, decimal volume)
     {
         if (unitId == Guid.Empty)
         {
@@ -36,11 +39,13 @@ public class ProductUnit : AuditedEntity<Guid>
         }
 
         UnitId = unitId;
+        Volume = volume;
         SetFactorAndLevel(conversionFactor, level);
     }
-    internal void UpdateStats(int conversionFactor, int level)
+    internal void UpdateStats(int conversionFactor, int level, decimal volume)
     {
         SetFactorAndLevel(conversionFactor, level);
+        Volume = volume;
     }
 
     private void SetFactorAndLevel(int conversionFactor, int level)

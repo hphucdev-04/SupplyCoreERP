@@ -10,4 +10,8 @@ public interface IMcpClientService
     Task<List<McpToolDto>> GetToolsAsync();
 
     Task<string> CallToolAsync(string toolName, JsonObject arguments);
+
+    Task<List<McpResourceDto>> GetResourcesAsync();
+
+    Task<string> GetServerInstructionsAsync();
 }

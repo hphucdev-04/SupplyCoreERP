@@ -4,5 +4,5 @@ namespace SupplyCoreERP.Agent.Dtos;
 
 public class AgentContext
 {
-    public List<AgentMessageDto> Steps { get; set; } = new();
+    public List<AgentSessionMessageDto> Steps { get; set; } = new();
 }

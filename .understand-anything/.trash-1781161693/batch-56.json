@@ -1,0 +1,1320 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.HttpApi.Host/wwwroot/css/login-custom.css",
+      "type": "file",
+      "name": "login-custom.css",
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/css/login-custom.css",
+      "summary": "File mã nguồn `login-custom.css` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.HttpApi.Host/wwwroot/global-scripts.js",
+      "type": "file",
+      "name": "global-scripts.js",
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/global-scripts.js",
+      "summary": "File mã nguồn `global-scripts.js` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.HttpApi.Host/wwwroot/global-styles.css",
+      "type": "file",
+      "name": "global-styles.css",
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/global-styles.css",
+      "summary": "File mã nguồn `global-styles.css` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.HttpApi/Controllers/SupplyCoreERPController.cs",
+      "type": "file",
+      "name": "SupplyCoreERPController.cs",
+      "path": "src/SupplyCoreERP.HttpApi/Controllers/SupplyCoreERPController.cs",
+      "summary": "File mã nguồn `SupplyCoreERPController.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.HttpApi/Models/Test/TestModel.cs",
+      "type": "file",
+      "name": "TestModel.cs",
+      "path": "src/SupplyCoreERP.HttpApi/Models/Test/TestModel.cs",
+      "summary": "File mã nguồn `TestModel.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg",
+      "type": "file",
+      "name": "SupplyCoreERP.HttpApi.abppkg",
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg",
+      "summary": "File mã nguồn `SupplyCoreERP.HttpApi.abppkg` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "config:src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg.analyze.json",
+      "type": "config",
+      "name": "SupplyCoreERP.HttpApi.abppkg.analyze.json",
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg.analyze.json",
+      "summary": "File mã nguồn `SupplyCoreERP.HttpApi.abppkg.analyze.json` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "config:src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.csproj",
+      "type": "config",
+      "name": "SupplyCoreERP.HttpApi.csproj",
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.csproj",
+      "summary": "File mã nguồn `SupplyCoreERP.HttpApi.csproj` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "type": "file",
+      "name": "SupplyCoreERPHttpApiModule.cs",
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "summary": "File mã nguồn `SupplyCoreERPHttpApiModule.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs:SupplyCoreERPHttpApiModule",
+      "type": "class",
+      "name": "SupplyCoreERPHttpApiModule",
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "summary": "Lớp `SupplyCoreERPHttpApiModule` thực hiện nghiệp vụ liên quan đến supply core e r p http api module.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 13,
+      "endLine": 39
+    },
+    {
+      "id": "function:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs:ConfigureLocalization",
+      "type": "function",
+      "name": "ConfigureLocalization",
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "summary": "Phương thức `ConfigureLocalization` thực hiện nghiệp vụ configure localization.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 28,
+      "endLine": 38
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "type": "file",
+      "name": "McpAgent.cs",
+      "path": "src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "summary": "File mã nguồn `McpAgent.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:McpAgent",
+      "type": "class",
+      "name": "McpAgent",
+      "path": "src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "summary": "Lớp `McpAgent` thực hiện nghiệp vụ liên quan đến mcp agent.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 286
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:RunAsync",
+      "type": "function",
+      "name": "RunAsync",
+      "path": "src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "summary": "Phương thức `RunAsync` thực hiện nghiệp vụ run.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 29,
+      "endLine": 219
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:OptimizeHistory",
+      "type": "function",
+      "name": "OptimizeHistory",
+      "path": "src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "summary": "Phương thức `OptimizeHistory` thực hiện nghiệp vụ optimize history.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 221,
+      "endLine": 239
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:MapHistoryToAgentFormat",
+      "type": "function",
+      "name": "MapHistoryToAgentFormat",
+      "path": "src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "summary": "Phương thức `MapHistoryToAgentFormat` thực hiện nghiệp vụ map history to agent format.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 241,
+      "endLine": 285
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentChatMessageDto.cs",
+      "type": "file",
+      "name": "AgentChatMessageDto.cs",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentChatMessageDto.cs",
+      "summary": "File mã nguồn `AgentChatMessageDto.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentResponseDto.cs",
+      "type": "file",
+      "name": "AgentResponseDto.cs",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentResponseDto.cs",
+      "summary": "File mã nguồn `AgentResponseDto.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentToolCallDto.cs",
+      "type": "file",
+      "name": "AgentToolCallDto.cs",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentToolCallDto.cs",
+      "summary": "File mã nguồn `AgentToolCallDto.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentToolResponseDto.cs",
+      "type": "file",
+      "name": "AgentToolResponseDto.cs",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentToolResponseDto.cs",
+      "summary": "File mã nguồn `AgentToolResponseDto.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "type": "file",
+      "name": "GeminiProvider.cs",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "summary": "File mã nguồn `GeminiProvider.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GeminiProvider",
+      "type": "class",
+      "name": "GeminiProvider",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "summary": "Lớp `GeminiProvider` thực hiện nghiệp vụ liên quan đến nhà cung cấp gemini.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 13,
+      "endLine": 239
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GenerateContentAsync",
+      "type": "function",
+      "name": "GenerateContentAsync",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "summary": "Phương thức `GenerateContentAsync` thực hiện nghiệp vụ generate content.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 30,
+      "endLine": 81
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:MapHistoryToGeminiFormat",
+      "type": "function",
+      "name": "MapHistoryToGeminiFormat",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "summary": "Phương thức `MapHistoryToGeminiFormat` thực hiện nghiệp vụ map history to gemini format.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 83,
+      "endLine": 151
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:MapMcpToolsToGemini",
+      "type": "function",
+      "name": "MapMcpToolsToGemini",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "summary": "Phương thức `MapMcpToolsToGemini` thực hiện nghiệp vụ map mcp tools to gemini.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 153,
+      "endLine": 201
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:ParseGeminiResponse",
+      "type": "function",
+      "name": "ParseGeminiResponse",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "summary": "Phương thức `ParseGeminiResponse` thực hiện nghiệp vụ parse gemini response.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 203,
+      "endLine": 238
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/IAgentProvider.cs",
+      "type": "file",
+      "name": "IAgentProvider.cs",
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/IAgentProvider.cs",
+      "summary": "File mã nguồn `IAgentProvider.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Mcp.Client/SupplyCoreERP.Mcp.Client.csproj",
+      "type": "config",
+      "name": "SupplyCoreERP.Mcp.Client.csproj",
+      "path": "src/SupplyCoreERP.Mcp.Client/SupplyCoreERP.Mcp.Client.csproj",
+      "summary": "File mã nguồn `SupplyCoreERP.Mcp.Client.csproj` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs",
+      "type": "file",
+      "name": "SupplyCoreERPMcpClientModule.cs",
+      "path": "src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs",
+      "summary": "File mã nguồn `SupplyCoreERPMcpClientModule.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:SupplyCoreERP.abpmdl",
+      "type": "file",
+      "name": "SupplyCoreERP.abpmdl",
+      "path": "SupplyCoreERP.abpmdl",
+      "summary": "File mã nguồn `SupplyCoreERP.abpmdl` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:SupplyCoreERP.abpsln",
+      "type": "file",
+      "name": "SupplyCoreERP.abpsln",
+      "path": "SupplyCoreERP.abpsln",
+      "summary": "File mã nguồn `SupplyCoreERP.abpsln` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:SupplyCoreERP.slnx",
+      "type": "file",
+      "name": "SupplyCoreERP.slnx",
+      "path": "SupplyCoreERP.slnx",
+      "summary": "File mã nguồn `SupplyCoreERP.slnx` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "type": "file",
+      "name": "MedicineAppService_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "File mã nguồn `MedicineAppService_Integration_Tests.cs` thuộc quản lý thông tin đăng ký thuốc và dược phẩm trong danh mục.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "application-layer",
+        "catalog"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:MedicineAppService_Integration_Tests",
+      "type": "class",
+      "name": "MedicineAppService_Integration_Tests",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Lớp `MedicineAppService_Integration_Tests` thực hiện nghiệp vụ liên quan đến dịch vụ thuốc ứng dụng integration tests.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 301
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_List_Of_Medicines",
+      "type": "function",
+      "name": "Should_Get_List_Of_Medicines",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Get_List_Of_Medicines` thực hiện nghiệp vụ should get list of medicines.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 25,
+      "endLine": 39
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Create_Medicine_When_Input_Is_Valid",
+      "type": "function",
+      "name": "Should_Create_Medicine_When_Input_Is_Valid",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Create_Medicine_When_Input_Is_Valid` thực hiện nghiệp vụ should create thuốc when input is valid.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 40,
+      "endLine": 63
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Update_Medicine_When_Input_Is_Valid",
+      "type": "function",
+      "name": "Should_Update_Medicine_When_Input_Is_Valid",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Update_Medicine_When_Input_Is_Valid` thực hiện nghiệp vụ should update thuốc when input is valid.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 64,
+      "endLine": 88
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Approve_Pending_Medicine",
+      "type": "function",
+      "name": "Should_Approve_Pending_Medicine",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Approve_Pending_Medicine` thực hiện nghiệp vụ should approve pending thuốc.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 89,
+      "endLine": 113
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_Medicine_Detail_Successfully",
+      "type": "function",
+      "name": "Should_Get_Medicine_Detail_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Get_Medicine_Detail_Successfully` thực hiện nghiệp vụ should get thuốc chi tiết successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 114,
+      "endLine": 127
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+      "type": "function",
+      "name": "Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine` thực hiện nghiệp vụ should throw entity not found exception when get non existent thuốc.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 128,
+      "endLine": 140
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Delete_Medicine_Successfully",
+      "type": "function",
+      "name": "Should_Delete_Medicine_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Delete_Medicine_Successfully` thực hiện nghiệp vụ should delete thuốc successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 141,
+      "endLine": 167
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Reject_Pending_Medicine_Successfully",
+      "type": "function",
+      "name": "Should_Reject_Pending_Medicine_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Reject_Pending_Medicine_Successfully` thực hiện nghiệp vụ should reject pending thuốc successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 168,
+      "endLine": 192
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Toggle_Active_Medicine_Successfully",
+      "type": "function",
+      "name": "Should_Toggle_Active_Medicine_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Toggle_Active_Medicine_Successfully` thực hiện nghiệp vụ should toggle active thuốc successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 193,
+      "endLine": 207
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_Medicine_Summary_Successfully",
+      "type": "function",
+      "name": "Should_Get_Medicine_Summary_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Get_Medicine_Summary_Successfully` thực hiện nghiệp vụ should get thuốc summary successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 208,
+      "endLine": 219
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Ingredients_Via_AppService_Successfully",
+      "type": "function",
+      "name": "Should_Manage_Ingredients_Via_AppService_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Manage_Ingredients_Via_AppService_Successfully` thực hiện nghiệp vụ should manage ingredients via app service successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 220,
+      "endLine": 241
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Units_Via_AppService_Successfully",
+      "type": "function",
+      "name": "Should_Manage_Units_Via_AppService_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Manage_Units_Via_AppService_Successfully` thực hiện nghiệp vụ should manage units via app service successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 242,
+      "endLine": 277
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Registrations_Via_AppService_Successfully",
+      "type": "function",
+      "name": "Should_Manage_Registrations_Via_AppService_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Manage_Registrations_Via_AppService_Successfully` thực hiện nghiệp vụ should manage registrations via app service successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 278,
+      "endLine": 300
+    },
+    {
+      "id": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "type": "file",
+      "name": "CustomerAppService_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "summary": "File mã nguồn `CustomerAppService_Integration_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "application-layer"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:CustomerAppService_Integration_Tests",
+      "type": "class",
+      "name": "CustomerAppService_Integration_Tests",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "summary": "Lớp `CustomerAppService_Integration_Tests` thực hiện nghiệp vụ liên quan đến dịch vụ customer ứng dụng integration tests.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 97
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Get_List_Of_Customers",
+      "type": "function",
+      "name": "Should_Get_List_Of_Customers",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Get_List_Of_Customers` thực hiện nghiệp vụ should get list of customers.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 25,
+      "endLine": 39
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Create_Customer_With_Valid_DTO",
+      "type": "function",
+      "name": "Should_Create_Customer_With_Valid_DTO",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Create_Customer_With_Valid_DTO` thực hiện nghiệp vụ should create customer with valid d t o.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 40,
+      "endLine": 67
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Update_Customer_Successfully",
+      "type": "function",
+      "name": "Should_Update_Customer_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Update_Customer_Successfully` thực hiện nghiệp vụ should update customer successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 68,
+      "endLine": 96
+    },
+    {
+      "id": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "type": "file",
+      "name": "SupplierAppService_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "summary": "File mã nguồn `SupplierAppService_Integration_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "application-layer"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:SupplierAppService_Integration_Tests",
+      "type": "class",
+      "name": "SupplierAppService_Integration_Tests",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "summary": "Lớp `SupplierAppService_Integration_Tests` thực hiện nghiệp vụ liên quan đến dịch vụ supplier ứng dụng integration tests.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 92
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Get_List_Of_Suppliers",
+      "type": "function",
+      "name": "Should_Get_List_Of_Suppliers",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Get_List_Of_Suppliers` thực hiện nghiệp vụ should get list of suppliers.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 25,
+      "endLine": 39
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Create_Supplier_With_Valid_DTO",
+      "type": "function",
+      "name": "Should_Create_Supplier_With_Valid_DTO",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Create_Supplier_With_Valid_DTO` thực hiện nghiệp vụ should create supplier with valid d t o.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 40,
+      "endLine": 64
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Update_Supplier_Successfully",
+      "type": "function",
+      "name": "Should_Update_Supplier_Successfully",
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Update_Supplier_Successfully` thực hiện nghiệp vụ should update supplier successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 65,
+      "endLine": 91
+    },
+    {
+      "id": "file:test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.abppkg",
+      "type": "file",
+      "name": "SupplyCoreERP.Application.Tests.abppkg",
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.abppkg",
+      "summary": "File mã nguồn `SupplyCoreERP.Application.Tests.abppkg` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "application-layer"
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "target": "class:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs:SupplyCoreERPHttpApiModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "target": "class:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs:SupplyCoreERPHttpApiModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "target": "function:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs:ConfigureLocalization",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "target": "function:src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs:ConfigureLocalization",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:McpAgent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:McpAgent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:McpAgent",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Agent/IAgent.cs:IAgent",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:McpAgent",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:RunAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:RunAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:OptimizeHistory",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:OptimizeHistory",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:MapHistoryToAgentFormat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:MapHistoryToAgentFormat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:RunAsync",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:OptimizeHistory",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:RunAsync",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:MapHistoryToAgentFormat",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs:RunAsync",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GenerateContentAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GeminiProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GeminiProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GeminiProvider",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/AgentProviders/IAgentProvider.cs:IAgentProvider",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GeminiProvider",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GenerateContentAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GenerateContentAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:MapHistoryToGeminiFormat",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:MapHistoryToGeminiFormat",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:MapMcpToolsToGemini",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:MapMcpToolsToGemini",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:ParseGeminiResponse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:ParseGeminiResponse",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GenerateContentAsync",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:MapHistoryToGeminiFormat",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GenerateContentAsync",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:MapMcpToolsToGemini",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:GenerateContentAsync",
+      "target": "function:src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs:ParseGeminiResponse",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:MedicineAppService_Integration_Tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:MedicineAppService_Integration_Tests",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_List_Of_Medicines",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_List_Of_Medicines",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Create_Medicine_When_Input_Is_Valid",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Create_Medicine_When_Input_Is_Valid",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Update_Medicine_When_Input_Is_Valid",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Update_Medicine_When_Input_Is_Valid",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Approve_Pending_Medicine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Approve_Pending_Medicine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_Medicine_Detail_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_Medicine_Detail_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Delete_Medicine_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Delete_Medicine_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Reject_Pending_Medicine_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Reject_Pending_Medicine_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Toggle_Active_Medicine_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Toggle_Active_Medicine_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_Medicine_Summary_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Get_Medicine_Summary_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Ingredients_Via_AppService_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Ingredients_Via_AppService_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Units_Via_AppService_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Units_Via_AppService_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Registrations_Via_AppService_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs:Should_Manage_Registrations_Via_AppService_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:CustomerAppService_Integration_Tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:CustomerAppService_Integration_Tests",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Get_List_Of_Customers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Get_List_Of_Customers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Create_Customer_With_Valid_DTO",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Create_Customer_With_Valid_DTO",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Update_Customer_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs:Should_Update_Customer_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:SupplierAppService_Integration_Tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:SupplierAppService_Integration_Tests",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Get_List_Of_Suppliers",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Get_List_Of_Suppliers",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Create_Supplier_With_Valid_DTO",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Create_Supplier_With_Valid_DTO",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Update_Supplier_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs:Should_Update_Supplier_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

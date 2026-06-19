@@ -8,7 +8,7 @@ public class InventoryBalanceDto : FullAuditedEntityDto<Guid>
     public Guid WarehouseId { get; set; }
     public string? WarehouseName { get; set; }
 
-    public Guid BinId { get; set; }
+    public Guid? BinId { get; set; }
     public string? BinCode { get; set; }
 
     public Guid ProductId { get; set; }

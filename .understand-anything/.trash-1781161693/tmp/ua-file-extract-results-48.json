@@ -1,0 +1,3487 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.csproj",
+      "language": "csproj",
+      "fileCategory": "config",
+      "totalLines": 44,
+      "nonEmptyLines": 36,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 6,
+      "nonEmptyLines": 5,
+      "classes": [
+        {
+          "name": "SupplyCoreERPDomainErrorCodes",
+          "startLine": 3,
+          "endLine": 6,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SupplyCoreERPDomainErrorCodes",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 66,
+      "nonEmptyLines": 58,
+      "functions": [
+        {
+          "name": "PreConfigureServices",
+          "startLine": 31,
+          "endLine": 35,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "ConfigureServices",
+          "startLine": 37,
+          "endLine": 65,
+          "params": [
+            "context"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPDomainSharedModule",
+          "startLine": 19,
+          "endLine": 66,
+          "methods": [
+            "PreConfigureServices",
+            "ConfigureServices"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PreConfigureServices",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "ConfigureServices",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPDomainSharedModule",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "PreConfigureServices",
+          "callee": "SupplyCoreERPGlobalFeatureConfigurator.Configure",
+          "lineNumber": 33
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "SupplyCoreERPModuleExtensionConfigurator.Configure",
+          "lineNumber": 34
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "Configure<AbpVirtualFileSystemOptions>",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.FileSets.AddEmbedded<SupplyCoreERPDomainSharedModule>",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "Configure<AbpLocalizationOptions>",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.Resources\r\n                .Add<SupplyCoreERPResource>(\"en\")\r\n                .AddBaseTypes(typeof(AbpValidationResource))\r\n                .AddBaseTypes(typeof(AbpUiResource))\r\n                .AddVirtualJson(\"/Localization/SupplyCoreERP\")\r\n                .AddVirtualJson(\"/Localization/Permissions\")\r\n                .AddVirtualJson",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.Resources\r\n                .Add<SupplyCoreERPResource>(\"en\")\r\n                .AddBaseTypes(typeof(AbpValidationResource))\r\n                .AddBaseTypes(typeof(AbpUiResource))\r\n                .AddVirtualJson(\"/Localization/SupplyCoreERP\")\r\n                .AddVirtualJson",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.Resources\r\n                .Add<SupplyCoreERPResource>(\"en\")\r\n                .AddBaseTypes(typeof(AbpValidationResource))\r\n                .AddBaseTypes(typeof(AbpUiResource))\r\n                .AddVirtualJson",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.Resources\r\n                .Add<SupplyCoreERPResource>(\"en\")\r\n                .AddBaseTypes(typeof(AbpValidationResource))\r\n                .AddBaseTypes",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.Resources\r\n                .Add<SupplyCoreERPResource>(\"en\")\r\n                .AddBaseTypes",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.Resources\r\n                .Add<SupplyCoreERPResource>",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.Languages.Add",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "new LanguageInfo",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.Languages.Add",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "new LanguageInfo",
+          "lineNumber": 57
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "Configure<AbpExceptionLocalizationOptions>",
+          "lineNumber": 61
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.MapCodeNamespace",
+          "lineNumber": 63
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 17,
+      "functions": [
+        {
+          "name": "Configure",
+          "startLine": 10,
+          "endLine": 19,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPGlobalFeatureConfigurator",
+          "startLine": 6,
+          "endLine": 20,
+          "methods": [
+            "Configure"
+          ],
+          "properties": [
+            "OneTimeRunner"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Configure",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPGlobalFeatureConfigurator",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Configure",
+          "callee": "OneTimeRunner.Run",
+          "lineNumber": 12
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 71,
+      "nonEmptyLines": 61,
+      "functions": [
+        {
+          "name": "Configure",
+          "startLine": 12,
+          "endLine": 19,
+          "params": []
+        },
+        {
+          "name": "ConfigureExistingProperties",
+          "startLine": 21,
+          "endLine": 36,
+          "params": []
+        },
+        {
+          "name": "ConfigureExtraProperties",
+          "startLine": 38,
+          "endLine": 70,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPModuleExtensionConfigurator",
+          "startLine": 8,
+          "endLine": 71,
+          "methods": [
+            "Configure",
+            "ConfigureExistingProperties",
+            "ConfigureExtraProperties"
+          ],
+          "properties": [
+            "OneTimeRunner"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Configure",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPModuleExtensionConfigurator",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Configure",
+          "callee": "OneTimeRunner.Run",
+          "lineNumber": 14
+        },
+        {
+          "caller": "Configure",
+          "callee": "ConfigureExistingProperties",
+          "lineNumber": 16
+        },
+        {
+          "caller": "Configure",
+          "callee": "ConfigureExtraProperties",
+          "lineNumber": 17
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 110,
+      "nonEmptyLines": 96,
+      "functions": [
+        {
+          "name": "AgentManager",
+          "startLine": 16,
+          "endLine": 22,
+          "params": [
+            "sessionRepository",
+            "agentTaskRepository"
+          ]
+        },
+        {
+          "name": "GetOrCreateSessionAsync",
+          "startLine": 28,
+          "endLine": 52,
+          "params": [
+            "sessionId",
+            "userId",
+            "defaultHistoryJson"
+          ]
+        },
+        {
+          "name": "UpdateSessionHistoryAsync",
+          "startLine": 57,
+          "endLine": 61,
+          "params": [
+            "session",
+            "conversationHistoryJson"
+          ]
+        },
+        {
+          "name": "CreateTaskAsync",
+          "startLine": 67,
+          "endLine": 82,
+          "params": [
+            "sessionId",
+            "taskType",
+            "formJson",
+            "suspendedDataJson"
+          ]
+        },
+        {
+          "name": "FindPendingTaskAsync",
+          "startLine": 87,
+          "endLine": 91,
+          "params": [
+            "sessionId",
+            "taskType"
+          ]
+        },
+        {
+          "name": "CompleteTaskAsync",
+          "startLine": 96,
+          "endLine": 100,
+          "params": [
+            "task"
+          ]
+        },
+        {
+          "name": "CancelTaskAsync",
+          "startLine": 105,
+          "endLine": 109,
+          "params": [
+            "task"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AgentManager",
+          "startLine": 11,
+          "endLine": 110,
+          "methods": [
+            "AgentManager",
+            "GetOrCreateSessionAsync",
+            "UpdateSessionHistoryAsync",
+            "CreateTaskAsync",
+            "FindPendingTaskAsync",
+            "CompleteTaskAsync",
+            "CancelTaskAsync"
+          ],
+          "properties": [
+            "_sessionRepository",
+            "_agentTaskRepository"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AgentManager",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "GetOrCreateSessionAsync",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateSessionHistoryAsync",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "CreateTaskAsync",
+          "line": 67,
+          "isDefault": false
+        },
+        {
+          "name": "FindPendingTaskAsync",
+          "line": 87,
+          "isDefault": false
+        },
+        {
+          "name": "CompleteTaskAsync",
+          "line": 96,
+          "isDefault": false
+        },
+        {
+          "name": "CancelTaskAsync",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "AgentManager",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GetOrCreateSessionAsync",
+          "callee": "_sessionRepository.FindAsync",
+          "lineNumber": 34
+        },
+        {
+          "caller": "GetOrCreateSessionAsync",
+          "callee": "_sessionRepository.GetQueryableAsync",
+          "lineNumber": 38
+        },
+        {
+          "caller": "GetOrCreateSessionAsync",
+          "callee": "queryable\r\n                .Where(s => s.UserId == userId)\r\n                .OrderByDescending(s => s.CreationTime)\r\n                .FirstOrDefault",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetOrCreateSessionAsync",
+          "callee": "queryable\r\n                .Where(s => s.UserId == userId)\r\n                .OrderByDescending",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetOrCreateSessionAsync",
+          "callee": "queryable\r\n                .Where",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GetOrCreateSessionAsync",
+          "callee": "new AgentSession",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GetOrCreateSessionAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GetOrCreateSessionAsync",
+          "callee": "_sessionRepository.InsertAsync",
+          "lineNumber": 48
+        },
+        {
+          "caller": "UpdateSessionHistoryAsync",
+          "callee": "_sessionRepository.UpdateAsync",
+          "lineNumber": 60
+        },
+        {
+          "caller": "CreateTaskAsync",
+          "callee": "(await _agentTaskRepository.GetQueryableAsync())\r\n            .Where(t => t.SessionId == sessionId && t.TaskType == taskType && t.Status == AgentTaskStatus.Pending)\r\n            .ToList",
+          "lineNumber": 69
+        },
+        {
+          "caller": "CreateTaskAsync",
+          "callee": "(await _agentTaskRepository.GetQueryableAsync())\r\n            .Where",
+          "lineNumber": 69
+        },
+        {
+          "caller": "CreateTaskAsync",
+          "callee": "_agentTaskRepository.GetQueryableAsync",
+          "lineNumber": 69
+        },
+        {
+          "caller": "CreateTaskAsync",
+          "callee": "_agentTaskRepository.UpdateAsync",
+          "lineNumber": 76
+        },
+        {
+          "caller": "CreateTaskAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 79
+        },
+        {
+          "caller": "CreateTaskAsync",
+          "callee": "_agentTaskRepository.InsertAsync",
+          "lineNumber": 80
+        },
+        {
+          "caller": "FindPendingTaskAsync",
+          "callee": "(await _agentTaskRepository.GetQueryableAsync())\r\n            .FirstOrDefault",
+          "lineNumber": 89
+        },
+        {
+          "caller": "FindPendingTaskAsync",
+          "callee": "_agentTaskRepository.GetQueryableAsync",
+          "lineNumber": 89
+        },
+        {
+          "caller": "CompleteTaskAsync",
+          "callee": "_agentTaskRepository.UpdateAsync",
+          "lineNumber": 99
+        },
+        {
+          "caller": "CancelTaskAsync",
+          "callee": "_agentTaskRepository.UpdateAsync",
+          "lineNumber": 108
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 7,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "AgentSession",
+          "startLine": 12,
+          "endLine": 14,
+          "params": []
+        },
+        {
+          "name": "AgentSession",
+          "startLine": 16,
+          "endLine": 20,
+          "params": [
+            "id",
+            "userId",
+            "conversationHistoryJson"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AgentSession",
+          "startLine": 6,
+          "endLine": 21,
+          "methods": [
+            "AgentSession",
+            "AgentSession"
+          ],
+          "properties": [
+            "UserId",
+            "ConversationHistoryJson"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UserId",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "ConversationHistoryJson",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "AgentSession",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 23,
+      "functions": [
+        {
+          "name": "AgentTask",
+          "startLine": 19,
+          "endLine": 21,
+          "params": []
+        },
+        {
+          "name": "AgentTask",
+          "startLine": 23,
+          "endLine": 30,
+          "params": [
+            "id",
+            "sessionId",
+            "taskType",
+            "formJson",
+            "suspendedDataJson"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AgentTask",
+          "startLine": 7,
+          "endLine": 31,
+          "methods": [
+            "AgentTask",
+            "AgentTask"
+          ],
+          "properties": [
+            "SessionId",
+            "TaskType",
+            "Status",
+            "FormJson",
+            "SuspendedDataJson"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SessionId",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TaskType",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "FormJson",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "SuspendedDataJson",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "AgentTask",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 29,
+      "functions": [
+        {
+          "name": "ActiveIngredient",
+          "startLine": 13,
+          "endLine": 13,
+          "params": []
+        },
+        {
+          "name": "ActiveIngredient",
+          "startLine": 15,
+          "endLine": 19,
+          "params": [
+            "id",
+            "code",
+            "name"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 21,
+          "endLine": 24,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "SetCode",
+          "startLine": 26,
+          "endLine": 29,
+          "params": [
+            "code"
+          ]
+        },
+        {
+          "name": "SetName",
+          "startLine": 30,
+          "endLine": 33,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ActiveIngredient",
+          "startLine": 9,
+          "endLine": 34,
+          "methods": [
+            "ActiveIngredient",
+            "ActiveIngredient",
+            "Update",
+            "SetCode",
+            "SetName"
+          ],
+          "properties": [
+            "Code",
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ActiveIngredient",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ActiveIngredient",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ActiveIngredient",
+          "callee": "SetCode",
+          "lineNumber": 17
+        },
+        {
+          "caller": "ActiveIngredient",
+          "callee": "SetName",
+          "lineNumber": 18
+        },
+        {
+          "caller": "Update",
+          "callee": "SetName",
+          "lineNumber": 23
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper",
+          "lineNumber": 28
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim",
+          "lineNumber": 28
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 28
+        },
+        {
+          "caller": "SetCode",
+          "callee": "nameof",
+          "lineNumber": 28
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim",
+          "lineNumber": 32
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 32
+        },
+        {
+          "caller": "SetName",
+          "callee": "nameof",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 67,
+      "nonEmptyLines": 49,
+      "functions": [
+        {
+          "name": "ActiveIngredientManager",
+          "startLine": 20,
+          "endLine": 29,
+          "params": [
+            "repository",
+            "medIngredientRepo",
+            "documentSequenceManager"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 31,
+          "endLine": 41,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 43,
+          "endLine": 46,
+          "params": [
+            "entity",
+            "newName"
+          ]
+        },
+        {
+          "name": "DeleteAsync",
+          "startLine": 48,
+          "endLine": 59,
+          "params": [
+            "entity"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ActiveIngredientManager",
+          "startLine": 12,
+          "endLine": 60,
+          "methods": [
+            "ActiveIngredientManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync"
+          ],
+          "properties": [
+            "_repository",
+            "_medIngredientRepo",
+            "_documentSequenceManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ActiveIngredientManager",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAsync",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "ActiveIngredientManager",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 33
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_repository.AnyAsync",
+          "lineNumber": 35
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 37
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new ActiveIngredient",
+          "lineNumber": 40
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 40
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "entity.Update",
+          "lineNumber": 45
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_medIngredientRepo.AnyAsync",
+          "lineNumber": 51
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 55
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_repository.DeleteAsync",
+          "lineNumber": 58
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 27,
+      "functions": [
+        {
+          "name": "BaseUnit",
+          "startLine": 12,
+          "endLine": 12,
+          "params": []
+        },
+        {
+          "name": "BaseUnit",
+          "startLine": 14,
+          "endLine": 18,
+          "params": [
+            "id",
+            "code",
+            "name"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 19,
+          "endLine": 22,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "SetCode",
+          "startLine": 24,
+          "endLine": 27,
+          "params": [
+            "code"
+          ]
+        },
+        {
+          "name": "SetName",
+          "startLine": 29,
+          "endLine": 32,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "BaseUnit",
+          "startLine": 7,
+          "endLine": 33,
+          "methods": [
+            "BaseUnit",
+            "BaseUnit",
+            "Update",
+            "SetCode",
+            "SetName"
+          ],
+          "properties": [
+            "Code",
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnit",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnit",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "BaseUnit",
+          "callee": "SetCode",
+          "lineNumber": 16
+        },
+        {
+          "caller": "BaseUnit",
+          "callee": "SetName",
+          "lineNumber": 17
+        },
+        {
+          "caller": "Update",
+          "callee": "SetName",
+          "lineNumber": 21
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper",
+          "lineNumber": 26
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim",
+          "lineNumber": 26
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 26
+        },
+        {
+          "caller": "SetCode",
+          "callee": "nameof",
+          "lineNumber": 26
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace(name, nameof(Name), 100).Trim",
+          "lineNumber": 31
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 31
+        },
+        {
+          "caller": "SetName",
+          "callee": "nameof",
+          "lineNumber": 31
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 62,
+      "functions": [
+        {
+          "name": "BaseUnitManager",
+          "startLine": 20,
+          "endLine": 31,
+          "params": [
+            "repository",
+            "productRepository",
+            "productUnitRepository",
+            "documentSequenceManager"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 33,
+          "endLine": 45,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 47,
+          "endLine": 52,
+          "params": [
+            "unit",
+            "newName"
+          ]
+        },
+        {
+          "name": "DeleteAsync",
+          "startLine": 54,
+          "endLine": 73,
+          "params": [
+            "unit"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "BaseUnitManager",
+          "startLine": 11,
+          "endLine": 74,
+          "methods": [
+            "BaseUnitManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync"
+          ],
+          "properties": [
+            "_repository",
+            "_productRepository",
+            "_productUnitRepository",
+            "_documentSequenceManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BaseUnitManager",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAsync",
+          "line": 54,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnitManager",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 35
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 35
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 37
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_repository.AnyAsync",
+          "lineNumber": 39
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 41
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BaseUnit",
+          "lineNumber": 44
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 44
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 49
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 49
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 50
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 50
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "unit.Update",
+          "lineNumber": 51
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 56
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "nameof",
+          "lineNumber": 56
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_productRepository.AnyAsync",
+          "lineNumber": 59
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 62
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_productUnitRepository.AnyAsync",
+          "lineNumber": 66
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 69
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_repository.DeleteAsync",
+          "lineNumber": 72
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 21,
+      "functions": [
+        {
+          "name": "Category",
+          "startLine": 14,
+          "endLine": 14,
+          "params": []
+        },
+        {
+          "name": "Category",
+          "startLine": 16,
+          "endLine": 20,
+          "params": [
+            "id",
+            "name"
+          ]
+        },
+        {
+          "name": "SetName",
+          "startLine": 22,
+          "endLine": 25,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Category",
+          "startLine": 9,
+          "endLine": 27,
+          "methods": [
+            "Category",
+            "Category",
+            "SetName"
+          ],
+          "properties": [
+            "Name",
+            "Products"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Name",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Products",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "Category",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "SetName",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Category",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Category",
+          "callee": "SetName",
+          "lineNumber": 19
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace(name, nameof(Name), maxLength: 100).Trim",
+          "lineNumber": 24
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 24
+        },
+        {
+          "caller": "SetName",
+          "callee": "nameof",
+          "lineNumber": 24
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 81,
+      "nonEmptyLines": 59,
+      "functions": [
+        {
+          "name": "CategoryManager",
+          "startLine": 18,
+          "endLine": 25,
+          "params": [
+            "categoryRepository",
+            "productRepository",
+            "guidGenerator"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 27,
+          "endLine": 41,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 43,
+          "endLine": 57,
+          "params": [
+            "category",
+            "newName"
+          ]
+        },
+        {
+          "name": "DeleteAsync",
+          "startLine": 59,
+          "endLine": 72,
+          "params": [
+            "category"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CategoryManager",
+          "startLine": 11,
+          "endLine": 74,
+          "methods": [
+            "CategoryManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync"
+          ],
+          "properties": [
+            "_categoryRepository",
+            "_productRepository"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CategoryManager",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAsync",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "CategoryManager",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 29
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 29
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_categoryRepository.AnyAsync",
+          "lineNumber": 32
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "x.Name.ToLower",
+          "lineNumber": 32
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "name.ToLower",
+          "lineNumber": 32
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new Category",
+          "lineNumber": 37
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 38
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 45
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 45
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 46
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 46
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "newName.Trim",
+          "lineNumber": 48
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "_categoryRepository.AnyAsync",
+          "lineNumber": 51
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "x.Name.ToLower",
+          "lineNumber": 51
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "normalizedName.ToLower",
+          "lineNumber": 51
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 53
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "category.SetName",
+          "lineNumber": 56
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 61
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "nameof",
+          "lineNumber": 61
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_productRepository.AnyAsync",
+          "lineNumber": 64
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 68
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_categoryRepository.DeleteAsync",
+          "lineNumber": 71
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 27,
+      "functions": [
+        {
+          "name": "DosageForm",
+          "startLine": 12,
+          "endLine": 12,
+          "params": []
+        },
+        {
+          "name": "DosageForm",
+          "startLine": 14,
+          "endLine": 18,
+          "params": [
+            "id",
+            "code",
+            "name"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 20,
+          "endLine": 23,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "SetCode",
+          "startLine": 25,
+          "endLine": 28,
+          "params": [
+            "code"
+          ]
+        },
+        {
+          "name": "SetName",
+          "startLine": 29,
+          "endLine": 32,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DosageForm",
+          "startLine": 7,
+          "endLine": 33,
+          "methods": [
+            "DosageForm",
+            "DosageForm",
+            "Update",
+            "SetCode",
+            "SetName"
+          ],
+          "properties": [
+            "Code",
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "DosageForm",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "DosageForm",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "DosageForm",
+          "callee": "SetCode",
+          "lineNumber": 16
+        },
+        {
+          "caller": "DosageForm",
+          "callee": "SetName",
+          "lineNumber": 17
+        },
+        {
+          "caller": "Update",
+          "callee": "SetName",
+          "lineNumber": 22
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper",
+          "lineNumber": 27
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim",
+          "lineNumber": 27
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 27
+        },
+        {
+          "caller": "SetCode",
+          "callee": "nameof",
+          "lineNumber": 27
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim",
+          "lineNumber": 31
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 31
+        },
+        {
+          "caller": "SetName",
+          "callee": "nameof",
+          "lineNumber": 31
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 87,
+      "nonEmptyLines": 65,
+      "functions": [
+        {
+          "name": "DosageFormManager",
+          "startLine": 20,
+          "endLine": 28,
+          "params": [
+            "repository",
+            "medicineRepository",
+            "documentSequenceManager"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 30,
+          "endLine": 49,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 51,
+          "endLine": 64,
+          "params": [
+            "entity",
+            "newName"
+          ]
+        },
+        {
+          "name": "DeleteAsync",
+          "startLine": 66,
+          "endLine": 79,
+          "params": [
+            "entity"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "DosageFormManager",
+          "startLine": 12,
+          "endLine": 80,
+          "methods": [
+            "DosageFormManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync"
+          ],
+          "properties": [
+            "_repository",
+            "_medicineRepository",
+            "_documentSequenceManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DosageFormManager",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAsync",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "DosageFormManager",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 32
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 32
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "name.Trim",
+          "lineNumber": 33
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 35
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_repository.AnyAsync",
+          "lineNumber": 37
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 39
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_repository.AnyAsync",
+          "lineNumber": 43
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 45
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new DosageForm",
+          "lineNumber": 48
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 48
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 53
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 53
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 54
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 54
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "newName.Trim",
+          "lineNumber": 55
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "_repository.AnyAsync",
+          "lineNumber": 58
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 60
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "entity.Update",
+          "lineNumber": 63
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 68
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "nameof",
+          "lineNumber": 68
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_medicineRepository.AnyAsync",
+          "lineNumber": 71
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 75
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_repository.DeleteAsync",
+          "lineNumber": 78
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 49,
+      "nonEmptyLines": 33,
+      "functions": [
+        {
+          "name": "Manufacturer",
+          "startLine": 25,
+          "endLine": 25,
+          "params": []
+        },
+        {
+          "name": "Manufacturer",
+          "startLine": 27,
+          "endLine": 34,
+          "params": [
+            "id",
+            "code",
+            "name",
+            "continentId",
+            "countryId"
+          ]
+        },
+        {
+          "name": "Update",
+          "startLine": 36,
+          "endLine": 41,
+          "params": [
+            "name",
+            "continentId",
+            "countryId"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Manufacturer",
+          "startLine": 12,
+          "endLine": 42,
+          "methods": [
+            "Manufacturer",
+            "Manufacturer",
+            "Update"
+          ],
+          "properties": [
+            "Code",
+            "Name",
+            "ContinentId",
+            "Continent",
+            "CountryId",
+            "Country"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ContinentId",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "Continent",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "CountryId",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Country",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "Manufacturer",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Update",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "Manufacturer",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Manufacturer",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Manufacturer",
+          "callee": "nameof",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Manufacturer",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Manufacturer",
+          "callee": "nameof",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Update",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Update",
+          "callee": "nameof",
+          "lineNumber": 38
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 9,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 126,
+      "nonEmptyLines": 98,
+      "functions": [
+        {
+          "name": "ManufacturerManager",
+          "startLine": 23,
+          "endLine": 35,
+          "params": [
+            "repository",
+            "continentRepository",
+            "countryRepository",
+            "medicineRepository",
+            "documentSequenceManager"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 37,
+          "endLine": 70,
+          "params": [
+            "name",
+            "continentId",
+            "countryId"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 72,
+          "endLine": 103,
+          "params": [
+            "entity",
+            "newName",
+            "newContinentId",
+            "newCountryId"
+          ]
+        },
+        {
+          "name": "DeleteAsync",
+          "startLine": 105,
+          "endLine": 118,
+          "params": [
+            "entity"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ManufacturerManager",
+          "startLine": 13,
+          "endLine": 119,
+          "methods": [
+            "ManufacturerManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync"
+          ],
+          "properties": [
+            "_repository",
+            "_continentRepository",
+            "_countryRepository",
+            "_medicineRepository",
+            "_documentSequenceManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ManufacturerManager",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAsync",
+          "line": 105,
+          "isDefault": false
+        },
+        {
+          "name": "ManufacturerManager",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 40
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 40
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "name.Trim",
+          "lineNumber": 41
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 43
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_continentRepository.AnyAsync",
+          "lineNumber": 46
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 48
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_countryRepository.GetAsync",
+          "lineNumber": 51
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 60
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_repository.AnyAsync",
+          "lineNumber": 64
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 66
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new Manufacturer",
+          "lineNumber": 69
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 69
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 74
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 74
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 75
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 75
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "newName.Trim",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "_continentRepository.AnyAsync",
+          "lineNumber": 79
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 81
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "_countryRepository.GetAsync",
+          "lineNumber": 84
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 87
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 93
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "_repository.AnyAsync",
+          "lineNumber": 97
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 99
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "entity.Update",
+          "lineNumber": 102
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 107
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "nameof",
+          "lineNumber": 107
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_medicineRepository.AnyAsync",
+          "lineNumber": 110
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 114
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_repository.DeleteAsync",
+          "lineNumber": 117
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineCreatedDomainEvent.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 7,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineImportDomainEvent.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 11,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineStatusChangedDomainEvent.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 10,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 53,
+      "nonEmptyLines": 47,
+      "classes": [
+        {
+          "name": "IMedicineManager",
+          "startLine": 8,
+          "endLine": 53,
+          "methods": [
+            "CreateAsync",
+            "UpdateAsync",
+            "AddIngredientAsync",
+            "RemoveIngredientAsync",
+            "AddUnitAsync",
+            "UpdateUnitAsync",
+            "RemoveUnitAsync",
+            "AddRegistrationAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IMedicineManager",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 147,
+      "nonEmptyLines": 118,
+      "functions": [
+        {
+          "name": "Medicine",
+          "startLine": 31,
+          "endLine": 34,
+          "params": []
+        },
+        {
+          "name": "Medicine",
+          "startLine": 36,
+          "endLine": 58,
+          "params": [
+            "id",
+            "categoryId",
+            "manufacturerId",
+            "code",
+            "name",
+            "baseUnitId",
+            "dosageFormId",
+            "initialRegNumber",
+            "usageRoute",
+            "storageCondition",
+            "isPrescriptionDrug"
+          ]
+        },
+        {
+          "name": "RaiseCreatedEvent",
+          "startLine": 60,
+          "endLine": 63,
+          "params": []
+        },
+        {
+          "name": "UpdatePharmaInfo",
+          "startLine": 65,
+          "endLine": 75,
+          "params": [
+            "dosageFormId",
+            "usageRoute",
+            "storageCondition",
+            "isPrescriptionDrug"
+          ]
+        },
+        {
+          "name": "AddRegistration",
+          "startLine": 77,
+          "endLine": 90,
+          "params": [
+            "id",
+            "regNumber",
+            "from",
+            "to",
+            "note"
+          ]
+        },
+        {
+          "name": "GetCurrentRegistration",
+          "startLine": 92,
+          "endLine": 96,
+          "params": []
+        },
+        {
+          "name": "AddIngredient",
+          "startLine": 98,
+          "endLine": 106,
+          "params": [
+            "activeIngredientId"
+          ]
+        },
+        {
+          "name": "RemoveIngredient",
+          "startLine": 108,
+          "endLine": 115,
+          "params": [
+            "activeIngredientId"
+          ]
+        },
+        {
+          "name": "Approve",
+          "startLine": 117,
+          "endLine": 126,
+          "params": []
+        },
+        {
+          "name": "Reject",
+          "startLine": 127,
+          "endLine": 136,
+          "params": []
+        },
+        {
+          "name": "SetPending",
+          "startLine": 137,
+          "endLine": 137,
+          "params": []
+        },
+        {
+          "name": "SetActive",
+          "startLine": 138,
+          "endLine": 138,
+          "params": [
+            "isActive"
+          ]
+        },
+        {
+          "name": "SetStatus",
+          "startLine": 139,
+          "endLine": 139,
+          "params": [
+            "status"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Medicine",
+          "startLine": 13,
+          "endLine": 140,
+          "methods": [
+            "Medicine",
+            "Medicine",
+            "RaiseCreatedEvent",
+            "UpdatePharmaInfo",
+            "AddRegistration",
+            "GetCurrentRegistration",
+            "AddIngredient",
+            "RemoveIngredient",
+            "Approve",
+            "Reject",
+            "SetPending",
+            "SetActive",
+            "SetStatus"
+          ],
+          "properties": [
+            "DosageFormId",
+            "DosageForm",
+            "IsActive",
+            "UsageRoute",
+            "StorageCondition",
+            "Status",
+            "IsPrescriptionDrug",
+            "Ingredients",
+            "Registrations",
+            "IsAvailableForInventory",
+            "RequiredStorageCondition"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DosageFormId",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "DosageForm",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "UsageRoute",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "StorageCondition",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "IsPrescriptionDrug",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Ingredients",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Registrations",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "IsAvailableForInventory",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "RequiredStorageCondition",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "Medicine",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "RaiseCreatedEvent",
+          "line": 60,
+          "isDefault": false
+        },
+        {
+          "name": "UpdatePharmaInfo",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "AddRegistration",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "GetCurrentRegistration",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "AddIngredient",
+          "line": 98,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveIngredient",
+          "line": 108,
+          "isDefault": false
+        },
+        {
+          "name": "Approve",
+          "line": 117,
+          "isDefault": false
+        },
+        {
+          "name": "Reject",
+          "line": 127,
+          "isDefault": false
+        },
+        {
+          "name": "SetPending",
+          "line": 137,
+          "isDefault": false
+        },
+        {
+          "name": "SetActive",
+          "line": 138,
+          "isDefault": false
+        },
+        {
+          "name": "SetStatus",
+          "line": 139,
+          "isDefault": false
+        },
+        {
+          "name": "Medicine",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Medicine",
+          "callee": "AddRegistration",
+          "lineNumber": 57
+        },
+        {
+          "caller": "Medicine",
+          "callee": "Guid.NewGuid",
+          "lineNumber": 57
+        },
+        {
+          "caller": "RaiseCreatedEvent",
+          "callee": "AddLocalEvent",
+          "lineNumber": 62
+        },
+        {
+          "caller": "RaiseCreatedEvent",
+          "callee": "new MedicineCreatedDomainEvent",
+          "lineNumber": 62
+        },
+        {
+          "caller": "AddRegistration",
+          "callee": "Registrations.Any",
+          "lineNumber": 79
+        },
+        {
+          "caller": "AddRegistration",
+          "callee": "regNumber.Trim().ToUpper",
+          "lineNumber": 79
+        },
+        {
+          "caller": "AddRegistration",
+          "callee": "regNumber.Trim",
+          "lineNumber": 79
+        },
+        {
+          "caller": "AddRegistration",
+          "callee": "new BusinessException",
+          "lineNumber": 81
+        },
+        {
+          "caller": "AddRegistration",
+          "callee": "reg.SetActive",
+          "lineNumber": 86
+        },
+        {
+          "caller": "AddRegistration",
+          "callee": "Registrations.Add",
+          "lineNumber": 89
+        },
+        {
+          "caller": "AddRegistration",
+          "callee": "new MedicineRegistration",
+          "lineNumber": 89
+        },
+        {
+          "caller": "GetCurrentRegistration",
+          "callee": "Registrations.FirstOrDefault",
+          "lineNumber": 94
+        },
+        {
+          "caller": "GetCurrentRegistration",
+          "callee": "Registrations.OrderByDescending(r => r.CreationTime).FirstOrDefault",
+          "lineNumber": 95
+        },
+        {
+          "caller": "GetCurrentRegistration",
+          "callee": "Registrations.OrderByDescending",
+          "lineNumber": 95
+        },
+        {
+          "caller": "AddIngredient",
+          "callee": "Ingredients.Any",
+          "lineNumber": 100
+        },
+        {
+          "caller": "AddIngredient",
+          "callee": "new BusinessException",
+          "lineNumber": 102
+        },
+        {
+          "caller": "AddIngredient",
+          "callee": "Ingredients.Add",
+          "lineNumber": 105
+        },
+        {
+          "caller": "AddIngredient",
+          "callee": "new MedicineIngredient",
+          "lineNumber": 105
+        },
+        {
+          "caller": "RemoveIngredient",
+          "callee": "Ingredients.FirstOrDefault",
+          "lineNumber": 110
+        },
+        {
+          "caller": "RemoveIngredient",
+          "callee": "Ingredients.Remove",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Approve",
+          "callee": "new BusinessException",
+          "lineNumber": 121
+        },
+        {
+          "caller": "Approve",
+          "callee": "AddLocalEvent",
+          "lineNumber": 125
+        },
+        {
+          "caller": "Approve",
+          "callee": "new MedicineStatusChangedDomainEvent",
+          "lineNumber": 125
+        },
+        {
+          "caller": "Reject",
+          "callee": "new BusinessException",
+          "lineNumber": 131
+        },
+        {
+          "caller": "Reject",
+          "callee": "AddLocalEvent",
+          "lineNumber": 135
+        },
+        {
+          "caller": "Reject",
+          "callee": "new MedicineStatusChangedDomainEvent",
+          "lineNumber": 135
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 24,
+        "functionCount": 13,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 16,
+      "functions": [
+        {
+          "name": "MedicineIngredient",
+          "startLine": 13,
+          "endLine": 13,
+          "params": []
+        },
+        {
+          "name": "MedicineIngredient",
+          "startLine": 15,
+          "endLine": 19,
+          "params": [
+            "medicineId",
+            "ingredientId"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "MedicineIngredient",
+          "startLine": 7,
+          "endLine": 20,
+          "methods": [
+            "MedicineIngredient",
+            "MedicineIngredient"
+          ],
+          "properties": [
+            "MedicineId",
+            "ActiveIngredientId",
+            "ActiveIngredient"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MedicineId",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ActiveIngredientId",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ActiveIngredient",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineIngredient",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineIngredient",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 240,
+      "nonEmptyLines": 205,
+      "functions": [
+        {
+          "name": "MedicineManager",
+          "startLine": 30,
+          "endLine": 48,
+          "params": [
+            "productManager",
+            "categoryRepository",
+            "manufacturerRepository",
+            "unitRepository",
+            "dosageFormRepository",
+            "activeIngredientRepository",
+            "countryRepository",
+            "documentSequenceManager"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 51,
+          "endLine": 98,
+          "params": [
+            "name",
+            "categoryId",
+            "manufacturerId",
+            "baseUnitId",
+            "dosageFormId",
+            "regNumber",
+            "usageRoute",
+            "storageCondition",
+            "isPrescriptionDrug",
+            "regValidFrom",
+            "regValidTo",
+            "regNote",
+            "raiseEvent"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 100,
+          "endLine": 142,
+          "params": [
+            "medicine",
+            "name",
+            "categoryId",
+            "manufacturerId",
+            "baseUnitId",
+            "dosageFormId",
+            "regNumber",
+            "usageRoute",
+            "storageCondition",
+            "isPrescriptionDrug",
+            "regValidFrom",
+            "regValidTo",
+            "regNote"
+          ]
+        },
+        {
+          "name": "AddIngredientAsync",
+          "startLine": 146,
+          "endLine": 154,
+          "params": [
+            "medicine",
+            "activeIngredientId"
+          ]
+        },
+        {
+          "name": "RemoveIngredientAsync",
+          "startLine": 156,
+          "endLine": 161,
+          "params": [
+            "medicine",
+            "activeIngredientId"
+          ]
+        },
+        {
+          "name": "AddUnitAsync",
+          "startLine": 165,
+          "endLine": 170,
+          "params": [
+            "medicine",
+            "unitId",
+            "conversionFactor",
+            "level"
+          ]
+        },
+        {
+          "name": "UpdateUnitAsync",
+          "startLine": 172,
+          "endLine": 177,
+          "params": [
+            "medicine",
+            "unitId",
+            "conversionFactor",
+            "level"
+          ]
+        },
+        {
+          "name": "RemoveUnitAsync",
+          "startLine": 179,
+          "endLine": 184,
+          "params": [
+            "medicine",
+            "unitId"
+          ]
+        },
+        {
+          "name": "AddRegistrationAsync",
+          "startLine": 188,
+          "endLine": 206,
+          "params": [
+            "medicine",
+            "regNumber",
+            "validFrom",
+            "validTo",
+            "regNote"
+          ]
+        },
+        {
+          "name": "ValidateForeignKeysAsync",
+          "startLine": 210,
+          "endLine": 231,
+          "params": [
+            "catId",
+            "manuId",
+            "unitId",
+            "dosageId"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "MedicineManager",
+          "startLine": 18,
+          "endLine": 233,
+          "methods": [
+            "MedicineManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "AddIngredientAsync",
+            "RemoveIngredientAsync",
+            "AddUnitAsync",
+            "UpdateUnitAsync",
+            "RemoveUnitAsync",
+            "AddRegistrationAsync",
+            "ValidateForeignKeysAsync"
+          ],
+          "properties": [
+            "_productManager",
+            "_categoryRepository",
+            "_manufacturerRepository",
+            "_unitRepository",
+            "_dosageFormRepository",
+            "_activeIngredientRepository",
+            "_documentSequenceManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MedicineManager",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 100,
+          "isDefault": false
+        },
+        {
+          "name": "AddIngredientAsync",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveIngredientAsync",
+          "line": 156,
+          "isDefault": false
+        },
+        {
+          "name": "AddUnitAsync",
+          "line": 165,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateUnitAsync",
+          "line": 172,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveUnitAsync",
+          "line": 179,
+          "isDefault": false
+        },
+        {
+          "name": "AddRegistrationAsync",
+          "line": 188,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineManager",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "ValidateForeignKeysAsync",
+          "lineNumber": 66
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 68
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_productManager.CheckCodeAsync",
+          "lineNumber": 69
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 72
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "medicine.GetCurrentRegistration",
+          "lineNumber": 85
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "firstReg.UpdateValidity",
+          "lineNumber": 88
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "firstReg.SetNote",
+          "lineNumber": 89
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "medicine.RaiseCreatedEvent",
+          "lineNumber": 94
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 115
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 115
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "ValidateForeignKeysAsync",
+          "lineNumber": 118
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "_productManager.ValidateBaseUnitChangeAsync",
+          "lineNumber": 121
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "medicine.UpdateInfo",
+          "lineNumber": 123
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "medicine.GetCurrentRegistration",
+          "lineNumber": 126
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "regNumber.Trim().ToUpper",
+          "lineNumber": 127
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "regNumber.Trim",
+          "lineNumber": 127
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "medicine.AddRegistration",
+          "lineNumber": 129
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 129
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "currentReg.UpdateValidity",
+          "lineNumber": 134
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "currentReg.SetNote",
+          "lineNumber": 135
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "medicine.UpdatePharmaInfo",
+          "lineNumber": 139
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "medicine.SetPending",
+          "lineNumber": 141
+        },
+        {
+          "caller": "AddIngredientAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 148
+        },
+        {
+          "caller": "AddIngredientAsync",
+          "callee": "nameof",
+          "lineNumber": 148
+        },
+        {
+          "caller": "AddIngredientAsync",
+          "callee": "_activeIngredientRepository.AnyAsync",
+          "lineNumber": 149
+        },
+        {
+          "caller": "AddIngredientAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 151
+        },
+        {
+          "caller": "AddIngredientAsync",
+          "callee": "medicine.AddIngredient",
+          "lineNumber": 153
+        },
+        {
+          "caller": "RemoveIngredientAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 158
+        },
+        {
+          "caller": "RemoveIngredientAsync",
+          "callee": "nameof",
+          "lineNumber": 158
+        },
+        {
+          "caller": "RemoveIngredientAsync",
+          "callee": "medicine.RemoveIngredient",
+          "lineNumber": 159
+        },
+        {
+          "caller": "AddUnitAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 167
+        },
+        {
+          "caller": "AddUnitAsync",
+          "callee": "nameof",
+          "lineNumber": 167
+        },
+        {
+          "caller": "AddUnitAsync",
+          "callee": "_productManager.ValidateUnitChangeAsync",
+          "lineNumber": 168
+        },
+        {
+          "caller": "AddUnitAsync",
+          "callee": "medicine.AddUnit",
+          "lineNumber": 169
+        },
+        {
+          "caller": "AddUnitAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 169
+        },
+        {
+          "caller": "UpdateUnitAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 174
+        },
+        {
+          "caller": "UpdateUnitAsync",
+          "callee": "nameof",
+          "lineNumber": 174
+        },
+        {
+          "caller": "UpdateUnitAsync",
+          "callee": "_productManager.ValidateUnitChangeAsync",
+          "lineNumber": 175
+        },
+        {
+          "caller": "UpdateUnitAsync",
+          "callee": "medicine.UpdateUnit",
+          "lineNumber": 176
+        },
+        {
+          "caller": "RemoveUnitAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 181
+        },
+        {
+          "caller": "RemoveUnitAsync",
+          "callee": "nameof",
+          "lineNumber": 181
+        },
+        {
+          "caller": "RemoveUnitAsync",
+          "callee": "_productManager.ValidateUnitChangeAsync",
+          "lineNumber": 182
+        },
+        {
+          "caller": "RemoveUnitAsync",
+          "callee": "medicine.RemoveUnit",
+          "lineNumber": 183
+        },
+        {
+          "caller": "AddRegistrationAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 195
+        },
+        {
+          "caller": "AddRegistrationAsync",
+          "callee": "nameof",
+          "lineNumber": 195
+        },
+        {
+          "caller": "AddRegistrationAsync",
+          "callee": "medicine.AddRegistration",
+          "lineNumber": 197
+        },
+        {
+          "caller": "AddRegistrationAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 198
+        },
+        {
+          "caller": "ValidateForeignKeysAsync",
+          "callee": "_categoryRepository.AnyAsync",
+          "lineNumber": 212
+        },
+        {
+          "caller": "ValidateForeignKeysAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 214
+        },
+        {
+          "caller": "ValidateForeignKeysAsync",
+          "callee": "_manufacturerRepository.AnyAsync",
+          "lineNumber": 217
+        },
+        {
+          "caller": "ValidateForeignKeysAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 219
+        },
+        {
+          "caller": "ValidateForeignKeysAsync",
+          "callee": "_unitRepository.AnyAsync",
+          "lineNumber": 222
+        },
+        {
+          "caller": "ValidateForeignKeysAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 224
+        },
+        {
+          "caller": "ValidateForeignKeysAsync",
+          "callee": "_dosageFormRepository.AnyAsync",
+          "lineNumber": 227
+        },
+        {
+          "caller": "ValidateForeignKeysAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 229
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 10,
+        "classCount": 1
+      }
+    }
+  ]
+}

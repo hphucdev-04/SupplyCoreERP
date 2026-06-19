@@ -1,0 +1,1152 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+      "type": "file",
+      "metadata": {
+        "name": "PurchaseReturnAutoMapperProfile.cs",
+        "path": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "purchasereturns"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs:PurchaseReturnAutoMapperProfile",
+      "type": "class",
+      "metadata": {
+        "name": "PurchaseReturnAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+        "summary": "Lớp PurchaseReturnAutoMapperProfile thuộc thành phần PurchaseReturnAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "purchasereturns"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs:PurchaseReturnAutoMapperProfile",
+      "type": "function",
+      "metadata": {
+        "name": "PurchaseReturnAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+        "summary": "Phương thức PurchaseReturnAutoMapperProfile thực hiện xử lý nghiệp vụ liên quan đến PurchaseReturnAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "purchasereturns"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SalesOrderAppService.cs",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Dịch vụ ứng dụng (Application Service) triển khai các quy trình nghiệp vụ và CRUD cho quản lý đơn bán hàng (SO).",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SalesOrderAppService",
+      "type": "class",
+      "metadata": {
+        "name": "SalesOrderAppService",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Lớp dịch vụ ứng dụng SalesOrderAppService xử lý luồng nghiệp vụ cho đơn bán hàng (SO)..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SalesOrderAppService",
+      "type": "function",
+      "metadata": {
+        "name": "SalesOrderAppService",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức SalesOrderAppService thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:GetListAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetListAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức GetListAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:GetAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức GetAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:AddLineAsync",
+      "type": "function",
+      "metadata": {
+        "name": "AddLineAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức AddLineAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:UpdateLineAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateLineAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức UpdateLineAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:RemoveLineAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RemoveLineAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức RemoveLineAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SendToApproveAsync",
+      "type": "function",
+      "metadata": {
+        "name": "SendToApproveAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức SendToApproveAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:ApproveAsync",
+      "type": "function",
+      "metadata": {
+        "name": "ApproveAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức ApproveAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:CompleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CompleteAsync",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+        "summary": "Phương thức CompleteAsync thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SalesOrderAutoMapperProfile.cs",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "sales-order"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs:SalesOrderAutoMapperProfile",
+      "type": "class",
+      "metadata": {
+        "name": "SalesOrderAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+        "summary": "Lớp SalesOrderAutoMapperProfile thuộc thành phần SalesOrderAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "sales-order"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs:SalesOrderAutoMapperProfile",
+      "type": "function",
+      "metadata": {
+        "name": "SalesOrderAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+        "summary": "Phương thức SalesOrderAutoMapperProfile thực hiện xử lý nghiệp vụ liên quan đến SalesOrderAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "sales-order"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SalesRecallAppService.cs",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Dịch vụ ứng dụng (Application Service) triển khai các quy trình nghiệp vụ và CRUD cho quản lý sales recalls.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SalesRecallAppService",
+      "type": "class",
+      "metadata": {
+        "name": "SalesRecallAppService",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Lớp dịch vụ ứng dụng SalesRecallAppService xử lý luồng nghiệp vụ cho sales recalls..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SalesRecallAppService",
+      "type": "function",
+      "metadata": {
+        "name": "SalesRecallAppService",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức SalesRecallAppService thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:GetListAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetListAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức GetListAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:GetAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức GetAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:AddLineAsync",
+      "type": "function",
+      "metadata": {
+        "name": "AddLineAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức AddLineAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:UpdateLineAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateLineAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức UpdateLineAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:RemoveLineAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RemoveLineAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức RemoveLineAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SendToApproveAsync",
+      "type": "function",
+      "metadata": {
+        "name": "SendToApproveAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức SendToApproveAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:ApproveAsync",
+      "type": "function",
+      "metadata": {
+        "name": "ApproveAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức ApproveAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:RejectAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RejectAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức RejectAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:TraceCustomersByBatchAsync",
+      "type": "function",
+      "metadata": {
+        "name": "TraceCustomersByBatchAsync",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+        "summary": "Phương thức TraceCustomersByBatchAsync thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SalesRecallAutoMapperProfile.cs",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "salesrecalls"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs:SalesRecallAutoMapperProfile",
+      "type": "class",
+      "metadata": {
+        "name": "SalesRecallAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+        "summary": "Lớp SalesRecallAutoMapperProfile thuộc thành phần SalesRecallAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "salesrecalls"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs:SalesRecallAutoMapperProfile",
+      "type": "function",
+      "metadata": {
+        "name": "SalesRecallAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+        "summary": "Phương thức SalesRecallAutoMapperProfile thực hiện xử lý nghiệp vụ liên quan đến SalesRecallAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "salesrecalls"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs:PurchaseReturnAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs:PurchaseReturnAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs:PurchaseReturnAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs:PurchaseReturnAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SalesOrderAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SalesOrderAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SalesOrderAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SalesOrderAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:GetListAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:GetListAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:GetAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:GetAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:AddLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:AddLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:UpdateLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:UpdateLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:RemoveLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:RemoveLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SendToApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:SendToApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:ApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:ApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:CompleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs:CompleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs:SalesOrderAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs:SalesOrderAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs:SalesOrderAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs:SalesOrderAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SalesRecallAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SalesRecallAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SalesRecallAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SalesRecallAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:GetListAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:GetListAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:GetAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:GetAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:AddLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:AddLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:UpdateLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:UpdateLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:RemoveLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:RemoveLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SendToApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:SendToApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:ApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:ApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:RejectAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:RejectAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:TraceCustomersByBatchAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs:TraceCustomersByBatchAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs:SalesRecallAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs:SalesRecallAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs:SalesRecallAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs:SalesRecallAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

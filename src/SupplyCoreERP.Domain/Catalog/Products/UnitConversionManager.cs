@@ -110,6 +110,42 @@ public class UnitConversionManager : DomainService
 
         return absoluteFactor;
     }
+
+    /// <summary>
+    /// Tính tổng thể tích chiếm dụng của một số lượng hàng hóa ở một đơn vị tính nhất định.
+    /// </summary>
+    public virtual decimal CalculateVolume(Product product, Guid unitId, decimal quantity)
+    {
+        Check.NotNull(product, nameof(product));
+
+        if (quantity <= 0)
+        {
+            return 0;
+        }
+
+        if (unitId == product.BaseUnitId)
+        {
+            return quantity * product.BaseUnitVolume;
+        }
+
+        ProductUnit? targetUnit = product.Units.FirstOrDefault(u => u.UnitId == unitId);
+        if (targetUnit == null)
+        {
+            throw new BusinessException(
+                "SupplyCoreERP:UnitNotFound",
+                $"Đơn vị tính với Id '{unitId}' không thuộc danh sách quy đổi của sản phẩm '{product.Name}'."
+            );
+        }
+
+        if (targetUnit.Volume > 0)
+        {
+            return quantity * targetUnit.Volume;
+        }
+
+        // Nếu không thiết lập thể tích riêng cho đơn vị đóng gói, tính tỷ lệ theo đơn vị gốc và hệ số quy đổi
+        int absoluteFactor = GetAbsoluteConversionFactor(product, unitId);
+        return quantity * (product.BaseUnitVolume * absoluteFactor);
+    }
 }
 
 

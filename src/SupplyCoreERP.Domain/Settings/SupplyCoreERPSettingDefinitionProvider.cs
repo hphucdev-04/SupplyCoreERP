@@ -23,7 +23,8 @@ public class SupplyCoreERPSettingDefinitionProvider : SettingDefinitionProvider
         context.Add(new SettingDefinition(
             SupplyCoreERPSettings.LlmProviderApiKey,
             defaultValue: "",
-            isVisibleToClients: false
+            isVisibleToClients: false,
+            isEncrypted: true
         ));
 
         context.Add(new SettingDefinition(
@@ -36,6 +37,12 @@ public class SupplyCoreERPSettingDefinitionProvider : SettingDefinitionProvider
             SupplyCoreERPSettings.ExpirationAlertDays,
             defaultValue: "30",
             isVisibleToClients: false
+        ));
+
+        context.Add(new SettingDefinition(
+            SupplyCoreERPSettings.AgentMaxHistoryMessages,
+            defaultValue: "20",
+            isVisibleToClients: true
         ));
     }
 }

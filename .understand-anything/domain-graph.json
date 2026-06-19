@@ -1,0 +1,1139 @@
+{
+  "version": "1.0.0",
+  "project": {
+    "name": "SupplyCoreERP (RxLogistics)",
+    "languages": [
+      "csharp",
+      "cshtml",
+      "css",
+      "html",
+      "javascript",
+      "json",
+      "markdown",
+      "powershell",
+      "typescript",
+      "yaml"
+    ],
+    "frameworks": [
+      "ABP Framework",
+      "Angular",
+      "Docker",
+      "GitHub Actions"
+    ],
+    "description": "Giải pháp ERP quản lý chuỗi cung ứng dược phẩm toàn diện được xây dựng trên ABP Framework (.NET 10) và Angular tuân thủ các nguyên tắc thiết kế hướng tên miền (DDD).",
+    "analyzedAt": "2026-06-11T16:07:20+07:00",
+    "gitCommitHash": "7e064f81dfefe1b544ed67321ed81297621b47e2"
+  },
+  "nodes": [
+    {
+      "id": "domain:procurement-management",
+      "type": "domain",
+      "name": "Quản lý Mua hàng",
+      "summary": "Quản lý toàn bộ quy trình mua hàng từ khi đề xuất nhu cầu mua hàng, tạo đơn mua hàng chính thức, đến quy trình trả hàng lỗi cho nhà cung cấp.",
+      "tags": [
+        "procurement",
+        "purchase-orders",
+        "purchase-requisitions",
+        "purchase-returns"
+      ],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": [
+          "PurchaseRequisition",
+          "PurchaseOrder",
+          "PurchaseReturn",
+          "PurchaseRequisitionLine",
+          "PurchaseOrderLine",
+          "PurchaseReturnLine"
+        ],
+        "businessRules": [
+          "Chỉ xóa được yêu cầu mua hàng đang ở trạng thái Nháp",
+          "Phê duyệt đơn mua hàng sẽ tự động sinh phiếu nhập kho tương ứng",
+          "Chỉ trả hàng cho nhà cung cấp dựa trên một đơn mua hàng đã tồn tại"
+        ],
+        "crossDomainInteractions": [
+          "Tạo phiếu nhập kho trong Quản lý Kho hàng khi duyệt đơn mua hàng",
+          "Cập nhật công nợ hoặc xếp hạng của Nhà cung cấp trong Quản lý Đối tác"
+        ]
+      }
+    },
+    {
+      "id": "domain:sales-recall-management",
+      "type": "domain",
+      "name": "Quản lý Bán hàng & Thu hồi",
+      "summary": "Quản lý quy trình từ khi tạo đơn bán hàng cho khách hàng, đại lý cho đến quy trình thu hồi khẩn cấp các lô thuốc bị lỗi hoặc kém chất lượng đã bán ra thị trường.",
+      "tags": [
+        "sales",
+        "sales-orders",
+        "recalls",
+        "pharmacovigilance"
+      ],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": [
+          "SalesOrder",
+          "SalesRecall",
+          "SalesOrderLine",
+          "SalesRecallLine",
+          "Customer"
+        ],
+        "businessRules": [
+          "Thu hồi thuốc phải hỗ trợ truy vết lịch sử bán hàng theo lô thuốc (ProductBatch)",
+          "Duyệt đơn bán hàng sẽ tự động tạo phiếu xuất kho để xuất hàng",
+          "Thu hồi thuốc khi duyệt sẽ tạo phiếu nhập kho để thu hồi hàng lỗi về"
+        ],
+        "crossDomainInteractions": [
+          "Sinh phiếu xuất kho khi duyệt đơn bán hàng",
+          "Sinh phiếu nhập kho (GoodsReturn) khi duyệt phiếu thu hồi",
+          "Kiểm tra tồn kho trước khi duyệt bán hàng"
+        ]
+      }
+    },
+    {
+      "id": "domain:inventory-management",
+      "type": "domain",
+      "name": "Quản lý Kho hàng & Tồn kho",
+      "summary": "Quản lý việc lưu trữ hàng hóa tại kho, phân bổ vị trí (Bin), thực hiện nhập/xuất kho vật lý theo phiếu và áp dụng thuật toán FEFO để tối ưu hóa hạn dùng của dược phẩm.",
+      "tags": [
+        "inventory",
+        "warehouse",
+        "fefo",
+        "tickets"
+      ],
+      "complexity": "complex",
+      "domainMeta": {
+        "entities": [
+          "InventoryTicket",
+          "InventoryTicketLine",
+          "InventoryTicketDetail",
+          "Warehouse",
+          "Location",
+          "ProductBatch",
+          "InventoryBalance"
+        ],
+        "businessRules": [
+          "Xuất kho dược phẩm phải áp dụng thuật toán FEFO (Hết hạn trước - Xuất trước)",
+          "Mỗi lần nhập/xuất kho vật lý hoàn tất phải tạo ra các bản ghi giao dịch kho (InventoryTransaction) để ghi thẻ kho",
+          "Cập nhật số dư tồn kho (InventoryBalance) tại từng Bin của kho"
+        ],
+        "crossDomainInteractions": [
+          "Cập nhật trạng thái hoàn thành cho Đơn mua hàng hoặc Đơn bán hàng",
+          "Thực hiện trừ/cộng tồn kho thực tế của sản phẩm"
+        ]
+      }
+    },
+    {
+      "id": "domain:product-management",
+      "type": "domain",
+      "name": "Quản lý Thông tin Dược phẩm & Bảng giá",
+      "summary": "Quản lý danh mục thuốc, hoạt chất, dạng bào chế, số đăng ký lưu hành và thiết lập các bảng giá bán/mua cho hệ thống.",
+      "tags": [
+        "product-catalog",
+        "medicine",
+        "pricing",
+        "master-data"
+      ],
+      "complexity": "moderate",
+      "domainMeta": {
+        "entities": [
+          "Medicine",
+          "ActiveIngredient",
+          "DosageForm",
+          "MedicineRegistration",
+          "ProductPrice",
+          "PriceList"
+        ],
+        "businessRules": [
+          "Thuốc phải được phê duyệt trước khi đưa vào kinh doanh hoặc sử dụng",
+          "Mỗi loại thuốc có thể có nhiều đơn vị quy đổi và số đăng ký lưu hành",
+          "Bảng giá phải hoạt động mới áp dụng được cho sản phẩm"
+        ],
+        "crossDomainInteractions": [
+          "Cung cấp thông tin thuốc và giá cho các đơn mua hàng và đơn bán hàng"
+        ]
+      }
+    },
+    {
+      "id": "flow:purchase-requisition-process",
+      "type": "flow",
+      "name": "Quy trình Yêu cầu Mua hàng",
+      "summary": "Khởi tạo và phê duyệt nhu cầu mua hàng, sau đó phân bổ và chuyển đổi sang các đơn mua hàng (Purchase Order).",
+      "tags": [
+        "requisition",
+        "request",
+        "procurement"
+      ],
+      "complexity": "moderate",
+      "domainMeta": {
+        "entryPoint": "IPurchaseRequisitionAppService.CreateAsync",
+        "entryType": "http"
+      }
+    },
+    {
+      "id": "flow:purchase-order-process",
+      "type": "flow",
+      "name": "Quy trình Đơn mua hàng",
+      "summary": "Tạo, quản lý đơn mua hàng chính thức gửi nhà cung cấp, phê duyệt để sinh phiếu nhập kho và hoàn thành đơn hàng.",
+      "tags": [
+        "purchase-order",
+        "procurement",
+        "order-processing"
+      ],
+      "complexity": "complex",
+      "domainMeta": {
+        "entryPoint": "IPurchaseOrderAppService.CreateAsync",
+        "entryType": "http"
+      }
+    },
+    {
+      "id": "flow:purchase-return-process",
+      "type": "flow",
+      "name": "Quy trình Trả hàng mua",
+      "summary": "Xử lý việc trả lại hàng hóa bị lỗi hoặc hết hạn cho nhà cung cấp dựa trên đơn mua hàng ban đầu.",
+      "tags": [
+        "purchase-return",
+        "procurement",
+        "supplier-return"
+      ],
+      "complexity": "moderate",
+      "domainMeta": {
+        "entryPoint": "IPurchaseReturnAppService.CreateAsync",
+        "entryType": "http"
+      }
+    },
+    {
+      "id": "flow:sales-order-process",
+      "type": "flow",
+      "name": "Quy trình Đơn bán hàng",
+      "summary": "Xử lý đơn bán hàng từ khâu tạo nháp, thêm sản phẩm, duyệt đơn hàng (sinh phiếu xuất kho) và hoàn tất thanh toán.",
+      "tags": [
+        "sales-order",
+        "sales",
+        "order-processing"
+      ],
+      "complexity": "complex",
+      "domainMeta": {
+        "entryPoint": "ISalesOrderAppService.CreateAsync",
+        "entryType": "http"
+      }
+    },
+    {
+      "id": "flow:sales-recall-process",
+      "type": "flow",
+      "name": "Quy trình Thu hồi thuốc",
+      "summary": "Truy vết và lập danh sách khách hàng đã mua sản phẩm thuộc lô thuốc bị lỗi, ban hành quyết định thu hồi và nhập kho thu hồi.",
+      "tags": [
+        "recall",
+        "traceability",
+        "compliance"
+      ],
+      "complexity": "complex",
+      "domainMeta": {
+        "entryPoint": "ISalesRecallAppService.CreateAsync",
+        "entryType": "http"
+      }
+    },
+    {
+      "id": "flow:inventory-ticket-process",
+      "type": "flow",
+      "name": "Quy trình Phiếu kho vật lý",
+      "summary": "Xử lý việc nhập hoặc xuất kho thực tế, phân bổ chi tiết lô hàng, Bin và thực thi cập nhật sổ kho.",
+      "tags": [
+        "inventory-ticket",
+        "goods-issue",
+        "goods-receipt",
+        "warehouse-operations"
+      ],
+      "complexity": "complex",
+      "domainMeta": {
+        "entryPoint": "IInventoryTicketAppService.CreateAsync",
+        "entryType": "http"
+      }
+    },
+    {
+      "id": "flow:medicine-catalog-process",
+      "type": "flow",
+      "name": "Quy trình Quản lý Thông tin Thuốc",
+      "summary": "Tạo thông tin thuốc, cấu hình hoạt chất, đơn vị tính quy đổi, số đăng ký lưu hành và duyệt thuốc.",
+      "tags": [
+        "medicine",
+        "catalog",
+        "master-data"
+      ],
+      "complexity": "moderate",
+      "domainMeta": {
+        "entryPoint": "IMedicineAppService.CreateAsync",
+        "entryType": "http"
+      }
+    },
+    {
+      "id": "flow:price-setup-process",
+      "type": "flow",
+      "name": "Thiết lập giá bán/mua",
+      "summary": "Thiết lập đơn giá cho các sản phẩm theo từng bảng giá và đơn vị tính tương ứng.",
+      "tags": [
+        "pricing",
+        "price-list",
+        "sales-config"
+      ],
+      "complexity": "simple",
+      "domainMeta": {
+        "entryPoint": "IPriceAppService.CreateAsync",
+        "entryType": "http"
+      }
+    },
+    {
+      "id": "step:purchase-requisition-process:create-requisition",
+      "type": "step",
+      "name": "Khởi tạo yêu cầu mua hàng nháp",
+      "summary": "Tạo phiếu yêu cầu mua hàng nháp với thông tin kho nhận, ngày yêu cầu và ghi chú.",
+      "tags": [
+        "requisition",
+        "create"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAppService.cs",
+      "lineRange": [
+        94,
+        104
+      ]
+    },
+    {
+      "id": "step:purchase-requisition-process:add-line",
+      "type": "step",
+      "name": "Thêm dòng sản phẩm yêu cầu",
+      "summary": "Thêm sản phẩm, đơn vị tính và số lượng cần mua vào phiếu yêu cầu.",
+      "tags": [
+        "requisition",
+        "line",
+        "item"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAppService.cs",
+      "lineRange": [
+        125,
+        136
+      ]
+    },
+    {
+      "id": "step:purchase-requisition-process:send-approve",
+      "type": "step",
+      "name": "Gửi phê duyệt yêu cầu",
+      "summary": "Chuyển trạng thái yêu cầu sang chờ duyệt và khóa chỉnh sửa cơ bản.",
+      "tags": [
+        "requisition",
+        "workflow",
+        "approve"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAppService.cs",
+      "lineRange": [
+        164,
+        175
+      ]
+    },
+    {
+      "id": "step:purchase-requisition-process:approve-requisition",
+      "type": "step",
+      "name": "Phê duyệt yêu cầu",
+      "summary": "Người quản lý duyệt phiếu yêu cầu để xác nhận nhu cầu mua hàng là hợp lệ.",
+      "tags": [
+        "requisition",
+        "approve"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAppService.cs",
+      "lineRange": [
+        177,
+        182
+      ]
+    },
+    {
+      "id": "step:purchase-requisition-process:convert-to-po",
+      "type": "step",
+      "name": "Chuyển đổi thành đơn mua hàng",
+      "summary": "Phân bổ dòng yêu cầu cho các nhà cung cấp khác nhau và sinh ra các đơn mua hàng (Purchase Order) tương ứng.",
+      "tags": [
+        "requisition",
+        "convert",
+        "purchase-order"
+      ],
+      "complexity": "complex",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAppService.cs",
+      "lineRange": [
+        191,
+        214
+      ]
+    },
+    {
+      "id": "step:purchase-order-process:create-po",
+      "type": "step",
+      "name": "Khởi tạo đơn mua hàng",
+      "summary": "Tạo đơn mua hàng nháp với thông tin nhà cung cấp, kho nhận và các mốc thời gian giao hàng.",
+      "tags": [
+        "purchase-order",
+        "create"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAppService.cs",
+      "lineRange": [
+        99,
+        106
+      ]
+    },
+    {
+      "id": "step:purchase-order-process:add-line",
+      "type": "step",
+      "name": "Thêm dòng mặt hàng mua",
+      "summary": "Thêm thông tin sản phẩm, số lượng, đơn giá, thuế suất và tỷ lệ quy đổi.",
+      "tags": [
+        "purchase-order",
+        "item"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAppService.cs",
+      "lineRange": [
+        132,
+        143
+      ]
+    },
+    {
+      "id": "step:purchase-order-process:send-approve",
+      "type": "step",
+      "name": "Gửi duyệt đơn hàng",
+      "summary": "Chuyển đơn mua hàng sang trạng thái chờ phê duyệt để kiểm tra thông tin tài chính.",
+      "tags": [
+        "purchase-order",
+        "approve"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAppService.cs",
+      "lineRange": [
+        173,
+        181
+      ]
+    },
+    {
+      "id": "step:purchase-order-process:approve-po",
+      "type": "step",
+      "name": "Phê duyệt đơn hàng và tạo phiếu nhập kho",
+      "summary": "Duyệt đơn hàng và tự động sinh ra một phiếu nhập kho (InventoryTicket) nháp để sẵn sàng tiếp nhận hàng.",
+      "tags": [
+        "purchase-order",
+        "approve",
+        "inventory-ticket"
+      ],
+      "complexity": "moderate",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAppService.cs",
+      "lineRange": [
+        183,
+        193
+      ]
+    },
+    {
+      "id": "step:purchase-order-process:complete-po",
+      "type": "step",
+      "name": "Hoàn thành đơn hàng",
+      "summary": "Hoàn tất đơn mua hàng sau khi đã nhập đủ kho, cập nhật công nợ và xếp hạng cho Nhà cung cấp.",
+      "tags": [
+        "purchase-order",
+        "complete"
+      ],
+      "complexity": "moderate",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAppService.cs",
+      "lineRange": [
+        195,
+        208
+      ]
+    },
+    {
+      "id": "step:purchase-return-process:create-return",
+      "type": "step",
+      "name": "Khởi tạo phiếu trả hàng",
+      "summary": "Tạo phiếu trả hàng nháp liên kết với đơn mua hàng gốc (Purchase Order) và nhà cung cấp.",
+      "tags": [
+        "purchase-return",
+        "create"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAppService.cs",
+      "lineRange": [
+        126,
+        139
+      ]
+    },
+    {
+      "id": "step:purchase-return-process:add-line",
+      "type": "step",
+      "name": "Thêm dòng sản phẩm trả hàng",
+      "summary": "Chọn dòng sản phẩm từ đơn hàng gốc, chỉ định số lượng trả và tỷ lệ khấu hao (nếu có).",
+      "tags": [
+        "purchase-return",
+        "item"
+      ],
+      "complexity": "moderate",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAppService.cs",
+      "lineRange": [
+        168,
+        191
+      ]
+    },
+    {
+      "id": "step:purchase-return-process:approve-return",
+      "type": "step",
+      "name": "Phê duyệt trả hàng",
+      "summary": "Duyệt yêu cầu trả hàng, hệ thống tự động sinh phiếu xuất kho để thực xuất trả hàng cho nhà cung cấp.",
+      "tags": [
+        "purchase-return",
+        "approve"
+      ],
+      "complexity": "moderate",
+      "filePath": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAppService.cs",
+      "lineRange": [
+        234,
+        243
+      ]
+    },
+    {
+      "id": "step:sales-order-process:create-so",
+      "type": "step",
+      "name": "Khởi tạo đơn bán hàng",
+      "summary": "Tạo đơn bán hàng nháp cho khách hàng, thiết lập kho xuất, ngày giao hàng dự kiến và hạn thanh toán.",
+      "tags": [
+        "sales-order",
+        "create"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "lineRange": [
+        85,
+        92
+      ]
+    },
+    {
+      "id": "step:sales-order-process:add-line",
+      "type": "step",
+      "name": "Thêm dòng mặt hàng bán",
+      "summary": "Thêm sản phẩm, số lượng, giá bán và mức chiết khấu cho dòng đơn hàng.",
+      "tags": [
+        "sales-order",
+        "item"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "lineRange": [
+        118,
+        129
+      ]
+    },
+    {
+      "id": "step:sales-order-process:approve-so",
+      "type": "step",
+      "name": "Phê duyệt đơn bán hàng",
+      "summary": "Kiểm tra tồn kho tổng quát và phê duyệt đơn hàng, đồng thời tự động sinh phiếu xuất kho (GoodsIssue) ở trạng thái Nháp.",
+      "tags": [
+        "sales-order",
+        "approve",
+        "inventory-ticket"
+      ],
+      "complexity": "complex",
+      "filePath": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "lineRange": [
+        169,
+        180
+      ]
+    },
+    {
+      "id": "step:sales-order-process:complete-so",
+      "type": "step",
+      "name": "Hoàn thành đơn bán hàng",
+      "summary": "Xác nhận đơn hàng đã giao thành công và cập nhật lịch sử công nợ, doanh thu cho Khách hàng.",
+      "tags": [
+        "sales-order",
+        "complete"
+      ],
+      "complexity": "moderate",
+      "filePath": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "lineRange": [
+        182,
+        190
+      ]
+    },
+    {
+      "id": "step:sales-recall-process:create-recall",
+      "type": "step",
+      "name": "Khởi tạo quyết định thu hồi",
+      "summary": "Tạo hồ sơ thu hồi thuốc lỗi nháp chỉ định rõ sản phẩm, số lô lỗi, lý do và mức độ khẩn cấp.",
+      "tags": [
+        "recall",
+        "create"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "lineRange": [
+        114,
+        129
+      ]
+    },
+    {
+      "id": "step:sales-recall-process:trace-customers",
+      "type": "step",
+      "name": "Truy vết khách hàng theo lô thuốc",
+      "summary": "Hệ thống tự động tìm kiếm các phiếu xuất kho đã được thực thi chứa số lô lỗi để tìm ra danh sách khách hàng và đơn bán hàng liên quan.",
+      "tags": [
+        "recall",
+        "trace",
+        "batch-number"
+      ],
+      "complexity": "complex",
+      "filePath": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "lineRange": [
+        242,
+        313
+      ]
+    },
+    {
+      "id": "step:sales-recall-process:add-line",
+      "type": "step",
+      "name": "Thêm dòng chi tiết thu hồi",
+      "summary": "Đưa thông tin khách hàng, đơn hàng bán và số lượng cần thu hồi vào quyết định thu hồi.",
+      "tags": [
+        "recall",
+        "line"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "lineRange": [
+        158,
+        180
+      ]
+    },
+    {
+      "id": "step:sales-recall-process:approve-recall",
+      "type": "step",
+      "name": "Phê duyệt quyết định thu hồi",
+      "summary": "Ban hành chính thức quyết định thu hồi, tự động tạo phiếu nhập kho thu hồi hàng lỗi về kho cách ly.",
+      "tags": [
+        "recall",
+        "approve",
+        "workflow"
+      ],
+      "complexity": "moderate",
+      "filePath": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "lineRange": [
+        222,
+        230
+      ]
+    },
+    {
+      "id": "step:inventory-ticket-process:create-ticket",
+      "type": "step",
+      "name": "Tạo phiếu nhập/xuất kho",
+      "summary": "Tạo phiếu nhập (GoodsReceipt) hoặc xuất (GoodsIssue) nháp liên kết với chứng từ gốc.",
+      "tags": [
+        "ticket",
+        "create"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/Tickets/InventoryTicketAppService.cs",
+      "lineRange": [
+        95,
+        102
+      ]
+    },
+    {
+      "id": "step:inventory-ticket-process:add-line",
+      "type": "step",
+      "name": "Thêm dòng mặt hàng từ chứng từ",
+      "summary": "Tự động lấy và thêm dòng mặt hàng còn thiếu từ đơn mua hàng hoặc đơn bán hàng gốc.",
+      "tags": [
+        "ticket",
+        "line"
+      ],
+      "complexity": "moderate",
+      "filePath": "src/SupplyCoreERP.Application/Tickets/InventoryTicketAppService.cs",
+      "lineRange": [
+        159,
+        174
+      ]
+    },
+    {
+      "id": "step:inventory-ticket-process:apply-fefo",
+      "type": "step",
+      "name": "Áp dụng phân bổ FEFO",
+      "summary": "Hệ thống tự động tìm và phân bổ các lô sản phẩm sắp hết hạn trước ở các vị trí (Bin) thích hợp cho phiếu xuất.",
+      "tags": [
+        "ticket",
+        "fefo",
+        "allocation"
+      ],
+      "complexity": "complex",
+      "filePath": "src/SupplyCoreERP.Application/Tickets/InventoryTicketAppService.cs",
+      "lineRange": [
+        280,
+        320
+      ]
+    },
+    {
+      "id": "step:inventory-ticket-process:execute-ticket",
+      "type": "step",
+      "name": "Thực thi phiếu kho",
+      "summary": "Người kho xác nhận thực tế nhập/xuất, hệ thống cập nhật số dư kho, ghi nhận giao dịch kho (InventoryTransaction) và khóa phiếu.",
+      "tags": [
+        "ticket",
+        "execute",
+        "transaction"
+      ],
+      "complexity": "complex",
+      "filePath": "src/SupplyCoreERP.Application/Tickets/InventoryTicketAppService.cs",
+      "lineRange": [
+        273,
+        278
+      ]
+    },
+    {
+      "id": "step:medicine-catalog-process:create-medicine",
+      "type": "step",
+      "name": "Khởi tạo thông tin thuốc",
+      "summary": "Tạo bản ghi thuốc mới với thông tin cơ bản: tên, danh mục, nhà sản xuất, đơn vị cơ bản.",
+      "tags": [
+        "medicine",
+        "create"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/Medicines/MedicineAppService.cs",
+      "lineRange": [
+        100,
+        122
+      ]
+    },
+    {
+      "id": "step:medicine-catalog-process:add-ingredient",
+      "type": "step",
+      "name": "Thêm thành phần hoạt chất",
+      "summary": "Liên kết thuốc với các hoạt chất dược lý cấu thành.",
+      "tags": [
+        "medicine",
+        "ingredient"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/Medicines/MedicineAppService.cs",
+      "lineRange": [
+        208,
+        223
+      ]
+    },
+    {
+      "id": "step:medicine-catalog-process:add-unit",
+      "type": "step",
+      "name": "Thêm đơn vị quy đổi",
+      "summary": "Thêm các đơn vị tính khác (Hộp, Thùng...) kèm theo tỷ lệ quy đổi so với đơn vị cơ bản.",
+      "tags": [
+        "medicine",
+        "unit"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/Medicines/MedicineAppService.cs",
+      "lineRange": [
+        243,
+        259
+      ]
+    },
+    {
+      "id": "step:medicine-catalog-process:add-registration",
+      "type": "step",
+      "name": "Đăng ký số lưu hành",
+      "summary": "Thêm số đăng ký lưu hành của Bộ Y Tế kèm theo thời hạn hiệu lực.",
+      "tags": [
+        "medicine",
+        "registration"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/Medicines/MedicineAppService.cs",
+      "lineRange": [
+        311,
+        330
+      ]
+    },
+    {
+      "id": "step:medicine-catalog-process:approve-medicine",
+      "type": "step",
+      "name": "Phê duyệt thông tin thuốc",
+      "summary": "Duyệt thông tin thuốc để kích hoạt trạng thái được phép giao dịch trong hệ thống.",
+      "tags": [
+        "medicine",
+        "approve"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/Medicines/MedicineAppService.cs",
+      "lineRange": [
+        163,
+        168
+      ]
+    },
+    {
+      "id": "step:price-setup-process:create-price",
+      "type": "step",
+      "name": "Thiết lập giá sản phẩm",
+      "summary": "Tạo đơn giá mới cho sản phẩm ứng với một bảng giá (Price List), đơn vị tính và số lượng tối thiểu.",
+      "tags": [
+        "pricing",
+        "create"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/Prices/PriceAppService.cs",
+      "lineRange": [
+        52,
+        63
+      ]
+    },
+    {
+      "id": "step:price-setup-process:update-price",
+      "type": "step",
+      "name": "Cập nhật đơn giá",
+      "summary": "Thay đổi mức giá hiện tại của sản phẩm trong bảng giá.",
+      "tags": [
+        "pricing",
+        "update"
+      ],
+      "complexity": "simple",
+      "filePath": "src/SupplyCoreERP.Application/Prices/PriceAppService.cs",
+      "lineRange": [
+        65,
+        72
+      ]
+    }
+  ],
+  "edges": [
+    {
+      "source": "domain:procurement-management",
+      "target": "flow:purchase-requisition-process",
+      "type": "contains_flow",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "domain:procurement-management",
+      "target": "flow:purchase-order-process",
+      "type": "contains_flow",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "domain:procurement-management",
+      "target": "flow:purchase-return-process",
+      "type": "contains_flow",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "domain:sales-recall-management",
+      "target": "flow:sales-order-process",
+      "type": "contains_flow",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "domain:sales-recall-management",
+      "target": "flow:sales-recall-process",
+      "type": "contains_flow",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "domain:inventory-management",
+      "target": "flow:inventory-ticket-process",
+      "type": "contains_flow",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "domain:product-management",
+      "target": "flow:medicine-catalog-process",
+      "type": "contains_flow",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "domain:product-management",
+      "target": "flow:price-setup-process",
+      "type": "contains_flow",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "flow:purchase-requisition-process",
+      "target": "step:purchase-requisition-process:create-requisition",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.2
+    },
+    {
+      "source": "flow:purchase-requisition-process",
+      "target": "step:purchase-requisition-process:add-line",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.4
+    },
+    {
+      "source": "flow:purchase-requisition-process",
+      "target": "step:purchase-requisition-process:send-approve",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "flow:purchase-requisition-process",
+      "target": "step:purchase-requisition-process:approve-requisition",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "flow:purchase-requisition-process",
+      "target": "step:purchase-requisition-process:convert-to-po",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "flow:purchase-order-process",
+      "target": "step:purchase-order-process:create-po",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.2
+    },
+    {
+      "source": "flow:purchase-order-process",
+      "target": "step:purchase-order-process:add-line",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.4
+    },
+    {
+      "source": "flow:purchase-order-process",
+      "target": "step:purchase-order-process:send-approve",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "flow:purchase-order-process",
+      "target": "step:purchase-order-process:approve-po",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "flow:purchase-order-process",
+      "target": "step:purchase-order-process:complete-po",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "flow:purchase-return-process",
+      "target": "step:purchase-return-process:create-return",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.3
+    },
+    {
+      "source": "flow:purchase-return-process",
+      "target": "step:purchase-return-process:add-line",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "flow:purchase-return-process",
+      "target": "step:purchase-return-process:approve-return",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "flow:sales-order-process",
+      "target": "step:sales-order-process:create-so",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.25
+    },
+    {
+      "source": "flow:sales-order-process",
+      "target": "step:sales-order-process:add-line",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "flow:sales-order-process",
+      "target": "step:sales-order-process:approve-so",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.75
+    },
+    {
+      "source": "flow:sales-order-process",
+      "target": "step:sales-order-process:complete-so",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "flow:sales-recall-process",
+      "target": "step:sales-recall-process:create-recall",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.25
+    },
+    {
+      "source": "flow:sales-recall-process",
+      "target": "step:sales-recall-process:trace-customers",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "flow:sales-recall-process",
+      "target": "step:sales-recall-process:add-line",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.75
+    },
+    {
+      "source": "flow:sales-recall-process",
+      "target": "step:sales-recall-process:approve-recall",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "flow:inventory-ticket-process",
+      "target": "step:inventory-ticket-process:create-ticket",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.25
+    },
+    {
+      "source": "flow:inventory-ticket-process",
+      "target": "step:inventory-ticket-process:add-line",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "flow:inventory-ticket-process",
+      "target": "step:inventory-ticket-process:apply-fefo",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.75
+    },
+    {
+      "source": "flow:inventory-ticket-process",
+      "target": "step:inventory-ticket-process:execute-ticket",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "flow:medicine-catalog-process",
+      "target": "step:medicine-catalog-process:create-medicine",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.2
+    },
+    {
+      "source": "flow:medicine-catalog-process",
+      "target": "step:medicine-catalog-process:add-ingredient",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.4
+    },
+    {
+      "source": "flow:medicine-catalog-process",
+      "target": "step:medicine-catalog-process:add-unit",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "flow:medicine-catalog-process",
+      "target": "step:medicine-catalog-process:add-registration",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "flow:medicine-catalog-process",
+      "target": "step:medicine-catalog-process:approve-medicine",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "flow:price-setup-process",
+      "target": "step:price-setup-process:create-price",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "flow:price-setup-process",
+      "target": "step:price-setup-process:update-price",
+      "type": "flow_step",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "domain:procurement-management",
+      "target": "domain:inventory-management",
+      "type": "cross_domain",
+      "direction": "forward",
+      "description": "Duyệt đơn mua hàng tự động sinh ra phiếu nhập kho tương ứng để chuẩn bị tiếp nhận hàng hóa vật lý.",
+      "weight": 0.6
+    },
+    {
+      "source": "domain:sales-recall-management",
+      "target": "domain:inventory-management",
+      "type": "cross_domain",
+      "direction": "forward",
+      "description": "Phê duyệt đơn bán hàng hoặc quyết định thu hồi sẽ tự động sinh phiếu xuất kho hoặc phiếu nhập kho tương ứng.",
+      "weight": 0.6
+    },
+    {
+      "source": "domain:inventory-management",
+      "target": "domain:procurement-management",
+      "type": "cross_domain",
+      "direction": "forward",
+      "description": "Thực thi hoàn thành phiếu nhập kho sẽ cập nhật công nợ và trạng thái hoàn tất cho đơn mua hàng.",
+      "weight": 0.6
+    },
+    {
+      "source": "domain:inventory-management",
+      "target": "domain:sales-recall-management",
+      "type": "cross_domain",
+      "direction": "forward",
+      "description": "Thực thi phiếu xuất kho bán hàng cung cấp dữ liệu về lô sản phẩm đã xuất để hỗ trợ truy vết khách hàng khi thu hồi.",
+      "weight": 0.6
+    },
+    {
+      "source": "domain:product-management",
+      "target": "domain:procurement-management",
+      "type": "cross_domain",
+      "direction": "forward",
+      "description": "Cung cấp danh mục thuốc, các đơn vị tính và thông tin đăng ký lưu hành hợp lệ để thực hiện mua hàng.",
+      "weight": 0.5
+    },
+    {
+      "source": "domain:product-management",
+      "target": "domain:sales-recall-management",
+      "type": "cross_domain",
+      "direction": "forward",
+      "description": "Cung cấp danh mục thuốc, thông tin số lô và bảng giá chi tiết phục vụ bán hàng và thu hồi.",
+      "weight": 0.5
+    }
+  ],
+  "layers": [],
+  "tour": []
+}

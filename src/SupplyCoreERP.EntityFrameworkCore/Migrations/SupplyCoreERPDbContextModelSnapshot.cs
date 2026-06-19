@@ -25,14 +25,10 @@ namespace SupplyCoreERP.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SupplyCoreERP.Ai.AgentSession", b =>
+            modelBuilder.Entity("SupplyCoreERP.Agent.AgentMessage", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
-
-                    b.Property<string>("ConversationHistoryJson")
-                        .IsRequired()
-                        .HasColumnType("text");
 
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("timestamp without time zone")
@@ -42,6 +38,55 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("CreatorId");
 
+                    b.Property<string>("Role")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid>("SessionId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("Text")
+                        .HasColumnType("text");
+
+                    b.Property<string>("ToolCallsJson")
+                        .HasColumnType("jsonb");
+
+                    b.Property<string>("ToolResponsesJson")
+                        .HasColumnType("jsonb");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("SessionId");
+
+                    b.ToTable("AppAgentMessages", (string)null);
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Agent.AgentSession", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("ConcurrencyStamp")
+                        .IsConcurrencyToken()
+                        .IsRequired()
+                        .HasMaxLength(40)
+                        .HasColumnType("character varying(40)")
+                        .HasColumnName("ConcurrencyStamp");
+
+                    b.Property<DateTime>("CreationTime")
+                        .HasColumnType("timestamp without time zone")
+                        .HasColumnName("CreationTime");
+
+                    b.Property<Guid?>("CreatorId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("CreatorId");
+
+                    b.Property<string>("ExtraProperties")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("ExtraProperties");
+
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid");
 
@@ -50,7 +95,7 @@ namespace SupplyCoreERP.Migrations
                     b.ToTable("AppAgentSessions", (string)null);
                 });
 
-            modelBuilder.Entity("SupplyCoreERP.Ai.AgentTask", b =>
+            modelBuilder.Entity("SupplyCoreERP.Agent.AgentTask", b =>
                 {
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
@@ -81,6 +126,8 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("SessionId");
 
                     b.ToTable("AppAgentTasks", (string)null);
                 });
@@ -498,6 +545,9 @@ namespace SupplyCoreERP.Migrations
                     b.Property<Guid>("BaseUnitId")
                         .HasColumnType("uuid");
 
+                    b.Property<decimal>("BaseUnitVolume")
+                        .HasColumnType("numeric(18,2)");
+
                     b.Property<Guid>("CategoryId")
                         .HasColumnType("uuid");
 
@@ -605,6 +655,9 @@ namespace SupplyCoreERP.Migrations
 
                     b.Property<Guid>("UnitId")
                         .HasColumnType("uuid");
+
+                    b.Property<decimal>("Volume")
+                        .HasColumnType("numeric(18,2)");
 
                     b.HasKey("Id");
 
@@ -743,9 +796,6 @@ namespace SupplyCoreERP.Migrations
                     b.Property<Guid>("Id")
                         .HasColumnType("uuid");
 
-                    b.Property<Guid>("BinId")
-                        .HasColumnType("uuid");
-
                     b.Property<string>("ConcurrencyStamp")
                         .IsConcurrencyToken()
                         .IsRequired()
@@ -805,16 +855,41 @@ namespace SupplyCoreERP.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BinId");
-
                     b.HasIndex("ProductBatchId");
 
                     b.HasIndex("ProductId");
 
-                    b.HasIndex("WarehouseId", "BinId", "ProductId", "ProductBatchId")
+                    b.HasIndex("WarehouseId", "ProductId", "ProductBatchId")
                         .IsUnique();
 
                     b.ToTable("AppInventoryBalances", (string)null);
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Inventory.Balances.InventoryBinBalance", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("BinId")
+                        .HasColumnType("uuid");
+
+                    b.Property<Guid>("InventoryBalanceId")
+                        .HasColumnType("uuid");
+
+                    b.Property<decimal>("LockedQuantity")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.Property<decimal>("Quantity")
+                        .HasColumnType("decimal(18, 2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("BinId");
+
+                    b.HasIndex("InventoryBalanceId", "BinId")
+                        .IsUnique();
+
+                    b.ToTable("AppInventoryBinBalances", (string)null);
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Inventory.Balances.InventoryReservation", b =>
@@ -833,6 +908,13 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("CreatorId");
 
+                    b.Property<Guid?>("PartnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PartnerName")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
                     b.Property<Guid>("ProductBatchId")
                         .HasColumnType("uuid");
 
@@ -849,6 +931,13 @@ namespace SupplyCoreERP.Migrations
 
                     b.Property<decimal>("ReservedQuantity")
                         .HasColumnType("decimal(18, 4)");
+
+                    b.Property<Guid?>("SourceDocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SourceDocumentNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -1186,6 +1275,13 @@ namespace SupplyCoreERP.Migrations
                         .HasMaxLength(1000)
                         .HasColumnType("character varying(1000)");
 
+                    b.Property<Guid?>("PartnerId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("PartnerName")
+                        .HasMaxLength(250)
+                        .HasColumnType("character varying(250)");
+
                     b.Property<Guid>("ProductBatchId")
                         .HasColumnType("uuid");
 
@@ -1199,7 +1295,15 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("uuid");
 
                     b.Property<string>("ReferenceDocumentNumber")
-                        .HasColumnType("text");
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
+                    b.Property<Guid?>("SourceDocumentId")
+                        .HasColumnType("uuid");
+
+                    b.Property<string>("SourceDocumentNumber")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
 
                     b.Property<int>("TransactionType")
                         .HasColumnType("integer");
@@ -1246,6 +1350,11 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("timestamp without time zone")
                         .HasColumnName("DeletionTime");
 
+                    b.Property<int>("Height")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(0);
+
                     b.Property<bool>("IsBlocked")
                         .HasColumnType("boolean");
 
@@ -1268,6 +1377,9 @@ namespace SupplyCoreERP.Migrations
 
                     b.Property<int>("MaxSKU")
                         .HasColumnType("integer");
+
+                    b.Property<decimal>("MaxVolume")
+                        .HasColumnType("numeric(18,2)");
 
                     b.Property<int>("PositionX")
                         .HasColumnType("integer");
@@ -4941,6 +5053,24 @@ namespace SupplyCoreERP.Migrations
                     b.ToTable("AppMedicines", (string)null);
                 });
 
+            modelBuilder.Entity("SupplyCoreERP.Agent.AgentMessage", b =>
+                {
+                    b.HasOne("SupplyCoreERP.Agent.AgentSession", null)
+                        .WithMany("Messages")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Agent.AgentTask", b =>
+                {
+                    b.HasOne("SupplyCoreERP.Agent.AgentSession", null)
+                        .WithMany("Tasks")
+                        .HasForeignKey("SessionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("SupplyCoreERP.Catalog.Manufacturers.Manufacturer", b =>
                 {
                     b.HasOne("SupplyCoreERP.Locations.Continents.Continent", "Continent")
@@ -5034,12 +5164,6 @@ namespace SupplyCoreERP.Migrations
 
             modelBuilder.Entity("SupplyCoreERP.Inventory.Balances.InventoryBalance", b =>
                 {
-                    b.HasOne("SupplyCoreERP.Inventory.Warehouses.Bin", "Bin")
-                        .WithMany()
-                        .HasForeignKey("BinId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("SupplyCoreERP.Inventory.Batches.ProductBatch", "ProductBatch")
                         .WithMany()
                         .HasForeignKey("ProductBatchId")
@@ -5058,13 +5182,28 @@ namespace SupplyCoreERP.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Bin");
-
                     b.Navigation("Product");
 
                     b.Navigation("ProductBatch");
 
                     b.Navigation("Warehouse");
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Inventory.Balances.InventoryBinBalance", b =>
+                {
+                    b.HasOne("SupplyCoreERP.Inventory.Warehouses.Bin", "Bin")
+                        .WithMany()
+                        .HasForeignKey("BinId")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
+                    b.HasOne("SupplyCoreERP.Inventory.Balances.InventoryBalance", null)
+                        .WithMany("BinBalances")
+                        .HasForeignKey("InventoryBalanceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Bin");
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Inventory.Balances.InventoryReservation", b =>
@@ -5922,6 +6061,13 @@ namespace SupplyCoreERP.Migrations
                     b.Navigation("DosageForm");
                 });
 
+            modelBuilder.Entity("SupplyCoreERP.Agent.AgentSession", b =>
+                {
+                    b.Navigation("Messages");
+
+                    b.Navigation("Tasks");
+                });
+
             modelBuilder.Entity("SupplyCoreERP.Catalog.Categories.Category", b =>
                 {
                     b.Navigation("Products");
@@ -5930,6 +6076,11 @@ namespace SupplyCoreERP.Migrations
             modelBuilder.Entity("SupplyCoreERP.Catalog.Products.Product", b =>
                 {
                     b.Navigation("Units");
+                });
+
+            modelBuilder.Entity("SupplyCoreERP.Inventory.Balances.InventoryBalance", b =>
+                {
+                    b.Navigation("BinBalances");
                 });
 
             modelBuilder.Entity("SupplyCoreERP.Inventory.Tickets.InventoryTicket", b =>

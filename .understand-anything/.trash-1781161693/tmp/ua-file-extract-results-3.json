@@ -1,0 +1,511 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 20,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-order-status.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "exports": [
+        {
+          "name": "purchaseOrderStatusOptions",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-requisition-status.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 11,
+      "exports": [
+        {
+          "name": "purchaseRequisitionStatusOptions",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-return-status.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "exports": [
+        {
+          "name": "purchaseReturnStatusOptions",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/recall-level.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 7,
+      "exports": [
+        {
+          "name": "recallLevelOptions",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/sales-order-status.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "exports": [
+        {
+          "name": "salesOrderStatusOptions",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/sales-recall-status.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "exports": [
+        {
+          "name": "salesRecallStatusOptions",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/approval-status.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "exports": [
+        {
+          "name": "approvalStatusOptions",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/ticket-type.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "exports": [
+        {
+          "name": "ticketTypeOptions",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-orders/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 90,
+      "nonEmptyLines": 82,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-orders/purchase-order.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 107,
+      "nonEmptyLines": 84,
+      "classes": [
+        {
+          "name": "PurchaseOrderService",
+          "startLine": 9,
+          "endLine": 107,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "addLine",
+            "approve",
+            "complete",
+            "create",
+            "delete",
+            "get",
+            "getList",
+            "removeLine",
+            "sendToApprove",
+            "update",
+            "updateLine"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PurchaseOrderService",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-requisitions/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 77,
+      "nonEmptyLines": 67,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-requisitions/purchase-requisition.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 116,
+      "nonEmptyLines": 91,
+      "classes": [
+        {
+          "name": "PurchaseRequisitionService",
+          "startLine": 9,
+          "endLine": 116,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "addLine",
+            "approve",
+            "convertToPurchaseOrder",
+            "create",
+            "delete",
+            "get",
+            "getList",
+            "reject",
+            "removeLine",
+            "sendToApprove",
+            "update",
+            "updateLine"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PurchaseRequisitionService",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-returns/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 88,
+      "nonEmptyLines": 80,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-returns/purchase-return.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 107,
+      "nonEmptyLines": 84,
+      "classes": [
+        {
+          "name": "PurchaseReturnService",
+          "startLine": 9,
+          "endLine": 107,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "addLine",
+            "approve",
+            "create",
+            "delete",
+            "get",
+            "getList",
+            "reject",
+            "removeLine",
+            "sendToApprove",
+            "update",
+            "updateLine"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PurchaseReturnService",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/sales-orders/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 83,
+      "nonEmptyLines": 76,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/sales-orders/sales-order.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 107,
+      "nonEmptyLines": 84,
+      "classes": [
+        {
+          "name": "SalesOrderService",
+          "startLine": 9,
+          "endLine": 107,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "addLine",
+            "approve",
+            "complete",
+            "create",
+            "delete",
+            "get",
+            "getList",
+            "removeLine",
+            "sendToApprove",
+            "update",
+            "updateLine"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SalesOrderService",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/sales-recalls/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 105,
+      "nonEmptyLines": 96,
+      "metrics": {
+        "importCount": 4,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/sales-recalls/sales-recall.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 115,
+      "nonEmptyLines": 90,
+      "classes": [
+        {
+          "name": "SalesRecallService",
+          "startLine": 9,
+          "endLine": 115,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "addLine",
+            "approve",
+            "create",
+            "delete",
+            "get",
+            "getList",
+            "reject",
+            "removeLine",
+            "sendToApprove",
+            "traceCustomersByBatch",
+            "update",
+            "updateLine"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SalesRecallService",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/tickets/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 78,
+      "nonEmptyLines": 71,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/tickets/inventory-ticket.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 156,
+      "nonEmptyLines": 121,
+      "classes": [
+        {
+          "name": "InventoryTicketService",
+          "startLine": 11,
+          "endLine": 156,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "addDetail",
+            "addLineFromPurchaseOrder",
+            "addLineFromSalesOrder",
+            "applyFEFO",
+            "create",
+            "delete",
+            "deleteDetail",
+            "deleteLine",
+            "execute",
+            "get",
+            "getLinesFromPurchaseOrder",
+            "getLinesFromSalesOrder",
+            "getList",
+            "getRelatedTicketsByPurchaseOrder",
+            "getRelatedTicketsBySaleOrder",
+            "sendToApprove",
+            "update"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "InventoryTicketService",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

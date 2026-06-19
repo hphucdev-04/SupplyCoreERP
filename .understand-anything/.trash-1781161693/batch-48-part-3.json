@@ -1,0 +1,949 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "type": "file",
+      "metadata": {
+        "name": "Medicine.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "class",
+      "metadata": {
+        "name": "Medicine",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Lớp Medicine thuộc thành phần Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "function",
+      "metadata": {
+        "name": "Medicine",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức Medicine thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "function",
+      "metadata": {
+        "name": "Medicine",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức Medicine thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:RaiseCreatedEvent",
+      "type": "function",
+      "metadata": {
+        "name": "RaiseCreatedEvent",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức RaiseCreatedEvent thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:UpdatePharmaInfo",
+      "type": "function",
+      "metadata": {
+        "name": "UpdatePharmaInfo",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức UpdatePharmaInfo thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:AddRegistration",
+      "type": "function",
+      "metadata": {
+        "name": "AddRegistration",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức AddRegistration thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:GetCurrentRegistration",
+      "type": "function",
+      "metadata": {
+        "name": "GetCurrentRegistration",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức GetCurrentRegistration thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:AddIngredient",
+      "type": "function",
+      "metadata": {
+        "name": "AddIngredient",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức AddIngredient thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:RemoveIngredient",
+      "type": "function",
+      "metadata": {
+        "name": "RemoveIngredient",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức RemoveIngredient thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Approve",
+      "type": "function",
+      "metadata": {
+        "name": "Approve",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức Approve thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Reject",
+      "type": "function",
+      "metadata": {
+        "name": "Reject",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức Reject thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetPending",
+      "type": "function",
+      "metadata": {
+        "name": "SetPending",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức SetPending thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetActive",
+      "type": "function",
+      "metadata": {
+        "name": "SetActive",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức SetActive thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetStatus",
+      "type": "function",
+      "metadata": {
+        "name": "SetStatus",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+        "summary": "Phương thức SetStatus thực hiện xử lý nghiệp vụ liên quan đến Medicine.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineIngredient.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineIngredient",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+        "summary": "Lớp MedicineIngredient thuộc thành phần MedicineIngredient.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "function",
+      "metadata": {
+        "name": "MedicineIngredient",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+        "summary": "Phương thức MedicineIngredient thực hiện xử lý nghiệp vụ liên quan đến MedicineIngredient.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "function",
+      "metadata": {
+        "name": "MedicineIngredient",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+        "summary": "Phương thức MedicineIngredient thực hiện xử lý nghiệp vụ liên quan đến MedicineIngredient.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineManager.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể catalog.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:MedicineManager",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Lớp MedicineManager thuộc thành phần MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:MedicineManager",
+      "type": "function",
+      "metadata": {
+        "name": "MedicineManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức MedicineManager thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddIngredientAsync",
+      "type": "function",
+      "metadata": {
+        "name": "AddIngredientAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức AddIngredientAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:RemoveIngredientAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RemoveIngredientAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức RemoveIngredientAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddUnitAsync",
+      "type": "function",
+      "metadata": {
+        "name": "AddUnitAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức AddUnitAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:UpdateUnitAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateUnitAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức UpdateUnitAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:RemoveUnitAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RemoveUnitAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức RemoveUnitAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddRegistrationAsync",
+      "type": "function",
+      "metadata": {
+        "name": "AddRegistrationAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức AddRegistrationAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:ValidateForeignKeysAsync",
+      "type": "function",
+      "metadata": {
+        "name": "ValidateForeignKeysAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+        "summary": "Phương thức ValidateForeignKeysAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Medicine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:RaiseCreatedEvent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:RaiseCreatedEvent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:UpdatePharmaInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:UpdatePharmaInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:AddRegistration",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:AddRegistration",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:GetCurrentRegistration",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:GetCurrentRegistration",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:AddIngredient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:AddIngredient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:RemoveIngredient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:RemoveIngredient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Approve",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Approve",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Reject",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:Reject",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetPending",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetPending",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetActive",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetActive",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetStatus",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs:SetStatus",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs:MedicineIngredient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:MedicineManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:MedicineManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:MedicineManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:MedicineManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddIngredientAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddIngredientAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:RemoveIngredientAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:RemoveIngredientAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddUnitAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddUnitAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:UpdateUnitAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:UpdateUnitAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:RemoveUnitAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:RemoveUnitAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddRegistrationAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:AddRegistrationAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs:ValidateForeignKeysAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    }
+  ]
+}

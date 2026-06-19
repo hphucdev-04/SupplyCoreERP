@@ -1,0 +1,7134 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 538,
+      "nonEmptyLines": 452,
+      "functions": [
+        {
+          "name": "TicketManager",
+          "startLine": 43,
+          "endLine": 79,
+          "params": [
+            "ticketRepo",
+            "ticketLineRepo",
+            "ticketDetailRepo",
+            "balanceRepo",
+            "batchRepo",
+            "binRepo",
+            "warehouseRepo",
+            "productRepo",
+            "poLineRepo",
+            "soLineRepo",
+            "purchaseReturnLineRepo",
+            "salesRecallLineRepo",
+            "salesRecallRepo",
+            "warehouseManager",
+            "balanceManager",
+            "documentSequenceManager",
+            "unitConversionManager"
+          ]
+        },
+        {
+          "name": "IsIssueTicket",
+          "startLine": 82,
+          "endLine": 83,
+          "params": [
+            "type"
+          ]
+        },
+        {
+          "name": "IsIncomingTicket",
+          "startLine": 85,
+          "endLine": 86,
+          "params": [
+            "type"
+          ]
+        },
+        {
+          "name": "ValidateBinForIncomingAsync",
+          "startLine": 88,
+          "endLine": 104,
+          "params": [
+            "binId",
+            "productId",
+            "productBatchId"
+          ]
+        },
+        {
+          "name": "ValidateBatchForIssueAsync",
+          "startLine": 106,
+          "endLine": 118,
+          "params": [
+            "productBatchId"
+          ]
+        },
+        {
+          "name": "ValidateProductForInventoryAsync",
+          "startLine": 120,
+          "endLine": 127,
+          "params": [
+            "productId"
+          ]
+        },
+        {
+          "name": "MapTicketToTransaction",
+          "startLine": 129,
+          "endLine": 141,
+          "params": [
+            "type"
+          ]
+        },
+        {
+          "name": "HasStatusAsync",
+          "startLine": 143,
+          "endLine": 147,
+          "params": [
+            "referenceId",
+            "status"
+          ]
+        },
+        {
+          "name": "CreateTicketAsync",
+          "startLine": 151,
+          "endLine": 168,
+          "params": [
+            "type",
+            "warehouseId",
+            "referenceDocumentId",
+            "referenceDocumentNumber",
+            "note"
+          ]
+        },
+        {
+          "name": "UpdateTicket",
+          "startLine": 170,
+          "endLine": 178,
+          "params": [
+            "ticket",
+            "note"
+          ]
+        },
+        {
+          "name": "ValidateBeforeDeleteAsync",
+          "startLine": 180,
+          "endLine": 191,
+          "params": [
+            "ticket"
+          ]
+        },
+        {
+          "name": "CreateTicketLineAsync",
+          "startLine": 195,
+          "endLine": 265,
+          "params": [
+            "ticket",
+            "productId",
+            "referenceDocumentLineId",
+            "quantity",
+            "unitId",
+            "conversionFactor"
+          ]
+        },
+        {
+          "name": "UpdateLineQuantity",
+          "startLine": 268,
+          "endLine": 276,
+          "params": [
+            "ticket",
+            "line",
+            "newQuantity"
+          ]
+        },
+        {
+          "name": "CreateTicketDetailAsync",
+          "startLine": 280,
+          "endLine": 358,
+          "params": [
+            "ticket",
+            "line",
+            "productId",
+            "productBatchId",
+            "binId",
+            "unitId",
+            "conversionFactor",
+            "quantity"
+          ]
+        },
+        {
+          "name": "UpdateDetailQuantityAsync",
+          "startLine": 360,
+          "endLine": 384,
+          "params": [
+            "ticket",
+            "line",
+            "detail",
+            "actualQuantity"
+          ]
+        },
+        {
+          "name": "RemoveTicketDetailAsync",
+          "startLine": 386,
+          "endLine": 397,
+          "params": [
+            "ticket",
+            "line",
+            "detail"
+          ]
+        },
+        {
+          "name": "SendToApproveAsync",
+          "startLine": 401,
+          "endLine": 438,
+          "params": [
+            "ticket"
+          ]
+        },
+        {
+          "name": "RejectTicketAsync",
+          "startLine": 440,
+          "endLine": 454,
+          "params": [
+            "ticket",
+            "rejectReason"
+          ]
+        },
+        {
+          "name": "ExecuteTicketAsync",
+          "startLine": 456,
+          "endLine": 471,
+          "params": [
+            "ticket"
+          ]
+        },
+        {
+          "name": "AllocateFEFOForLineAsync",
+          "startLine": 475,
+          "endLine": 529,
+          "params": [
+            "ticket",
+            "line"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "TicketManager",
+          "startLine": 21,
+          "endLine": 532,
+          "methods": [
+            "TicketManager",
+            "IsIssueTicket",
+            "IsIncomingTicket",
+            "ValidateBinForIncomingAsync",
+            "ValidateBatchForIssueAsync",
+            "ValidateProductForInventoryAsync",
+            "MapTicketToTransaction",
+            "HasStatusAsync",
+            "CreateTicketAsync",
+            "UpdateTicket",
+            "ValidateBeforeDeleteAsync",
+            "CreateTicketLineAsync",
+            "UpdateLineQuantity",
+            "CreateTicketDetailAsync",
+            "UpdateDetailQuantityAsync",
+            "RemoveTicketDetailAsync",
+            "SendToApproveAsync",
+            "RejectTicketAsync",
+            "ExecuteTicketAsync",
+            "AllocateFEFOForLineAsync"
+          ],
+          "properties": [
+            "_ticketRepo",
+            "_ticketLineRepo",
+            "_ticketDetailRepo",
+            "_batchRepo",
+            "_binRepo",
+            "_warehouseRepo",
+            "_productRepo",
+            "_poLineRepo",
+            "_soLineRepo",
+            "_purchaseReturnLineRepo",
+            "_salesRecallLineRepo",
+            "_salesRecallRepo",
+            "_warehouseManager",
+            "_balanceManager",
+            "_balanceRepo",
+            "_documentSequenceManager",
+            "_unitConversionManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TicketManager",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "HasStatusAsync",
+          "line": 143,
+          "isDefault": false
+        },
+        {
+          "name": "CreateTicketAsync",
+          "line": 151,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateTicket",
+          "line": 170,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateBeforeDeleteAsync",
+          "line": 180,
+          "isDefault": false
+        },
+        {
+          "name": "CreateTicketLineAsync",
+          "line": 195,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateLineQuantity",
+          "line": 268,
+          "isDefault": false
+        },
+        {
+          "name": "CreateTicketDetailAsync",
+          "line": 280,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateDetailQuantityAsync",
+          "line": 360,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveTicketDetailAsync",
+          "line": 386,
+          "isDefault": false
+        },
+        {
+          "name": "SendToApproveAsync",
+          "line": 401,
+          "isDefault": false
+        },
+        {
+          "name": "RejectTicketAsync",
+          "line": 440,
+          "isDefault": false
+        },
+        {
+          "name": "ExecuteTicketAsync",
+          "line": 456,
+          "isDefault": false
+        },
+        {
+          "name": "AllocateFEFOForLineAsync",
+          "line": 475,
+          "isDefault": false
+        },
+        {
+          "name": "TicketManager",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "_binRepo.WithDetailsAsync",
+          "lineNumber": 90
+        },
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "AsyncExecuter.FirstOrDefaultAsync",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "binQuery.Where",
+          "lineNumber": 91
+        },
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "_productRepo.GetAsync",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "_warehouseManager.ValidateStorageCompatibility",
+          "lineNumber": 99
+        },
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "_balanceRepo.CountAsync",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "_balanceRepo.AnyAsync",
+          "lineNumber": 102
+        },
+        {
+          "caller": "ValidateBinForIncomingAsync",
+          "callee": "bin.ValidateSKUCapacity",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ValidateBatchForIssueAsync",
+          "callee": "_batchRepo.GetAsync",
+          "lineNumber": 108
+        },
+        {
+          "caller": "ValidateBatchForIssueAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ValidateBatchForIssueAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 116
+        },
+        {
+          "caller": "ValidateProductForInventoryAsync",
+          "callee": "_productRepo.GetAsync",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ValidateProductForInventoryAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 125
+        },
+        {
+          "caller": "MapTicketToTransaction",
+          "callee": "new ArgumentOutOfRangeException",
+          "lineNumber": 139
+        },
+        {
+          "caller": "HasStatusAsync",
+          "callee": "_ticketRepo.FirstOrDefaultAsync",
+          "lineNumber": 145
+        },
+        {
+          "caller": "CreateTicketAsync",
+          "callee": "_warehouseRepo.GetAsync",
+          "lineNumber": 153
+        },
+        {
+          "caller": "CreateTicketAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 156
+        },
+        {
+          "caller": "CreateTicketAsync",
+          "callee": "_ticketRepo.CountAsync",
+          "lineNumber": 159
+        },
+        {
+          "caller": "CreateTicketAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 162
+        },
+        {
+          "caller": "CreateTicketAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 165
+        },
+        {
+          "caller": "CreateTicketAsync",
+          "callee": "new InventoryTicket",
+          "lineNumber": 167
+        },
+        {
+          "caller": "CreateTicketAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 167
+        },
+        {
+          "caller": "UpdateTicket",
+          "callee": "new BusinessException",
+          "lineNumber": 174
+        },
+        {
+          "caller": "UpdateTicket",
+          "callee": "ticket.UpdateNote",
+          "lineNumber": 177
+        },
+        {
+          "caller": "ValidateBeforeDeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 184
+        },
+        {
+          "caller": "ValidateBeforeDeleteAsync",
+          "callee": "IsIssueTicket",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ValidateBeforeDeleteAsync",
+          "callee": "_balanceManager.UnlockStockAsync",
+          "lineNumber": 189
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 205
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "_productRepo.GetAsync",
+          "lineNumber": 208
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 211
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "_poLineRepo.GetAsync",
+          "lineNumber": 221
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 224
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "_soLineRepo.GetAsync",
+          "lineNumber": 231
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 234
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "_purchaseReturnLineRepo.GetAsync",
+          "lineNumber": 241
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 244
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "_salesRecallLineRepo.GetAsync",
+          "lineNumber": 251
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "_salesRecallRepo.GetAsync",
+          "lineNumber": 252
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 255
+        },
+        {
+          "caller": "CreateTicketLineAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 262
+        },
+        {
+          "caller": "UpdateLineQuantity",
+          "callee": "new BusinessException",
+          "lineNumber": 272
+        },
+        {
+          "caller": "UpdateLineQuantity",
+          "callee": "line.UpdateQuantity",
+          "lineNumber": 275
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 285
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 290
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "ValidateProductForInventoryAsync",
+          "lineNumber": 293
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "_binRepo.WithDetailsAsync",
+          "lineNumber": 294
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "AsyncExecuter.FirstOrDefaultAsync",
+          "lineNumber": 295
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 305
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 311
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "IsIncomingTicket",
+          "lineNumber": 314
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "ValidateBinForIncomingAsync",
+          "lineNumber": 316
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "IsIssueTicket",
+          "lineNumber": 319
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "ValidateBatchForIssueAsync",
+          "lineNumber": 321
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "_productRepo.WithDetailsAsync",
+          "lineNumber": 324
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "AsyncExecuter.FirstOrDefaultAsync",
+          "lineNumber": 325
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "_unitConversionManager.GetConversionFactor",
+          "lineNumber": 332
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 335
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "_unitConversionManager.ConvertToBaseQuantity",
+          "lineNumber": 341
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "_ticketDetailRepo.GetQueryableAsync",
+          "lineNumber": 344
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "detailQuery.Where(d => d.TicketLineId == line.Id).Sum",
+          "lineNumber": 345
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "detailQuery.Where",
+          "lineNumber": 345
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 349
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "IsIssueTicket",
+          "lineNumber": 352
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "_balanceManager.AdjustLockAsync",
+          "lineNumber": 354
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "new InventoryTicketDetail",
+          "lineNumber": 357
+        },
+        {
+          "caller": "CreateTicketDetailAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 357
+        },
+        {
+          "caller": "UpdateDetailQuantityAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 364
+        },
+        {
+          "caller": "UpdateDetailQuantityAsync",
+          "callee": "_productRepo.WithDetailsAsync",
+          "lineNumber": 368
+        },
+        {
+          "caller": "UpdateDetailQuantityAsync",
+          "callee": "AsyncExecuter.FirstOrDefaultAsync",
+          "lineNumber": 369
+        },
+        {
+          "caller": "UpdateDetailQuantityAsync",
+          "callee": "_unitConversionManager.ConvertToBaseQuantity",
+          "lineNumber": 375
+        },
+        {
+          "caller": "UpdateDetailQuantityAsync",
+          "callee": "IsIssueTicket",
+          "lineNumber": 378
+        },
+        {
+          "caller": "UpdateDetailQuantityAsync",
+          "callee": "_balanceManager.AdjustLockAsync",
+          "lineNumber": 380
+        },
+        {
+          "caller": "UpdateDetailQuantityAsync",
+          "callee": "detail.UpdateActualQuantity",
+          "lineNumber": 383
+        },
+        {
+          "caller": "RemoveTicketDetailAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 390
+        },
+        {
+          "caller": "RemoveTicketDetailAsync",
+          "callee": "IsIssueTicket",
+          "lineNumber": 393
+        },
+        {
+          "caller": "RemoveTicketDetailAsync",
+          "callee": "_balanceManager.AdjustLockAsync",
+          "lineNumber": 395
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 405
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "_ticketLineRepo.WithDetailsAsync",
+          "lineNumber": 408
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "lines.Where(x => x.TicketId == ticket.Id).ToList",
+          "lineNumber": 409
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "lines.Where",
+          "lineNumber": 409
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "ticketLines.Any",
+          "lineNumber": 411
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 413
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "ticketLines.SelectMany(x => x.Details).ToList",
+          "lineNumber": 416
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "ticketLines.SelectMany",
+          "lineNumber": 416
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "allDetails.Any",
+          "lineNumber": 417
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 419
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "line.Details.Sum",
+          "lineNumber": 424
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "_productRepo.GetAsync",
+          "lineNumber": 427
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 428
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "IsIssueTicket",
+          "lineNumber": 432
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "_balanceManager.LockStockAsync",
+          "lineNumber": 434
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "ticket.RequestApprove",
+          "lineNumber": 437
+        },
+        {
+          "caller": "RejectTicketAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 444
+        },
+        {
+          "caller": "RejectTicketAsync",
+          "callee": "IsIssueTicket",
+          "lineNumber": 447
+        },
+        {
+          "caller": "RejectTicketAsync",
+          "callee": "_balanceManager.UnlockStockAsync",
+          "lineNumber": 449
+        },
+        {
+          "caller": "RejectTicketAsync",
+          "callee": "ticket.Reject",
+          "lineNumber": 452
+        },
+        {
+          "caller": "RejectTicketAsync",
+          "callee": "ticket.UpdateNote",
+          "lineNumber": 453
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 460
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "_ticketLineRepo.WithDetailsAsync",
+          "lineNumber": 463
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "lines.Where(x => x.TicketId == ticket.Id).ToList",
+          "lineNumber": 464
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "lines.Where",
+          "lineNumber": 464
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "ticketLines.SelectMany(x => x.Details).ToList",
+          "lineNumber": 465
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "ticketLines.SelectMany",
+          "lineNumber": 465
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "MapTicketToTransaction",
+          "lineNumber": 467
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "_balanceManager.ExecuteStockMovementAsync",
+          "lineNumber": 468
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "IsIssueTicket",
+          "lineNumber": 468
+        },
+        {
+          "caller": "ExecuteTicketAsync",
+          "callee": "ticket.Execute",
+          "lineNumber": 470
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "_productRepo.WithDetailsAsync",
+          "lineNumber": 477
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "AsyncExecuter.FirstOrDefaultAsync",
+          "lineNumber": 478
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "_unitConversionManager.ConvertToBaseQuantity",
+          "lineNumber": 484
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "_balanceRepo.GetListAsync",
+          "lineNumber": 486
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "balances.Select(x => x.ProductBatchId).Distinct().ToList",
+          "lineNumber": 488
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "balances.Select(x => x.ProductBatchId).Distinct",
+          "lineNumber": 488
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "balances.Select",
+          "lineNumber": 488
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "_batchRepo.GetListAsync",
+          "lineNumber": 489
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "batchIds.Contains",
+          "lineNumber": 489
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "(from b in balances\r\n                                                join ba in batches on b.ProductBatchId equals ba.Id\r\n                                                orderby ba.ExpiryDate ascending\r\n                                                select b).ToList",
+          "lineNumber": 491
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "Math.Min",
+          "lineNumber": 507
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 509
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "details.Add",
+          "lineNumber": 510
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "balances.Sum",
+          "lineNumber": 517
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 520
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 524
+        },
+        {
+          "caller": "AllocateFEFOForLineAsync",
+          "callee": "_ticketDetailRepo.InsertManyAsync",
+          "lineNumber": 528
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 15,
+        "functionCount": 20,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 52,
+      "nonEmptyLines": 40,
+      "functions": [
+        {
+          "name": "InventoryTransaction",
+          "startLine": 31,
+          "endLine": 31,
+          "params": []
+        },
+        {
+          "name": "InventoryTransaction",
+          "startLine": 33,
+          "endLine": 45,
+          "params": [
+            "id",
+            "warehouseId",
+            "binId",
+            "prodId",
+            "batchId",
+            "type",
+            "qtyChanged",
+            "balanceAfter",
+            "refDocId",
+            "refDocNumber",
+            "note"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "InventoryTransaction",
+          "startLine": 12,
+          "endLine": 46,
+          "methods": [
+            "InventoryTransaction",
+            "InventoryTransaction"
+          ],
+          "properties": [
+            "WarehouseId",
+            "Warehouse",
+            "BinId",
+            "Bin",
+            "ProductId",
+            "Product",
+            "ProductBatchId",
+            "ProductBatch",
+            "TransactionType",
+            "QuantityChanged",
+            "BalanceAfterTransaction",
+            "ReferenceDocumentId",
+            "ReferenceDocumentNumber",
+            "Note"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WarehouseId",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Warehouse",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "BinId",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Bin",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "ProductId",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Product",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "ProductBatchId",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "ProductBatch",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "TransactionType",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "QuantityChanged",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "BalanceAfterTransaction",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "ReferenceDocumentId",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "ReferenceDocumentNumber",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Note",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "InventoryTransaction",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "InventoryTransaction",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 16,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 73,
+      "nonEmptyLines": 54,
+      "functions": [
+        {
+          "name": "Bin",
+          "startLine": 24,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "Bin",
+          "startLine": 26,
+          "endLine": 34,
+          "params": [
+            "id",
+            "warehouseId",
+            "zoneId",
+            "code",
+            "x",
+            "y",
+            "w",
+            "l",
+            "rotation",
+            "maxSKU"
+          ]
+        },
+        {
+          "name": "SetCoordinates",
+          "startLine": 36,
+          "endLine": 39,
+          "params": [
+            "x",
+            "y",
+            "w",
+            "l",
+            "rotation"
+          ]
+        },
+        {
+          "name": "UpdateInfo",
+          "startLine": 41,
+          "endLine": 45,
+          "params": [
+            "zoneId",
+            "maxSKU"
+          ]
+        },
+        {
+          "name": "ToggleBlock",
+          "startLine": 47,
+          "endLine": 47,
+          "params": [
+            "isBlocked"
+          ]
+        },
+        {
+          "name": "ValidateSKUCapacity",
+          "startLine": 49,
+          "endLine": 66,
+          "params": [
+            "usedSKUCount",
+            "isNewSKU"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Bin",
+          "startLine": 7,
+          "endLine": 67,
+          "methods": [
+            "Bin",
+            "Bin",
+            "SetCoordinates",
+            "UpdateInfo",
+            "ToggleBlock",
+            "ValidateSKUCapacity"
+          ],
+          "properties": [
+            "WarehouseId",
+            "ZoneId",
+            "Zone",
+            "Code",
+            "PositionX",
+            "PositionY",
+            "Width",
+            "Length",
+            "Rotation",
+            "MaxSKU",
+            "IsBlocked"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WarehouseId",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ZoneId",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "Zone",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Code",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "PositionX",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "PositionY",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Width",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "Length",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Rotation",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "MaxSKU",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "IsBlocked",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "Bin",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "SetCoordinates",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateInfo",
+          "line": 41,
+          "isDefault": false
+        },
+        {
+          "name": "ToggleBlock",
+          "line": 47,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateSKUCapacity",
+          "line": 49,
+          "isDefault": false
+        },
+        {
+          "name": "Bin",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Bin",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code)).ToUpper",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Bin",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Bin",
+          "callee": "nameof",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Bin",
+          "callee": "SetCoordinates",
+          "lineNumber": 33
+        },
+        {
+          "caller": "ValidateSKUCapacity",
+          "callee": "new BusinessException",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ValidateSKUCapacity",
+          "callee": "new BusinessException",
+          "lineNumber": 63
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 17,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 93,
+      "nonEmptyLines": 76,
+      "functions": [
+        {
+          "name": "Warehouse",
+          "startLine": 28,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "Warehouse",
+          "startLine": 30,
+          "endLine": 42,
+          "params": [
+            "id",
+            "code",
+            "name",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "mapWidth",
+            "mapLength"
+          ]
+        },
+        {
+          "name": "UpdateInfo",
+          "startLine": 44,
+          "endLine": 51,
+          "params": [
+            "name",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId"
+          ]
+        },
+        {
+          "name": "UpdateMapSize",
+          "startLine": 53,
+          "endLine": 57,
+          "params": [
+            "width",
+            "length"
+          ]
+        },
+        {
+          "name": "SentToApprove",
+          "startLine": 59,
+          "endLine": 67,
+          "params": []
+        },
+        {
+          "name": "Approve",
+          "startLine": 68,
+          "endLine": 76,
+          "params": []
+        },
+        {
+          "name": "Reject",
+          "startLine": 77,
+          "endLine": 85,
+          "params": []
+        },
+        {
+          "name": "SetActive",
+          "startLine": 86,
+          "endLine": 86,
+          "params": [
+            "isActive"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Warehouse",
+          "startLine": 11,
+          "endLine": 87,
+          "methods": [
+            "Warehouse",
+            "Warehouse",
+            "UpdateInfo",
+            "UpdateMapSize",
+            "SentToApprove",
+            "Approve",
+            "Reject",
+            "SetActive"
+          ],
+          "properties": [
+            "Code",
+            "Name",
+            "Address",
+            "CountryId",
+            "Country",
+            "CityId",
+            "City",
+            "AreaId",
+            "Area",
+            "MapWidth",
+            "MapLength",
+            "Status",
+            "IsActive"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Address",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "CountryId",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Country",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "CityId",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "City",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "AreaId",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Area",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "MapWidth",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "MapLength",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Warehouse",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateInfo",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateMapSize",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "SentToApprove",
+          "line": 59,
+          "isDefault": false
+        },
+        {
+          "name": "Approve",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "Reject",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "SetActive",
+          "line": 86,
+          "isDefault": false
+        },
+        {
+          "name": "Warehouse",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Warehouse",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).ToUpper",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Warehouse",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Warehouse",
+          "callee": "nameof",
+          "lineNumber": 32
+        },
+        {
+          "caller": "Warehouse",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Warehouse",
+          "callee": "nameof",
+          "lineNumber": 33
+        },
+        {
+          "caller": "UpdateInfo",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 46
+        },
+        {
+          "caller": "UpdateInfo",
+          "callee": "nameof",
+          "lineNumber": 46
+        },
+        {
+          "caller": "SentToApprove",
+          "callee": "new BusinessException",
+          "lineNumber": 63
+        },
+        {
+          "caller": "Approve",
+          "callee": "new BusinessException",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Reject",
+          "callee": "new BusinessException",
+          "lineNumber": 81
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 21,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 206,
+      "nonEmptyLines": 170,
+      "functions": [
+        {
+          "name": "WarehouseManager",
+          "startLine": 23,
+          "endLine": 36,
+          "params": [
+            "warehouseRepo",
+            "zoneRepo",
+            "binRepo",
+            "balanceRepo",
+            "documentSequenceManager"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 39,
+          "endLine": 49,
+          "params": [
+            "name",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "width",
+            "length"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 51,
+          "endLine": 56,
+          "params": [
+            "warehouse",
+            "name",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "width",
+            "length"
+          ]
+        },
+        {
+          "name": "DeleteAsync",
+          "startLine": 58,
+          "endLine": 68,
+          "params": [
+            "warehouseId"
+          ]
+        },
+        {
+          "name": "SendToApproveAsync",
+          "startLine": 72,
+          "endLine": 76,
+          "params": [
+            "warehouse"
+          ]
+        },
+        {
+          "name": "ApproveAsync",
+          "startLine": 77,
+          "endLine": 81,
+          "params": [
+            "warehouse"
+          ]
+        },
+        {
+          "name": "RejectAsync",
+          "startLine": 82,
+          "endLine": 86,
+          "params": [
+            "warehouse"
+          ]
+        },
+        {
+          "name": "CreateZoneAsync",
+          "startLine": 90,
+          "endLine": 100,
+          "params": [
+            "warehouseId",
+            "name",
+            "type",
+            "condition",
+            "color",
+            "x",
+            "y",
+            "w",
+            "l",
+            "rotation"
+          ]
+        },
+        {
+          "name": "UpdateZoneAsync",
+          "startLine": 102,
+          "endLine": 107,
+          "params": [
+            "zone",
+            "name",
+            "type",
+            "condition",
+            "color",
+            "x",
+            "y",
+            "w",
+            "l",
+            "rotation"
+          ]
+        },
+        {
+          "name": "DeleteZoneAsync",
+          "startLine": 109,
+          "endLine": 117,
+          "params": [
+            "zoneId"
+          ]
+        },
+        {
+          "name": "CreateBinAsync",
+          "startLine": 121,
+          "endLine": 139,
+          "params": [
+            "warehouseId",
+            "zoneId",
+            "x",
+            "y",
+            "w",
+            "l",
+            "rotation",
+            "maxSKU"
+          ]
+        },
+        {
+          "name": "UpdateBinAsync",
+          "startLine": 141,
+          "endLine": 166,
+          "params": [
+            "bin",
+            "zoneId",
+            "x",
+            "y",
+            "w",
+            "l",
+            "rotation",
+            "maxSKU",
+            "isBlocked"
+          ]
+        },
+        {
+          "name": "DeleteBinAsync",
+          "startLine": 168,
+          "endLine": 176,
+          "params": [
+            "binId"
+          ]
+        },
+        {
+          "name": "ValidateStorageCompatibility",
+          "startLine": 180,
+          "endLine": 198,
+          "params": [
+            "bin",
+            "productCondition"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "WarehouseManager",
+          "startLine": 13,
+          "endLine": 200,
+          "methods": [
+            "WarehouseManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync",
+            "SendToApproveAsync",
+            "ApproveAsync",
+            "RejectAsync",
+            "CreateZoneAsync",
+            "UpdateZoneAsync",
+            "DeleteZoneAsync",
+            "CreateBinAsync",
+            "UpdateBinAsync",
+            "DeleteBinAsync",
+            "ValidateStorageCompatibility"
+          ],
+          "properties": [
+            "_warehouseRepo",
+            "_zoneRepo",
+            "_binRepo",
+            "_balanceRepo",
+            "_documentSequenceManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WarehouseManager",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 51,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAsync",
+          "line": 58,
+          "isDefault": false
+        },
+        {
+          "name": "SendToApproveAsync",
+          "line": 72,
+          "isDefault": false
+        },
+        {
+          "name": "ApproveAsync",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "RejectAsync",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "CreateZoneAsync",
+          "line": 90,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateZoneAsync",
+          "line": 102,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteZoneAsync",
+          "line": 109,
+          "isDefault": false
+        },
+        {
+          "name": "CreateBinAsync",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateBinAsync",
+          "line": 141,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteBinAsync",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateStorageCompatibility",
+          "line": 180,
+          "isDefault": false
+        },
+        {
+          "name": "WarehouseManager",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 41
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_warehouseRepo.AnyAsync",
+          "lineNumber": 43
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 45
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new Warehouse",
+          "lineNumber": 48
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 48
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "warehouse.UpdateInfo",
+          "lineNumber": 54
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "warehouse.UpdateMapSize",
+          "lineNumber": 55
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_balanceRepo.AnyAsync",
+          "lineNumber": 60
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 62
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_binRepo.DeleteAsync",
+          "lineNumber": 65
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_zoneRepo.DeleteAsync",
+          "lineNumber": 66
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_warehouseRepo.DeleteAsync",
+          "lineNumber": 67
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "warehouse.SentToApprove",
+          "lineNumber": 74
+        },
+        {
+          "caller": "SendToApproveAsync",
+          "callee": "_warehouseRepo.UpdateAsync",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ApproveAsync",
+          "callee": "warehouse.Approve",
+          "lineNumber": 79
+        },
+        {
+          "caller": "ApproveAsync",
+          "callee": "_warehouseRepo.UpdateAsync",
+          "lineNumber": 80
+        },
+        {
+          "caller": "RejectAsync",
+          "callee": "warehouse.Reject",
+          "lineNumber": 84
+        },
+        {
+          "caller": "RejectAsync",
+          "callee": "_warehouseRepo.UpdateAsync",
+          "lineNumber": 85
+        },
+        {
+          "caller": "CreateZoneAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 92
+        },
+        {
+          "caller": "CreateZoneAsync",
+          "callee": "_zoneRepo.AnyAsync",
+          "lineNumber": 94
+        },
+        {
+          "caller": "CreateZoneAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 96
+        },
+        {
+          "caller": "CreateZoneAsync",
+          "callee": "new Zone",
+          "lineNumber": 99
+        },
+        {
+          "caller": "CreateZoneAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 99
+        },
+        {
+          "caller": "UpdateZoneAsync",
+          "callee": "zone.UpdateInfo",
+          "lineNumber": 105
+        },
+        {
+          "caller": "UpdateZoneAsync",
+          "callee": "zone.SetCoordinates",
+          "lineNumber": 106
+        },
+        {
+          "caller": "DeleteZoneAsync",
+          "callee": "_binRepo.AnyAsync",
+          "lineNumber": 111
+        },
+        {
+          "caller": "DeleteZoneAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 113
+        },
+        {
+          "caller": "DeleteZoneAsync",
+          "callee": "_zoneRepo.DeleteAsync",
+          "lineNumber": 116
+        },
+        {
+          "caller": "CreateBinAsync",
+          "callee": "_zoneRepo.GetAsync",
+          "lineNumber": 125
+        },
+        {
+          "caller": "CreateBinAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 128
+        },
+        {
+          "caller": "CreateBinAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 131
+        },
+        {
+          "caller": "CreateBinAsync",
+          "callee": "_binRepo.AnyAsync",
+          "lineNumber": 133
+        },
+        {
+          "caller": "CreateBinAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 135
+        },
+        {
+          "caller": "CreateBinAsync",
+          "callee": "new Bin",
+          "lineNumber": 138
+        },
+        {
+          "caller": "CreateBinAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 138
+        },
+        {
+          "caller": "UpdateBinAsync",
+          "callee": "_zoneRepo.GetAsync",
+          "lineNumber": 147
+        },
+        {
+          "caller": "UpdateBinAsync",
+          "callee": "new UserFriendlyException",
+          "lineNumber": 150
+        },
+        {
+          "caller": "UpdateBinAsync",
+          "callee": "_balanceRepo.CountAsync",
+          "lineNumber": 156
+        },
+        {
+          "caller": "UpdateBinAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 159
+        },
+        {
+          "caller": "UpdateBinAsync",
+          "callee": "bin.UpdateInfo",
+          "lineNumber": 163
+        },
+        {
+          "caller": "UpdateBinAsync",
+          "callee": "bin.SetCoordinates",
+          "lineNumber": 164
+        },
+        {
+          "caller": "UpdateBinAsync",
+          "callee": "bin.ToggleBlock",
+          "lineNumber": 165
+        },
+        {
+          "caller": "DeleteBinAsync",
+          "callee": "_balanceRepo.AnyAsync",
+          "lineNumber": 170
+        },
+        {
+          "caller": "DeleteBinAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 172
+        },
+        {
+          "caller": "DeleteBinAsync",
+          "callee": "_binRepo.DeleteAsync",
+          "lineNumber": 175
+        },
+        {
+          "caller": "ValidateStorageCompatibility",
+          "callee": "new BusinessException",
+          "lineNumber": 184
+        },
+        {
+          "caller": "ValidateStorageCompatibility",
+          "callee": "new BusinessException",
+          "lineNumber": 189
+        },
+        {
+          "caller": "ValidateStorageCompatibility",
+          "callee": "new BusinessException",
+          "lineNumber": 196
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 15,
+        "functionCount": 14,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 61,
+      "nonEmptyLines": 44,
+      "functions": [
+        {
+          "name": "Zone",
+          "startLine": 28,
+          "endLine": 28,
+          "params": []
+        },
+        {
+          "name": "Zone",
+          "startLine": 30,
+          "endLine": 41,
+          "params": [
+            "id",
+            "warehouseId",
+            "code",
+            "name",
+            "type",
+            "condition",
+            "color",
+            "x",
+            "y",
+            "w",
+            "l",
+            "rotation"
+          ]
+        },
+        {
+          "name": "SetCoordinates",
+          "startLine": 43,
+          "endLine": 46,
+          "params": [
+            "x",
+            "y",
+            "w",
+            "l",
+            "rotation"
+          ]
+        },
+        {
+          "name": "UpdateInfo",
+          "startLine": 48,
+          "endLine": 54,
+          "params": [
+            "name",
+            "type",
+            "condition",
+            "color"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Zone",
+          "startLine": 9,
+          "endLine": 55,
+          "methods": [
+            "Zone",
+            "Zone",
+            "SetCoordinates",
+            "UpdateInfo"
+          ],
+          "properties": [
+            "WarehouseId",
+            "Code",
+            "Name",
+            "Type",
+            "StorageCondition",
+            "Color",
+            "PositionX",
+            "PositionY",
+            "Width",
+            "Length",
+            "Rotation"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WarehouseId",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Code",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Type",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "StorageCondition",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Color",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "PositionX",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "PositionY",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Width",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Length",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Rotation",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Zone",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "SetCoordinates",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateInfo",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "Zone",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Zone",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code)).ToUpper",
+          "lineNumber": 35
+        },
+        {
+          "caller": "Zone",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 35
+        },
+        {
+          "caller": "Zone",
+          "callee": "nameof",
+          "lineNumber": 35
+        },
+        {
+          "caller": "Zone",
+          "callee": "SetCoordinates",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 15,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 29,
+      "nonEmptyLines": 20,
+      "functions": [
+        {
+          "name": "Define",
+          "startLine": 8,
+          "endLine": 17,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "L",
+          "startLine": 19,
+          "endLine": 22,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LocalizationSettingProvider",
+          "startLine": 6,
+          "endLine": 23,
+          "methods": [
+            "Define",
+            "L"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Define",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "LocalizationSettingProvider",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Define",
+          "callee": "context.Add",
+          "lineNumber": 10
+        },
+        {
+          "caller": "Define",
+          "callee": "new SettingDefinition",
+          "lineNumber": 11
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 13
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 14
+        },
+        {
+          "caller": "L",
+          "callee": "LocalizableString.Create<AbpLocalizationResource>",
+          "lineNumber": 21
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/Area.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 21,
+      "functions": [
+        {
+          "name": "Area",
+          "startLine": 17,
+          "endLine": 17,
+          "params": []
+        },
+        {
+          "name": "Area",
+          "startLine": 18,
+          "endLine": 23,
+          "params": [
+            "id",
+            "cityId",
+            "zipCode",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Area",
+          "startLine": 10,
+          "endLine": 24,
+          "methods": [
+            "Area",
+            "Area"
+          ],
+          "properties": [
+            "CityId",
+            "City",
+            "ZipCode",
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CityId",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "City",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "ZipCode",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "Area",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Area",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Area",
+          "callee": "Check.NotNullOrWhiteSpace(zipCode, nameof(ZipCode), 10).ToUpper",
+          "lineNumber": 21
+        },
+        {
+          "caller": "Area",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 21
+        },
+        {
+          "caller": "Area",
+          "callee": "nameof",
+          "lineNumber": 21
+        },
+        {
+          "caller": "Area",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Area",
+          "callee": "nameof",
+          "lineNumber": 22
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 34,
+      "functions": [
+        {
+          "name": "AreaManager",
+          "startLine": 17,
+          "endLine": 23,
+          "params": [
+            "areaRepository",
+            "cityRepository"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 25,
+          "endLine": 40,
+          "params": [
+            "cityId",
+            "zipCode",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "AreaManager",
+          "startLine": 10,
+          "endLine": 41,
+          "methods": [
+            "AreaManager",
+            "CreateAsync"
+          ],
+          "properties": [
+            "_areaRepository",
+            "_cityRepository"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AreaManager",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "AreaManager",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_cityRepository.AnyAsync",
+          "lineNumber": 29
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 31
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_areaRepository.AnyAsync",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 36
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new Area",
+          "lineNumber": 39
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/City.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 19,
+      "functions": [
+        {
+          "name": "City",
+          "startLine": 16,
+          "endLine": 16,
+          "params": []
+        },
+        {
+          "name": "City",
+          "startLine": 17,
+          "endLine": 21,
+          "params": [
+            "id",
+            "countryId",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "City",
+          "startLine": 10,
+          "endLine": 22,
+          "methods": [
+            "City",
+            "City"
+          ],
+          "properties": [
+            "CountryId",
+            "Country",
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CountryId",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "Country",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "City",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "City",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "City",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 20
+        },
+        {
+          "caller": "City",
+          "callee": "nameof",
+          "lineNumber": 20
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 47,
+      "nonEmptyLines": 34,
+      "functions": [
+        {
+          "name": "CityManager",
+          "startLine": 17,
+          "endLine": 23,
+          "params": [
+            "cityRepository",
+            "countryRepository"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 25,
+          "endLine": 40,
+          "params": [
+            "countryId",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CityManager",
+          "startLine": 10,
+          "endLine": 41,
+          "methods": [
+            "CityManager",
+            "CreateAsync"
+          ],
+          "properties": [
+            "_cityRepository",
+            "_countryRepository"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CityManager",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "CityManager",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_countryRepository.AnyAsync",
+          "lineNumber": 29
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 31
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_cityRepository.AnyAsync",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 36
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new City",
+          "lineNumber": 39
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 39
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 15,
+      "functions": [
+        {
+          "name": "Continent",
+          "startLine": 13,
+          "endLine": 13,
+          "params": []
+        },
+        {
+          "name": "Continent",
+          "startLine": 14,
+          "endLine": 17,
+          "params": [
+            "id",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Continent",
+          "startLine": 9,
+          "endLine": 18,
+          "methods": [
+            "Continent",
+            "Continent"
+          ],
+          "properties": [
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Name",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Continent",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Continent",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Continent",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 16
+        },
+        {
+          "caller": "Continent",
+          "callee": "nameof",
+          "lineNumber": 16
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 25,
+      "functions": [
+        {
+          "name": "ContinentManager",
+          "startLine": 15,
+          "endLine": 18,
+          "params": [
+            "continentRepository"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 20,
+          "endLine": 30,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "ContinentManager",
+          "startLine": 9,
+          "endLine": 31,
+          "methods": [
+            "ContinentManager",
+            "CreateAsync"
+          ],
+          "properties": [
+            "_continentRepository"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ContinentManager",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "ContinentManager",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 22
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 22
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_continentRepository.AnyAsync",
+          "lineNumber": 24
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 26
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new Continent",
+          "lineNumber": 29
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/Country.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 21,
+      "functions": [
+        {
+          "name": "Country",
+          "startLine": 18,
+          "endLine": 18,
+          "params": []
+        },
+        {
+          "name": "Country",
+          "startLine": 19,
+          "endLine": 24,
+          "params": [
+            "id",
+            "continentId",
+            "iso",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Country",
+          "startLine": 10,
+          "endLine": 25,
+          "methods": [
+            "Country",
+            "Country"
+          ],
+          "properties": [
+            "ContinentId",
+            "Continent",
+            "ISO",
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ContinentId",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "Continent",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "ISO",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "Country",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "Country",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Country",
+          "callee": "Check.NotNullOrWhiteSpace(iso, nameof(ISO), 3).ToUpper",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Country",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Country",
+          "callee": "nameof",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Country",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Country",
+          "callee": "nameof",
+          "lineNumber": 23
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 48,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "CountryManager",
+          "startLine": 17,
+          "endLine": 23,
+          "params": [
+            "countryRepository",
+            "continentRepository"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 25,
+          "endLine": 41,
+          "params": [
+            "continentId",
+            "iso",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CountryManager",
+          "startLine": 10,
+          "endLine": 42,
+          "methods": [
+            "CountryManager",
+            "CreateAsync"
+          ],
+          "properties": [
+            "_countryRepository",
+            "_continentRepository"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CountryManager",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "CountryManager",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 27
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 28
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "nameof",
+          "lineNumber": 28
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_continentRepository.AnyAsync",
+          "lineNumber": 30
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 32
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "_countryRepository.AnyAsync",
+          "lineNumber": 35
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 37
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new Country",
+          "lineNumber": 40
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/DataSeed/LocationDataSeedContributor.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 394,
+      "nonEmptyLines": 357,
+      "functions": [
+        {
+          "name": "LocationDataSeedContributor",
+          "startLine": 22,
+          "endLine": 34,
+          "params": [
+            "continentRepository",
+            "countryRepository",
+            "cityRepository",
+            "areaRepository",
+            "guidGenerator"
+          ]
+        },
+        {
+          "name": "SeedAsync",
+          "startLine": 36,
+          "endLine": 332,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "CreateContinentAsync",
+          "startLine": 335,
+          "endLine": 347,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "CreateCountryAsync",
+          "startLine": 349,
+          "endLine": 361,
+          "params": [
+            "continentId",
+            "iso",
+            "name"
+          ]
+        },
+        {
+          "name": "CreateCityAsync",
+          "startLine": 363,
+          "endLine": 375,
+          "params": [
+            "countryId",
+            "name"
+          ]
+        },
+        {
+          "name": "CreateAreaAsync",
+          "startLine": 377,
+          "endLine": 387,
+          "params": [
+            "cityId",
+            "zipCode",
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LocationDataSeedContributor",
+          "startLine": 14,
+          "endLine": 388,
+          "methods": [
+            "LocationDataSeedContributor",
+            "SeedAsync",
+            "CreateContinentAsync",
+            "CreateCountryAsync",
+            "CreateCityAsync",
+            "CreateAreaAsync"
+          ],
+          "properties": [
+            "_continentRepository",
+            "_countryRepository",
+            "_cityRepository",
+            "_areaRepository",
+            "_guidGenerator"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "LocationDataSeedContributor",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "SeedAsync",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "LocationDataSeedContributor",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateContinentAsync",
+          "lineNumber": 39
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateContinentAsync",
+          "lineNumber": 40
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateContinentAsync",
+          "lineNumber": 41
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateContinentAsync",
+          "lineNumber": 42
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateContinentAsync",
+          "lineNumber": 43
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateContinentAsync",
+          "lineNumber": 44
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 48
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 49
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 50
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 51
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 52
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 53
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 54
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 55
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 56
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 57
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 58
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 62
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 63
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 64
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 65
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 66
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 67
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 68
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 69
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 73
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 74
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 75
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 76
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 80
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 81
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 82
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 83
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 84
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 85
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 89
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 90
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 91
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 92
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 96
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCountryAsync",
+          "lineNumber": 97
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 104
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 105
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 106
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 107
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 108
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 109
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 110
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 111
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 112
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 113
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 114
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 115
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 116
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 117
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 118
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 119
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 120
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 121
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 122
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 123
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 124
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 125
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 126
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 127
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 131
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 132
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 133
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 134
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 135
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 136
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 137
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 141
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 142
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 143
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 144
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 145
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 146
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 150
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 151
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 152
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 153
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 154
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 158
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 159
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 160
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 161
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 162
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 163
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 164
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 165
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 166
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 167
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 168
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 169
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 173
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 174
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 175
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 176
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 177
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 178
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 179
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 180
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 181
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 182
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 186
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 187
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 188
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 189
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 190
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 191
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 192
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 193
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 194
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 195
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 196
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 197
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 198
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 199
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 200
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 201
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 205
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 206
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 207
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 208
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 209
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 210
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 211
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 212
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 213
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 214
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 215
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 216
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 217
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 218
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 219
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 220
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 221
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 222
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 223
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 224
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 225
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 226
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 227
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 228
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 229
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 230
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 231
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 232
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 233
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 234
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 238
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 239
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 240
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 241
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 242
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 243
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 244
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 245
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 246
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 247
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 248
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 249
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 250
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 251
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 252
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 253
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 254
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 255
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 256
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 257
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 258
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 259
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 260
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 261
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 265
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 266
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 267
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 268
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 269
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 270
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 271
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 272
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 273
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 274
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 275
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 276
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 277
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 278
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 279
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 280
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 281
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 282
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 283
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 284
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 285
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 286
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 287
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 288
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 289
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 290
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 291
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 292
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 293
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 294
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 295
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 296
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 297
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 298
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 299
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 300
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 301
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 302
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 303
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateCityAsync",
+          "lineNumber": 304
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 309
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 310
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 311
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 312
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 313
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 314
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 315
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 316
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 317
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 318
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 319
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 320
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 321
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 322
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 323
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 324
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 325
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 326
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 327
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 328
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 329
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateAreaAsync",
+          "lineNumber": 330
+        },
+        {
+          "caller": "CreateContinentAsync",
+          "callee": "_continentRepository.FirstOrDefaultAsync",
+          "lineNumber": 337
+        },
+        {
+          "caller": "CreateContinentAsync",
+          "callee": "_continentRepository.InsertAsync",
+          "lineNumber": 343
+        },
+        {
+          "caller": "CreateContinentAsync",
+          "callee": "new Continent",
+          "lineNumber": 344
+        },
+        {
+          "caller": "CreateContinentAsync",
+          "callee": "_guidGenerator.Create",
+          "lineNumber": 344
+        },
+        {
+          "caller": "CreateCountryAsync",
+          "callee": "_countryRepository.FirstOrDefaultAsync",
+          "lineNumber": 351
+        },
+        {
+          "caller": "CreateCountryAsync",
+          "callee": "_countryRepository.InsertAsync",
+          "lineNumber": 357
+        },
+        {
+          "caller": "CreateCountryAsync",
+          "callee": "new Country",
+          "lineNumber": 358
+        },
+        {
+          "caller": "CreateCountryAsync",
+          "callee": "_guidGenerator.Create",
+          "lineNumber": 358
+        },
+        {
+          "caller": "CreateCityAsync",
+          "callee": "_cityRepository.FirstOrDefaultAsync",
+          "lineNumber": 365
+        },
+        {
+          "caller": "CreateCityAsync",
+          "callee": "_cityRepository.InsertAsync",
+          "lineNumber": 371
+        },
+        {
+          "caller": "CreateCityAsync",
+          "callee": "new City",
+          "lineNumber": 372
+        },
+        {
+          "caller": "CreateCityAsync",
+          "callee": "_guidGenerator.Create",
+          "lineNumber": 372
+        },
+        {
+          "caller": "CreateAreaAsync",
+          "callee": "_areaRepository.FirstOrDefaultAsync",
+          "lineNumber": 379
+        },
+        {
+          "caller": "CreateAreaAsync",
+          "callee": "_areaRepository.InsertAsync",
+          "lineNumber": 382
+        },
+        {
+          "caller": "CreateAreaAsync",
+          "callee": "new Area",
+          "lineNumber": 383
+        },
+        {
+          "caller": "CreateAreaAsync",
+          "callee": "_guidGenerator.Create",
+          "lineNumber": 383
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 6,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/OpenIddict/OpenIddictDataSeedContributor.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 145,
+      "nonEmptyLines": 120,
+      "functions": [
+        {
+          "name": "OpenIddictDataSeedContributor",
+          "startLine": 20,
+          "endLine": 28,
+          "params": [
+            "configuration",
+            "openIddictApplicationRepository",
+            "applicationManager",
+            "openIddictScopeRepository",
+            "scopeManager"
+          ]
+        },
+        {
+          "name": "SeedAsync",
+          "startLine": 30,
+          "endLine": 35,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "CreateScopesAsync",
+          "startLine": 37,
+          "endLine": 45,
+          "params": []
+        },
+        {
+          "name": "CreateApplicationsAsync",
+          "startLine": 47,
+          "endLine": 138,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "OpenIddictDataSeedContributor",
+          "startLine": 18,
+          "endLine": 139,
+          "methods": [
+            "OpenIddictDataSeedContributor",
+            "SeedAsync",
+            "CreateScopesAsync",
+            "CreateApplicationsAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "OpenIddictDataSeedContributor",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "SeedAsync",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "OpenIddictDataSeedContributor",
+          "line": 18,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateScopesAsync",
+          "lineNumber": 33
+        },
+        {
+          "caller": "SeedAsync",
+          "callee": "CreateApplicationsAsync",
+          "lineNumber": 34
+        },
+        {
+          "caller": "CreateScopesAsync",
+          "callee": "CreateScopesAsync",
+          "lineNumber": 39
+        },
+        {
+          "caller": "CreateScopesAsync",
+          "callee": "new OpenIddictScopeDescriptor",
+          "lineNumber": 39
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "Configuration.GetSection",
+          "lineNumber": 59
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "consoleAndAngularClientId.IsNullOrWhiteSpace",
+          "lineNumber": 64
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "configurationSection[\"SupplyCoreERP_App:RootUrl\"]?.TrimEnd",
+          "lineNumber": 66
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "CreateOrUpdateApplicationAsync",
+          "lineNumber": 67
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "new List<string>",
+          "lineNumber": 74
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "new List<string>",
+          "lineNumber": 83
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "new List<string>",
+          "lineNumber": 84
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "swaggerClientId.IsNullOrWhiteSpace",
+          "lineNumber": 98
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "configurationSection[\"SupplyCoreERP_Swagger:RootUrl\"]?.TrimEnd",
+          "lineNumber": 100
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "CreateOrUpdateApplicationAsync",
+          "lineNumber": 102
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "new List<string>",
+          "lineNumber": 109
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "new List<string>",
+          "lineNumber": 111
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "swaggerRootUrl.EnsureEndsWith",
+          "lineNumber": 112
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "hangfireClientId.IsNullOrWhiteSpace",
+          "lineNumber": 119
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "configurationSection[\"SupplyCoreERP_Hangfire:RootUrl\"]?.TrimEnd",
+          "lineNumber": 121
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "CreateOrUpdateApplicationAsync",
+          "lineNumber": 123
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "new List<string>",
+          "lineNumber": 130
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "new List<string>",
+          "lineNumber": 132
+        },
+        {
+          "caller": "CreateApplicationsAsync",
+          "callee": "hangfireRootUrl.EnsureEndsWith",
+          "lineNumber": 133
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Customer/Customer.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 136,
+      "nonEmptyLines": 111,
+      "functions": [
+        {
+          "name": "Customer",
+          "startLine": 41,
+          "endLine": 41,
+          "params": []
+        },
+        {
+          "name": "Customer",
+          "startLine": 43,
+          "endLine": 64,
+          "params": [
+            "id",
+            "code",
+            "name",
+            "phoneNumber",
+            "email",
+            "representativeName",
+            "gender",
+            "type",
+            "taxCode",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "note",
+            "debtLimit",
+            "paymentTermDays",
+            "priceListId"
+          ]
+        },
+        {
+          "name": "UpdateInfo",
+          "startLine": 66,
+          "endLine": 78,
+          "params": [
+            "name",
+            "phoneNumber",
+            "email",
+            "representativeName",
+            "gender",
+            "type",
+            "taxCode",
+            "note"
+          ]
+        },
+        {
+          "name": "SetLocation",
+          "startLine": 80,
+          "endLine": 86,
+          "params": [
+            "address",
+            "countryId",
+            "cityId",
+            "areaId"
+          ]
+        },
+        {
+          "name": "SetDebtInfo",
+          "startLine": 88,
+          "endLine": 92,
+          "params": [
+            "debtLimit",
+            "paymentTermDays"
+          ]
+        },
+        {
+          "name": "SetPriceList",
+          "startLine": 94,
+          "endLine": 97,
+          "params": [
+            "priceListId"
+          ]
+        },
+        {
+          "name": "AddDebt",
+          "startLine": 99,
+          "endLine": 114,
+          "params": [
+            "amount"
+          ]
+        },
+        {
+          "name": "PayDebt",
+          "startLine": 116,
+          "endLine": 124,
+          "params": [
+            "amount"
+          ]
+        },
+        {
+          "name": "SetActive",
+          "startLine": 126,
+          "endLine": 126,
+          "params": [
+            "isActive"
+          ]
+        },
+        {
+          "name": "SetCode",
+          "startLine": 127,
+          "endLine": 127,
+          "params": [
+            "code"
+          ]
+        },
+        {
+          "name": "SetName",
+          "startLine": 128,
+          "endLine": 128,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Customer",
+          "startLine": 12,
+          "endLine": 129,
+          "methods": [
+            "Customer",
+            "Customer",
+            "UpdateInfo",
+            "SetLocation",
+            "SetDebtInfo",
+            "SetPriceList",
+            "AddDebt",
+            "PayDebt",
+            "SetActive",
+            "SetCode",
+            "SetName"
+          ],
+          "properties": [
+            "Code",
+            "Name",
+            "PhoneNumber",
+            "Email",
+            "RepresentativeName",
+            "Gender",
+            "Type",
+            "TaxCode",
+            "Note",
+            "IsActive",
+            "Address",
+            "CountryId",
+            "Country",
+            "CityId",
+            "City",
+            "AreaId",
+            "Area",
+            "DebtLimit",
+            "PaymentTermDays",
+            "CurrentDebt",
+            "PriceListId",
+            "PriceList"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "PhoneNumber",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Email",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "RepresentativeName",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Gender",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "Type",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "TaxCode",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "Note",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Address",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "CountryId",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Country",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "CityId",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "City",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "AreaId",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "Area",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "DebtLimit",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "PaymentTermDays",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "CurrentDebt",
+          "line": 35,
+          "isDefault": false
+        },
+        {
+          "name": "PriceListId",
+          "line": 38,
+          "isDefault": false
+        },
+        {
+          "name": "PriceList",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "Customer",
+          "line": 43,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateInfo",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "SetLocation",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "SetDebtInfo",
+          "line": 88,
+          "isDefault": false
+        },
+        {
+          "name": "SetPriceList",
+          "line": 94,
+          "isDefault": false
+        },
+        {
+          "name": "AddDebt",
+          "line": 99,
+          "isDefault": false
+        },
+        {
+          "name": "PayDebt",
+          "line": 116,
+          "isDefault": false
+        },
+        {
+          "name": "SetActive",
+          "line": 126,
+          "isDefault": false
+        },
+        {
+          "name": "Customer",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Customer",
+          "callee": "SetCode",
+          "lineNumber": 50
+        },
+        {
+          "caller": "Customer",
+          "callee": "SetName",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Customer",
+          "callee": "SetLocation",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Customer",
+          "callee": "SetDebtInfo",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Customer",
+          "callee": "SetPriceList",
+          "lineNumber": 63
+        },
+        {
+          "caller": "UpdateInfo",
+          "callee": "SetName",
+          "lineNumber": 70
+        },
+        {
+          "caller": "AddDebt",
+          "callee": "new BusinessException",
+          "lineNumber": 103
+        },
+        {
+          "caller": "AddDebt",
+          "callee": "new BusinessException",
+          "lineNumber": 108
+        },
+        {
+          "caller": "PayDebt",
+          "callee": "new BusinessException",
+          "lineNumber": 120
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper",
+          "lineNumber": 127
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim",
+          "lineNumber": 127
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 127
+        },
+        {
+          "caller": "SetCode",
+          "callee": "nameof",
+          "lineNumber": 127
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim",
+          "lineNumber": 128
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 128
+        },
+        {
+          "caller": "SetName",
+          "callee": "nameof",
+          "lineNumber": 128
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 31,
+        "functionCount": 11,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Customer/CustomerManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 181,
+      "nonEmptyLines": 148,
+      "functions": [
+        {
+          "name": "CustomerManager",
+          "startLine": 26,
+          "endLine": 40,
+          "params": [
+            "customerRepository",
+            "countryRepo",
+            "cityRepo",
+            "areaRepo",
+            "priceListRepo",
+            "documentSequenceManager"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 42,
+          "endLine": 61,
+          "params": [
+            "name",
+            "phoneNumber",
+            "email",
+            "representativeName",
+            "gender",
+            "type",
+            "taxCode",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "note",
+            "debtLimit",
+            "paymentTermDays",
+            "priceListId"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 63,
+          "endLine": 83,
+          "params": [
+            "customer",
+            "name",
+            "phoneNumber",
+            "email",
+            "representativeName",
+            "gender",
+            "type",
+            "taxCode",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "note",
+            "debtLimit",
+            "paymentTermDays",
+            "priceListId"
+          ]
+        },
+        {
+          "name": "DeleteAsync",
+          "startLine": 85,
+          "endLine": 95,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "CheckPhoneNumberExistsAsync",
+          "startLine": 97,
+          "endLine": 108,
+          "params": [
+            "phoneNumber"
+          ]
+        },
+        {
+          "name": "ValidateLocationAsync",
+          "startLine": 110,
+          "endLine": 144,
+          "params": [
+            "countryId",
+            "cityId",
+            "areaId"
+          ]
+        },
+        {
+          "name": "ValidatePriceListAsync",
+          "startLine": 146,
+          "endLine": 152,
+          "params": [
+            "priceListId"
+          ]
+        },
+        {
+          "name": "CheckCodeAndNameAsync",
+          "startLine": 154,
+          "endLine": 173,
+          "params": [
+            "code",
+            "name",
+            "excludeId"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "CustomerManager",
+          "startLine": 15,
+          "endLine": 174,
+          "methods": [
+            "CustomerManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync",
+            "CheckPhoneNumberExistsAsync",
+            "ValidateLocationAsync",
+            "ValidatePriceListAsync",
+            "CheckCodeAndNameAsync"
+          ],
+          "properties": [
+            "_customerRepository",
+            "_countryRepo",
+            "_cityRepo",
+            "_areaRepo",
+            "_priceListRepo",
+            "_documentSequenceManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CustomerManager",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAsync",
+          "line": 85,
+          "isDefault": false
+        },
+        {
+          "name": "CheckCodeAndNameAsync",
+          "line": 154,
+          "isDefault": false
+        },
+        {
+          "name": "CustomerManager",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 49
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "CheckCodeAndNameAsync",
+          "lineNumber": 51
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "CheckPhoneNumberExistsAsync",
+          "lineNumber": 52
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "ValidateLocationAsync",
+          "lineNumber": 53
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "ValidatePriceListAsync",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new Customer",
+          "lineNumber": 56
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 57
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "Check.NotNull",
+          "lineNumber": 69
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "nameof",
+          "lineNumber": 69
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "CheckPhoneNumberExistsAsync",
+          "lineNumber": 73
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "ValidateLocationAsync",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "ValidatePriceListAsync",
+          "lineNumber": 77
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "customer.UpdateInfo",
+          "lineNumber": 79
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "customer.SetLocation",
+          "lineNumber": 80
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "customer.SetDebtInfo",
+          "lineNumber": 81
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "customer.SetPriceList",
+          "lineNumber": 82
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_customerRepository.GetAsync",
+          "lineNumber": 87
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 91
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_customerRepository.DeleteAsync",
+          "lineNumber": 94
+        },
+        {
+          "caller": "CheckPhoneNumberExistsAsync",
+          "callee": "string.IsNullOrWhiteSpace",
+          "lineNumber": 99
+        },
+        {
+          "caller": "CheckPhoneNumberExistsAsync",
+          "callee": "_customerRepository.AnyAsync",
+          "lineNumber": 104
+        },
+        {
+          "caller": "CheckPhoneNumberExistsAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "_countryRepo.AnyAsync",
+          "lineNumber": 112
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 114
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "_cityRepo.FindAsync",
+          "lineNumber": 119
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "_areaRepo.FindAsync",
+          "lineNumber": 133
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 141
+        },
+        {
+          "caller": "ValidatePriceListAsync",
+          "callee": "_priceListRepo.AnyAsync",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ValidatePriceListAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 150
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 156
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "nameof",
+          "lineNumber": 156
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 157
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "nameof",
+          "lineNumber": 157
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "code.Trim().ToUpper",
+          "lineNumber": 159
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "code.Trim",
+          "lineNumber": 159
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "name.Trim",
+          "lineNumber": 160
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "_customerRepository.AnyAsync",
+          "lineNumber": 163
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 165
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "_customerRepository.AnyAsync",
+          "lineNumber": 169
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 171
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Customer/ICustomerManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 20,
+      "classes": [
+        {
+          "name": "ICustomerManager",
+          "startLine": 8,
+          "endLine": 25,
+          "methods": [
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync",
+            "CheckCodeAndNameAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ICustomerManager",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/ISupplierManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 45,
+      "nonEmptyLines": 37,
+      "classes": [
+        {
+          "name": "ISupplierManager",
+          "startLine": 8,
+          "endLine": 45,
+          "methods": [
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync",
+            "AddProductAsync",
+            "UpdateProductAsync",
+            "RemoveProductAsync",
+            "ToggleProductActive",
+            "CheckCodeAndNameAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ISupplierManager",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/Supplier.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 198,
+      "nonEmptyLines": 164,
+      "functions": [
+        {
+          "name": "Supplier",
+          "startLine": 40,
+          "endLine": 40,
+          "params": []
+        },
+        {
+          "name": "Supplier",
+          "startLine": 42,
+          "endLine": 72,
+          "params": [
+            "id",
+            "code",
+            "name",
+            "taxCode",
+            "phoneNumber",
+            "email",
+            "representativeName",
+            "note",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "gender",
+            "debtLimit",
+            "paymentTermDays"
+          ]
+        },
+        {
+          "name": "UpdateInfo",
+          "startLine": 74,
+          "endLine": 90,
+          "params": [
+            "name",
+            "gender",
+            "taxCode",
+            "phoneNumber",
+            "email",
+            "representativeName",
+            "note"
+          ]
+        },
+        {
+          "name": "SetLocation",
+          "startLine": 92,
+          "endLine": 98,
+          "params": [
+            "address",
+            "countryId",
+            "cityId",
+            "areaId"
+          ]
+        },
+        {
+          "name": "SetDebtInfo",
+          "startLine": 100,
+          "endLine": 104,
+          "params": [
+            "debtLimit",
+            "paymentTermDays"
+          ]
+        },
+        {
+          "name": "AddDebt",
+          "startLine": 106,
+          "endLine": 119,
+          "params": [
+            "amount"
+          ]
+        },
+        {
+          "name": "PayDebt",
+          "startLine": 121,
+          "endLine": 129,
+          "params": [
+            "amount"
+          ]
+        },
+        {
+          "name": "SetActive",
+          "startLine": 131,
+          "endLine": 131,
+          "params": [
+            "isActive"
+          ]
+        },
+        {
+          "name": "SetCode",
+          "startLine": 132,
+          "endLine": 132,
+          "params": [
+            "code"
+          ]
+        },
+        {
+          "name": "SetName",
+          "startLine": 133,
+          "endLine": 133,
+          "params": [
+            "name"
+          ]
+        },
+        {
+          "name": "AddProduct",
+          "startLine": 136,
+          "endLine": 160,
+          "params": [
+            "id",
+            "productId",
+            "defaultUnitId",
+            "leadTimeDays",
+            "isPreferred",
+            "note"
+          ]
+        },
+        {
+          "name": "UpdateProduct",
+          "startLine": 162,
+          "endLine": 173,
+          "params": [
+            "productId",
+            "defaultUnitId",
+            "leadTimeDays",
+            "isPreferred",
+            "note"
+          ]
+        },
+        {
+          "name": "RemoveProduct",
+          "startLine": 175,
+          "endLine": 181,
+          "params": [
+            "productId"
+          ]
+        },
+        {
+          "name": "ToggleProductActive",
+          "startLine": 183,
+          "endLine": 189,
+          "params": [
+            "productId"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Supplier",
+          "startLine": 13,
+          "endLine": 191,
+          "methods": [
+            "Supplier",
+            "Supplier",
+            "UpdateInfo",
+            "SetLocation",
+            "SetDebtInfo",
+            "AddDebt",
+            "PayDebt",
+            "SetActive",
+            "SetCode",
+            "SetName",
+            "AddProduct",
+            "UpdateProduct",
+            "RemoveProduct",
+            "ToggleProductActive"
+          ],
+          "properties": [
+            "Code",
+            "Name",
+            "TaxCode",
+            "PhoneNumber",
+            "Email",
+            "RepresentativeName",
+            "Gender",
+            "Note",
+            "IsActive",
+            "Address",
+            "DebtLimit",
+            "PaymentTermDays",
+            "CurrentDebt",
+            "CountryId",
+            "Country",
+            "CityId",
+            "City",
+            "AreaId",
+            "Area",
+            "SupplierProducts"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "TaxCode",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "PhoneNumber",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Email",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "RepresentativeName",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Gender",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "Note",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Address",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "DebtLimit",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "PaymentTermDays",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "CurrentDebt",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "CountryId",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "Country",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "CityId",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "City",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "AreaId",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "Area",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierProducts",
+          "line": 39,
+          "isDefault": false
+        },
+        {
+          "name": "Supplier",
+          "line": 42,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateInfo",
+          "line": 74,
+          "isDefault": false
+        },
+        {
+          "name": "SetLocation",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "SetDebtInfo",
+          "line": 100,
+          "isDefault": false
+        },
+        {
+          "name": "AddDebt",
+          "line": 106,
+          "isDefault": false
+        },
+        {
+          "name": "PayDebt",
+          "line": 121,
+          "isDefault": false
+        },
+        {
+          "name": "SetActive",
+          "line": 131,
+          "isDefault": false
+        },
+        {
+          "name": "AddProduct",
+          "line": 136,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProduct",
+          "line": 162,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveProduct",
+          "line": 175,
+          "isDefault": false
+        },
+        {
+          "name": "ToggleProductActive",
+          "line": 183,
+          "isDefault": false
+        },
+        {
+          "name": "Supplier",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Supplier",
+          "callee": "SetCode",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Supplier",
+          "callee": "SetName",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Supplier",
+          "callee": "SetLocation",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Supplier",
+          "callee": "SetDebtInfo",
+          "lineNumber": 71
+        },
+        {
+          "caller": "UpdateInfo",
+          "callee": "SetName",
+          "lineNumber": 83
+        },
+        {
+          "caller": "AddDebt",
+          "callee": "new BusinessException",
+          "lineNumber": 110
+        },
+        {
+          "caller": "AddDebt",
+          "callee": "new BusinessException",
+          "lineNumber": 115
+        },
+        {
+          "caller": "PayDebt",
+          "callee": "new BusinessException",
+          "lineNumber": 125
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim().ToUpper",
+          "lineNumber": 132
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace(code, nameof(Code), 50).Trim",
+          "lineNumber": 132
+        },
+        {
+          "caller": "SetCode",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 132
+        },
+        {
+          "caller": "SetCode",
+          "callee": "nameof",
+          "lineNumber": 132
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace(name, nameof(Name), 255).Trim",
+          "lineNumber": 133
+        },
+        {
+          "caller": "SetName",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 133
+        },
+        {
+          "caller": "SetName",
+          "callee": "nameof",
+          "lineNumber": 133
+        },
+        {
+          "caller": "AddProduct",
+          "callee": "SupplierProducts.Any",
+          "lineNumber": 144
+        },
+        {
+          "caller": "AddProduct",
+          "callee": "new BusinessException",
+          "lineNumber": 146
+        },
+        {
+          "caller": "AddProduct",
+          "callee": "SupplierProducts.Add",
+          "lineNumber": 158
+        },
+        {
+          "caller": "UpdateProduct",
+          "callee": "SupplierProducts.FirstOrDefault",
+          "lineNumber": 169
+        },
+        {
+          "caller": "UpdateProduct",
+          "callee": "new BusinessException",
+          "lineNumber": 170
+        },
+        {
+          "caller": "UpdateProduct",
+          "callee": "sp.UpdateInfo",
+          "lineNumber": 172
+        },
+        {
+          "caller": "RemoveProduct",
+          "callee": "SupplierProducts.FirstOrDefault",
+          "lineNumber": 177
+        },
+        {
+          "caller": "RemoveProduct",
+          "callee": "new BusinessException",
+          "lineNumber": 178
+        },
+        {
+          "caller": "RemoveProduct",
+          "callee": "SupplierProducts.Remove",
+          "lineNumber": 180
+        },
+        {
+          "caller": "ToggleProductActive",
+          "callee": "SupplierProducts.FirstOrDefault",
+          "lineNumber": 185
+        },
+        {
+          "caller": "ToggleProductActive",
+          "callee": "new BusinessException",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ToggleProductActive",
+          "callee": "sp.SetActive",
+          "lineNumber": 188
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 32,
+        "functionCount": 14,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/SupplierManager.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 233,
+      "nonEmptyLines": 198,
+      "functions": [
+        {
+          "name": "SupplierManager",
+          "startLine": 29,
+          "endLine": 45,
+          "params": [
+            "supplierRepository",
+            "productRepo",
+            "unitRepo",
+            "countryRepo",
+            "cityRepo",
+            "areaRepo",
+            "documentSequenceManager"
+          ]
+        },
+        {
+          "name": "CreateAsync",
+          "startLine": 48,
+          "endLine": 62,
+          "params": [
+            "name",
+            "taxCode",
+            "phoneNumber",
+            "email",
+            "representativeName",
+            "gender",
+            "note",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "debtLimit",
+            "paymentTermDays"
+          ]
+        },
+        {
+          "name": "UpdateAsync",
+          "startLine": 64,
+          "endLine": 75,
+          "params": [
+            "supplier",
+            "name",
+            "taxCode",
+            "phoneNumber",
+            "email",
+            "representativeName",
+            "gender",
+            "note",
+            "address",
+            "countryId",
+            "cityId",
+            "areaId",
+            "debtLimit",
+            "paymentTermDays"
+          ]
+        },
+        {
+          "name": "DeleteAsync",
+          "startLine": 77,
+          "endLine": 88,
+          "params": [
+            "id"
+          ]
+        },
+        {
+          "name": "AddProductAsync",
+          "startLine": 92,
+          "endLine": 123,
+          "params": [
+            "supplier",
+            "productId",
+            "defaultUnitId",
+            "leadTimeDays",
+            "isPreferred",
+            "note"
+          ]
+        },
+        {
+          "name": "UpdateProductAsync",
+          "startLine": 125,
+          "endLine": 144,
+          "params": [
+            "supplier",
+            "productId",
+            "defaultUnitId",
+            "leadTimeDays",
+            "isPreferred",
+            "note"
+          ]
+        },
+        {
+          "name": "RemoveProductAsync",
+          "startLine": 146,
+          "endLine": 154,
+          "params": [
+            "supplier",
+            "productId"
+          ]
+        },
+        {
+          "name": "ToggleProductActive",
+          "startLine": 156,
+          "endLine": 165,
+          "params": [
+            "supplier",
+            "productId"
+          ]
+        },
+        {
+          "name": "CheckCodeAndNameAsync",
+          "startLine": 169,
+          "endLine": 188,
+          "params": [
+            "code",
+            "name",
+            "excludeId"
+          ]
+        },
+        {
+          "name": "ValidateLocationAsync",
+          "startLine": 190,
+          "endLine": 224,
+          "params": [
+            "countryId",
+            "cityId",
+            "areaId"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplierManager",
+          "startLine": 17,
+          "endLine": 226,
+          "methods": [
+            "SupplierManager",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync",
+            "AddProductAsync",
+            "UpdateProductAsync",
+            "RemoveProductAsync",
+            "ToggleProductActive",
+            "CheckCodeAndNameAsync",
+            "ValidateLocationAsync"
+          ],
+          "properties": [
+            "_supplierRepository",
+            "_productRepo",
+            "_unitRepo",
+            "_countryRepo",
+            "_cityRepo",
+            "_areaRepo",
+            "_documentSequenceManager"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SupplierManager",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "CreateAsync",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateAsync",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "DeleteAsync",
+          "line": 77,
+          "isDefault": false
+        },
+        {
+          "name": "AddProductAsync",
+          "line": 92,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateProductAsync",
+          "line": 125,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveProductAsync",
+          "line": 146,
+          "isDefault": false
+        },
+        {
+          "name": "ToggleProductActive",
+          "line": 156,
+          "isDefault": false
+        },
+        {
+          "name": "CheckCodeAndNameAsync",
+          "line": 169,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierManager",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CreateAsync",
+          "callee": "_documentSequenceManager.GenerateAsync",
+          "lineNumber": 54
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "CheckCodeAndNameAsync",
+          "lineNumber": 55
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "ValidateLocationAsync",
+          "lineNumber": 56
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "new Supplier",
+          "lineNumber": 58
+        },
+        {
+          "caller": "CreateAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 59
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "ValidateLocationAsync",
+          "lineNumber": 71
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "supplier.UpdateInfo",
+          "lineNumber": 72
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "supplier.SetLocation",
+          "lineNumber": 73
+        },
+        {
+          "caller": "UpdateAsync",
+          "callee": "supplier.SetDebtInfo",
+          "lineNumber": 74
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_supplierRepository.GetAsync",
+          "lineNumber": 79
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 82
+        },
+        {
+          "caller": "DeleteAsync",
+          "callee": "_supplierRepository.DeleteAsync",
+          "lineNumber": 87
+        },
+        {
+          "caller": "AddProductAsync",
+          "callee": "_productRepo.FindAsync",
+          "lineNumber": 101
+        },
+        {
+          "caller": "AddProductAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 102
+        },
+        {
+          "caller": "AddProductAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 106
+        },
+        {
+          "caller": "AddProductAsync",
+          "callee": "_unitRepo.AnyAsync",
+          "lineNumber": 109
+        },
+        {
+          "caller": "AddProductAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 111
+        },
+        {
+          "caller": "AddProductAsync",
+          "callee": "supplier.AddProduct",
+          "lineNumber": 114
+        },
+        {
+          "caller": "AddProductAsync",
+          "callee": "GuidGenerator.Create",
+          "lineNumber": 115
+        },
+        {
+          "caller": "UpdateProductAsync",
+          "callee": "_unitRepo.AnyAsync",
+          "lineNumber": 133
+        },
+        {
+          "caller": "UpdateProductAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 135
+        },
+        {
+          "caller": "UpdateProductAsync",
+          "callee": "supplier.UpdateProduct",
+          "lineNumber": 138
+        },
+        {
+          "caller": "RemoveProductAsync",
+          "callee": "_productRepo.AnyAsync",
+          "lineNumber": 148
+        },
+        {
+          "caller": "RemoveProductAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 150
+        },
+        {
+          "caller": "RemoveProductAsync",
+          "callee": "supplier.RemoveProduct",
+          "lineNumber": 153
+        },
+        {
+          "caller": "ToggleProductActive",
+          "callee": "supplier.SupplierProducts.FirstOrDefault",
+          "lineNumber": 158
+        },
+        {
+          "caller": "ToggleProductActive",
+          "callee": "new BusinessException",
+          "lineNumber": 161
+        },
+        {
+          "caller": "ToggleProductActive",
+          "callee": "supplier.ToggleProductActive",
+          "lineNumber": 164
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 171
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "nameof",
+          "lineNumber": 171
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "Check.NotNullOrWhiteSpace",
+          "lineNumber": 172
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "nameof",
+          "lineNumber": 172
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "code.Trim().ToUpper",
+          "lineNumber": 174
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "code.Trim",
+          "lineNumber": 174
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "name.Trim",
+          "lineNumber": 175
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "_supplierRepository.AnyAsync",
+          "lineNumber": 177
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 180
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "_supplierRepository.AnyAsync",
+          "lineNumber": 183
+        },
+        {
+          "caller": "CheckCodeAndNameAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "_countryRepo.AnyAsync",
+          "lineNumber": 192
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 194
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "_cityRepo.FindAsync",
+          "lineNumber": 199
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 202
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 207
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "_areaRepo.FindAsync",
+          "lineNumber": 213
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 216
+        },
+        {
+          "caller": "ValidateLocationAsync",
+          "callee": "new BusinessException",
+          "lineNumber": 221
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 10,
+        "functionCount": 10,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/SupplierProduct.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 128,
+      "nonEmptyLines": 109,
+      "functions": [
+        {
+          "name": "SupplierProduct",
+          "startLine": 32,
+          "endLine": 35,
+          "params": []
+        },
+        {
+          "name": "SupplierProduct",
+          "startLine": 37,
+          "endLine": 54,
+          "params": [
+            "id",
+            "supplierId",
+            "productId",
+            "defaultUnitId",
+            "leadTimeDays",
+            "isPreferred",
+            "note"
+          ]
+        },
+        {
+          "name": "UpdateInfo",
+          "startLine": 56,
+          "endLine": 66,
+          "params": [
+            "defaultUnitId",
+            "leadTimeDays",
+            "isPreferred",
+            "note"
+          ]
+        },
+        {
+          "name": "AddCondition",
+          "startLine": 68,
+          "endLine": 71,
+          "params": [
+            "condition"
+          ]
+        },
+        {
+          "name": "RemoveCondition",
+          "startLine": 73,
+          "endLine": 80,
+          "params": [
+            "conditionId"
+          ]
+        },
+        {
+          "name": "ValidateConditions",
+          "startLine": 82,
+          "endLine": 121,
+          "params": []
+        },
+        {
+          "name": "SetPreferred",
+          "startLine": 123,
+          "endLine": 126,
+          "params": [
+            "isPreferred"
+          ]
+        },
+        {
+          "name": "SetActive",
+          "startLine": 127,
+          "endLine": 127,
+          "params": [
+            "active"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplierProduct",
+          "startLine": 11,
+          "endLine": 128,
+          "methods": [
+            "SupplierProduct",
+            "SupplierProduct",
+            "UpdateInfo",
+            "AddCondition",
+            "RemoveCondition",
+            "ValidateConditions",
+            "SetPreferred",
+            "SetActive"
+          ],
+          "properties": [
+            "SupplierId",
+            "Supplier",
+            "ProductId",
+            "Product",
+            "DefaultUnitId",
+            "DefaultUnit",
+            "LeadTimeDays",
+            "IsPreferred",
+            "IsActive",
+            "Note",
+            "Conditions"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SupplierId",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Supplier",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "ProductId",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Product",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "DefaultUnitId",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "DefaultUnit",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "LeadTimeDays",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "IsPreferred",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "Note",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Conditions",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierProduct",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateInfo",
+          "line": 56,
+          "isDefault": false
+        },
+        {
+          "name": "AddCondition",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "RemoveCondition",
+          "line": 73,
+          "isDefault": false
+        },
+        {
+          "name": "ValidateConditions",
+          "line": 82,
+          "isDefault": false
+        },
+        {
+          "name": "SetPreferred",
+          "line": 123,
+          "isDefault": false
+        },
+        {
+          "name": "SetActive",
+          "line": 127,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierProduct",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SupplierProduct",
+          "callee": "new List<SupplierProductCondition>",
+          "lineNumber": 34
+        },
+        {
+          "caller": "SupplierProduct",
+          "callee": "Math.Max",
+          "lineNumber": 49
+        },
+        {
+          "caller": "SupplierProduct",
+          "callee": "new List<SupplierProductCondition>",
+          "lineNumber": 53
+        },
+        {
+          "caller": "UpdateInfo",
+          "callee": "Math.Max",
+          "lineNumber": 63
+        },
+        {
+          "caller": "AddCondition",
+          "callee": "Conditions.Add",
+          "lineNumber": 70
+        },
+        {
+          "caller": "RemoveCondition",
+          "callee": "Conditions.FirstOrDefault",
+          "lineNumber": 75
+        },
+        {
+          "caller": "RemoveCondition",
+          "callee": "Conditions.Remove",
+          "lineNumber": 78
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "Conditions.Any",
+          "lineNumber": 84
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "Conditions.GroupBy",
+          "lineNumber": 89
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "group.Select(x => x.ConversionFactor).Distinct().ToList",
+          "lineNumber": 94
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "group.Select(x => x.ConversionFactor).Distinct",
+          "lineNumber": 94
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "group.Select",
+          "lineNumber": 94
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "new BusinessException",
+          "lineNumber": 97
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "group.OrderBy(x => x.MinOrderQuantity).ToList",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "group.OrderBy",
+          "lineNumber": 101
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "new BusinessException",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ValidateConditions",
+          "callee": "new BusinessException",
+          "lineNumber": 117
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 19,
+        "functionCount": 8,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/SupplierProductCondition.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 86,
+      "nonEmptyLines": 69,
+      "functions": [
+        {
+          "name": "SupplierProductCondition",
+          "startLine": 29,
+          "endLine": 29,
+          "params": []
+        },
+        {
+          "name": "SupplierProductCondition",
+          "startLine": 31,
+          "endLine": 60,
+          "params": [
+            "id",
+            "supplierProductId",
+            "unitId",
+            "conversionFactor",
+            "standardPrice",
+            "minOrderQuantity",
+            "overDeliveryTolerancePct",
+            "underDeliveryTolerancePct"
+          ]
+        },
+        {
+          "name": "UpdateCondition",
+          "startLine": 62,
+          "endLine": 78,
+          "params": [
+            "standardPrice",
+            "minOrderQuantity",
+            "overDeliveryTolerancePct",
+            "underDeliveryTolerancePct"
+          ]
+        },
+        {
+          "name": "UpdateLastPurchasePrice",
+          "startLine": 80,
+          "endLine": 85,
+          "params": [
+            "price"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplierProductCondition",
+          "startLine": 11,
+          "endLine": 86,
+          "methods": [
+            "SupplierProductCondition",
+            "SupplierProductCondition",
+            "UpdateCondition",
+            "UpdateLastPurchasePrice"
+          ],
+          "properties": [
+            "SupplierProductId",
+            "SupplierProduct",
+            "UnitId",
+            "Unit",
+            "ConversionFactor",
+            "StandardPrice",
+            "LastPurchasePrice",
+            "MinOrderQuantity",
+            "OverDeliveryTolerancePct",
+            "UnderDeliveryTolerancePct"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SupplierProductId",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierProduct",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "UnitId",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Unit",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "ConversionFactor",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "StandardPrice",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "LastPurchasePrice",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "MinOrderQuantity",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "OverDeliveryTolerancePct",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "UnderDeliveryTolerancePct",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierProductCondition",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateCondition",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "UpdateLastPurchasePrice",
+          "line": 80,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierProductCondition",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SupplierProductCondition",
+          "callee": "new BusinessException",
+          "lineNumber": 46
+        },
+        {
+          "caller": "SupplierProductCondition",
+          "callee": "new BusinessException",
+          "lineNumber": 50
+        },
+        {
+          "caller": "SupplierProductCondition",
+          "callee": "new BusinessException",
+          "lineNumber": 56
+        },
+        {
+          "caller": "SupplierProductCondition",
+          "callee": "Math.Max",
+          "lineNumber": 58
+        },
+        {
+          "caller": "SupplierProductCondition",
+          "callee": "Math.Max",
+          "lineNumber": 59
+        },
+        {
+          "caller": "UpdateCondition",
+          "callee": "new BusinessException",
+          "lineNumber": 70
+        },
+        {
+          "caller": "UpdateCondition",
+          "callee": "new BusinessException",
+          "lineNumber": 74
+        },
+        {
+          "caller": "UpdateCondition",
+          "callee": "Math.Max",
+          "lineNumber": 76
+        },
+        {
+          "caller": "UpdateCondition",
+          "callee": "Math.Max",
+          "lineNumber": 77
+        },
+        {
+          "caller": "UpdateLastPurchasePrice",
+          "callee": "new BusinessException",
+          "lineNumber": 84
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    }
+  ]
+}

@@ -1,0 +1,14 @@
+{
+  "fixedSectionOk": true,
+  "nodesRecovered": 3,
+  "edgesRestored": 3,
+  "crossBatchEdgesAdded": 0,
+  "typesRemapped": 0,
+  "complexityRemapped": 0,
+  "notes": [
+    "Fixed section counts are reasonable. 10 duplicate nodes were corrected by keeping the last occurrence.",
+    "Complexity values that were defaulted to moderate have been kept as is.",
+    "Dropped 21 edges due to missing targets: 18 of them implemented ITransientDependency which is an external dependency (skipped), while 3 implemented internal interfaces (IDocumentSequenceManager, ISupplyCoreERPDbSchemaMigrator, IAgentProvider) which have been recreated and their implements edges restored.",
+    "Verified cross-batch edge gaps using importMap from scan-result.json. Added missing imports edges between existing file nodes in the assembled graph."
+  ]
+}

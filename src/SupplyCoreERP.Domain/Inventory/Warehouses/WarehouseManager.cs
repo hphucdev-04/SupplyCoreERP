@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using SupplyCoreERP.Common.DocumentSequences;
 using SupplyCoreERP.Enums.Medicines;
@@ -120,7 +122,7 @@ public class WarehouseManager : DomainService
     #region Bin
     public async Task<Bin> CreateBinAsync(
         Guid warehouseId, Guid zoneId,
-        int x, int y, int w, int l, float rotation, int maxSKU)
+        int x, int y, int w, int l, float rotation, int maxSKU, int height)
     {
         Zone zone = await _zoneRepo.GetAsync(zoneId);
         if (zone.WarehouseId != warehouseId)
@@ -135,39 +137,64 @@ public class WarehouseManager : DomainService
             throw new BusinessException("SupplyCoreERP:InvalidBin", $"Mã vị trí '{code}' đã tồn tại trong kho này!");
         }
 
-        return new Bin(GuidGenerator.Create(), warehouseId, zoneId, code, x, y, w, l, rotation, maxSKU);
+        return new Bin(GuidGenerator.Create(), warehouseId, zoneId, code, x, y, w, l, rotation, maxSKU, height);
     }
 
     public async Task UpdateBinAsync(
         Bin bin, Guid zoneId,
-        int x, int y, int w, int l, float rotation, int maxSKU, bool isBlocked)
+        int x, int y, int w, int l, float rotation, int maxSKU, int height, bool isBlocked)
     {
         if (bin.ZoneId != zoneId)
         {
             Zone zone = await _zoneRepo.GetAsync(zoneId);
             if (zone.WarehouseId != bin.WarehouseId)
             {
-                throw new UserFriendlyException("Dá»¯ liá»‡u khÃ´ng há»£p lá»‡: Zone khÃ´ng thuá»™c Warehouse nÃ y!");
+                throw new UserFriendlyException("Dữ liệu không hợp lệ: Zone không thuộc Warehouse này!");
             }
         }
 
         if (maxSKU > 0)
         {
-            int usedSKU = await _balanceRepo.CountAsync(b => b.BinId == bin.Id && b.Quantity > 0);
+            int usedSKU = await _balanceRepo.CountAsync(b => b.BinBalances.Any(bb => bb.BinId == bin.Id && bb.Quantity > 0));
             if (maxSKU < usedSKU)
             {
-                throw new BusinessException("SupplyCoreERP:InvalidBin", $"Khôn th thể đặt giới hạn {maxSKU} SKU vì vị trí '{bin.Code}' đang chứa {usedSKU} loại hàng!");
+                throw new BusinessException("SupplyCoreERP:InvalidBin", $"Không thể đặt giới hạn {maxSKU} SKU vì vị trí '{bin.Code}' đang chứa {usedSKU} loại hàng!");
             }
         }
 
-        bin.UpdateInfo(zoneId, maxSKU);
+        if (height > 0)
+        {
+            var balancesQuery = await _balanceRepo.WithDetailsAsync(x => x.BinBalances, x => x.Product);
+            balancesQuery = balancesQuery
+                .Where(x => x.BinBalances.Any(bb => bb.BinId == bin.Id));
+
+            List<InventoryBalance> balancesInBin = await AsyncExecuter.ToListAsync(balancesQuery);
+            decimal currentVolume = 0;
+            foreach (var balance in balancesInBin)
+            {
+                var binBalance = balance.BinBalances.FirstOrDefault(bb => bb.BinId == bin.Id);
+                if (binBalance != null && binBalance.Quantity > 0)
+                {
+                    currentVolume += binBalance.Quantity * balance.Product.BaseUnitVolume;
+                }
+            }
+
+            decimal calculatedMaxVolume = (decimal)w * l * height;
+            decimal allowedVolume = calculatedMaxVolume * 0.8m;
+            if (allowedVolume < currentVolume)
+            {
+                throw new BusinessException("SupplyCoreERP:InvalidBin", $"Không thể đặt giới hạn chiều cao {height} cm (tương đương {calculatedMaxVolume:N2} cm³ tối đa, 80% là {allowedVolume:N2} cm³) vì vị trí '{bin.Code}' đang chứa hàng có tổng thể tích là {currentVolume:N2} cm³!");
+            }
+        }
+
+        bin.UpdateInfo(zoneId, maxSKU, height);
         bin.SetCoordinates(x, y, w, l, rotation);
         bin.ToggleBlock(isBlocked);
     }
 
     public async Task DeleteBinAsync(Guid binId)
     {
-        if (await _balanceRepo.AnyAsync(bal => bal.BinId == binId && bal.Quantity > 0))
+        if (await _balanceRepo.AnyAsync(bal => bal.BinBalances.Any(bb => bb.BinId == binId && bb.Quantity > 0)))
         {
             throw new BusinessException("SupplyCoreERP:InvalidBin", "Không thể xóa Vị trí đang chứa hàng tồn kho!");
         }

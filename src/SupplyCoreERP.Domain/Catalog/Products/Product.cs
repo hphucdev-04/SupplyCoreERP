@@ -22,6 +22,7 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
     public Guid BaseUnitId { get; protected set; }
     public virtual BaseUnit BaseUnit { get; protected set; }
     public ProductType ProductType { get; protected set; }
+    public decimal BaseUnitVolume { get; protected set; }
     public virtual ICollection<ProductUnit> Units { get; protected set; }
 
     /// <summary>
@@ -45,7 +46,8 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
         string code,
         string name,
         Guid baseUnitId,
-        ProductType productType)
+        ProductType productType,
+        decimal baseUnitVolume = 0)
         : base(id)
     {
         CategoryId = categoryId;
@@ -54,6 +56,7 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
         SetName(name);
         BaseUnitId = baseUnitId;
         ProductType = productType;
+        BaseUnitVolume = baseUnitVolume;
         Units = new List<ProductUnit>();
     }
 
@@ -70,7 +73,7 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
     public void SetCategory(Guid id) => CategoryId = id;
     public void SetManufacturer(Guid id) => ManufacturerId = id;
 
-    public void UpdateInfo(string name, Guid categoryId, Guid manufacturerId, Guid baseUnitId)
+    public void UpdateInfo(string name, Guid categoryId, Guid manufacturerId, Guid baseUnitId, decimal baseUnitVolume)
     {
         if (Units.Any(u => u.UnitId == baseUnitId))
         {
@@ -81,9 +84,10 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
         CategoryId = categoryId;
         ManufacturerId = manufacturerId;
         BaseUnitId = baseUnitId;
+        BaseUnitVolume = baseUnitVolume;
     }
 
-    public void AddUnit(Guid id, Guid unitId, int conversionFactor, int level)
+    public void AddUnit(Guid id, Guid unitId, int conversionFactor, int level, decimal volume = 0)
     {
         if (unitId == BaseUnitId)
         {
@@ -101,10 +105,10 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
         }
 
         int nextLevel = Units.Any() ? Units.Max(u => u.Level) + 1 : 1;
-        Units.Add(new ProductUnit(id, Id, unitId, conversionFactor, nextLevel));
+        Units.Add(new ProductUnit(id, Id, unitId, conversionFactor, nextLevel, volume));
     }
 
-    public void UpdateUnit(Guid unitId, int conversionFactor, int level)
+    public void UpdateUnit(Guid unitId, int conversionFactor, int level, decimal volume)
     {
         ProductUnit? unit = Units.FirstOrDefault(u => u.UnitId == unitId);
         if (unit == null)
@@ -112,7 +116,7 @@ public abstract class Product : FullAuditedAggregateRoot<Guid>
             throw new UserFriendlyException("Đơn vị không tồn tại.");
         }
 
-        unit.UpdateStats(conversionFactor, unit.Level);
+        unit.UpdateStats(conversionFactor, unit.Level, volume);
     }
 
     public void RemoveUnit(Guid unitId)

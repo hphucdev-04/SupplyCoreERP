@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { DynamicLayoutComponent } from '@abp/ng.core';
 import { LoaderBarComponent } from '@abp/ng.theme.shared';
 import { NotificationComponent } from './shared/components/notification-component/notification.component';
-import { AiChatComponent } from './shared/components/ai-chat.component/ai-chat.component'; 
+import { AgentChatComponent } from './shared/components/agent-chat.component/agent-chat.component'; 
 import { DrawerComponent } from './shared/components/drawer-component/drawer.component';
 
 @Component({
@@ -14,7 +14,7 @@ import { DrawerComponent } from './shared/components/drawer-component/drawer.com
     LoaderBarComponent, 
     DynamicLayoutComponent, 
     NotificationComponent, 
-    AiChatComponent,
+    AgentChatComponent,
     DrawerComponent
   ],
   template: `
@@ -35,7 +35,7 @@ import { DrawerComponent } from './shared/components/drawer-component/drawer.com
       [width]="'lg'" 
       [showFooter]="false" 
       (close)="isChatOpen = false">
-      <app-ai-chat *ngIf="isChatOpen"></app-ai-chat>
+      <app-agent-chat *ngIf="isChatOpen"></app-agent-chat>
     </app-drawer>
   `,
 })

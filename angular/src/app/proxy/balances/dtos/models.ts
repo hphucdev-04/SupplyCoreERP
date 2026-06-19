@@ -1,4 +1,4 @@
-import type { CreationAuditedEntityDto, FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
+import type { CreationAuditedEntityDto, EntityDto, FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { ReservationStatus } from '../../enums/balances/reservation-status.enum';
 
 export interface GetInventoryBalanceListDto extends PagedAndSortedResultRequestDto {
@@ -29,6 +29,8 @@ export interface InventoryBalanceDetailDto extends InventoryBalanceDto {
   manufacturingDate?: string;
   expiryDate?: string;
   supplierName?: string;
+  binBalances?: InventoryBinBalanceDto[];
+  reservations?: InventoryReservationDto[];
 }
 
 export interface InventoryBalanceDto extends FullAuditedEntityDto<string> {
@@ -46,6 +48,14 @@ export interface InventoryBalanceDto extends FullAuditedEntityDto<string> {
   availableQuantity?: number;
 }
 
+export interface InventoryBinBalanceDto extends EntityDto<string> {
+  binId?: string;
+  binCode?: string;
+  quantity?: number;
+  lockedQuantity?: number;
+  availableQuantity?: number;
+}
+
 export interface InventoryReservationDto extends CreationAuditedEntityDto<string> {
   referenceDocumentId?: string;
   referenceDocumentNumber?: string;
@@ -57,4 +67,8 @@ export interface InventoryReservationDto extends CreationAuditedEntityDto<string
   productBatchId?: string;
   reservedQuantity?: number;
   status?: ReservationStatus;
+  partnerId?: string;
+  partnerName?: string;
+  sourceDocumentId?: string;
+  sourceDocumentNumber?: string;
 }

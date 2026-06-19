@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { forkJoin, Subject } from 'rxjs';
 import { Confirmation, ConfirmationService } from '@abp/ng.theme.shared';
 import { MedicineService } from 'src/app/proxy/medicines';
@@ -144,6 +144,9 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
   loadData() {
     this.medicineService.get(this.id).subscribe(res => {
       this.medicine = res;
+      if (this.medicine && this.medicine.units) {
+        this.medicine.units.sort((a, b) => a.level - b.level);
+      }
       this.routesService.add([
         {
           path: `/catalog/medicines/details/${this.id}`,
@@ -235,6 +238,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
       unitId: [null, Validators.required],
       conversionFactor: [null, [Validators.required, Validators.min(2)]],
       level: [{ value: null, disabled: true }, [Validators.required, Validators.min(1)]],
+      volume: [0, [Validators.required, Validators.min(0)]],
     });
 
     //Price Form
@@ -276,7 +280,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
     const nextLevel = this.medicine?.units?.length
       ? Math.max(...this.medicine.units.map(u => u.level)) + 1
       : 1;
-    this.unitForm.reset({ conversionFactor: 10, level: nextLevel });
+    this.unitForm.reset({ conversionFactor: 10, level: nextLevel, volume: 0 });
     this.unitForm.get('unitId')?.enable();
     this.isUnitDrawerOpen = true;
   }
@@ -288,6 +292,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
       unitId: unit.unitId,
       conversionFactor: unit.conversionFactor,
       level: unit.level,
+      volume: unit.volume || 0,
     });
     this.unitForm.get('unitId')?.disable();
     this.isUnitDrawerOpen = true;

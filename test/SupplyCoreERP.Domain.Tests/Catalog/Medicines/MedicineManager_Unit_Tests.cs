@@ -114,7 +114,7 @@ public class MedicineManager_Unit_Tests
         Medicine medicine = await _medicineManager.CreateAsync(
             "Paracetamol 500mg", catId, manuId, unitId, dosageId,
             "SDK-001", UsageRoute.Oral, StorageCondition.Normal, false,
-            DateTime.Now, DateTime.Now.AddYears(5), "Initial Registration"
+            0.05m, DateTime.Now, DateTime.Now.AddYears(5), "Initial Registration"
         );
 
         // Assert
@@ -162,7 +162,7 @@ public class MedicineManager_Unit_Tests
             medicine,
             "Paracetamol Extra 500mg", catId, manuId, unitId, dosageId,
             "SDK-001", UsageRoute.Oral, StorageCondition.Cool, true,
-            null, null, "Updated validity and storage"
+            0.05m, null, null, "Updated validity and storage"
         );
 
         // Assert
@@ -202,7 +202,8 @@ public class MedicineManager_Unit_Tests
         await _medicineManager.UpdateAsync(
             medicine,
             "Paracetamol 500mg", catId, manuId, unitId, dosageId,
-            "SDK-002", UsageRoute.Oral, StorageCondition.Normal, false
+            "SDK-002", UsageRoute.Oral, StorageCondition.Normal, false,
+            0.05m
         );
 
         // Assert

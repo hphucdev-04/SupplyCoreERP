@@ -28,12 +28,20 @@ public class InventoryReservation : CreationAuditedEntity<Guid>
 
     // Trạng thái của giữ chỗ?
     public ReservationStatus Status { get; private set; }
+
+    // Thông tin snapshot đối tác & chứng từ gốc
+    public Guid? PartnerId { get; private set; }
+    public string? PartnerName { get; private set; }
+    public Guid? SourceDocumentId { get; private set; }
+    public string? SourceDocumentNumber { get; private set; }
+
     protected InventoryReservation() { }
 
     public InventoryReservation(
         Guid id, Guid refDocId, string refDocNumber,
         Guid warehouseId, Guid binId, Guid productId, Guid batchId,
-        decimal reservedQty) : base(id)
+        decimal reservedQty, Guid? partnerId = null, string? partnerName = null,
+        Guid? sourceDocId = null, string? sourceDocNumber = null) : base(id)
     {
         ReferenceDocumentId = refDocId;
         ReferenceDocumentNumber = refDocNumber;
@@ -43,6 +51,10 @@ public class InventoryReservation : CreationAuditedEntity<Guid>
         ProductBatchId = batchId;
         ReservedQuantity = reservedQty;
         Status = ReservationStatus.Active;
+        PartnerId = partnerId;
+        PartnerName = partnerName;
+        SourceDocumentId = sourceDocId;
+        SourceDocumentNumber = sourceDocNumber;
     }
     public void IncreaseQuantity(decimal amount)
     {

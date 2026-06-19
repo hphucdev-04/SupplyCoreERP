@@ -30,6 +30,8 @@ export interface CanvasZone extends ZoneDto {
 export interface CanvasBin extends BinDto {
   _isDirty?: boolean;
   _hasCollision?: boolean;
+  height?: number;
+  maxVolume?: number;
 }
 
 @Component({
@@ -272,13 +274,15 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
             eb.code = sb.code;
             eb.zoneId = sb.zoneId;
             eb.maxSKU = sb.maxSKU;
+            eb.maxVolume = sb.maxVolume;
+            eb.height = (sb as any).height;
             eb.isBlocked = sb.isBlocked;
             eb.rotation = sb.rotation;
             if (!eb._isDirty) {
               eb.positionX = sb.positionX;
               eb.positionY = sb.positionY;
-              eb.width = sb.width;
-              eb.length = sb.length;
+              eb.width = sb.width * 0.2; // Convert cm to px
+              eb.length = sb.length * 0.2; // Convert cm to px
               this.binDragPos.set(eb.id, {
                 x: eb.positionX * this.scale,
                 y: eb.positionY * this.scale,
@@ -286,7 +290,13 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
             }
             eb._isDirty = false;
           } else {
-            const nb: CanvasBin = { ...sb, _isDirty: false, _hasCollision: false };
+            const nb: CanvasBin = {
+              ...sb,
+              width: sb.width * 0.2, // Convert cm to px
+              length: sb.length * 0.2, // Convert cm to px
+              _isDirty: false,
+              _hasCollision: false
+            };
             this.bins.push(nb);
             this.binDragPos.set(nb.id, {
               x: nb.positionX * this.scale,
@@ -865,7 +875,12 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
         z._isDirty = false;
       }
       for (const b of this.bins.filter(b => b._isDirty)) {
-        await lastValueFrom(this.warehouseService.updateStorageBin(b.id, b as any));
+        const payload = {
+          ...b,
+          width: Math.round(b.width * 5),
+          length: Math.round(b.length * 5),
+        };
+        await lastValueFrom(this.warehouseService.updateStorageBin(b.id, payload as any));
         b._isDirty = false;
       }
       this.hasUnsavedChanges = false;
@@ -1032,6 +1047,14 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     if (this.activeZone) this.openBinDrawer();
   }
 
+  get calculatedVolume(): number {
+    if (!this.form) return 0;
+    const w = this.form.get('width')?.value || 0;
+    const l = this.form.get('length')?.value || 0;
+    const h = this.form.get('height')?.value || 0;
+    return Math.round(w * l * h);
+  }
+
   openBinDrawer(bin?: CanvasBin) {
     const defaultZoneId = this.activeZone?.id || this.zones[0]?.id || null;
     const tz = this.zones.find(z => z.id === (bin?.zoneId || defaultZoneId));
@@ -1045,10 +1068,11 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
       zoneId: [bin?.zoneId || defaultZoneId, Validators.required],
       positionX: [this.toM(bin?.positionX ?? dx), Validators.required],
       positionY: [this.toM(bin?.positionY ?? dy), Validators.required],
-      width: [this.toM(bin?.width ?? this.toPx(2)), [Validators.required, Validators.min(0.5)]],
-      length: [this.toM(bin?.length ?? this.toPx(2)), [Validators.required, Validators.min(0.5)]],
+      width: [bin ? Math.round(bin.width * 5) : 200, [Validators.required, Validators.min(10)]],
+      length: [bin ? Math.round(bin.length * 5) : 200, [Validators.required, Validators.min(10)]],
       rotation: [bin?.rotation ?? 0, [Validators.min(0), Validators.max(360)]],
       maxSKU: [bin?.maxSKU ?? 0, Validators.min(0)],
+      height: [bin?.height ?? 180, [Validators.required, Validators.min(0)]],
       isBlocked: [bin?.isBlocked ?? false],
     });
     this.form
@@ -1073,8 +1097,8 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
       if (!this.selectedBin || this.isSaving) return;
       this.selectedBin.positionX = this.toPx(val.positionX);
       this.selectedBin.positionY = this.toPx(val.positionY);
-      this.selectedBin.width = this.toPx(val.width);
-      this.selectedBin.length = this.toPx(val.length);
+      this.selectedBin.width = val.width * 0.2; // Convert cm to px
+      this.selectedBin.length = val.length * 0.2; // Convert cm to px
       this.selectedBin.rotation = parseFloat(val.rotation) || 0;
       this.checkAllCollisions();
       this.cdr.markForCheck();
@@ -1089,19 +1113,22 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
       ...v,
       positionX: this.toPx(v.positionX),
       positionY: this.toPx(v.positionY),
-      width: this.toPx(v.width),
-      length: this.toPx(v.length),
+      width: Math.round(v.width),
+      length: Math.round(v.length),
       rotation: parseFloat(v.rotation) || 0,
+      height: parseInt(v.height) || 0,
     };
     const tz = this.zones.find(z => z.id === p.zoneId);
     if (tz) {
+      const wPx = p.width * 0.2;
+      const lPx = p.length * 0.2;
       p.positionX = Math.max(
         tz.positionX,
-        Math.min(p.positionX, tz.positionX + tz.width - p.width),
+        Math.min(p.positionX, tz.positionX + tz.width - wPx),
       );
       p.positionY = Math.max(
         tz.positionY,
-        Math.min(p.positionY, tz.positionY + tz.length - p.length),
+        Math.min(p.positionY, tz.positionY + tz.length - lPx),
       );
     }
     (this.selectedBin?.id

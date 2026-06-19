@@ -1,0 +1,94 @@
+{
+  "nodes": [
+    {
+      "id": "service:src/SupplyCoreERP.DbMigrator/Dockerfile.local",
+      "type": "service",
+      "metadata": {
+        "name": "Dockerfile.local",
+        "path": "src/SupplyCoreERP.DbMigrator/Dockerfile.local",
+        "summary": "Dockerfile cục bộ để build container cho công cụ DbMigrator.",
+        "tags": ["containerization", "dockerfile", "db-migrator"],
+        "complexity": "simple",
+        "language": "dockerfile"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+      "type": "config",
+      "metadata": {
+        "name": "SupplyCoreERP.DbMigrator.csproj",
+        "path": "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+        "summary": "File dự án .NET C# cho DbMigrator, định nghĩa các gói tham chiếu NuGet và cấu hình ứng dụng.",
+        "tags": ["config", "csproj", "dotnet", "db-migrator"],
+        "complexity": "moderate",
+        "language": "csproj"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.DbMigrator/appsettings.Development.json",
+      "type": "config",
+      "metadata": {
+        "name": "appsettings.Development.json",
+        "path": "src/SupplyCoreERP.DbMigrator/appsettings.Development.json",
+        "summary": "Cấu hình môi trường Development cho DbMigrator, chứa chuỗi kết nối cơ sở dữ liệu ConnectionStrings và thông tin OpenIddict.",
+        "tags": ["config", "appsettings", "development", "db-migrator"],
+        "complexity": "simple",
+        "language": "json"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.DbMigrator/appsettings.Production.json",
+      "type": "config",
+      "metadata": {
+        "name": "appsettings.Production.json",
+        "path": "src/SupplyCoreERP.DbMigrator/appsettings.Production.json",
+        "summary": "Cấu hình môi trường Production cho DbMigrator, định nghĩa chuỗi kết nối và chứng chỉ OpenIddict trong môi trường production.",
+        "tags": ["config", "appsettings", "production", "db-migrator"],
+        "complexity": "simple",
+        "language": "json"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.DbMigrator/appsettings.json",
+      "type": "config",
+      "metadata": {
+        "name": "appsettings.json",
+        "path": "src/SupplyCoreERP.DbMigrator/appsettings.json",
+        "summary": "Cấu hình cơ sở mặc định cho ứng dụng DbMigrator, chỉ định ConnectionStrings mặc định và cấu hình OpenIddict cơ bản.",
+        "tags": ["config", "appsettings", "db-migrator"],
+        "complexity": "simple",
+        "language": "json"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "service:src/SupplyCoreERP.DbMigrator/Dockerfile.local",
+      "target": "config:src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+      "type": "deploys",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "config:src/SupplyCoreERP.DbMigrator/appsettings.Development.json",
+      "target": "config:src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:src/SupplyCoreERP.DbMigrator/appsettings.Production.json",
+      "target": "config:src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    },
+    {
+      "source": "config:src/SupplyCoreERP.DbMigrator/appsettings.json",
+      "target": "config:src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+      "type": "configures",
+      "direction": "forward",
+      "weight": 0.6
+    }
+  ]
+}

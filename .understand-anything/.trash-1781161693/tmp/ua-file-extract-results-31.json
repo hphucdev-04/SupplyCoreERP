@@ -1,0 +1,2681 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "angular/src/app/catalogs/medicines/medicines.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 492,
+      "nonEmptyLines": 470,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicines.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicines.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 339,
+      "nonEmptyLines": 306,
+      "classes": [
+        {
+          "name": "MedicinesComponent",
+          "startLine": 48,
+          "endLine": 339,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "loadLookups",
+            "loadSummary",
+            "onSearch",
+            "onFilterChange",
+            "viewDetail",
+            "createMedicine",
+            "editMedicine",
+            "deleteMedicine",
+            "buildForm",
+            "closeDrawer",
+            "save",
+            "exportToExcel",
+            "downloadBlob",
+            "openImport",
+            "onImportSuccess",
+            "approveMedicine",
+            "rejectMedicine",
+            "onToggleActive"
+          ],
+          "properties": [
+            "destroy$",
+            "data",
+            "isDrawerOpen",
+            "form",
+            "selectedMedicine",
+            "filterText",
+            "filterCategoryId",
+            "filterManufacturerId",
+            "filterStatus",
+            "categories",
+            "manufacturers",
+            "units",
+            "dosageForms",
+            "summary",
+            "usageRouteOptions",
+            "storageConditionOptions",
+            "medicineStatusOptions",
+            "MedicineStatus",
+            "isDetailModalOpen",
+            "detailId",
+            "isImportOpen",
+            "enumName",
+            "importFn",
+            "templateFn"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MedicinesComponent",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadLookups",
+          "lineNumber": 99
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadSummary",
+          "lineNumber": 100
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.buildForm",
+          "lineNumber": 101
+        },
+        {
+          "caller": "streamCreator",
+          "callee": "this.medicineService.getList",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list\r\n      .hookToQuery(streamCreator)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list\r\n      .hookToQuery(streamCreator)\r\n      .pipe",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list\r\n      .hookToQuery",
+          "lineNumber": 111
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "takeUntil",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadSummary",
+          "lineNumber": 116
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 122
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "forkJoin({\r\n      cats: this.categoryService.getList({ maxResultCount: 1000 }),\r\n      manus: this.manufacturerService.getList({ maxResultCount: 1000 }),\r\n      units: this.unitService.getList({ maxResultCount: 1000 }),\r\n      dosages: this.dosageFormService.getList({ maxResultCount: 1000 }),\r\n    })\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 127
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "forkJoin({\r\n      cats: this.categoryService.getList({ maxResultCount: 1000 }),\r\n      manus: this.manufacturerService.getList({ maxResultCount: 1000 }),\r\n      units: this.unitService.getList({ maxResultCount: 1000 }),\r\n      dosages: this.dosageFormService.getList({ maxResultCount: 1000 }),\r\n    })\r\n      .pipe",
+          "lineNumber": 127
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "forkJoin",
+          "lineNumber": 127
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.categoryService.getList",
+          "lineNumber": 128
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.manufacturerService.getList",
+          "lineNumber": 129
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.unitService.getList",
+          "lineNumber": 130
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.dosageFormService.getList",
+          "lineNumber": 131
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "takeUntil",
+          "lineNumber": 133
+        },
+        {
+          "caller": "loadSummary",
+          "callee": "this.medicineService\r\n      .getSummary()\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 143
+        },
+        {
+          "caller": "loadSummary",
+          "callee": "this.medicineService\r\n      .getSummary()\r\n      .pipe",
+          "lineNumber": 143
+        },
+        {
+          "caller": "loadSummary",
+          "callee": "this.medicineService\r\n      .getSummary",
+          "lineNumber": 143
+        },
+        {
+          "caller": "loadSummary",
+          "callee": "takeUntil",
+          "lineNumber": 145
+        },
+        {
+          "caller": "onSearch",
+          "callee": "this.list.get",
+          "lineNumber": 154
+        },
+        {
+          "caller": "onFilterChange",
+          "callee": "this.list.get",
+          "lineNumber": 158
+        },
+        {
+          "caller": "viewDetail",
+          "callee": "this.router.navigate",
+          "lineNumber": 162
+        },
+        {
+          "caller": "createMedicine",
+          "callee": "this.form.reset",
+          "lineNumber": 167
+        },
+        {
+          "caller": "createMedicine",
+          "callee": "this.form.get('baseUnitId')?.enable",
+          "lineNumber": 168
+        },
+        {
+          "caller": "createMedicine",
+          "callee": "this.form.get",
+          "lineNumber": 168
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "this.medicineService\r\n      .get(id)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 173
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "this.medicineService\r\n      .get(id)\r\n      .pipe",
+          "lineNumber": 173
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "this.medicineService\r\n      .get",
+          "lineNumber": 173
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "takeUntil",
+          "lineNumber": 175
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "res.registrationValidFrom.split",
+          "lineNumber": 183
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "res.registrationValidTo.split",
+          "lineNumber": 186
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "this.form.patchValue",
+          "lineNumber": 190
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "this.form.get('baseUnitId')?.disable",
+          "lineNumber": 192
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "this.form.get",
+          "lineNumber": 192
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "this.form.get('baseUnitId')?.enable",
+          "lineNumber": 194
+        },
+        {
+          "caller": "editMedicine",
+          "callee": "this.form.get",
+          "lineNumber": 194
+        },
+        {
+          "caller": "deleteMedicine",
+          "callee": "this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe",
+          "lineNumber": 201
+        },
+        {
+          "caller": "deleteMedicine",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 201
+        },
+        {
+          "caller": "deleteMedicine",
+          "callee": "this.medicineService\r\n          .delete(id)\r\n          .pipe(takeUntil(this.destroy$))\r\n          .subscribe",
+          "lineNumber": 203
+        },
+        {
+          "caller": "deleteMedicine",
+          "callee": "this.medicineService\r\n          .delete(id)\r\n          .pipe",
+          "lineNumber": 203
+        },
+        {
+          "caller": "deleteMedicine",
+          "callee": "this.medicineService\r\n          .delete",
+          "lineNumber": 203
+        },
+        {
+          "caller": "deleteMedicine",
+          "callee": "takeUntil",
+          "lineNumber": 205
+        },
+        {
+          "caller": "deleteMedicine",
+          "callee": "this.list.get",
+          "lineNumber": 207
+        },
+        {
+          "caller": "deleteMedicine",
+          "callee": "this.toaster.success",
+          "lineNumber": 208
+        },
+        {
+          "caller": "buildForm",
+          "callee": "this.fb.group",
+          "lineNumber": 216
+        },
+        {
+          "caller": "buildForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 217
+        },
+        {
+          "caller": "buildForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 222
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.reset",
+          "lineNumber": 235
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.get('baseUnitId')?.enable",
+          "lineNumber": 236
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.get",
+          "lineNumber": 236
+        },
+        {
+          "caller": "save",
+          "callee": "this.form.getRawValue",
+          "lineNumber": 241
+        },
+        {
+          "caller": "save",
+          "callee": "this.medicineService.update",
+          "lineNumber": 243
+        },
+        {
+          "caller": "save",
+          "callee": "this.medicineService.create",
+          "lineNumber": 244
+        },
+        {
+          "caller": "save",
+          "callee": "request.pipe(takeUntil(this.destroy$)).subscribe",
+          "lineNumber": 246
+        },
+        {
+          "caller": "save",
+          "callee": "request.pipe",
+          "lineNumber": 246
+        },
+        {
+          "caller": "save",
+          "callee": "takeUntil",
+          "lineNumber": 246
+        },
+        {
+          "caller": "save",
+          "callee": "this.closeDrawer",
+          "lineNumber": 247
+        },
+        {
+          "caller": "save",
+          "callee": "this.list.get",
+          "lineNumber": 248
+        },
+        {
+          "caller": "save",
+          "callee": "this.toaster.success",
+          "lineNumber": 249
+        },
+        {
+          "caller": "exportToExcel",
+          "callee": "this.medicineService\r\n      .getListAsExcelFile({\r\n        filter: this.filterText,\r\n        categoryId: this.filterCategoryId,\r\n        manufacturerId: this.filterManufacturerId,\r\n        status: this.filterStatus,\r\n        maxResultCount: 1000,\r\n      })\r\n      .subscribe",
+          "lineNumber": 258
+        },
+        {
+          "caller": "exportToExcel",
+          "callee": "this.medicineService\r\n      .getListAsExcelFile",
+          "lineNumber": 258
+        },
+        {
+          "caller": "exportToExcel",
+          "callee": "this.downloadBlob",
+          "lineNumber": 268
+        },
+        {
+          "caller": "exportToExcel",
+          "callee": "new Date().getTime",
+          "lineNumber": 268
+        },
+        {
+          "caller": "exportToExcel",
+          "callee": "this.toaster.success",
+          "lineNumber": 269
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "window.URL.createObjectURL",
+          "lineNumber": 275
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "document.createElement",
+          "lineNumber": 276
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "document.body.appendChild",
+          "lineNumber": 279
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "a.click",
+          "lineNumber": 280
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "document.body.removeChild",
+          "lineNumber": 281
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "window.URL.revokeObjectURL",
+          "lineNumber": 282
+        },
+        {
+          "caller": "onImportSuccess",
+          "callee": "this.list.get",
+          "lineNumber": 301
+        },
+        {
+          "caller": "approveMedicine",
+          "callee": "this.confirmation.warn('::AreYouSureToApprove', '::Approve').subscribe",
+          "lineNumber": 305
+        },
+        {
+          "caller": "approveMedicine",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 305
+        },
+        {
+          "caller": "approveMedicine",
+          "callee": "this.medicineService.approve(id).subscribe",
+          "lineNumber": 307
+        },
+        {
+          "caller": "approveMedicine",
+          "callee": "this.medicineService.approve",
+          "lineNumber": 307
+        },
+        {
+          "caller": "approveMedicine",
+          "callee": "this.list.get",
+          "lineNumber": 307
+        },
+        {
+          "caller": "approveMedicine",
+          "callee": "this.toaster.success",
+          "lineNumber": 308
+        },
+        {
+          "caller": "rejectMedicine",
+          "callee": "this.confirmation.warn('::AreYouSureToReject', '::Reject').subscribe",
+          "lineNumber": 314
+        },
+        {
+          "caller": "rejectMedicine",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 314
+        },
+        {
+          "caller": "rejectMedicine",
+          "callee": "this.medicineService.reject(id).subscribe",
+          "lineNumber": 316
+        },
+        {
+          "caller": "rejectMedicine",
+          "callee": "this.medicineService.reject",
+          "lineNumber": 316
+        },
+        {
+          "caller": "rejectMedicine",
+          "callee": "this.list.get",
+          "lineNumber": 316
+        },
+        {
+          "caller": "rejectMedicine",
+          "callee": "this.toaster.success",
+          "lineNumber": 317
+        },
+        {
+          "caller": "onToggleActive",
+          "callee": "event.stopPropagation",
+          "lineNumber": 323
+        },
+        {
+          "caller": "onToggleActive",
+          "callee": "this.confirmation\r\n      .warn(row.isActive ? '::AreYouSureToDeactivate' : '::AreYouSureToActivate', '::Confirm')\r\n      .subscribe",
+          "lineNumber": 324
+        },
+        {
+          "caller": "onToggleActive",
+          "callee": "this.confirmation\r\n      .warn",
+          "lineNumber": 324
+        },
+        {
+          "caller": "onToggleActive",
+          "callee": "this.medicineService.toggleActive(row.id).subscribe",
+          "lineNumber": 328
+        },
+        {
+          "caller": "onToggleActive",
+          "callee": "this.medicineService.toggleActive",
+          "lineNumber": 328
+        },
+        {
+          "caller": "onToggleActive",
+          "callee": "this.list.get",
+          "lineNumber": 328
+        },
+        {
+          "caller": "onToggleActive",
+          "callee": "this.toaster.success",
+          "lineNumber": 329
+        },
+        {
+          "caller": "onToggleActive",
+          "callee": "this.toaster.error",
+          "lineNumber": 334
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/catalogs/units/units.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 88,
+      "nonEmptyLines": 79,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/units/units.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/units/units.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 109,
+      "nonEmptyLines": 97,
+      "classes": [
+        {
+          "name": "UnitsComponent",
+          "startLine": 19,
+          "endLine": 109,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "onSearch",
+            "createUnit",
+            "editUnit",
+            "deleteUnit",
+            "buildForm",
+            "closeDrawer",
+            "save"
+          ],
+          "properties": [
+            "destroy$",
+            "unit",
+            "isDrawerOpen",
+            "form",
+            "selectedUnit",
+            "filterText"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UnitsComponent",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "unitStreamCreator",
+          "callee": "this.unitService.getList",
+          "lineNumber": 36
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(unitStreamCreator).subscribe",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.buildForm",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 46
+        },
+        {
+          "caller": "onSearch",
+          "callee": "this.list.get",
+          "lineNumber": 51
+        },
+        {
+          "caller": "createUnit",
+          "callee": "this.form.reset",
+          "lineNumber": 56
+        },
+        {
+          "caller": "editUnit",
+          "callee": "this.unitService.get(id)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 61
+        },
+        {
+          "caller": "editUnit",
+          "callee": "this.unitService.get(id)\r\n      .pipe",
+          "lineNumber": 61
+        },
+        {
+          "caller": "editUnit",
+          "callee": "this.unitService.get",
+          "lineNumber": 61
+        },
+        {
+          "caller": "editUnit",
+          "callee": "takeUntil",
+          "lineNumber": 62
+        },
+        {
+          "caller": "editUnit",
+          "callee": "this.form.patchValue",
+          "lineNumber": 65
+        },
+        {
+          "caller": "deleteUnit",
+          "callee": "this.confirmation\r\n      .warn('::AreYouSureToDelete', '::AreYouSure')\r\n      .subscribe",
+          "lineNumber": 71
+        },
+        {
+          "caller": "deleteUnit",
+          "callee": "this.confirmation\r\n      .warn",
+          "lineNumber": 71
+        },
+        {
+          "caller": "deleteUnit",
+          "callee": "this.unitService.delete(id).subscribe",
+          "lineNumber": 75
+        },
+        {
+          "caller": "deleteUnit",
+          "callee": "this.unitService.delete",
+          "lineNumber": 75
+        },
+        {
+          "caller": "deleteUnit",
+          "callee": "this.list.get",
+          "lineNumber": 76
+        },
+        {
+          "caller": "deleteUnit",
+          "callee": "this.toaster.success",
+          "lineNumber": 77
+        },
+        {
+          "caller": "buildForm",
+          "callee": "this.fb.group",
+          "lineNumber": 84
+        },
+        {
+          "caller": "buildForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 85
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.reset",
+          "lineNumber": 91
+        },
+        {
+          "caller": "save",
+          "callee": "this.unitService.update",
+          "lineNumber": 98
+        },
+        {
+          "caller": "save",
+          "callee": "this.unitService.create",
+          "lineNumber": 99
+        },
+        {
+          "caller": "save",
+          "callee": "request.subscribe",
+          "lineNumber": 101
+        },
+        {
+          "caller": "save",
+          "callee": "this.closeDrawer",
+          "lineNumber": 102
+        },
+        {
+          "caller": "save",
+          "callee": "this.list.get",
+          "lineNumber": 103
+        },
+        {
+          "caller": "save",
+          "callee": "this.toaster.success",
+          "lineNumber": 104
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/home/home.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/home/home.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balance-details/balance-details.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 177,
+      "nonEmptyLines": 156,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balance-details/balance-details.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balance-details/balance-details.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 48,
+      "classes": [
+        {
+          "name": "BalanceDetailsComponent",
+          "startLine": 16,
+          "endLine": 56,
+          "methods": [
+            "constructor",
+            "open",
+            "close",
+            "loadDetail",
+            "ngOnDestroy"
+          ],
+          "properties": [
+            "destroy$",
+            "isVisible",
+            "balanceId",
+            "detail",
+            "isLoading",
+            "activeTab"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BalanceDetailsComponent",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "open",
+          "callee": "this.loadDetail",
+          "lineNumber": 33
+        },
+        {
+          "caller": "loadDetail",
+          "callee": "this.balanceService.get(id)\r\n      .pipe(\r\n        takeUntil(this.destroy$),\r\n        finalize(() => this.isLoading = false)\r\n      )\r\n      .subscribe",
+          "lineNumber": 42
+        },
+        {
+          "caller": "loadDetail",
+          "callee": "this.balanceService.get(id)\r\n      .pipe",
+          "lineNumber": 42
+        },
+        {
+          "caller": "loadDetail",
+          "callee": "this.balanceService.get",
+          "lineNumber": 42
+        },
+        {
+          "caller": "loadDetail",
+          "callee": "takeUntil",
+          "lineNumber": 44
+        },
+        {
+          "caller": "loadDetail",
+          "callee": "finalize",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 54
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balances.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 172,
+      "nonEmptyLines": 159,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balances.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balances.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 90,
+      "nonEmptyLines": 72,
+      "classes": [
+        {
+          "name": "BalancesComponent",
+          "startLine": 24,
+          "endLine": 90,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "loadLookups",
+            "onSearch",
+            "onFilterChange",
+            "openDetail"
+          ],
+          "properties": [
+            "destroy$",
+            "detailModal",
+            "data",
+            "warehouses",
+            "medicines",
+            "filterText",
+            "filterWarehouseId",
+            "filterMedicineId",
+            "hideZeroBalance"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BalancesComponent",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadLookups",
+          "lineNumber": 48
+        },
+        {
+          "caller": "streamCreator",
+          "callee": "this.balanceService.getList",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(streamCreator)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(streamCreator)\r\n      .pipe",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "takeUntil",
+          "lineNumber": 60
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 65
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 66
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.warehouseService.getList({ maxResultCount: 1000, skipCount: 0 } as any)\r\n      .pipe(takeUntil(this.destroy$)).subscribe",
+          "lineNumber": 70
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.warehouseService.getList({ maxResultCount: 1000, skipCount: 0 } as any)\r\n      .pipe",
+          "lineNumber": 70
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.warehouseService.getList",
+          "lineNumber": 70
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "takeUntil",
+          "lineNumber": 71
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.medicineService.getList({ maxResultCount: 1000, skipCount: 0 } as any)\r\n      .pipe(takeUntil(this.destroy$)).subscribe",
+          "lineNumber": 73
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.medicineService.getList({ maxResultCount: 1000, skipCount: 0 } as any)\r\n      .pipe",
+          "lineNumber": 73
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.medicineService.getList",
+          "lineNumber": 73
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "takeUntil",
+          "lineNumber": 74
+        },
+        {
+          "caller": "onSearch",
+          "callee": "this.list.get",
+          "lineNumber": 79
+        },
+        {
+          "caller": "onFilterChange",
+          "callee": "this.list.get",
+          "lineNumber": 83
+        },
+        {
+          "caller": "openDetail",
+          "callee": "this.detailModal.open",
+          "lineNumber": 88
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batch-details/batch-details.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 207,
+      "nonEmptyLines": 199,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batch-details/batch-details.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 54,
+      "nonEmptyLines": 47,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batch-details/batch-details.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 98,
+      "nonEmptyLines": 83,
+      "classes": [
+        {
+          "name": "BatchDetailsComponent",
+          "startLine": 24,
+          "endLine": 98,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "loadBatch",
+            "loadBalances",
+            "loadTransactions",
+            "loadReservations",
+            "ngOnDestroy",
+            "totalQuantity",
+            "totalAvailable",
+            "totalLocked"
+          ],
+          "properties": [
+            "destroy$",
+            "batchId",
+            "batch",
+            "balances",
+            "transactions",
+            "reservations",
+            "activeTab",
+            "BatchQAStatus",
+            "InventoryTransactionType",
+            "ReservationStatus"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BatchDetailsComponent",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadBatch",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadBalances",
+          "lineNumber": 52
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadTransactions",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadReservations",
+          "lineNumber": 54
+        },
+        {
+          "caller": "loadBatch",
+          "callee": "this.batchService.get(this.batchId).subscribe",
+          "lineNumber": 59
+        },
+        {
+          "caller": "loadBatch",
+          "callee": "this.batchService.get",
+          "lineNumber": 59
+        },
+        {
+          "caller": "loadBalances",
+          "callee": "this.balanceService.getList({ productBatchId: this.batchId, maxResultCount: 1000 }).subscribe",
+          "lineNumber": 65
+        },
+        {
+          "caller": "loadBalances",
+          "callee": "this.balanceService.getList",
+          "lineNumber": 65
+        },
+        {
+          "caller": "loadTransactions",
+          "callee": "this.transactionService.getList({ productBatchId: this.batchId, maxResultCount: 1000, sorting: \"creationTime DESC\" }).subscribe",
+          "lineNumber": 71
+        },
+        {
+          "caller": "loadTransactions",
+          "callee": "this.transactionService.getList",
+          "lineNumber": 71
+        },
+        {
+          "caller": "loadReservations",
+          "callee": "this.balanceService.getReservationList({ productBatchId: this.batchId, maxResultCount: 1000 }).subscribe",
+          "lineNumber": 77
+        },
+        {
+          "caller": "loadReservations",
+          "callee": "this.balanceService.getReservationList",
+          "lineNumber": 77
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 83
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 84
+        },
+        {
+          "caller": "totalQuantity",
+          "callee": "this.balances.reduce",
+          "lineNumber": 88
+        },
+        {
+          "caller": "totalAvailable",
+          "callee": "this.balances.reduce",
+          "lineNumber": 92
+        },
+        {
+          "caller": "totalLocked",
+          "callee": "this.balances.reduce",
+          "lineNumber": 96
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batches.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 256,
+      "nonEmptyLines": 238,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batches.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 75,
+      "nonEmptyLines": 66,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batches.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 198,
+      "nonEmptyLines": 174,
+      "classes": [
+        {
+          "name": "BatchesComponent",
+          "startLine": 25,
+          "endLine": 198,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "loadMedicines",
+            "onSearch",
+            "onFilterChange",
+            "buildForm",
+            "openCreateDrawer",
+            "editBatch",
+            "closeDrawer",
+            "save",
+            "deleteBatch",
+            "approveBatch",
+            "rejectBatch"
+          ],
+          "properties": [
+            "destroy$",
+            "data",
+            "medicines",
+            "isDrawerOpen",
+            "form",
+            "selectedBatch",
+            "filterText",
+            "filterMedicineId",
+            "filterStatus",
+            "BatchQAStatus",
+            "batchStatusOptions",
+            "enumName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "BatchesComponent",
+          "line": 17,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ngOnInit",
+          "callee": "this.buildForm",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadMedicines",
+          "lineNumber": 57
+        },
+        {
+          "caller": "streamCreator",
+          "callee": "this.batchService.getList",
+          "lineNumber": 59
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(streamCreator)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(streamCreator)\r\n      .pipe",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery",
+          "lineNumber": 67
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "takeUntil",
+          "lineNumber": 68
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 75
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 76
+        },
+        {
+          "caller": "loadMedicines",
+          "callee": "this.medicineService.getList({ maxResultCount: 1000 } as any)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 80
+        },
+        {
+          "caller": "loadMedicines",
+          "callee": "this.medicineService.getList({ maxResultCount: 1000 } as any)\r\n      .pipe",
+          "lineNumber": 80
+        },
+        {
+          "caller": "loadMedicines",
+          "callee": "this.medicineService.getList",
+          "lineNumber": 80
+        },
+        {
+          "caller": "loadMedicines",
+          "callee": "takeUntil",
+          "lineNumber": 81
+        },
+        {
+          "caller": "onSearch",
+          "callee": "this.list.get",
+          "lineNumber": 92
+        },
+        {
+          "caller": "onFilterChange",
+          "callee": "this.list.get",
+          "lineNumber": 96
+        },
+        {
+          "caller": "buildForm",
+          "callee": "this.fb.group",
+          "lineNumber": 103
+        },
+        {
+          "caller": "buildForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 105
+        },
+        {
+          "caller": "openCreateDrawer",
+          "callee": "this.form.reset",
+          "lineNumber": 113
+        },
+        {
+          "caller": "editBatch",
+          "callee": "this.batchService.get(id)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 118
+        },
+        {
+          "caller": "editBatch",
+          "callee": "this.batchService.get(id)\r\n      .pipe",
+          "lineNumber": 118
+        },
+        {
+          "caller": "editBatch",
+          "callee": "this.batchService.get",
+          "lineNumber": 118
+        },
+        {
+          "caller": "editBatch",
+          "callee": "takeUntil",
+          "lineNumber": 119
+        },
+        {
+          "caller": "editBatch",
+          "callee": "this.form.patchValue",
+          "lineNumber": 122
+        },
+        {
+          "caller": "editBatch",
+          "callee": "new Date(res.manufacturingDate).toISOString().split",
+          "lineNumber": 125
+        },
+        {
+          "caller": "editBatch",
+          "callee": "new Date(res.manufacturingDate).toISOString",
+          "lineNumber": 125
+        },
+        {
+          "caller": "editBatch",
+          "callee": "new Date(res.expiryDate).toISOString().split",
+          "lineNumber": 126
+        },
+        {
+          "caller": "editBatch",
+          "callee": "new Date(res.expiryDate).toISOString",
+          "lineNumber": 126
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.reset",
+          "lineNumber": 134
+        },
+        {
+          "caller": "save",
+          "callee": "this.toaster.error",
+          "lineNumber": 144
+        },
+        {
+          "caller": "save",
+          "callee": "this.batchService.update",
+          "lineNumber": 149
+        },
+        {
+          "caller": "save",
+          "callee": "this.batchService.create",
+          "lineNumber": 150
+        },
+        {
+          "caller": "save",
+          "callee": "request.pipe(takeUntil(this.destroy$)).subscribe",
+          "lineNumber": 152
+        },
+        {
+          "caller": "save",
+          "callee": "request.pipe",
+          "lineNumber": 152
+        },
+        {
+          "caller": "save",
+          "callee": "takeUntil",
+          "lineNumber": 152
+        },
+        {
+          "caller": "save",
+          "callee": "this.closeDrawer",
+          "lineNumber": 153
+        },
+        {
+          "caller": "save",
+          "callee": "this.list.get",
+          "lineNumber": 154
+        },
+        {
+          "caller": "save",
+          "callee": "this.toaster.success",
+          "lineNumber": 155
+        },
+        {
+          "caller": "deleteBatch",
+          "callee": "this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure', {\r\n      messageLocalizationParams: [batchNumber]\r\n    }).subscribe",
+          "lineNumber": 160
+        },
+        {
+          "caller": "deleteBatch",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 160
+        },
+        {
+          "caller": "deleteBatch",
+          "callee": "this.batchService.delete(id)\r\n          .pipe(takeUntil(this.destroy$))\r\n          .subscribe",
+          "lineNumber": 164
+        },
+        {
+          "caller": "deleteBatch",
+          "callee": "this.batchService.delete(id)\r\n          .pipe",
+          "lineNumber": 164
+        },
+        {
+          "caller": "deleteBatch",
+          "callee": "this.batchService.delete",
+          "lineNumber": 164
+        },
+        {
+          "caller": "deleteBatch",
+          "callee": "takeUntil",
+          "lineNumber": 165
+        },
+        {
+          "caller": "deleteBatch",
+          "callee": "this.list.get",
+          "lineNumber": 167
+        },
+        {
+          "caller": "deleteBatch",
+          "callee": "this.toaster.success",
+          "lineNumber": 168
+        },
+        {
+          "caller": "approveBatch",
+          "callee": "this.confirmation.info('::AreYouSureToApprove', '::Approve').subscribe",
+          "lineNumber": 178
+        },
+        {
+          "caller": "approveBatch",
+          "callee": "this.confirmation.info",
+          "lineNumber": 178
+        },
+        {
+          "caller": "approveBatch",
+          "callee": "this.batchService.approveQA(id).subscribe",
+          "lineNumber": 180
+        },
+        {
+          "caller": "approveBatch",
+          "callee": "this.batchService.approveQA",
+          "lineNumber": 180
+        },
+        {
+          "caller": "approveBatch",
+          "callee": "this.list.get",
+          "lineNumber": 181
+        },
+        {
+          "caller": "approveBatch",
+          "callee": "this.toaster.success",
+          "lineNumber": 182
+        },
+        {
+          "caller": "rejectBatch",
+          "callee": "this.confirmation.error('::AreYouSureToReject', '::Reject').subscribe",
+          "lineNumber": 189
+        },
+        {
+          "caller": "rejectBatch",
+          "callee": "this.confirmation.error",
+          "lineNumber": 189
+        },
+        {
+          "caller": "rejectBatch",
+          "callee": "this.batchService.rejectQA(id).subscribe",
+          "lineNumber": 191
+        },
+        {
+          "caller": "rejectBatch",
+          "callee": "this.batchService.rejectQA",
+          "lineNumber": 191
+        },
+        {
+          "caller": "rejectBatch",
+          "callee": "this.list.get",
+          "lineNumber": 192
+        },
+        {
+          "caller": "rejectBatch",
+          "callee": "this.toaster.success",
+          "lineNumber": 193
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/inventories/inventories.routes.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 41,
+      "nonEmptyLines": 39,
+      "exports": [
+        {
+          "name": "INVENTORIES_ROUTES",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets-details/ticket-details.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 556,
+      "nonEmptyLines": 531,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets-details/ticket-details.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 143,
+      "nonEmptyLines": 119,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets-details/ticket-details.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 749,
+      "nonEmptyLines": 663,
+      "classes": [
+        {
+          "name": "TicketDetailsComponent",
+          "startLine": 51,
+          "endLine": 749,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "goBack",
+            "toggleLine",
+            "loadTicketData",
+            "loadPoLines",
+            "loadMasterData",
+            "loadBins",
+            "openLinkedOrder",
+            "applyBinFilter",
+            "filterBatchesByTicketType",
+            "applyBatchFilter",
+            "onMedicineChange",
+            "openQuickBatchForm",
+            "cancelQuickBatch",
+            "saveQuickBatch",
+            "onUnitChange",
+            "updateQuantityPreview",
+            "loadUnitsForProduct",
+            "buildForms",
+            "openAddDetailDrawer",
+            "openQuickCreateBatchDrawer",
+            "closeAddDetailDrawer",
+            "saveDetail",
+            "deleteDetail",
+            "deleteLine",
+            "openPoLineDrawer",
+            "closePoLineDrawer",
+            "addPoLineToTicket",
+            "loadSoLines",
+            "openSoLineDrawer",
+            "closeSoLineDrawer",
+            "addSoLineToTicket",
+            "sendToApprove",
+            "execute",
+            "applyFEFO",
+            "isIssueTicket",
+            "getLineAssignedBaseQty"
+          ],
+          "properties": [
+            "rejectReasonModal",
+            "destroy$",
+            "ROUTE_NAME",
+            "ticketId",
+            "ticket",
+            "loading",
+            "expandedLineIds",
+            "rejectReason",
+            "showRejectError",
+            "isRejecting",
+            "bins",
+            "filteredBins",
+            "hiddenBinCount",
+            "selectedMedicineCondition",
+            "medicines",
+            "allBatches",
+            "batches",
+            "hiddenBatchCount",
+            "isCreatingBatch",
+            "quickBatchForm",
+            "isSavingQuickBatch",
+            "isAddDetailDrawerOpen",
+            "detailForm",
+            "isSavingDetail",
+            "selectedTicketLine",
+            "units",
+            "selectedConversionFactor",
+            "selectedUnitName",
+            "baseUnitName",
+            "quantityPreview",
+            "remainingQty",
+            "registrations",
+            "isFefoDrawerOpen",
+            "fefoForm",
+            "isRunningFefo",
+            "fefoUnits",
+            "fefoBaseQtyPreview",
+            "fefoBaseUnitName",
+            "fefoConversionFactor",
+            "poLines",
+            "isPoLineDrawerOpen",
+            "soLines",
+            "isSoLineDrawerOpen",
+            "lineBatches",
+            "TicketType",
+            "ApprovalStatus",
+            "BatchQAStatus",
+            "StorageCondition",
+            "enumName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TicketDetailsComponent",
+          "line": 44,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ngOnInit",
+          "callee": "this.buildForms",
+          "lineNumber": 138
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadTicketData",
+          "lineNumber": 139
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadMasterData",
+          "lineNumber": 140
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.goBack",
+          "lineNumber": 142
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.routesService.remove",
+          "lineNumber": 147
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 148
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 149
+        },
+        {
+          "caller": "goBack",
+          "callee": "this.router.navigate",
+          "lineNumber": 153
+        },
+        {
+          "caller": "toggleLine",
+          "callee": "this.expandedLineIds.has",
+          "lineNumber": 158
+        },
+        {
+          "caller": "toggleLine",
+          "callee": "this.expandedLineIds.delete",
+          "lineNumber": 159
+        },
+        {
+          "caller": "toggleLine",
+          "callee": "this.expandedLineIds.add",
+          "lineNumber": 161
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.ticketService\r\n      .get(this.ticketId)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 168
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.ticketService\r\n      .get(this.ticketId)\r\n      .pipe",
+          "lineNumber": 168
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.ticketService\r\n      .get",
+          "lineNumber": 168
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "takeUntil",
+          "lineNumber": 170
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.loadBins",
+          "lineNumber": 175
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.loadPoLines",
+          "lineNumber": 178
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.loadSoLines",
+          "lineNumber": 180
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "Array.from",
+          "lineNumber": 185
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "res.lines.map",
+          "lineNumber": 185
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "productIds.forEach",
+          "lineNumber": 186
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.batchService\r\n                .getList({ productId: pid, maxResultCount: 100 } as any)\r\n                .subscribe",
+          "lineNumber": 187
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.batchService\r\n                .getList",
+          "lineNumber": 187
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.filterBatchesByTicketType",
+          "lineNumber": 190
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.routesService.add",
+          "lineNumber": 195
+        },
+        {
+          "caller": "loadTicketData",
+          "callee": "this.goBack",
+          "lineNumber": 205
+        },
+        {
+          "caller": "loadPoLines",
+          "callee": "this.ticketService\r\n      .getLinesFromPurchaseOrder(poId)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 210
+        },
+        {
+          "caller": "loadPoLines",
+          "callee": "this.ticketService\r\n      .getLinesFromPurchaseOrder(poId)\r\n      .pipe",
+          "lineNumber": 210
+        },
+        {
+          "caller": "loadPoLines",
+          "callee": "this.ticketService\r\n      .getLinesFromPurchaseOrder",
+          "lineNumber": 210
+        },
+        {
+          "caller": "loadPoLines",
+          "callee": "takeUntil",
+          "lineNumber": 212
+        },
+        {
+          "caller": "loadPoLines",
+          "callee": "res.map",
+          "lineNumber": 214
+        },
+        {
+          "caller": "loadMasterData",
+          "callee": "this.medicineService\r\n      .getList({ maxResultCount: 1000, skipCount: 0 } as any)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 222
+        },
+        {
+          "caller": "loadMasterData",
+          "callee": "this.medicineService\r\n      .getList({ maxResultCount: 1000, skipCount: 0 } as any)\r\n      .pipe",
+          "lineNumber": 222
+        },
+        {
+          "caller": "loadMasterData",
+          "callee": "this.medicineService\r\n      .getList",
+          "lineNumber": 222
+        },
+        {
+          "caller": "loadMasterData",
+          "callee": "takeUntil",
+          "lineNumber": 224
+        },
+        {
+          "caller": "loadBins",
+          "callee": "this.warehouseService\r\n      .getStorageBins(warehouseId)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 229
+        },
+        {
+          "caller": "loadBins",
+          "callee": "this.warehouseService\r\n      .getStorageBins(warehouseId)\r\n      .pipe",
+          "lineNumber": 229
+        },
+        {
+          "caller": "loadBins",
+          "callee": "this.warehouseService\r\n      .getStorageBins",
+          "lineNumber": 229
+        },
+        {
+          "caller": "loadBins",
+          "callee": "takeUntil",
+          "lineNumber": 231
+        },
+        {
+          "caller": "loadBins",
+          "callee": "res.filter",
+          "lineNumber": 233
+        },
+        {
+          "caller": "loadBins",
+          "callee": "this.applyBinFilter",
+          "lineNumber": 234
+        },
+        {
+          "caller": "openLinkedOrder",
+          "callee": "this.router.navigate",
+          "lineNumber": 244
+        },
+        {
+          "caller": "openLinkedOrder",
+          "callee": "this.router.navigate",
+          "lineNumber": 249
+        },
+        {
+          "caller": "applyBinFilter",
+          "callee": "this.bins.filter",
+          "lineNumber": 260
+        },
+        {
+          "caller": "applyBinFilter",
+          "callee": "this.detailForm?.get",
+          "lineNumber": 264
+        },
+        {
+          "caller": "applyBinFilter",
+          "callee": "this.filteredBins.find",
+          "lineNumber": 265
+        },
+        {
+          "caller": "applyBinFilter",
+          "callee": "this.detailForm?.patchValue",
+          "lineNumber": 266
+        },
+        {
+          "caller": "filterBatchesByTicketType",
+          "callee": "this.isIssueTicket",
+          "lineNumber": 272
+        },
+        {
+          "caller": "filterBatchesByTicketType",
+          "callee": "all.filter",
+          "lineNumber": 273
+        },
+        {
+          "caller": "filterBatchesByTicketType",
+          "callee": "all.filter",
+          "lineNumber": 277
+        },
+        {
+          "caller": "applyBatchFilter",
+          "callee": "this.filterBatchesByTicketType",
+          "lineNumber": 283
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.detailForm.patchValue",
+          "lineNumber": 288
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.quickBatchForm?.reset",
+          "lineNumber": 298
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.applyBinFilter",
+          "lineNumber": 301
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.medicines.find",
+          "lineNumber": 305
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.applyBinFilter",
+          "lineNumber": 306
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.medicineService\r\n      .getRegistrations(medicineId)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 309
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.medicineService\r\n      .getRegistrations(medicineId)\r\n      .pipe",
+          "lineNumber": 309
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.medicineService\r\n      .getRegistrations",
+          "lineNumber": 309
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "takeUntil",
+          "lineNumber": 311
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "res.filter",
+          "lineNumber": 313
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.batchService\r\n      .getList({ productId: medicineId, maxResultCount: 1000, skipCount: 0 } as any)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 316
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.batchService\r\n      .getList({ productId: medicineId, maxResultCount: 1000, skipCount: 0 } as any)\r\n      .pipe",
+          "lineNumber": 316
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.batchService\r\n      .getList",
+          "lineNumber": 316
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "takeUntil",
+          "lineNumber": 318
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.applyBatchFilter",
+          "lineNumber": 319
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.loadUnitsForProduct",
+          "lineNumber": 321
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.detailForm.patchValue",
+          "lineNumber": 327
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "units.find",
+          "lineNumber": 331
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "units.find",
+          "lineNumber": 336
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.detailForm.patchValue",
+          "lineNumber": 338
+        },
+        {
+          "caller": "onMedicineChange",
+          "callee": "this.updateQuantityPreview",
+          "lineNumber": 343
+        },
+        {
+          "caller": "openQuickBatchForm",
+          "callee": "this.fb.group",
+          "lineNumber": 348
+        },
+        {
+          "caller": "openQuickBatchForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 349
+        },
+        {
+          "caller": "openQuickBatchForm",
+          "callee": "this.quickBatchForm.patchValue",
+          "lineNumber": 357
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "this.toaster.error",
+          "lineNumber": 375
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "this.detailForm.get",
+          "lineNumber": 378
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "this.batchService\r\n      .create({\r\n        productId,\r\n        ...this.quickBatchForm.value,\r\n      })\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 382
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "this.batchService\r\n      .create({\r\n        productId,\r\n        ...this.quickBatchForm.value,\r\n      })\r\n      .pipe",
+          "lineNumber": 382
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "this.batchService\r\n      .create",
+          "lineNumber": 382
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "takeUntil",
+          "lineNumber": 387
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "this.applyBatchFilter",
+          "lineNumber": 393
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "this.detailForm.patchValue",
+          "lineNumber": 394
+        },
+        {
+          "caller": "saveQuickBatch",
+          "callee": "this.toaster.success",
+          "lineNumber": 395
+        },
+        {
+          "caller": "onUnitChange",
+          "callee": "this.units.find",
+          "lineNumber": 404
+        },
+        {
+          "caller": "onUnitChange",
+          "callee": "this.detailForm.patchValue",
+          "lineNumber": 408
+        },
+        {
+          "caller": "onUnitChange",
+          "callee": "this.updateQuantityPreview",
+          "lineNumber": 410
+        },
+        {
+          "caller": "updateQuantityPreview",
+          "callee": "this.detailForm.get",
+          "lineNumber": 414
+        },
+        {
+          "caller": "updateQuantityPreview",
+          "callee": "this.detailForm.get",
+          "lineNumber": 415
+        },
+        {
+          "caller": "updateQuantityPreview",
+          "callee": "UnitConversionHelper.convertToBaseQuantity",
+          "lineNumber": 416
+        },
+        {
+          "caller": "loadUnitsForProduct",
+          "callee": "this.medicineService\r\n      .get(medicineId)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 430
+        },
+        {
+          "caller": "loadUnitsForProduct",
+          "callee": "this.medicineService\r\n      .get(medicineId)\r\n      .pipe",
+          "lineNumber": 430
+        },
+        {
+          "caller": "loadUnitsForProduct",
+          "callee": "this.medicineService\r\n      .get",
+          "lineNumber": 430
+        },
+        {
+          "caller": "loadUnitsForProduct",
+          "callee": "takeUntil",
+          "lineNumber": 432
+        },
+        {
+          "caller": "loadUnitsForProduct",
+          "callee": "[...(detail.units || [])].sort",
+          "lineNumber": 440
+        },
+        {
+          "caller": "loadUnitsForProduct",
+          "callee": "sorted.map",
+          "lineNumber": 442
+        },
+        {
+          "caller": "loadUnitsForProduct",
+          "callee": "callback",
+          "lineNumber": 451
+        },
+        {
+          "caller": "buildForms",
+          "callee": "this.fb.group",
+          "lineNumber": 456
+        },
+        {
+          "caller": "buildForms",
+          "callee": "Validators.min",
+          "lineNumber": 461
+        },
+        {
+          "caller": "buildForms",
+          "callee": "Validators.min",
+          "lineNumber": 462
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "(line.details || []).reduce",
+          "lineNumber": 470
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "UnitConversionHelper.convertToBaseQuantity",
+          "lineNumber": 473
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "UnitConversionHelper.convertToBaseQuantity",
+          "lineNumber": 480
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "Math.max",
+          "lineNumber": 485
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "UnitConversionHelper.convertFromBaseQuantity",
+          "lineNumber": 486
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "this.detailForm.reset",
+          "lineNumber": 492
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "this.onMedicineChange",
+          "lineNumber": 500
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "setTimeout",
+          "lineNumber": 503
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "this.detailForm.patchValue",
+          "lineNumber": 504
+        },
+        {
+          "caller": "openAddDetailDrawer",
+          "callee": "this.updateQuantityPreview",
+          "lineNumber": 507
+        },
+        {
+          "caller": "openQuickCreateBatchDrawer",
+          "callee": "this.openAddDetailDrawer",
+          "lineNumber": 513
+        },
+        {
+          "caller": "openQuickCreateBatchDrawer",
+          "callee": "setTimeout",
+          "lineNumber": 515
+        },
+        {
+          "caller": "openQuickCreateBatchDrawer",
+          "callee": "this.openQuickBatchForm",
+          "lineNumber": 516
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "this.detailForm.get",
+          "lineNumber": 529
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "this.toaster.error",
+          "lineNumber": 531
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "this.detailForm.getRawValue",
+          "lineNumber": 538
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "this.ticketService\r\n      .addDetail(this.selectedTicketLine.id, payload)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 540
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "this.ticketService\r\n      .addDetail(this.selectedTicketLine.id, payload)\r\n      .pipe",
+          "lineNumber": 540
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "this.ticketService\r\n      .addDetail",
+          "lineNumber": 540
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "takeUntil",
+          "lineNumber": 542
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "this.closeAddDetailDrawer",
+          "lineNumber": 546
+        },
+        {
+          "caller": "saveDetail",
+          "callee": "this.loadTicketData",
+          "lineNumber": 547
+        },
+        {
+          "caller": "deleteDetail",
+          "callee": "this.confirmation.warn('::AreYouSureToDeleteDetail', '::AreYouSure').subscribe",
+          "lineNumber": 556
+        },
+        {
+          "caller": "deleteDetail",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 556
+        },
+        {
+          "caller": "deleteDetail",
+          "callee": "this.ticketService\r\n          .deleteDetail(detailId)\r\n          .pipe(takeUntil(this.destroy$))\r\n          .subscribe",
+          "lineNumber": 559
+        },
+        {
+          "caller": "deleteDetail",
+          "callee": "this.ticketService\r\n          .deleteDetail(detailId)\r\n          .pipe",
+          "lineNumber": 559
+        },
+        {
+          "caller": "deleteDetail",
+          "callee": "this.ticketService\r\n          .deleteDetail",
+          "lineNumber": 559
+        },
+        {
+          "caller": "deleteDetail",
+          "callee": "takeUntil",
+          "lineNumber": 561
+        },
+        {
+          "caller": "deleteDetail",
+          "callee": "this.loadTicketData",
+          "lineNumber": 563
+        },
+        {
+          "caller": "deleteLine",
+          "callee": "this.confirmation.warn('::AreYouSureToDeleteLine', '::AreYouSure').subscribe",
+          "lineNumber": 570
+        },
+        {
+          "caller": "deleteLine",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 570
+        },
+        {
+          "caller": "deleteLine",
+          "callee": "this.ticketService\r\n          .deleteLine(lineId)\r\n          .pipe(takeUntil(this.destroy$))\r\n          .subscribe",
+          "lineNumber": 573
+        },
+        {
+          "caller": "deleteLine",
+          "callee": "this.ticketService\r\n          .deleteLine(lineId)\r\n          .pipe",
+          "lineNumber": 573
+        },
+        {
+          "caller": "deleteLine",
+          "callee": "this.ticketService\r\n          .deleteLine",
+          "lineNumber": 573
+        },
+        {
+          "caller": "deleteLine",
+          "callee": "takeUntil",
+          "lineNumber": 575
+        },
+        {
+          "caller": "deleteLine",
+          "callee": "this.loadTicketData",
+          "lineNumber": 577
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "this.toaster.error",
+          "lineNumber": 594
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "this.toaster.error",
+          "lineNumber": 598
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "this.ticketService\r\n      .addLineFromPurchaseOrder(this.ticketId, poLine.id, poLine.importQuantity)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 603
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "this.ticketService\r\n      .addLineFromPurchaseOrder(this.ticketId, poLine.id, poLine.importQuantity)\r\n      .pipe",
+          "lineNumber": 603
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "this.ticketService\r\n      .addLineFromPurchaseOrder",
+          "lineNumber": 603
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "takeUntil",
+          "lineNumber": 605
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "this.loadTicketData",
+          "lineNumber": 607
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "this.toaster.success",
+          "lineNumber": 608
+        },
+        {
+          "caller": "addPoLineToTicket",
+          "callee": "this.closePoLineDrawer",
+          "lineNumber": 612
+        },
+        {
+          "caller": "loadSoLines",
+          "callee": "this.ticketService\r\n      .getLinesFromSalesOrder(soId)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 618
+        },
+        {
+          "caller": "loadSoLines",
+          "callee": "this.ticketService\r\n      .getLinesFromSalesOrder(soId)\r\n      .pipe",
+          "lineNumber": 618
+        },
+        {
+          "caller": "loadSoLines",
+          "callee": "this.ticketService\r\n      .getLinesFromSalesOrder",
+          "lineNumber": 618
+        },
+        {
+          "caller": "loadSoLines",
+          "callee": "takeUntil",
+          "lineNumber": 620
+        },
+        {
+          "caller": "loadSoLines",
+          "callee": "res.map",
+          "lineNumber": 622
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "this.toaster.error",
+          "lineNumber": 639
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "this.toaster.error",
+          "lineNumber": 643
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "this.ticketService\r\n      .addLineFromSalesOrder(this.ticketId, soLine.id, soLine.exportQuantity)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 647
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "this.ticketService\r\n      .addLineFromSalesOrder(this.ticketId, soLine.id, soLine.exportQuantity)\r\n      .pipe",
+          "lineNumber": 647
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "this.ticketService\r\n      .addLineFromSalesOrder",
+          "lineNumber": 647
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "takeUntil",
+          "lineNumber": 649
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "this.loadTicketData",
+          "lineNumber": 651
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "this.toaster.success",
+          "lineNumber": 652
+        },
+        {
+          "caller": "addSoLineToTicket",
+          "callee": "this.closeSoLineDrawer",
+          "lineNumber": 653
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "this.confirmation.error",
+          "lineNumber": 660
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "(line.details || []).reduce",
+          "lineNumber": 666
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "UnitConversionHelper.convertToBaseQuantity",
+          "lineNumber": 669
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "UnitConversionHelper.convertToBaseQuantity",
+          "lineNumber": 676
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "Math.abs",
+          "lineNumber": 685
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "this.toaster.error",
+          "lineNumber": 686
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "this.confirmation.info('::SendToApproveConfirmation', '::Confirm').subscribe",
+          "lineNumber": 693
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "this.confirmation.info",
+          "lineNumber": 693
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "this.ticketService\r\n        .sendToApprove(this.ticketId)\r\n        .pipe(takeUntil(this.destroy$))\r\n        .subscribe",
+          "lineNumber": 695
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "this.ticketService\r\n        .sendToApprove(this.ticketId)\r\n        .pipe",
+          "lineNumber": 695
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "this.ticketService\r\n        .sendToApprove",
+          "lineNumber": 695
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "takeUntil",
+          "lineNumber": 697
+        },
+        {
+          "caller": "sendToApprove",
+          "callee": "this.loadTicketData",
+          "lineNumber": 699
+        },
+        {
+          "caller": "execute",
+          "callee": "this.confirmation.success('::ExecuteConfirmation', '::Confirm').subscribe",
+          "lineNumber": 705
+        },
+        {
+          "caller": "execute",
+          "callee": "this.confirmation.success",
+          "lineNumber": 705
+        },
+        {
+          "caller": "execute",
+          "callee": "this.ticketService\r\n        .execute(this.ticketId)\r\n        .pipe(takeUntil(this.destroy$))\r\n        .subscribe",
+          "lineNumber": 707
+        },
+        {
+          "caller": "execute",
+          "callee": "this.ticketService\r\n        .execute(this.ticketId)\r\n        .pipe",
+          "lineNumber": 707
+        },
+        {
+          "caller": "execute",
+          "callee": "this.ticketService\r\n        .execute",
+          "lineNumber": 707
+        },
+        {
+          "caller": "execute",
+          "callee": "takeUntil",
+          "lineNumber": 709
+        },
+        {
+          "caller": "execute",
+          "callee": "this.loadTicketData",
+          "lineNumber": 711
+        },
+        {
+          "caller": "applyFEFO",
+          "callee": "this.confirmation.warn('::ApplyFEFOConfirmation', '::AreYouSure').subscribe",
+          "lineNumber": 717
+        },
+        {
+          "caller": "applyFEFO",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 717
+        },
+        {
+          "caller": "applyFEFO",
+          "callee": "this.ticketService\r\n        .applyFEFO(this.ticketId)\r\n        .pipe(takeUntil(this.destroy$))\r\n        .subscribe",
+          "lineNumber": 719
+        },
+        {
+          "caller": "applyFEFO",
+          "callee": "this.ticketService\r\n        .applyFEFO(this.ticketId)\r\n        .pipe",
+          "lineNumber": 719
+        },
+        {
+          "caller": "applyFEFO",
+          "callee": "this.ticketService\r\n        .applyFEFO",
+          "lineNumber": 719
+        },
+        {
+          "caller": "applyFEFO",
+          "callee": "takeUntil",
+          "lineNumber": 721
+        },
+        {
+          "caller": "applyFEFO",
+          "callee": "this.toaster.success",
+          "lineNumber": 723
+        },
+        {
+          "caller": "applyFEFO",
+          "callee": "this.loadTicketData",
+          "lineNumber": 724
+        },
+        {
+          "caller": "getLineAssignedBaseQty",
+          "callee": "(line.details || []).reduce",
+          "lineNumber": 738
+        },
+        {
+          "caller": "getLineAssignedBaseQty",
+          "callee": "UnitConversionHelper.convertToBaseQuantity",
+          "lineNumber": 741
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 257,
+      "nonEmptyLines": 242,
+      "metrics": {}
+    }
+  ]
+}

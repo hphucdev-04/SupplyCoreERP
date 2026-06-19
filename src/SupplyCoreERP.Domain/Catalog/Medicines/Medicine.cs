@@ -44,8 +44,9 @@ public class Medicine : Product
         string initialRegNumber,
         UsageRoute usageRoute,
         StorageCondition storageCondition,
-        bool isPrescriptionDrug)
-        : base(id, categoryId, manufacturerId, code, name, baseUnitId, ProductType.Medicine)
+        bool isPrescriptionDrug,
+        decimal baseUnitVolume = 0)
+        : base(id, categoryId, manufacturerId, code, name, baseUnitId, ProductType.Medicine, baseUnitVolume)
     {
         IsActive = true;
         Status = MedicineStatus.Pending;

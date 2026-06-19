@@ -58,6 +58,7 @@ public class MedicineManager : DomainService, IMedicineManager
         UsageRoute usageRoute,
         StorageCondition storageCondition,
         bool isPrescriptionDrug,
+        decimal baseUnitVolume = 0,
         DateTime? regValidFrom = null,
         DateTime? regValidTo = null,
         string? regNote = null,
@@ -79,7 +80,8 @@ public class MedicineManager : DomainService, IMedicineManager
             regNumber,
             usageRoute,
             storageCondition,
-            isPrescriptionDrug
+            isPrescriptionDrug,
+            baseUnitVolume
         );
 
         MedicineRegistration? firstReg = medicine.GetCurrentRegistration();
@@ -108,6 +110,7 @@ public class MedicineManager : DomainService, IMedicineManager
         UsageRoute usageRoute,
         StorageCondition storageCondition,
         bool isPrescriptionDrug,
+        decimal baseUnitVolume,
         DateTime? regValidFrom = null,
         DateTime? regValidTo = null,
         string? regNote = null)
@@ -120,7 +123,7 @@ public class MedicineManager : DomainService, IMedicineManager
         // Kích hoạt kiểm tra BaseUnit qua ProductManager
         await _productManager.ValidateBaseUnitChangeAsync(medicine, baseUnitId);
 
-        medicine.UpdateInfo(name, categoryId, manufacturerId, baseUnitId);
+        medicine.UpdateInfo(name, categoryId, manufacturerId, baseUnitId, baseUnitVolume);
 
         // Kiểm tra nếu số đăng ký thay đổi thì thêm bản ghi mới
         MedicineRegistration? currentReg = medicine.GetCurrentRegistration();
@@ -162,18 +165,18 @@ public class MedicineManager : DomainService, IMedicineManager
     #endregion
 
     #region Unit
-    public virtual async Task AddUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level)
+    public virtual async Task AddUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level, decimal volume = 0)
     {
         Check.NotNull(medicine, nameof(medicine));
         await _productManager.ValidateUnitChangeAsync(medicine);
-        medicine.AddUnit(GuidGenerator.Create(), unitId, conversionFactor, level);
+        medicine.AddUnit(GuidGenerator.Create(), unitId, conversionFactor, level, volume);
     }
 
-    public virtual async Task UpdateUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level)
+    public virtual async Task UpdateUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level, decimal volume = 0)
     {
         Check.NotNull(medicine, nameof(medicine));
         await _productManager.ValidateUnitChangeAsync(medicine);
-        medicine.UpdateUnit(unitId, conversionFactor, level);
+        medicine.UpdateUnit(unitId, conversionFactor, level, volume);
     }
 
     public virtual async Task RemoveUnitAsync(Medicine medicine, Guid unitId)

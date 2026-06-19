@@ -1,0 +1,1294 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/CreateUpdateActiveIngredientDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "CreateUpdateActiveIngredientDto",
+          "startLine": 8,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Name",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUpdateActiveIngredientDto",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/GetActiveIngredientListDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 9,
+      "classes": [
+        {
+          "name": "GetActiveIngredientListDto",
+          "startLine": 8,
+          "endLine": 11,
+          "methods": [],
+          "properties": [
+            "Filter"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Filter",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "GetActiveIngredientListDto",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/IActiveIngredientAppService.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 12,
+      "classes": [
+        {
+          "name": "IActiveIngredientAppService",
+          "startLine": 7,
+          "endLine": 14,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IActiveIngredientAppService",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentContext.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 6,
+      "classes": [
+        {
+          "name": "AgentContext",
+          "startLine": 5,
+          "endLine": 8,
+          "methods": [],
+          "properties": [
+            "Steps"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Steps",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "AgentContext",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentElicitationInputDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 8,
+      "classes": [
+        {
+          "name": "AgentElicitationInputDto",
+          "startLine": 6,
+          "endLine": 11,
+          "methods": [],
+          "properties": [
+            "SessionId",
+            "FormValues"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SessionId",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "FormValues",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "AgentElicitationInputDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentHistoryDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "AgentHistoryDto",
+          "startLine": 5,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "Steps",
+            "PendingTask"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Steps",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "PendingTask",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "AgentHistoryDto",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentMessageDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 31,
+      "nonEmptyLines": 22,
+      "classes": [
+        {
+          "name": "AgentMessageDto",
+          "startLine": 7,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "Role",
+            "Text",
+            "ToolCalls",
+            "ToolResponses"
+          ]
+        },
+        {
+          "name": "AgentToolCallMessageDto",
+          "startLine": 19,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Arguments"
+          ]
+        },
+        {
+          "name": "AgentToolResponseMessageDto",
+          "startLine": 26,
+          "endLine": 31,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Content"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Role",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "Text",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ToolCalls",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "ToolResponses",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "AgentMessageDto",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "Arguments",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "AgentToolCallMessageDto",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "Content",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "AgentToolResponseMessageDto",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 0,
+        "classCount": 3
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentRequestInputDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "AgentRequestInputDto",
+          "startLine": 7,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "Text",
+            "History",
+            "SessionId"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Text",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "History",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "SessionId",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "AgentRequestInputDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentResponseOutputDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "AgentResponseOutputDto",
+          "startLine": 5,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "Text",
+            "SessionId"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Text",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "SessionId",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "AgentResponseOutputDto",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentResultDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 10,
+      "classes": [
+        {
+          "name": "AgentResultDto",
+          "startLine": 3,
+          "endLine": 16,
+          "methods": [],
+          "properties": [
+            "FinalText",
+            "RequiresApproval",
+            "PendingToolName",
+            "PendingToolArguments",
+            "RequiresElicitation",
+            "ElicitationFormJson"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FinalText",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "RequiresApproval",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "PendingToolName",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "PendingToolArguments",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "RequiresElicitation",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "ElicitationFormJson",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "AgentResultDto",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentSessionInputDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "classes": [
+        {
+          "name": "AgentSessionInputDto",
+          "startLine": 6,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "SessionId"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SessionId",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "AgentSessionInputDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/IAgent.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "IAgent",
+          "startLine": 6,
+          "endLine": 9,
+          "methods": [
+            "RunAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IAgent",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/IAgentAppService.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 12,
+      "classes": [
+        {
+          "name": "IAgentAppService",
+          "startLine": 7,
+          "endLine": 18,
+          "methods": [
+            "SendMessageAsync",
+            "ApproveAsync",
+            "RejectAsync",
+            "SubmitElicitationAsync",
+            "GetHistoryAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IAgentAppService",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/GetInventoryBalanceListDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "GetInventoryBalanceListDto",
+          "startLine": 6,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "WarehouseId",
+            "BinId",
+            "ProductId",
+            "ProductBatchId",
+            "BatchNumber",
+            "IsNearExpiry",
+            "HideZeroQuantity"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WarehouseId",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "BinId",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ProductId",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ProductBatchId",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "BatchNumber",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "IsNearExpiry",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "HideZeroQuantity",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "GetInventoryBalanceListDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/GetInventoryReservationListDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 24,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "GetInventoryReservationListDto",
+          "startLine": 9,
+          "endLine": 23,
+          "methods": [],
+          "properties": [
+            "ReferenceDocumentId",
+            "ReferenceDocumentNumber",
+            "WarehouseId",
+            "BinId",
+            "ProductId",
+            "ProductBatchId",
+            "Status"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ReferenceDocumentId",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ReferenceDocumentNumber",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "WarehouseId",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "BinId",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "ProductId",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "ProductBatchId",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "GetInventoryReservationListDto",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/InventoryBalanceDetailDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 19,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "InventoryBalanceDetailDto",
+          "startLine": 7,
+          "endLine": 18,
+          "methods": [],
+          "properties": [
+            "WarehouseAddress",
+            "CityName",
+            "AreaName",
+            "ProductCode",
+            "ManufacturingDate",
+            "ExpiryDate",
+            "SupplierName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WarehouseAddress",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "CityName",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "AreaName",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "ProductCode",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "ManufacturingDate",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ExpiryDate",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierName",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "InventoryBalanceDetailDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/InventoryBalanceDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "InventoryBalanceDto",
+          "startLine": 6,
+          "endLine": 25,
+          "methods": [],
+          "properties": [
+            "WarehouseId",
+            "WarehouseName",
+            "BinId",
+            "BinCode",
+            "ProductId",
+            "ProductName",
+            "ProductBatchId",
+            "BatchNumber",
+            "BaseUnitName",
+            "Quantity",
+            "LockedQuantity",
+            "AvailableQuantity"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "WarehouseId",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "WarehouseName",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "BinId",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "BinCode",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ProductId",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "ProductName",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ProductBatchId",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "BatchNumber",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnitName",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Quantity",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "LockedQuantity",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "AvailableQuantity",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "InventoryBalanceDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 13,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/InventoryReservationDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "InventoryReservationDto",
+          "startLine": 9,
+          "endLine": 25,
+          "methods": [],
+          "properties": [
+            "ReferenceDocumentId",
+            "ReferenceDocumentNumber",
+            "WarehouseId",
+            "WarehouseName",
+            "BinId",
+            "BinCode",
+            "ProductId",
+            "ProductBatchId",
+            "ReservedQuantity",
+            "Status"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ReferenceDocumentId",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "ReferenceDocumentNumber",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "WarehouseId",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "WarehouseName",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "BinId",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "BinCode",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "ProductId",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "ProductBatchId",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "ReservedQuantity",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "InventoryReservationDto",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/IInventoryBalanceAppService.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "IInventoryBalanceAppService",
+          "startLine": 10,
+          "endLine": 15,
+          "methods": [
+            "GetListAsync",
+            "GetAsync",
+            "GetReservationListAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IInventoryBalanceAppService",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/BaseUnits/Dtos/BaseUnitDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 8,
+      "classes": [
+        {
+          "name": "BaseUnitDto",
+          "startLine": 6,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "Code",
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnitDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/BaseUnits/Dtos/CreateUpdateBaseUnitDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "CreateUpdateBaseUnitDto",
+          "startLine": 8,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Name",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUpdateBaseUnitDto",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/BaseUnits/Dtos/GetBaseUnitListDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 6,
+      "classes": [
+        {
+          "name": "GetBaseUnitListDto",
+          "startLine": 5,
+          "endLine": 8,
+          "methods": [],
+          "properties": [
+            "Filter"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Filter",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "GetBaseUnitListDto",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/BaseUnits/IBaseUnitAppService.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "IBaseUnitAppService",
+          "startLine": 7,
+          "endLine": 14,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IBaseUnitAppService",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/CreateUpdateProductBatchDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 25,
+      "nonEmptyLines": 17,
+      "classes": [
+        {
+          "name": "CreateUpdateProductBatchDto",
+          "startLine": 6,
+          "endLine": 24,
+          "methods": [],
+          "properties": [
+            "ProductId",
+            "BatchNumber",
+            "ManufacturingDate",
+            "ExpiryDate",
+            "SupplierId",
+            "MedicineRegistrationId"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProductId",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "BatchNumber",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "ManufacturingDate",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "ExpiryDate",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierId",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineRegistrationId",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUpdateProductBatchDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/GetProductBatchListDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "GetProductBatchListDto",
+          "startLine": 7,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "Filter",
+            "ProductId",
+            "SupplierId",
+            "Status"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Filter",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ProductId",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierId",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "GetProductBatchListDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

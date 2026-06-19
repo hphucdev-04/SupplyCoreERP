@@ -20,6 +20,8 @@ public class BinDto : EntityDto<Guid>
     public float Rotation { get; set; }
 
     public int MaxSKU { get; set; }
+    public int Height { get; set; }
+    public decimal MaxVolume { get; set; }
     public bool IsBlocked { get; set; }
 }
 

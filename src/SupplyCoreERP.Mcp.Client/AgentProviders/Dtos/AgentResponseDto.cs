@@ -4,7 +4,7 @@ public class AgentResponseDto
 {
     public string? Text { get; set; }
 
-    public List<AgentToolCallDto> ToolCalls { get; set; } = new();
+    public List<LlmToolCallDto> ToolCalls { get; set; } = new();
 
     public bool IsToolCall => ToolCalls.Count > 0;
 }

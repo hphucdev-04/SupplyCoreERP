@@ -31,6 +31,8 @@ RUN npm install --only=production
 
 # Copy compiled JavaScript output from the builder stage
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/resources ./resources
+COPY --from=builder /app/query_blacklist.json ./query_blacklist.json
 
 # Expose port
 EXPOSE 3000

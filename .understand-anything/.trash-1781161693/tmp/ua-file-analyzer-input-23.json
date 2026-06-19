@@ -1,0 +1,77 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "angular/Dockerfile.local",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "angular/README.md",
+      "language": "markdown",
+      "sizeLines": 32,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "angular/angular.json",
+      "language": "json",
+      "sizeLines": 211,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/dynamic-env.json",
+      "language": "json",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/package.json",
+      "language": "json",
+      "sizeLines": 65,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/start.ps1",
+      "language": "powershell",
+      "sizeLines": 2,
+      "fileCategory": "script"
+    },
+    {
+      "path": "angular/tsconfig.app.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/tsconfig.json",
+      "language": "json",
+      "sizeLines": 24,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/tsconfig.spec.json",
+      "language": "json",
+      "sizeLines": 18,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/vercel.json",
+      "language": "json",
+      "sizeLines": 2,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "angular/Dockerfile.local": [],
+    "angular/README.md": [],
+    "angular/angular.json": [],
+    "angular/dynamic-env.json": [],
+    "angular/package.json": [],
+    "angular/start.ps1": [],
+    "angular/tsconfig.app.json": [],
+    "angular/tsconfig.json": [],
+    "angular/tsconfig.spec.json": [],
+    "angular/vercel.json": []
+  }
+}

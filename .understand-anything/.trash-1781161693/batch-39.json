@@ -1,0 +1,1313 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "AddMedicineRegistrationDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs:AddMedicineRegistrationDto",
+      "type": "class",
+      "metadata": {
+        "name": "AddMedicineRegistrationDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs",
+        "summary": "Lớp DTO AddMedicineRegistrationDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateMedicineDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin thuốc/dược phẩm trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs:CreateUpdateMedicineDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateMedicineDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs",
+        "summary": "Lớp DTO CreateUpdateMedicineDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin thuốc/dược phẩm trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateMedicineIngredientDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin thuốc/dược phẩm trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs:CreateUpdateMedicineIngredientDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateMedicineIngredientDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs",
+        "summary": "Lớp DTO CreateUpdateMedicineIngredientDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin thuốc/dược phẩm trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateMedicineUnitDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin thuốc/dược phẩm trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs:CreateUpdateMedicineUnitDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateMedicineUnitDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs",
+        "summary": "Lớp DTO CreateUpdateMedicineUnitDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin thuốc/dược phẩm trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetMedicineListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs:GetMedicineListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetMedicineListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs",
+        "summary": "Lớp DTO GetMedicineListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineDetailDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs",
+        "summary": "DTO chứa thông tin chi tiết đầy đủ của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs:MedicineDetailDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineDetailDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs",
+        "summary": "Lớp DTO MedicineDetailDto hỗ trợ truyền tải dữ liệu DTO chứa thông tin chi tiết đầy đủ của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs:MedicineDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs",
+        "summary": "Lớp DTO MedicineDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineExportDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs:MedicineExportDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineExportDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs",
+        "summary": "Lớp DTO MedicineExportDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineImportDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs:MedicineImportDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineImportDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs",
+        "summary": "Lớp DTO MedicineImportDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineIngredientDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs:MedicineIngredientDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineIngredientDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs",
+        "summary": "Lớp DTO MedicineIngredientDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicinePriceExportDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs:MedicinePriceExportDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicinePriceExportDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs",
+        "summary": "Lớp DTO MedicinePriceExportDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicinePriceImportDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs:MedicinePriceImportDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicinePriceImportDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs",
+        "summary": "Lớp DTO MedicinePriceImportDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineRegistrationDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs:MedicineRegistrationDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineRegistrationDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs",
+        "summary": "Lớp DTO MedicineRegistrationDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineSummaryDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs",
+        "summary": "DTO chứa thông tin tóm tắt rút gọn của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs:MedicineSummaryDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineSummaryDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs",
+        "summary": "Lớp DTO MedicineSummaryDto hỗ trợ truyền tải dữ liệu DTO chứa thông tin tóm tắt rút gọn của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineUnitDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs:MedicineUnitDto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineUnitDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs",
+        "summary": "Lớp DTO MedicineUnitDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "IMedicineAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý thuốc/dược phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs:IMedicineAppService",
+      "type": "class",
+      "metadata": {
+        "name": "IMedicineAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs",
+        "summary": "Interface IMedicineAppService định nghĩa các hợp đồng nghiệp vụ cho thuốc/dược phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetNotificationListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách thông báo.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs:GetNotificationListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetNotificationListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs",
+        "summary": "Lớp DTO GetNotificationListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách thông báo..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "NotificationDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của thông báo.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs:NotificationDto",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs",
+        "summary": "Lớp DTO NotificationDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của thông báo..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "INotificationAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý thông báo.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs:INotificationAppService",
+      "type": "class",
+      "metadata": {
+        "name": "INotificationAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs",
+        "summary": "Interface INotificationAppService định nghĩa các hợp đồng nghiệp vụ cho thông báo..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs",
+      "type": "file",
+      "metadata": {
+        "name": "INotificationRealTime.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs:INotificationRealTime",
+      "type": "class",
+      "metadata": {
+        "name": "INotificationRealTime",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs",
+        "summary": "Interface INotificationRealTime định nghĩa các hợp đồng nghiệp vụ cho Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs",
+      "type": "file",
+      "metadata": {
+        "name": "NotificationCleanupJobArgs.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs:NotificationCleanupJobArgs",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationCleanupJobArgs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs",
+        "summary": "Lớp NotificationCleanupJobArgs thuộc thành phần NotificationCleanupJobArgs.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs",
+      "type": "file",
+      "metadata": {
+        "name": "NotificationSentJobArgs.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs:NotificationSentJobArgs",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationSentJobArgs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs",
+        "summary": "Lớp NotificationSentJobArgs thuộc thành phần NotificationSentJobArgs.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPPermissionDefinitionProvider.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+        "summary": "Tệp định nghĩa các quyền hạn hoặc cấu hình quyền truy cập (Permissions) liên quan đến phân quyền hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "permissions"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs:SupplyCoreERPPermissionDefinitionProvider",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPPermissionDefinitionProvider",
+        "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+        "summary": "Lớp SupplyCoreERPPermissionDefinitionProvider thuộc thành phần SupplyCoreERPPermissionDefinitionProvider.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "permissions"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs:Define",
+      "type": "function",
+      "metadata": {
+        "name": "Define",
+        "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+        "summary": "Phương thức Define thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPPermissionDefinitionProvider.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "permissions"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs:AddCrudPermissions",
+      "type": "function",
+      "metadata": {
+        "name": "AddCrudPermissions",
+        "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+        "summary": "Phương thức AddCrudPermissions thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPPermissionDefinitionProvider.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "permissions"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPPermissions.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs",
+        "summary": "Tệp định nghĩa các quyền hạn hoặc cấu hình quyền truy cập (Permissions) liên quan đến phân quyền hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "permissions"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs:SupplyCoreERPPermissions",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPPermissions",
+        "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs",
+        "summary": "Lớp SupplyCoreERPPermissions thuộc thành phần SupplyCoreERPPermissions.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "permissions"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateProductPriceDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin giá sản phẩm trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs:CreateUpdateProductPriceDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateProductPriceDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs",
+        "summary": "Lớp DTO CreateUpdateProductPriceDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin giá sản phẩm trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs:AddMedicineRegistrationDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs:AddMedicineRegistrationDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs:CreateUpdateMedicineDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs:CreateUpdateMedicineDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs:CreateUpdateMedicineIngredientDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs:CreateUpdateMedicineIngredientDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs:CreateUpdateMedicineUnitDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs:CreateUpdateMedicineUnitDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs:GetMedicineListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs:GetMedicineListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs:MedicineDetailDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs:MedicineDetailDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs:MedicineDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs:MedicineDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs:MedicineExportDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs:MedicineExportDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs:MedicineImportDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs:MedicineImportDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs:MedicineIngredientDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs:MedicineIngredientDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs:MedicinePriceExportDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs:MedicinePriceExportDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs:MedicinePriceImportDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs:MedicinePriceImportDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs:MedicineRegistrationDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs:MedicineRegistrationDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs:MedicineSummaryDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs:MedicineSummaryDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs:MedicineUnitDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs:MedicineUnitDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs:IMedicineAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs:IMedicineAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs:GetNotificationListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs:GetNotificationListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs:NotificationDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs:NotificationDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs:INotificationAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs:INotificationAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs:INotificationRealTime",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs:INotificationRealTime",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs:NotificationCleanupJobArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs:NotificationCleanupJobArgs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs:NotificationSentJobArgs",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs:NotificationSentJobArgs",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs:SupplyCoreERPPermissionDefinitionProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs:SupplyCoreERPPermissionDefinitionProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "target": "function:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs:Define",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "target": "function:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs:Define",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "target": "function:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs:AddCrudPermissions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs:SupplyCoreERPPermissions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs:SupplyCoreERPPermissions",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs:CreateUpdateProductPriceDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs:CreateUpdateProductPriceDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

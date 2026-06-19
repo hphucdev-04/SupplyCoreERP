@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/GetSalesRecallListDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/SalesRecallDto.cs",
+      "language": "csharp",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/SalesRecallLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/UpdateSalesRecallDto.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/UpdateSalesRecallLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/ISalesRecallAppService.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/DlpSettingsDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/InventorySettingsDto.cs",
+      "language": "csharp",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/LlmProviderSettingsDto.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/McpSettingsDto.cs",
+      "language": "csharp",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/ISettingAppService.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierDto.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierProductConditionDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierProductDto.cs",
+      "language": "csharp",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierListDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierMedicineListDto.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierProductListDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierMedicineDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierProductConditionDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierProductDto.cs",
+      "language": "csharp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/ISupplierAppService.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 117,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/GetSalesRecallListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/SalesRecallDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/SalesRecallLineDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/UpdateSalesRecallDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/UpdateSalesRecallLineDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/SalesRecalls/ISalesRecallAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/DlpSettingsDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/InventorySettingsDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/LlmProviderSettingsDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/McpSettingsDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Settings/ISettingAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierProductConditionDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierProductDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierMedicineListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierProductListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierDetailDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierMedicineDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierProductConditionDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierProductDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Suppliers/ISupplierAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.abppkg": [],
+    "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.abppkg.analyze.json": []
+  }
+}

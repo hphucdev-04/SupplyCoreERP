@@ -28,9 +28,20 @@ public class InventoryTransaction : CreationAuditedAggregateRoot<Guid>
 
     public string? Note { get; private set; }
 
+    // Thông tin snapshot đối tác & chứng từ gốc
+    public Guid? PartnerId { get; private set; }
+    public string? PartnerName { get; private set; }
+    public Guid? SourceDocumentId { get; private set; }
+    public string? SourceDocumentNumber { get; private set; }
+
     protected InventoryTransaction() { }
 
-    public InventoryTransaction(Guid id, Guid warehouseId, Guid binId, Guid prodId, Guid batchId, InventoryTransactionType type, decimal qtyChanged, decimal balanceAfter, Guid? refDocId, string? refDocNumber, string? note) : base(id)
+    public InventoryTransaction(
+        Guid id, Guid warehouseId, Guid binId, Guid prodId, Guid batchId,
+        InventoryTransactionType type, decimal qtyChanged, decimal balanceAfter,
+        Guid? refDocId, string? refDocNumber, string? note,
+        Guid? partnerId = null, string? partnerName = null,
+        Guid? sourceDocId = null, string? sourceDocNumber = null) : base(id)
     {
         WarehouseId = warehouseId;
         BinId = binId;
@@ -42,6 +53,10 @@ public class InventoryTransaction : CreationAuditedAggregateRoot<Guid>
         ReferenceDocumentId = refDocId;
         ReferenceDocumentNumber = refDocNumber;
         Note = note;
+        PartnerId = partnerId;
+        PartnerName = partnerName;
+        SourceDocumentId = sourceDocId;
+        SourceDocumentNumber = sourceDocNumber;
     }
 }
 

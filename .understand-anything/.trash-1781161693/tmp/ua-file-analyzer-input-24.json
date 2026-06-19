@@ -1,0 +1,35 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "angular/scripts/README.md",
+      "language": "markdown",
+      "sizeLines": 199,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "angular/scripts/remove-symlinks.ps1",
+      "language": "powershell",
+      "sizeLines": 49,
+      "fileCategory": "script"
+    },
+    {
+      "path": "angular/scripts/setup-symlinks.ps1",
+      "language": "powershell",
+      "sizeLines": 105,
+      "fileCategory": "script"
+    },
+    {
+      "path": "angular/scripts/symlink-config.ps1",
+      "language": "powershell",
+      "sizeLines": 32,
+      "fileCategory": "script"
+    }
+  ],
+  "batchImportData": {
+    "angular/scripts/README.md": [],
+    "angular/scripts/remove-symlinks.ps1": [],
+    "angular/scripts/setup-symlinks.ps1": [],
+    "angular/scripts/symlink-config.ps1": []
+  }
+}

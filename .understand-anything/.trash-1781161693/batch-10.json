@@ -1,0 +1,209 @@
+{
+  "nodes": [
+    {
+      "id": "file:angular/src/app/proxy/customers/customer.service.ts",
+      "type": "file",
+      "metadata": {
+        "name": "customer.service.ts",
+        "path": "angular/src/app/proxy/customers/customer.service.ts",
+        "summary": "Dịch vụ client Angular (customer) gọi các API backend ABP của phân hệ customer.service.ts để thao tác dữ liệu.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "api-client",
+          "service"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/customers/dtos/models.ts",
+      "type": "file",
+      "metadata": {
+        "name": "models.ts",
+        "path": "angular/src/app/proxy/customers/dtos/models.ts",
+        "summary": "File định nghĩa các interface và kiểu dữ liệu (DTO) cho phân hệ dtos dùng để trao đổi dữ liệu với backend API.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "dto",
+          "data-model"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/enums/partner/customer-type.enum.ts",
+      "type": "file",
+      "metadata": {
+        "name": "customer-type.enum.ts",
+        "path": "angular/src/app/proxy/enums/partner/customer-type.enum.ts",
+        "summary": "File định nghĩa kiểu liệt kê (enum) đại diện cho các trạng thái hoặc phân loại của customer-type trong hệ thống.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "enum",
+          "data-model"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/enums/partner/gender.enum.ts",
+      "type": "file",
+      "metadata": {
+        "name": "gender.enum.ts",
+        "path": "angular/src/app/proxy/enums/partner/gender.enum.ts",
+        "summary": "File định nghĩa kiểu liệt kê (enum) đại diện cho các trạng thái hoặc phân loại của gender trong hệ thống.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "enum",
+          "data-model"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/suppliers/dtos/models.ts",
+      "type": "file",
+      "metadata": {
+        "name": "models.ts",
+        "path": "angular/src/app/proxy/suppliers/dtos/models.ts",
+        "summary": "File định nghĩa các interface và kiểu dữ liệu (DTO) cho phân hệ dtos dùng để trao đổi dữ liệu với backend API.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "dto",
+          "data-model"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/suppliers/supplier.service.ts",
+      "type": "file",
+      "metadata": {
+        "name": "supplier.service.ts",
+        "path": "angular/src/app/proxy/suppliers/supplier.service.ts",
+        "summary": "Dịch vụ client Angular (supplier) gọi các API backend ABP của phân hệ supplier.service.ts để thao tác dữ liệu.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "api-client",
+          "service"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/proxy/customers/customer.service.ts:CustomerService",
+      "type": "class",
+      "metadata": {
+        "name": "CustomerService",
+        "path": "angular/src/app/proxy/customers/customer.service.ts",
+        "summary": "Lớp CustomerService cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ customer.service.ts.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/proxy/suppliers/supplier.service.ts:SupplierService",
+      "type": "class",
+      "metadata": {
+        "name": "SupplierService",
+        "path": "angular/src/app/proxy/suppliers/supplier.service.ts",
+        "summary": "Lớp SupplierService cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ supplier.service.ts.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:angular/src/app/proxy/customers/customer.service.ts",
+      "target": "class:angular/src/app/proxy/customers/customer.service.ts:CustomerService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/proxy/customers/customer.service.ts",
+      "target": "class:angular/src/app/proxy/customers/customer.service.ts:CustomerService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/proxy/suppliers/supplier.service.ts",
+      "target": "class:angular/src/app/proxy/suppliers/supplier.service.ts:SupplierService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/proxy/suppliers/supplier.service.ts",
+      "target": "class:angular/src/app/proxy/suppliers/supplier.service.ts:SupplierService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/proxy/customers/customer.service.ts",
+      "target": "file:angular/src/app/proxy/customers/dtos/models.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/customers/dtos/models.ts",
+      "target": "file:angular/src/app/proxy/enums/partner/customer-type.enum.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/customers/dtos/models.ts",
+      "target": "file:angular/src/app/proxy/enums/partner/gender.enum.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/suppliers/dtos/models.ts",
+      "target": "file:angular/src/app/proxy/enums/partner/gender.enum.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/suppliers/supplier.service.ts",
+      "target": "file:angular/src/app/proxy/suppliers/dtos/models.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

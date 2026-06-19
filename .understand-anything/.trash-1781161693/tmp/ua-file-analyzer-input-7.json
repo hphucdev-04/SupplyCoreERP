@@ -1,0 +1,84 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "angular/src/app/proxy/enums/medicines/medicine-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/medicines/storage-condition.enum.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/medicines/usage-route.enum.ts",
+      "language": "typescript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/zone-type.enum.ts",
+      "language": "typescript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 111,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/medicine-excel.service.ts",
+      "language": "typescript",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/medicine.service.ts",
+      "language": "typescript",
+      "sizeLines": 174,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/warehouses/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 90,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/warehouses/warehouse.service.ts",
+      "language": "typescript",
+      "sizeLines": 178,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "angular/src/app/proxy/enums/medicines/medicine-status.enum.ts": [],
+    "angular/src/app/proxy/enums/medicines/storage-condition.enum.ts": [],
+    "angular/src/app/proxy/enums/medicines/usage-route.enum.ts": [],
+    "angular/src/app/proxy/enums/warehouses/zone-type.enum.ts": [],
+    "angular/src/app/proxy/medicines/dtos/models.ts": [
+      "angular/src/app/proxy/enums/medicines/medicine-status.enum.ts",
+      "angular/src/app/proxy/enums/medicines/storage-condition.enum.ts",
+      "angular/src/app/proxy/enums/medicines/usage-route.enum.ts"
+    ],
+    "angular/src/app/proxy/medicines/medicine-excel.service.ts": [
+      "angular/src/app/proxy/medicines/dtos/models.ts"
+    ],
+    "angular/src/app/proxy/medicines/medicine.service.ts": [
+      "angular/src/app/proxy/medicines/dtos/models.ts"
+    ],
+    "angular/src/app/proxy/warehouses/dtos/models.ts": [
+      "angular/src/app/proxy/enums/medicines/storage-condition.enum.ts",
+      "angular/src/app/proxy/enums/warehouses/approval-status.enum.ts",
+      "angular/src/app/proxy/enums/warehouses/zone-type.enum.ts"
+    ],
+    "angular/src/app/proxy/warehouses/warehouse.service.ts": [
+      "angular/src/app/proxy/warehouses/dtos/models.ts"
+    ]
+  }
+}

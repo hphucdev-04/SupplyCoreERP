@@ -10,5 +10,6 @@ public class MedicineUnitDto
     public string UnitName { get; set; }
     public int ConversionFactor { get; set; }
     public int Level { get; set; }
+    public decimal Volume { get; set; }
 }
 

@@ -1,0 +1,1586 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "type": "file",
+      "name": "MedicineRegistration.cs",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "summary": "File mã nguồn `MedicineRegistration.cs` thuộc quản lý thông tin đăng ký thuốc và dược phẩm trong danh mục.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "catalog"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs:MedicineRegistration",
+      "type": "class",
+      "name": "MedicineRegistration",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "summary": "Lớp `MedicineRegistration` thực hiện nghiệp vụ liên quan đến thuốc đăng ký.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 11,
+      "endLine": 73
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs:MedicineRegistration",
+      "type": "function",
+      "name": "MedicineRegistration",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "summary": "Phương thức `MedicineRegistration` thực hiện nghiệp vụ thuốc đăng ký.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 27,
+      "endLine": 47
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "type": "file",
+      "name": "Product.cs",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "summary": "File mã nguồn `Product.cs` thuộc quản lý sản phẩm, đơn vị tính và chuyển đổi đơn vị trong danh mục.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "catalog"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:Product",
+      "type": "class",
+      "name": "Product",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "summary": "Lớp `Product` thực hiện nghiệp vụ liên quan đến sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 14,
+      "endLine": 137
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:Product",
+      "type": "function",
+      "name": "Product",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "summary": "Phương thức `Product` thực hiện nghiệp vụ sản phẩm.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 41,
+      "endLine": 58
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:UpdateInfo",
+      "type": "function",
+      "name": "UpdateInfo",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "summary": "Phương thức `UpdateInfo` cập nhật info.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 73,
+      "endLine": 84
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:AddUnit",
+      "type": "function",
+      "name": "AddUnit",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "summary": "Phương thức `AddUnit` thêm mới đơn vị.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 86,
+      "endLine": 105
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:UpdateUnit",
+      "type": "function",
+      "name": "UpdateUnit",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "summary": "Phương thức `UpdateUnit` cập nhật đơn vị.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 107,
+      "endLine": 116
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:RemoveUnit",
+      "type": "function",
+      "name": "RemoveUnit",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "summary": "Phương thức `RemoveUnit` xóa đơn vị.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 118,
+      "endLine": 136
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "type": "file",
+      "name": "ProductManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "summary": "File mã nguồn `ProductManager.cs` thuộc quản lý sản phẩm, đơn vị tính và chuyển đổi đơn vị trong danh mục.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "catalog"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ProductManager",
+      "type": "class",
+      "name": "ProductManager",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "summary": "Lớp `ProductManager` thực hiện nghiệp vụ liên quan đến quản lý sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 14,
+      "endLine": 136
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ProductManager",
+      "type": "function",
+      "name": "ProductManager",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "summary": "Phương thức `ProductManager` thực hiện nghiệp vụ sản phẩm manager.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 25,
+      "endLine": 39
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:CheckCodeAsync",
+      "type": "function",
+      "name": "CheckCodeAsync",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "summary": "Phương thức `CheckCodeAsync` kiểm tra mã.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 41,
+      "endLine": 51
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:HasTransactionsAsync",
+      "type": "function",
+      "name": "HasTransactionsAsync",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "summary": "Phương thức `HasTransactionsAsync` thực hiện nghiệp vụ has transactions.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 53,
+      "endLine": 86
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ValidateBaseUnitChangeAsync",
+      "type": "function",
+      "name": "ValidateBaseUnitChangeAsync",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "summary": "Phương thức `ValidateBaseUnitChangeAsync` kiểm tra tính hợp lệ của base đơn vị change.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 88,
+      "endLine": 122
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ValidateUnitChangeAsync",
+      "type": "function",
+      "name": "ValidateUnitChangeAsync",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "summary": "Phương thức `ValidateUnitChangeAsync` kiểm tra tính hợp lệ của đơn vị change.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 124,
+      "endLine": 135
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "type": "file",
+      "name": "ProductUnit.cs",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "summary": "File mã nguồn `ProductUnit.cs` thuộc quản lý sản phẩm, đơn vị tính và chuyển đổi đơn vị trong danh mục.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "catalog"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:ProductUnit",
+      "type": "class",
+      "name": "ProductUnit",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "summary": "Lớp `ProductUnit` thực hiện nghiệp vụ liên quan đến sản phẩm đơn vị.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 8,
+      "endLine": 56
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:ProductUnit",
+      "type": "function",
+      "name": "ProductUnit",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "summary": "Phương thức `ProductUnit` thực hiện nghiệp vụ sản phẩm đơn vị.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 19,
+      "endLine": 29
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:UpdateInternal",
+      "type": "function",
+      "name": "UpdateInternal",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "summary": "Phương thức `UpdateInternal` cập nhật internal.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 31,
+      "endLine": 40
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:SetFactorAndLevel",
+      "type": "function",
+      "name": "SetFactorAndLevel",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "summary": "Phương thức `SetFactorAndLevel` thiết lập factor and level.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 46,
+      "endLine": 55
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "type": "file",
+      "name": "UnitConversionManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "summary": "File mã nguồn `UnitConversionManager.cs` thuộc quản lý sản phẩm, đơn vị tính và chuyển đổi đơn vị trong danh mục.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "catalog"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:UnitConversionManager",
+      "type": "class",
+      "name": "UnitConversionManager",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "summary": "Lớp `UnitConversionManager` thực hiện nghiệp vụ liên quan đến quản lý đơn vị chuyển đổi.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 9,
+      "endLine": 113
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:ConvertToBaseQuantity",
+      "type": "function",
+      "name": "ConvertToBaseQuantity",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "summary": "Phương thức `ConvertToBaseQuantity` thực hiện nghiệp vụ convert to base quantity.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 15,
+      "endLine": 30
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:ConvertFromBaseQuantity",
+      "type": "function",
+      "name": "ConvertFromBaseQuantity",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "summary": "Phương thức `ConvertFromBaseQuantity` thực hiện nghiệp vụ convert from base quantity.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 36,
+      "endLine": 54
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:GetAbsoluteConversionFactor",
+      "type": "function",
+      "name": "GetAbsoluteConversionFactor",
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "summary": "Phương thức `GetAbsoluteConversionFactor` lấy thông tin absolute chuyển đổi factor.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 81,
+      "endLine": 112
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "type": "file",
+      "name": "DocumentSequence.cs",
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "summary": "File mã nguồn `DocumentSequence.cs` thuộc quản lý cấu hình sinh số hiệu tài liệu tự động.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "common"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs:DocumentSequence",
+      "type": "class",
+      "name": "DocumentSequence",
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "summary": "Lớp `DocumentSequence` thực hiện nghiệp vụ liên quan đến tài liệu chuỗi số.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 7,
+      "endLine": 35
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs:Increment",
+      "type": "function",
+      "name": "Increment",
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "summary": "Phương thức `Increment` thực hiện nghiệp vụ increment.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 22,
+      "endLine": 33
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "type": "file",
+      "name": "DocumentSequenceManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "summary": "File mã nguồn `DocumentSequenceManager.cs` thuộc quản lý cấu hình sinh số hiệu tài liệu tự động.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "common"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:DocumentSequenceManager",
+      "type": "class",
+      "name": "DocumentSequenceManager",
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "summary": "Lớp `DocumentSequenceManager` thực hiện nghiệp vụ liên quan đến quản lý tài liệu chuỗi số.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 8,
+      "endLine": 48
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:GenerateAsync",
+      "type": "function",
+      "name": "GenerateAsync",
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "summary": "Phương thức `GenerateAsync` thực hiện nghiệp vụ generate.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 19,
+      "endLine": 47
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/IDocumentSequenceManager.cs",
+      "type": "file",
+      "name": "IDocumentSequenceManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/IDocumentSequenceManager.cs",
+      "summary": "File mã nguồn `IDocumentSequenceManager.cs` thuộc quản lý cấu hình sinh số hiệu tài liệu tự động.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "common"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "type": "file",
+      "name": "Notification.cs",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "summary": "File mã nguồn `Notification.cs` thuộc quản lý thông báo hệ thống và người dùng.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "common"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs:Notification",
+      "type": "class",
+      "name": "Notification",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "summary": "Lớp `Notification` thực hiện nghiệp vụ liên quan đến thông báo.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 39
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs:Notification",
+      "type": "function",
+      "name": "Notification",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "summary": "Phương thức `Notification` thực hiện nghiệp vụ thông báo.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 24,
+      "endLine": 38
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "type": "file",
+      "name": "NotificationManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "summary": "File mã nguồn `NotificationManager.cs` thuộc quản lý thông báo hệ thống và người dùng.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "common"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:NotificationManager",
+      "type": "class",
+      "name": "NotificationManager",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "summary": "Lớp `NotificationManager` thực hiện nghiệp vụ liên quan đến quản lý thông báo.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 11,
+      "endLine": 141
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:CreateForPermission",
+      "type": "function",
+      "name": "CreateForPermission",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "summary": "Phương thức `CreateForPermission` thực hiện nghiệp vụ create for permission.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 31,
+      "endLine": 41
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkReadAsync",
+      "type": "function",
+      "name": "MarkReadAsync",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "summary": "Phương thức `MarkReadAsync` thực hiện nghiệp vụ mark read.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 43,
+      "endLine": 56
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkManyReadAsync",
+      "type": "function",
+      "name": "MarkManyReadAsync",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "summary": "Phương thức `MarkManyReadAsync` thực hiện nghiệp vụ mark many read.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 58,
+      "endLine": 91
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkDeleteAsync",
+      "type": "function",
+      "name": "MarkDeleteAsync",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "summary": "Phương thức `MarkDeleteAsync` thực hiện nghiệp vụ mark delete.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 93,
+      "endLine": 105
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkManyDeleteAsync",
+      "type": "function",
+      "name": "MarkManyDeleteAsync",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "summary": "Phương thức `MarkManyDeleteAsync` thực hiện nghiệp vụ mark many delete.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 107,
+      "endLine": 140
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "type": "file",
+      "name": "UserNotification.cs",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "summary": "File mã nguồn `UserNotification.cs` thuộc quản lý thông báo hệ thống và người dùng.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "common"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs:UserNotification",
+      "type": "class",
+      "name": "UserNotification",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "summary": "Lớp `UserNotification` thực hiện nghiệp vụ liên quan đến người dùng thông báo.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 10,
+      "endLine": 40
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs:MarkAsRead",
+      "type": "function",
+      "name": "MarkAsRead",
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "summary": "Phương thức `MarkAsRead` thực hiện nghiệp vụ mark as read.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 28,
+      "endLine": 37
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Data/ISupplyCoreERPDbSchemaMigrator.cs",
+      "type": "file",
+      "name": "ISupplyCoreERPDbSchemaMigrator.cs",
+      "path": "src/SupplyCoreERP.Domain/Data/ISupplyCoreERPDbSchemaMigrator.cs",
+      "summary": "File mã nguồn `ISupplyCoreERPDbSchemaMigrator.cs` thuộc thực hiện di cư dữ liệu (database migration) và khởi tạo schema.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "data-migration"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Data/NullSupplyCoreERPDbSchemaMigrator.cs",
+      "type": "file",
+      "name": "NullSupplyCoreERPDbSchemaMigrator.cs",
+      "path": "src/SupplyCoreERP.Domain/Data/NullSupplyCoreERPDbSchemaMigrator.cs",
+      "summary": "File mã nguồn `NullSupplyCoreERPDbSchemaMigrator.cs` thuộc thực hiện di cư dữ liệu (database migration) và khởi tạo schema.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "data-migration"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "type": "file",
+      "name": "SupplyCoreERPDbMigrationService.cs",
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "summary": "File mã nguồn `SupplyCoreERPDbMigrationService.cs` thuộc thực hiện di cư dữ liệu (database migration) và khởi tạo schema.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "data-migration"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:SupplyCoreERPDbMigrationService",
+      "type": "class",
+      "name": "SupplyCoreERPDbMigrationService",
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "summary": "Lớp `SupplyCoreERPDbMigrationService` thực hiện nghiệp vụ liên quan đến dịch vụ supply core e r p cơ sở dữ liệu di cư dữ liệu.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 18,
+      "endLine": 185
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:SupplyCoreERPDbMigrationService",
+      "type": "function",
+      "name": "SupplyCoreERPDbMigrationService",
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "summary": "Phương thức `SupplyCoreERPDbMigrationService` thực hiện nghiệp vụ supply core e r p db migration service.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 26,
+      "endLine": 36
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:MigrateAsync",
+      "type": "function",
+      "name": "MigrateAsync",
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "summary": "Phương thức `MigrateAsync` thực hiện nghiệp vụ migrate.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 38,
+      "endLine": 55
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigrationIfNotExist",
+      "type": "function",
+      "name": "AddInitialMigrationIfNotExist",
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "summary": "Phương thức `AddInitialMigrationIfNotExist` thêm mới initial migration if not exist.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 75,
+      "endLine": 106
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigration",
+      "type": "function",
+      "name": "AddInitialMigration",
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "summary": "Phương thức `AddInitialMigration` thêm mới initial migration.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 122,
+      "endLine": 152
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetEntityFrameworkCoreProjectFolderPath",
+      "type": "function",
+      "name": "GetEntityFrameworkCoreProjectFolderPath",
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "summary": "Phương thức `GetEntityFrameworkCoreProjectFolderPath` lấy thông tin entity framework core project folder path.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 154,
+      "endLine": 167
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetSolutionDirectoryPath",
+      "type": "function",
+      "name": "GetSolutionDirectoryPath",
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "summary": "Phương thức `GetSolutionDirectoryPath` lấy thông tin solution directory path.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 169,
+      "endLine": 184
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "type": "file",
+      "name": "ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "path": "src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "summary": "File mã nguồn `ChangeIdentityPasswordPolicySettingDefinitionProvider.cs` thuộc cấu hình và quản lý chính sách bảo mật, mật khẩu người dùng.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "identity"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs:ChangeIdentityPasswordPolicySettingDefinitionProvider",
+      "type": "class",
+      "name": "ChangeIdentityPasswordPolicySettingDefinitionProvider",
+      "path": "src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "summary": "Lớp `ChangeIdentityPasswordPolicySettingDefinitionProvider` thực hiện nghiệp vụ liên quan đến nhà cung cấp thay đổi danh tính mật khẩu chính sách cài đặt định nghĩa.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 6,
+      "endLine": 34
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs:Define",
+      "type": "function",
+      "name": "Define",
+      "path": "src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "summary": "Phương thức `Define` thực hiện nghiệp vụ define.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 8,
+      "endLine": 33
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs:MedicineRegistration",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs:MedicineRegistration",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs:MedicineRegistration",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs:MedicineRegistration",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:Product",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:Product",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:Product",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:Product",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:UpdateInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:UpdateInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:AddUnit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:AddUnit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:UpdateUnit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:UpdateUnit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:RemoveUnit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:RemoveUnit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ProductManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ProductManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ProductManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ProductManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:CheckCodeAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:CheckCodeAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:HasTransactionsAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:HasTransactionsAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ValidateBaseUnitChangeAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ValidateBaseUnitChangeAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ValidateUnitChangeAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ValidateUnitChangeAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:ValidateUnitChangeAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs:HasTransactionsAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:ProductUnit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:ProductUnit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:ProductUnit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:ProductUnit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:UpdateInternal",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:UpdateInternal",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:SetFactorAndLevel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:SetFactorAndLevel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:ProductUnit",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:UpdateInternal",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:UpdateInternal",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs:SetFactorAndLevel",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:UnitConversionManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:UnitConversionManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:ConvertToBaseQuantity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:ConvertToBaseQuantity",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:ConvertFromBaseQuantity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:ConvertFromBaseQuantity",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:GetAbsoluteConversionFactor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:GetAbsoluteConversionFactor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:ConvertToBaseQuantity",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:GetAbsoluteConversionFactor",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:ConvertFromBaseQuantity",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs:GetAbsoluteConversionFactor",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs:DocumentSequence",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs:DocumentSequence",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs:Increment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs:Increment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:DocumentSequenceManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:DocumentSequenceManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:DocumentSequenceManager",
+      "target": "class:src/SupplyCoreERP.Domain/Common/DocumentSequences/IDocumentSequenceManager.cs:IDocumentSequenceManager",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:GenerateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:GenerateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:GenerateAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs:Increment",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs:Notification",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs:Notification",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs:Notification",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs:Notification",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:NotificationManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:NotificationManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:CreateForPermission",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:CreateForPermission",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkReadAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkReadAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkManyReadAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkManyReadAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkDeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkDeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkManyDeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkManyDeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkReadAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs:MarkAsRead",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs:MarkManyReadAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs:MarkAsRead",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs:UserNotification",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs:UserNotification",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs:MarkAsRead",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs:MarkAsRead",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:SupplyCoreERPDbMigrationService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:SupplyCoreERPDbMigrationService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:SupplyCoreERPDbMigrationService",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:SupplyCoreERPDbMigrationService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:SupplyCoreERPDbMigrationService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:MigrateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:MigrateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigrationIfNotExist",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigrationIfNotExist",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigration",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigration",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetEntityFrameworkCoreProjectFolderPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetEntityFrameworkCoreProjectFolderPath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetSolutionDirectoryPath",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetSolutionDirectoryPath",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:MigrateAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigrationIfNotExist",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigrationIfNotExist",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigration",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:AddInitialMigration",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetEntityFrameworkCoreProjectFolderPath",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetEntityFrameworkCoreProjectFolderPath",
+      "target": "function:src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs:GetSolutionDirectoryPath",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs:ChangeIdentityPasswordPolicySettingDefinitionProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs:ChangeIdentityPasswordPolicySettingDefinitionProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs:Define",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs:Define",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

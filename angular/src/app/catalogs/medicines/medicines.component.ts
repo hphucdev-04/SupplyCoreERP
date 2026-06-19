@@ -218,6 +218,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       categoryId: [null, Validators.required],
       manufacturerId: [null, Validators.required],
       baseUnitId: [null, Validators.required],
+      baseUnitVolume: [0, [Validators.required, Validators.min(0)]],
       dosageFormId: [null, Validators.required],
       registrationNumber: ['', Validators.maxLength(50)],
       registrationValidFrom: [null],

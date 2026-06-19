@@ -14,7 +14,9 @@ public class CreateUpdateMedicineUnitDto
     public int ConversionFactor { get; set; }
 
     [Required]
-    [Range(1, int.MaxValue, ErrorMessage = "Level pháº£i tá»« 1 trá»Ÿ lÃªn")]
+    [Range(1, int.MaxValue, ErrorMessage = "Level phải từ 1 trở lên")]
     public int Level { get; set; }
+
+    public decimal Volume { get; set; }
 }
 

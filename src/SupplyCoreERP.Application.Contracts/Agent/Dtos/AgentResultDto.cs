@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace SupplyCoreERP.Agent.Dtos;
 
 public class AgentResultDto
@@ -13,4 +15,6 @@ public class AgentResultDto
     public bool RequiresElicitation { get; set; }
 
     public string? ElicitationFormJson { get; set; }
+
+    public List<AgentSessionMessageDto> NewSteps { get; set; } = new();
 }

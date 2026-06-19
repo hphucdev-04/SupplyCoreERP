@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    {
+      "id": "resource:.dockerignore",
+      "type": "resource",
+      "label": ".dockerignore",
+      "properties": {
+        "summary": "Cấu hình tài nguyên hạ tầng trong .dockerignore.",
+        "tags": [
+          "infrastructure",
+          "iac",
+          "resource",
+          "unknown"
+        ],
+        "complexity": "simple",
+        "language": "unknown",
+        "sizeLines": 15
+      }
+    },
+    {
+      "id": "service:Dockerfile",
+      "type": "service",
+      "label": "Dockerfile",
+      "properties": {
+        "summary": "Cấu hình container hóa/dịch vụ Dockerfile sử dụng Docker.",
+        "tags": [
+          "docker",
+          "containerization",
+          "infrastructure",
+          "dockerfile"
+        ],
+        "complexity": "moderate",
+        "language": "dockerfile",
+        "sizeLines": 51
+      }
+    }
+  ],
+  "edges": []
+}

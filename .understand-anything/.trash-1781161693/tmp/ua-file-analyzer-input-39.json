@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs",
+      "language": "csharp",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs",
+      "language": "csharp",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs",
+      "language": "csharp",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs",
+      "language": "csharp",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs",
+      "language": "csharp",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs",
+      "language": "csharp",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs",
+      "language": "csharp",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs",
+      "language": "csharp",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "language": "csharp",
+      "sizeLines": 207,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs",
+      "language": "csharp",
+      "sizeLines": 207,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs",
+      "language": "csharp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs": []
+  }
+}

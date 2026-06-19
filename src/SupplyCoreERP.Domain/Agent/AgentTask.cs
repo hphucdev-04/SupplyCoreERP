@@ -1,22 +1,23 @@
 using System;
 using SupplyCoreERP.Enums.Agent;
+using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Agent;
 
 public class AgentTask : CreationAuditedEntity<Guid>
 {
-    public Guid SessionId { get; set; }
+    public Guid SessionId { get; private set; }
 
-    public AgentTaskType TaskType { get; set; }
+    public AgentTaskType TaskType { get; private set; }
 
-    public AgentTaskStatus Status { get; set; }
+    public AgentTaskStatus Status { get; internal set; }
 
-    public string? FormJson { get; set; }
+    public string? FormJson { get; private set; }
 
-    public string? SuspendedDataJson { get; set; }
+    public string? SuspendedDataJson { get; private set; }
 
-    private AgentTask()
+    protected AgentTask()
     {
     }
 
@@ -27,5 +28,23 @@ public class AgentTask : CreationAuditedEntity<Guid>
         Status = AgentTaskStatus.Pending;
         FormJson = formJson;
         SuspendedDataJson = suspendedDataJson;
+    }
+
+    internal void Complete()
+    {
+        if (Status != AgentTaskStatus.Pending)
+        {
+            throw new BusinessException("AgentTask:ErrorComplete", "Chỉ các tác vụ đang chờ mới có thể hoàn thành.");
+        }
+        Status = AgentTaskStatus.Completed;
+    }
+
+    internal void Cancel()
+    {
+        if (Status != AgentTaskStatus.Pending)
+        {
+            throw new BusinessException("AgentTask:ErrorCancel", "Chỉ các tác vụ đang chờ mới có thể hủy.");
+        }
+        Status = AgentTaskStatus.Cancelled;
     }
 }

@@ -1,0 +1,2160 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/css/login-custom.css",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 495,
+      "nonEmptyLines": 428,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/global-scripts.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/global-styles.css",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 8,
+      "nonEmptyLines": 8,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/Controllers/SupplyCoreERPController.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 12,
+      "functions": [
+        {
+          "name": "SupplyCoreERPController",
+          "startLine": 10,
+          "endLine": 13,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPController",
+          "startLine": 8,
+          "endLine": 14,
+          "methods": [
+            "SupplyCoreERPController"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SupplyCoreERPController",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/Models/Test/TestModel.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "TestModel",
+          "startLine": 5,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "Name",
+            "BirthDate"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Name",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "BirthDate",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TestModel",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg",
+      "language": "abppkg",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg.analyze.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 118,
+      "nonEmptyLines": 118,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "hash",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "contents",
+          "level": 1,
+          "line": 4
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.csproj",
+      "language": "csproj",
+      "fileCategory": "config",
+      "totalLines": 26,
+      "nonEmptyLines": 20,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 40,
+      "nonEmptyLines": 36,
+      "functions": [
+        {
+          "name": "ConfigureServices",
+          "startLine": 23,
+          "endLine": 26,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "ConfigureLocalization",
+          "startLine": 28,
+          "endLine": 38,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPHttpApiModule",
+          "startLine": 13,
+          "endLine": 39,
+          "methods": [
+            "ConfigureServices",
+            "ConfigureLocalization"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConfigureServices",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPHttpApiModule",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureLocalization",
+          "lineNumber": 25
+        },
+        {
+          "caller": "ConfigureLocalization",
+          "callee": "Configure<AbpLocalizationOptions>",
+          "lineNumber": 30
+        },
+        {
+          "caller": "ConfigureLocalization",
+          "callee": "options.Resources\r\n                .Get<SupplyCoreERPResource>()\r\n                .AddBaseTypes",
+          "lineNumber": 32
+        },
+        {
+          "caller": "ConfigureLocalization",
+          "callee": "options.Resources\r\n                .Get<SupplyCoreERPResource>",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 286,
+      "nonEmptyLines": 247,
+      "functions": [
+        {
+          "name": "McpAgent",
+          "startLine": 21,
+          "endLine": 27,
+          "params": [
+            "mcpClientService",
+            "agentProvider"
+          ]
+        },
+        {
+          "name": "RunAsync",
+          "startLine": 29,
+          "endLine": 219,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "OptimizeHistory",
+          "startLine": 221,
+          "endLine": 239,
+          "params": [
+            "history",
+            "maxMessages"
+          ]
+        },
+        {
+          "name": "MapHistoryToAgentFormat",
+          "startLine": 241,
+          "endLine": 285,
+          "params": [
+            "history"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "McpAgent",
+          "startLine": 16,
+          "endLine": 286,
+          "methods": [
+            "McpAgent",
+            "RunAsync",
+            "OptimizeHistory",
+            "MapHistoryToAgentFormat"
+          ],
+          "properties": [
+            "_mcpClientService",
+            "_agentProvider"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "McpAgent",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "RunAsync",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "McpAgent",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "RunAsync",
+          "callee": "_mcpClientService.GetToolsAsync",
+          "lineNumber": 32
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "OptimizeHistory",
+          "lineNumber": 35
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "MapHistoryToAgentFormat",
+          "lineNumber": 38
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new List<McpToolDto>",
+          "lineNumber": 51
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "_agentProvider.GenerateContentAsync",
+          "lineNumber": 55
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "tools.Find",
+          "lineNumber": 62
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "context.Steps.Add",
+          "lineNumber": 69
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentMessageDto",
+          "lineNumber": 69
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new List<AgentToolCallMessageDto>",
+          "lineNumber": 72
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentResultDto",
+          "lineNumber": 78
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "JsonSerializer.Serialize",
+          "lineNumber": 82
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "_mcpClientService.CallToolAsync",
+          "lineNumber": 88
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "JsonNode.Parse",
+          "lineNumber": 94
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "errorObj[\"message\"]?.ToString",
+          "lineNumber": 100
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "context.Steps.Add",
+          "lineNumber": 107
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentMessageDto",
+          "lineNumber": 107
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new List<AgentToolCallMessageDto>",
+          "lineNumber": 110
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentResultDto",
+          "lineNumber": 116
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "resultObj[\"elicitation\"]?.ToJsonString",
+          "lineNumber": 119
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "JsonSerializer.Serialize",
+          "lineNumber": 121
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "resultObj[\"isError\"]?.GetValue<bool>",
+          "lineNumber": 125
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "resultObj[\"content\"]?.AsArray",
+          "lineNumber": 126
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "contentArray\r\n                                    .Select(c => c?[\"text\"]?.ToString())\r\n                                    .Where",
+          "lineNumber": 130
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "contentArray\r\n                                    .Select",
+          "lineNumber": 130
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "c?[\"text\"]?.ToString",
+          "lineNumber": 131
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "string.IsNullOrEmpty",
+          "lineNumber": 132
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "string.Join",
+          "lineNumber": 133
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "resultObj.ToString",
+          "lineNumber": 137
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "internalHistory.Add",
+          "lineNumber": 161
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentChatMessageDto",
+          "lineNumber": 161
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new List<AgentToolCallDto>",
+          "lineNumber": 164
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "internalHistory.Add",
+          "lineNumber": 167
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentChatMessageDto",
+          "lineNumber": 167
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new List<AgentToolResponseDto>",
+          "lineNumber": 170
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "context.Steps.Add",
+          "lineNumber": 177
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentMessageDto",
+          "lineNumber": 177
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new List<AgentToolCallMessageDto>",
+          "lineNumber": 180
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "context.Steps.Add",
+          "lineNumber": 186
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentMessageDto",
+          "lineNumber": 186
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new List<AgentToolResponseMessageDto>",
+          "lineNumber": 189
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "context.Steps.Add",
+          "lineNumber": 200
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentMessageDto",
+          "lineNumber": 200
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentResultDto",
+          "lineNumber": 206
+        },
+        {
+          "caller": "RunAsync",
+          "callee": "new AgentResultDto",
+          "lineNumber": 214
+        },
+        {
+          "caller": "OptimizeHistory",
+          "callee": "new List<AgentMessageDto>",
+          "lineNumber": 225
+        },
+        {
+          "caller": "OptimizeHistory",
+          "callee": "history.Skip(history.Count - maxMessages).ToList",
+          "lineNumber": 229
+        },
+        {
+          "caller": "OptimizeHistory",
+          "callee": "history.Skip",
+          "lineNumber": 229
+        },
+        {
+          "caller": "OptimizeHistory",
+          "callee": "string.IsNullOrEmpty",
+          "lineNumber": 232
+        },
+        {
+          "caller": "OptimizeHistory",
+          "callee": "optimized.Insert",
+          "lineNumber": 235
+        },
+        {
+          "caller": "MapHistoryToAgentFormat",
+          "callee": "chatMsg.ToolCalls.Add",
+          "lineNumber": 261
+        },
+        {
+          "caller": "MapHistoryToAgentFormat",
+          "callee": "new AgentToolCallDto",
+          "lineNumber": 261
+        },
+        {
+          "caller": "MapHistoryToAgentFormat",
+          "callee": "chatMsg.ToolResponses.Add",
+          "lineNumber": 273
+        },
+        {
+          "caller": "MapHistoryToAgentFormat",
+          "callee": "new AgentToolResponseDto",
+          "lineNumber": 273
+        },
+        {
+          "caller": "MapHistoryToAgentFormat",
+          "callee": "list.Add",
+          "lineNumber": 281
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentChatMessageDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 8,
+      "classes": [
+        {
+          "name": "AgentChatMessageDto",
+          "startLine": 3,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "Role",
+            "Text",
+            "ToolCalls",
+            "ToolResponses"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Role",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "Text",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "ToolCalls",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ToolResponses",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "AgentChatMessageDto",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentResponseDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "AgentResponseDto",
+          "startLine": 3,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "Text",
+            "ToolCalls",
+            "IsToolCall"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Text",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "ToolCalls",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "IsToolCall",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "AgentResponseDto",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentToolCallDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "AgentToolCallDto",
+          "startLine": 5,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Arguments"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Name",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "Arguments",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "AgentToolCallDto",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentToolResponseDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 6,
+      "classes": [
+        {
+          "name": "AgentToolResponseDto",
+          "startLine": 3,
+          "endLine": 8,
+          "methods": [],
+          "properties": [
+            "Name",
+            "Content"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Name",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "Content",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "AgentToolResponseDto",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 239,
+      "nonEmptyLines": 201,
+      "functions": [
+        {
+          "name": "GeminiProvider",
+          "startLine": 20,
+          "endLine": 28,
+          "params": [
+            "httpClient",
+            "settingProvider",
+            "stringEncryptionService"
+          ]
+        },
+        {
+          "name": "GenerateContentAsync",
+          "startLine": 30,
+          "endLine": 81,
+          "params": [
+            "chatHistory",
+            "tools"
+          ]
+        },
+        {
+          "name": "MapHistoryToGeminiFormat",
+          "startLine": 83,
+          "endLine": 151,
+          "params": [
+            "chatHistory"
+          ]
+        },
+        {
+          "name": "MapMcpToolsToGemini",
+          "startLine": 153,
+          "endLine": 201,
+          "params": [
+            "tools"
+          ]
+        },
+        {
+          "name": "ParseGeminiResponse",
+          "startLine": 203,
+          "endLine": 238,
+          "params": [
+            "responseContent"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "GeminiProvider",
+          "startLine": 13,
+          "endLine": 239,
+          "methods": [
+            "GeminiProvider",
+            "GenerateContentAsync",
+            "MapHistoryToGeminiFormat",
+            "MapMcpToolsToGemini",
+            "ParseGeminiResponse"
+          ],
+          "properties": [
+            "_httpClient",
+            "_settingProvider",
+            "_stringEncryptionService"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GeminiProvider",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "GenerateContentAsync",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "GeminiProvider",
+          "line": 13,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "_settingProvider.GetOrNullAsync",
+          "lineNumber": 32
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "string.IsNullOrEmpty",
+          "lineNumber": 33
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "_stringEncryptionService.Decrypt",
+          "lineNumber": 35
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "_settingProvider.GetOrNullAsync",
+          "lineNumber": 37
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "string.IsNullOrEmpty",
+          "lineNumber": 39
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "new Exception",
+          "lineNumber": 41
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "MapHistoryToGeminiFormat",
+          "lineNumber": 46
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "MapMcpToolsToGemini",
+          "lineNumber": 47
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "geminiPayload.Add",
+          "lineNumber": 56
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "geminiPayload.Add",
+          "lineNumber": 60
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "JsonSerializer.Serialize",
+          "lineNumber": 68
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "Console.WriteLine",
+          "lineNumber": 69
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "_httpClient.PostAsync",
+          "lineNumber": 72
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "response.Content.ReadAsStringAsync",
+          "lineNumber": 74
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "new Exception",
+          "lineNumber": 77
+        },
+        {
+          "caller": "GenerateContentAsync",
+          "callee": "ParseGeminiResponse",
+          "lineNumber": 80
+        },
+        {
+          "caller": "MapHistoryToGeminiFormat",
+          "callee": "string.IsNullOrEmpty",
+          "lineNumber": 98
+        },
+        {
+          "caller": "MapHistoryToGeminiFormat",
+          "callee": "parts.Add",
+          "lineNumber": 100
+        },
+        {
+          "caller": "MapHistoryToGeminiFormat",
+          "callee": "parts.Add",
+          "lineNumber": 107
+        },
+        {
+          "caller": "MapHistoryToGeminiFormat",
+          "callee": "JsonNode.Parse",
+          "lineNumber": 125
+        },
+        {
+          "caller": "MapHistoryToGeminiFormat",
+          "callee": "new JsonObject",
+          "lineNumber": 129
+        },
+        {
+          "caller": "MapHistoryToGeminiFormat",
+          "callee": "parts.Add",
+          "lineNumber": 132
+        },
+        {
+          "caller": "MapHistoryToGeminiFormat",
+          "callee": "contents.Add",
+          "lineNumber": 143
+        },
+        {
+          "caller": "MapHistoryToGeminiFormat",
+          "callee": "parts.ToArray",
+          "lineNumber": 146
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "inputSchema[\"type\"]?.ToString()?.ToUpper",
+          "lineNumber": 168
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "inputSchema[\"type\"]?.ToString",
+          "lineNumber": 168
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "parameters.Add",
+          "lineNumber": 169
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "inputSchema[\"properties\"].AsObject",
+          "lineNumber": 174
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "propVal?[\"type\"]?.ToString()?.ToUpper",
+          "lineNumber": 178
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "propVal?[\"type\"]?.ToString",
+          "lineNumber": 178
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "propVal?[\"description\"]?.ToString",
+          "lineNumber": 179
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "props.Add",
+          "lineNumber": 181
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "parameters.Add",
+          "lineNumber": 183
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "parameters.Add",
+          "lineNumber": 188
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "inputSchema[\"required\"].AsArray().Select(x => x.ToString()).ToList",
+          "lineNumber": 188
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "inputSchema[\"required\"].AsArray().Select",
+          "lineNumber": 188
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "inputSchema[\"required\"].AsArray",
+          "lineNumber": 188
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "x.ToString",
+          "lineNumber": 188
+        },
+        {
+          "caller": "MapMcpToolsToGemini",
+          "callee": "list.Add",
+          "lineNumber": 192
+        },
+        {
+          "caller": "ParseGeminiResponse",
+          "callee": "JsonNode.Parse",
+          "lineNumber": 205
+        },
+        {
+          "caller": "ParseGeminiResponse",
+          "callee": "functionCall[\"name\"]?.ToString",
+          "lineNumber": 220
+        },
+        {
+          "caller": "ParseGeminiResponse",
+          "callee": "functionCall[\"args\"]?.AsObject",
+          "lineNumber": 221
+        },
+        {
+          "caller": "ParseGeminiResponse",
+          "callee": "string.IsNullOrEmpty",
+          "lineNumber": 223
+        },
+        {
+          "caller": "ParseGeminiResponse",
+          "callee": "responseDto.ToolCalls.Add",
+          "lineNumber": 225
+        },
+        {
+          "caller": "ParseGeminiResponse",
+          "callee": "new AgentToolCallDto",
+          "lineNumber": 225
+        },
+        {
+          "caller": "ParseGeminiResponse",
+          "callee": "new JsonObject",
+          "lineNumber": 228
+        },
+        {
+          "caller": "ParseGeminiResponse",
+          "callee": "contentPart[\"text\"]?.ToString",
+          "lineNumber": 234
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 5,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/IAgentProvider.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 7,
+      "classes": [
+        {
+          "name": "IAgentProvider",
+          "startLine": 6,
+          "endLine": 9,
+          "methods": [
+            "GenerateContentAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IAgentProvider",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/SupplyCoreERP.Mcp.Client.csproj",
+      "language": "csproj",
+      "fileCategory": "config",
+      "totalLines": 19,
+      "nonEmptyLines": 15,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 13,
+      "functions": [
+        {
+          "name": "ConfigureServices",
+          "startLine": 10,
+          "endLine": 14,
+          "params": [
+            "context"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPMcpClientModule",
+          "startLine": 5,
+          "endLine": 15,
+          "methods": [
+            "ConfigureServices"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "ConfigureServices",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPMcpClientModule",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "SupplyCoreERP.abpmdl",
+      "language": "abpmdl",
+      "fileCategory": "code",
+      "totalLines": 104,
+      "nonEmptyLines": 104,
+      "metrics": {}
+    },
+    {
+      "path": "SupplyCoreERP.abpsln",
+      "language": "abpsln",
+      "fileCategory": "code",
+      "totalLines": 58,
+      "nonEmptyLines": 57,
+      "metrics": {}
+    },
+    {
+      "path": "SupplyCoreERP.slnx",
+      "language": "slnx",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 21,
+      "metrics": {}
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 301,
+      "nonEmptyLines": 274,
+      "functions": [
+        {
+          "name": "MedicineAppService_Integration_Tests",
+          "startLine": 21,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "Should_Get_List_Of_Medicines",
+          "startLine": 25,
+          "endLine": 39,
+          "params": []
+        },
+        {
+          "name": "Should_Create_Medicine_When_Input_Is_Valid",
+          "startLine": 40,
+          "endLine": 63,
+          "params": []
+        },
+        {
+          "name": "Should_Update_Medicine_When_Input_Is_Valid",
+          "startLine": 64,
+          "endLine": 88,
+          "params": []
+        },
+        {
+          "name": "Should_Approve_Pending_Medicine",
+          "startLine": 89,
+          "endLine": 113,
+          "params": []
+        },
+        {
+          "name": "Should_Get_Medicine_Detail_Successfully",
+          "startLine": 114,
+          "endLine": 127,
+          "params": []
+        },
+        {
+          "name": "Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+          "startLine": 128,
+          "endLine": 140,
+          "params": []
+        },
+        {
+          "name": "Should_Delete_Medicine_Successfully",
+          "startLine": 141,
+          "endLine": 167,
+          "params": []
+        },
+        {
+          "name": "Should_Reject_Pending_Medicine_Successfully",
+          "startLine": 168,
+          "endLine": 192,
+          "params": []
+        },
+        {
+          "name": "Should_Toggle_Active_Medicine_Successfully",
+          "startLine": 193,
+          "endLine": 207,
+          "params": []
+        },
+        {
+          "name": "Should_Get_Medicine_Summary_Successfully",
+          "startLine": 208,
+          "endLine": 219,
+          "params": []
+        },
+        {
+          "name": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "startLine": 220,
+          "endLine": 241,
+          "params": []
+        },
+        {
+          "name": "Should_Manage_Units_Via_AppService_Successfully",
+          "startLine": 242,
+          "endLine": 277,
+          "params": []
+        },
+        {
+          "name": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "startLine": 278,
+          "endLine": 300,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "MedicineAppService_Integration_Tests",
+          "startLine": 16,
+          "endLine": 301,
+          "methods": [
+            "MedicineAppService_Integration_Tests",
+            "Should_Get_List_Of_Medicines",
+            "Should_Create_Medicine_When_Input_Is_Valid",
+            "Should_Update_Medicine_When_Input_Is_Valid",
+            "Should_Approve_Pending_Medicine",
+            "Should_Get_Medicine_Detail_Successfully",
+            "Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+            "Should_Delete_Medicine_Successfully",
+            "Should_Reject_Pending_Medicine_Successfully",
+            "Should_Toggle_Active_Medicine_Successfully",
+            "Should_Get_Medicine_Summary_Successfully",
+            "Should_Manage_Ingredients_Via_AppService_Successfully",
+            "Should_Manage_Units_Via_AppService_Successfully",
+            "Should_Manage_Registrations_Via_AppService_Successfully"
+          ],
+          "properties": [
+            "_medicineAppService"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Should_Get_List_Of_Medicines",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Create_Medicine_When_Input_Is_Valid",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Update_Medicine_When_Input_Is_Valid",
+          "line": 64,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Approve_Pending_Medicine",
+          "line": 89,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Get_Medicine_Detail_Successfully",
+          "line": 114,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+          "line": 128,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Delete_Medicine_Successfully",
+          "line": 141,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Reject_Pending_Medicine_Successfully",
+          "line": 168,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Toggle_Active_Medicine_Successfully",
+          "line": 193,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Get_Medicine_Summary_Successfully",
+          "line": 208,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "line": 220,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Manage_Units_Via_AppService_Successfully",
+          "line": 242,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "line": 278,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineAppService_Integration_Tests",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "MedicineAppService_Integration_Tests",
+          "callee": "GetRequiredService<IMedicineAppService>",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Should_Get_List_Of_Medicines",
+          "callee": "_medicineAppService.GetListAsync",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Should_Get_List_Of_Medicines",
+          "callee": "new GetMedicineListDto",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Should_Get_List_Of_Medicines",
+          "callee": "result.TotalCount.ShouldBeGreaterThan",
+          "lineNumber": 37
+        },
+        {
+          "caller": "Should_Get_List_Of_Medicines",
+          "callee": "result.Items.ShouldContain",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Should_Create_Medicine_When_Input_Is_Valid",
+          "callee": "_medicineAppService.CreateAsync",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Should_Create_Medicine_When_Input_Is_Valid",
+          "callee": "new CreateUpdateMedicineDto",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Should_Create_Medicine_When_Input_Is_Valid",
+          "callee": "result.ShouldNotBeNull",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Should_Create_Medicine_When_Input_Is_Valid",
+          "callee": "result.Id.ShouldNotBe",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Should_Create_Medicine_When_Input_Is_Valid",
+          "callee": "result.Name.ShouldBe",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Should_Create_Medicine_When_Input_Is_Valid",
+          "callee": "result.Code.ShouldNotBeNullOrWhiteSpace",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Should_Update_Medicine_When_Input_Is_Valid",
+          "callee": "_medicineAppService.UpdateAsync",
+          "lineNumber": 69
+        },
+        {
+          "caller": "Should_Update_Medicine_When_Input_Is_Valid",
+          "callee": "new CreateUpdateMedicineDto",
+          "lineNumber": 71
+        },
+        {
+          "caller": "Should_Update_Medicine_When_Input_Is_Valid",
+          "callee": "result.ShouldNotBeNull",
+          "lineNumber": 86
+        },
+        {
+          "caller": "Should_Update_Medicine_When_Input_Is_Valid",
+          "callee": "result.Name.ShouldBe",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Should_Approve_Pending_Medicine",
+          "callee": "_medicineAppService.CreateAsync",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Should_Approve_Pending_Medicine",
+          "callee": "new CreateUpdateMedicineDto",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Should_Approve_Pending_Medicine",
+          "callee": "_medicineAppService.ApproveAsync",
+          "lineNumber": 108
+        },
+        {
+          "caller": "Should_Approve_Pending_Medicine",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 111
+        },
+        {
+          "caller": "Should_Approve_Pending_Medicine",
+          "callee": "updated.Status.ShouldBe",
+          "lineNumber": 112
+        },
+        {
+          "caller": "Should_Get_Medicine_Detail_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 119
+        },
+        {
+          "caller": "Should_Get_Medicine_Detail_Successfully",
+          "callee": "result.ShouldNotBeNull",
+          "lineNumber": 122
+        },
+        {
+          "caller": "Should_Get_Medicine_Detail_Successfully",
+          "callee": "result.Id.ShouldBe",
+          "lineNumber": 123
+        },
+        {
+          "caller": "Should_Get_Medicine_Detail_Successfully",
+          "callee": "result.Name.ShouldBe",
+          "lineNumber": 124
+        },
+        {
+          "caller": "Should_Get_Medicine_Detail_Successfully",
+          "callee": "result.Code.ShouldBe",
+          "lineNumber": 125
+        },
+        {
+          "caller": "Should_Get_Medicine_Detail_Successfully",
+          "callee": "result.HasTransactions.ShouldBeFalse",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+          "callee": "Guid.NewGuid",
+          "lineNumber": 133
+        },
+        {
+          "caller": "Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+          "callee": "Should.ThrowAsync<Volo.Abp.Domain.Entities.EntityNotFoundException>",
+          "lineNumber": 136
+        },
+        {
+          "caller": "Should_Throw_EntityNotFoundException_When_Get_NonExistent_Medicine",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 138
+        },
+        {
+          "caller": "Should_Delete_Medicine_Successfully",
+          "callee": "_medicineAppService.CreateAsync",
+          "lineNumber": 146
+        },
+        {
+          "caller": "Should_Delete_Medicine_Successfully",
+          "callee": "new CreateUpdateMedicineDto",
+          "lineNumber": 146
+        },
+        {
+          "caller": "Should_Delete_Medicine_Successfully",
+          "callee": "_medicineAppService.DeleteAsync",
+          "lineNumber": 160
+        },
+        {
+          "caller": "Should_Delete_Medicine_Successfully",
+          "callee": "Should.ThrowAsync<Volo.Abp.Domain.Entities.EntityNotFoundException>",
+          "lineNumber": 163
+        },
+        {
+          "caller": "Should_Delete_Medicine_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 165
+        },
+        {
+          "caller": "Should_Reject_Pending_Medicine_Successfully",
+          "callee": "_medicineAppService.CreateAsync",
+          "lineNumber": 173
+        },
+        {
+          "caller": "Should_Reject_Pending_Medicine_Successfully",
+          "callee": "new CreateUpdateMedicineDto",
+          "lineNumber": 173
+        },
+        {
+          "caller": "Should_Reject_Pending_Medicine_Successfully",
+          "callee": "_medicineAppService.RejectAsync",
+          "lineNumber": 187
+        },
+        {
+          "caller": "Should_Reject_Pending_Medicine_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 190
+        },
+        {
+          "caller": "Should_Reject_Pending_Medicine_Successfully",
+          "callee": "updated.Status.ShouldBe",
+          "lineNumber": 191
+        },
+        {
+          "caller": "Should_Toggle_Active_Medicine_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 198
+        },
+        {
+          "caller": "Should_Toggle_Active_Medicine_Successfully",
+          "callee": "_medicineAppService.ToggleActiveAsync",
+          "lineNumber": 202
+        },
+        {
+          "caller": "Should_Toggle_Active_Medicine_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 205
+        },
+        {
+          "caller": "Should_Toggle_Active_Medicine_Successfully",
+          "callee": "updated.IsActive.ShouldBe",
+          "lineNumber": 206
+        },
+        {
+          "caller": "Should_Get_Medicine_Summary_Successfully",
+          "callee": "_medicineAppService.GetSummaryAsync",
+          "lineNumber": 213
+        },
+        {
+          "caller": "Should_Get_Medicine_Summary_Successfully",
+          "callee": "result.ShouldNotBeNull",
+          "lineNumber": 216
+        },
+        {
+          "caller": "Should_Get_Medicine_Summary_Successfully",
+          "callee": "result.TotalCount.ShouldBeGreaterThan",
+          "lineNumber": 217
+        },
+        {
+          "caller": "Should_Get_Medicine_Summary_Successfully",
+          "callee": "result.TotalActive.ShouldBeGreaterThan",
+          "lineNumber": 218
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "_medicineAppService.AddIngredientAsync",
+          "lineNumber": 225
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "new CreateUpdateMedicineIngredientDto",
+          "lineNumber": 225
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 231
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "medicine.Ingredients.Count.ShouldBe",
+          "lineNumber": 232
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "medicine.Ingredients.First().ActiveIngredientId.ShouldBe",
+          "lineNumber": 233
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "medicine.Ingredients.First",
+          "lineNumber": 233
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "_medicineAppService.RemoveIngredientAsync",
+          "lineNumber": 236
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 239
+        },
+        {
+          "caller": "Should_Manage_Ingredients_Via_AppService_Successfully",
+          "callee": "updatedMedicine.Ingredients.Count.ShouldBe",
+          "lineNumber": 240
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "_medicineAppService.AddUnitAsync",
+          "lineNumber": 247
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "new CreateUpdateMedicineUnitDto",
+          "lineNumber": 247
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 255
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "medicine.Units.Count.ShouldBe",
+          "lineNumber": 256
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "medicine.Units.First().UnitId.ShouldBe",
+          "lineNumber": 257
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "medicine.Units.First",
+          "lineNumber": 257
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "medicine.Units.First().ConversionFactor.ShouldBe",
+          "lineNumber": 258
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "medicine.Units.First",
+          "lineNumber": 258
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "_medicineAppService.UpdateUnitAsync",
+          "lineNumber": 261
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "new CreateUpdateMedicineUnitDto",
+          "lineNumber": 261
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 268
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "medicineUpdated.Units.First().ConversionFactor.ShouldBe",
+          "lineNumber": 269
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "medicineUpdated.Units.First",
+          "lineNumber": 269
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "_medicineAppService.RemoveUnitAsync",
+          "lineNumber": 272
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "_medicineAppService.GetAsync",
+          "lineNumber": 275
+        },
+        {
+          "caller": "Should_Manage_Units_Via_AppService_Successfully",
+          "callee": "medicineDeleted.Units.Count.ShouldBe",
+          "lineNumber": 276
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "_medicineAppService.GetRegistrationsAsync",
+          "lineNumber": 283
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "regs.Count.ShouldBeGreaterThan",
+          "lineNumber": 284
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "regs.First().RegistrationNumber.ShouldBe",
+          "lineNumber": 285
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "regs.First",
+          "lineNumber": 285
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "_medicineAppService.AddRegistrationAsync",
+          "lineNumber": 288
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "new AddMedicineRegistrationDto",
+          "lineNumber": 288
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "DateTime.Now.AddYears",
+          "lineNumber": 292
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "_medicineAppService.GetRegistrationsAsync",
+          "lineNumber": 297
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "updatedRegs.Count.ShouldBe",
+          "lineNumber": 298
+        },
+        {
+          "caller": "Should_Manage_Registrations_Via_AppService_Successfully",
+          "callee": "updatedRegs.ShouldContain",
+          "lineNumber": 299
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 14,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 97,
+      "nonEmptyLines": 91,
+      "functions": [
+        {
+          "name": "CustomerAppService_Integration_Tests",
+          "startLine": 21,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "Should_Get_List_Of_Customers",
+          "startLine": 25,
+          "endLine": 39,
+          "params": []
+        },
+        {
+          "name": "Should_Create_Customer_With_Valid_DTO",
+          "startLine": 40,
+          "endLine": 67,
+          "params": []
+        },
+        {
+          "name": "Should_Update_Customer_Successfully",
+          "startLine": 68,
+          "endLine": 96,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "CustomerAppService_Integration_Tests",
+          "startLine": 16,
+          "endLine": 97,
+          "methods": [
+            "CustomerAppService_Integration_Tests",
+            "Should_Get_List_Of_Customers",
+            "Should_Create_Customer_With_Valid_DTO",
+            "Should_Update_Customer_Successfully"
+          ],
+          "properties": [
+            "_customerAppService"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Should_Get_List_Of_Customers",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Create_Customer_With_Valid_DTO",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Update_Customer_Successfully",
+          "line": 68,
+          "isDefault": false
+        },
+        {
+          "name": "CustomerAppService_Integration_Tests",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CustomerAppService_Integration_Tests",
+          "callee": "GetRequiredService<ICustomerAppService>",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Should_Get_List_Of_Customers",
+          "callee": "_customerAppService.GetListAsync",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Should_Get_List_Of_Customers",
+          "callee": "new GetCustomerListDto",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Should_Get_List_Of_Customers",
+          "callee": "result.TotalCount.ShouldBeGreaterThan",
+          "lineNumber": 37
+        },
+        {
+          "caller": "Should_Get_List_Of_Customers",
+          "callee": "result.Items.ShouldContain",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Should_Create_Customer_With_Valid_DTO",
+          "callee": "_customerAppService.CreateAsync",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Should_Create_Customer_With_Valid_DTO",
+          "callee": "new CreateUpdateCustomerDto",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Should_Create_Customer_With_Valid_DTO",
+          "callee": "result.ShouldNotBeNull",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Should_Create_Customer_With_Valid_DTO",
+          "callee": "result.Id.ShouldNotBe",
+          "lineNumber": 63
+        },
+        {
+          "caller": "Should_Create_Customer_With_Valid_DTO",
+          "callee": "result.Name.ShouldBe",
+          "lineNumber": 64
+        },
+        {
+          "caller": "Should_Create_Customer_With_Valid_DTO",
+          "callee": "result.Code.ShouldNotBeNullOrWhiteSpace",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Should_Create_Customer_With_Valid_DTO",
+          "callee": "result.PriceListId.ShouldBe",
+          "lineNumber": 66
+        },
+        {
+          "caller": "Should_Update_Customer_Successfully",
+          "callee": "_customerAppService.UpdateAsync",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Should_Update_Customer_Successfully",
+          "callee": "new CreateUpdateCustomerDto",
+          "lineNumber": 75
+        },
+        {
+          "caller": "Should_Update_Customer_Successfully",
+          "callee": "result.ShouldNotBeNull",
+          "lineNumber": 93
+        },
+        {
+          "caller": "Should_Update_Customer_Successfully",
+          "callee": "result.Name.ShouldBe",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Should_Update_Customer_Successfully",
+          "callee": "result.DebtLimit.ShouldBe",
+          "lineNumber": 95
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 92,
+      "nonEmptyLines": 86,
+      "functions": [
+        {
+          "name": "SupplierAppService_Integration_Tests",
+          "startLine": 21,
+          "endLine": 24,
+          "params": []
+        },
+        {
+          "name": "Should_Get_List_Of_Suppliers",
+          "startLine": 25,
+          "endLine": 39,
+          "params": []
+        },
+        {
+          "name": "Should_Create_Supplier_With_Valid_DTO",
+          "startLine": 40,
+          "endLine": 64,
+          "params": []
+        },
+        {
+          "name": "Should_Update_Supplier_Successfully",
+          "startLine": 65,
+          "endLine": 91,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplierAppService_Integration_Tests",
+          "startLine": 16,
+          "endLine": 92,
+          "methods": [
+            "SupplierAppService_Integration_Tests",
+            "Should_Get_List_Of_Suppliers",
+            "Should_Create_Supplier_With_Valid_DTO",
+            "Should_Update_Supplier_Successfully"
+          ],
+          "properties": [
+            "_supplierAppService"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Should_Get_List_Of_Suppliers",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Create_Supplier_With_Valid_DTO",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "Should_Update_Supplier_Successfully",
+          "line": 65,
+          "isDefault": false
+        },
+        {
+          "name": "SupplierAppService_Integration_Tests",
+          "line": 16,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SupplierAppService_Integration_Tests",
+          "callee": "GetRequiredService<ISupplierAppService>",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Should_Get_List_Of_Suppliers",
+          "callee": "_supplierAppService.GetListAsync",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Should_Get_List_Of_Suppliers",
+          "callee": "new GetSupplierListDto",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Should_Get_List_Of_Suppliers",
+          "callee": "result.TotalCount.ShouldBeGreaterThan",
+          "lineNumber": 37
+        },
+        {
+          "caller": "Should_Get_List_Of_Suppliers",
+          "callee": "result.Items.ShouldContain",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Should_Create_Supplier_With_Valid_DTO",
+          "callee": "_supplierAppService.CreateAsync",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Should_Create_Supplier_With_Valid_DTO",
+          "callee": "new CreateUpdateSupplierDto",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Should_Create_Supplier_With_Valid_DTO",
+          "callee": "result.ShouldNotBeNull",
+          "lineNumber": 60
+        },
+        {
+          "caller": "Should_Create_Supplier_With_Valid_DTO",
+          "callee": "result.Id.ShouldNotBe",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Should_Create_Supplier_With_Valid_DTO",
+          "callee": "result.Name.ShouldBe",
+          "lineNumber": 62
+        },
+        {
+          "caller": "Should_Create_Supplier_With_Valid_DTO",
+          "callee": "result.Code.ShouldNotBeNullOrWhiteSpace",
+          "lineNumber": 63
+        },
+        {
+          "caller": "Should_Update_Supplier_Successfully",
+          "callee": "_supplierAppService.UpdateAsync",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Should_Update_Supplier_Successfully",
+          "callee": "new CreateUpdateSupplierDto",
+          "lineNumber": 72
+        },
+        {
+          "caller": "Should_Update_Supplier_Successfully",
+          "callee": "result.ShouldNotBeNull",
+          "lineNumber": 88
+        },
+        {
+          "caller": "Should_Update_Supplier_Successfully",
+          "callee": "result.Name.ShouldBe",
+          "lineNumber": 89
+        },
+        {
+          "caller": "Should_Update_Supplier_Successfully",
+          "callee": "result.DebtLimit.ShouldBe",
+          "lineNumber": 90
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 4,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.abppkg",
+      "language": "abppkg",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "metrics": {}
+    }
+  ]
+}

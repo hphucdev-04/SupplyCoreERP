@@ -15,6 +15,8 @@ export interface BinDto extends EntityDto<string> {
   length?: number;
   rotation?: number;
   maxSKU?: number;
+  height?: number;
+  maxVolume?: number;
   isBlocked?: boolean;
 }
 
@@ -27,6 +29,7 @@ export interface CreateUpdateBinDto {
   length?: number;
   rotation?: number;
   maxSKU?: number;
+  height?: number;
   isBlocked?: boolean;
 }
 

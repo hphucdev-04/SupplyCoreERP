@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "language": "csharp",
+      "sizeLines": 160,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "language": "csharp",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "language": "csharp",
+      "sizeLines": 287,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "language": "csharp",
+      "sizeLines": 119,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs",
+      "language": "csharp",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "language": "csharp",
+      "sizeLines": 200,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "language": "csharp",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "language": "csharp",
+      "sizeLines": 247,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "language": "csharp",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettings.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 137,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.csproj",
+      "language": "csproj",
+      "sizeLines": 33,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs",
+      "language": "csharp",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "language": "csharp",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/EntityFrameworkCoreSupplyCoreERPDbSchemaMigrator.cs",
+      "language": "csharp",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPDbContext.cs",
+      "language": "csharp",
+      "sizeLines": 901,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPDbContextFactory.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPEfCoreEntityExtensionMappings.cs",
+      "language": "csharp",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreModule.cs",
+      "language": "csharp",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260416064025_Add_DocumentSequence_Table.cs",
+      "language": "csharp",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260416064025_Add_DocumentSequence_Table.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4688,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260417172129_Initial.cs",
+      "language": "csharp",
+      "sizeLines": 2722,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260417172129_Initial.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4688,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260421021917_Add-SequenceCode.cs",
+      "language": "csharp",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs": [],
+    "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs": [],
+    "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs": [],
+    "src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs": [],
+    "src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs": [],
+    "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs": [],
+    "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs": [],
+    "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs": [],
+    "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs": [],
+    "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettings.cs": [],
+    "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg": [],
+    "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg.analyze.json": [],
+    "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.csproj": [],
+    "src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs": [],
+    "src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/EntityFrameworkCoreSupplyCoreERPDbSchemaMigrator.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPDbContext.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPDbContextFactory.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPEfCoreEntityExtensionMappings.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreModule.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260416064025_Add_DocumentSequence_Table.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260416064025_Add_DocumentSequence_Table.Designer.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260417172129_Initial.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260417172129_Initial.Designer.cs": [],
+    "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260421021917_Add-SequenceCode.cs": []
+  }
+}

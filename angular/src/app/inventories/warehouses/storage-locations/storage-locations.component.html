@@ -431,8 +431,9 @@
               >
                 <div class="br-info">
                   <span class="br-code">{{ bin.code }}</span>
-                  <span class="br-size">{{ toM(bin.width) }}×{{ toM(bin.length) }}m</span>
-                  <span class="br-sku" *ngIf="bin.maxSKU > 0">≤{{ bin.maxSKU }}</span>
+                  <span class="br-size">{{ toM(bin.width) }}×{{ toM(bin.length) }}x{{ toM(bin.height) }}</span>
+                  <span class="br-sku" *ngIf="bin.maxSKU > 0">≤{{ bin.maxSKU }} SKU</span>
+                  <span class="br-vol" *ngIf="bin.maxVolume > 0">≤{{ bin.maxVolume | number:'1.0-0' }} cm³</span>
                   <span class="br-blocked" *ngIf="bin.isBlocked">BLOCKED</span>
                 </div>
                 <div class="zr-actions" (click)="$event.stopPropagation()">
@@ -466,7 +467,7 @@
   *ngIf="drawerType === 'ZONE'"
   [isOpen]="true"
   [title]="selectedZone?.id ? '::EditZone' : '::NewZone'"
-  width="sm"
+  width="md"
   [saveDisabled]="form?.invalid"
   (close)="closeDrawer()"
   (save)="saveZone()"
@@ -581,7 +582,7 @@
   *ngIf="drawerType === 'BIN'"
   [isOpen]="true"
   [title]="selectedBin?.id ? '::EditBin' : '::NewBin'"
-  width="sm"
+  width="md"
   [saveDisabled]="form?.invalid"
   (close)="closeDrawer()"
   (save)="saveBin()"
@@ -598,7 +599,7 @@
     <div class="drawer-divider">Position</div>
     <div class="df-row mb-3">
       <div class="df">
-        <label class="dl">X (m)</label
+        <label class="dl">X (m)<span class="req">*</span></label
         ><input
           type="number"
           step="0.1"
@@ -607,7 +608,7 @@
         />
       </div>
       <div class="df">
-        <label class="dl">Y (m)</label
+        <label class="dl">Y (m)<span class="req">*</span></label
         ><input
           type="number"
           step="0.1"
@@ -620,25 +621,35 @@
     <div class="drawer-divider">Dimensions</div>
     <div class="df-row mb-3">
       <div class="df">
-        <label class="dl">Width (m)</label
+        <label class="dl">Width (cm)<span class="req">*</span></label
         ><input
           type="number"
-          step="0.5"
-          min="0.5"
+          step="5"
+          min="10"
           class="form-control form-control-sm"
           formControlName="width"
         />
       </div>
       <div class="df">
-        <label class="dl">Length (m)</label
+        <label class="dl">Length (cm)<span class="req">*</span></label
         ><input
           type="number"
-          step="0.5"
-          min="0.5"
+          step="5"
+          min="10"
           class="form-control form-control-sm"
           formControlName="length"
         />
       </div>
+      <div class="df">
+      <label class="dl">Height (cm)<span class="req">*</span></label>
+      <input
+        type="number"
+        min="0"
+        step="1"
+        class="form-control form-control-sm"
+        formControlName="height"
+      />
+    </div>
     </div>
 
     <div class="df mb-3">
@@ -667,6 +678,22 @@
         formControlName="maxSKU"
       />
     </div>
+
+   <div class="df-row mb-3">
+     <div class="df">
+      <label class="dl">Sức chứa tối đa (cm³)</label>
+      <div class="form-control form-control-sm fw-bold">
+        {{ calculatedVolume | number:'1.0-0' }} cm³
+      </div>
+    </div>
+
+    <div class="df">
+      <label class="dl">Sức chứa cho phép(cm³)</label>
+      <div class="form-control form-control-sm fw-bold">
+        {{ calculatedVolume * 0.8 | number:'1.0-0' }} cm³
+      </div>
+    </div>
+   </div>
 
     <div class="form-check form-switch">
       <input class="form-check-input" type="checkbox" id="binBlocked" formControlName="isBlocked" />

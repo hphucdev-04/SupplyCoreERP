@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.csproj",
+      "language": "csproj",
+      "sizeLines": 24,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs",
+      "language": "csharp",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs",
+      "language": "csharp",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs",
+      "language": "csharp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs",
+      "language": "csharp",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs",
+      "language": "csharp",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "language": "csharp",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "language": "csharp",
+      "sizeLines": 701,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.csproj": [],
+    "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs": [],
+    "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs": [],
+    "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Agent/AgentAppService.cs": []
+  }
+}

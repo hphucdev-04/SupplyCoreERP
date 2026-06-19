@@ -179,7 +179,7 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
     {
         Bin bin = await _warehouseManager.CreateBinAsync(
             input.WarehouseId, input.ZoneId,
-            input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation, input.MaxSKU);
+            input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation, input.MaxSKU, input.Height);
 
         await _binRepo.InsertAsync(bin);
 
@@ -199,7 +199,7 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
         await _warehouseManager.UpdateBinAsync(
             bin, input.ZoneId,
             input.PositionX, input.PositionY, input.Width, input.Length, input.Rotation,
-            input.MaxSKU, input.IsBlocked);
+            input.MaxSKU, input.Height, input.IsBlocked);
 
         await _binRepo.UpdateAsync(bin);
 

@@ -1,0 +1,536 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Orders/PurchaseReturnType.cs",
+      "type": "file",
+      "metadata": {
+        "name": "PurchaseReturnType.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/PurchaseReturnType.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Orders/RecallLevel.cs",
+      "type": "file",
+      "metadata": {
+        "name": "RecallLevel.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/RecallLevel.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Orders/SalesOrderStatus.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SalesOrderStatus.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/SalesOrderStatus.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Orders/SalesRecallStatus.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SalesRecallStatus.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/SalesRecallStatus.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Partner/CustomerType.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CustomerType.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Partner/CustomerType.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Partner/Gender.cs",
+      "type": "file",
+      "metadata": {
+        "name": "Gender.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Partner/Gender.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/PriceLists/CurrencyType.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CurrencyType.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/PriceLists/CurrencyType.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Products/ProductType.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ProductType.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Products/ProductType.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/ApprovalStatus.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ApprovalStatus.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/ApprovalStatus.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/BatchQAStatus.cs",
+      "type": "file",
+      "metadata": {
+        "name": "BatchQAStatus.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/BatchQAStatus.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/InventoryTransactionType.cs",
+      "type": "file",
+      "metadata": {
+        "name": "InventoryTransactionType.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/InventoryTransactionType.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/TicketType.cs",
+      "type": "file",
+      "metadata": {
+        "name": "TicketType.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/TicketType.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/ZoneType.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ZoneType.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/ZoneType.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "enums"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineApprovedEto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineApprovedEto.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineApprovedEto.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "etos"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineCreatedEto.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "etos"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs:MedicineApprovedEto",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineApprovedEto",
+        "path": "src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs",
+        "summary": "Lớp MedicineApprovedEto thuộc thành phần MedicineCreatedEto.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "etos"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain.Shared/Localization/Permissions/en.json",
+      "type": "config",
+      "metadata": {
+        "name": "en.json",
+        "path": "src/SupplyCoreERP.Domain.Shared/Localization/Permissions/en.json",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "simple",
+        "language": "json"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain.Shared/Localization/Permissions/vi.json",
+      "type": "config",
+      "metadata": {
+        "name": "vi.json",
+        "path": "src/SupplyCoreERP.Domain.Shared/Localization/Permissions/vi.json",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "simple",
+        "language": "json"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain.Shared/Localization/Properties/en.json",
+      "type": "config",
+      "metadata": {
+        "name": "en.json",
+        "path": "src/SupplyCoreERP.Domain.Shared/Localization/Properties/en.json",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "complex",
+        "language": "json"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain.Shared/Localization/Properties/vi.json",
+      "type": "config",
+      "metadata": {
+        "name": "vi.json",
+        "path": "src/SupplyCoreERP.Domain.Shared/Localization/Properties/vi.json",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "complex",
+        "language": "json"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERP/en.json",
+      "type": "config",
+      "metadata": {
+        "name": "en.json",
+        "path": "src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERP/en.json",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "moderate",
+        "language": "json"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERP/vi.json",
+      "type": "config",
+      "metadata": {
+        "name": "vi.json",
+        "path": "src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERP/vi.json",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "moderate",
+        "language": "json"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPResource.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "localization"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs:SupplyCoreERPResource",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPResource",
+        "path": "src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs",
+        "summary": "Lớp SupplyCoreERPResource thuộc thành phần SupplyCoreERPResource.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "localization"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MultiTenancyConsts.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs",
+        "summary": "Tệp chứa các hằng số, cấu hình và giới hạn nghiệp vụ dùng chung cho thực thể multi tenancy.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "constants"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs:MultiTenancyConsts",
+      "type": "class",
+      "metadata": {
+        "name": "MultiTenancyConsts",
+        "path": "src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs",
+        "summary": "Lớp hằng số MultiTenancyConsts định nghĩa các giá trị tĩnh cấu hình cho multi tenancy..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "constants"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.abppkg",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERP.Domain.Shared.abppkg",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.abppkg",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "simple",
+        "language": "abppkg"
+      }
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.abppkg.analyze.json",
+      "type": "config",
+      "metadata": {
+        "name": "SupplyCoreERP.Domain.Shared.abppkg.analyze.json",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.abppkg.analyze.json",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "moderate",
+        "language": "json"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs:MedicineApprovedEto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs:MedicineApprovedEto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs:SupplyCoreERPResource",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs:SupplyCoreERPResource",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs:MultiTenancyConsts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs:MultiTenancyConsts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

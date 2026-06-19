@@ -109,6 +109,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             input.UsageRoute,
             input.StorageCondition,
             input.IsPrescriptionDrug,
+            input.BaseUnitVolume,
             input.RegistrationValidFrom,
             input.RegistrationValidTo,
             input.RegistrationNote
@@ -142,6 +143,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             input.UsageRoute,
             input.StorageCondition,
             input.IsPrescriptionDrug,
+            input.BaseUnitVolume,
             input.RegistrationValidFrom,
             input.RegistrationValidTo,
             input.RegistrationNote
@@ -253,7 +255,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        await _medicineManager.AddUnitAsync(medicine, input.UnitId, input.ConversionFactor, input.Level);
+        await _medicineManager.AddUnitAsync(medicine, input.UnitId, input.ConversionFactor, input.Level, input.Volume);
 
         await _medicineRepo.UpdateAsync(medicine);
     }
@@ -271,7 +273,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        await _medicineManager.UpdateUnitAsync(medicine, unitId, input.ConversionFactor, input.Level);
+        await _medicineManager.UpdateUnitAsync(medicine, unitId, input.ConversionFactor, input.Level, input.Volume);
 
         await _medicineRepo.UpdateAsync(medicine);
     }

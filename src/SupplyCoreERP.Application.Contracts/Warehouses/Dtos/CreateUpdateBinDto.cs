@@ -23,6 +23,7 @@ public class CreateUpdateBinDto
     public float Rotation { get; set; }
 
     public int MaxSKU { get; set; }
+    public int Height { get; set; }
     public bool IsBlocked { get; set; }
 }
 

@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "angular/src/app/inventories/tickets/tickets.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets.component.ts",
+      "language": "typescript",
+      "sizeLines": 272,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.html",
+      "language": "html",
+      "sizeLines": 678,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.scss",
+      "language": "css",
+      "sizeLines": 1249,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+      "language": "typescript",
+      "sizeLines": 1134,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/warehouses.component.html",
+      "language": "html",
+      "sizeLines": 265,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/warehouses.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/warehouses.component.ts",
+      "language": "typescript",
+      "sizeLines": 287,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customer-details/customer-details.component.html",
+      "language": "html",
+      "sizeLines": 270,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customer-details/customer-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customers.component.html",
+      "language": "html",
+      "sizeLines": 332,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customers.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customers.component.ts",
+      "language": "typescript",
+      "sizeLines": 272,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/partner.routes.ts",
+      "language": "typescript",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.html",
+      "language": "html",
+      "sizeLines": 586,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 516,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/suppliers.component.html",
+      "language": "html",
+      "sizeLines": 304,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/suppliers.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/suppliers.component.ts",
+      "language": "typescript",
+      "sizeLines": 268,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/procurement.routes.ts",
+      "language": "typescript",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.html",
+      "language": "html",
+      "sizeLines": 249,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+      "language": "typescript",
+      "sizeLines": 241,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "angular/src/app/inventories/tickets/tickets.component.scss": [],
+    "angular/src/app/inventories/tickets/tickets.component.ts": [],
+    "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.html": [],
+    "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.scss": [],
+    "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts": [],
+    "angular/src/app/inventories/warehouses/warehouses.component.html": [],
+    "angular/src/app/inventories/warehouses/warehouses.component.scss": [],
+    "angular/src/app/inventories/warehouses/warehouses.component.ts": [],
+    "angular/src/app/partners/customers/customer-details/customer-details.component.html": [],
+    "angular/src/app/partners/customers/customer-details/customer-details.component.scss": [],
+    "angular/src/app/partners/customers/customer-details/customer-details.component.ts": [],
+    "angular/src/app/partners/customers/customers.component.html": [],
+    "angular/src/app/partners/customers/customers.component.scss": [],
+    "angular/src/app/partners/customers/customers.component.ts": [],
+    "angular/src/app/partners/partner.routes.ts": [],
+    "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.html": [],
+    "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.scss": [],
+    "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts": [],
+    "angular/src/app/partners/suppliers/suppliers.component.html": [],
+    "angular/src/app/partners/suppliers/suppliers.component.scss": [],
+    "angular/src/app/partners/suppliers/suppliers.component.ts": [],
+    "angular/src/app/procurement/procurement.routes.ts": [],
+    "angular/src/app/procurement/purchase-orders/purchase-orders.component.html": [],
+    "angular/src/app/procurement/purchase-orders/purchase-orders.component.scss": [],
+    "angular/src/app/procurement/purchase-orders/purchase-orders.component.ts": []
+  }
+}

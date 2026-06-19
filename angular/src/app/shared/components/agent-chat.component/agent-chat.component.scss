@@ -1,0 +1,444 @@
+.ai-chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  position: relative;
+  background-color: #f8fafc;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid #e2e8f0;
+}
+
+.chat-messages {
+  flex: 1;
+  overflow-y: auto;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+
+  &::-webkit-scrollbar {
+    width: 4px;
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  &::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 2px;
+  }
+  &::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+  }
+  &::-webkit-scrollbar-button {
+    display: none !important;
+    height: 0 !important;
+    width: 0 !important;
+  }
+}
+
+.message-row {
+  display: flex;
+  width: 100%;
+
+  &--user {
+    justify-content: flex-end;
+  }
+
+  &:not(&--user) {
+    justify-content: flex-start;
+  }
+}
+
+.message-bubble {
+  max-width: 80%;
+  font-size: 14px;
+  line-height: 1.5;
+  word-break: break-word;
+  background: linear-gradient(135deg, #0ea5e9 0%, #2563eb 100%);
+  color: #ffffff;
+  border-radius: 16px;
+  border-bottom-right-radius: 4px;
+  box-shadow: 0 2px 8px rgba(37, 99, 235, 0.12);
+  padding: 10px 14px;
+}
+
+.message-text {
+  max-width: 100%;
+  font-size: 14px;
+  line-height: 1.6;
+  word-break: break-word;
+  background: transparent;
+  color: #1e293b;
+  padding: 4px 0 12px 0;
+
+  ::ng-deep {
+    p {
+      margin-bottom: 8px;
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    table.markdown-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 12px 0;
+      font-size: 13px;
+      background-color: #ffffff;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+      
+      th, td {
+        border: 1px solid #e2e8f0;
+        padding: 8px 12px;
+        text-align: left;
+      }
+
+      th {
+        background-color: #f1f5f9;
+        color: #334155;
+        font-weight: 600;
+      }
+
+      tr:nth-child(even) {
+        background-color: #f8fafc;
+      }
+    }
+    code {
+      background-color: #e2e8f0;
+      color: #ef4444;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 13px;
+    }
+    pre {
+      background-color: #0f172a;
+      color: #38bdf8;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      font-family: monospace;
+      overflow-x: auto;
+      margin: 8px 0;
+      
+      code {
+        background: none;
+        color: inherit;
+        padding: 0;
+        border-radius: 0;
+      }
+    }
+    ul, ol {
+      margin-left: 20px;
+      margin-bottom: 8px;
+    }
+    a {
+      color: #2563eb;
+      text-decoration: underline;
+    }
+  }
+}
+
+.chat-footer {
+  position: relative;
+  background-color: transparent;
+  border-top: none;
+  padding: 0 15px 10px 15px;
+  z-index: 10;
+}
+
+.slide-panel {
+  position: absolute;
+  bottom: 100%;
+  left: 20px;
+  right: 20px;
+  background: #ffffff;
+  border: 1px solid #cbd5e1;
+  border-radius: 12px;
+  box-shadow: 0 -10px 15px -3px rgba(15, 23, 42, 0.04), 0 4px 6px -2px rgba(15, 23, 42, 0.04);
+  z-index: 20;
+  overflow-y: auto;
+  
+  /* Hiệu ứng trượt */
+  transform: translateY(100%) scale(0.98);
+  opacity: 0;
+  visibility: hidden;
+  max-height: 0;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  &--active {
+    transform: translateY(-8px) scale(1);
+    opacity: 1;
+    visibility: visible;
+    max-height: 400px;
+  }
+}
+
+.panel-content {
+  padding: 18px;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  color: #b45309; /* Màu cam mặc định cho Approval */
+
+  &.info {
+    color: #0284c7; /* Màu xanh cho Elicitation */
+  }
+
+  .panel-icon {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+  }
+
+  h6 {
+    font-size: 14px;
+    font-weight: 600;
+    margin: 0;
+  }
+}
+
+.panel-body {
+  font-size: 13px;
+  color: #475569;
+  line-height: 1.5;
+  margin-bottom: 16px;
+  max-height: 240px;
+  overflow-y: auto;
+
+  p {
+    margin: 0 0 8px 0;
+    &.desc {
+      color: #64748b;
+      font-size: 12.5px;
+    }
+  }
+}
+
+.panel-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  border-top: 1px solid #f1f5f9;
+  padding-top: 12px;
+}
+
+/* Form fields trong Elicitation */
+.form-field {
+  margin-bottom: 12px;
+  text-align: left;
+
+  label {
+    display: block;
+    font-size: 12px;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 4px;
+  }
+
+  input {
+    width: 100%;
+    padding: 8px 12px;
+    font-size: 13px;
+    border: 1px solid #cbd5e1;
+    border-radius: 6px;
+    outline: none;
+    transition: border-color 0.2s;
+
+    &:focus {
+      border-color: #0284c7;
+      box-shadow: 0 0 0 2px rgba(2, 132, 199, 0.10);
+    }
+  }
+}
+
+/* Flat Buttons trong panel */
+.btn {
+  padding: 8px 16px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.btn-flat-reject {
+  background-color: #f1f5f9;
+  color: #475569;
+  border: 1px solid #cbd5e1;
+
+  &:hover:not(:disabled) {
+    background-color: #e2e8f0;
+  }
+}
+
+.btn-flat-approve {
+  background-color: #d97706;
+  color: #ffffff;
+
+  &:hover:not(:disabled) {
+    background-color: #b45309;
+  }
+}
+
+.btn-flat-submit {
+  background-color: #0284c7;
+  color: #ffffff;
+
+  &:hover:not(:disabled) {
+    background-color: #0369a1;
+  }
+}
+
+/* 3. Ô nhập chat chính (Input Area) */
+.input-container {
+  display: flex;
+  align-items: center;
+  background-color: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  padding: 10px 14px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.02);
+  transition: all 0.2s ease;
+
+  &:focus-within {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.15);
+  }
+
+  &--disabled {
+    opacity: 0.4;
+    background-color: #e2e8f0 !important;
+    border-color: #cbd5e1 !important;
+    pointer-events: none;
+  }
+
+  textarea {
+    flex: 1;
+    background: none;
+    border: none;
+    outline: none;
+    resize: none;
+    overflow: hidden;
+    font-size: 14px;
+    color: #1e293b;
+    height: 24px;
+    max-height: 120px;
+    line-height: 1.5;
+    font-family: inherit;
+
+    &::placeholder {
+      color: #94a3b8;
+    }
+  }
+}
+
+/* Actions dưới ô nhập chat */
+.footer-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 8px;
+  padding: 0 4px;
+}
+
+.powered-by {
+  font-size: 11px;
+  color: #94a3b8;
+  font-weight: 500;
+}
+
+.btn-clear-chat {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  font-size: 12px;
+  color: #64748b;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  padding: 4px 8px;
+  border-radius: 4px;
+
+  &:hover:not(:disabled) {
+    color: #ef4444;
+    background-color: #e2e8f0;
+  }
+
+  &:disabled {
+    color: #cbd5e1;
+    cursor: not-allowed;
+  }
+
+  .icon-clear {
+    width: 14px;
+    height: 14px;
+  }
+}
+
+.btn-send {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: #0284c7;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  margin-left: 8px;
+  transition: transform 0.15s, color 0.15s;
+
+  &:hover:not(:disabled) {
+    color: #0369a1;
+    transform: scale(1.1);
+  }
+
+  &:disabled {
+    color: #cbd5e1;
+    cursor: not-allowed;
+  }
+}
+
+/* 4. Typing Indicator (Hiệu ứng gõ của AI) */
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 12px;
+
+  span {
+    width: 6px;
+    height: 6px;
+    background-color: #94a3b8;
+    border-radius: 50%;
+    display: inline-block;
+    animation: bounce 1.4s infinite ease-in-out both;
+
+    &:nth-child(1) { animation-delay: -0.32s; }
+    &:nth-child(2) { animation-delay: -0.16s; }
+  }
+}
+
+@keyframes bounce {
+  0%, 80%, 100% { transform: scale(0); }
+  40% { transform: scale(1); }
+}

@@ -393,10 +393,23 @@
           class="form-text text-danger mt-1"
           style="font-size: 11px"
         >
-          <i class="fa fa-lock me-1"></i> Không thể đổi đơn vị gốc vì sản phẩm đã phát sinh giao
-          dịch.
+          <i class="fa fa-lock me-1"></i> Không thể đổi đơn vị gốc vì sản phẩm đã phát sinh giao dịch.
         </div>
       </div>
+      <div class="col-md-6 mb-3">
+        <label class="ph-label ph-label--required">Thể tích Đơn vị gốc (cm³)</label>
+        <input
+          type="number"
+          min="0"
+          step="0.01"
+          class="form-control form-control-sm"
+          formControlName="baseUnitVolume"
+          placeholder="Ví dụ: 18"
+        />
+      </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::DosageForm' | abpLocalization }}</label>
         <select class="form-select form-select-sm" formControlName="dosageFormId">
@@ -404,9 +417,6 @@
           <option *ngFor="let item of dosageForms" [ngValue]="item.id">{{ item.name }}</option>
         </select>
       </div>
-    </div>
-
-    <div class="row">
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{ '::UsageRoute' | abpLocalization }}</label>
         <select class="form-select form-select-sm" formControlName="usageRoute">
@@ -416,6 +426,9 @@
           </option>
         </select>
       </div>
+    </div>
+
+    <div class="row">
       <div class="col-md-6 mb-3">
         <label class="ph-label ph-label--required">{{
           '::StorageCondition' | abpLocalization

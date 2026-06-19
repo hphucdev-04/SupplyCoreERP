@@ -34,7 +34,9 @@
     "@angular/platform-browser-dynamic": "~20.0.0",
     "@angular/router": "~20.0.0",
     "@microsoft/signalr": "^10.0.0",
+    "apexcharts": "^3.45.1",
     "deep-chat": "^2.4.2",
+    "ng-apexcharts": "^1.9.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.0.0",
     "zone.js": "~0.15.0"

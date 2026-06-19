@@ -1,0 +1,548 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "angular/src/app/proxy/active-ingredients/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/active-ingredients/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/agent/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/agent/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/balances/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/balances/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/base-units/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/base-units/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/batches/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/batches/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/categories/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/categories/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/customers/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/customers/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/dosage-forms/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/dosage-forms/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 27,
+      "exports": [
+        {
+          "name": "ActiveIngredients",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Agent",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Balances",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnits",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Batches",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Categories",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Customers",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "DosageForms",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Enums",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Locations",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Manufacturers",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Medicines",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Notifications",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Prices",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "PurchaseOrders",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "PurchaseRequisitions",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "PurchaseReturnRequests",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "PurchaseReturns",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "SalesOrders",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "SalesRecalls",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Settings",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Suppliers",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "System",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Tickets",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Transactions",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "Warehouses",
+          "line": 27,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 26,
+        "exportCount": 26,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/locations/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/locations/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/manufacturers/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/manufacturers/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/notifications/dtos/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/notifications/index.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "exports": [
+        {
+          "name": "Dtos",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

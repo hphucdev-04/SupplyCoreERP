@@ -1,0 +1,49 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Dockerfile.local",
+      "language": "dockerfile",
+      "sizeLines": 17,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.csproj",
+      "language": "csproj",
+      "sizeLines": 67,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/appsettings.Development.json",
+      "language": "json",
+      "sizeLines": 23,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/appsettings.Production.json",
+      "language": "json",
+      "sizeLines": 24,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/appsettings.json",
+      "language": "json",
+      "sizeLines": 21,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/package.json",
+      "language": "json",
+      "sizeLines": 8,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.HttpApi.Host/Dockerfile.local": [],
+    "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.csproj": [],
+    "src/SupplyCoreERP.HttpApi.Host/appsettings.Development.json": [],
+    "src/SupplyCoreERP.HttpApi.Host/appsettings.Production.json": [],
+    "src/SupplyCoreERP.HttpApi.Host/appsettings.json": [],
+    "src/SupplyCoreERP.HttpApi.Host/package.json": []
+  }
+}

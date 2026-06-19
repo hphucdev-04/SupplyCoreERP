@@ -23,6 +23,7 @@ export interface CreateUpdateMedicineDto {
   usageRoute?: UsageRoute;
   storageCondition?: StorageCondition;
   isPrescriptionDrug?: boolean;
+  baseUnitVolume?: number;
   isActive?: boolean;
 }
 
@@ -34,6 +35,7 @@ export interface CreateUpdateMedicineUnitDto {
   unitId: string;
   conversionFactor?: number;
   level: number;
+  volume?: number;
 }
 
 export interface GetMedicineListDto extends PagedAndSortedResultRequestDto {
@@ -75,6 +77,7 @@ export interface MedicineDto extends EntityDto<string> {
   status?: MedicineStatus;
   isActive?: boolean;
   hasTransactions?: boolean;
+  baseUnitVolume?: number;
   creationTime?: string;
   lastModificationTime?: string;
 }
@@ -108,4 +111,5 @@ export interface MedicineUnitDto {
   unitName?: string;
   conversionFactor?: number;
   level?: number;
+  volume?: number;
 }

@@ -1,4 +1,4 @@
-import type { AgentElicitationInputDto, AgentHistoryDto, AgentRequestInputDto, AgentSessionInputDto } from './dtos/models';
+import type { AgentElicitationInputDto, AgentHistoryDto, AgentRequestInputDto, AgentSessionInputDto, AgentSessionPagedInputDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
 
@@ -19,11 +19,11 @@ export class AgentService {
     { apiName: this.apiName,...config });
   
 
-  getHistory = (input: AgentSessionInputDto, config?: Partial<Rest.Config>) =>
+  getHistory = (input: AgentSessionPagedInputDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, AgentHistoryDto>({
       method: 'GET',
       url: '/api/app/agent/history',
-      params: { sessionId: input.sessionId },
+      params: { sessionId: input.sessionId, skipCount: input.skipCount, maxResultCount: input.maxResultCount },
     },
     { apiName: this.apiName,...config });
   
@@ -32,6 +32,15 @@ export class AgentService {
     this.restService.request<any, object>({
       method: 'POST',
       url: '/api/app/agent/reject',
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  resetSession = (input: AgentSessionInputDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, object>({
+      method: 'POST',
+      url: '/api/app/agent/reset-session',
       body: input,
     },
     { apiName: this.apiName,...config });

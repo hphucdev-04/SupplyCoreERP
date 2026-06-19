@@ -1,0 +1,317 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 9,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "angular/src/app/app.config.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 43,
+      "exports": [
+        {
+          "name": "appConfig",
+          "line": 21,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 6,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/app.routes.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 42,
+      "exports": [
+        {
+          "name": "APP_ROUTES",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/common/locale.provider.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 11,
+      "functions": [
+        {
+          "name": "registerLocales",
+          "startLine": 5,
+          "endLine": 12,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "registerLocales",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "registerLocales",
+          "callee": "Promise.resolve().then",
+          "lineNumber": 7
+        },
+        {
+          "caller": "registerLocales",
+          "callee": "Promise.resolve",
+          "lineNumber": 7
+        },
+        {
+          "caller": "registerLocales",
+          "callee": "registerLocaleData",
+          "lineNumber": 8
+        },
+        {
+          "caller": "registerLocales",
+          "callee": "registerLocaleData",
+          "lineNumber": 9
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/common/menu.provider.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 108,
+      "nonEmptyLines": 98,
+      "functions": [
+        {
+          "name": "createMenuGroup",
+          "startLine": 3,
+          "endLine": 38,
+          "params": [
+            "name",
+            "icon",
+            "order",
+            "children",
+            "policy"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "APP_ROUTES",
+          "line": 40,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "createMenuGroup",
+          "callee": "name.toLowerCase",
+          "lineNumber": 11
+        },
+        {
+          "caller": "createMenuGroup",
+          "callee": "children.map",
+          "lineNumber": 28
+        },
+        {
+          "caller": "createMenuGroup",
+          "callee": "c.name.toLowerCase",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/common/route.provider.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 12,
+      "functions": [
+        {
+          "name": "configureRoutes",
+          "startLine": 11,
+          "endLine": 14,
+          "params": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "APP_ROUTE_PROVIDER",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "configureRoutes",
+          "callee": "inject",
+          "lineNumber": 12
+        },
+        {
+          "caller": "configureRoutes",
+          "callee": "routes.add",
+          "lineNumber": 13
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 1,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/common/signalR.provider.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 9,
+      "nonEmptyLines": 8,
+      "exports": [
+        {
+          "name": "APP_SIGNALR_PROVIDER",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/shared/services/signalR/signalr-manager.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 26,
+      "classes": [
+        {
+          "name": "SignalRManager",
+          "startLine": 6,
+          "endLine": 30,
+          "methods": [
+            "constructor",
+            "init"
+          ],
+          "properties": [
+            "hubs"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SignalRManager",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "init",
+          "callee": "this.oauthService.hasValidAccessToken",
+          "lineNumber": 17
+        },
+        {
+          "caller": "init",
+          "callee": "this.hubs.forEach",
+          "lineNumber": 18
+        },
+        {
+          "caller": "init",
+          "callee": "h.connect",
+          "lineNumber": 18
+        },
+        {
+          "caller": "init",
+          "callee": "this.oauthService.events.subscribe",
+          "lineNumber": 22
+        },
+        {
+          "caller": "init",
+          "callee": "this.hubs.forEach",
+          "lineNumber": 24
+        },
+        {
+          "caller": "init",
+          "callee": "h.connect",
+          "lineNumber": 24
+        },
+        {
+          "caller": "init",
+          "callee": "this.hubs.forEach",
+          "lineNumber": 26
+        },
+        {
+          "caller": "init",
+          "callee": "h.disconnect",
+          "lineNumber": 26
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/environments/environment.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 29,
+      "exports": [
+        {
+          "name": "environment",
+          "line": 15,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/main.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

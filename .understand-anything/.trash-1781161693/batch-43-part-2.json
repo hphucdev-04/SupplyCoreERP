@@ -1,0 +1,590 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ActiveIngredientAppService.cs",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+        "summary": "Dịch vụ ứng dụng (Application Service) triển khai các quy trình nghiệp vụ và CRUD cho quản lý hoạt chất.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:ActiveIngredientAppService",
+      "type": "class",
+      "metadata": {
+        "name": "ActiveIngredientAppService",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+        "summary": "Lớp dịch vụ ứng dụng ActiveIngredientAppService xử lý luồng nghiệp vụ cho hoạt chất..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:ActiveIngredientAppService",
+      "type": "function",
+      "metadata": {
+        "name": "ActiveIngredientAppService",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+        "summary": "Phương thức ActiveIngredientAppService thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:CreateFilteredQueryAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateFilteredQueryAsync",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+        "summary": "Phương thức CreateFilteredQueryAsync thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ActiveIngredientAutoMapperProfile.cs",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "active-ingredient"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs:ActiveIngredientAutoMapperProfile",
+      "type": "class",
+      "metadata": {
+        "name": "ActiveIngredientAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+        "summary": "Lớp ActiveIngredientAutoMapperProfile thuộc thành phần ActiveIngredientAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "active-ingredient"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs:ActiveIngredientAutoMapperProfile",
+      "type": "function",
+      "metadata": {
+        "name": "ActiveIngredientAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+        "summary": "Phương thức ActiveIngredientAutoMapperProfile thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "active-ingredient"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "AgentAppService.cs",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Dịch vụ ứng dụng (Application Service) triển khai các quy trình nghiệp vụ và CRUD cho quản lý đại lý/tác nhân hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:AgentAppService",
+      "type": "class",
+      "metadata": {
+        "name": "AgentAppService",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Lớp dịch vụ ứng dụng AgentAppService xử lý luồng nghiệp vụ cho đại lý/tác nhân hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:DlpRule",
+      "type": "class",
+      "metadata": {
+        "name": "DlpRule",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Lớp DlpRule thuộc thành phần AgentAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:AgentAppService",
+      "type": "function",
+      "metadata": {
+        "name": "AgentAppService",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Phương thức AgentAppService thực hiện xử lý nghiệp vụ liên quan đến AgentAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:SendMessageAsync",
+      "type": "function",
+      "metadata": {
+        "name": "SendMessageAsync",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Phương thức SendMessageAsync thực hiện xử lý nghiệp vụ liên quan đến AgentAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:ApproveAsync",
+      "type": "function",
+      "metadata": {
+        "name": "ApproveAsync",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Phương thức ApproveAsync thực hiện xử lý nghiệp vụ liên quan đến AgentAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:RejectAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RejectAsync",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Phương thức RejectAsync thực hiện xử lý nghiệp vụ liên quan đến AgentAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:GetHistoryAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetHistoryAsync",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Phương thức GetHistoryAsync thực hiện xử lý nghiệp vụ liên quan đến AgentAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:SubmitElicitationAsync",
+      "type": "function",
+      "metadata": {
+        "name": "SubmitElicitationAsync",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Phương thức SubmitElicitationAsync thực hiện xử lý nghiệp vụ liên quan đến AgentAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:RedactSensitiveTextAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RedactSensitiveTextAsync",
+        "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+        "summary": "Phương thức RedactSensitiveTextAsync thực hiện xử lý nghiệp vụ liên quan đến AgentAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:ActiveIngredientAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:ActiveIngredientAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:ActiveIngredientAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:ActiveIngredientAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs:CreateFilteredQueryAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs:ActiveIngredientAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs:ActiveIngredientAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs:ActiveIngredientAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs:ActiveIngredientAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:AgentAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:AgentAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:DlpRule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:DlpRule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:AgentAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:AgentAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:SendMessageAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:SendMessageAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:ApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:ApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:RejectAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:RejectAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:GetHistoryAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:GetHistoryAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:SubmitElicitationAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:SubmitElicitationAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Agent/AgentAppService.cs:RedactSensitiveTextAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    }
+  ]
+}

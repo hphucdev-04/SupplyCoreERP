@@ -1,0 +1,80 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 3,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "angular/src/app/proxy/batches/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 29,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/batches/product-batch.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 79,
+      "nonEmptyLines": 62,
+      "classes": [
+        {
+          "name": "ProductBatchService",
+          "startLine": 9,
+          "endLine": 79,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "approveQA",
+            "create",
+            "delete",
+            "get",
+            "getList",
+            "recall",
+            "rejectQA",
+            "update"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ProductBatchService",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/batch-qastatus.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "exports": [
+        {
+          "name": "batchQAStatusOptions",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    }
+  ]
+}

@@ -1,0 +1,358 @@
+{
+  "nodes": [
+    {
+      "id": "file:angular/src/app/shared/untils/unit-conversion.helper.ts",
+      "type": "file",
+      "metadata": {
+        "name": "unit-conversion.helper.ts",
+        "path": "angular/src/app/shared/untils/unit-conversion.helper.ts",
+        "summary": "Tiện ích quy đổi đơn vị tính (quy đổi số lượng sang đơn vị gốc và ngược lại).",
+        "tags": ["utility", "typescript", "shared"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/untils/unit-conversion.helper.ts:UnitConversionHelper",
+      "type": "class",
+      "metadata": {
+        "name": "UnitConversionHelper",
+        "path": "angular/src/app/shared/untils/unit-conversion.helper.ts",
+        "summary": "Lớp tiện ích hỗ trợ quy đổi đơn vị tính (quy đổi số lượng sang đơn vị gốc và ngược lại).",
+        "tags": ["utility", "shared", "unit-conversion"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/assets/.gitkeep",
+      "type": "file",
+      "metadata": {
+        "name": ".gitkeep",
+        "path": "angular/src/assets/.gitkeep",
+        "summary": "Tệp giữ thư mục rỗng trong Git cho thư mục assets.",
+        "tags": ["git", "placeholder"],
+        "complexity": "simple",
+        "language": "unknown"
+      }
+    },
+    {
+      "id": "file:angular/src/environments/environment.prod.ts",
+      "type": "file",
+      "metadata": {
+        "name": "environment.prod.ts",
+        "path": "angular/src/environments/environment.prod.ts",
+        "summary": "File cấu hình môi trường production cho Client Angular.",
+        "tags": ["config", "environment", "production"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/index.html",
+      "type": "file",
+      "metadata": {
+        "name": "index.html",
+        "path": "angular/src/index.html",
+        "summary": "File HTML chính chứa khung ứng dụng Angular Client.",
+        "tags": ["html", "markup", "entry-point"],
+        "complexity": "simple",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/polyfills.ts",
+      "type": "file",
+      "metadata": {
+        "name": "polyfills.ts",
+        "path": "angular/src/polyfills.ts",
+        "summary": "Polyfills phục vụ khả năng tương thích của Angular trên các trình duyệt cũ.",
+        "tags": ["config", "polyfills", "typescript"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/styles.scss",
+      "type": "file",
+      "metadata": {
+        "name": "styles.scss",
+        "path": "angular/src/styles.scss",
+        "summary": "Styles toàn cục (global styles) của ứng dụng Angular Client.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "complex",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/test.ts",
+      "type": "file",
+      "metadata": {
+        "name": "test.ts",
+        "path": "angular/src/test.ts",
+        "summary": "Điểm khởi chạy cấu hình kiểm thử đơn vị (unit tests) phía Angular.",
+        "tags": ["config", "test", "unit-test"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/web.config",
+      "type": "file",
+      "metadata": {
+        "name": "web.config",
+        "path": "angular/web.config",
+        "summary": "File cấu hình máy chủ IIS để phục vụ ứng dụng web Angular.",
+        "tags": ["config", "iis", "deployment"],
+        "complexity": "simple",
+        "language": "config"
+      }
+    },
+    {
+      "id": "file:common.props",
+      "type": "file",
+      "metadata": {
+        "name": "common.props",
+        "path": "common.props",
+        "summary": "File cấu hình MSBuild dùng chung cho các dự án .NET trong giải pháp.",
+        "tags": ["config", "msbuild", "dotnet"],
+        "complexity": "simple",
+        "language": "props"
+      }
+    },
+    {
+      "id": "file:Directory.DotSettings",
+      "type": "file",
+      "metadata": {
+        "name": "Directory.DotSettings",
+        "path": "Directory.DotSettings",
+        "summary": "File cấu hình định dạng code ReSharper/Rider cho toàn dự án.",
+        "tags": ["config", "resharper", "rider"],
+        "complexity": "simple",
+        "language": "dotsettings"
+      }
+    },
+    {
+      "id": "file:docs/testing/generate_excel.py",
+      "type": "file",
+      "metadata": {
+        "name": "generate_excel.py",
+        "path": "docs/testing/generate_excel.py",
+        "summary": "Script Python dùng để quét mã nguồn C# kiểm thử và tạo báo cáo Excel.",
+        "tags": ["script", "python", "testing", "report"],
+        "complexity": "complex",
+        "language": "python"
+      }
+    },
+    {
+      "id": "file:docs/testing/Partner_and_Catalog_Tests_Spec.xlsx",
+      "type": "file",
+      "metadata": {
+        "name": "Partner_and_Catalog_Tests_Spec.xlsx",
+        "path": "docs/testing/Partner_and_Catalog_Tests_Spec.xlsx",
+        "summary": "Tệp bảng tính Excel ghi nhận đặc tả kịch bản kiểm thử.",
+        "tags": ["test-specification", "excel", "testing"],
+        "complexity": "moderate",
+        "language": "xlsx"
+      }
+    },
+    {
+      "id": "document:docs/testing/QA_Test_Sync_Guide.md",
+      "type": "document",
+      "metadata": {
+        "name": "QA_Test_Sync_Guide.md",
+        "path": "docs/testing/QA_Test_Sync_Guide.md",
+        "summary": "Tài liệu hướng dẫn đồng bộ hóa kiểm thử chất lượng (QA).",
+        "tags": ["documentation", "testing", "qa"],
+        "complexity": "moderate",
+        "language": "markdown"
+      }
+    },
+    {
+      "id": "file:docs/testing/test_result/test_results_domain.trx",
+      "type": "file",
+      "metadata": {
+        "name": "test_results_domain.trx",
+        "path": "docs/testing/test_result/test_results_domain.trx",
+        "summary": "Tệp kết quả kiểm thử tầng Domain định dạng TRX XML.",
+        "tags": ["test-results", "xml", "testing"],
+        "complexity": "complex",
+        "language": "trx"
+      }
+    },
+    {
+      "id": "file:docs/testing/test_result/test_results_efcore.trx",
+      "type": "file",
+      "metadata": {
+        "name": "test_results_efcore.trx",
+        "path": "docs/testing/test_result/test_results_efcore.trx",
+        "summary": "Tệp kết quả kiểm thử tầng EF Core định dạng TRX XML.",
+        "tags": ["test-results", "xml", "testing"],
+        "complexity": "moderate",
+        "language": "trx"
+      }
+    },
+    {
+      "id": "config:docs/testing/testcase_mapping.json",
+      "type": "config",
+      "metadata": {
+        "name": "testcase_mapping.json",
+        "path": "docs/testing/testcase_mapping.json",
+        "summary": "Ánh xạ các mã trường hợp kiểm thử với các phương thức kiểm thử tự động.",
+        "tags": ["config", "test-mapping", "json"],
+        "complexity": "moderate",
+        "language": "json"
+      }
+    },
+    {
+      "id": "config:etc/abp-studio/run-profiles/Default.abprun.json",
+      "type": "config",
+      "metadata": {
+        "name": "Default.abprun.json",
+        "path": "etc/abp-studio/run-profiles/Default.abprun.json",
+        "summary": "Cấu hình profile khởi chạy mặc định của ABP Studio.",
+        "tags": ["config", "abp-studio"],
+        "complexity": "simple",
+        "language": "json"
+      }
+    },
+    {
+      "id": "file:etc/scripts/initialize-solution.ps1",
+      "type": "file",
+      "metadata": {
+        "name": "initialize-solution.ps1",
+        "path": "etc/scripts/initialize-solution.ps1",
+        "summary": "Script PowerShell để thiết lập ban đầu cho giải pháp.",
+        "tags": ["script", "powershell", "setup"],
+        "complexity": "simple",
+        "language": "powershell"
+      }
+    },
+    {
+      "id": "file:etc/scripts/migrate-database.ps1",
+      "type": "file",
+      "metadata": {
+        "name": "migrate-database.ps1",
+        "path": "etc/scripts/migrate-database.ps1",
+        "summary": "Script PowerShell tự động thực thi quá trình chuyển đổi (migrate) cơ sở dữ liệu.",
+        "tags": ["script", "powershell", "migration"],
+        "complexity": "simple",
+        "language": "powershell"
+      }
+    },
+    {
+      "id": "document:GEMINI.md",
+      "type": "document",
+      "metadata": {
+        "name": "GEMINI.md",
+        "path": "GEMINI.md",
+        "summary": "Tài liệu chứa các quy tắc phát triển và hướng dẫn AI dành riêng cho dự án.",
+        "tags": ["documentation", "rules", "gemini"],
+        "complexity": "moderate",
+        "language": "markdown"
+      }
+    },
+    {
+      "id": "document:mcp-server/resources/db_schema.md",
+      "type": "document",
+      "metadata": {
+        "name": "db_schema.md",
+        "path": "mcp-server/resources/db_schema.md",
+        "summary": "Tài liệu chi tiết các bảng và cấu trúc cơ sở dữ liệu phía MCP server.",
+        "tags": ["documentation", "database-schema", "mcp-server"],
+        "complexity": "simple",
+        "language": "markdown"
+      }
+    },
+    {
+      "id": "document:mcp-server/src/resources/db_schema.md",
+      "type": "document",
+      "metadata": {
+        "name": "db_schema.md",
+        "path": "mcp-server/src/resources/db_schema.md",
+        "summary": "Bản sao tài liệu lược đồ cơ sở dữ liệu trong mã nguồn MCP server.",
+        "tags": ["documentation", "database-schema", "mcp-server"],
+        "complexity": "simple",
+        "language": "markdown"
+      }
+    },
+    {
+      "id": "config:NuGet.Config",
+      "type": "config",
+      "metadata": {
+        "name": "NuGet.Config",
+        "path": "NuGet.Config",
+        "summary": "Cấu hình nguồn gói NuGet của toàn bộ dự án .NET.",
+        "tags": ["config", "nuget", "dotnet"],
+        "complexity": "simple",
+        "language": "config"
+      }
+    },
+    {
+      "id": "document:README.md",
+      "type": "document",
+      "metadata": {
+        "name": "README.md",
+        "path": "README.md",
+        "summary": "Tài liệu giới thiệu tổng quan hệ thống SupplyCoreERP.",
+        "tags": ["documentation", "readme", "overview"],
+        "complexity": "moderate",
+        "language": "markdown"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ActiveIngredientDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs",
+        "summary": "File định nghĩa lớp ActiveIngredientDto chứa thông tin hoạt chất của thuốc.",
+        "tags": ["dto", "csharp", "active-ingredient"],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs:ActiveIngredientDto",
+      "type": "class",
+      "metadata": {
+        "name": "ActiveIngredientDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs",
+        "summary": "DTO đại diện cho thông tin hoạt chất đầy đủ, bao gồm mã và tên hoạt chất.",
+        "tags": ["dto", "active-ingredient", "data-model"],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:angular/src/app/shared/untils/unit-conversion.helper.ts",
+      "target": "class:angular/src/app/shared/untils/unit-conversion.helper.ts:UnitConversionHelper",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/shared/untils/unit-conversion.helper.ts",
+      "target": "class:angular/src/app/shared/untils/unit-conversion.helper.ts:UnitConversionHelper",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs:ActiveIngredientDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs:ActiveIngredientDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

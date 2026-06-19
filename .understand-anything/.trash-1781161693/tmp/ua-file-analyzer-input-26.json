@@ -1,0 +1,42 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/Dockerfile.local",
+      "language": "dockerfile",
+      "sizeLines": 5,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+      "language": "csproj",
+      "sizeLines": 67,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.Development.json",
+      "language": "json",
+      "sizeLines": 20,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.Production.json",
+      "language": "json",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.json",
+      "language": "json",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.DbMigrator/Dockerfile.local": [],
+    "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj": [],
+    "src/SupplyCoreERP.DbMigrator/appsettings.Development.json": [],
+    "src/SupplyCoreERP.DbMigrator/appsettings.Production.json": [],
+    "src/SupplyCoreERP.DbMigrator/appsettings.json": []
+  }
+}

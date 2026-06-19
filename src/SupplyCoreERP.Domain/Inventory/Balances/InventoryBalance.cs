@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Inventory.Batches;
 using SupplyCoreERP.Inventory.Warehouses;
@@ -11,10 +13,10 @@ public class InventoryBalance : FullAuditedAggregateRoot<Guid>
 {
     public Guid WarehouseId { get; private set; }
     public virtual Warehouse Warehouse { get; protected set; }
-    public Guid BinId { get; private set; }
-    public virtual Bin Bin { get; protected set; }
+    
     public Guid ProductId { get; private set; }
     public virtual Product Product { get; protected set; }
+    
     public Guid ProductBatchId { get; private set; }
     public virtual ProductBatch ProductBatch { get; protected set; }
 
@@ -22,46 +24,80 @@ public class InventoryBalance : FullAuditedAggregateRoot<Guid>
     public decimal LockedQuantity { get; private set; }
     public decimal AvailableQuantity => Quantity - LockedQuantity;
 
-    protected InventoryBalance() { }
+    public virtual ICollection<InventoryBinBalance> BinBalances { get; protected set; }
 
-    public InventoryBalance(Guid id, Guid warehouseId, Guid binId, Guid productId, Guid batchId, decimal qty = 0) : base(id)
+    protected InventoryBalance()
+    {
+        BinBalances = new List<InventoryBinBalance>();
+    }
+
+    public InventoryBalance(Guid id, Guid warehouseId, Guid productId, Guid batchId) : base(id)
     {
         WarehouseId = warehouseId;
-        BinId = binId;
         ProductId = productId;
         ProductBatchId = batchId;
-        Quantity = qty;
+        Quantity = 0;
         LockedQuantity = 0;
+        BinBalances = new List<InventoryBinBalance>();
     }
 
-    public void AddStock(decimal amount) => Quantity += amount;
-
-    public void RemoveStock(decimal amount)
+    public void AddStock(Guid binId, decimal amount, Guid newBinBalanceId)
     {
-        if (AvailableQuantity < amount)
+        var binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId);
+        if (binBalance == null)
         {
-            throw new BusinessException("SupplyCoreERP:OutOfStock", "Không đủ tồn kho để thực hiện thao tác!");
+            binBalance = new InventoryBinBalance(newBinBalanceId, Id, binId, amount);
+            BinBalances.Add(binBalance);
         }
+        else
+        {
+            binBalance.AddStock(amount);
+        }
+        Quantity += amount;
+    }
 
+    public void RemoveStock(Guid binId, decimal amount)
+    {
+        var binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId)
+            ?? throw new BusinessException("SupplyCoreERP:BinBalanceNotFound", "Không tìm thấy tồn kho tại vị trí kệ này!");
+
+        binBalance.RemoveStock(amount);
         Quantity -= amount;
+
+        if (binBalance.Quantity == 0 && binBalance.LockedQuantity == 0)
+        {
+            BinBalances.Remove(binBalance);
+        }
     }
 
-    public void LockStock(decimal amount)
+    public void LockStock(Guid binId, decimal amount)
     {
-        if (AvailableQuantity < amount)
-        {
-            throw new BusinessException("SupplyCoreERP:StockNotAvailable", "Không đủ tồn kho để giữ hàng!");
-        }
+        var binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId)
+            ?? throw new BusinessException("SupplyCoreERP:StockNotAvailable", "Không có tồn kho khả dụng tại vị trí kệ này để giữ hàng!");
 
+        binBalance.LockStock(amount);
         LockedQuantity += amount;
     }
 
-    public void UnlockStock(decimal amount)
+    public void UnlockStock(Guid binId, decimal amount)
     {
-        LockedQuantity -= amount;
-        if (LockedQuantity < 0)
+        var binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId);
+        if (binBalance != null)
         {
-            LockedQuantity = 0;
+            decimal oldLocked = binBalance.LockedQuantity;
+            binBalance.UnlockStock(amount);
+            decimal actualUnlocked = oldLocked - binBalance.LockedQuantity;
+            
+            LockedQuantity -= actualUnlocked;
+            if (LockedQuantity < 0)
+            {
+                LockedQuantity = 0;
+            }
+
+            if (binBalance.Quantity == 0 && binBalance.LockedQuantity == 0)
+            {
+                BinBalances.Remove(binBalance);
+            }
         }
     }
 }

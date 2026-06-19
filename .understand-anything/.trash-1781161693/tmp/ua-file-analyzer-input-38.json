@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs",
+      "language": "csharp",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs",
+      "language": "csharp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs",
+      "language": "csharp",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs": [],
+    "src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs": []
+  }
+}

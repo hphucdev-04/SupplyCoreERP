@@ -45,7 +45,7 @@ public class LocationDataSeedContributor : IDataSeedContributor, ITransientDepen
 
         // SEED COUNTRIES 
         #region Asia
-        Country vietnam = await CreateCountryAsync(asia.Id, "VNM", "Viet Nam");
+        Country vietnam = await CreateCountryAsync(asia.Id, "VNM", "VietNam");
         Country thailand = await CreateCountryAsync(asia.Id, "THA", "Thailand");
         Country malaysia = await CreateCountryAsync(asia.Id, "MYS", "Malaysia");
         Country japan = await CreateCountryAsync(asia.Id, "JPN", "Japan");

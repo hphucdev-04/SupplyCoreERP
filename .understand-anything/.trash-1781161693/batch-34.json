@@ -1,0 +1,452 @@
+{
+  "nodes": [
+    {
+      "id": "config:angular/src/app/proxy/generate-proxy.json",
+      "type": "config",
+      "metadata": {
+        "name": "generate-proxy.json",
+        "path": "angular/src/app/proxy/generate-proxy.json",
+        "summary": "File cấu hình tự động tạo proxy cho phía Angular Client từ API ABP Framework.",
+        "tags": ["config", "proxy", "abp"],
+        "complexity": "complex",
+        "language": "json"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/locations/dtos/models.ts",
+      "type": "file",
+      "metadata": {
+        "name": "models.ts",
+        "path": "angular/src/app/proxy/locations/dtos/models.ts",
+        "summary": "File định nghĩa các DTO models liên quan tới khu vực địa lý (quốc gia, tỉnh thành).",
+        "tags": ["dto", "model", "location"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/locations/location.service.ts",
+      "type": "file",
+      "metadata": {
+        "name": "location.service.ts",
+        "path": "angular/src/app/proxy/locations/location.service.ts",
+        "summary": "Proxy service gọi API lấy danh mục địa lý.",
+        "tags": ["proxy-service", "location", "typescript"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/manufacturers/dtos/models.ts",
+      "type": "file",
+      "metadata": {
+        "name": "models.ts",
+        "path": "angular/src/app/proxy/manufacturers/dtos/models.ts",
+        "summary": "File định nghĩa các DTO models cho nhà sản xuất.",
+        "tags": ["dto", "model", "manufacturer"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/manufacturers/manufacturer.service.ts",
+      "type": "file",
+      "metadata": {
+        "name": "manufacturer.service.ts",
+        "path": "angular/src/app/proxy/manufacturers/manufacturer.service.ts",
+        "summary": "Proxy service gọi API quản lý nhà sản xuất.",
+        "tags": ["proxy-service", "manufacturer", "typescript"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "document:angular/src/app/proxy/README.md",
+      "type": "document",
+      "metadata": {
+        "name": "README.md",
+        "path": "angular/src/app/proxy/README.md",
+        "summary": "Tài liệu hướng dẫn về các thư mục proxy tự động sinh bởi ABP CLI.",
+        "tags": ["documentation", "proxy"],
+        "complexity": "simple",
+        "language": "markdown"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/system/text/json/nodes/models.ts",
+      "type": "file",
+      "metadata": {
+        "name": "models.ts",
+        "path": "angular/src/app/proxy/system/text/json/nodes/models.ts",
+        "summary": "File định nghĩa các DTO models định dạng JSON từ hệ thống.",
+        "tags": ["dto", "model", "system"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "sales-order-details.component.html",
+        "path": "angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.html",
+        "summary": "Giao diện chi tiết đơn đặt hàng bán (SO) hiển thị thông tin chung và bảng quản lý các dòng sản phẩm.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "complex",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "sales-order-details.component.scss",
+        "path": "angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.scss",
+        "summary": "Styles rỗng cho SalesOrderDetailsComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "sales-order-details.component.ts",
+        "path": "angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts",
+        "summary": "Code logic của component xem chi tiết và cập nhật các dòng sản phẩm trong đơn bán hàng.",
+        "tags": ["angular-component", "typescript", "sales"],
+        "complexity": "complex",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts:SalesOrderDetailsComponent",
+      "type": "class",
+      "metadata": {
+        "name": "SalesOrderDetailsComponent",
+        "path": "angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts",
+        "summary": "Component Angular chi tiết đơn bán hàng (Sales Order details), quản lý các dòng sản phẩm, cập nhật giá tự động theo bảng giá và duyệt trạng thái đơn hàng.",
+        "tags": ["angular-component", "sales", "sales-order-detail"],
+        "complexity": "complex",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-orders/sales-orders.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "sales-orders.component.html",
+        "path": "angular/src/app/sales/sales-orders/sales-orders.component.html",
+        "summary": "Giao diện quản lý danh sách đơn bán hàng và Drawer tạo mới.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "moderate",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-orders/sales-orders.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "sales-orders.component.scss",
+        "path": "angular/src/app/sales/sales-orders/sales-orders.component.scss",
+        "summary": "Styles rỗng cho SalesOrdersComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-orders/sales-orders.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "sales-orders.component.ts",
+        "path": "angular/src/app/sales/sales-orders/sales-orders.component.ts",
+        "summary": "Code logic của component quản lý danh sách đơn bán hàng.",
+        "tags": ["angular-component", "typescript", "sales"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/sales/sales-orders/sales-orders.component.ts:SalesOrdersComponent",
+      "type": "class",
+      "metadata": {
+        "name": "SalesOrdersComponent",
+        "path": "angular/src/app/sales/sales-orders/sales-orders.component.ts",
+        "summary": "Component Angular quản lý danh sách đơn bán hàng (Sales Orders), lọc theo trạng thái và đối tác.",
+        "tags": ["angular-component", "sales", "sales-order"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "sales-recall-details.component.html",
+        "path": "angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.html",
+        "summary": "Giao diện quản lý chi tiết phiếu thu hồi bán hàng.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "moderate",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "sales-recall-details.component.ts",
+        "path": "angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts",
+        "summary": "Code logic quản lý chi tiết phiếu thu hồi bán hàng.",
+        "tags": ["angular-component", "typescript", "sales"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts:SalesRecallDetailsComponent",
+      "type": "class",
+      "metadata": {
+        "name": "SalesRecallDetailsComponent",
+        "path": "angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts",
+        "summary": "Component Angular chi tiết phiếu thu hồi bán hàng (Sales Recall details), quản lý danh sách sản phẩm bị thu hồi.",
+        "tags": ["angular-component", "sales", "sales-recall-detail"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-recalls/sales-recalls.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "sales-recalls.component.html",
+        "path": "angular/src/app/sales/sales-recalls/sales-recalls.component.html",
+        "summary": "Giao diện danh sách phiếu thu hồi bán hàng.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "moderate",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales-recalls/sales-recalls.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "sales-recalls.component.ts",
+        "path": "angular/src/app/sales/sales-recalls/sales-recalls.component.ts",
+        "summary": "Code logic quản lý danh sách phiếu thu hồi hàng bán.",
+        "tags": ["angular-component", "typescript", "sales"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/sales/sales-recalls/sales-recalls.component.ts:SalesRecallsComponent",
+      "type": "class",
+      "metadata": {
+        "name": "SalesRecallsComponent",
+        "path": "angular/src/app/sales/sales-recalls/sales-recalls.component.ts",
+        "summary": "Component Angular quản lý danh sách các phiếu thu hồi hàng bán.",
+        "tags": ["angular-component", "sales", "sales-recall"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/sales/sales.routes.ts",
+      "type": "file",
+      "metadata": {
+        "name": "sales.routes.ts",
+        "path": "angular/src/app/sales/sales.routes.ts",
+        "summary": "File định nghĩa định tuyến cho phân hệ bán hàng (Sales) bao gồm Sales Orders và Sales Recalls.",
+        "tags": ["angular-routes", "routing", "sales"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/settings/dlp-settings/dlp-settings.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "dlp-settings.component.html",
+        "path": "angular/src/app/settings/dlp-settings/dlp-settings.component.html",
+        "summary": "Giao diện cấu hình cài đặt ngăn ngừa thất thoát dữ liệu DLP.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "simple",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/settings/dlp-settings/dlp-settings.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "dlp-settings.component.scss",
+        "path": "angular/src/app/settings/dlp-settings/dlp-settings.component.scss",
+        "summary": "Styles cho DLP settings.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/settings/inventory-settings/inventory-settings.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "inventory-settings.component.html",
+        "path": "angular/src/app/settings/inventory-settings/inventory-settings.component.html",
+        "summary": "Giao diện cấu hình cài đặt kho hàng.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "simple",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/settings/inventory-settings/inventory-settings.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "inventory-settings.component.scss",
+        "path": "angular/src/app/settings/inventory-settings/inventory-settings.component.scss",
+        "summary": "Styles cho Inventory settings.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/settings/llm-provider-settings/llm-provider-settings.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "llm-provider-settings.component.html",
+        "path": "angular/src/app/settings/llm-provider-settings/llm-provider-settings.component.html",
+        "summary": "Giao diện cấu hình nhà cung cấp LLM.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "simple",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/settings/llm-provider-settings/llm-provider-settings.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "llm-provider-settings.component.scss",
+        "path": "angular/src/app/settings/llm-provider-settings/llm-provider-settings.component.scss",
+        "summary": "Styles cho LLM provider settings.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/settings/mcp-settings/mcp-settings.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "mcp-settings.component.html",
+        "path": "angular/src/app/settings/mcp-settings/mcp-settings.component.html",
+        "summary": "Giao diện cấu hình cài đặt máy chủ MCP.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "simple",
+        "language": "html"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts",
+      "target": "class:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts:SalesOrderDetailsComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts",
+      "target": "class:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts:SalesOrderDetailsComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-orders/sales-orders.component.ts",
+      "target": "class:angular/src/app/sales/sales-orders/sales-orders.component.ts:SalesOrdersComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-orders/sales-orders.component.ts",
+      "target": "class:angular/src/app/sales/sales-orders/sales-orders.component.ts:SalesOrdersComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts",
+      "target": "class:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts:SalesRecallDetailsComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts",
+      "target": "class:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts:SalesRecallDetailsComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-recalls/sales-recalls.component.ts",
+      "target": "class:angular/src/app/sales/sales-recalls/sales-recalls.component.ts:SalesRecallsComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-recalls/sales-recalls.component.ts",
+      "target": "class:angular/src/app/sales/sales-recalls/sales-recalls.component.ts:SalesRecallsComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.html",
+      "target": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.scss",
+      "target": "file:angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-orders/sales-orders.component.html",
+      "target": "file:angular/src/app/sales/sales-orders/sales-orders.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-orders/sales-orders.component.scss",
+      "target": "file:angular/src/app/sales/sales-orders/sales-orders.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.html",
+      "target": "file:angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/sales/sales-recalls/sales-recalls.component.html",
+      "target": "file:angular/src/app/sales/sales-recalls/sales-recalls.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

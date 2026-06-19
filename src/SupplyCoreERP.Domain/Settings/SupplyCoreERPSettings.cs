@@ -11,6 +11,7 @@ public static class SupplyCoreERPSettings
     public const string LlmProviderApiKey = Prefix + ".LlmProvider.ApiKey";
     public const string McpServerBaseUrl = Prefix + ".McpServer.BaseUrl";
     public const string ExpirationAlertDays = Prefix + ".Inventory.ExpirationAlertDays";
+    public const string AgentMaxHistoryMessages = Prefix + ".Agent.MaxHistoryMessages";
 }
 
 

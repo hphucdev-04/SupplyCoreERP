@@ -1,0 +1,22 @@
+{
+  "nodes": [
+    {
+      "id": "service:src/SupplyCoreERP.HttpApi.Host/Dockerfile",
+      "type": "service",
+      "label": "Dockerfile",
+      "properties": {
+        "summary": "Cấu hình container hóa/dịch vụ Dockerfile sử dụng Docker.",
+        "tags": [
+          "docker",
+          "containerization",
+          "infrastructure",
+          "dockerfile"
+        ],
+        "complexity": "simple",
+        "language": "dockerfile",
+        "sizeLines": 5
+      }
+    }
+  ],
+  "edges": []
+}

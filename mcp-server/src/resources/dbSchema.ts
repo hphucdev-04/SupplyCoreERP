@@ -1,7 +1,7 @@
 import { McpServer } from "@modelcontextprotocol/server";
-import { fileURLToPath } from "url";
 import path from "path";
 import fs from "fs/promises";
+import { fileURLToPath } from "url";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -12,7 +12,7 @@ export const registerDatabaseResources = (server: McpServer) => {
     "schema://database",
     {
       mimeType: "text/markdown",
-      description: "Cung cấp sơ đồ cấu trúc cơ sở dữ liệu các bảng của SupplyCoreERP để AI hiểu mối quan hệ khóa ngoại."
+      description: "Database schema of all SupplyCoreERP tables, columns, data types, and foreign key relationships."
     },
     async (uri) => {
       try {
@@ -26,16 +26,15 @@ export const registerDatabaseResources = (server: McpServer) => {
           }]
         };
       } catch (error: any) {
-        console.error("[MCP-Server] Lỗi khi đọc file db_schema.md:", error);
+        console.error("[MCP-Server] Error reading db_schema.md:", error);
         return {
           contents: [{
             uri: uri.href,
             mimeType: "text/markdown",
-            text: "# Lỗi nạp sơ đồ cơ sở dữ liệu\nKhông thể đọc file cấu hình sơ đồ cơ sở dữ liệu."
+            text: "# Error loading database schema\nFailed to read the database schema configuration file."
           }]
         };
       }
     }
   );
 };
-

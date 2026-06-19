@@ -12,7 +12,7 @@ public class CreateUpdateSupplierProductDto
     [Required]
     public Guid DefaultUnitId { get; set; }
 
-    [Range(0, int.MaxValue, ErrorMessage = "Thá»i gian giao hÃ ng khÃ´ng Ä‘Æ°á»£c Ã¢m.")]
+    [Range(0, int.MaxValue, ErrorMessage = "Thời gian giao hàng không được âm.")]
     public int LeadTimeDays { get; set; }
 
     public bool IsPreferred { get; set; }

@@ -30,5 +30,11 @@ public class InventoryTransactionDto : CreationAuditedEntityDto<Guid>
     public string? ReferenceDocumentNumber { get; set; }
 
     public string Note { get; set; }
+
+    public Guid? PartnerId { get; set; }
+    public string? PartnerName { get; set; }
+
+    public Guid? SourceDocumentId { get; set; }
+    public string? SourceDocumentNumber { get; set; }
 }
 
