@@ -25,4 +25,11 @@ public class SalesRecallLineDto : AuditedEntityDto<Guid>
     public decimal TotalPrice { get; set; }
     public decimal TaxAmount { get; set; }
     public decimal FinalPrice { get; set; }
+
+    public decimal SalesOrderQuantity { get; set; }
+    public string? SalesOrderUnitName { get; set; }
+    public decimal SalesOrderBaseQuantity { get; set; }
+
+    public decimal RecalledQuantity { get; set; }
+    public decimal RecalledBaseQuantity { get; set; }
 }

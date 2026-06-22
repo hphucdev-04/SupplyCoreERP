@@ -67,6 +67,7 @@ public class LocationDataSeedContributor : IDataSeedContributor, ITransientDepen
         Country netherlands = await CreateCountryAsync(europe.Id, "NLD", "Netherlands");
         Country belgium = await CreateCountryAsync(europe.Id, "BEL", "Belgium");
         Country switzerland = await CreateCountryAsync(europe.Id, "CHE", "Switzerland");
+        Country ireland = await CreateCountryAsync(europe.Id, "IRL", "Ireland");
         #endregion
 
         #region North America
@@ -248,7 +249,7 @@ public class LocationDataSeedContributor : IDataSeedContributor, ITransientDepen
         City schaffhausen = await CreateCityAsync(switzerland.Id, "Schaffhausen");
         City fribourg = await CreateCityAsync(switzerland.Id, "Fribourg");
         City solothurn = await CreateCityAsync(switzerland.Id, "Solothurn");
-        City neuchatel = await CreateCityAsync(switzerland.Id, "NeuchÃ¢tel");
+        City neuchatel = await CreateCityAsync(switzerland.Id, "Neuchatel");
         City bellinzona = await CreateCityAsync(switzerland.Id, "Bellinzona");
         City sion = await CreateCityAsync(switzerland.Id, "Sion");
         City chur = await CreateCityAsync(switzerland.Id, "Chur");

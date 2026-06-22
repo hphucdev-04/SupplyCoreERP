@@ -96,6 +96,9 @@
           prop="batchNumber"
           [width]="150"
         >
+          <ng-template let-row="row" ngx-datatable-cell-template>
+            <span class="ph-badge ph-badge--info">{{ row.batchNumber }}</span>
+          </ng-template>
         </ngx-datatable-column>
 
         <ngx-datatable-column
@@ -105,11 +108,6 @@
         >
           <ng-template let-row="row" ngx-datatable-cell-template>
             <span><i class="fa fa-map-marker ph-text-danger me-1"></i>{{ row.warehouseName }}</span>
-            <small class="d-block mt-1">
-              <span class="ph-badge ph-badge--neutral"
-                ><i class="fa fa-box ph-text-primary me-1"></i>{{ row.binCode }}</span
-              >
-            </small>
           </ng-template>
         </ngx-datatable-column>
 

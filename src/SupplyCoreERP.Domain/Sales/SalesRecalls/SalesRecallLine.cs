@@ -24,6 +24,7 @@ public class SalesRecallLine : AuditedEntity<Guid>
     public int ConversionFactor { get; private set; }
     public decimal Quantity { get; private set; }
     public decimal BaseQuantity => Quantity * ConversionFactor;
+    public decimal RecalledQuantity { get; private set; }
 
     public decimal OriginalUnitPrice { get; private set; }
     public decimal TaxRate { get; private set; }
@@ -52,6 +53,7 @@ public class SalesRecallLine : AuditedEntity<Guid>
         ConversionFactor = conversionFactor > 0 ? conversionFactor : throw new BusinessException("SupplyCoreERP:InvalidConversionFactor", "Hệ số quy đổi phải lớn hơn 0!");
         OriginalUnitPrice = originalUnitPrice >= 0 ? originalUnitPrice : throw new BusinessException("SupplyCoreERP:InvalidUnitPrice", "Đơn giá không được âm!");
         TaxRate = taxRate >= 0 ? taxRate : throw new BusinessException("SupplyCoreERP:InvalidTaxRate", "Thuế suất không được âm!");
+        RecalledQuantity = 0;
 
         SetQuantity(quantity);
     }
@@ -59,6 +61,15 @@ public class SalesRecallLine : AuditedEntity<Guid>
     public void UpdateQuantity(decimal quantity)
     {
         SetQuantity(quantity);
+    }
+
+    public void AddRecalledQuantity(decimal quantity)
+    {
+        if (quantity < 0)
+        {
+            throw new BusinessException("SupplyCoreERP:InvalidQuantity", "Số lượng cộng thêm không được âm!");
+        }
+        RecalledQuantity += quantity;
     }
 
     private void SetQuantity(decimal quantity)

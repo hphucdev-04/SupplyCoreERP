@@ -135,6 +135,43 @@ export class SalesOrdersComponent implements OnInit, OnDestroy {
       dueDate: [null],
       note: ['', [Validators.maxLength(1000)]],
     });
+
+    // Theo dõi thay đổi của customerId và orderDate để tính DueDate
+    this.form
+      .get('customerId')
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(id => {
+        this.calculateDueDate();
+      });
+
+    this.form
+      .get('orderDate')
+      .valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(date => {
+        this.calculateDueDate();
+      });
+  }
+
+  calculateDueDate() {
+    const customerId = this.form.get('customerId').value;
+    const orderDateStr = this.form.get('orderDate').value;
+
+    if (!customerId || !orderDateStr) {
+      this.form.get('dueDate').setValue(null);
+      return;
+    }
+
+    // Lấy thông tin chi tiết khách hàng để có paymentTermDays
+    this.customerService.get(customerId).subscribe(customer => {
+      const days = customer.paymentTermDays || 0;
+      const orderDate = new Date(orderDateStr);
+      if (days > 0) {
+        orderDate.setDate(orderDate.getDate() + days);
+        this.form.get('dueDate').setValue(orderDate.toISOString().split('T')[0]);
+      } else {
+        this.form.get('dueDate').setValue(orderDateStr);
+      }
+    });
   }
 
   openCreateDrawer() {

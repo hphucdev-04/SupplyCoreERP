@@ -9,7 +9,7 @@ export const registerQueryTools = (server: McpServer) => {
     {
       description: "Execute a read-only SQL query (SELECT/WITH) on the SupplyCoreERP PostgreSQL database.",
       inputSchema: z.object({
-        sql: z.string().describe("SQL SELECT or WITH query. Use $1, $2 for parameters."),
+        sql: z.string().describe("SQL SELECT or WITH query. You MUST always include a LIMIT clause (maximum 10 rows) to prevent performance issues, unless it is a simple COUNT query without GROUP BY. Use $1, $2 for parameters."),
         params: z.array(z.string()).optional().describe("Parameter values for $1, $2 placeholders.")
       }),
       annotations: {

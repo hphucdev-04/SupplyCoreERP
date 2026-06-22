@@ -20,6 +20,13 @@ namespace SupplyCoreERP.Inventory.Tickets;
 
 public class TicketManager : DomainService, ITicketManager
 {
+    private static readonly Dictionary<TicketType, HashSet<ZoneType>> TicketZoneRules = new()
+    {
+        { TicketType.GoodsReceipt,  new() { ZoneType.QA } },
+        { TicketType.GoodsIssue,    new() { ZoneType.Storage, ZoneType.QA } },
+        { TicketType.RecallReceipt, new() { ZoneType.Quarantine } },
+        { TicketType.ReturnOutward, new() { ZoneType.Quarantine } }
+    };
     // Dependencies
     private readonly IRepository<InventoryTicket, Guid> _ticketRepo;
     private readonly IRepository<InventoryTicketLine, Guid> _ticketLineRepo;
@@ -104,8 +111,15 @@ public class TicketManager : DomainService, ITicketManager
         _warehouseManager.ValidateStorageCompatibility(bin, product.RequiredStorageCondition);
 
         // 1. Kiểm tra giới hạn SKU tối đa
-        int usedSKUCount = await _balanceRepo.CountAsync(b => b.BinBalances.Any(bb => bb.BinId == bin.Id && bb.Quantity > 0));
-        bool isNewSKU = !await _balanceRepo.AnyAsync(b => b.ProductId == productId && b.ProductBatchId == productBatchId && b.BinBalances.Any(bb => bb.BinId == bin.Id));
+        IQueryable<InventoryBalance> balancesInBinQuery = await _balanceRepo.GetQueryableAsync();
+        int usedSKUCount = await AsyncExecuter.CountAsync(
+            balancesInBinQuery
+                .Where(b => b.BinBalances.Any(bb => bb.BinId == bin.Id && bb.Quantity > 0))
+                .Select(b => b.ProductId)
+                .Distinct()
+        );
+
+        bool isNewSKU = !await _balanceRepo.AnyAsync(b => b.ProductId == productId && b.BinBalances.Any(bb => bb.BinId == bin.Id && bb.Quantity > 0));
         bin.ValidateSKUCapacity(usedSKUCount, isNewSKU);
 
         // 2. Kiểm tra giới hạn Thể tích tối đa
@@ -113,15 +127,15 @@ public class TicketManager : DomainService, ITicketManager
         {
             decimal newVolume = _unitConversionManager.CalculateVolume(product, unitId, quantity);
 
-            var balancesQuery = await _balanceRepo.WithDetailsAsync(x => x.BinBalances, x => x.Product);
+            IQueryable<InventoryBalance> balancesQuery = await _balanceRepo.WithDetailsAsync(x => x.BinBalances, x => x.Product);
             balancesQuery = balancesQuery
                 .Where(x => x.BinBalances.Any(bb => bb.BinId == binId));
 
             List<InventoryBalance> balancesInBin = await AsyncExecuter.ToListAsync(balancesQuery);
             decimal currentVolume = 0;
-            foreach (var balance in balancesInBin)
+            foreach (InventoryBalance balance in balancesInBin)
             {
-                var binBalance = balance.BinBalances.FirstOrDefault(bb => bb.BinId == binId);
+                InventoryBinBalance? binBalance = balance.BinBalances.FirstOrDefault(bb => bb.BinId == binId);
                 if (binBalance != null && binBalance.Quantity > 0)
                 {
                     currentVolume += binBalance.Quantity * balance.Product.BaseUnitVolume;
@@ -146,8 +160,17 @@ public class TicketManager : DomainService, ITicketManager
         }
     }
 
-    private async Task ValidateProductForInventoryAsync(Guid productId)
+    private async Task ValidateProductForInventoryAsync(Guid productId, TicketType ticketType)
     {
+        bool isRecallOrReturn = ticketType == TicketType.RecallReceipt || 
+                               ticketType == TicketType.ReturnInward || 
+                               ticketType == TicketType.ReturnOutward;
+
+        if (isRecallOrReturn)
+        {
+            return;
+        }
+
         Product product = await _productRepo.GetAsync(productId);
         if (!product.IsAvailableForInventory)
         {
@@ -235,7 +258,11 @@ public class TicketManager : DomainService, ITicketManager
         }
 
         Product product = await _productRepo.GetAsync(productId);
-        if (!product.IsAvailableForInventory)
+        bool isRecallOrReturn = ticket.Type == TicketType.RecallReceipt || 
+                               ticket.Type == TicketType.ReturnInward || 
+                               ticket.Type == TicketType.ReturnOutward;
+
+        if (!isRecallOrReturn && !product.IsAvailableForInventory)
         {
             throw new BusinessException("SupplyCoreERP:InvalidProduct", $"Sản phẩm '{product.Name}' chưa được duyệt. Không thể nhập/xuất kho!");
         }
@@ -319,7 +346,7 @@ public class TicketManager : DomainService, ITicketManager
             throw new BusinessException("SupplyCoreERP:InvalidProduct", "Sản phẩm chi tiết không khớp với dòng phiếu kho!");
         }
 
-        await ValidateProductForInventoryAsync(productId);
+        await ValidateProductForInventoryAsync(productId, ticket.Type);
         IQueryable<Bin> binQuery = await _binRepo.WithDetailsAsync(b => b.Zone);
         Bin bin = await AsyncExecuter.FirstOrDefaultAsync(binQuery, b => b.Id == binId);
         if (bin == null)
@@ -327,12 +354,18 @@ public class TicketManager : DomainService, ITicketManager
             throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(Bin), binId);
         }
 
-        if (ticket.Type == TicketType.RecallReceipt)
+        if (bin.Zone == null)
         {
-            if (bin.Zone == null || bin.Zone.Type != ZoneType.Quarantine)
-            {
-                throw new BusinessException("SupplyCoreERP:QuarantineEnforced", "Sản phẩm thu hồi bắt buộc phải đưa vào Vùng Biệt Trữ Cách Ly (Recall Zone / Quarantine)!");
-            }
+            throw new BusinessException("SupplyCoreERP:InvalidBin", "Lỗi hệ thống: Không tải được thông tin Zone!");
+        }
+
+        if (TicketZoneRules.TryGetValue(ticket.Type, out HashSet<ZoneType>? allowedZones)
+            && !allowedZones.Contains(bin.Zone.Type))
+        {
+            throw new BusinessException(SupplyCoreERPDomainErrorCodes.InvalidZoneForTicketType)
+                .WithData("ticketType", ticket.Type.ToString())
+                .WithData("zoneType", bin.Zone.Type.ToString())
+                .WithData("allowedZones", string.Join(", ", allowedZones));
         }
 
         if (bin.WarehouseId != ticket.WarehouseId)
@@ -345,7 +378,7 @@ public class TicketManager : DomainService, ITicketManager
             await ValidateBinForIncomingAsync(binId, productId, productBatchId, unitId, quantity);
         }
 
-        if (IsIssueTicket(ticket.Type))
+        if (ticket.Type == TicketType.GoodsIssue)
         {
             await ValidateBatchForIssueAsync(productBatchId);
         }
@@ -512,7 +545,7 @@ public class TicketManager : DomainService, ITicketManager
 
         decimal requiredBaseQuantity = _unitConversionManager.ConvertToBaseQuantity(product, line.UnitId, line.Quantity);
 
-        var balancesQuery = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
+        IQueryable<InventoryBalance> balancesQuery = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
         balancesQuery = balancesQuery
             .Where(x => x.WarehouseId == ticket.WarehouseId && x.ProductId == line.ProductId && x.Quantity > x.LockedQuantity);
 
@@ -536,11 +569,11 @@ public class TicketManager : DomainService, ITicketManager
                 break;
             }
 
-            var validBinBalances = balance.BinBalances
+            List<InventoryBinBalance> validBinBalances = balance.BinBalances
                 .Where(bb => bb.AvailableQuantity > 0)
                 .ToList();
 
-            foreach (var binBalance in validBinBalances)
+            foreach (InventoryBinBalance? binBalance in validBinBalances)
             {
                 if (remaining <= 0)
                 {

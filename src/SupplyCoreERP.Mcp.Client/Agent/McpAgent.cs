@@ -38,20 +38,20 @@ public class McpAgent : IAgent, ITransientDependency
     {
         List<AgentSessionMessageDto> newSteps = new();
 
-        // 1. Lấy danh sách Tools và Resources hiện có từ MCP Server
+        // Lấy danh sách Tools và Resources hiện có từ MCP Server
         List<McpToolDto> tools = await _mcpClientService.GetToolsAsync();
         List<McpResourceDto> resources = await _mcpClientService.GetResourcesAsync();
 
         // Định hình khung tư duy Agent (Chỉ dẫn hệ thống nạp động từ MCP Server)
         string systemInstruction = await _mcpClientService.GetServerInstructionsAsync();
 
-        // 2. Tải cấu hình DLP một lần cho toàn bộ vòng lặp
+        // Tải cấu hình DLP một lần cho toàn bộ vòng lặp
         List<DlpRuleDto> dlpRules = await LoadDlpRulesAsync();
 
-        // 3. Chuyển đổi lịch sử hội thoại đã tối ưu (được nạp trực tiếp từ Domain) sang cấu trúc tin nhắn LLM nội bộ
+        // Chuyển đổi lịch sử hội thoại đã tối ưu (được nạp trực tiếp từ Domain) sang cấu trúc tin nhắn LLM nội bộ
         List<LlmMessageDto> llmHistory = MapHistoryToLlmFormat(context.Steps);
 
-        // 4. Bắt đầu vòng lặp LLM điều phối Tool với chốt an toàn chống vòng lặp vô hạn
+        // Bắt đầu vòng lặp LLM điều phối Tool với chốt an toàn chống vòng lặp vô hạn
         const int MaxAgentIterations = 10;
         int iteration = 0;
         AgentResponseDto? lastLlmResponse = null;
@@ -136,7 +136,7 @@ public class McpAgent : IAgent, ITransientDependency
                         // Bỏ qua lỗi parse, kết quả bình thường không phải Elicitation
                     }
 
-                    // === DLP: Làm sạch kết quả từ MCP Server trước khi gửi LLM và lưu lịch sử ===
+                    // Làm sạch kết quả từ MCP Server trước khi gửi LLM và lưu lịch sử ===
                     string sanitizedResult = SanitizeText(toolResult, dlpRules);
                     JsonObject? sanitizedArguments = SanitizeArguments(toolCall.Arguments, dlpRules);
 

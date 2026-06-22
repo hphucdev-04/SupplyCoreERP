@@ -12,5 +12,6 @@ public enum ZoneType
     Staging = 3,        // Khu vực Soạn hàng / Đóng gói
     Quarantine = 4,     // Khu vực Biệt trữ / Hàng lỗi
     ForkliftParking = 5, // Bãi đỗ xe nâng
-    Office = 6           // Văn phòng
+    Office = 6,          // Văn phòng
+    QA = 7               // Khu vực kiểm nghiệm / Biệt trữ chờ QA
 }

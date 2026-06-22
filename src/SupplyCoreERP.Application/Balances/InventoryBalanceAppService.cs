@@ -52,7 +52,25 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
                  .Take(input.MaxResultCount)
         );
 
-        return new PagedResultDto<InventoryBalanceDto>(totalCount, ObjectMapper.Map<List<InventoryBalance>, List<InventoryBalanceDto>>(items));
+        var dtos = ObjectMapper.Map<List<InventoryBalance>, List<InventoryBalanceDto>>(items);
+        if (input.BinId.HasValue)
+        {
+            foreach (var dto in dtos)
+            {
+                var item = items.First(x => x.Id == dto.Id);
+                var binBalance = item.BinBalances.FirstOrDefault(bb => bb.BinId == input.BinId.Value);
+                if (binBalance != null)
+                {
+                    dto.BinId = binBalance.BinId;
+                    dto.BinCode = binBalance.Bin?.Code;
+                    dto.Quantity = binBalance.Quantity;
+                    dto.LockedQuantity = binBalance.LockedQuantity;
+                    dto.AvailableQuantity = binBalance.AvailableQuantity;
+                }
+            }
+        }
+
+        return new PagedResultDto<InventoryBalanceDto>(totalCount, dtos);
     }
 
     public async Task<InventoryBalanceDetailDto> GetAsync(Guid id)

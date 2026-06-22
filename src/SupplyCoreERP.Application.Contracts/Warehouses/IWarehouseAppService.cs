@@ -36,5 +36,6 @@ public interface IWarehouseAppService : IApplicationService
     Task<BinDto> UpdateStorageBinAsync(Guid id, CreateUpdateBinDto input);
     Task DeleteStorageBinAsync(Guid id);
     Task ToggleBinBlockAsync(Guid id);
+    Task TransferBinAsync(TransferBinDto input);
 }
 

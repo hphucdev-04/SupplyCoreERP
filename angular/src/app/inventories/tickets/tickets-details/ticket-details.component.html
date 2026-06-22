@@ -114,17 +114,25 @@
       </h6>
       <div class="ph-card__header-actions">
         <ng-container *ngIf="ticket.status === ApprovalStatus.Draft">
-          <button *ngIf="ticket.referenceDocumentId && ticket.type === TicketType.GoodsReceipt"
+          <button *ngIf="ticket.referenceDocumentId && isGoodsReceiptTicket()"
             class="btn btn-sm ph-btn-actions" (click)="openPoLineDrawer()">
             <i class="fa fa-list-check me-1"></i> {{ '::SelectFromPO' | abpLocalization }}
           </button>
-          <button *ngIf="ticket.referenceDocumentId && ticket.type === TicketType.GoodsIssue"
+          <button *ngIf="ticket.referenceDocumentId && isGoodsIssueTicket()"
             class="btn btn-sm ph-btn-actions" (click)="openSoLineDrawer()">
             <i class="fa fa-list-check me-1"></i> {{ '::SelectFromSO' | abpLocalization }}
           </button>
+          <button *ngIf="ticket.referenceDocumentId && isReturnOutwardTicket()"
+            class="btn btn-sm ph-btn-actions" (click)="openPrLineDrawer()">
+            <i class="fa fa-list-check me-1"></i> {{ '::SelectFromPurchaseReturn' | abpLocalization }}
+          </button>
+          <button *ngIf="ticket.referenceDocumentId && isRecallReceiptTicket()"
+            class="btn btn-sm ph-btn-actions" (click)="openRecallLineDrawer()">
+            <i class="fa fa-list-check me-1"></i> {{ '::SelectFromSalesRecall' | abpLocalization }}
+          </button>
 
           <!-- Nút Gợi ý FEFO -->
-          <button *ngIf="isIssueTicket()" class="btn btn-sm ph-btn-outline" (click)="applyFEFO()"
+          <button *ngIf="isGoodsIssueTicket()" class="btn btn-sm ph-btn-outline" (click)="applyFEFO()"
             [title]="'::ApplyFEFOHint' | abpLocalization">
             <i class="fa fa-magic me-1"></i> {{ '::AutoFEFO' | abpLocalization }}
           </button>
@@ -431,6 +439,106 @@
     </div>
   </app-drawer>
 
+  <!-- Purchase Return Lines Drawer -->
+  <app-drawer [isOpen]="isPrLineDrawerOpen" [title]="'::ImportFromPurchaseReturn' | abpLocalization" [height]="'lg'"
+    [position]="'bottom'" [showFooter]="false" (close)="closePrLineDrawer()">
+    <div class="ph-drawer__body--flush">
+      <div class="p-4 ph-bg-subtle border-bottom">
+        <h5 class="mb-1 fw-bold">{{ '::SelectProductsToExport' | abpLocalization }}</h5>
+        <p class="ph-text-muted mb-0">{{ '::ExportPrDescriptionHint' | abpLocalization }}</p>
+      </div>
+      <div class="table-responsive">
+        <table class="ph-table ph-table--flush">
+          <thead>
+            <tr>
+              <th class="ps-4">{{ '::Product' | abpLocalization }}</th>
+              <th class="text-end">{{ '::Ordered' | abpLocalization }}</th>
+              <th class="text-end">{{ '::Remaining' | abpLocalization }}</th>
+              <th style="width: 150px" class="text-center">
+                {{ '::ExportQty' | abpLocalization }}
+              </th>
+              <th style="width: 120px"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let prl of prLines" [class.ph-bg-success]="prl.exportQuantity > 0">
+              <td class="ps-4 py-3">
+                <div class="fw-bold">{{ prl.productName }}</div>
+                <small class="ph-text-muted ph-font-mono">{{ prl.productCode }}</small>
+              </td>
+              <td class="text-end ph-field-value">
+                {{ prl.quantity | number }} <small>{{ prl.unitName }}</small>
+              </td>
+              <td class="text-end fw-bold ph-text-primary ph-field-value">
+                {{ prl.quantity | number }} <small>{{ prl.unitName }}</small>
+              </td>
+              <td class="px-4">
+                <input type="number" class="form-control form-control-sm text-end fw-bold"
+                  [(ngModel)]="prl.exportQuantity" [min]="0" [max]="prl.quantity" />
+              </td>
+              <td class="text-center pe-4">
+                <button class="btn btn-sm ph-btn-new" [disabled]="!prl.exportQuantity || prl.exportQuantity <= 0"
+                  (click)="addPrLineToTicket(prl)">
+                  <i class="fa fa-truck me-1"></i> {{ '::Export' | abpLocalization }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </app-drawer>
+
+  <!-- Sales Recall Lines Drawer -->
+  <app-drawer [isOpen]="isRecallLineDrawerOpen" [title]="'::ImportFromSalesRecall' | abpLocalization" [height]="'lg'"
+    [position]="'bottom'" [showFooter]="false" (close)="closeRecallLineDrawer()">
+    <div class="ph-drawer__body--flush">
+      <div class="p-4 ph-bg-subtle border-bottom">
+        <h5 class="mb-1 fw-bold">{{ '::SelectCustomersToRecall' | abpLocalization }}</h5>
+        <p class="ph-text-muted mb-0">{{ '::ImportRecallDescriptionHint' | abpLocalization }}</p>
+      </div>
+      <div class="table-responsive">
+        <table class="ph-table ph-table--flush">
+          <thead>
+            <tr>
+              <th class="ps-4">{{ '::Customer' | abpLocalization }}</th>
+              <th class="text-end">{{ '::RecallQuantity' | abpLocalization }}</th>
+              <th class="text-end">{{ '::Remaining' | abpLocalization }}</th>
+              <th style="width: 150px" class="text-center">
+                {{ '::ImportQty' | abpLocalization }}
+              </th>
+              <th style="width: 120px"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let rl of recallLines" [class.ph-bg-success]="rl.exportQuantity > 0">
+              <td class="ps-4 py-3">
+                <div class="fw-bold">{{ rl.customerName }}</div>
+                <small class="ph-text-muted ph-font-mono">{{ rl.customerCode }}</small>
+              </td>
+              <td class="text-end ph-field-value">
+                {{ rl.quantity | number }} <small>{{ rl.unitName }}</small>
+              </td>
+              <td class="text-end fw-bold ph-text-primary ph-field-value">
+                {{ rl.quantity | number }} <small>{{ rl.unitName }}</small>
+              </td>
+              <td class="px-4">
+                <input type="number" class="form-control form-control-sm text-end fw-bold"
+                  [(ngModel)]="rl.exportQuantity" [min]="0" [max]="rl.quantity" />
+              </td>
+              <td class="text-center pe-4">
+                <button class="btn btn-sm ph-btn-new" [disabled]="!rl.exportQuantity || rl.exportQuantity <= 0"
+                  (click)="addRecallLineToTicket(rl)">
+                  <i class="fa fa-plus me-1"></i> {{ '::Add' | abpLocalization }}
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </app-drawer>
+
   <!-- Add Detail Drawer -->
   <app-drawer [isOpen]="isAddDetailDrawerOpen" [title]="'::AddBatchAndBin' | abpLocalization" [width]="'md'"
     [saveDisabled]="detailForm?.invalid || isSavingDetail" (close)="closeAddDetailDrawer()" (save)="saveDetail()">
@@ -448,7 +556,7 @@
           <div class="col-6 mb-3">
             <label class="ph-label ph-label--required">{{ '::Unit' | abpLocalization }}</label>
             <select class="form-select form-select-sm" formControlName="unitId"
-              (change)="onUnitChange($event.target.value)"
+              (change)="onUnitChange($any($event.target).value)"
               [attr.disabled]="selectedTicketLine || !units.length ? 'disabled' : null">
               <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
               <option *ngFor="let u of units" [value]="u.unitId">
@@ -486,7 +594,7 @@
             [labelKey]="'batchNumber'" [placeholder]="'::SelectBatch' | abpLocalization" [disabled]="!batches.length">
           </app-dropdown-search>
 
-          <div class="ph-hint-warning mt-1" *ngIf="isIssueTicket() && hiddenBatchCount > 0">
+          <div class="ph-hint-warning mt-1" *ngIf="isGoodsIssueTicket() && hiddenBatchCount > 0">
             <i class="fa fa-lock me-1"></i>
             {{ '::HiddenUnapprovedBatches' | abpLocalization }}: {{ hiddenBatchCount }}
           </div>
@@ -519,6 +627,10 @@
         </div>
         <div class="ph-card__body p-2">
           <div [formGroup]="quickBatchForm">
+            <div class="mb-2" *ngIf="poSupplier">
+              <label class="ph-label">Nhà cung cấp</label>
+              <input type="text" class="form-control form-control-sm text-muted" [value]="poSupplier.name" readonly />
+            </div>
             <div class="mb-2">
               <label class="ph-label">{{ '::BatchNumber' | abpLocalization }}</label>
               <input type="text" class="form-control form-control-sm text-uppercase" formControlName="batchNumber" />

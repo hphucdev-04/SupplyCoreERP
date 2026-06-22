@@ -30,6 +30,7 @@ public class SalesRecallDto : FullAuditedEntityDto<Guid>
     public string? Note { get; set; }
 
     public bool IsOverdue { get; set; }
+    public string? BaseUnitName { get; set; }
 
     public List<SalesRecallLineDto> Lines { get; set; } = new List<SalesRecallLineDto>();
     public List<SalesRecallRelatedTicketDto> RelatedTickets { get; set; } = new List<SalesRecallRelatedTicketDto>();

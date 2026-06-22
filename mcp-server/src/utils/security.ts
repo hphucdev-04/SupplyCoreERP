@@ -107,6 +107,30 @@ export async function validateSqlQuery(sql: string): Promise<{ isValid: boolean;
     };
   }
 
+  // Enforce LIMIT (maximum 10 rows) except for simple COUNT queries without GROUP BY
+  const limitMatch = cleanSql.match(/\blimit\s+(\d+)\b/i);
+  if (!limitMatch) {
+    const isCountQuery = /select\s+count\s*\(/i.test(cleanSql) && !/\bgroup\s+by\b/i.test(cleanSql);
+    if (!isCountQuery) {
+      return {
+        isValid: false,
+        errorReason: "Validation Error: Your query must contain a LIMIT clause (maximum 10 rows) to prevent fetching excessive data.",
+        hasStar: false,
+        tables: []
+      };
+    }
+  } else {
+    const limitVal = parseInt(limitMatch[1], 10);
+    if (limitVal > 10) {
+      return {
+        isValid: false,
+        errorReason: "Validation Error: The LIMIT value cannot exceed 10 rows.",
+        hasStar: false,
+        tables: []
+      };
+    }
+  }
+
   // Block destructive keywords
   const destructiveRegex = /\b(INSERT|UPDATE|DELETE|DROP|TRUNCATE|ALTER|CREATE|REPLACE|GRANT|REVOKE)\b/i;
   if (destructiveRegex.test(cleanSql)) {

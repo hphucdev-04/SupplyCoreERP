@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Common.DocumentSequences;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Enums.Warehouses;
@@ -14,11 +15,27 @@ namespace SupplyCoreERP.Inventory.Warehouses;
 
 public class WarehouseManager : DomainService
 {
+    private static readonly HashSet<ZoneType> InventoryZoneTypes = new()
+    {
+        ZoneType.Storage,
+        ZoneType.QA,
+        ZoneType.Quarantine
+    };
+
+    private static readonly Dictionary<ZoneType, HashSet<ZoneType>> TransferZoneRules = new()
+    {
+        { ZoneType.QA,         new() { ZoneType.Storage, ZoneType.Quarantine } },
+        { ZoneType.Storage,    new() { ZoneType.Quarantine } },
+        { ZoneType.Quarantine, new() }
+    };
+
     // Dependencies
     private readonly IRepository<Warehouse, Guid> _warehouseRepo;
     private readonly IRepository<Zone, Guid> _zoneRepo;
     private readonly IRepository<Bin, Guid> _binRepo;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
+    private readonly IRepository<Product, Guid> _productRepo;
+    private readonly InventoryBalanceManager _inventoryBalanceManager;
     private readonly IDocumentSequenceManager _documentSequenceManager;
 
     // Constructor injection
@@ -27,6 +44,8 @@ public class WarehouseManager : DomainService
         IRepository<Zone, Guid> zoneRepo,
         IRepository<Bin, Guid> binRepo,
         IRepository<InventoryBalance, Guid> balanceRepo,
+        IRepository<Product, Guid> productRepo,
+        InventoryBalanceManager inventoryBalanceManager,
         IDocumentSequenceManager documentSequenceManager
         )
     {
@@ -34,6 +53,8 @@ public class WarehouseManager : DomainService
         _zoneRepo = zoneRepo;
         _binRepo = binRepo;
         _balanceRepo = balanceRepo;
+        _productRepo = productRepo;
+        _inventoryBalanceManager = inventoryBalanceManager;
         _documentSequenceManager = documentSequenceManager;
     }
 
@@ -164,15 +185,15 @@ public class WarehouseManager : DomainService
 
         if (height > 0)
         {
-            var balancesQuery = await _balanceRepo.WithDetailsAsync(x => x.BinBalances, x => x.Product);
+            IQueryable<InventoryBalance> balancesQuery = await _balanceRepo.WithDetailsAsync(x => x.BinBalances, x => x.Product);
             balancesQuery = balancesQuery
                 .Where(x => x.BinBalances.Any(bb => bb.BinId == bin.Id));
 
             List<InventoryBalance> balancesInBin = await AsyncExecuter.ToListAsync(balancesQuery);
             decimal currentVolume = 0;
-            foreach (var balance in balancesInBin)
+            foreach (InventoryBalance balance in balancesInBin)
             {
-                var binBalance = balance.BinBalances.FirstOrDefault(bb => bb.BinId == bin.Id);
+                InventoryBinBalance? binBalance = balance.BinBalances.FirstOrDefault(bb => bb.BinId == bin.Id);
                 if (binBalance != null && binBalance.Quantity > 0)
                 {
                     currentVolume += binBalance.Quantity * balance.Product.BaseUnitVolume;
@@ -211,17 +232,96 @@ public class WarehouseManager : DomainService
             throw new BusinessException("SupplyCoreERP:InvalidBin", "Lỗi hệ thống: Không tải được thông tin Zone!");
         }
 
-        if (productCondition.HasValue && bin.Zone.StorageCondition != productCondition.Value)
+        if (bin.Zone.Type == ZoneType.Storage && productCondition.HasValue && bin.Zone.StorageCondition != productCondition.Value)
         {
             throw new BusinessException("SupplyCoreERP:InvalidBin", "Sai điều kiện bảo quản: Vị trí này yêu cầu điều kiện '" + bin.Zone.StorageCondition + "' nhưng sản phẩm có điều kiện '" + productCondition.Value + "'!"
             );
         }
 
-        if (bin.Zone.Type == ZoneType.Inbound || bin.Zone.Type == ZoneType.Outbound
-            || bin.Zone.Type == ZoneType.ForkliftParking)
+        if (!InventoryZoneTypes.Contains(bin.Zone.Type))
         {
-            throw new BusinessException("SupplyCoreERP:InvalidBin", $"Vị trí '{bin.Code}' thuộc khu vực '{bin.Zone.Name}' có loại '{bin.Zone.Type}' không phù hợp để chứa hàng hóa!");
+            throw new BusinessException(SupplyCoreERPDomainErrorCodes.ZoneNotAllowedForInventory)
+                .WithData("zoneType", bin.Zone.Type.ToString());
         }
+    }
+
+    public async Task TransferBinAsync(
+        Guid warehouseId,
+        Guid sourceBinId,
+        Guid targetBinId,
+        Guid productId,
+        Guid productBatchId,
+        decimal quantity,
+        Guid unitId,
+        decimal conversionFactor)
+    {
+        Warehouse warehouse = await _warehouseRepo.GetAsync(warehouseId);
+        IQueryable<Bin> binQuery = await _binRepo.WithDetailsAsync(x => x.Zone);
+
+        Bin? sourceBin = await AsyncExecuter.FirstOrDefaultAsync(binQuery.Where(x => x.Id == sourceBinId));
+        if (sourceBin == null)
+        {
+            throw new BusinessException("SupplyCoreERP:InvalidBin", "Không tìm thấy ô hàng nguồn!");
+        }
+
+        Bin? targetBin = await AsyncExecuter.FirstOrDefaultAsync(binQuery.Where(x => x.Id == targetBinId));
+        if (targetBin == null)
+        {
+            throw new BusinessException("SupplyCoreERP:InvalidBin", "Không tìm thấy ô hàng đích!");
+        }
+
+        if (sourceBin.WarehouseId != warehouseId || targetBin.WarehouseId != warehouseId)
+        {
+            throw new BusinessException("SupplyCoreERP:InvalidBin", "Vị trí nguồn và vị trí đích phải thuộc cùng một kho!");
+        }
+
+        if (sourceBin.Zone.Type != targetBin.Zone.Type)
+        {
+            if (!TransferZoneRules.TryGetValue(sourceBin.Zone.Type, out HashSet<ZoneType>? allowedTargetZones)
+                || !allowedTargetZones.Contains(targetBin.Zone.Type))
+            {
+                throw new BusinessException(SupplyCoreERPDomainErrorCodes.InvalidZoneTransferDirection)
+                    .WithData("sourceZoneType", sourceBin.Zone.Type.ToString())
+                    .WithData("targetZoneType", targetBin.Zone.Type.ToString());
+            }
+        }
+
+        Product product = await _productRepo.GetAsync(productId);
+        ValidateStorageCompatibility(targetBin, product.RequiredStorageCondition);
+
+        int usedSKUCount = await _balanceRepo.CountAsync(b => b.BinBalances.Any(bb => bb.BinId == targetBinId && bb.Quantity > 0));
+        bool isNewSKU = !await _balanceRepo.AnyAsync(b => b.ProductId == productId && b.BinBalances.Any(bb => bb.BinId == targetBinId && bb.Quantity > 0));
+        targetBin.ValidateSKUCapacity(usedSKUCount, isNewSKU);
+
+        IQueryable<InventoryBalance> balancesQuery = await _balanceRepo.WithDetailsAsync(x => x.BinBalances, x => x.Product);
+        balancesQuery = balancesQuery.Where(x => x.BinBalances.Any(bb => bb.BinId == targetBinId));
+        List<InventoryBalance> balancesInBin = await AsyncExecuter.ToListAsync(balancesQuery);
+
+        decimal currentVolume = 0;
+        foreach (InventoryBalance balance in balancesInBin)
+        {
+            InventoryBinBalance? binBalance = balance.BinBalances.FirstOrDefault(bb => bb.BinId == targetBinId);
+            if (binBalance != null && binBalance.Quantity > 0)
+            {
+                currentVolume += binBalance.Quantity * balance.Product.BaseUnitVolume;
+            }
+        }
+
+        decimal baseQty = quantity * conversionFactor;
+        decimal newVolume = baseQty * product.BaseUnitVolume;
+
+        targetBin.ValidateVolumeCapacity(currentVolume, newVolume);
+
+        await _inventoryBalanceManager.ExecuteTransferAsync(
+            warehouseId,
+            sourceBinId,
+            targetBinId,
+            productId,
+            productBatchId,
+            quantity,
+            unitId,
+            conversionFactor
+        );
     }
     #endregion
 }

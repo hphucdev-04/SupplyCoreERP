@@ -662,6 +662,7 @@ public class SupplyCoreERPDbContext :
             b.HasOne(x => x.Bin).WithMany().HasForeignKey(x => x.BinId).OnDelete(DeleteBehavior.Restrict);
 
             b.HasIndex(x => new { x.WarehouseId, x.ProductId, x.CreationTime });
+            b.HasIndex(x => x.CorrelationId);
         });
         // InventoryReservation
         builder.Entity<InventoryReservation>(b =>

@@ -59,7 +59,7 @@ public class InventoryBalanceManager : DomainService
         List<Guid> productIds = details.Select(d => d.ProductId).Distinct().ToList();
         List<Guid> batchIds = details.Select(d => d.ProductBatchId).Distinct().ToList();
 
-        var query = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
+        IQueryable<InventoryBalance> query = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
 
         return query.Where(x =>
             x.WarehouseId == warehouseId &&
@@ -84,8 +84,8 @@ public class InventoryBalanceManager : DomainService
             {
                 case TicketType.GoodsReceipt: // Nhập mua hàng từ NCC
                     {
-                        var poQuery = await _poRepo.WithDetailsAsync(x => x.Supplier);
-                        var po = poQuery.FirstOrDefault(x => x.Id == refId);
+                        IQueryable<PurchaseOrder> poQuery = await _poRepo.WithDetailsAsync(x => x.Supplier);
+                        PurchaseOrder? po = poQuery.FirstOrDefault(x => x.Id == refId);
                         if (po != null)
                         {
                             return (po.SupplierId, po.Supplier?.Name, po.Id, po.Code);
@@ -96,8 +96,8 @@ public class InventoryBalanceManager : DomainService
                 case TicketType.GoodsIssue: // Xuất bán hàng cho khách
                 case TicketType.ReturnInward: // Khách trả hàng (mặc định map theo SalesOrder)
                     {
-                        var soQuery = await _soRepo.WithDetailsAsync(x => x.Customer);
-                        var so = soQuery.FirstOrDefault(x => x.Id == refId);
+                        IQueryable<SalesOrder> soQuery = await _soRepo.WithDetailsAsync(x => x.Customer);
+                        SalesOrder? so = soQuery.FirstOrDefault(x => x.Id == refId);
                         if (so != null)
                         {
                             return (so.CustomerId, so.Customer?.Name, so.Id, so.Code);
@@ -107,8 +107,8 @@ public class InventoryBalanceManager : DomainService
 
                 case TicketType.ReturnOutward: // Xuất trả hàng NCC
                     {
-                        var prQuery = await _purchaseReturnRepo.WithDetailsAsync(x => x.Supplier);
-                        var pr = prQuery.FirstOrDefault(x => x.Id == refId);
+                        IQueryable<PurchaseReturn> prQuery = await _purchaseReturnRepo.WithDetailsAsync(x => x.Supplier);
+                        PurchaseReturn? pr = prQuery.FirstOrDefault(x => x.Id == refId);
                         if (pr != null)
                         {
                             return (pr.SupplierId, pr.Supplier?.Name, pr.Id, pr.Code);
@@ -120,13 +120,13 @@ public class InventoryBalanceManager : DomainService
                     {
                         if (referenceDocumentLineId.HasValue)
                         {
-                            var recallQuery = await _salesRecallRepo.WithDetailsAsync(x => x.Lines);
-                            var recall = recallQuery.FirstOrDefault(x => x.Id == refId);
+                            IQueryable<SalesRecall> recallQuery = await _salesRecallRepo.WithDetailsAsync(x => x.Lines);
+                            SalesRecall? recall = recallQuery.FirstOrDefault(x => x.Id == refId);
 
-                            var line = recall?.Lines.FirstOrDefault(l => l.Id == referenceDocumentLineId.Value);
+                            SalesRecallLine? line = recall?.Lines.FirstOrDefault(l => l.Id == referenceDocumentLineId.Value);
                             if (line != null)
                             {
-                                var customer = await _customerRepo.FindAsync(line.CustomerId);
+                                Customer? customer = await _customerRepo.FindAsync(line.CustomerId);
                                 return (line.CustomerId, customer?.Name, recall.Id, recall.Code);
                             }
                         }
@@ -155,9 +155,9 @@ public class InventoryBalanceManager : DomainService
 
         foreach (InventoryTicketDetail item in details)
         {
-            var balance = balances.FirstOrDefault(x => x.ProductId == item.ProductId && x.ProductBatchId == item.ProductBatchId);
-            var binBalance = balance?.BinBalances.FirstOrDefault(x => x.BinId == item.BinId);
-            
+            InventoryBalance? balance = balances.FirstOrDefault(x => x.ProductId == item.ProductId && x.ProductBatchId == item.ProductBatchId);
+            InventoryBinBalance? binBalance = balance?.BinBalances.FirstOrDefault(x => x.BinId == item.BinId);
+
             if (balance == null || binBalance == null || binBalance.AvailableQuantity < item.BaseQuantity)
             {
                 throw new BusinessException("SupplyCoreERP:OutOfStock", $"Không đủ tồn kho khả dụng dành cho sản phẩm ID {item.ProductId} tại kệ chỉ định!");
@@ -196,7 +196,7 @@ public class InventoryBalanceManager : DomainService
         List<Guid> productIds = activeReservations.Select(x => x.ProductId).Distinct().ToList();
         List<Guid> batchIds = activeReservations.Select(x => x.ProductBatchId).Distinct().ToList();
 
-        var query = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
+        IQueryable<InventoryBalance> query = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
         List<InventoryBalance> balances = query.Where(x =>
             x.WarehouseId == ticket.WarehouseId && productIds.Contains(x.ProductId) && batchIds.Contains(x.ProductBatchId)).ToList();
 
@@ -210,7 +210,7 @@ public class InventoryBalanceManager : DomainService
             if (balance != null)
             {
                 balance.UnlockStock(res.BinId, res.ReservedQuantity);
-                
+
                 if (balance.Quantity == 0 && balance.LockedQuantity == 0)
                 {
                     if (!balancesToDelete.Contains(balance))
@@ -247,13 +247,13 @@ public class InventoryBalanceManager : DomainService
             return;
         }
 
-        var query = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
-        InventoryBalance? balance = query.FirstOrDefault(x => 
+        IQueryable<InventoryBalance> query = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
+        InventoryBalance? balance = query.FirstOrDefault(x =>
             x.WarehouseId == ticket.WarehouseId && x.ProductId == productId && x.ProductBatchId == productBatchId);
 
         if (baseQtyDiff > 0) // Lock thêm
         {
-            var binBalance = balance?.BinBalances.FirstOrDefault(x => x.BinId == binId);
+            InventoryBinBalance? binBalance = balance?.BinBalances.FirstOrDefault(x => x.BinId == binId);
             if (balance == null || binBalance == null || binBalance.AvailableQuantity < baseQtyDiff)
             {
                 throw new BusinessException("SupplyCoreERP:OutOfStock", $"Không đủ tồn khả dụng");
@@ -288,7 +288,7 @@ public class InventoryBalanceManager : DomainService
             if (balance != null)
             {
                 balance.UnlockStock(binId, unlockAmount);
-                
+
                 if (balance.Quantity == 0 && balance.LockedQuantity == 0)
                 {
                     await _balanceRepo.DeleteAsync(balance);
@@ -336,7 +336,7 @@ public class InventoryBalanceManager : DomainService
 
         foreach (InventoryTicketDetail item in details)
         {
-            var balance = balances.FirstOrDefault(x => x.ProductId == item.ProductId && x.ProductBatchId == item.ProductBatchId);
+            InventoryBalance? balance = balances.FirstOrDefault(x => x.ProductId == item.ProductId && x.ProductBatchId == item.ProductBatchId);
 
             if (isIssue)
             {
@@ -376,7 +376,7 @@ public class InventoryBalanceManager : DomainService
                 {
                     balance = new InventoryBalance(GuidGenerator.Create(), ticket.WarehouseId, item.ProductId, item.ProductBatchId);
                     balance.AddStock(item.BinId, item.BaseQuantity, GuidGenerator.Create());
-                    
+
                     balances.Add(balance);
                     balancesToInsert.Add(balance);
                 }
@@ -396,7 +396,7 @@ public class InventoryBalanceManager : DomainService
 
             transactions.Add(new InventoryTransaction(
                 GuidGenerator.Create(), ticket.WarehouseId, item.BinId, item.ProductId, item.ProductBatchId,
-                transType, item.BaseQuantity, balance.Quantity, ticket.Id, ticket.TicketNumber, ticket.Note,
+                transType, isIssue ? -item.BaseQuantity : item.BaseQuantity, balance.Quantity, ticket.Id, ticket.TicketNumber, ticket.Note,
                 partnerId, partnerName, sourceDocId, sourceDocNumber));
         }
 
@@ -424,6 +424,81 @@ public class InventoryBalanceManager : DomainService
         {
             await _transactionRepo.InsertManyAsync(transactions);
         }
+    }
+
+    public async Task ExecuteTransferAsync(
+        Guid warehouseId,
+        Guid sourceBinId,
+        Guid targetBinId,
+        Guid productId,
+        Guid productBatchId,
+        decimal quantity,
+        Guid unitId,
+        decimal conversionFactor)
+    {
+        IQueryable<InventoryBalance> query = await _balanceRepo.WithDetailsAsync(x => x.BinBalances);
+        InventoryBalance? balance = query.FirstOrDefault(x =>
+            x.WarehouseId == warehouseId &&
+            x.ProductId == productId &&
+            x.ProductBatchId == productBatchId);
+
+        if (balance == null)
+        {
+            throw new BusinessException("SupplyCoreERP:OutOfStock", "Không tìm thấy số dư tồn kho phù hợp để chuyển!");
+        }
+
+        decimal baseQty = quantity * conversionFactor;
+        InventoryBinBalance? binBalance = balance.BinBalances.FirstOrDefault(x => x.BinId == sourceBinId);
+
+        if (binBalance == null || binBalance.AvailableQuantity < baseQty)
+        {
+            throw new BusinessException(SupplyCoreERPDomainErrorCodes.InsufficientAvailableQuantityForTransfer)
+                .WithData("available", binBalance?.AvailableQuantity ?? 0)
+                .WithData("required", baseQty);
+        }
+
+        // Giảm ở source bin, tăng ở target bin
+        balance.RemoveStock(sourceBinId, baseQty);
+        balance.AddStock(targetBinId, baseQty, GuidGenerator.Create());
+
+        await _balanceRepo.UpdateAsync(balance);
+
+        Guid correlationId = GuidGenerator.Create();
+
+        // Tạo 2 transactions: TransferOut và TransferIn
+        var transactions = new List<InventoryTransaction>
+        {
+            new(
+                GuidGenerator.Create(),
+                warehouseId,
+                sourceBinId,
+                productId,
+                productBatchId,
+                InventoryTransactionType.TransferOut,
+                -baseQty,
+                balance.BinBalances.FirstOrDefault(x => x.BinId == sourceBinId)?.Quantity ?? 0,
+                null,
+                null,
+                $"Chuyển kho nội bộ sang ô hàng {targetBinId}",
+                correlationId: correlationId
+            ),
+            new(
+                GuidGenerator.Create(),
+                warehouseId,
+                targetBinId,
+                productId,
+                productBatchId,
+                InventoryTransactionType.TransferIn,
+                baseQty,
+                balance.BinBalances.FirstOrDefault(x => x.BinId == targetBinId)?.Quantity ?? 0,
+                null,
+                null,
+                $"Nhận chuyển kho nội bộ từ ô hàng {sourceBinId}",
+                correlationId: correlationId
+            )
+        };
+
+        await _transactionRepo.InsertManyAsync(transactions);
     }
 }
 

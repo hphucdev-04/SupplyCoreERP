@@ -164,7 +164,7 @@ public class DashboardAppService : SupplyCore, IDashboardAppService
                 .Where(x => x.Status != SalesOrderStatus.Draft && x.Status != SalesOrderStatus.Canceled)
                 .SelectMany(x => x.Lines)
                 .Where(line => line.Product.CategoryId == input.CategoryId.Value)
-                .SumAsync(line => line.Quantity * line.UnitPrice * (1 - line.DiscountRate / 100) * (1 + line.TaxRate / 100));
+                .SumAsync(line => Math.Round(line.Quantity * line.UnitPrice * (1 - line.DiscountRate / 100) * (1 + line.TaxRate / 100), 2));
         }
         else
         {
@@ -189,7 +189,7 @@ public class DashboardAppService : SupplyCore, IDashboardAppService
                 .Where(x => x.Status != PurchaseOrderStatus.Draft && x.Status != PurchaseOrderStatus.Canceled)
                 .SelectMany(x => x.Lines)
                 .Where(line => line.Product.CategoryId == input.CategoryId.Value)
-                .SumAsync(line => line.Quantity * line.UnitPrice * (1 + line.TaxRate / 100));
+                .SumAsync(line => Math.Round(line.Quantity * line.UnitPrice * (1 + line.TaxRate / 100), 2));
         }
         else
         {
@@ -232,7 +232,7 @@ public class DashboardAppService : SupplyCore, IDashboardAppService
                 .Where(x => x.Status != PurchaseReturnStatus.Draft && x.Status != PurchaseReturnStatus.Rejected)
                 .SelectMany(x => x.Lines)
                 .Where(line => line.Product.CategoryId == input.CategoryId.Value)
-                .SumAsync(line => line.Quantity * (line.OriginalUnitPrice * (1 - line.DepreciationRate / 100)) * (1 + line.TaxRate / 100));
+                .SumAsync(line => Math.Round(line.Quantity * (line.OriginalUnitPrice * (1 - line.DepreciationRate / 100)) * (1 + line.TaxRate / 100), 2));
         }
         else
         {
@@ -286,7 +286,7 @@ public class DashboardAppService : SupplyCore, IDashboardAppService
             .SelectMany(x => x.Lines)
             .Where(line => !input.CategoryId.HasValue || line.Product.CategoryId == input.CategoryId.Value)
             .GroupBy(line => line.SalesOrder.OrderDate.Date)
-            .Select(g => new { Date = g.Key, Amount = g.Sum(line => line.Quantity * line.UnitPrice * (1 - line.DiscountRate / 100) * (1 + line.TaxRate / 100)) })
+            .Select(g => new { Date = g.Key, Amount = Math.Round(g.Sum(line => line.Quantity * line.UnitPrice * (1 - line.DiscountRate / 100) * (1 + line.TaxRate / 100)), 2) })
             .ToListAsync();
 
         IQueryable<PurchaseOrder> purchaseQuery = await _purchaseOrderRepository.GetQueryableAsync();
@@ -299,7 +299,7 @@ public class DashboardAppService : SupplyCore, IDashboardAppService
             .SelectMany(x => x.Lines)
             .Where(line => !input.CategoryId.HasValue || line.Product.CategoryId == input.CategoryId.Value)
             .GroupBy(line => line.PurchaseOrder.OrderDate.Date)
-            .Select(g => new { Date = g.Key, Amount = g.Sum(line => line.Quantity * line.UnitPrice * (1 + line.TaxRate / 100)) })
+            .Select(g => new { Date = g.Key, Amount = Math.Round(g.Sum(line => line.Quantity * line.UnitPrice * (1 + line.TaxRate / 100)), 2) })
             .ToListAsync();
 
         var salesDict = salesData.ToDictionary(x => x.Date, x => x.Amount);

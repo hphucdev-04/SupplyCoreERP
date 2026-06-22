@@ -9,7 +9,7 @@ using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Inventory.Balances;
 
-public class InventoryBalance : FullAuditedAggregateRoot<Guid>
+public class InventoryBalance : AuditedAggregateRoot<Guid>
 {
     public Guid WarehouseId { get; private set; }
     public virtual Warehouse Warehouse { get; protected set; }

@@ -66,6 +66,10 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
             SupplyCoreERPPermissions.Inventory.Warehouse.Reject,
             L("Permission:Inventory.Warehous.Reject")
         );
+        warehousePermission.AddChild(
+            SupplyCoreERPPermissions.Inventory.Warehouse.ZoneTransfer,
+            L("Permission:Inventory.Warehouse.ZoneTransfer")
+        );
 
         AddCrudPermissions(inventoryGroup, SupplyCoreERPPermissions.Inventory.Batch.Default, "Batch");
 

@@ -7,7 +7,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { TicketType } from 'src/app/proxy/enums/warehouses/ticket-type.enum';
 import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
-import { BatchQAStatus } from 'src/app/proxy/enums/warehouses';
+import { BatchQAStatus, ZoneType } from 'src/app/proxy/enums/warehouses';
 import { StorageCondition } from 'src/app/proxy/enums/medicines';
 import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto, MedicineRegistrationDto } from 'src/app/proxy/medicines/dtos';
@@ -22,8 +22,11 @@ import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { ProductBatchService } from 'src/app/proxy/batches';
 import { enumName } from 'src/app/shared/untils/enum.util';
+import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
 import { PurchaseOrderLineDto } from 'src/app/proxy/purchase-orders/dtos';
 import { SalesOrderLineDto } from 'src/app/proxy/sales-orders/dtos';
+import { PurchaseReturnLineDto } from 'src/app/proxy/purchase-returns/dtos/models';
+import { SalesRecallLineDto } from 'src/app/proxy/sales-recalls/dtos/models';
 import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
 
 interface SelectablePOLineDto extends PurchaseOrderLineDto {
@@ -92,6 +95,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
   remainingQty = 0;
 
   registrations: MedicineRegistrationDto[] = [];
+  poSupplier: { id: string; name: string } | null = null;
 
   isFefoDrawerOpen = false;
   fefoForm: FormGroup;
@@ -110,6 +114,14 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
   soLines: SelectableSOLineDto[] = [];
   isSoLineDrawerOpen = false;
 
+  // PR Selection
+  prLines: (PurchaseReturnLineDto & { exportQuantity?: number })[] = [];
+  isPrLineDrawerOpen = false;
+
+  // Recall Selection
+  recallLines: (SalesRecallLineDto & { exportQuantity?: number })[] = [];
+  isRecallLineDrawerOpen = false;
+
   lineBatches: { [productId: string]: ProductBatchDto[] } = {};
 
   TicketType = TicketType;
@@ -124,6 +136,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     private warehouseService: WarehouseService,
     private medicineService: MedicineService,
     private batchService: ProductBatchService,
+    private poService: PurchaseOrderService,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
     private fb: FormBuilder,
@@ -174,10 +187,21 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
           this.loading = false;
           this.loadBins(res.warehouseId);
           if (res.referenceDocumentId) {
-            if (res.type === TicketType.GoodsReceipt) {
+            if (this.isGoodsReceiptTicket()) {
               this.loadPoLines(res.referenceDocumentId);
-            } else if (res.type === TicketType.GoodsIssue) {
+              this.poService.get(res.referenceDocumentId)
+                .pipe(takeUntil(this.destroy$))
+                .subscribe(po => {
+                  if (po) {
+                    this.poSupplier = { id: po.supplierId, name: po.supplierName };
+                  }
+                });
+            } else if (this.isGoodsIssueTicket()) {
               this.loadSoLines(res.referenceDocumentId);
+            } else if (this.isReturnOutwardTicket()) {
+              this.loadPrLines(res.referenceDocumentId);
+            } else if (this.isRecallReceiptTicket()) {
+              this.loadRecallLines(res.referenceDocumentId);
             }
           }
 
@@ -237,15 +261,9 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
 
   openLinkedOrder() {
     if (!this.ticket?.referenceDocumentId) return;
-    if (
-      this.ticket.type === TicketType.GoodsReceipt ||
-      this.ticket.type === TicketType.ReturnOutward
-    ) {
+    if (this.isGoodsReceiptTicket() || this.isReturnOutwardTicket()) {
       this.router.navigate(['/orders/purchaseorders/details', this.ticket.referenceDocumentId]);
-    } else if (
-      this.ticket.type === TicketType.GoodsIssue ||
-      this.ticket.type === TicketType.ReturnInward
-    ) {
+    } else if (this.isGoodsIssueTicket() || this.isRecallReceiptTicket()) {
       this.router.navigate(['/orders/saleorders/details', this.ticket.referenceDocumentId]);
     }
   }
@@ -253,13 +271,46 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
   // ── Bin filtering ─────────────────────────────────────────
   private applyBinFilter(condition: StorageCondition | null) {
     this.selectedMedicineCondition = condition;
-    if (condition == null) {
-      this.filteredBins = this.bins;
-      this.hiddenBinCount = 0;
-    } else {
-      this.filteredBins = this.bins.filter(b => b.zoneStorageCondition === condition);
-      this.hiddenBinCount = this.bins.length - this.filteredBins.length;
+    
+    // 1. Lọc theo phân khu được phép chứa (allowedZones) ứng với loại Ticket
+    let allowedZones: ZoneType[] = [];
+    if (this.ticket) {
+      const type = this.ticket.type as any;
+      const isReceipt = type === TicketType.GoodsReceipt || String(type) === '0' || type === 'GoodsReceipt';
+      const isRecallOrReturnOut = type === TicketType.RecallReceipt || String(type) === '4' || type === 'RecallReceipt'
+        || type === TicketType.ReturnOutward || String(type) === '3' || type === 'ReturnOutward';
+      const isIssue = type === TicketType.GoodsIssue || String(type) === '1' || type === 'GoodsIssue';
+
+      if (isReceipt) {
+        allowedZones = [ZoneType.QA];
+      } else if (isRecallOrReturnOut) {
+        allowedZones = [ZoneType.Quarantine];
+      } else if (isIssue) {
+        allowedZones = [ZoneType.Storage, ZoneType.QA];
+      }
     }
+
+    let result = this.bins;
+    if (allowedZones.length > 0) {
+      result = result.filter(b => {
+        if (b.zoneType === undefined || b.zoneType === null) return false;
+        return allowedZones.some(az => (az as any) === b.zoneType || String(az) === String(b.zoneType) || ZoneType[az] === (b.zoneType as any));
+      });
+    }
+
+    // 2. Lọc theo điều kiện bảo quản (chỉ bắt buộc đối với phân khu Storage)
+    if (condition !== null) {
+      result = result.filter(b => {
+        const isStorage = (b.zoneType as any) === ZoneType.Storage || String(b.zoneType) === '0' || (b.zoneType as any) === 'Storage';
+        if (isStorage) {
+          return (b.zoneStorageCondition as any) === condition || String(b.zoneStorageCondition) === String(condition) || StorageCondition[b.zoneStorageCondition as any] === (condition as any);
+        }
+        return true;
+      });
+    }
+
+    this.filteredBins = result;
+    this.hiddenBinCount = this.bins.length - this.filteredBins.length;
 
     const currentBinId = this.detailForm?.get('binId')?.value;
     if (currentBinId && !this.filteredBins.find(b => b.id === currentBinId)) {
@@ -269,12 +320,20 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
 
   // ── Batch filtering ───────────────────────────────────────
   private filterBatchesByTicketType(all: ProductBatchDto[]): ProductBatchDto[] {
-    if (!this.isIssueTicket()) {
+    const type = this.ticket?.type as any;
+    const isGoodsIssue = type === TicketType.GoodsIssue || String(type) === '1' || type === 'GoodsIssue';
+    const isReturnOrDisposal =
+      type === TicketType.ReturnOutward || String(type) === '3' || type === 'ReturnOutward' ||
+      type === TicketType.DisposalIssue || String(type) === '5' || type === 'DisposalIssue';
+
+    if (isGoodsIssue) {
+      return all.filter(b => b.status === BatchQAStatus.Approved);
+    } else if (isReturnOrDisposal) {
+      return all;
+    } else {
       return all.filter(
         b => b.status !== BatchQAStatus.Recalled && b.status !== BatchQAStatus.Expired,
       );
-    } else {
-      return all.filter(b => b.status === BatchQAStatus.Approved);
     }
   }
 
@@ -350,6 +409,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
       manufacturingDate: [null, [Validators.required]],
       expiryDate: [null, [Validators.required]],
       medicineRegistrationId: [null],
+      supplierId: [this.poSupplier?.id || null]
     });
 
     // Mặc định chọn SĐK đầu tiên nếu có
@@ -654,6 +714,88 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
+  // ── PR Line Selection ─────────────────────────────────────
+  loadPrLines(prId: string) {
+    this.ticketService
+      .getLinesFromPurchaseReturn(prId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.prLines = res.map(l => ({
+          ...l,
+          exportQuantity: l.quantity,
+        }));
+      });
+  }
+
+  openPrLineDrawer() {
+    this.isPrLineDrawerOpen = true;
+  }
+
+  closePrLineDrawer() {
+    this.isPrLineDrawerOpen = false;
+  }
+
+  addPrLineToTicket(prLine: any) {
+    if (prLine.exportQuantity <= 0) {
+      this.toaster.error('::QuantityMustBeGreaterThanZero', '::Error');
+      return;
+    }
+    if (prLine.exportQuantity > prLine.quantity) {
+      this.toaster.error('::ExportQuantityExceedsRemaining', '::Error');
+      return;
+    }
+
+    this.ticketService
+      .addLineFromPurchaseReturn(this.ticketId, prLine.id, prLine.exportQuantity)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loadTicketData();
+        this.toaster.success('::AllocationSuccess', '::Success');
+        this.closePrLineDrawer();
+      });
+  }
+
+  // ── Recall Line Selection ─────────────────────────────────
+  loadRecallLines(recallId: string) {
+    this.ticketService
+      .getLinesFromSalesRecall(recallId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.recallLines = res.map(l => ({
+          ...l,
+          exportQuantity: l.quantity,
+        }));
+      });
+  }
+
+  openRecallLineDrawer() {
+    this.isRecallLineDrawerOpen = true;
+  }
+
+  closeRecallLineDrawer() {
+    this.isRecallLineDrawerOpen = false;
+  }
+
+  addRecallLineToTicket(recallLine: any) {
+    if (recallLine.exportQuantity <= 0) {
+      this.toaster.error('::QuantityMustBeGreaterThanZero', '::Error');
+      return;
+    }
+    if (recallLine.exportQuantity > recallLine.quantity) {
+      this.toaster.error('::ExportQuantityExceedsRemaining', '::Error');
+      return;
+    }
+
+    this.ticketService
+      .addLineFromSalesRecall(this.ticketId, recallLine.id, recallLine.exportQuantity)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.loadTicketData();
+        this.toaster.success('::AllocationSuccess', '::Success');
+        this.closeRecallLineDrawer();
+      });
+  }
+
   // ── Ticket workflow ───────────────────────────────────────
   sendToApprove() {
     if (!this.ticket?.lines?.length) {
@@ -727,11 +869,37 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
   }
 
   isIssueTicket(): boolean {
+    if (!this.ticket) return false;
+    const type = this.ticket.type as any;
     return (
-      this.ticket?.type === TicketType.GoodsIssue ||
-      this.ticket?.type === TicketType.DisposalIssue ||
-      this.ticket?.type === TicketType.ReturnOutward
+      type === TicketType.GoodsIssue || String(type) === '1' || type === 'GoodsIssue' ||
+      type === TicketType.DisposalIssue || String(type) === '5' || type === 'DisposalIssue' ||
+      type === TicketType.ReturnOutward || String(type) === '3' || type === 'ReturnOutward'
     );
+  }
+
+  isGoodsIssueTicket(): boolean {
+    if (!this.ticket) return false;
+    const type = this.ticket.type as any;
+    return type === TicketType.GoodsIssue || String(type) === '1' || type === 'GoodsIssue';
+  }
+
+  isGoodsReceiptTicket(): boolean {
+    if (!this.ticket) return false;
+    const type = this.ticket.type as any;
+    return type === TicketType.GoodsReceipt || String(type) === '0' || type === 'GoodsReceipt';
+  }
+
+  isReturnOutwardTicket(): boolean {
+    if (!this.ticket) return false;
+    const type = this.ticket.type as any;
+    return type === TicketType.ReturnOutward || String(type) === '3' || type === 'ReturnOutward';
+  }
+
+  isRecallReceiptTicket(): boolean {
+    if (!this.ticket) return false;
+    const type = this.ticket.type as any;
+    return type === TicketType.RecallReceipt || String(type) === '4' || type === 'RecallReceipt';
   }
 
   getLineAssignedBaseQty(line: InventoryTicketLineDto): number {

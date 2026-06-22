@@ -8,7 +8,7 @@ import { fileURLToPath } from "url";
 import rateLimit from "express-rate-limit";
 // Tool registrations
 import { registerQueryTools } from "./tools/read_query.js";
-import { registerDatetimeTools } from "./tools/datetime.js";
+import { registerDatetimeTools } from "./tools/get_current_datetime.js";
 import { registerReadResourceTool } from "./tools/read_resource.js";
 import { registerSupplierTools } from "./tools/supplier.js";
 // Resource and prompt registrations
@@ -65,7 +65,8 @@ const createMcpServer = () => {
             "1. Use the provided tools and resources to look up information autonomously. Never ask the user for technical details.\n" +
             "2. The database is PostgreSQL with PascalCase identifiers — always wrap table and column names in double quotes.\n" +
             "3. Select ID columns in queries for internal tracking, but never display raw UUID/GUID values to the user.\n" +
-            "4. Always respond to the user in Vietnamese."
+            "4. Always respond to the user in Vietnamese.\n" +
+            "5. When presenting lists of data retrieved from the database that are limited by a LIMIT clause, always explicitly notify the user in Vietnamese that the list is partial (e.g., 'đây chưa phải là tất cả dữ liệu') and suggest that they can ask to see more if needed."
     });
     registerQueryTools(server);
     registerDatetimeTools(server);

@@ -2,7 +2,7 @@ namespace SupplyCoreERP.Enums.Orders;
 
 public enum PurchaseRequisitionStatus
 {
-    Draft = 1,           // Nháp (Đang soạn)
+    Draft = 1,           // Nháp 
     PendingApproval = 2, // Chờ duyệt
     Approved = 3,        // Đã duyệt (Sẵn sàng để chuyển sang PO)
     Rejected = 4,        // Từ chối duyệt

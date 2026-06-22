@@ -16,6 +16,10 @@ using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
+using SupplyCoreERP.Procurement.PurchaseReturns;
+using SupplyCoreERP.PurchaseReturns.Dtos;
+using SupplyCoreERP.Sales.SalesRecalls;
+using SupplyCoreERP.SalesRecalls.Dtos;
 
 namespace SupplyCoreERP.Tickets;
 
@@ -28,6 +32,10 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
     private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo;
     private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
     private readonly ITicketManager _ticketManager;
+    private readonly IRepository<PurchaseReturn, Guid> _purchaseReturnRepo;
+    private readonly IRepository<PurchaseReturnLine, Guid> _purchaseReturnLineRepo;
+    private readonly IRepository<SalesRecall, Guid> _salesRecallRepo;
+    private readonly IRepository<SalesRecallLine, Guid> _salesRecallLineRepo;
 
     // Constructor injection
     public InventoryTicketAppService(
@@ -36,7 +44,11 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
         IRepository<InventoryTicketDetail, Guid> ticketDetailRepo,
         IRepository<PurchaseOrder, Guid> purchaseOrderRepo,
         IRepository<SalesOrder, Guid> salesOrderRepo,
-        ITicketManager ticketManager)
+        ITicketManager ticketManager,
+        IRepository<PurchaseReturn, Guid> purchaseReturnRepo,
+        IRepository<PurchaseReturnLine, Guid> purchaseReturnLineRepo,
+        IRepository<SalesRecall, Guid> salesRecallRepo,
+        IRepository<SalesRecallLine, Guid> salesRecallLineRepo)
     {
         _ticketRepo = ticketRepo;
         _ticketLineRepo = ticketLineRepo;
@@ -44,6 +56,10 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
         _purchaseOrderRepo = purchaseOrderRepo;
         _salesOrderRepo = salesOrderRepo;
         _ticketManager = ticketManager;
+        _purchaseReturnRepo = purchaseReturnRepo;
+        _purchaseReturnLineRepo = purchaseReturnLineRepo;
+        _salesRecallRepo = salesRecallRepo;
+        _salesRecallLineRepo = salesRecallLineRepo;
     }
 
     #region Ticket CRUD
@@ -225,6 +241,114 @@ public class InventoryTicketAppService : SupplyCore, IInventoryTicketAppService
 
         SalesOrderLine soLine = so.Lines.First(x => x.Id == soLineId);
         InventoryTicketLine line = await _ticketManager.CreateTicketLineAsync(ticket, soLine.ProductId, soLine.Id, quantity);
+        await _ticketLineRepo.InsertAsync(line);
+    }
+
+    public async Task<List<PurchaseReturnLineDto>> GetLinesFromPurchaseReturnAsync(Guid returnId)
+    {
+        IQueryable<PurchaseReturn> query = await _purchaseReturnRepo.GetQueryableAsync();
+        PurchaseReturn pr = await query.Include(x => x.Lines).ThenInclude(l => l.Product).Include(x => x.Lines).ThenInclude(l => l.Unit).FirstOrDefaultAsync(x => x.Id == returnId)
+            ?? throw new EntityNotFoundException(typeof(PurchaseReturn), returnId);
+
+        if (pr.Status == PurchaseReturnStatus.Completed)
+        {
+            return new List<PurchaseReturnLineDto>();
+        }
+
+        IQueryable<InventoryTicketLine> ticketLineQuery = await _ticketLineRepo.GetQueryableAsync();
+        List<Guid> prLineIds = pr.Lines.Select(x => x.Id).ToList();
+
+        var existingAllocations = await ticketLineQuery
+            .Where(x => x.ReferenceDocumentLineId.HasValue && prLineIds.Contains(x.ReferenceDocumentLineId.Value) && x.Ticket.Status != ApprovalStatus.Rejected)
+            .Select(x => new { x.ReferenceDocumentLineId, x.Quantity, x.ConversionFactor })
+            .ToListAsync();
+
+        List<PurchaseReturnLineDto> result = new();
+        foreach (PurchaseReturnLine prLine in pr.Lines)
+        {
+            decimal alreadyAllocatedBase = existingAllocations
+                .Where(a => a.ReferenceDocumentLineId == prLine.Id)
+                .Sum(a => a.Quantity * a.ConversionFactor);
+            decimal remainingBase = prLine.BaseQuantity - alreadyAllocatedBase;
+
+            if (remainingBase > 0.0001m)
+            {
+                PurchaseReturnLineDto dto = ObjectMapper.Map<PurchaseReturnLine, PurchaseReturnLineDto>(prLine);
+                dto.Quantity = Math.Round(remainingBase / prLine.ConversionFactor, 4);
+                result.Add(dto);
+            }
+        }
+        return result;
+    }
+
+    public async Task AddLineFromPurchaseReturnAsync(Guid id, Guid prLineId, decimal quantity)
+    {
+        InventoryTicket ticket = await _ticketRepo.GetAsync(id);
+        if (ticket.Status != ApprovalStatus.Draft)
+        {
+            throw new UserFriendlyException("Chỉ thêm dòng khi phiếu ở trạng thái Nháp!");
+        }
+
+        IQueryable<PurchaseReturn> prQuery = await _purchaseReturnRepo.GetQueryableAsync();
+        PurchaseReturn pr = await prQuery.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Lines.Any(l => l.Id == prLineId))
+            ?? throw new EntityNotFoundException(typeof(PurchaseReturnLine), prLineId);
+
+        PurchaseReturnLine prLine = pr.Lines.First(x => x.Id == prLineId);
+        InventoryTicketLine line = await _ticketManager.CreateTicketLineAsync(ticket, prLine.ProductId, prLine.Id, quantity);
+        await _ticketLineRepo.InsertAsync(line);
+    }
+
+    public async Task<List<SalesRecallLineDto>> GetLinesFromSalesRecallAsync(Guid recallId)
+    {
+        IQueryable<SalesRecall> query = await _salesRecallRepo.GetQueryableAsync();
+        SalesRecall recall = await query.Include(x => x.Lines).ThenInclude(l => l.Customer).Include(x => x.Lines).ThenInclude(l => l.Unit).FirstOrDefaultAsync(x => x.Id == recallId)
+            ?? throw new EntityNotFoundException(typeof(SalesRecall), recallId);
+
+        if (recall.Status == SalesRecallStatus.Completed)
+        {
+            return new List<SalesRecallLineDto>();
+        }
+
+        IQueryable<InventoryTicketLine> ticketLineQuery = await _ticketLineRepo.GetQueryableAsync();
+        List<Guid> recallLineIds = recall.Lines.Select(x => x.Id).ToList();
+
+        var existingAllocations = await ticketLineQuery
+            .Where(x => x.ReferenceDocumentLineId.HasValue && recallLineIds.Contains(x.ReferenceDocumentLineId.Value) && x.Ticket.Status != ApprovalStatus.Rejected)
+            .Select(x => new { x.ReferenceDocumentLineId, x.Quantity, x.ConversionFactor })
+            .ToListAsync();
+
+        List<SalesRecallLineDto> result = new();
+        foreach (SalesRecallLine recallLine in recall.Lines)
+        {
+            decimal alreadyAllocatedBase = existingAllocations
+                .Where(a => a.ReferenceDocumentLineId == recallLine.Id)
+                .Sum(a => a.Quantity * a.ConversionFactor);
+            decimal remainingBase = recallLine.BaseQuantity - alreadyAllocatedBase;
+
+            if (remainingBase > 0.0001m)
+            {
+                SalesRecallLineDto dto = ObjectMapper.Map<SalesRecallLine, SalesRecallLineDto>(recallLine);
+                dto.Quantity = Math.Round(remainingBase / recallLine.ConversionFactor, 4);
+                result.Add(dto);
+            }
+        }
+        return result;
+    }
+
+    public async Task AddLineFromSalesRecallAsync(Guid id, Guid recallLineId, decimal quantity)
+    {
+        InventoryTicket ticket = await _ticketRepo.GetAsync(id);
+        if (ticket.Status != ApprovalStatus.Draft)
+        {
+            throw new UserFriendlyException("Chỉ thêm dòng khi phiếu ở trạng thái Nháp!");
+        }
+
+        IQueryable<SalesRecall> recallQuery = await _salesRecallRepo.GetQueryableAsync();
+        SalesRecall recall = await recallQuery.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Lines.Any(l => l.Id == recallLineId))
+            ?? throw new EntityNotFoundException(typeof(SalesRecallLine), recallLineId);
+
+        SalesRecallLine recallLine = recall.Lines.First(x => x.Id == recallLineId);
+        InventoryTicketLine line = await _ticketManager.CreateTicketLineAsync(ticket, recall.ProductId, recallLine.Id, quantity);
         await _ticketLineRepo.InsertAsync(line);
     }
 

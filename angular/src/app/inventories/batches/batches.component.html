@@ -209,6 +209,30 @@
 
     <div class="row">
       <div class="col-md-12 mb-3">
+        <label class="ph-label">Nhà cung cấp</label>
+        <!-- Chế độ tạo mới: Dropdown search để chọn -->
+        <app-dropdown-search
+          *ngIf="!selectedBatch?.id"
+          formControlName="supplierId"
+          [items]="suppliers"
+          [labelKey]="'name'"
+          [valueKey]="'id'"
+          [placeholder]="'— Chọn nhà cung cấp —'"
+        ></app-dropdown-search>
+        
+        <!-- Chế độ chỉnh sửa: Hiển thị readonly tên nhà cung cấp -->
+        <input
+          *ngIf="selectedBatch?.id"
+          type="text"
+          class="form-control form-control-sm bg-light text-muted"
+          [value]="selectedBatch?.supplierName || 'N/A'"
+          readonly
+        />
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-12 mb-3">
         <label class="ph-label ph-label--required">{{ '::BatchNumber' | abpLocalization }}</label>
         <input
           type="text"

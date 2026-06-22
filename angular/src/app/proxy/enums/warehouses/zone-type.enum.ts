@@ -8,6 +8,7 @@ export enum ZoneType {
   Quarantine = 4,
   ForkliftParking = 5,
   Office = 6,
+  QA = 7,
 }
 
 export const zoneTypeOptions = mapEnumToOptions(ZoneType);

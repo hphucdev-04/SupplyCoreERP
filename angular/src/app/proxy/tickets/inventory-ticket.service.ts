@@ -3,7 +3,9 @@ import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
 import type { PurchaseOrderLineDto } from '../purchase-orders/dtos/models';
+import type { PurchaseReturnLineDto } from '../purchase-returns/dtos/models';
 import type { SalesOrderLineDto } from '../sales-orders/dtos/models';
+import type { SalesRecallLineDto } from '../sales-recalls/dtos/models';
 
 @Injectable({
   providedIn: 'root',
@@ -31,10 +33,28 @@ export class InventoryTicketService {
     { apiName: this.apiName,...config });
   
 
+  addLineFromPurchaseReturn = (id: string, prLineId: string, quantity: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/inventory-ticket/${id}/line-from-purchase-return/${prLineId}`,
+      params: { quantity },
+    },
+    { apiName: this.apiName,...config });
+  
+
   addLineFromSalesOrder = (id: string, soLineId: string, quantity: number, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'POST',
       url: `/api/app/inventory-ticket/${id}/line-from-sales-order/${soLineId}`,
+      params: { quantity },
+    },
+    { apiName: this.apiName,...config });
+  
+
+  addLineFromSalesRecall = (id: string, recallLineId: string, quantity: number, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: `/api/app/inventory-ticket/${id}/line-from-sales-recall/${recallLineId}`,
       params: { quantity },
     },
     { apiName: this.apiName,...config });
@@ -105,10 +125,26 @@ export class InventoryTicketService {
     { apiName: this.apiName,...config });
   
 
+  getLinesFromPurchaseReturn = (returnId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, PurchaseReturnLineDto[]>({
+      method: 'GET',
+      url: `/api/app/inventory-ticket/lines-from-purchase-return/${returnId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
   getLinesFromSalesOrder = (soId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, SalesOrderLineDto[]>({
       method: 'GET',
       url: `/api/app/inventory-ticket/lines-from-sales-order/${soId}`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  getLinesFromSalesRecall = (recallId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, SalesRecallLineDto[]>({
+      method: 'GET',
+      url: `/api/app/inventory-ticket/lines-from-sales-recall/${recallId}`,
     },
     { apiName: this.apiName,...config });
   

@@ -9,7 +9,7 @@ import rateLimit from "express-rate-limit";
 
 // Tool registrations
 import { registerQueryTools } from "./tools/read_query.js";
-import { registerDatetimeTools } from "./tools/datetime.js";
+import { registerDatetimeTools } from "./tools/get_current_datetime.js";
 import { registerReadResourceTool } from "./tools/read_resource.js";
 import { registerSupplierTools } from "./tools/supplier.js";
 
@@ -26,9 +26,8 @@ dotenv.config({ path: path.resolve(__dirname, "../.env") });
 // Map để quản lý transport của các phiên theo Session ID
 const transports: { [sessionId: string]: NodeStreamableHTTPServerTransport } = {};
 
-/**
- * Middleware kiểm tra Origin Header (DNS Rebinding Protection)
- */
+//Middleware kiểm tra Origin Header (DNS Rebinding Protection)
+
 const validateOrigin = (req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin;
   if (origin) {
@@ -41,9 +40,9 @@ const validateOrigin = (req: Request, res: Response, next: NextFunction) => {
   next();
 };
 
-/**
- * Middleware Rate Limiting cho MCP
- */
+
+//Middleware Rate Limiting cho MCP
+
 const mcpLimiter = rateLimit({
   windowMs: 60 * 1000, // 1 phút
   max: 100,
@@ -54,9 +53,9 @@ const mcpLimiter = rateLimit({
   validate: false 
 });
 
-/**
- * Khởi tạo và đăng ký toàn bộ nghiệp vụ cho một instance McpServer mới
- */
+
+//Khởi tạo và đăng ký toàn bộ nghiệp vụ cho một instance McpServer mới
+
 const createMcpServer = (): McpServer => {
   const server = new McpServer(
     {
@@ -76,7 +75,8 @@ const createMcpServer = (): McpServer => {
         "1. Use the provided tools and resources to look up information autonomously. Never ask the user for technical details.\n" +
         "2. The database is PostgreSQL with PascalCase identifiers — always wrap table and column names in double quotes.\n" +
         "3. Select ID columns in queries for internal tracking, but never display raw UUID/GUID values to the user.\n" +
-        "4. Always respond to the user in Vietnamese."
+        "4. Always respond to the user in Vietnamese.\n" +
+        "5. When presenting lists of data retrieved from the database that are limited by a LIMIT clause, always explicitly notify the user in Vietnamese that the list is partial (e.g., 'đây chưa phải là tất cả dữ liệu') and suggest that they can ask to see more if needed."
     }
   );
 
@@ -90,9 +90,9 @@ const createMcpServer = (): McpServer => {
   return server;
 };
 
-/**
- * Xử lý yêu cầu HTTP POST (JSON-RPC)
- */
+
+//Xử lý yêu cầu HTTP POST (JSON-RPC)
+
 const handleMcpPost = async (req: Request, res: Response): Promise<void> => {
   const sessionId = req.headers["mcp-session-id"] as string | undefined;
   console.log(`[MCP-Server] ==> POST /mcp | Session: ${sessionId || "Invalid"} | Method: ${req.body?.method || "N/A"}`);
@@ -160,9 +160,9 @@ const handleMcpPost = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-/**
- * Xử lý yêu cầu HTTP GET (SSE Stream)
- */
+
+//Xử lý yêu cầu HTTP GET (SSE Stream)
+
 const handleMcpGet = async (req: Request, res: Response): Promise<void> => {
   const sessionId = (req.headers["mcp-session-id"] || req.query.sessionId) as string | undefined;
   console.log(`[MCP-Server] ==> GET /mcp (Mo SSE Stream) | Session: ${sessionId || "N/A"}`);
@@ -187,9 +187,9 @@ const handleMcpGet = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-/**
- * Xử lý yêu cầu HTTP DELETE (Đóng session)
- */
+
+//Xử lý yêu cầu HTTP DELETE (Đóng session)
+
 const handleMcpDelete = async (req: Request, res: Response): Promise<void> => {
   const sessionId = req.headers["mcp-session-id"] as string | undefined;
   console.log(`[MCP-Server] ==> DELETE /mcp (Dong Session) | Session: ${sessionId || "N/A"}`);
@@ -214,9 +214,9 @@ const handleMcpDelete = async (req: Request, res: Response): Promise<void> => {
   }
 };
 
-/**
- * Endpoint thông báo thay đổi Tools
- */
+
+//Endpoint thông báo thay đổi Tools
+
 const handleToolsChanged = async (req: Request, res: Response): Promise<void> => {
   try {
     console.log("[MCP-Server] Received tools change notification, broadcasting to all sessions...");
@@ -238,9 +238,9 @@ const handleToolsChanged = async (req: Request, res: Response): Promise<void> =>
   }
 };
 
-/**
- * Thiết lập dọn dẹp tài nguyên khi tắt server (SIGINT)
- */
+
+//Thiết lập dọn dẹp tài nguyên khi tắt server (SIGINT)
+
 const setupShutdownHandler = (): void => {
   process.on("SIGINT", async () => {
     console.log("[MCP-Server] Cleaning up active transports...");
@@ -293,9 +293,8 @@ const runHttpServer = async (): Promise<void> => {
   });
 };
 
-/**
- * Hàm khởi chạy chính
- */
+
+// Hàm khởi chạy chính
 async function main(): Promise<void> {
   const isStdio = process.argv.includes("--stdio");
   if (isStdio) {

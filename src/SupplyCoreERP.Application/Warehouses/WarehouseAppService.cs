@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using SupplyCoreERP.Inventory.Warehouses;
+using SupplyCoreERP.Permissions;
 using SupplyCoreERP.Warehouses.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
@@ -221,6 +223,21 @@ public class WarehouseAppService : SupplyCore, IWarehouseAppService
         Bin bin = await _binRepo.GetAsync(id);
         bin.ToggleBlock(!bin.IsBlocked);
         await _binRepo.UpdateAsync(bin);
+    }
+
+    [Authorize(SupplyCoreERPPermissions.Inventory.Warehouse.ZoneTransfer)]
+    public async Task TransferBinAsync(TransferBinDto input)
+    {
+        await _warehouseManager.TransferBinAsync(
+            input.WarehouseId,
+            input.SourceBinId,
+            input.TargetBinId,
+            input.ProductId,
+            input.ProductBatchId,
+            input.Quantity,
+            input.UnitId,
+            input.ConversionFactor
+        );
     }
     #endregion
 }

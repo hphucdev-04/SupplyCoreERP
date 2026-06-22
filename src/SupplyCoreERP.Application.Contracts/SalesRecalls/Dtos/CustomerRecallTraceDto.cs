@@ -17,4 +17,8 @@ public class CustomerRecallTraceDto
 
     public decimal Quantity { get; set; }
     public string UnitName { get; set; }
+    public Guid UnitId { get; set; }
+    public decimal UnitPrice { get; set; }
+    public decimal TaxRate { get; set; }
+    public int ConversionFactor { get; set; }
 }

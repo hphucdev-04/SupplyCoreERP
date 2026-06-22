@@ -78,7 +78,7 @@
       <button
         class="tb-btn icon-only ghost"
         (click)="zoomIn()"
-        [disabled]="scale >= 2"
+        [disabled]="scale >= 10"
         title="Zoom In"
       >
         <i class="fa fa-search-plus"></i>
@@ -168,6 +168,13 @@
               title="Forklift Parking"
             >
               <i class="fas fa-dolly"></i><span>Parking</span>
+            </button>
+            <button
+              class="shape-tile zone-qa"
+              (click)="createZoneFromTemplate(ZoneType.QA, StorageCondition.Other)"
+              title="QA Zone"
+            >
+              <i class="fas fa-flask"></i><span>QA Zone</span>
             </button>
             <button
               class="shape-tile zone-office"
@@ -309,25 +316,27 @@
                 (dblclick)="onBinDoubleClick(bin, $event)"
                 title="{{ bin.code }} — Double-click to edit"
               >
-                <span class="bin-label" [style.font-size.px]="getBinFontSize(bin)">{{
+                <span class="bin-label" *ngIf="shouldShowBinLabel(bin)" [style.font-size.px]="getBinFontSize(bin)">{{
                   bin.code
                 }}</span>
                 <i class="fa fa-ban bin-blocked-icon" *ngIf="bin.isBlocked"></i>
 
                 <!-- Resize handles -->
-                <div class="rh rh-nw" (mousedown)="onResizeStart($event, bin, 'bin', 'nw')"></div>
-                <div class="rh rh-n" (mousedown)="onResizeStart($event, bin, 'bin', 'n')"></div>
-                <div class="rh rh-ne" (mousedown)="onResizeStart($event, bin, 'bin', 'ne')"></div>
-                <div class="rh rh-e" (mousedown)="onResizeStart($event, bin, 'bin', 'e')"></div>
-                <div class="rh rh-se" (mousedown)="onResizeStart($event, bin, 'bin', 'se')"></div>
-                <div class="rh rh-s" (mousedown)="onResizeStart($event, bin, 'bin', 's')"></div>
-                <div class="rh rh-sw" (mousedown)="onResizeStart($event, bin, 'bin', 'sw')"></div>
-                <div class="rh rh-w" (mousedown)="onResizeStart($event, bin, 'bin', 'w')"></div>
+                <ng-container *ngIf="shouldShowBinControls(bin)">
+                  <div class="rh rh-nw" (mousedown)="onResizeStart($event, bin, 'bin', 'nw')"></div>
+                  <div class="rh rh-n" (mousedown)="onResizeStart($event, bin, 'bin', 'n')"></div>
+                  <div class="rh rh-ne" (mousedown)="onResizeStart($event, bin, 'bin', 'ne')"></div>
+                  <div class="rh rh-e" (mousedown)="onResizeStart($event, bin, 'bin', 'e')"></div>
+                  <div class="rh rh-se" (mousedown)="onResizeStart($event, bin, 'bin', 'se')"></div>
+                  <div class="rh rh-s" (mousedown)="onResizeStart($event, bin, 'bin', 's')"></div>
+                  <div class="rh rh-sw" (mousedown)="onResizeStart($event, bin, 'bin', 'sw')"></div>
+                  <div class="rh rh-w" (mousedown)="onResizeStart($event, bin, 'bin', 'w')"></div>
 
-                <!-- Rotate -->
-                <div class="rotate-handle" (mousedown)="onRotateStart($event, bin)">
-                  <i class="fa fa-redo"></i>
-                </div>
+                  <!-- Rotate -->
+                  <div class="rotate-handle" (mousedown)="onRotateStart($event, bin)">
+                    <i class="fa fa-redo"></i>
+                  </div>
+                </ng-container>
               </div>
             </div>
           </ng-container>
@@ -582,124 +591,276 @@
   *ngIf="drawerType === 'BIN'"
   [isOpen]="true"
   [title]="selectedBin?.id ? '::EditBin' : '::NewBin'"
-  width="md"
+  [width]="binDrawerTab === 'inventory' ? 'lg' : 'md'"
   [saveDisabled]="form?.invalid"
+  [showFooter]="binDrawerTab === 'config'"
   (close)="closeDrawer()"
   (save)="saveBin()"
 >
-  <form [formGroup]="form" (ngSubmit)="saveBin()">
-    <div class="df mb-3">
-      <label class="dl">{{ '::Zone' | abpLocalization }} <span class="req">*</span></label>
-      <select class="form-select form-select-sm" formControlName="zoneId">
-        <option [ngValue]="null">— Select zone —</option>
-        <option *ngFor="let z of zones" [value]="z.id">{{ z.name }}</option>
-      </select>
+  <div class="drawer-body-wrapper">
+    <!-- Tab Headers (chỉ hiển thị nếu đã có BinId) -->
+    <div class="drawer-tabs mb-3" *ngIf="selectedBin?.id">
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="binDrawerTab === 'config'"
+        (click)="binDrawerTab = 'config'"
+      >
+        <i class="fas fa-cog me-1"></i>Cấu hình
+      </button>
+      <button
+        type="button"
+        class="tab-btn"
+        [class.active]="binDrawerTab === 'inventory'"
+        (click)="binDrawerTab = 'inventory'; loadBinBalances(selectedBin.id)"
+      >
+        <i class="fas fa-boxes me-1"></i>Tồn kho
+      </button>
     </div>
 
-    <div class="drawer-divider">Position</div>
-    <div class="df-row mb-3">
-      <div class="df">
-        <label class="dl">X (m)<span class="req">*</span></label
-        ><input
-          type="number"
-          step="0.1"
-          class="form-control form-control-sm"
-          formControlName="positionX"
+    <!-- TAB 1: CONFIGURATION FORM -->
+    <form [formGroup]="form" (ngSubmit)="saveBin()" *ngIf="binDrawerTab === 'config'">
+      <div class="df mb-3" *ngIf="selectedBin?.id">
+        <label class="dl">{{ '::BinCode' | abpLocalization }}</label>
+        <input class="form-control form-control-sm" [value]="selectedBin.code" readonly />
+      </div>
+
+      <div class="df mb-3">
+        <label class="dl">{{ '::Zone' | abpLocalization }} <span class="req">*</span></label>
+        <select class="form-select form-select-sm" formControlName="zoneId">
+          <option [ngValue]="null">— Select zone —</option>
+          <option *ngFor="let z of zones" [value]="z.id">{{ z.name }}</option>
+        </select>
+      </div>
+
+      <div class="drawer-divider">Position</div>
+      <div class="df-row mb-3">
+        <div class="df">
+          <label class="dl">X (m)<span class="req">*</span></label
+          ><input
+            type="number"
+            step="0.1"
+            class="form-control form-control-sm"
+            formControlName="positionX"
+          />
+        </div>
+        <div class="df">
+          <label class="dl">Y (m)<span class="req">*</span></label
+          ><input
+            type="number"
+            step="0.1"
+            class="form-control form-control-sm"
+            formControlName="positionY"
+          />
+        </div>
+      </div>
+
+      <div class="drawer-divider">Dimensions</div>
+      <div class="df-row mb-3">
+        <div class="df">
+          <label class="dl">Width (cm)<span class="req">*</span></label
+          ><input
+            type="number"
+            step="5"
+            min="10"
+            class="form-control form-control-sm"
+            formControlName="width"
+          />
+        </div>
+        <div class="df">
+          <label class="dl">Length (cm)<span class="req">*</span></label
+          ><input
+            type="number"
+            step="5"
+            min="10"
+            class="form-control form-control-sm"
+            formControlName="length"
+          />
+        </div>
+        <div class="df">
+          <label class="dl">Height (cm)<span class="req">*</span></label>
+          <input
+            type="number"
+            min="0"
+            step="1"
+            class="form-control form-control-sm"
+            formControlName="height"
+          />
+        </div>
+      </div>
+
+      <div class="df mb-3">
+        <label class="dl"
+          >{{ '::Rotation' | abpLocalization }}
+          <span class="dl-val">{{ form.get('rotation')?.value }}°</span>
+        </label>
+        <input
+          type="range"
+          class="form-range"
+          formControlName="rotation"
+          min="0"
+          max="360"
+          step="1"
         />
       </div>
-      <div class="df">
-        <label class="dl">Y (m)<span class="req">*</span></label
-        ><input
+
+      <div class="drawer-divider">Settings</div>
+      <div class="df mb-3">
+        <label class="dl">Max SKU <span class="dl-hint">(0 = unlimited)</span></label>
+        <input
           type="number"
-          step="0.1"
+          min="0"
+          step="1"
           class="form-control form-control-sm"
-          formControlName="positionY"
+          formControlName="maxSKU"
         />
       </div>
-    </div>
 
-    <div class="drawer-divider">Dimensions</div>
-    <div class="df-row mb-3">
-      <div class="df">
-        <label class="dl">Width (cm)<span class="req">*</span></label
-        ><input
-          type="number"
-          step="5"
-          min="10"
-          class="form-control form-control-sm"
-          formControlName="width"
-        />
+      <div class="df-row mb-3">
+        <div class="df">
+          <label class="dl">Sức chứa tối đa (cm³)</label>
+          <div class="form-control form-control-sm fw-bold">
+            {{ calculatedVolume | number:'1.0-0' }} cm³
+          </div>
+        </div>
+
+        <div class="df">
+          <label class="dl">Sức chứa cho phép (cm³)</label>
+          <div class="form-control form-control-sm fw-bold">
+            {{ calculatedVolume * 0.8 | number:'1.0-0' }} cm³
+          </div>
+        </div>
       </div>
-      <div class="df">
-        <label class="dl">Length (cm)<span class="req">*</span></label
-        ><input
-          type="number"
-          step="5"
-          min="10"
-          class="form-control form-control-sm"
-          formControlName="length"
-        />
+
+      <div class="form-check form-switch">
+        <input class="form-check-input" type="checkbox" id="binBlocked" formControlName="isBlocked" />
+        <label class="form-check-label text-danger small fw-semibold" for="binBlocked">
+          <i class="fa fa-ban me-1"></i>{{ '::IsBlocked' | abpLocalization }}
+        </label>
       </div>
-      <div class="df">
-      <label class="dl">Height (cm)<span class="req">*</span></label>
-      <input
-        type="number"
-        min="0"
-        step="1"
-        class="form-control form-control-sm"
-        formControlName="height"
-      />
-    </div>
-    </div>
+    </form>
 
-    <div class="df mb-3">
-      <label class="dl"
-        >{{ '::Rotation' | abpLocalization }}
-        <span class="dl-val">{{ form.get('rotation')?.value }}°</span>
-      </label>
-      <input
-        type="range"
-        class="form-range"
-        formControlName="rotation"
-        min="0"
-        max="360"
-        step="1"
-      />
-    </div>
+    <!-- TAB 2: INVENTORY BALANCES & TRANSFER -->
+    <div class="bin-inventory-tab" *ngIf="binDrawerTab === 'inventory' && selectedBin?.id">
+      <!-- Loading state -->
+      <div class="text-center py-4 text-muted" *ngIf="isLoadingBalances">
+        <i class="fas fa-spinner fa-spin fa-2x mb-2 text-primary"></i>
+        <div>Đang tải tồn kho...</div>
+      </div>
 
-    <div class="drawer-divider">Settings</div>
-    <div class="df mb-3">
-      <label class="dl">Max SKU <span class="dl-hint">(0 = unlimited)</span></label>
-      <input
-        type="number"
-        min="0"
-        step="1"
-        class="form-control form-control-sm"
-        formControlName="maxSKU"
-      />
-    </div>
+      <!-- Empty state -->
+      <div class="text-center py-5 text-muted border rounded bg-dark-card" *ngIf="!isLoadingBalances && binBalances.length === 0">
+        <i class="fas fa-box-open fa-2x mb-3 opacity-30"></i>
+        <div>Không có tồn kho trong ô hàng này.</div>
+      </div>
 
-   <div class="df-row mb-3">
-     <div class="df">
-      <label class="dl">Sức chứa tối đa (cm³)</label>
-      <div class="form-control form-control-sm fw-bold">
-        {{ calculatedVolume | number:'1.0-0' }} cm³
+      <!-- Table of Batches -->
+      <div class="table-responsive border rounded mb-3" *ngIf="!isLoadingBalances && binBalances.length > 0">
+        <table class="table table-sm table-hover align-middle mb-0 text-black">
+          <thead class="table-dark">
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Số lô</th>
+              <th class="text-end">Tồn / Khả dụng</th>
+              <th class="text-center">Đơn vị</th>
+              <th class="text-center" style="width: 70px;">Chuyển</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let b of binBalances" [class.table-active-row]="selectedBalance?.productBatchId === b.productBatchId">
+              <td>
+                <div class="fw-semibold text-truncate ph-color-text-body" style="max-width: 180px;" [title]="b.productName">
+                  {{ b.productName }}
+                </div>
+              </td>
+              <td><span class="ph-badge ph-badge--infor font-monospace">{{ b.batchNumber }}</span></td>
+              <td class="text-end font-monospace">
+                <span class="text-muted">{{ b.quantity | number }}</span> /
+                <span class="fw-bold text-success">{{ b.availableQuantity | number }}</span>
+              </td>
+              <td class="text-center"><span class="small text-muted">{{ b.baseUnitName }}</span></td>
+              <td class="text-center">
+                <button
+                  *ngIf="selectedBalance?.productBatchId !== b.productBatchId"
+                  type="button"
+                  class="btn btn-xs btn-outline-primary icon-only"
+                  (click)="selectBalanceForTransfer(b)"
+                  [disabled]="(b.availableQuantity || 0) <= 0"
+                  title="Chọn lô hàng để chuyển"
+                >
+                  <i class="fas fa-exchange-alt"></i>
+                </button>
+                <button
+                  *ngIf="selectedBalance?.productBatchId === b.productBatchId"
+                  type="button"
+                  class="btn btn-xs btn-danger icon-only"
+                  (click)="cancelTransfer()"
+                  title="Hủy chọn"
+                >
+                  <i class="fas fa-times"></i>
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Form Chuyển kho (Transfer Form) -->
+      <div class="transfer-form-card border border-primary p-3 rounded" *ngIf="selectedBalance">
+        <div class="d-flex justify-content-between align-items-center mb-3 border-bottom pb-2 border-primary-light">
+          <h6 class="text-primary mb-0 fw-bold"><i class="fas fa-shipping-fast me-1"></i>Chuyển phân khu hàng hóa</h6>
+          <span class="small text-muted">Đang chọn lô: <strong class="text-warning">{{ selectedBalance.batchNumber }}</strong></span>
+        </div>
+
+        <div class="row g-3 mb-3">
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-white">Số lượng chuyển <span class="text-danger">*</span></label>
+            <div class="input-group input-group-sm">
+              <input
+                type="number"
+                class="form-control form-control-sm bg-dark text-white border-secondary"
+                [(ngModel)]="transferQuantity"
+                [max]="selectedBalance.availableQuantity || 0"
+                min="0.000001"
+                step="any"
+              />
+              <span class="input-group-text bg-dark border-secondary text-muted">{{ selectedBalance.baseUnitName }}</span>
+            </div>
+            <div class="form-text small text-success mt-1">
+              Khả dụng tối đa: {{ selectedBalance.availableQuantity | number }} {{ selectedBalance.baseUnitName }}
+            </div>
+          </div>
+
+          <div class="col-md-6">
+            <label class="form-label small fw-semibold text-white">Ô hàng đích <span class="text-danger">*</span></label>
+            <app-dropdown-search
+              [(ngModel)]="targetBinId"
+              [items]="getFilteredTargetBins(selectedBin)"
+              [labelKey]="'displayLabel'"
+              [placeholder]="'— Chọn ô hàng đích —'"
+            >
+            </app-dropdown-search>
+            <div class="form-text small text-muted mt-1">
+              Chỉ hiển thị các ô hàng thuộc phân khu hợp lệ
+            </div>
+          </div>
+        </div>
+
+        <div class="d-flex justify-content-end gap-2 border-top pt-3 border-primary-light">
+          <button type="button" class="btn btn-sm btn-outline-secondary" (click)="cancelTransfer()">
+            Hủy bỏ
+          </button>
+          <button
+            type="button"
+            class="btn btn-sm btn-primary"
+            [disabled]="isTransferring || !targetBinId || transferQuantity <= 0 || transferQuantity > (selectedBalance.availableQuantity || 0)"
+            (click)="confirmTransfer()"
+          >
+            <i class="fas fa-spinner fa-spin me-1" *ngIf="isTransferring"></i>
+            Xác nhận chuyển
+          </button>
+        </div>
       </div>
     </div>
-
-    <div class="df">
-      <label class="dl">Sức chứa cho phép(cm³)</label>
-      <div class="form-control form-control-sm fw-bold">
-        {{ calculatedVolume * 0.8 | number:'1.0-0' }} cm³
-      </div>
-    </div>
-   </div>
-
-    <div class="form-check form-switch">
-      <input class="form-check-input" type="checkbox" id="binBlocked" formControlName="isBlocked" />
-      <label class="form-check-label text-danger small fw-semibold" for="binBlocked">
-        <i class="fa fa-ban me-1"></i>{{ '::IsBlocked' | abpLocalization }}
-      </label>
-    </div>
-  </form>
+  </div>
 </app-drawer>
