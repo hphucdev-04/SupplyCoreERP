@@ -3,6 +3,7 @@ import type { AuditedEntityDto, FullAuditedEntityDto, PagedAndSortedResultReques
 import type { PurchaseReturnRequestStatus } from '../../enums/orders/purchase-return-request-status.enum';
 
 export interface AddPurchaseReturnRequestLineDto {
+  returnType: PurchaseReturnType;
   productId: string;
   unitId: string;
   conversionFactor: number;
@@ -15,9 +16,7 @@ export interface AddPurchaseReturnRequestLineDto {
 }
 
 export interface CreatePurchaseReturnRequestDto {
-  supplierId: string;
   warehouseId: string;
-  returnType: PurchaseReturnType;
   requestDate: string;
   note?: string;
 }
@@ -31,13 +30,9 @@ export interface GetPurchaseReturnRequestListDto extends PagedAndSortedResultReq
 
 export interface PurchaseReturnRequestDto extends FullAuditedEntityDto<string> {
   code?: string;
-  supplierId?: string;
-  supplierName?: string;
-  supplierCode?: string;
   warehouseId?: string;
   warehouseName?: string;
   warehouseCode?: string;
-  returnType?: PurchaseReturnType;
   requestDate?: string;
   status?: PurchaseReturnRequestStatus;
   subTotal?: number;
@@ -59,6 +54,10 @@ export interface PurchaseReturnRequestLineDto extends AuditedEntityDto<string> {
   purchaseOrderId?: string;
   purchaseOrderCode?: string;
   purchaseOrderLineId?: string;
+  returnType?: PurchaseReturnType;
+  supplierId?: string;
+  supplierName?: string;
+  supplierCode?: string;
   quantity?: number;
   baseQuantity?: number;
   originalUnitPrice?: number;
@@ -80,12 +79,12 @@ export interface PurchaseReturnRequestRelatedTicketDto {
 
 export interface UpdatePurchaseReturnRequestDto {
   warehouseId: string;
-  returnType: PurchaseReturnType;
   requestDate: string;
   note?: string;
 }
 
 export interface UpdatePurchaseReturnRequestLineDto {
+  returnType: PurchaseReturnType;
   quantity: number;
   depreciationRate: number;
 }

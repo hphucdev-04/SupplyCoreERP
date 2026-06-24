@@ -17,6 +17,7 @@ import { WarehouseService } from 'src/app/proxy/warehouses';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { SalesRecallStatus } from 'src/app/proxy/enums/orders/sales-recall-status.enum';
 import { RecallLevel } from 'src/app/proxy/enums/orders/recall-level.enum';
+import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
 interface SelectableTrace extends CustomerRecallTraceDto {
@@ -24,7 +25,7 @@ interface SelectableTrace extends CustomerRecallTraceDto {
   recallQuantity: number;
   recallPrice: number;
   taxRate: number;
-  unitId: string; // Thực tế cần đơn vị tính để insert
+  unitId: string; 
 }
 
 @Component({
@@ -61,6 +62,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
 
   SalesRecallStatus = SalesRecallStatus;
   RecallLevel = RecallLevel;
+  ApprovalStatus = ApprovalStatus;
   readonly enumName = enumName;
 
   constructor(
@@ -71,7 +73,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -94,7 +96,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/sales/sales-recalls']);
   }
 
-  // ── Data Loading ─────────────────────────────────────────
+  //Data Loading
   loadData() {
     this.loading = true;
     this.recallService
@@ -171,7 +173,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     }
   }
 
-  // ── Forms ─────────────────────────────────────────────────
+  //Forms 
   buildForms() {
     this.editForm = this.fb.group({
       recallDecisionNumber: ['', [Validators.required, Validators.maxLength(256)]],
@@ -182,7 +184,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ── Edit Master ───────────────────────────────────────────
+  //Edit Master 
   openEditDrawer() {
     this.editForm.patchValue({
       recallDecisionNumber: this.recallDto.recallDecisionNumber,
@@ -215,7 +217,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  // ── Drawer Bottom: Trace & Suggest ────────────────────────
+  //Drawer Bottom: Trace & Suggest 
   openTraceDrawer() {
     this.loadData();
     this.isTraceOpen = true;
@@ -285,7 +287,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ── Workflows Actions ─────────────────────────────────────
+  // Workflows Actions
   sendToApprove() {
     this.confirmation.info('::ConfirmSendToApprove', '::AreYouSure').subscribe(status => {
       if (status === Confirmation.Status.confirm) {

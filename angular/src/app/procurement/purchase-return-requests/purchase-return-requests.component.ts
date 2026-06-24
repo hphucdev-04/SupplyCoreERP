@@ -22,7 +22,7 @@ import { enumName } from 'src/app/shared/untils/enum.util';
 @Component({
   selector: 'app-purchase-return-requests',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
   providers: [ListService],
   templateUrl: './purchase-return-requests.component.html',
 })
@@ -30,7 +30,6 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
   data = { items: [], totalCount: 0 } as PagedResultDto<PurchaseReturnRequestDto>;
-  suppliers: SupplierDto[] = [];
   warehouses: WarehouseDto[] = [];
 
   isDrawerOpen = false;
@@ -38,7 +37,6 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
   isSaving = false;
 
   filterText = '';
-  filterSupplierId: string = null;
   filterWarehouseId: string = null;
   filterStatus: number = null;
 
@@ -51,7 +49,6 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
   constructor(
     public readonly list: ListService,
     private requestService: PurchaseReturnRequestService,
-    private supplierService: SupplierService,
     private warehouseService: WarehouseService,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
@@ -67,7 +64,6 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
       this.requestService.getList({
         ...query,
         filter: this.filterText,
-        supplierId: this.filterSupplierId,
         warehouseId: this.filterWarehouseId,
         status: this.filterStatus,
       });
@@ -85,11 +81,6 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
   }
 
   loadLookups() {
-    this.supplierService
-      .getList({ maxResultCount: 1000, skipCount: 0 })
-      .pipe(takeUntil(this.destroy$))
-      .subscribe(res => (this.suppliers = res.items));
-
     this.warehouseService
       .getList({ maxResultCount: 1000, skipCount: 0 })
       .pipe(takeUntil(this.destroy$))
@@ -112,7 +103,6 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
   openCreateDrawer() {
     this.form.reset({
       requestDate: new Date().toISOString().split('T')[0],
-      returnType: PurchaseReturnType.Defective,
     });
     this.isDrawerOpen = true;
   }
@@ -147,21 +137,19 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
       .subscribe(status => {
         if (status === Confirmation.Status.confirm) {
           this.requestService
-            .delete(id)
-            .pipe(takeUntil(this.destroy$))
-            .subscribe(() => {
-              this.list.get();
-              this.toaster.success('::DeleteSuccess', '::Success');
-            });
+             .delete(id)
+             .pipe(takeUntil(this.destroy$))
+             .subscribe(() => {
+               this.list.get();
+               this.toaster.success('::DeleteSuccess', '::Success');
+             });
         }
       });
   }
 
   buildForm() {
     this.form = this.fb.group({
-      supplierId: [null, [Validators.required]],
       warehouseId: [null, [Validators.required]],
-      returnType: [PurchaseReturnType.Defective, [Validators.required]],
       requestDate: [new Date().toISOString().split('T')[0], [Validators.required]],
       note: ['', [Validators.maxLength(1000)]],
     });

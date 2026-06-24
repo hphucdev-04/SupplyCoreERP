@@ -401,13 +401,18 @@
         <table class="ph-table ph-table--flush">
           <thead>
             <tr>
-              <th class="ps-4">{{ '::Product' | abpLocalization }}</th>
-              <th class="text-end">{{ '::Ordered' | abpLocalization }}</th>
-              <th class="text-end">{{ '::Remaining' | abpLocalization }}</th>
-              <th style="width: 150px" class="text-center">
+              <th class="ps-4" style="min-width: 200px">{{ '::Product' | abpLocalization }}</th>
+              <th style="width: 100px">{{ '::Unit' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::Ordered' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::Remaining' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::UnitPrice' | abpLocalization }}</th>
+              <th class="text-end" style="width: 120px">{{ '::TotalPrice' | abpLocalization }}</th>
+              <th class="text-center" style="width: 80px">{{ '::TaxRate' | abpLocalization }}</th>
+              <th class="text-end" style="width: 130px">{{ '::FinalPrice' | abpLocalization }}</th>
+              <th class="text-center" style="width: 140px">
                 {{ '::ExportQty' | abpLocalization }}
               </th>
-              <th style="width: 120px"></th>
+              <th style="width: 100px"></th>
             </tr>
           </thead>
           <tbody>
@@ -416,18 +421,35 @@
                 <div class="fw-bold">{{ sl.productName }}</div>
                 <small class="ph-text-muted ph-font-mono">{{ sl.productCode }}</small>
               </td>
+              <td>
+                <span class="ph-badge ph-badge--neutral">{{ sl.unitName }}</span>
+              </td>
               <td class="text-end ph-field-value">
-                {{ sl.quantity | number }} <small>{{ sl.unitName }}</small>
+                {{ sl.quantity + sl.deliveredQuantity | number }}
+                <small class="ph-text-muted">{{ sl.unitName }}</small>
               </td>
-              <td class="text-end fw-bold ph-text-primary ph-field-value">
-                {{ sl.quantity | number }} <small>{{ sl.unitName }}</small>
+              <td class="text-end fw-bold ph-text-primary">
+                {{ sl.quantity | number }} <small class="ph-text-muted">{{ sl.unitName }}</small>
               </td>
-              <td class="px-4">
+              <td class="text-end ph-field-value">
+                {{ sl.unitPrice | number: '1.0-0' }}
+              </td>
+              <td class="text-end fw-bold">
+                {{ sl.totalPrice | number: '1.0-0' }}
+              </td>
+              <td class="text-center">
+                <span class="ph-badge ph-badge--neutral">{{ sl.taxRate }}%</span>
+              </td>
+              <td class="text-end fw-bold ph-text-primary">
+                {{ sl.finalPrice | number: '1.0-0' }}
+              </td>
+              <td class="px-2">
                 <input type="number" class="form-control form-control-sm text-end fw-bold"
-                  [(ngModel)]="sl.exportQuantity" [min]="0" [max]="sl.quantity" />
+                  [(ngModel)]="sl.exportQuantity" [min]="0" [max]="sl.quantity"
+                  style="max-width: 120px; margin: 0 auto" />
               </td>
-              <td class="text-center pe-4">
-                <button class="btn btn-sm ph-btn-new" [disabled]="!sl.exportQuantity || sl.exportQuantity <= 0"
+              <td class="text-center">
+                <button class="btn btn-sm ph-btn-new w-100" [disabled]="!sl.exportQuantity || sl.exportQuantity <= 0"
                   (click)="addSoLineToTicket(sl)">
                   <i class="fa fa-truck me-1"></i> {{ '::Export' | abpLocalization }}
                 </button>
@@ -451,13 +473,18 @@
         <table class="ph-table ph-table--flush">
           <thead>
             <tr>
-              <th class="ps-4">{{ '::Product' | abpLocalization }}</th>
-              <th class="text-end">{{ '::Ordered' | abpLocalization }}</th>
-              <th class="text-end">{{ '::Remaining' | abpLocalization }}</th>
-              <th style="width: 150px" class="text-center">
+              <th class="ps-4" style="min-width: 200px">{{ '::Product' | abpLocalization }}</th>
+              <th style="width: 100px">{{ '::Unit' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::Ordered' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::Remaining' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::UnitPrice' | abpLocalization }}</th>
+              <th class="text-end" style="width: 120px">{{ '::TotalPrice' | abpLocalization }}</th>
+              <th class="text-center" style="width: 80px">{{ '::TaxRate' | abpLocalization }}</th>
+              <th class="text-end" style="width: 130px">{{ '::FinalPrice' | abpLocalization }}</th>
+              <th class="text-center" style="width: 140px">
                 {{ '::ExportQty' | abpLocalization }}
               </th>
-              <th style="width: 120px"></th>
+              <th style="width: 100px"></th>
             </tr>
           </thead>
           <tbody>
@@ -466,18 +493,35 @@
                 <div class="fw-bold">{{ prl.productName }}</div>
                 <small class="ph-text-muted ph-font-mono">{{ prl.productCode }}</small>
               </td>
+              <td>
+                <span class="ph-badge ph-badge--neutral">{{ prl.unitName }}</span>
+              </td>
               <td class="text-end ph-field-value">
-                {{ prl.quantity | number }} <small>{{ prl.unitName }}</small>
+                {{ prl.quantity | number }}
+                <small class="ph-text-muted">{{ prl.unitName }}</small>
               </td>
-              <td class="text-end fw-bold ph-text-primary ph-field-value">
-                {{ prl.quantity | number }} <small>{{ prl.unitName }}</small>
+              <td class="text-end fw-bold ph-text-primary">
+                {{ prl.quantity | number }} <small class="ph-text-muted">{{ prl.unitName }}</small>
               </td>
-              <td class="px-4">
+              <td class="text-end ph-field-value">
+                {{ prl.returnUnitPrice | number: '1.0-0' }}
+              </td>
+              <td class="text-end fw-bold">
+                {{ prl.totalPrice | number: '1.0-0' }}
+              </td>
+              <td class="text-center">
+                <span class="ph-badge ph-badge--neutral">{{ prl.taxRate }}%</span>
+              </td>
+              <td class="text-end fw-bold ph-text-primary">
+                {{ prl.finalPrice | number: '1.0-0' }}
+              </td>
+              <td class="px-2">
                 <input type="number" class="form-control form-control-sm text-end fw-bold"
-                  [(ngModel)]="prl.exportQuantity" [min]="0" [max]="prl.quantity" />
+                  [(ngModel)]="prl.exportQuantity" [min]="0" [max]="prl.quantity"
+                  style="max-width: 120px; margin: 0 auto" />
               </td>
-              <td class="text-center pe-4">
-                <button class="btn btn-sm ph-btn-new" [disabled]="!prl.exportQuantity || prl.exportQuantity <= 0"
+              <td class="text-center">
+                <button class="btn btn-sm ph-btn-new w-100" [disabled]="!prl.exportQuantity || prl.exportQuantity <= 0"
                   (click)="addPrLineToTicket(prl)">
                   <i class="fa fa-truck me-1"></i> {{ '::Export' | abpLocalization }}
                 </button>
@@ -501,13 +545,18 @@
         <table class="ph-table ph-table--flush">
           <thead>
             <tr>
-              <th class="ps-4">{{ '::Customer' | abpLocalization }}</th>
-              <th class="text-end">{{ '::RecallQuantity' | abpLocalization }}</th>
-              <th class="text-end">{{ '::Remaining' | abpLocalization }}</th>
-              <th style="width: 150px" class="text-center">
+              <th class="ps-4" style="min-width: 200px">{{ '::Customer' | abpLocalization }}</th>
+              <th style="width: 100px">{{ '::Unit' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::Ordered' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::Remaining' | abpLocalization }}</th>
+              <th class="text-end" style="width: 110px">{{ '::UnitPrice' | abpLocalization }}</th>
+              <th class="text-end" style="width: 120px">{{ '::TotalPrice' | abpLocalization }}</th>
+              <th class="text-center" style="width: 80px">{{ '::TaxRate' | abpLocalization }}</th>
+              <th class="text-end" style="width: 130px">{{ '::FinalPrice' | abpLocalization }}</th>
+              <th class="text-center" style="width: 140px">
                 {{ '::ImportQty' | abpLocalization }}
               </th>
-              <th style="width: 120px"></th>
+              <th style="width: 100px"></th>
             </tr>
           </thead>
           <tbody>
@@ -516,18 +565,35 @@
                 <div class="fw-bold">{{ rl.customerName }}</div>
                 <small class="ph-text-muted ph-font-mono">{{ rl.customerCode }}</small>
               </td>
+              <td>
+                <span class="ph-badge ph-badge--neutral">{{ rl.unitName }}</span>
+              </td>
               <td class="text-end ph-field-value">
-                {{ rl.quantity | number }} <small>{{ rl.unitName }}</small>
+                {{ rl.quantity + rl.recalledQuantity | number }}
+                <small class="ph-text-muted">{{ rl.unitName }}</small>
               </td>
-              <td class="text-end fw-bold ph-text-primary ph-field-value">
-                {{ rl.quantity | number }} <small>{{ rl.unitName }}</small>
+              <td class="text-end fw-bold ph-text-primary">
+                {{ rl.quantity | number }} <small class="ph-text-muted">{{ rl.unitName }}</small>
               </td>
-              <td class="px-4">
+              <td class="text-end ph-field-value">
+                {{ rl.originalUnitPrice | number: '1.0-0' }}
+              </td>
+              <td class="text-end fw-bold">
+                {{ rl.totalPrice | number: '1.0-0' }}
+              </td>
+              <td class="text-center">
+                <span class="ph-badge ph-badge--neutral">{{ rl.taxRate }}%</span>
+              </td>
+              <td class="text-end fw-bold ph-text-primary">
+                {{ rl.finalPrice | number: '1.0-0' }}
+              </td>
+              <td class="px-2">
                 <input type="number" class="form-control form-control-sm text-end fw-bold"
-                  [(ngModel)]="rl.exportQuantity" [min]="0" [max]="rl.quantity" />
+                  [(ngModel)]="rl.exportQuantity" [min]="0" [max]="rl.quantity"
+                  style="max-width: 120px; margin: 0 auto" />
               </td>
-              <td class="text-center pe-4">
-                <button class="btn btn-sm ph-btn-new" [disabled]="!rl.exportQuantity || rl.exportQuantity <= 0"
+              <td class="text-center">
+                <button class="btn btn-sm ph-btn-new w-100" [disabled]="!rl.exportQuantity || rl.exportQuantity <= 0"
                   (click)="addRecallLineToTicket(rl)">
                   <i class="fa fa-plus me-1"></i> {{ '::Add' | abpLocalization }}
                 </button>
@@ -591,7 +657,8 @@
           </div>
 
           <app-dropdown-search *ngIf="!isCreatingBatch" formControlName="productBatchId" [items]="batches"
-            [labelKey]="'batchNumber'" [placeholder]="'::SelectBatch' | abpLocalization" [disabled]="!batches.length">
+            [labelKey]="'batchNumber'" [placeholder]="'::SelectBatch' | abpLocalization" [disabled]="!batches.length"
+            (valueChange)="onBatchChange($event)">
           </app-dropdown-search>
 
           <div class="ph-hint-warning mt-1" *ngIf="isGoodsIssueTicket() && hiddenBatchCount > 0">
@@ -603,7 +670,7 @@
         <div class="mb-3">
           <label class="form-label txt-sm fw-semibold">{{ '::Bin' | abpLocalization }} <span
               class="txt-danger">*</span></label>
-          <app-dropdown-search formControlName="binId" [items]="filteredBins" [labelKey]="'code'"
+          <app-dropdown-search formControlName="binId" [items]="filteredBins" [labelKey]="'codeWithStock'"
             [placeholder]="'::SelectBin' | abpLocalization" [disabled]="!detailForm.get('productId').value">
           </app-dropdown-search>
           <div class="form-text text-danger txt-sm mt-1"
@@ -615,7 +682,7 @@
         </div>
       </form>
 
-      <!-- Quick Batch Form (Moved outside main form to avoid nesting) -->
+      <!-- Quick Batch Form -->
       <div class="ph-card border-ph-brand-500 mt-2" *ngIf="isCreatingBatch && quickBatchForm">
         <div class="ph-card__header ph-bg-success d-flex justify-content-between align-items-center py-2 px-3">
           <span class="ph-text-success fw-bold">

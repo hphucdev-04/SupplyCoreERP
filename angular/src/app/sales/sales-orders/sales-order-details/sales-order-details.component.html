@@ -167,7 +167,12 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let t of relatedTickets">
-                    <td class="font-mono fw-bold w-50">{{ t.ticketNumber }}</td>
+                    <td
+                      class="ph-text-primary ph-link"
+                      (click)="router.navigate(['/inventory/tickets/details', t.id])"
+                    >
+                      {{ t.ticketNumber }}
+                    </td>
                     <td>{{ t.creationTime | date: 'HH:mm dd/MM/yyyy' }}</td>
                     <td>
                       <span

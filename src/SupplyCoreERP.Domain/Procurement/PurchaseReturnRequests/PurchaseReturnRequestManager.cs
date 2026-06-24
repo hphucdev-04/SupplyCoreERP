@@ -19,6 +19,7 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
     private readonly IRepository<PurchaseReturnRequestLine, Guid> _requestLineRepo;
     private readonly IRepository<Supplier, Guid> _supplierRepo;
     private readonly IRepository<PurchaseOrderLine, Guid> _poLineRepo;
+    private readonly IRepository<PurchaseOrder, Guid> _poRepo;
     private readonly IRepository<PurchaseReturnLine, Guid> _returnLineRepo;
     private readonly IPurchaseReturnManager _returnManager;
     private readonly IRepository<PurchaseReturn, Guid> _returnRepo;
@@ -29,6 +30,7 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
         IRepository<PurchaseReturnRequestLine, Guid> requestLineRepo,
         IRepository<Supplier, Guid> supplierRepo,
         IRepository<PurchaseOrderLine, Guid> poLineRepo,
+        IRepository<PurchaseOrder, Guid> poRepo,
         IRepository<PurchaseReturnLine, Guid> returnLineRepo,
         IPurchaseReturnManager returnManager,
         IRepository<PurchaseReturn, Guid> returnRepo,
@@ -38,6 +40,7 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
         _requestLineRepo = requestLineRepo;
         _supplierRepo = supplierRepo;
         _poLineRepo = poLineRepo;
+        _poRepo = poRepo;
         _returnLineRepo = returnLineRepo;
         _returnManager = returnManager;
         _returnRepo = returnRepo;
@@ -45,28 +48,17 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
     }
 
     public async Task<PurchaseReturnRequest> CreateAsync(
-        Guid supplierId,
         Guid warehouseId,
-        PurchaseReturnType returnType,
         DateTime requestDate,
         string? note)
     {
-        Supplier supplier = await _supplierRepo.GetAsync(supplierId);
-        if (!supplier.IsActive)
-        {
-            throw new BusinessException("SupplyCoreERP:InactiveSupplier", $"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
-        }
-
         // Tự động sinh mã code từ DocumentSequenceManager với sequence code PRQ (hoặc cấu hình tương tự)
-        // Chúng ta sẽ đăng ký PRQ làm document type. Nếu chưa có sequence, ta có thể sinh thủ công hoặc dùng document type PRQ.
         string code = await _documentManager.GenerateAsync(SupplyCoreERPConsts.DocumentTypePurchaseReturnRequest);
 
         return new PurchaseReturnRequest(
             GuidGenerator.Create(),
             code,
-            supplierId,
             warehouseId,
-            returnType,
             requestDate,
             note
         );
@@ -82,8 +74,17 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
         decimal quantity,
         decimal originalUnitPrice,
         decimal depreciationRate,
-        decimal taxRate)
+        decimal taxRate,
+        PurchaseReturnType returnType)
     {
+        // Kiểm tra nhà cung cấp của PO có hoạt động không
+        PurchaseOrder po = await _poRepo.GetAsync(purchaseOrderId);
+        Supplier supplier = await _supplierRepo.GetAsync(po.SupplierId);
+        if (!supplier.IsActive)
+        {
+            throw new BusinessException("SupplyCoreERP:InactiveSupplier", $"Nhà cung cấp '{supplier.Name}' đang bị khóa!");
+        }
+
         await ValidateReturnQuantityAsync(request.Id, purchaseOrderLineId, quantity, conversionFactor);
 
         request.AddLine(
@@ -96,7 +97,8 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
             quantity,
             originalUnitPrice,
             depreciationRate,
-            taxRate
+            taxRate,
+            returnType
         );
     }
 
@@ -104,7 +106,8 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
         PurchaseReturnRequest request,
         Guid lineId,
         decimal quantity,
-        decimal depreciationRate)
+        decimal depreciationRate,
+        PurchaseReturnType returnType)
     {
         PurchaseReturnRequestLine? line = request.Lines.FirstOrDefault(x => x.Id == lineId);
         if (line == null)
@@ -114,7 +117,7 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
 
         await ValidateReturnQuantityAsync(request.Id, line.PurchaseOrderLineId, quantity, line.ConversionFactor);
 
-        request.UpdateLine(lineId, quantity, depreciationRate);
+        request.UpdateLine(lineId, quantity, depreciationRate, returnType);
     }
 
     public async Task ApproveAndSplitAsync(PurchaseReturnRequest request)
@@ -122,18 +125,23 @@ public class PurchaseReturnRequestManager : DomainService, IPurchaseReturnReques
         // 1. Chuyển trạng thái yêu cầu mẹ sang Approved
         request.Approve();
 
-        // 2. Thực hiện thuật toán Grouping & Splitting theo PurchaseOrderId
-        IEnumerable<IGrouping<Guid, PurchaseReturnRequestLine>> groups = request.Lines.GroupBy(x => x.PurchaseOrderId);
+        // 2. Thực hiện thuật toán Grouping & Splitting theo PurchaseOrderId và ReturnType
+        var groups = request.Lines.GroupBy(x => new { x.PurchaseOrderId, x.ReturnType });
 
-        foreach (IGrouping<Guid, PurchaseReturnRequestLine> group in groups)
+        foreach (var group in groups)
         {
-            Guid purchaseOrderId = group.Key;
+            Guid purchaseOrderId = group.Key.PurchaseOrderId;
+            PurchaseReturnType returnType = group.Key.ReturnType;
 
-            // Tạo phiếu PurchaseReturn con liên kết 1-1 với PO này
+            PurchaseOrder po = await _poRepo.GetAsync(purchaseOrderId);
+            Guid supplierId = po.SupplierId;
+
+            // Tạo phiếu PurchaseReturn con liên kết 1-1 với PO này và ReturnType này
             PurchaseReturn purchaseReturn = await _returnManager.CreateAsync(
                 purchaseOrderId,
-                request.SupplierId,
+                supplierId,
                 request.WarehouseId,
+                returnType,
                 request.RequestDate,
                 $"Được tự động phân tách từ Yêu cầu trả hàng {request.Code}"
             );

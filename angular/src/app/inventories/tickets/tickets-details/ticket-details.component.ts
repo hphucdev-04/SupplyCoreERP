@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ChangeDetectorRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
@@ -21,6 +21,7 @@ import { ProductBatchDto } from 'src/app/proxy/batches/dtos';
 import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { ProductBatchService } from 'src/app/proxy/batches';
+import { InventoryBalanceService } from 'src/app/proxy/balances';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
 import { PurchaseOrderLineDto } from 'src/app/proxy/purchase-orders/dtos';
@@ -68,8 +69,8 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
   showRejectError = false;
   isRejecting = false;
 
-  bins: BinDto[] = [];
-  filteredBins: BinDto[] = [];
+  bins: (BinDto & { codeWithStock?: string })[] = [];
+  filteredBins: (BinDto & { codeWithStock?: string })[] = [];
   hiddenBinCount = 0;
   selectedMedicineCondition: StorageCondition | null = null;
   medicines: MedicineDto[] = [];
@@ -143,6 +144,8 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private routesService: RoutesService,
+    private balanceService: InventoryBalanceService,
+    private cdr: ChangeDetectorRef,
   ) {}
 
   ngOnInit(): void {
@@ -254,7 +257,10 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
       .getStorageBins(warehouseId)
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
-        this.bins = res.filter(b => !b.isBlocked);
+        this.bins = res.filter(b => !b.isBlocked).map(b => ({
+          ...b,
+          codeWithStock: b.code
+        }));
         this.applyBinFilter(this.selectedMedicineCondition);
       });
   }
@@ -403,6 +409,57 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  onBatchChange(batchId: string) {
+    this.detailForm.patchValue({ binId: null });
+    const productId = this.detailForm.get('productId')?.value;
+
+    if (this.isIssueTicket() && productId && batchId) {
+      this.balanceService.getList({
+        warehouseId: this.ticket.warehouseId,
+        productId: productId,
+        productBatchId: batchId,
+        maxResultCount: 1,
+        skipCount: 0
+      } as any).pipe(takeUntil(this.destroy$))
+        .subscribe(res => {
+          const balance = res.items?.[0];
+          if (balance) {
+            this.balanceService.get(balance.id)
+              .pipe(takeUntil(this.destroy$))
+              .subscribe(detail => {
+                const balancesList = detail.binBalances || [];
+                const availableBins = balancesList.filter(bb => (bb.availableQuantity || 0) > 0);
+                const binIds = availableBins.map(ab => ab.binId);
+
+                const medicine = this.medicines.find(m => m.id === productId);
+                this.applyBinFilter(medicine?.storageCondition ?? null);
+
+                this.filteredBins = this.filteredBins.filter(b => binIds.includes(b.id)).map(b => {
+                  const bb = availableBins.find(ab => ab.binId === b.id);
+                  const availableQty = bb?.availableQuantity || 0;
+                  return {
+                    ...b,
+                    codeWithStock: `${b.code} (Khả dụng: ${availableQty} ${this.baseUnitName})`
+                  };
+                });
+                this.cdr.markForCheck();
+              });
+          } else {
+            this.filteredBins = [];
+            this.cdr.markForCheck();
+          }
+        });
+    } else {
+      const medicine = this.medicines.find(m => m.id === productId);
+      this.applyBinFilter(medicine?.storageCondition ?? null);
+      this.filteredBins = this.filteredBins.map(b => ({
+        ...b,
+        codeWithStock: b.code
+      }));
+      this.cdr.markForCheck();
+    }
+  }
+
   openQuickBatchForm() {
     this.quickBatchForm = this.fb.group({
       batchNumber: ['', [Validators.required, Validators.maxLength(50)]],
@@ -452,6 +509,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
           this.allBatches = [...this.allBatches, newBatch];
           this.applyBatchFilter(this.allBatches);
           this.detailForm.patchValue({ productBatchId: newBatch.id });
+          this.onBatchChange(newBatch.id);
           this.toaster.success('::CreateSuccess', '::Success');
         },
         error: () => {
@@ -564,6 +622,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
       this.detailForm.patchValue({
         productBatchId: batchId || null,
       });
+      this.onBatchChange(batchId || null);
       this.updateQuantityPreview();
     }, 800);
     this.isAddDetailDrawerOpen = true;

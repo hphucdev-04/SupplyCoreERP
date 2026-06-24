@@ -464,6 +464,10 @@ namespace SupplyCoreERP.Migrations
                     b.Property<Guid>("MedicineId")
                         .HasColumnType("uuid");
 
+                    b.Property<string>("Strength")
+                        .HasMaxLength(50)
+                        .HasColumnType("character varying(50)");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ActiveIngredientId");
@@ -2130,17 +2134,11 @@ namespace SupplyCoreERP.Migrations
                     b.Property<decimal>("MinOrderQuantity")
                         .HasColumnType("numeric");
 
-                    b.Property<decimal>("OverDeliveryTolerancePct")
-                        .HasColumnType("numeric");
-
                     b.Property<decimal>("StandardPrice")
                         .HasColumnType("numeric");
 
                     b.Property<Guid>("SupplierProductId")
                         .HasColumnType("uuid");
-
-                    b.Property<decimal>("UnderDeliveryTolerancePct")
-                        .HasColumnType("numeric");
 
                     b.Property<Guid>("UnitId")
                         .HasColumnType("uuid");
@@ -2502,18 +2500,12 @@ namespace SupplyCoreERP.Migrations
                     b.Property<DateTime>("RequestDate")
                         .HasColumnType("timestamp without time zone");
 
-                    b.Property<int>("ReturnType")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Status")
                         .HasColumnType("integer");
 
                     b.Property<decimal>("SubTotal")
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
-
-                    b.Property<Guid>("SupplierId")
-                        .HasColumnType("uuid");
 
                     b.Property<decimal>("TaxAmount")
                         .HasPrecision(18, 4)
@@ -2527,8 +2519,6 @@ namespace SupplyCoreERP.Migrations
                         .HasColumnType("uuid");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("SupplierId");
 
                     b.HasIndex("WarehouseId");
 
@@ -2590,6 +2580,11 @@ namespace SupplyCoreERP.Migrations
                     b.Property<decimal>("Quantity")
                         .HasPrecision(18, 4)
                         .HasColumnType("numeric(18,4)");
+
+                    b.Property<int>("ReturnType")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(2);
 
                     b.Property<decimal>("ReturnUnitPrice")
                         .HasPrecision(18, 4)
@@ -2689,6 +2684,11 @@ namespace SupplyCoreERP.Migrations
 
                     b.Property<DateTime>("ReturnDate")
                         .HasColumnType("timestamp without time zone");
+
+                    b.Property<int>("ReturnType")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer")
+                        .HasDefaultValue(2);
 
                     b.Property<int>("Status")
                         .HasColumnType("integer");
@@ -5645,19 +5645,11 @@ namespace SupplyCoreERP.Migrations
 
             modelBuilder.Entity("SupplyCoreERP.Procurement.PurchaseReturnRequests.PurchaseReturnRequest", b =>
                 {
-                    b.HasOne("SupplyCoreERP.Partner.Suppliers.Supplier", "Supplier")
-                        .WithMany()
-                        .HasForeignKey("SupplierId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
-
                     b.HasOne("SupplyCoreERP.Inventory.Warehouses.Warehouse", "Warehouse")
                         .WithMany()
                         .HasForeignKey("WarehouseId")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Supplier");
 
                     b.Navigation("Warehouse");
                 });

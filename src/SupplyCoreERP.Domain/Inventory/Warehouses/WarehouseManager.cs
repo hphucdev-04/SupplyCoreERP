@@ -7,6 +7,7 @@ using SupplyCoreERP.Common.DocumentSequences;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventory.Balances;
+using SupplyCoreERP.Inventory.Batches;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
@@ -35,6 +36,7 @@ public class WarehouseManager : DomainService
     private readonly IRepository<Bin, Guid> _binRepo;
     private readonly IRepository<InventoryBalance, Guid> _balanceRepo;
     private readonly IRepository<Product, Guid> _productRepo;
+    private readonly IRepository<ProductBatch, Guid> _productBatchRepo;
     private readonly InventoryBalanceManager _inventoryBalanceManager;
     private readonly IDocumentSequenceManager _documentSequenceManager;
 
@@ -45,6 +47,7 @@ public class WarehouseManager : DomainService
         IRepository<Bin, Guid> binRepo,
         IRepository<InventoryBalance, Guid> balanceRepo,
         IRepository<Product, Guid> productRepo,
+        IRepository<ProductBatch, Guid> productBatchRepo,
         InventoryBalanceManager inventoryBalanceManager,
         IDocumentSequenceManager documentSequenceManager
         )
@@ -54,6 +57,7 @@ public class WarehouseManager : DomainService
         _binRepo = binRepo;
         _balanceRepo = balanceRepo;
         _productRepo = productRepo;
+        _productBatchRepo = productBatchRepo;
         _inventoryBalanceManager = inventoryBalanceManager;
         _documentSequenceManager = documentSequenceManager;
     }
@@ -283,6 +287,16 @@ public class WarehouseManager : DomainService
                 throw new BusinessException(SupplyCoreERPDomainErrorCodes.InvalidZoneTransferDirection)
                     .WithData("sourceZoneType", sourceBin.Zone.Type.ToString())
                     .WithData("targetZoneType", targetBin.Zone.Type.ToString());
+            }
+        }
+
+        if (targetBin.Zone.Type == ZoneType.Storage)
+        {
+            ProductBatch batch = await _productBatchRepo.GetAsync(productBatchId);
+            if (batch.Status != BatchQAStatus.Approved)
+            {
+                throw new BusinessException("SupplyCoreERP:BatchNotApprovedQA",
+                    $"Lô hàng '{batch.BatchNumber}' chưa được phê duyệt QA đạt chuẩn. Không thể chuyển vào phân khu lưu trữ thương mại!");
             }
         }
 

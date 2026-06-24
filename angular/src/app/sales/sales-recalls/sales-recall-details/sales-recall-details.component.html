@@ -28,7 +28,7 @@
             *ngIf="recallDto.isOverdue && recallDto.status !== SalesRecallStatus.Completed"
             class="ph-badge ph-badge--rejected animate-pulse"
           >
-            ⚠️ {{ '::OverdueCompliance' | abpLocalization }}
+            {{ '::OverdueCompliance' | abpLocalization }}
           </span>
         </h3>
         <div class="ph-text-muted d-flex gap-3">
@@ -157,7 +157,7 @@
             </div>
             <div class="progress mb-2 ph-progress">
               <div
-                class="progress-bar bg-success progress-bar-striped progress-bar-animated"
+                class="progress-bar bg-success"
                 role="progressbar"
                 [style.width.%]="progressPercent"
                 [attr.aria-valuenow]="progressPercent"
@@ -194,7 +194,12 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let t of recallDto.relatedTickets">
-                    <td class="font-mono fw-bold w-50">{{ t.ticketNumber }}</td>
+                    <td
+                      class="ph-text-primary ph-link"
+                      (click)="router.navigate(['/inventory/tickets/details', t.id])"
+                    >
+                      {{ t.ticketNumber }}
+                    </td>
                     <td>{{ t.creationTime | date: 'dd/MM/yyyy HH:mm' }}</td>
                     <td>
                       <span class="ph-badge ph-badge--approved">Approved</span>
@@ -369,7 +374,7 @@
           <th>{{ '::SalesOrder' | abpLocalization }}</th>
           <th class="text-end">{{ '::DeliveredQty' | abpLocalization }}</th>
           <th class="text-end col-qty">{{ '::RecallQuantity' | abpLocalization }}</th>
-          <th class="text-end" style="width: 140px;">{{ '::ReturnPrice' | abpLocalization }}</th>
+          <th class="text-end" style="width: 190px;">{{ '::ReturnPrice' | abpLocalization }}</th>
           <th class="text-end" style="width: 100px;">{{ '::TaxRate' | abpLocalization }} (%)</th>
         </tr>
       </thead>
@@ -402,7 +407,7 @@
               />
               <span class="input-group-text bg-light text-muted">{{ line.unitName }}</span>
             </div>
-            <small class="d-block ph-text-muted text-xs mt-1" *ngIf="line.selected && line.conversionFactor > 1">
+            <small class="d-block ph-text-muted text-xs mt-1" *ngIf="line.conversionFactor > 1">
               = {{ line.recallQuantity * line.conversionFactor | number }} {{ recallDto.baseUnitName }}
             </small>
           </td>
@@ -414,7 +419,7 @@
                 [(ngModel)]="line.recallPrice"
                 [disabled]="!line.selected"
                 min="0"
-                style="max-width: 100px;"
+                style="max-width: 140px;"
               />
               <span class="input-group-text bg-light text-muted">₫/{{ line.unitName }}</span>
             </div>

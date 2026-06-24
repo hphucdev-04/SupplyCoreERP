@@ -20,10 +20,10 @@
   <!-- 2. Vùng chân trang chứa Panel trượt và Ô nhập chat -->
   <div class="chat-footer">
     
-    <!-- 2.1 Inline Slide-up Panel (Kiểu Claude) -->
+    <!-- 2.1 Inline Slide-up Panel -->
     <div class="slide-panel" [class.slide-panel--active]="!!(pendingApprovalInfo || pendingElicitationInfo)">
       
-      <!-- Giao diện Approval trượt lên tối giản -->
+      <!-- Giao diện Approval trượt lên  -->
       <div *ngIf="pendingApprovalInfo" class="panel-content">
         <div class="panel-header">
           <!-- Icon Alert cảnh báo -->
@@ -81,7 +81,7 @@
 
     </div>
 
-    <!-- 2.2 Ô nhập chat chính (Input Box) -->
+    <!-- Ô nhập chat chính  -->
     <div class="input-container" [class.input-container--disabled]="!!(pendingApprovalInfo || pendingElicitationInfo)">
       <textarea 
         #chatInput
@@ -92,7 +92,7 @@
         placeholder="Nhập tin nhắn chat tại đây...">
       </textarea>
       
-      <!-- Nút gửi tin nhắn (Chỉ hiện khi không có tác vụ pending) -->
+      <!-- Nút gửi tin nhắn  -->
       <button 
         *ngIf="!(pendingApprovalInfo || pendingElicitationInfo)" 
         (click)="sendChatMessage()" 
@@ -105,7 +105,7 @@
       </button>
     </div>
 
-    <!-- 2.3 Footer Actions (Clear button & Powered by label) -->
+    <!-- Footer Actions  -->
     <div class="footer-actions">
       <span class="powered-by">Powered by Rxlogistics</span>
       <button 

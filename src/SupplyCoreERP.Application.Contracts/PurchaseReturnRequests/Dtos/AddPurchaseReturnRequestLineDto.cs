@@ -1,10 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using SupplyCoreERP.Enums.Orders;
 
 namespace SupplyCoreERP.PurchaseReturnRequests.Dtos;
 
 public class AddPurchaseReturnRequestLineDto
 {
+    [Required]
+    public PurchaseReturnType ReturnType { get; set; }
+
     [Required]
     public Guid ProductId { get; set; }
 

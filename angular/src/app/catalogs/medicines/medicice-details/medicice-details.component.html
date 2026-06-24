@@ -313,6 +313,7 @@
                   <thead>
                     <tr>
                       <th>{{ '::Name' | abpLocalization }}</th>
+                      <th>{{ '::Strength' | abpLocalization }}</th>
                       <th class="text-end">{{ '::Actions' | abpLocalization }}</th>
                     </tr>
                   </thead>
@@ -321,6 +322,10 @@
                       <td>
                         <div class="ph-field-value">{{ item.activeIngredientName }}</div>
                         <small class="ph-text-muted">{{ item.activeIngredientCode }}</small>
+                      </td>
+                      <td>
+                        <span *ngIf="item.strength" class="ph-badge ph-badge--info">{{ item.strength }}</span>
+                        <span *ngIf="!item.strength" class="ph-text-muted">—</span>
                       </td>
                       <td class="text-end pe-4">
                         <button
@@ -333,7 +338,7 @@
                       </td>
                     </tr>
                     <tr *ngIf="medicine.ingredients.length === 0">
-                      <td colspan="2" class="ph-empty-state">
+                      <td colspan="3" class="ph-empty-state">
                         {{ '::NoIngredients' | abpLocalization }}
                       </td>
                     </tr>
@@ -638,6 +643,17 @@
         formControlName="activeIngredientId"
       >
       </app-dropdown-search>
+    </div>
+    <div class="mb-3">
+      <label class="ph-label">{{ '::Strength' | abpLocalization }}</label>
+      <input
+        id="ingredient-strength"
+        type="text"
+        class="form-control"
+        formControlName="strength"
+        placeholder="VD: 500mg, 250mg/5ml, 10%"
+        maxlength="50"
+      />
     </div>
   </form>
 </app-drawer>

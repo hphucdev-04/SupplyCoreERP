@@ -30,7 +30,8 @@ public class MedicineAutoMapperProfile : Profile
 
         CreateMap<MedicineIngredient, MedicineIngredientDto>()
             .ForMember(d => d.ActiveIngredientName, o => o.MapFrom(s => s.ActiveIngredient.Name))
-            .ForMember(d => d.ActiveIngredientCode, o => o.MapFrom(s => s.ActiveIngredient.Code));
+            .ForMember(d => d.ActiveIngredientCode, o => o.MapFrom(s => s.ActiveIngredient.Code))
+            .ForMember(d => d.Strength, o => o.MapFrom(s => s.Strength));
 
 
         CreateMap<ProductUnit, MedicineUnitDto>()

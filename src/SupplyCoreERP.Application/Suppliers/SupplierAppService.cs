@@ -188,9 +188,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
                     condInput.UnitId,
                     condInput.ConversionFactor,
                     condInput.StandardPrice,
-                    condInput.MinOrderQuantity,
-                    condInput.OverDeliveryTolerancePct,
-                    condInput.UnderDeliveryTolerancePct
+                    condInput.MinOrderQuantity
                 );
                 sp.AddCondition(condition);
             }
@@ -247,9 +245,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
                     {
                         existingCond.UpdateCondition(
                             condInput.StandardPrice,
-                            condInput.MinOrderQuantity,
-                            condInput.OverDeliveryTolerancePct,
-                            condInput.UnderDeliveryTolerancePct
+                            condInput.MinOrderQuantity
                         );
                     }
                 }
@@ -261,9 +257,7 @@ public class SupplierAppService : SupplyCore, ISupplierAppService
                         condInput.UnitId,
                         condInput.ConversionFactor,
                         condInput.StandardPrice,
-                        condInput.MinOrderQuantity,
-                        condInput.OverDeliveryTolerancePct,
-                        condInput.UnderDeliveryTolerancePct
+                        condInput.MinOrderQuantity
                     );
                     sp.AddCondition(newCondition);
                 }

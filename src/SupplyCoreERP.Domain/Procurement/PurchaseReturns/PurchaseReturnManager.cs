@@ -48,6 +48,7 @@ public class PurchaseReturnManager : DomainService, IPurchaseReturnManager
         Guid purchaseOrderId,
         Guid supplierId,
         Guid warehouseId,
+        PurchaseReturnType returnType,
         DateTime returnDate,
         string? note)
     {
@@ -66,6 +67,7 @@ public class PurchaseReturnManager : DomainService, IPurchaseReturnManager
             purchaseOrderId,
             supplierId,
             warehouseId,
+            returnType,
             returnDate,
             note
         );
@@ -74,10 +76,11 @@ public class PurchaseReturnManager : DomainService, IPurchaseReturnManager
     public Task UpdateAsync(
         PurchaseReturn purchaseReturn,
         Guid warehouseId,
+        PurchaseReturnType returnType,
         DateTime returnDate,
         string? note)
     {
-        purchaseReturn.UpdateInfo(warehouseId, returnDate, note);
+        purchaseReturn.UpdateInfo(warehouseId, returnType, returnDate, note);
         return Task.CompletedTask;
     }
 

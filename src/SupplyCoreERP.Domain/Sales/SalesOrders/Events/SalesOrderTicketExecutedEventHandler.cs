@@ -5,6 +5,7 @@ using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventory.Tickets.Events;
+using SupplyCoreERP.Partner.Customers;
 using SupplyCoreERP.Sales.Orders;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
@@ -19,15 +20,21 @@ public class SalesOrderTicketExecutedEventHandler
     private readonly IRepository<SalesOrder, Guid> _salesOrderRepo;
     private readonly IRepository<Product, Guid> _productRepo;
     private readonly UnitConversionManager _unitConversionManager;
+    private readonly ISalesOrderManager _salesOrderManager;
+    private readonly IRepository<Customer, Guid> _customerRepo;
 
     public SalesOrderTicketExecutedEventHandler(
         IRepository<SalesOrder, Guid> salesOrderRepo,
         IRepository<Product, Guid> productRepo,
-        UnitConversionManager unitConversionManager)
+        UnitConversionManager unitConversionManager,
+        ISalesOrderManager salesOrderManager,
+        IRepository<Customer, Guid> customerRepo)
     {
         _salesOrderRepo = salesOrderRepo;
         _productRepo = productRepo;
         _unitConversionManager = unitConversionManager;
+        _salesOrderManager = salesOrderManager;
+        _customerRepo = customerRepo;
     }
 
     public async Task HandleEventAsync(InventoryTicketExecutedDomainEvent eventData)
@@ -88,7 +95,8 @@ public class SalesOrderTicketExecutedEventHandler
 
         if (allDelivered)
         {
-            so.Complete();
+            Customer customer = await _salesOrderManager.CompleteAsync(so);
+            await _customerRepo.UpdateAsync(customer);
         }
         else if (so.Lines.Any(x => x.DeliveredQuantity > 0))
         {

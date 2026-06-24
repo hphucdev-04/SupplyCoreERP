@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Inventory.Tickets;
 using SupplyCoreERP.Partner.Customers;
+using SupplyCoreERP.Permissions;
 using SupplyCoreERP.Sales.Orders;
+using SupplyCoreERP.Sales.PriceLists;
 using SupplyCoreERP.SalesOrders.Dtos;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
@@ -21,6 +24,7 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     private readonly IRepository<InventoryTicket, Guid> _ticketRepo;
     private readonly IRepository<Customer, Guid> _customerRepo;
     private readonly ISalesOrderManager _orderManager;
+    private readonly PriceManager _priceManager;
 
     // Constructor injection
     public SalesOrderAppService(
@@ -28,12 +32,14 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
         IRepository<InventoryTicket, Guid> ticketRepo,
         IRepository<InventoryTicketDetail, Guid> ticketDetailRepo,
         IRepository<Customer, Guid> customerRepo,
-        ISalesOrderManager orderManager)
+        ISalesOrderManager orderManager,
+        PriceManager priceManager)
     {
         _orderRepo = orderRepo;
         _ticketRepo = ticketRepo;
         _customerRepo = customerRepo;
         _orderManager = orderManager;
+        _priceManager = priceManager;
     }
 
     #region SaleOrder
@@ -117,6 +123,15 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     #region SaleOrder Lines
     public async Task AddLineAsync(Guid orderId, AddSalesOrderLineDto input)
     {
+        if (input.UnitPrice.HasValue)
+        {
+            decimal? lowestPurchasePrice = await _priceManager.GetLowestPurchasePriceAsync(input.ProductId, input.UnitId);
+            if (lowestPurchasePrice.HasValue && input.UnitPrice.Value < lowestPurchasePrice.Value)
+            {
+                await AuthorizationService.CheckAsync(SupplyCoreERPPermissions.Order.SaleOrder.OverrideUnitPrice);
+            }
+        }
+
         IQueryable<SalesOrder> query = await _orderRepo.GetQueryableAsync();
         SalesOrder? entity = await query.Include(x => x.Lines).FirstOrDefaultAsync(x => x.Id == orderId);
         if (entity == null)
@@ -135,6 +150,19 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
         if (entity == null)
         {
             throw new EntityNotFoundException(typeof(SalesOrder), orderId);
+        }
+
+        if (input.UnitPrice.HasValue)
+        {
+            SalesOrderLine? line = entity.Lines.FirstOrDefault(x => x.Id == lineId);
+            if (line != null)
+            {
+                decimal? lowestPurchasePrice = await _priceManager.GetLowestPurchasePriceAsync(line.ProductId, line.UnitId);
+                if (lowestPurchasePrice.HasValue && input.UnitPrice.Value < lowestPurchasePrice.Value)
+                {
+                    await AuthorizationService.CheckAsync(SupplyCoreERPPermissions.Order.SaleOrder.OverrideUnitPrice);
+                }
+            }
         }
 
         await _orderManager.UpdateLineAsync(entity, lineId, input.Quantity, input.UnitPrice, input.DiscountRate, input.TaxRate);

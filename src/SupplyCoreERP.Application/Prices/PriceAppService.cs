@@ -49,7 +49,7 @@ public class PriceAppService : SupplyCore, IPriceAppService
         return ObjectMapper.Map<List<ProductPrice>, List<ProductPriceDto>>(prices);
     }
 
-    public async Task CreateAsync(CreateUpdateProductPriceDto input)
+    public async Task<ProductPriceDto> CreateAsync(CreateUpdateProductPriceDto input)
     {
         ProductPrice entity = await _priceManager.CreatePriceAsync(
             input.PriceListId,
@@ -60,15 +60,47 @@ public class PriceAppService : SupplyCore, IPriceAppService
         );
 
         await _productPriceRepo.InsertAsync(entity);
+
+        IQueryable<ProductPrice> query = await _productPriceRepo.GetQueryableAsync();
+        ProductPrice saved = await query
+            .Include(x => x.PriceList)
+            .Include(x => x.Unit)
+            .FirstAsync(x => x.Id == entity.Id);
+
+        ProductPriceDto dto = ObjectMapper.Map<ProductPrice, ProductPriceDto>(saved);
+
+        decimal? lowestPurchasePrice = await _priceManager.GetLowestPurchasePriceAsync(input.ProductId, input.UnitId);
+        if (lowestPurchasePrice.HasValue && input.Price < lowestPurchasePrice.Value)
+        {
+            dto.BelowCostWarning = $"Giá bán ({input.Price:N0}) thấp hơn giá nhập chuẩn thấp nhất ({lowestPurchasePrice.Value:N0}).";
+        }
+
+        return dto;
     }
 
-    public async Task UpdateAsync(Guid id, CreateUpdateProductPriceDto input)
+    public async Task<ProductPriceDto> UpdateAsync(Guid id, CreateUpdateProductPriceDto input)
     {
         ProductPrice entity = await _productPriceRepo.GetAsync(id);
-
         entity.UpdatePrice(input.Price);
-
         await _productPriceRepo.UpdateAsync(entity);
+
+        // Reload với navigation properties để map đầy đủ DTO
+        IQueryable<ProductPrice> query = await _productPriceRepo.GetQueryableAsync();
+        ProductPrice saved = await query
+            .Include(x => x.PriceList)
+            .Include(x => x.Unit)
+            .FirstAsync(x => x.Id == id);
+
+        ProductPriceDto dto = ObjectMapper.Map<ProductPrice, ProductPriceDto>(saved);
+
+        // Dùng entity.ProductId / entity.UnitId vì UpdateSalesOrderLineDto không mang 2 field này
+        decimal? lowestPurchasePrice = await _priceManager.GetLowestPurchasePriceAsync(entity.ProductId, entity.UnitId);
+        if (lowestPurchasePrice.HasValue && input.Price < lowestPurchasePrice.Value)
+        {
+            dto.BelowCostWarning = $"Giá bán ({input.Price:N0}) thấp hơn giá nhập chuẩn thấp nhất ({lowestPurchasePrice.Value:N0}).";
+        }
+
+        return dto;
     }
 
     public async Task DeleteAsync(Guid id)

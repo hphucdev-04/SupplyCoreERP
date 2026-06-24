@@ -7,6 +7,7 @@ import { Subject, forkJoin, of } from 'rxjs';
 import { takeUntil, switchMap, catchError } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 import { PurchaseReturnRequestService } from 'src/app/proxy/purchase-return-requests';
 import { PurchaseReturnRequestDto } from 'src/app/proxy/purchase-return-requests/dtos';
 import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
@@ -32,12 +33,15 @@ interface SelectablePOLine {
   selected: boolean;
   returnQuantity: number;
   depreciationRate: number;
+  supplierName?: string;
+  supplierCode?: string;
+  returnType?: PurchaseReturnType;
 }
 
 @Component({
   selector: 'app-purchase-return-request-details',
   standalone: true,
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, DropdownSearchComponent],
   templateUrl: './purchase-return-request-details.component.html',
 })
 export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy {
@@ -132,13 +136,12 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
   }
 
   loadAvailablePOLines() {
-    if (!this.requestDto?.supplierId || !this.requestDto?.warehouseId) return;
+    if (!this.requestDto?.warehouseId) return;
 
     this.loadingLines = true;
     this.poService
       .getList({
         maxResultCount: 1000,
-        supplierId: this.requestDto.supplierId,
         warehouseId: this.requestDto.warehouseId,
       })
       .pipe(
@@ -186,6 +189,9 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
                   selected: !!existingLine,
                   returnQuantity: existingLine ? existingLine.quantity : line.receivedQuantity,
                   depreciationRate: existingLine ? existingLine.depreciationRate : 0,
+                  supplierName: po.supplierName || '',
+                  supplierCode: po.supplierCode || '',
+                  returnType: existingLine ? existingLine.returnType : PurchaseReturnType.Defective,
                 });
               }
             });
@@ -205,7 +211,6 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
   buildForms() {
     this.editForm = this.fb.group({
       warehouseId: [null, [Validators.required]],
-      returnType: [null, [Validators.required]],
       requestDate: [null, [Validators.required]],
       note: ['', [Validators.maxLength(1000)]],
     });
@@ -215,7 +220,6 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
   openEditDrawer() {
     this.editForm.patchValue({
       warehouseId: this.requestDto.warehouseId,
-      returnType: this.requestDto.returnType,
       requestDate: this.requestDto.requestDate?.split('T')[0] ?? null,
       note: this.requestDto.note ?? '',
     });
@@ -270,7 +274,7 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
         this.toaster.error('::ReturnQtyCannotExceedReceivedQty', '::Error');
         return;
       }
-      if (this.requestDto.returnType === PurchaseReturnType.Defective && line.depreciationRate !== 0) {
+      if (line.returnType === PurchaseReturnType.Defective && line.depreciationRate !== 0) {
         this.toaster.error('::DefectiveCannotHaveDepreciation', '::Error');
         return;
       }
@@ -292,7 +296,8 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
         const existingLine = this.requestDto.lines.find(l => l.purchaseOrderLineId === line.id);
         return this.requestService.updateLine(this.requestId, existingLine.id, {
           quantity: line.returnQuantity,
-          depreciationRate: this.requestDto.returnType === PurchaseReturnType.Defective ? 0 : line.depreciationRate
+          depreciationRate: line.returnType === PurchaseReturnType.Defective ? 0 : line.depreciationRate,
+          returnType: line.returnType
         });
       } else {
         // Nếu chưa tồn tại, gọi addLine
@@ -304,8 +309,9 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
           purchaseOrderLineId: line.id,
           quantity: line.returnQuantity,
           originalUnitPrice: line.unitPrice,
-          depreciationRate: this.requestDto.returnType === PurchaseReturnType.Defective ? 0 : line.depreciationRate,
-          taxRate: line.taxRate
+          depreciationRate: line.returnType === PurchaseReturnType.Defective ? 0 : line.depreciationRate,
+          taxRate: line.taxRate,
+          returnType: line.returnType
         });
       }
     });

@@ -10,9 +10,6 @@ public class UpdatePurchaseReturnRequestDto
     public Guid WarehouseId { get; set; }
 
     [Required]
-    public PurchaseReturnType ReturnType { get; set; }
-
-    [Required]
     public DateTime RequestDate { get; set; }
 
     [MaxLength(1000)]

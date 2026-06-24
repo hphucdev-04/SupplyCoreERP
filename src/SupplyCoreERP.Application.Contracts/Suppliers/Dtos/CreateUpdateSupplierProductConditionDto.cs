@@ -18,11 +18,5 @@ public class CreateUpdateSupplierProductConditionDto
 
     [Range(0.0001, double.MaxValue, ErrorMessage = "Số lượng đặt hàng tối thiểu phải lớn hơn 0.")]
     public decimal MinOrderQuantity { get; set; } = 1;
-
-    [Range(0, 100)]
-    public decimal OverDeliveryTolerancePct { get; set; }
-
-    [Range(0, 100)]
-    public decimal UnderDeliveryTolerancePct { get; set; }
 }
 

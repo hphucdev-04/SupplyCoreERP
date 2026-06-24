@@ -39,7 +39,8 @@ public interface IMedicineManager : IDomainService
         DateTime? regValidTo = null,
         string? regNote = null);
 
-    Task AddIngredientAsync(Medicine medicine, Guid activeIngredientId);
+    Task AddIngredientAsync(Medicine medicine, Guid activeIngredientId, string? strength = null);
+    Task UpdateIngredientStrengthAsync(Medicine medicine, Guid activeIngredientId, string? strength);
     Task RemoveIngredientAsync(Medicine medicine, Guid activeIngredientId);
 
     Task AddUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level, decimal volume = 0);

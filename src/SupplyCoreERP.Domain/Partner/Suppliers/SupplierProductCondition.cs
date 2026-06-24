@@ -23,8 +23,6 @@ public class SupplierProductCondition : Entity<Guid>
     public decimal LastPurchasePrice { get; private set; }
 
     public decimal MinOrderQuantity { get; private set; }
-    public decimal OverDeliveryTolerancePct { get; private set; }
-    public decimal UnderDeliveryTolerancePct { get; private set; }
 
     protected SupplierProductCondition() { }
 
@@ -34,9 +32,7 @@ public class SupplierProductCondition : Entity<Guid>
         Guid unitId,
         int conversionFactor,
         decimal standardPrice,
-        decimal minOrderQuantity,
-        decimal overDeliveryTolerancePct = 0,
-        decimal underDeliveryTolerancePct = 0) : base(id)
+        decimal minOrderQuantity) : base(id)
     {
         SupplierProductId = supplierProductId;
         UnitId = unitId;
@@ -54,16 +50,11 @@ public class SupplierProductCondition : Entity<Guid>
         MinOrderQuantity = minOrderQuantity > 0
             ? minOrderQuantity
             : throw new BusinessException("SupplyCoreERP:InvalidMinOrderQuantity", "Số lượng đặt tối thiểu phải lớn hơn 0.");
-
-        OverDeliveryTolerancePct = Math.Max(0, overDeliveryTolerancePct);
-        UnderDeliveryTolerancePct = Math.Max(0, underDeliveryTolerancePct);
     }
 
     public void UpdateCondition(
         decimal standardPrice,
-        decimal minOrderQuantity,
-        decimal overDeliveryTolerancePct,
-        decimal underDeliveryTolerancePct)
+        decimal minOrderQuantity)
     {
         StandardPrice = standardPrice >= 0
             ? standardPrice
@@ -72,9 +63,6 @@ public class SupplierProductCondition : Entity<Guid>
         MinOrderQuantity = minOrderQuantity > 0
             ? minOrderQuantity
             : throw new BusinessException("SupplyCoreERP:InvalidMinOrderQuantity", "Số lượng đặt tối thiểu phải lớn hơn 0.");
-
-        OverDeliveryTolerancePct = Math.Max(0, overDeliveryTolerancePct);
-        UnderDeliveryTolerancePct = Math.Max(0, underDeliveryTolerancePct);
     }
 
     public void UpdateLastPurchasePrice(decimal price)

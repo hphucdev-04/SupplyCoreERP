@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using SupplyCoreERP.Partner.Suppliers;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
@@ -12,14 +13,17 @@ public class PriceManager : DomainService
     // Dependencies
     private readonly IRepository<ProductPrice, Guid> _productPriceRepository;
     private readonly IRepository<PriceList, Guid> _priceListRepository;
+    private readonly IRepository<SupplierProductCondition, Guid> _supplierProductConditionRepository;
 
     // Constructor injection
     public PriceManager(
         IRepository<ProductPrice, Guid> productPriceRepository,
-        IRepository<PriceList, Guid> priceListRepository)
+        IRepository<PriceList, Guid> priceListRepository,
+        IRepository<SupplierProductCondition, Guid> supplierProductConditionRepository)
     {
         _productPriceRepository = productPriceRepository;
         _priceListRepository = priceListRepository;
+        _supplierProductConditionRepository = supplierProductConditionRepository;
     }
 
     public async Task<ProductPrice> CreatePriceAsync(Guid priceListId, Guid productId, Guid unitId, decimal price, int minQuantity = 1)
@@ -56,6 +60,7 @@ public class PriceManager : DomainService
             minQuantity
         );
     }
+
     public async Task<decimal> GetOfficialPriceAsync(Guid? appliedPriceListId, Guid productId, Guid unitId, decimal quantity)
     {
         IQueryable<ProductPrice> priceQuery = await _productPriceRepository.GetQueryableAsync();
@@ -96,10 +101,23 @@ public class PriceManager : DomainService
         throw new BusinessException("SupplyCoreERP:PriceNotFound", "Sản phẩm này chưa được thiết lập giá bán cho mức số lượng bạn chọn!");
     }
 
+    /// <summary>
+    /// Tra giá nhập chuẩn thấp nhất (Min StandardPrice) của tất cả nhà cung cấp cho một sản phẩm + đơn vị.
+    /// Dùng để cảnh báo khi giá bán thấp hơn giá nhập.
+    /// </summary>
+    /// <returns>Giá nhập chuẩn thấp nhất, hoặc null nếu không có dữ liệu tham chiếu.</returns>
+    public async Task<decimal?> GetLowestPurchasePriceAsync(Guid productId, Guid unitId)
+    {
+        IQueryable<SupplierProductCondition> query = await _supplierProductConditionRepository.GetQueryableAsync();
+
+        // Filter theo cả ProductId + UnitId — dùng 1 biến để tránh MinAsync throw trên sequence rỗng
+        IQueryable<SupplierProductCondition> filtered = query.Where(c =>
+            c.SupplierProduct.ProductId == productId &&
+            c.UnitId == unitId);
+
+        bool hasAny = await AsyncExecuter.AnyAsync(filtered);
+        if (!hasAny) return null;
+
+        return await AsyncExecuter.MinAsync(filtered, c => c.StandardPrice);
+    }
 }
-
-
-
-
-
-

@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Inventory.Tickets;
 
 namespace SupplyCoreERP.Procurement.PurchaseReturns;
@@ -10,12 +11,14 @@ public interface IPurchaseReturnManager
         Guid purchaseOrderId,
         Guid supplierId,
         Guid warehouseId,
+        PurchaseReturnType returnType,
         DateTime returnDate,
         string? note);
 
     Task UpdateAsync(
         PurchaseReturn purchaseReturn,
         Guid warehouseId,
+        PurchaseReturnType returnType,
         DateTime returnDate,
         string? note);
 

@@ -146,14 +146,24 @@ public class MedicineManager : DomainService, IMedicineManager
     #endregion
 
     #region Ingredient
-    public virtual async Task AddIngredientAsync(Medicine medicine, Guid activeIngredientId)
+    public virtual async Task AddIngredientAsync(Medicine medicine, Guid activeIngredientId, string? strength = null)
     {
         Check.NotNull(medicine, nameof(medicine));
         if (!await _activeIngredientRepository.AnyAsync(x => x.Id == activeIngredientId))
         {
             throw new BusinessException("SupplyCoreERP:InvalidActiveIngredient", "Hoạt chất không tồn tại trong danh mục!");
         }
-        medicine.AddIngredient(activeIngredientId);
+        medicine.AddIngredient(activeIngredientId, strength);
+    }
+
+    public virtual async Task UpdateIngredientStrengthAsync(Medicine medicine, Guid activeIngredientId, string? strength)
+    {
+        Check.NotNull(medicine, nameof(medicine));
+        if (!await _activeIngredientRepository.AnyAsync(x => x.Id == activeIngredientId))
+        {
+            throw new BusinessException("SupplyCoreERP:InvalidActiveIngredient", "Hoạt chất không tồn tại trong danh mục!");
+        }
+        medicine.UpdateIngredientStrength(activeIngredientId, strength);
     }
 
     public virtual async Task RemoveIngredientAsync(Medicine medicine, Guid activeIngredientId)

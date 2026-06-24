@@ -16,5 +16,10 @@ public class ProductPriceDto : EntityDto<Guid>
 
     public decimal Price { get; set; }
     public int MinQuantity { get; set; }
+
+    /// <summary>
+    /// Null = giá hợp lệ. Có giá trị = giá bán thấp hơn giá nhập chuẩn, FE hiển thị cảnh báo.
+    /// </summary>
+    public string? BelowCostWarning { get; set; }
 }
 

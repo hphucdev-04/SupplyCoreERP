@@ -7,6 +7,7 @@ public class PurchaseRequisitionLineDto : AuditedEntityDto<Guid>
 {
     public Guid ProductId { get; set; }
     public string ProductName { get; set; }
+    public string ProductCode { get; set; }
     public Guid UnitId { get; set; }
     public string UnitName { get; set; }
     public decimal Quantity { get; set; }

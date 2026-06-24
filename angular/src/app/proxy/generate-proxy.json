@@ -6163,6 +6163,39 @@
                   }
                 },
                 {
+                  "name": "UpdateIngredientStrengthAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "activeIngredientId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                      "typeSimple": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
                   "name": "RemoveIngredientAsync",
                   "parametersOnMethod": [
                     {
@@ -6759,6 +6792,83 @@
                 {
                   "nameOnMethod": "id",
                   "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                  "typeSimple": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Medicines.IMedicineAppService"
+            },
+            "UpdateIngredientStrengthAsyncByIdAndActiveIngredientIdAndInput": {
+              "uniqueName": "UpdateIngredientStrengthAsyncByIdAndActiveIngredientIdAndInput",
+              "name": "UpdateIngredientStrengthAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/medicine/{id}/ingredient-strength/{activeIngredientId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "activeIngredientId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                  "typeSimple": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "activeIngredientId",
+                  "name": "activeIngredientId",
                   "jsonName": null,
                   "type": "System.Guid",
                   "typeSimple": "string",
@@ -7949,8 +8059,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "System.Void",
-                    "typeSimple": "System.Void"
+                    "type": "SupplyCoreERP.Prices.Dtos.ProductPriceDto",
+                    "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductPriceDto"
                   }
                 },
                 {
@@ -7974,8 +8084,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "System.Void",
-                    "typeSimple": "System.Void"
+                    "type": "SupplyCoreERP.Prices.Dtos.ProductPriceDto",
+                    "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductPriceDto"
                   }
                 },
                 {
@@ -8082,8 +8192,8 @@
                 }
               ],
               "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
+                "type": "SupplyCoreERP.Prices.Dtos.ProductPriceDto",
+                "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductPriceDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Prices.IPriceAppService"
@@ -8139,8 +8249,8 @@
                 }
               ],
               "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
+                "type": "SupplyCoreERP.Prices.Dtos.ProductPriceDto",
+                "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductPriceDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Prices.IPriceAppService"
@@ -24452,6 +24562,18 @@
           "minimum": null,
           "maximum": null,
           "regex": null
+        },
+        {
+          "name": "Strength",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": 50,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
         }
       ]
     },
@@ -24992,6 +25114,18 @@
         },
         {
           "name": "ActiveIngredientCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Strength",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -25583,6 +25717,18 @@
           "jsonName": null,
           "type": "System.Int32",
           "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BelowCostWarning",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -26806,6 +26952,18 @@
           "regex": null
         },
         {
+          "name": "ProductCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "UnitId",
           "jsonName": null,
           "type": "System.Guid",
@@ -27034,6 +27192,18 @@
       "genericArguments": null,
       "properties": [
         {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "ProductId",
           "jsonName": null,
           "type": "System.Guid",
@@ -27151,34 +27321,10 @@
       "genericArguments": null,
       "properties": [
         {
-          "name": "SupplierId",
-          "jsonName": null,
-          "type": "System.Guid",
-          "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "WarehouseId",
           "jsonName": null,
           "type": "System.Guid",
           "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ReturnType",
-          "jsonName": null,
-          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
-          "typeSimple": "enum",
           "isRequired": true,
           "minLength": null,
           "maxLength": null,
@@ -27289,42 +27435,6 @@
           "regex": null
         },
         {
-          "name": "SupplierId",
-          "jsonName": null,
-          "type": "System.Guid",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "SupplierName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "SupplierCode",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "WarehouseId",
           "jsonName": null,
           "type": "System.Guid",
@@ -27353,18 +27463,6 @@
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ReturnType",
-          "jsonName": null,
-          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
-          "typeSimple": "enum",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -27598,6 +27696,54 @@
           "regex": null
         },
         {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SupplierId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SupplierName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SupplierCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "Quantity",
           "jsonName": null,
           "type": "System.Decimal",
@@ -27796,18 +27942,6 @@
           "regex": null
         },
         {
-          "name": "ReturnType",
-          "jsonName": null,
-          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
-          "typeSimple": "enum",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "RequestDate",
           "jsonName": null,
           "type": "System.DateTime",
@@ -27840,6 +27974,18 @@
       "enumValues": null,
       "genericArguments": null,
       "properties": [
+        {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
         {
           "name": "Quantity",
           "jsonName": null,
@@ -28007,6 +28153,18 @@
           "jsonName": null,
           "type": "System.Guid",
           "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
           "isRequired": true,
           "minLength": null,
           "maxLength": null,
@@ -28217,6 +28375,18 @@
           "jsonName": null,
           "type": "System.DateTime",
           "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -28592,6 +28762,18 @@
           "jsonName": null,
           "type": "System.Guid",
           "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
           "isRequired": true,
           "minLength": null,
           "maxLength": null,
@@ -30902,30 +31084,6 @@
           "minimum": "0,0001",
           "maximum": "1,7976931348623157E+308",
           "regex": null
-        },
-        {
-          "name": "OverDeliveryTolerancePct",
-          "jsonName": null,
-          "type": "System.Decimal",
-          "typeSimple": "number",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": "0",
-          "maximum": "100",
-          "regex": null
-        },
-        {
-          "name": "UnderDeliveryTolerancePct",
-          "jsonName": null,
-          "type": "System.Decimal",
-          "typeSimple": "number",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": "0",
-          "maximum": "100",
-          "regex": null
         }
       ]
     },
@@ -31646,30 +31804,6 @@
         },
         {
           "name": "MinOrderQuantity",
-          "jsonName": null,
-          "type": "System.Decimal",
-          "typeSimple": "number",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "OverDeliveryTolerancePct",
-          "jsonName": null,
-          "type": "System.Decimal",
-          "typeSimple": "number",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "UnderDeliveryTolerancePct",
           "jsonName": null,
           "type": "System.Decimal",
           "typeSimple": "number",

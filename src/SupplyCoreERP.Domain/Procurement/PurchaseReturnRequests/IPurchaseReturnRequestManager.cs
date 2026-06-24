@@ -8,9 +8,7 @@ namespace SupplyCoreERP.Procurement.PurchaseReturnRequests;
 public interface IPurchaseReturnRequestManager : IDomainService
 {
     Task<PurchaseReturnRequest> CreateAsync(
-        Guid supplierId,
         Guid warehouseId,
-        PurchaseReturnType returnType,
         DateTime requestDate,
         string? note);
     Task AddLineAsync(
@@ -23,12 +21,14 @@ public interface IPurchaseReturnRequestManager : IDomainService
         decimal quantity,
         decimal originalUnitPrice,
         decimal depreciationRate,
-        decimal taxRate);
+        decimal taxRate,
+        PurchaseReturnType returnType);
     Task UpdateLineAsync(
         PurchaseReturnRequest request,
         Guid lineId,
         decimal quantity,
-        decimal depreciationRate);
+        decimal depreciationRate,
+        PurchaseReturnType returnType);
 
     Task ApproveAndSplitAsync(PurchaseReturnRequest request);
 }

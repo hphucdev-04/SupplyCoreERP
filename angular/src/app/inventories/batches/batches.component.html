@@ -190,7 +190,7 @@
   (close)="closeDrawer()"
   (save)="save()"
 >
-  <form [formGroup]="form" (ngSubmit)="save()" validateOnSubmit>
+  <form [formGroup]="form" (ngSubmit)="save()" [validateOnSubmit]="true">
     <div class="row">
       <div class="col-md-12 mb-3">
         <label class="ph-label ph-label--required">{{ '::Medicine' | abpLocalization }}</label>

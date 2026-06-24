@@ -24,8 +24,6 @@ export interface CreateUpdateSupplierProductConditionDto {
   conversionFactor?: number;
   standardPrice?: number;
   minOrderQuantity?: number;
-  overDeliveryTolerancePct?: number;
-  underDeliveryTolerancePct?: number;
 }
 
 export interface CreateUpdateSupplierProductDto {
@@ -107,8 +105,6 @@ export interface SupplierProductConditionDto extends EntityDto<string> {
   standardPrice?: number;
   lastPurchasePrice?: number;
   minOrderQuantity?: number;
-  overDeliveryTolerancePct?: number;
-  underDeliveryTolerancePct?: number;
 }
 
 export interface SupplierProductDto extends EntityDto<string> {

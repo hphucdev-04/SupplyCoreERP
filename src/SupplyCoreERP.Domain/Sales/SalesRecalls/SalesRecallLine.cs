@@ -69,6 +69,13 @@ public class SalesRecallLine : AuditedEntity<Guid>
         {
             throw new BusinessException("SupplyCoreERP:InvalidQuantity", "Số lượng cộng thêm không được âm!");
         }
+        if (RecalledQuantity + quantity > Quantity)
+        {
+            throw new BusinessException(
+                "SupplyCoreERP:ExceedsRecallQuantity", 
+                $"Số lượng thu hồi thực tế tích lũy ({RecalledQuantity + quantity}) không được vượt quá số lượng yêu cầu thu hồi ({Quantity})!"
+            );
+        }
         RecalledQuantity += quantity;
     }
 

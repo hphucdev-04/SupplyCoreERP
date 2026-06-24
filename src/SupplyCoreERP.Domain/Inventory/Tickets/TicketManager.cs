@@ -162,8 +162,8 @@ public class TicketManager : DomainService, ITicketManager
 
     private async Task ValidateProductForInventoryAsync(Guid productId, TicketType ticketType)
     {
-        bool isRecallOrReturn = ticketType == TicketType.RecallReceipt || 
-                               ticketType == TicketType.ReturnInward || 
+        bool isRecallOrReturn = ticketType == TicketType.RecallReceipt ||
+                               ticketType == TicketType.ReturnInward ||
                                ticketType == TicketType.ReturnOutward;
 
         if (isRecallOrReturn)
@@ -258,8 +258,8 @@ public class TicketManager : DomainService, ITicketManager
         }
 
         Product product = await _productRepo.GetAsync(productId);
-        bool isRecallOrReturn = ticket.Type == TicketType.RecallReceipt || 
-                               ticket.Type == TicketType.ReturnInward || 
+        bool isRecallOrReturn = ticket.Type == TicketType.RecallReceipt ||
+                               ticket.Type == TicketType.ReturnInward ||
                                ticket.Type == TicketType.ReturnOutward;
 
         if (!isRecallOrReturn && !product.IsAvailableForInventory)
@@ -556,7 +556,7 @@ public class TicketManager : DomainService, ITicketManager
 
         List<InventoryBalance> validBalances = (from b in balances
                                                 join ba in batches on b.ProductBatchId equals ba.Id
-                                                orderby ba.ExpiryDate ascending
+                                                orderby ba.ExpiryDate ascending, ba.ManufacturingDate ascending
                                                 select b).ToList();
 
         List<InventoryTicketDetail> details = new();

@@ -1,10 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
+using SupplyCoreERP.Enums.Orders;
 
 namespace SupplyCoreERP.PurchaseReturnRequests.Dtos;
 
 public class UpdatePurchaseReturnRequestLineDto
 {
+    [Required]
+    public PurchaseReturnType ReturnType { get; set; }
+
     [Required]
     [Range(0.0001, double.MaxValue)]
     public decimal Quantity { get; set; }

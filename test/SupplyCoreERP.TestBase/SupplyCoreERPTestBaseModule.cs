@@ -1,4 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
+using NSubstitute;
+using SupplyCoreERP.Notifications;
 using Volo.Abp;
 using Volo.Abp.Authorization;
 using Volo.Abp.Autofac;
@@ -25,6 +27,9 @@ public class SupplyCoreERPTestBaseModule : AbpModule
         });
 
         context.Services.AddAlwaysAllowAuthorization();
+
+        var mockNotificationRealTime = Substitute.For<INotificationRealTime>();
+        context.Services.AddSingleton(mockNotificationRealTime);
     }
 
     public override void OnApplicationInitialization(ApplicationInitializationContext context)

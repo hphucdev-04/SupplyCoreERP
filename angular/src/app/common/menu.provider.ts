@@ -69,14 +69,14 @@ export const APP_ROUTES = [
       requiredPolicy: 'Order.PurchaseRequisition',
     },
     {
-      name: 'Purchase-Orders',
-      icon: 'fas fa-file-invoice-dollar',
-      requiredPolicy: 'Order.PurchaseOrder',
-    },
-     {
       name: 'Purchase-Return-Requests',
       icon: 'fas fa-file-invoice-dollar',
       // requiredPolicy: 'Order.PurchaseReturnRequest',
+    },
+    {
+      name: 'Purchase-Orders',
+      icon: 'fas fa-file-invoice-dollar',
+      requiredPolicy: 'Order.PurchaseOrder',
     },
     {
       name: 'Purchase-Returns',

@@ -25,4 +25,5 @@ export interface ProductPriceDto extends EntityDto<string> {
   unitName?: string;
   price?: number;
   minQuantity?: number;
+  belowCostWarning?: string;
 }

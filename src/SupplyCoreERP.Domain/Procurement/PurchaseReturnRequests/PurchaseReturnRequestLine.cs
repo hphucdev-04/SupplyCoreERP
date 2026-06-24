@@ -3,6 +3,7 @@
 using System;
 using SupplyCoreERP.Catalog.BaseUnits;
 using SupplyCoreERP.Catalog.Products;
+using SupplyCoreERP.Enums.Orders;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Procurement.PurchaseReturnRequests;
@@ -18,6 +19,7 @@ public class PurchaseReturnRequestLine : AuditedEntity<Guid>
     public int ConversionFactor { get; private set; }
     public Guid PurchaseOrderId { get; private set; }
     public Guid PurchaseOrderLineId { get; private set; }
+    public PurchaseReturnType ReturnType { get; private set; }
 
     public decimal Quantity { get; private set; }
     public decimal BaseQuantity { get; private set; }
@@ -45,7 +47,8 @@ public class PurchaseReturnRequestLine : AuditedEntity<Guid>
         decimal quantity,
         decimal originalUnitPrice,
         decimal depreciationRate,
-        decimal taxRate) : base(id)
+        decimal taxRate,
+        PurchaseReturnType returnType) : base(id)
     {
         PurchaseReturnRequestId = purchaseReturnRequestId;
         ProductId = productId;
@@ -55,11 +58,12 @@ public class PurchaseReturnRequestLine : AuditedEntity<Guid>
         PurchaseOrderLineId = purchaseOrderLineId;
         OriginalUnitPrice = originalUnitPrice;
         TaxRate = taxRate;
+        ReturnType = returnType;
 
-        UpdateInfo(quantity, depreciationRate);
+        UpdateInfo(quantity, depreciationRate, returnType);
     }
 
-    public void UpdateInfo(decimal quantity, decimal depreciationRate)
+    public void UpdateInfo(decimal quantity, decimal depreciationRate, PurchaseReturnType returnType)
     {
         if (quantity <= 0)
         {
@@ -71,8 +75,9 @@ public class PurchaseReturnRequestLine : AuditedEntity<Guid>
             throw new ArgumentException("Tỷ lệ khấu hao phải nằm trong khoảng từ 0% đến 100%!", nameof(depreciationRate));
         }
 
+        ReturnType = returnType;
         Quantity = quantity;
-        DepreciationRate = depreciationRate;
+        DepreciationRate = ReturnType == PurchaseReturnType.Defective ? 0 : depreciationRate;
         BaseQuantity = Quantity * ConversionFactor;
 
         // Tính toán các thông số tài chính

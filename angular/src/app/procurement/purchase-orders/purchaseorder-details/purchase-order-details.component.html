@@ -198,7 +198,7 @@
                           'ph-badge--approved': t.status === 2,
                           'ph-badge--rejected': t.status === 3,
                         }"
-                        >{{ '::Enum:ApprovalStatus.' + t.status | abpLocalization }}</span
+                        >{{ '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, t.status) | abpLocalization }}</span
                       >
                     </td>
                   </tr>
@@ -309,7 +309,7 @@
                           [value]="row.quantity"
                           min="0.01"
                           step="1"
-                          (change)="onInlineLineChange(row, 'quantity', $event.target.value)"
+                          (change)="onInlineLineChange(row, 'quantity', $any($event.target).value)"
                         />
                       </div>
                       <span *ngIf="!isEditable()" class="fw-bold">{{ row.quantity | number }}</span>
@@ -327,7 +327,7 @@
                           style="width: 100px"
                           [value]="row.unitPrice"
                           min="0"
-                          (change)="onInlineLineChange(row, 'unitPrice', $event.target.value)"
+                          (change)="onInlineLineChange(row, 'unitPrice', $any($event.target).value)"
                         />
                       </div>
                       <span *ngIf="!isEditable()">{{ row.unitPrice | number: '1.0-0' }} ₫</span>
@@ -341,7 +341,7 @@
                           [value]="row.taxRate ?? 0"
                           min="0"
                           max="100"
-                          (change)="onInlineLineChange(row, 'taxRate', $event.target.value)"
+                          (change)="onInlineLineChange(row, 'taxRate', $any($event.target).value)"
                         />
                       </div>
                       <span *ngIf="!isEditable()" class="ph-text-muted"
@@ -477,7 +477,7 @@
         <select
           class="form-select"
           formControlName="productId"
-          (change)="onMedicineChange($event.target.value)"
+          (change)="onMedicineChange($any($event.target).value)"
         >
           <option [ngValue]="null">{{ '::SelectMedicine' | abpLocalization }}</option>
           <option *ngFor="let m of medicines" [value]="m.id">{{ m.code }} – {{ m.name }}</option>
@@ -490,7 +490,7 @@
             class="form-select"
             formControlName="unitId"
             [attr.disabled]="!units.length ? 'disabled' : null"
-            (change)="onUnitChange($event.target.value)"
+            (change)="onUnitChange($any($event.target).value)"
           >
             <option [ngValue]="null">{{ '::SelectUnit' | abpLocalization }}</option>
             <option *ngFor="let u of units" [value]="u.unitId">

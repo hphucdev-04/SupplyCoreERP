@@ -227,6 +227,7 @@
                     <td class="text-center">{{ i + 1 }}</td>
                     <td>
                       <div class="fw-bold ph-text-primary">{{ line.productName }}</div>
+                      <small>{{ line.productCode }}</small>
                     </td>
                     <td class="text-end">
                       <div *ngIf="isEditable(); else qtyText">
@@ -237,7 +238,7 @@
                           [value]="line.quantity"
                           min="0.01"
                           step="1"
-                          (change)="onInlineLineChange(line, 'quantity', $event.target.value)"
+                          (change)="onInlineLineChange(line, 'quantity', $any($event.target).value)"
                         />
                       </div>
                       <ng-template #qtyText>
@@ -281,7 +282,7 @@
                           class="form-control form-control-sm"
                           [value]="line.note || ''"
                           placeholder="{{ '::Note' | abpLocalization }}"
-                          (change)="onInlineLineChange(line, 'note', $event.target.value)"
+                          (change)="onInlineLineChange(line, 'note', $any($event.target).value)"
                         />
                       </div>
                       <ng-template #noteText>
@@ -426,10 +427,11 @@
               <th style="width: 40px" class="text-center">
                 <i class="fa fa-check-square-o"></i>
               </th>
-              <th style="width: 35%">{{ '::Product' | abpLocalization }}</th>
+              <th style="width: 30%">{{ '::Product' | abpLocalization }}</th>
               <th style="width: 15%" class="text-end">{{ '::Remaining' | abpLocalization }}</th>
-              <th style="width: 20%" class="text-end">{{ '::Quantity' | abpLocalization }}</th>
-              <th style="width: 30%">{{ '::Supplier' | abpLocalization }}</th>
+              <th style="width: 18%" class="text-end">{{ '::Quantity' | abpLocalization }}</th>
+              <th style="width: 12%">{{ '::Unit' | abpLocalization }}</th>
+              <th style="width: 25%">{{ '::Supplier' | abpLocalization }}</th>
             </tr>
           </thead>
           <tbody [formGroup]="convertForm">
@@ -440,7 +442,9 @@
                 </td>
                 <td>
                   <div class="fw-bold ph-text-primary">{{ ctrl.get('productName').value }}</div>
-                  <div class="ph-text-muted small">{{ ctrl.get('unitName').value }}</div>
+                  <div class="ph-text-muted small">
+                    {{ requisition?.lines?.[i]?.productCode }}
+                  </div>
                 </td>
                 <td class="text-end fw-bold">
                   {{ ctrl.get('remainingQty').value | number }}
@@ -452,6 +456,9 @@
                     formControlName="quantity"
                     [attr.disabled]="!ctrl.get('selected').value ? 'disabled' : null"
                   />
+                </td>
+                <td>
+                  <span class="ph-badge ph-badge--neutral">{{ ctrl.get('unitName').value }}</span>
                 </td>
                 <td style="overflow: visible !important">
                   <app-dropdown-search

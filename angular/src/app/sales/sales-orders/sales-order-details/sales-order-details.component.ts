@@ -76,7 +76,7 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private customerService: CustomerService,
   ) {}
 

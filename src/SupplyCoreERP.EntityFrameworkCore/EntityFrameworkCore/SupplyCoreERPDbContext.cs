@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Agent;
+using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Catalog.ActiveIngredients;
 using SupplyCoreERP.Catalog.BaseUnits;
 using SupplyCoreERP.Catalog.Categories;
@@ -345,6 +346,8 @@ public class SupplyCoreERPDbContext :
         {
             b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "MedicineIngredients", SupplyCoreERPConsts.DbSchema);
             b.ConfigureByConvention();
+
+            b.Property(x => x.Strength).HasMaxLength(50).IsRequired(false);
 
             // Link ActiveIngredient (Danh mục) -> RESTRICT
             b.HasOne(x => x.ActiveIngredient).WithMany().HasForeignKey(x => x.ActiveIngredientId).OnDelete(DeleteBehavior.Restrict);
@@ -798,6 +801,7 @@ public class SupplyCoreERPDbContext :
             b.ConfigureByConvention();
 
             b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+            b.Property(x => x.ReturnType).HasDefaultValue(PurchaseReturnType.Commercial);
             b.Property(x => x.Note).HasMaxLength(1000);
 
             b.Property(x => x.SubTotal).HasPrecision(18, 4);
@@ -843,7 +847,6 @@ public class SupplyCoreERPDbContext :
             b.Property(x => x.TaxAmount).HasPrecision(18, 4);
             b.Property(x => x.TotalAmount).HasPrecision(18, 4);
 
-            b.HasOne(x => x.Supplier).WithMany().HasForeignKey(x => x.SupplierId).IsRequired().OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 
             b.HasMany(x => x.Lines)
@@ -859,6 +862,7 @@ public class SupplyCoreERPDbContext :
             b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseReturnRequestLines", SupplyCoreERPConsts.DbSchema);
             b.ConfigureByConvention();
 
+            b.Property(x => x.ReturnType).HasDefaultValue(PurchaseReturnType.Commercial);
             b.Property(x => x.Quantity).HasPrecision(18, 4);
             b.Property(x => x.BaseQuantity).HasPrecision(18, 4);
             b.Property(x => x.OriginalUnitPrice).HasPrecision(18, 4);

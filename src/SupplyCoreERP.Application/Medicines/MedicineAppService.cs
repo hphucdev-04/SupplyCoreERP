@@ -219,7 +219,24 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        await _medicineManager.AddIngredientAsync(medicine, input.ActiveIngredientId);
+        await _medicineManager.AddIngredientAsync(medicine, input.ActiveIngredientId, input.Strength);
+
+        await _medicineRepo.UpdateAsync(medicine);
+    }
+
+    public async Task UpdateIngredientStrengthAsync(Guid id, Guid activeIngredientId, CreateUpdateMedicineIngredientDto input)
+    {
+        IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
+        Medicine? medicine = await query
+            .Include(x => x.Ingredients)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (medicine == null)
+        {
+            throw new EntityNotFoundException(typeof(Medicine), id);
+        }
+
+        await _medicineManager.UpdateIngredientStrengthAsync(medicine, activeIngredientId, input.Strength);
 
         await _medicineRepo.UpdateAsync(medicine);
     }

@@ -231,6 +231,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
     //Ingredients Form
     this.ingrForm = this.fb.group({
       activeIngredientId: [null, Validators.required],
+      strength: [null, Validators.maxLength(50)],
     });
 
     //Units Form

@@ -29,6 +29,7 @@ export interface CreateUpdateMedicineDto {
 
 export interface CreateUpdateMedicineIngredientDto {
   activeIngredientId: string;
+  strength?: string;
 }
 
 export interface CreateUpdateMedicineUnitDto {
@@ -86,6 +87,7 @@ export interface MedicineIngredientDto {
   activeIngredientId?: string;
   activeIngredientName?: string;
   activeIngredientCode?: string;
+  strength?: string;
 }
 
 export interface MedicineRegistrationDto extends EntityDto<string> {

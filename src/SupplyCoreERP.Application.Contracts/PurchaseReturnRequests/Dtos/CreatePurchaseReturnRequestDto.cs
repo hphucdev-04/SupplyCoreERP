@@ -7,13 +7,7 @@ namespace SupplyCoreERP.PurchaseReturnRequests.Dtos;
 public class CreatePurchaseReturnRequestDto
 {
     [Required]
-    public Guid SupplierId { get; set; }
-
-    [Required]
     public Guid WarehouseId { get; set; }
-
-    [Required]
-    public PurchaseReturnType ReturnType { get; set; }
 
     [Required]
     public DateTime RequestDate { get; set; }

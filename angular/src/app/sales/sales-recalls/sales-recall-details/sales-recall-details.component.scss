@@ -29,6 +29,11 @@
 .drawer-table-wrapper {
   max-height: 50vh;
   overflow-y: auto;
+
+  table.ph-table td {
+    vertical-align: top !important;
+    padding-top: 0.75rem !important;
+  }
 }
 
 .col-select {

@@ -124,6 +124,10 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
             SupplyCoreERPPermissions.Order.SaleOrder.Reject,
             L("Permission:Order.SaleOrder.Reject")
         );
+        saleOrderPermisson.AddChild(
+            SupplyCoreERPPermissions.Order.SaleOrder.OverrideUnitPrice,
+            L("Permission:Order.SaleOrder.OverrideUnitPrice")
+        );
 
         // PurchaseReturn
         PermissionDefinition purchaseReturnPermission = AddCrudPermissions(orderGroup, SupplyCoreERPPermissions.Order.PurchaseReturn.Default, "PurchaseReturn");
