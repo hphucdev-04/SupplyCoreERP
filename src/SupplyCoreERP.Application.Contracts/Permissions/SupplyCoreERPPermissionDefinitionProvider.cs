@@ -66,6 +66,10 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
             SupplyCoreERPPermissions.Inventory.Warehouse.Reject,
             L("Permission:Inventory.Warehous.Reject")
         );
+        warehousePermission.AddChild(
+            SupplyCoreERPPermissions.Inventory.Warehouse.ZoneTransfer,
+            L("Permission:Inventory.Warehouse.ZoneTransfer")
+        );
 
         AddCrudPermissions(inventoryGroup, SupplyCoreERPPermissions.Inventory.Batch.Default, "Batch");
 
@@ -119,6 +123,10 @@ public class SupplyCoreERPPermissionDefinitionProvider : PermissionDefinitionPro
         saleOrderPermisson.AddChild(
             SupplyCoreERPPermissions.Order.SaleOrder.Reject,
             L("Permission:Order.SaleOrder.Reject")
+        );
+        saleOrderPermisson.AddChild(
+            SupplyCoreERPPermissions.Order.SaleOrder.OverrideUnitPrice,
+            L("Permission:Order.SaleOrder.OverrideUnitPrice")
         );
 
         // PurchaseReturn

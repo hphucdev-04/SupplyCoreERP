@@ -1,6 +1,8 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil, finalize } from 'rxjs/operators';
+import { eLayoutType, RoutesService } from '@abp/ng.core';
 import { InventoryBalanceService } from 'src/app/proxy/balances';
 import { InventoryBalanceDetailDto } from 'src/app/proxy/balances/dtos';
 import { TransactionsComponent } from 'src/app/shared/components/transactions-component/transactions.component';
@@ -8,33 +10,31 @@ import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @Component({
-  selector: 'app-balance-detail-modal',
+  selector: 'app-balance-details',
   standalone: true,
   imports: [SharedModule, TransactionsComponent],
   templateUrl: './balance-details.component.html'
 })
-export class BalanceDetailsComponent implements OnDestroy {
+export class BalanceDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  private readonly ROUTE_NAME = '::Menu:BalanceDetails';
 
-  // Modal State chuẩn ABP
-  isVisible = false;
   balanceId = '';
   detail: InventoryBalanceDetailDto | null = null;
   isLoading = false;
-  activeTab: 'info' | 'history' = 'info';
+  activeTab: 'info' | 'history' | 'reservations' = 'info';
 
-  constructor(private balanceService: InventoryBalanceService) { }
+  constructor(
+    private route: ActivatedRoute,
+    private balanceService: InventoryBalanceService,
+    private routesService: RoutesService
+  ) { }
 
-  public open(id: string) {
-    this.balanceId = id;
-    this.activeTab = 'info';
-    this.detail = null;
-    this.isVisible = true; // Kích hoạt abp-modal
-    this.loadDetail(id);
-  }
-
-  public close() {
-    this.isVisible = false;
+  ngOnInit(): void {
+    this.balanceId = this.route.snapshot.params['id'];
+    if (this.balanceId) {
+      this.loadDetail(this.balanceId);
+    }
   }
 
   private loadDetail(id: string) {
@@ -46,10 +46,20 @@ export class BalanceDetailsComponent implements OnDestroy {
       )
       .subscribe(res => {
         this.detail = res;
+        this.routesService.add([
+          {
+            path: `/inventory/balances/details/${this.balanceId}`,
+            name: this.ROUTE_NAME,
+            parentName: '::Menu:Balances',
+            iconClass: 'fas fa-cubes',
+            layout: eLayoutType.application,
+          },
+        ]);
       });
   }
 
   ngOnDestroy(): void {
+    this.routesService.remove([this.ROUTE_NAME]);
     this.destroy$.next();
     this.destroy$.complete();
   }

@@ -1,86 +1,108 @@
-<abp-modal [(visible)]="isVisible" [options]="{ size: 'xl', fullscreen: 'lg' }">
+<div *ngIf="detail">
+  <button class="btn btn-sm ph-btn-secondary mb-3" routerLink="/inventory/balances">
+    <i class="fa fa-arrow-left me-1"></i> {{ '::Back' | abpLocalization }}
+  </button>
 
-  <ng-template #abpHeader>
-    <div class="d-flex align-items-center justify-content-between w-100 pe-3" *ngIf="detail">
-      <div class="d-flex align-items-center gap-3">
-        <div class="bg-primary-subtle text-primary rounded p-3 d-flex align-items-center justify-content-center"
-          style="width: 64px; height: 64px;">
-          <i class="fa fa-boxes-stacked fa-2x"></i>
-        </div>
-        <div>
-          <h4 class="modal-title fw-bold mb-1 d-flex align-items-center gap-2">
-            {{ '::BalanceDetails' | abpLocalization }}
-          </h4>
-          <div class="text-muted small d-flex gap-3">
-            <span> {{ '::Medicine' | abpLocalization }}: <strong class="text-primary">{{ detail.productName
-                }}</strong></span>
-            <span> {{ '::Batch' | abpLocalization }}: <strong class="text-danger">{{ detail.batchNumber
-                }}</strong></span>
-          </div>
+  <!-- Page Header -->
+  <div class="d-flex align-items-center justify-content-between mb-3">
+    <div class="d-flex align-items-center gap-3">
+      <div class="ph-icon-avatar ph-icon-avatar--lg">
+        <i class="fa fa-cubes fa-2x"></i>
+      </div>
+      <div>
+        <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
+          {{ detail.productName }}
+          <span class="ph-badge ph-badge--active">
+            {{ detail.batchNumber }}
+          </span>
+        </h3>
+        <div class="ph-text-muted d-flex gap-3">
+          <span>{{ '::Warehouse' | abpLocalization }}: <strong class="ph-text-body">{{ detail.warehouseName }}</strong></span>
+          <span>{{ '::Bin' | abpLocalization }}: <strong class="ph-text-body">{{ detail.binCode }}</strong></span>
         </div>
       </div>
     </div>
-  </ng-template>
+  </div>
 
-  <ng-template #abpBody>
+  <!-- Tabs -->
+  <ul class="nav nav-tabs mb-3">
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [class.active]="activeTab === 'info'"
+        (click)="activeTab = 'info'"
+        style="cursor: pointer"
+      >
+        <i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [class.active]="activeTab === 'reservations'"
+        (click)="activeTab = 'reservations'"
+        style="cursor: pointer"
+      >
+        <i class="fa fa-lock me-2"></i>{{ '::Reservations' | abpLocalization }}
+        <span class="ph-badge ph-badge--info ms-2" *ngIf="detail.reservations">{{ detail.reservations.length }}</span>
+      </a>
+    </li>
+    <li class="nav-item">
+      <a
+        class="nav-link"
+        [class.active]="activeTab === 'history'"
+        (click)="activeTab = 'history'"
+        style="cursor: pointer"
+      >
+        <i class="fa fa-history me-2"></i>{{ '::Menu:Transactions' | abpLocalization }}
+      </a>
+    </li>
+  </ul>
+
+  <!-- Container -->
+  <div class="container-fluid p-0">
     <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center py-5" style="min-height: 300px;">
       <div class="spinner-border text-primary" role="status"></div>
     </div>
 
-    <div class="container-fluid p-0" *ngIf="!isLoading && detail">
-
-      <ul class="nav nav-tabs px-1 border-bottom mb-3">
-        <li class="nav-item">
-          <a class="nav-link cursor-pointer fw-semibold text-uppercase small" [class.active]="activeTab === 'info'"
-            (click)="activeTab = 'info'">
-            <i class="fa fa-list-alt me-1"></i> {{ '::GeneralInformation' | abpLocalization }}
-          </a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link cursor-pointer fw-semibold text-uppercase small" [class.active]="activeTab === 'history'"
-            (click)="activeTab = 'history'">
-            <i class="fa fa-history me-1"></i> {{ '::Menu:Transactions' | abpLocalization }}
-          </a>
-        </li>
-      </ul>
-
+    <div *ngIf="!isLoading">
+      <!-- Tab 1: General Info -->
       <div *ngIf="activeTab === 'info'">
-        <div class="row g-3">
-
+        <div class="row g-2">
           <div class="col-lg-6">
-            <div class="card border shadow-sm h-100">
-              <div class="card-header py-3">
-                <h6 class="text-primary fw-bold mb-0"><i class="fa fa-pills me-2"></i> Thông tin Sản phẩm & Lô</h6>
+            <div class="ph-card h-100">
+              <div class="ph-card__header">
+                <h6 class="ph-card__header-title">
+                  <i class="fa fa-pills text-primary me-2"></i>{{ '::ProductAndBatchInfo' | abpLocalization }}
+                </h6>
               </div>
-              <div class="card-body py-4">
-                <div class="row g-3 p-2">
-                  <div class="col-12">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Sản phẩm</small>
-                    <div class="fw-bold fs-5 text-primary">{{ detail.productName }}</div>
+              <div class="ph-card__body">
+                <div class="row g-3">
+                  <div class="col-md-12">
+                    <span class="ph-field-meta">Sản phẩm</span>
+                    <div class="ph-field-value ph-text-primary fw-bold">{{ detail.productName }}</div>
                   </div>
                   <div class="col-md-6">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Mã thuốc</small>
-                    <div class="fw-medium fs-6">{{ detail.productCode }}</div>
+                    <span class="ph-field-meta">Mã thuốc</span>
+                    <div class="ph-field-value">{{ detail.productCode }}</div>
                   </div>
                   <div class="col-md-6">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Số Lô
-                      (Batch)</small>
-                    <div class="fw-medium fs-6"><span class="badge bg-success fs-6">{{ detail.batchNumber }}</span>
+                    <span class="ph-field-meta">Số Lô (Batch)</span>
+                    <div class="ph-field-value">
+                      <span class="ph-badge ph-badge--neutral">{{ detail.batchNumber }}</span>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Ngày sản
-                      xuất</small>
-                    <div class="fw-medium fs-6">{{ detail.manufacturingDate | date:'dd/MM/yyyy' }}</div>
+                    <span class="ph-field-meta">Ngày sản xuất</span>
+                    <div class="ph-field-value">{{ detail.manufacturingDate | date:'dd/MM/yyyy' }}</div>
                   </div>
                   <div class="col-md-6">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Hạn sử dụng</small>
-                    <div class="fw-bold fs-6 text-danger">{{ detail.expiryDate | date:'dd/MM/yyyy' }}</div>
+                    <span class="ph-field-meta">Hạn sử dụng</span>
+                    <div class="ph-field-value ph-text-danger fw-bold">{{ detail.expiryDate | date:'dd/MM/yyyy' }}</div>
                   </div>
-                  <div class="col-12 mt-3">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Nhà cung
-                      cấp</small>
-                    <div class="fw-medium fs-6 text-dark">{{ detail.supplierName || 'N/A' }}</div>
+                  <div class="col-md-12">
+                    <span class="ph-field-meta">Nhà cung cấp</span>
+                    <div class="ph-field-value">{{ detail.supplierName || '---' }}</div>
                   </div>
                 </div>
               </div>
@@ -88,90 +110,141 @@
           </div>
 
           <div class="col-lg-6">
-            <div class="card border shadow-sm h-100">
-              <div class="card-header py-3">
-                <h6 class="text-primary fw-bold mb-0"><i class="fa fa-warehouse me-2"></i> Vị trí & Tồn kho</h6>
+            <div class="ph-card h-100">
+              <div class="ph-card__header">
+                <h6 class="ph-card__header-title">
+                  <i class="fa fa-warehouse text-primary me-2"></i>{{ '::LocationAndStock' | abpLocalization }}
+                </h6>
               </div>
-              <div class="card-body py-4">
-                <div class="row g-3 p-2">
-                  <div class="col-12">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Kho lưu trữ</small>
-                    <div class="fw-bold fs-5">{{ detail.warehouseName }}</div>
-                    <div class="text-muted small mt-1">
+              <div class="ph-card__body">
+                <div class="row g-3">
+                  <div class="col-md-12">
+                    <span class="ph-field-meta">Kho lưu trữ</span>
+                    <div class="ph-field-value fw-bold">{{ detail.warehouseName }}</div>
+                    <small class="ph-text-muted d-block mt-1">
                       <i class="fa fa-map-marker-alt me-1"></i>
-
                       <span *ngIf="detail.warehouseAddress || detail.areaName || detail.cityName">
                         <ng-container *ngIf="detail.warehouseAddress">{{ detail.warehouseAddress }}</ng-container>
-
-                        <ng-container *ngIf="detail.warehouseAddress && (detail.areaName || detail.cityName)">,
-                        </ng-container>
-
+                        <ng-container *ngIf="detail.warehouseAddress && (detail.areaName || detail.cityName)">, </ng-container>
                         <ng-container *ngIf="detail.areaName">{{ detail.areaName }}</ng-container>
-
                         <ng-container *ngIf="detail.areaName && detail.cityName">, </ng-container>
-
                         <ng-container *ngIf="detail.cityName">{{ detail.cityName }}</ng-container>
                       </span>
-
                       <span *ngIf="!detail.warehouseAddress && !detail.areaName && !detail.cityName" class="fst-italic">
                         Chưa có thông tin khu vực
                       </span>
+                    </small>
+                  </div>
+                  <div class="col-md-12">
+                    <span class="ph-field-meta">Danh sách vị trí kệ (Bins)</span>
+                    <div class="table-responsive mt-2">
+                      <table class="table table-sm table-bordered mb-0 align-middle">
+                        <thead class="table-light">
+                          <tr>
+                            <th>Kệ</th>
+                            <th class="text-end">Tồn thực tế</th>
+                            <th class="text-end">Đang khóa</th>
+                            <th class="text-end">Khả dụng</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          <tr *ngFor="let bin of detail.binBalances">
+                            <td>
+                              <span class="ph-badge ph-badge--neutral">
+                                <i class="fa fa-box me-1 text-primary"></i>{{ bin.binCode }}
+                              </span>
+                            </td>
+                            <td class="text-end fw-semibold">{{ bin.quantity | number }}</td>
+                            <td class="text-end text-warning">{{ bin.lockedQuantity | number }}</td>
+                            <td class="text-end text-success fw-bold">{{ bin.availableQuantity | number }}</td>
+                          </tr>
+                          <tr *ngIf="!detail.binBalances || detail.binBalances.length === 0">
+                            <td colspan="4" class="text-center text-muted py-2 fst-italic">Không có vị trí kệ</td>
+                          </tr>
+                        </tbody>
+                      </table>
                     </div>
                   </div>
+                  
                   <div class="col-12">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Vị trí
-                      (Bin)</small>
-                    <div class="mt-1"><span class="badge bg-success px-3 py-2 fs-6"><i
-                          class="fa fa-box me-2 text-primary"></i>{{ detail.binCode }}</span></div>
+                    <hr class="ph-divider my-2">
                   </div>
 
-                  <div class="col-12 mt-2">
-                    <hr class="my-1 border-secondary opacity-25">
+                  <div class="col-md-4">
+                    <span class="ph-field-meta">Tổng tồn</span>
+                    <div class="ph-field-value fs-5 text-primary fw-bold">{{ detail.quantity | number }}</div>
                   </div>
-
-                  <div class="col-4">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Tổng tồn</small>
-                    <div class="fw-bold fs-4 text-primary">{{ detail.quantity | number }}</div>
+                  <div class="col-md-4">
+                    <span class="ph-field-meta">Đang khóa</span>
+                    <div class="ph-field-value fs-5 text-warning fw-bold">
+                      <i class="fa fa-lock me-1"></i>{{ detail.lockedQuantity | number }}
+                    </div>
                   </div>
-                  <div class="col-4">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Đang khóa</small>
-                    <div class="fw-bold fs-5 text-warning"><i class="fa fa-lock me-1 fs-6"></i>{{ detail.lockedQuantity
-                      | number }}</div>
-                  </div>
-                  <div class="col-4">
-                    <small class="text-muted text-uppercase fw-semibold" style="font-size: 0.75rem;">Khả dụng</small>
-                    <div class="fw-bold fs-5 text-success">{{ detail.availableQuantity | number }}</div>
+                  <div class="col-md-4">
+                    <span class="ph-field-meta">Khả dụng</span>
+                    <div class="ph-field-value fs-5 text-success fw-bold">{{ detail.availableQuantity | number }}</div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
 
-      <div *ngIf="activeTab === 'history'" style="min-height: 400px;">
-        <div class="alert alert-info py-2 small mb-3 border-0 bg-info bg-opacity-10 text-primary">
-          <i class="fa fa-info-circle me-1"></i> Đang hiển thị lịch sử luân chuyển của <b>{{ detail.productName }}</b>
-          (Lô: <b>{{ detail.batchNumber }}</b>) tại kệ <b>{{ detail.binCode }}</b>.
+      <!-- Tab 2: Reservations -->
+      <div *ngIf="activeTab === 'reservations'" class="ph-card">
+        <div class="ph-card__header">
+          <h6 class="ph-card__header-title">
+            <i class="fa fa-lock text-primary me-2"></i>{{ '::Reservations' | abpLocalization }}
+          </h6>
         </div>
+        <div class="ph-card__body p-0">
+          <ngx-datatable [rows]="detail.reservations" [count]="detail.reservations.length" default>
+            <ngx-datatable-column [name]="'::Partner' | abpLocalization" prop="partnerName" [width]="250">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value || '---' }}
+              </ng-template>
+            </ngx-datatable-column>
+            
+            <ngx-datatable-column [name]="'::SourceDocument' | abpLocalization" prop="sourceDocumentNumber" [width]="200">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value || '---' }}
+              </ng-template>
+            </ngx-datatable-column>
 
-        <div class="card border shadow-sm">
-          <div class="card-body p-0">
-            <app-transactions [isEmbedded]="true" [fixedProductId]="detail.productId"
-              [fixedBatchId]="detail.productBatchId" [fixedBinId]="detail.binId">
-            </app-transactions>
-          </div>
+            <ngx-datatable-column [name]="'::ReservedQuantity' | abpLocalization" prop="reservedQuantity" [width]="150">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value | number }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'::LockedDocument' | abpLocalization" prop="referenceDocumentNumber" [width]="200">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value || '---' }}
+              </ng-template>
+            </ngx-datatable-column>
+
+            <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime" [width]="180">
+              <ng-template let-value="value" ngx-datatable-cell-template>
+                {{ value | date: 'dd/MM/yyyy HH:mm' }}
+              </ng-template>
+            </ngx-datatable-column>
+          </ngx-datatable>
         </div>
       </div>
 
+      <!-- Tab 3: History -->
+      <div *ngIf="activeTab === 'history'" class="ph-card">
+        <div class="ph-card__header">
+          <h6 class="ph-card__header-title">
+            <i class="fa fa-history text-primary me-2"></i>{{ '::Menu:Transactions' | abpLocalization }}
+          </h6>
+        </div>
+        <div class="ph-card__body p-0">
+          <app-transactions [isEmbedded]="true" [fixedProductId]="detail.productId" [fixedBatchId]="detail.productBatchId" [fixedWarehouseId]="detail.warehouseId" [hideProduct]="true" [hideLocation]="true">
+          </app-transactions>
+        </div>
+      </div>
     </div>
-  </ng-template>
-
-  <ng-template #abpFooter>
-    <button type="button" class="btn btn-secondary px-4" (click)="close()">
-      {{ '::Close' | abpLocalization }}
-    </button>
-  </ng-template>
-
-</abp-modal>
+  </div>
+</div>

@@ -55,68 +55,61 @@
 
       <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="180">
         <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
-          <span class="ph-link" (click)="viewDetail(row.id)">{{ value }}</span>
+          <span class="ph-link fw-semibold font-mono" (click)="viewDetail(row.id)">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::DecisionNumber' | abpLocalization" prop="recallDecisionNumber" [width]="160">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="fw-bold text-dark">{{ row.recallDecisionNumber }}</span>
+          <span class="ph-text-muted font-mono"><i class="fa fa-file-text-o me-1"></i>{{ row.recallDecisionNumber }}</span>
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::Product' | abpLocalization" prop="productName" [width]="220">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <div class="fw-bold text-dark">{{ row.productName }}</div>
-          <span class="badge bg-light text-dark font-monospace">{{ row.productCode }}</span>
+          <div class="fw-bold ph-text-primary">{{ row.productName }}</div>
+          <small class="ph-text-muted font-mono">{{ row.productCode }}</small>
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::BatchNumber' | abpLocalization" prop="batchNumber" [width]="120">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="badge bg-secondary font-monospace">{{ row.batchNumber || 'N/A' }}</span>
+          <span class="font-mono ph-text-muted"><i class="fa fa-barcode me-1"></i>{{ row.batchNumber || 'N/A' }}</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::RecallLevel' | abpLocalization" prop="level" [width]="140">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="badge text-white" [class.bg-danger]="row.level === RecallLevel.Level1"
-            [class.bg-warning]="row.level === RecallLevel.Level2"
-            [style.background-color]="row.level === RecallLevel.Level3 ? '#eab308' : null">
-            <i class="fa" [class.fa-radiation]="row.level === RecallLevel.Level1"
-              [class.fa-exclamation-triangle]="row.level === RecallLevel.Level2"></i>
-            {{ '::Enum:RecallLevel.' + enumName(RecallLevel, row.level) | abpLocalization }}
+      <ngx-datatable-column [name]="'::RecallLevel' | abpLocalization" prop="level" [width]="160">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <span class="ph-badge" [ngClass]="levelClass(value)">
+            <i class="fa me-1" [ngClass]="levelIcon(value)"></i>
+            {{ '::Enum:RecallLevel.' + enumName(RecallLevel, value) | abpLocalization }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Deadline' | abpLocalization" prop="deadline" [width]="120">
+      <ngx-datatable-column [name]="'::Deadline' | abpLocalization" prop="deadline" [width]="130">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="ph-text-muted">{{ row.deadline | date: 'dd/MM/yyyy' }}</span>
+          <span class="ph-text-muted"><i class="fa fa-calendar me-1"></i>{{ row.deadline | date: 'dd/MM/yyyy' }}</span>
         </ng-template>
       </ngx-datatable-column>
 
       <ngx-datatable-column [name]="'::Compliance' | abpLocalization" prop="isOverdue" [width]="140">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span *ngIf="row.isOverdue && row.status !== SalesRecallStatus.Completed"
-            class="badge bg-danger animate-pulse" style="animation: pulse 1.5s infinite;">
+            class="ph-badge ph-badge--rejected animate-pulse">
             ⚠️ {{ '::OverdueCompliance' | abpLocalization }}
           </span>
-          <span *ngIf="!row.isOverdue || row.status === SalesRecallStatus.Completed" class="badge bg-success">
-            ✓ {{ '::OnTime' | abpLocalization }}
+          <span *ngIf="!row.isOverdue || row.status === SalesRecallStatus.Completed" class="ph-badge ph-badge--approved">
+            <i class="fa fa-check me-1"></i>{{ '::OnTime' | abpLocalization }}
           </span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="140">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="badge" [class.bg-secondary]="row.status === SalesRecallStatus.Draft"
-            [class.bg-warning]="row.status === SalesRecallStatus.PendingApproval"
-            [class.bg-info]="row.status === SalesRecallStatus.Approved"
-            [class.bg-primary]="row.status === SalesRecallStatus.Recalling"
-            [class.bg-success]="row.status === SalesRecallStatus.Completed"
-            [class.bg-danger]="row.status === SalesRecallStatus.Rejected">
-            {{ '::Enum:SalesRecallStatus.' + enumName(SalesRecallStatus, row.status) | abpLocalization }}
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="160">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <span class="ph-badge" [ngClass]="statusClass(value)">
+            <i class="fa me-1" [ngClass]="statusIcon(value)"></i>
+            {{ '::Enum:SalesRecallStatus.' + enumName(SalesRecallStatus, value) | abpLocalization }}
           </span>
         </ng-template>
       </ngx-datatable-column>
@@ -128,7 +121,7 @@
 <app-drawer [isOpen]="isDrawerOpen" [title]="'::NewSalesRecall' | abpLocalization" [showFooter]="true"
   [saveDisabled]="form.invalid || isSaving" [saveButtonText]="'::Save' | abpLocalization"
   [cancelButtonText]="'::Cancel' | abpLocalization" width="md" (close)="closeDrawer()" (save)="save()">
-  <form [formGroup]="form" class="p-3">
+  <form [formGroup]="form">
     <!-- Decision Number -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::RecallDecisionNumber' | abpLocalization }}</label>
@@ -143,7 +136,7 @@
     <!-- Product -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::MedicineProduct' | abpLocalization }}</label>
-      <select class="form-select" formControlName="productId" (change)="onMedicineChange($event.target.value)">
+      <select class="form-select" formControlName="productId" (change)="onMedicineChange($any($event.target).value)">
         <option [ngValue]="null" disabled>{{ '::SelectProduct' | abpLocalization }}</option>
         <option *ngFor="let p of medicines" [value]="p.id">{{ p.name }} ({{ p.code }})</option>
       </select>
@@ -195,16 +188,17 @@
           {{ '::Enum:RecallLevel.' + enumName(RecallLevel, l.value) | abpLocalization }}
         </option>
       </select>
-      <!-- Hướng dẫn Luật dược trực quan trên UI -->
-      <div class="ph-hint-warning mt-2 small" *ngIf="form.get('level').value === RecallLevel.Level1">
-        🚨 <strong>Luật Dược:</strong> Phải ban hành quyết định trong 24 giờ và hoàn tất thu hồi tối đa <strong>3
-          ngày</strong>!
-      </div>
-      <div class="ph-hint-msg mt-2 small" *ngIf="form.get('level').value === RecallLevel.Level2">
-        ⚠️ <strong>Luật Dược:</strong> Hoàn tất thu hồi tối đa <strong>15 ngày</strong>!
-      </div>
-      <div class="ph-hint-msg mt-2 small" *ngIf="form.get('level').value === RecallLevel.Level3">
-        📋 <strong>Luật Dược:</strong> Hoàn tất thu hồi tối đa <strong>30 ngày</strong>!
+      <div class="mt-2 small text-muted" *ngIf="form.get('level').value">
+        <div class="fw-semibold mb-1">Thời hạn hoàn thành thu hồi (kể từ khi ra quyết định):</div>
+        <div *ngIf="form.get('level').value == 1" class="text-danger">
+          Mức độ 1: Thu hồi khẩn cấp, hoàn thành trong không quá 05 ngày.
+        </div>
+        <div *ngIf="form.get('level').value == 2" class="text-warning">
+          Mức độ 2: Hoàn thành trong không quá 15 ngày.
+        </div>
+        <div *ngIf="form.get('level').value == 3" class="text-info">
+          Mức độ 3: Hoàn thành trong không quá 30 ngày.
+        </div>
       </div>
     </div>
 

@@ -4,16 +4,14 @@ using System.Linq;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Agent.Dtos;
 using SupplyCoreERP.Enums.Agent;
 using SupplyCoreERP.Mcp;
-using SupplyCoreERP.Settings;
 using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
-using Volo.Abp.Settings;
 
 namespace SupplyCoreERP.Agent;
 
@@ -23,8 +21,7 @@ public class AgentAppService : SupplyCore, IAgentAppService
     private readonly IAgent _agent;
     private readonly IMcpClientService _mcpClientService;
     private readonly IRepository<AgentSession, Guid> _sessionRepository;
-    private readonly AgentManager _agentManager;
-    private readonly ISettingProvider _settingProvider;
+    private readonly IAgentManager _agentManager;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -36,120 +33,55 @@ public class AgentAppService : SupplyCore, IAgentAppService
         IAgent agent,
         IMcpClientService mcpClientService,
         IRepository<AgentSession, Guid> sessionRepository,
-        AgentManager agentManager,
-        ISettingProvider settingProvider)
+        IAgentManager agentManager)
     {
         _agent = agent;
         _mcpClientService = mcpClientService;
         _sessionRepository = sessionRepository;
         _agentManager = agentManager;
-        _settingProvider = settingProvider;
     }
 
     public async Task<object> SendMessageAsync(AgentRequestInputDto input)
     {
-        // 1. Phục hồi hoặc khởi tạo phiên làm việc thông qua AgentManager
-        string defaultHistoryJson = input.History != null
-            ? JsonSerializer.Serialize(input.History, _jsonOptions)
-            : "[]";
+        // 1. Phục hồi hoặc khởi tạo phiên làm việc qua AgentManager
+        AgentSession session = await _agentManager.GetOrCreateSessionAsync(input.SessionId, CurrentUser.Id ?? Guid.Empty);
 
-        AgentSession session = await _agentManager.GetOrCreateSessionAsync(
-            input.SessionId,
-            CurrentUser.Id ?? Guid.Empty,
-            defaultHistoryJson
-        );
+        IQueryable<AgentSession> queryable = await _sessionRepository.GetQueryableAsync();
+        session = await queryable
+            .Include(s => s.Messages)
+            .Include(s => s.Tasks)
+            .FirstOrDefaultAsync(s => s.Id == session.Id)
+            ?? throw new UserFriendlyException("Không thể khởi tạo phiên làm việc.");
 
-        AgentContext context = new()
-        {
-            Steps = JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson, _jsonOptions)
-                    ?? new List<AgentMessageDto>()
-        };
+        // Lưu tin nhắn mới của người dùng (tự động chạy DLP ở tầng Domain)
+        await _agentManager.AddMessageAsync(session, "user", input.Text);
 
-        context.Steps.Add(new AgentMessageDto
-        {
-            Role = "user",
-            Text = input.Text
-        });
+        // 2. Nạp lịch sử tin nhắn đã được tối ưu hóa trực tiếp từ database
+        List<AgentMessage> optimizedHistory = await _agentManager.GetOptimizedHistoryAsync(session.Id);
+        List<AgentSessionMessageDto> steps = MapToSessionMessageDtos(optimizedHistory);
 
-        // 2. Chạy Agent
-        AgentResultDto result = await _agent.RunAsync(context);
+        // 3. Chạy Agent
+        AgentResultDto result = await _agent.RunAsync(new AgentContext { Steps = steps });
 
-        // 3. Cập nhật lịch sử cuộc trò chuyện vào session
-        await _agentManager.UpdateSessionHistoryAsync(session, JsonSerializer.Serialize(context.Steps, _jsonOptions));
+        // 4. Lưu các bước mới phát sinh xuống Database (tự động lọc DLP khi lưu)
+        await SaveNewStepsAsync(session, result.NewSteps);
 
-        // 4. Xử lý kết quả trả về từ Agent
-        if (result.RequiresApproval)
-        {
-            AgentToolCallMessageDto pendingToolCall = new()
-            {
-                Name = result.PendingToolName!,
-                Arguments = result.PendingToolArguments != null
-                    ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                    : new JsonObject()
-            };
-
-            // Tạo AgentTask loại Approval ở trạng thái Pending thông qua AgentManager
-            await _agentManager.CreateTaskAsync(
-                session.Id,
-                AgentTaskType.Approval,
-                formJson: null,
-                suspendedDataJson: JsonSerializer.Serialize(pendingToolCall, _jsonOptions)
-            );
-
-            return new
-            {
-                status = "PendingApproval",
-                sessionId = session.Id,
-                toolName = result.PendingToolName,
-                arguments = result.PendingToolArguments != null
-                    ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)
-                    : null
-            };
-        }
-        else if (result.RequiresElicitation)
-        {
-            AgentToolCallMessageDto pendingToolCall = new()
-            {
-                Name = result.PendingToolName!,
-                Arguments = result.PendingToolArguments != null
-                    ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                    : new JsonObject()
-            };
-
-            // Tạo AgentTask loại Elicitation ở trạng thái Pending thông qua AgentManager
-            await _agentManager.CreateTaskAsync(
-                session.Id,
-                AgentTaskType.Elicitation,
-                formJson: result.ElicitationFormJson,
-                suspendedDataJson: JsonSerializer.Serialize(pendingToolCall, _jsonOptions)
-            );
-
-            return new
-            {
-                status = "PendingElicitation",
-                sessionId = session.Id,
-                elicitationForm = result.ElicitationFormJson != null
-                    ? JsonSerializer.Deserialize<JsonObject>(result.ElicitationFormJson)
-                    : null
-            };
-        }
-        else
-        {
-            return new AgentResponseOutputDto
-            {
-                Text = result.FinalText ?? "",
-                SessionId = session.Id
-            };
-        }
+        // 5. Xử lý các tác vụ chờ (nếu có) và trả về kết quả
+        return await BuildResultResponseAsync(session, result);
     }
 
     public async Task<object> ApproveAsync(AgentSessionInputDto input)
     {
         // 1. Phục hồi phiên làm việc từ Database
-        AgentSession session = await _sessionRepository.GetAsync(input.SessionId);
+        IQueryable<AgentSession> queryable = await _sessionRepository.GetQueryableAsync();
+        AgentSession session = await queryable
+            .Include(s => s.Messages)
+            .Include(s => s.Tasks)
+            .FirstOrDefaultAsync(s => s.Id == input.SessionId)
+            ?? throw new UserFriendlyException("Không tìm thấy phiên làm việc.");
 
         // Tìm AgentTask loại Approval đang Pending của Session này
-        AgentTask? pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Approval);
+        AgentTask? pendingTask = await _agentManager.FindPendingTaskAsync(session, AgentTaskType.Approval);
 
         if (pendingTask == null || string.IsNullOrEmpty(pendingTask.SuspendedDataJson))
         {
@@ -162,11 +94,8 @@ public class AgentAppService : SupplyCore, IAgentAppService
             throw new UserFriendlyException("Thông tin tác vụ chờ phê duyệt không hợp lệ.");
         }
 
-        List<AgentMessageDto> steps = JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson, _jsonOptions)
-                    ?? new List<AgentMessageDto>();
-
-        // 2. Gọi tool trên MCP Server
-        string toolResult = await _mcpClientService.CallToolAsync(pendingToolCall.Name, pendingToolCall.Arguments);
+        // 2. Gọi tool trên MCP Server (Gọi qua CallToolAsync để tự chuẩn hóa và bắt lỗi)
+        string toolResult = await _mcpClientService.CallToolAsync(pendingToolCall.Name, pendingToolCall.Arguments ?? new JsonObject());
 
         // 2.1 Kiểm tra xem kết quả có chứa yêu cầu Elicitation (Mã lỗi -32042) hay không
         try
@@ -175,19 +104,13 @@ public class AgentAppService : SupplyCore, IAgentAppService
             JsonNode? errorObj = resultNode?["error"];
             if (errorObj != null && errorObj["code"]?.GetValue<int>() == -32042)
             {
-                // Hoàn thành tác vụ Approval cũ
-                await _agentManager.CompleteTaskAsync(pendingTask);
-
-                // Tạo một tác vụ Elicitation mới đang chờ
+                await _agentManager.CompleteTaskAsync(session, pendingTask);
                 await _agentManager.CreateTaskAsync(
-                    session.Id,
+                    session,
                     AgentTaskType.Elicitation,
                     formJson: errorObj["data"]?["requestedSchema"]?.ToJsonString(_jsonOptions),
                     suspendedDataJson: JsonSerializer.Serialize(pendingToolCall, _jsonOptions)
                 );
-
-                // Cập nhật lại lịch sử chat
-                await _agentManager.UpdateSessionHistoryAsync(session, JsonSerializer.Serialize(steps, _jsonOptions));
 
                 return new
                 {
@@ -205,124 +128,41 @@ public class AgentAppService : SupplyCore, IAgentAppService
         }
 
         // Hoàn thành tác vụ Approval cũ
-        await _agentManager.CompleteTaskAsync(pendingTask);
+        await _agentManager.CompleteTaskAsync(session, pendingTask);
 
-        // Khử nhạy cảm thông tin đối số trước khi lưu vào lịch sử DB để bảo vệ an toàn thông tin (DLP)
-        if (pendingToolCall.Arguments != null)
-        {
-            try
-            {
-                var keys = pendingToolCall.Arguments.Select(x => x.Key).ToList();
-                foreach (string key in keys)
-                {
-                    var valNode = pendingToolCall.Arguments[key];
-                    if (valNode != null)
-                    {
-                        if (valNode is JsonValue jsonValue && jsonValue.TryGetValue<string>(out string? originalValue) && originalValue != null)
-                        {
-                            string redactedValue = await RedactSensitiveTextAsync(originalValue);
-                            pendingToolCall.Arguments[key] = JsonValue.Create(redactedValue);
-                        }
-                    }
-                }
-            }
-            catch
-            {
-                // Bỏ qua lỗi làm sạch
-            }
-        }
+        // 3. Lưu kết quả tool (được tự động chạy DLP tại Domain khi ghi)
+        AgentToolResponseMessageDto toolResponse = new() { Name = pendingToolCall.Name, Content = toolResult };
+        await _agentManager.AddMessageAsync(
+            session,
+            "user",
+            text: null,
+            toolCallsJson: null,
+            toolResponsesJson: JsonSerializer.Serialize(new List<AgentToolResponseMessageDto> { toolResponse }, _jsonOptions)
+        );
 
-        // 3. Cập nhật lịch sử cuộc trò chuyện (lượt gọi tool và kết quả của tool)
-        steps.Add(new AgentMessageDto
-        {
-            Role = "model",
-            ToolCalls = new List<AgentToolCallMessageDto> { pendingToolCall }
-        });
+        // 4. Nạp lại lịch sử đã tối ưu và tiếp tục chạy Agent
+        List<AgentMessage> optimizedHistory = await _agentManager.GetOptimizedHistoryAsync(session.Id);
+        List<AgentSessionMessageDto> steps = MapToSessionMessageDtos(optimizedHistory);
 
-        string redactedToolResult = await RedactSensitiveTextAsync(toolResult);
+        AgentResultDto result = await _agent.RunAsync(new AgentContext { Steps = steps });
 
-        steps.Add(new AgentMessageDto
-        {
-            Role = "user",
-            ToolResponses = new List<AgentToolResponseMessageDto>
-            {
-                new() { Name = pendingToolCall.Name, Content = redactedToolResult }
-            }
-        });
+        await SaveNewStepsAsync(session, result.NewSteps);
 
-        // 4. Tiếp tục vòng lặp Agent với ngữ cảnh mới
-        AgentContext context = new() { Steps = steps };
-        AgentResultDto result = await _agent.RunAsync(context);
-
-        // 5. Lưu lại lịch sử và tạo tác vụ mới (nếu có)
-        await _agentManager.UpdateSessionHistoryAsync(session, JsonSerializer.Serialize(context.Steps, _jsonOptions));
-
-        if (result.RequiresApproval)
-        {
-            await _agentManager.CreateTaskAsync(
-                session.Id,
-                AgentTaskType.Approval,
-                formJson: null,
-                suspendedDataJson: JsonSerializer.Serialize(new AgentToolCallMessageDto
-                {
-                    Name = result.PendingToolName!,
-                    Arguments = result.PendingToolArguments != null
-                        ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                        : new JsonObject()
-                }, _jsonOptions)
-            );
-
-            return new
-            {
-                status = "PendingApproval",
-                sessionId = session.Id,
-                toolName = result.PendingToolName,
-                arguments = result.PendingToolArguments != null
-                    ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)
-                    : null
-            };
-        }
-        else if (result.RequiresElicitation)
-        {
-            await _agentManager.CreateTaskAsync(
-                session.Id,
-                AgentTaskType.Elicitation,
-                formJson: result.ElicitationFormJson,
-                suspendedDataJson: JsonSerializer.Serialize(new AgentToolCallMessageDto
-                {
-                    Name = result.PendingToolName!,
-                    Arguments = result.PendingToolArguments != null
-                        ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                        : new JsonObject()
-                }, _jsonOptions)
-            );
-
-            return new
-            {
-                status = "PendingElicitation",
-                sessionId = session.Id,
-                elicitationForm = result.ElicitationFormJson != null
-                    ? JsonSerializer.Deserialize<JsonObject>(result.ElicitationFormJson)
-                    : null
-            };
-        }
-        else
-        {
-            return new AgentResponseOutputDto
-            {
-                Text = result.FinalText ?? "",
-                SessionId = session.Id
-            };
-        }
+        return await BuildResultResponseAsync(session, result);
     }
 
     public async Task<object> RejectAsync(AgentSessionInputDto input)
     {
         // 1. Phục hồi phiên làm việc từ Database
-        AgentSession session = await _sessionRepository.GetAsync(input.SessionId);
+        IQueryable<AgentSession> queryable = await _sessionRepository.GetQueryableAsync();
+        AgentSession session = await queryable
+            .Include(s => s.Messages)
+            .Include(s => s.Tasks)
+            .FirstOrDefaultAsync(s => s.Id == input.SessionId)
+            ?? throw new UserFriendlyException("Không tìm thấy phiên làm việc.");
 
         // Tìm AgentTask loại Approval đang Pending
-        AgentTask? pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Approval);
+        AgentTask? pendingTask = await _agentManager.FindPendingTaskAsync(session, AgentTaskType.Approval);
 
         if (pendingTask == null || string.IsNullOrEmpty(pendingTask.SuspendedDataJson))
         {
@@ -336,142 +176,105 @@ public class AgentAppService : SupplyCore, IAgentAppService
         }
 
         // Hủy tác vụ Approval cũ
-        await _agentManager.CancelTaskAsync(pendingTask);
+        await _agentManager.CancelTaskAsync(session, pendingTask);
 
-        List<AgentMessageDto> steps = JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson, _jsonOptions)
-                    ?? new List<AgentMessageDto>();
+        // 2. Thêm thông tin từ chối của người dùng vào lịch sử (tự động chạy DLP khi lưu)
+        await _agentManager.AddMessageAsync(session, "user", $"User rejected the execution of tool '{pendingToolCall.Name}'.");
 
-        // 2. Thêm thông tin từ chối của người dùng vào lịch sử
-        steps.Add(new AgentMessageDto
-        {
-            Role = "model",
-            ToolCalls = new List<AgentToolCallMessageDto> { pendingToolCall }
-        });
+        // 3. Nạp lại lịch sử đã tối ưu và tiếp tục chạy Agent
+        List<AgentMessage> optimizedHistory = await _agentManager.GetOptimizedHistoryAsync(session.Id);
+        List<AgentSessionMessageDto> steps = MapToSessionMessageDtos(optimizedHistory);
 
-        steps.Add(new AgentMessageDto
-        {
-            Role = "user",
-            Text = $"User rejected the execution of tool '{pendingToolCall.Name}'."
-        });
+        AgentResultDto result = await _agent.RunAsync(new AgentContext { Steps = steps });
 
-        // 3. Tiếp tục vòng lặp Agent với ngữ cảnh mới
-        AgentContext context = new() { Steps = steps };
-        AgentResultDto result = await _agent.RunAsync(context);
+        await SaveNewStepsAsync(session, result.NewSteps);
 
-        // 4. Lưu lại lịch sử và tạo tác vụ mới (nếu có)
-        await _agentManager.UpdateSessionHistoryAsync(session, JsonSerializer.Serialize(context.Steps, _jsonOptions));
-
-        if (result.RequiresApproval)
-        {
-            await _agentManager.CreateTaskAsync(
-                session.Id,
-                AgentTaskType.Approval,
-                formJson: null,
-                suspendedDataJson: JsonSerializer.Serialize(new AgentToolCallMessageDto
-                {
-                    Name = result.PendingToolName!,
-                    Arguments = result.PendingToolArguments != null
-                        ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                        : new JsonObject()
-                }, _jsonOptions)
-            );
-
-            return new
-            {
-                status = "PendingApproval",
-                sessionId = session.Id,
-                toolName = result.PendingToolName,
-                arguments = result.PendingToolArguments != null
-                    ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)
-                    : null
-            };
-        }
-        else if (result.RequiresElicitation)
-        {
-            await _agentManager.CreateTaskAsync(
-                session.Id,
-                AgentTaskType.Elicitation,
-                formJson: result.ElicitationFormJson,
-                suspendedDataJson: JsonSerializer.Serialize(new AgentToolCallMessageDto
-                {
-                    Name = result.PendingToolName!,
-                    Arguments = result.PendingToolArguments != null
-                        ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                        : new JsonObject()
-                }, _jsonOptions)
-            );
-
-            return new
-            {
-                status = "PendingElicitation",
-                sessionId = session.Id,
-                elicitationForm = result.ElicitationFormJson != null
-                    ? JsonSerializer.Deserialize<JsonObject>(result.ElicitationFormJson)
-                    : null
-            };
-        }
-        else
-        {
-            return new AgentResponseOutputDto
-            {
-                Text = result.FinalText ?? "",
-                SessionId = session.Id
-            };
-        }
+        return await BuildResultResponseAsync(session, result);
     }
 
-    public async Task<AgentHistoryDto> GetHistoryAsync(AgentSessionInputDto input)
+    public async Task<AgentHistoryDto> GetHistoryAsync(AgentSessionPagedInputDto input)
     {
-        var output = new AgentHistoryDto();
+        AgentHistoryDto output = new();
 
         if (input.SessionId == Guid.Empty)
         {
             return output;
         }
 
-        // A. Lấy lịch sử cuộc trò chuyện từ DB
-        AgentSession? session = await _sessionRepository.FindAsync(input.SessionId);
-        if (session != null && !string.IsNullOrEmpty(session.ConversationHistoryJson))
-        {
-            output.Steps = JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson, _jsonOptions)
-                           ?? new List<AgentMessageDto>();
-        }
+        IQueryable<AgentSession> queryable = await _sessionRepository.GetQueryableAsync();
+        AgentSession? session = await queryable
+            .Include(s => s.Messages)
+            .Include(s => s.Tasks)
+            .FirstOrDefaultAsync(s => s.Id == input.SessionId);
 
-        // B. Tìm và tích hợp tác vụ pending (nếu có) để khôi phục trạng thái
-        var pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Approval);
-        if (pendingTask == null)
+        if (session != null)
         {
-            pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Elicitation);
-        }
+            // Tải phân trang tin nhắn từ CSDL để hiển thị lịch sử UI
+            List<AgentMessage> pagedMessages = session.Messages
+                .OrderByDescending(m => m.CreationTime)
+                .Skip(input.SkipCount)
+                .Take(input.MaxResultCount)
+                .Reverse()
+                .ToList();
 
-        if (pendingTask != null)
-        {
-            var suspendedToolCall = !string.IsNullOrEmpty(pendingTask.SuspendedDataJson)
-                ? JsonSerializer.Deserialize<AgentToolCallMessageDto>(pendingTask.SuspendedDataJson, _jsonOptions)
-                : null;
+            output.Steps = MapToSessionMessageDtos(pagedMessages);
 
-            output.PendingTask = new
+            AgentTask? pendingTask = session.Tasks.FirstOrDefault(t => t.Status == AgentTaskStatus.Pending);
+            if (pendingTask != null)
             {
-                status = pendingTask.TaskType == AgentTaskType.Approval ? "PendingApproval" : "PendingElicitation",
-                sessionId = pendingTask.SessionId,
-                toolName = suspendedToolCall?.Name,
-                arguments = suspendedToolCall?.Arguments,
-                elicitationForm = pendingTask.FormJson != null
-                    ? JsonSerializer.Deserialize<JsonObject>(pendingTask.FormJson)
-                    : null
-            };
+                AgentToolCallMessageDto? suspendedToolCall = !string.IsNullOrEmpty(pendingTask.SuspendedDataJson)
+                    ? JsonSerializer.Deserialize<AgentToolCallMessageDto>(pendingTask.SuspendedDataJson, _jsonOptions)
+                    : null;
+
+                output.PendingTask = new
+                {
+                    status = pendingTask.TaskType == AgentTaskType.Approval ? "PendingApproval" : "PendingElicitation",
+                    sessionId = pendingTask.SessionId,
+                    toolName = suspendedToolCall?.Name,
+                    arguments = suspendedToolCall?.Arguments,
+                    elicitationForm = pendingTask.FormJson != null
+                        ? JsonSerializer.Deserialize<JsonObject>(pendingTask.FormJson)
+                        : null
+                };
+            }
         }
 
         return output;
     }
 
+    public async Task<object> ResetSessionAsync(AgentSessionInputDto input)
+    {
+        IQueryable<AgentSession> queryable = await _sessionRepository.GetQueryableAsync();
+        AgentSession? session = await queryable
+            .FirstOrDefaultAsync(s => s.Id == input.SessionId);
+
+        if (session == null)
+        {
+            throw new UserFriendlyException("Không tìm thấy phiên hội thoại.");
+        }
+
+        // Xóa sạch lịch sử qua AgentManager
+        await _agentManager.ClearSessionHistoryAsync(session);
+
+        return new
+        {
+            status = "Success",
+            message = "Đã dọn dẹp toàn bộ cuộc hội thoại cũ."
+        };
+    }
+
     public async Task<object> SubmitElicitationAsync(AgentElicitationInputDto input)
     {
         // 1. Phục hồi phiên làm việc từ Database
-        AgentSession session = await _sessionRepository.GetAsync(input.SessionId);
+        IQueryable<AgentSession> queryable = await _sessionRepository.GetQueryableAsync();
+        AgentSession session = await queryable
+            .Include(s => s.Messages)
+            .Include(s => s.Tasks)
+            .FirstOrDefaultAsync(s => s.Id == input.SessionId)
+            ?? throw new UserFriendlyException("Không tìm thấy phiên làm việc.");
 
         // Tìm tác vụ Elicitation đang Pending
-        AgentTask? pendingTask = await _agentManager.FindPendingTaskAsync(input.SessionId, AgentTaskType.Elicitation);
+        AgentTask? pendingTask = await _agentManager.FindPendingTaskAsync(session, AgentTaskType.Elicitation);
 
         if (pendingTask == null || string.IsNullOrEmpty(pendingTask.SuspendedDataJson))
         {
@@ -484,9 +287,6 @@ public class AgentAppService : SupplyCore, IAgentAppService
             throw new UserFriendlyException("Thông tin tác vụ bị treo không hợp lệ.");
         }
 
-        List<AgentMessageDto> steps = JsonSerializer.Deserialize<List<AgentMessageDto>>(session.ConversationHistoryJson, _jsonOptions)
-                    ?? new List<AgentMessageDto>();
-
         // 2. Trộn dữ liệu người dùng nộp từ Form vào đối số gọi Tool
         JsonObject arguments = suspendedToolCall.Arguments ?? new JsonObject();
         foreach (KeyValuePair<string, string> item in input.FormValues)
@@ -495,119 +295,95 @@ public class AgentAppService : SupplyCore, IAgentAppService
         }
 
         // Hoàn thành tác vụ Elicitation
-        await _agentManager.CompleteTaskAsync(pendingTask);
+        await _agentManager.CompleteTaskAsync(session, pendingTask);
 
-        // 3. Gọi Tool trực tiếp trên MCP Server với đối số đầy đủ
+        // 3. Gọi Tool trực tiếp qua CallToolAsync để tự chuẩn hóa và bắt lỗi
         string toolResult = await _mcpClientService.CallToolAsync(suspendedToolCall.Name, arguments);
 
-        // Phân biệt Protocol Error vs Tool Execution Error và trích xuất nội dung
-        string processedResult = toolResult;
-        try
-        {
-            JsonNode? resultNode = JsonNode.Parse(toolResult);
-            JsonNode? resultObj = resultNode?["result"];
-            JsonNode? errorObj = resultNode?["error"];
+        // 4. Lưu model tool call và kết quả vào lịch sử (tự động chạy DLP khi ghi)
+        suspendedToolCall.Arguments = arguments;
+        await _agentManager.AddMessageAsync(
+            session,
+            "model",
+            text: null,
+            toolCallsJson: JsonSerializer.Serialize(new List<AgentToolCallMessageDto> { suspendedToolCall }, _jsonOptions)
+        );
 
-            if (errorObj != null)
+        AgentToolResponseMessageDto toolResponse = new() { Name = suspendedToolCall.Name, Content = toolResult };
+        await _agentManager.AddMessageAsync(
+            session,
+            "user",
+            text: null,
+            toolCallsJson: null,
+            toolResponsesJson: JsonSerializer.Serialize(new List<AgentToolResponseMessageDto> { toolResponse }, _jsonOptions)
+        );
+
+        // 5. Tiếp tục chạy Agent với ngữ cảnh mới đã được tối ưu hóa
+        List<AgentMessage> optimizedHistory = await _agentManager.GetOptimizedHistoryAsync(session.Id);
+        List<AgentSessionMessageDto> steps = MapToSessionMessageDtos(optimizedHistory);
+
+        AgentResultDto result = await _agent.RunAsync(new AgentContext { Steps = steps });
+
+        await SaveNewStepsAsync(session, result.NewSteps);
+
+        return await BuildResultResponseAsync(session, result);
+    }
+
+    private List<AgentSessionMessageDto> MapToSessionMessageDtos(ICollection<AgentMessage> messages)
+    {
+        return messages
+            .OrderBy(m => m.CreationTime)
+            .Select(m => new AgentSessionMessageDto
             {
-                processedResult = $"[PROTOCOL ERROR] {errorObj["message"]?.ToString() ?? "Unknown protocol error"}";
-            }
-            else if (resultObj != null)
-            {
-                bool isToolError = resultObj["isError"]?.GetValue<bool>() ?? false;
-                JsonArray? contentArray = resultObj["content"]?.AsArray();
+                Role = m.Role,
+                Text = m.Text,
+                ToolCalls = !string.IsNullOrEmpty(m.ToolCallsJson)
+                    ? JsonSerializer.Deserialize<List<AgentToolCallMessageDto>>(m.ToolCallsJson, _jsonOptions)
+                    : null,
+                ToolResponses = !string.IsNullOrEmpty(m.ToolResponsesJson)
+                    ? JsonSerializer.Deserialize<List<AgentToolResponseMessageDto>>(m.ToolResponsesJson, _jsonOptions)
+                    : null,
+                CreationTime = m.CreationTime
+            })
+            .ToList();
+    }
 
-                if (contentArray != null && contentArray.Count > 0)
-                {
-                    IEnumerable<string?> texts = contentArray
-                        .Select(c => c?["text"]?.ToString())
-                        .Where(t => !string.IsNullOrEmpty(t));
-                    processedResult = string.Join("\n", texts);
-                }
-                else
-                {
-                    processedResult = resultObj.ToString();
-                }
-
-                if (isToolError)
-                {
-                    processedResult = $"[TOOL ERROR] {processedResult}";
-                }
-            }
+    private async Task SaveNewStepsAsync(AgentSession session, List<AgentSessionMessageDto> newSteps)
+    {
+        if (newSteps == null) return;
+        foreach (AgentSessionMessageDto step in newSteps)
+        {
+            await _agentManager.AddMessageAsync(
+                session,
+                step.Role,
+                step.Text,
+                toolCallsJson: step.ToolCalls != null && step.ToolCalls.Any()
+                    ? JsonSerializer.Serialize(step.ToolCalls, _jsonOptions)
+                    : null,
+                toolResponsesJson: step.ToolResponses != null && step.ToolResponses.Any()
+                    ? JsonSerializer.Serialize(step.ToolResponses, _jsonOptions)
+                    : null
+            );
         }
-        catch
-        {
-            processedResult = $"[RAW RESULT] {toolResult}";
-        }
+    }
 
-        const int MaxToolResultLength = 50 * 1024;
-        if (processedResult.Length > MaxToolResultLength)
-        {
-            processedResult = processedResult[..MaxToolResultLength] + "\n[TRUNCATED: Result exceeded 50KB limit]";
-        }
-
-        // 4. Khử nhạy cảm thông tin đối số trước khi lưu vào lịch sử DB để bảo vệ an toàn thông tin (DLP)
-        try
-        {
-            var keys = arguments.Select(x => x.Key).ToList();
-            foreach (string key in keys)
-            {
-                var valNode = arguments[key];
-                if (valNode != null)
-                {
-                    if (valNode is JsonValue jsonValue && jsonValue.TryGetValue<string>(out string? originalValue) && originalValue != null)
-                    {
-                        string redactedValue = await RedactSensitiveTextAsync(originalValue);
-                        arguments[key] = JsonValue.Create(redactedValue);
-                    }
-                }
-            }
-        }
-        catch
-        {
-            // Bỏ qua lỗi làm sạch
-        }
-
-        steps.Add(new AgentMessageDto
-        {
-            Role = "model",
-            ToolCalls = new List<AgentToolCallMessageDto>
-            {
-                new() { Name = suspendedToolCall.Name, Arguments = arguments }
-            }
-        });
-
-        string redactedProcessedResult = await RedactSensitiveTextAsync(processedResult);
-
-        steps.Add(new AgentMessageDto
-        {
-            Role = "user",
-            ToolResponses = new List<AgentToolResponseMessageDto>
-            {
-                new() { Name = suspendedToolCall.Name, Content = redactedProcessedResult }
-            }
-        });
-
-        // 5. Tiếp tục chạy Agent với ngữ cảnh mới
-        AgentContext context = new() { Steps = steps };
-        AgentResultDto result = await _agent.RunAsync(context);
-
-        // 6. Cập nhật lại session theo kết quả chạy tiếp theo của Agent
-        await _agentManager.UpdateSessionHistoryAsync(session, JsonSerializer.Serialize(context.Steps, _jsonOptions));
-
+    private async Task<object> BuildResultResponseAsync(AgentSession session, AgentResultDto result)
+    {
         if (result.RequiresApproval)
         {
+            AgentToolCallMessageDto nextToolCall = new()
+            {
+                Name = result.PendingToolName!,
+                Arguments = result.PendingToolArguments != null
+                    ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
+                    : new JsonObject()
+            };
+
             await _agentManager.CreateTaskAsync(
-                session.Id,
+                session,
                 AgentTaskType.Approval,
                 formJson: null,
-                suspendedDataJson: JsonSerializer.Serialize(new AgentToolCallMessageDto
-                {
-                    Name = result.PendingToolName!,
-                    Arguments = result.PendingToolArguments != null
-                        ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                        : new JsonObject()
-                }, _jsonOptions)
+                suspendedDataJson: JsonSerializer.Serialize(nextToolCall, _jsonOptions)
             );
 
             return new
@@ -622,17 +398,19 @@ public class AgentAppService : SupplyCore, IAgentAppService
         }
         else if (result.RequiresElicitation)
         {
+            AgentToolCallMessageDto nextToolCall = new()
+            {
+                Name = result.PendingToolName!,
+                Arguments = result.PendingToolArguments != null
+                    ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
+                    : new JsonObject()
+            };
+
             await _agentManager.CreateTaskAsync(
-                session.Id,
+                session,
                 AgentTaskType.Elicitation,
                 formJson: result.ElicitationFormJson,
-                suspendedDataJson: JsonSerializer.Serialize(new AgentToolCallMessageDto
-                {
-                    Name = result.PendingToolName!,
-                    Arguments = result.PendingToolArguments != null
-                        ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                        : new JsonObject()
-                }, _jsonOptions)
+                suspendedDataJson: JsonSerializer.Serialize(nextToolCall, _jsonOptions)
             );
 
             return new
@@ -653,49 +431,4 @@ public class AgentAppService : SupplyCore, IAgentAppService
             };
         }
     }
-
-    private async Task<string> RedactSensitiveTextAsync(string text)
-    {
-        if (string.IsNullOrEmpty(text))
-        {
-            return text;
-        }
-
-        try
-        {
-            string? dlpRulesJson = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.DlpRules);
-            if (string.IsNullOrEmpty(dlpRulesJson))
-            {
-                return text;
-            }
-
-            List<DlpRule>? rules = JsonSerializer.Deserialize<List<DlpRule>>(dlpRulesJson, _jsonOptions);
-            if (rules == null || !rules.Any())
-            {
-                return text;
-            }
-
-            foreach (DlpRule rule in rules)
-            {
-                if (!string.IsNullOrEmpty(rule.Pattern) && !string.IsNullOrEmpty(rule.Replacement))
-                {
-                    text = Regex.Replace(text, rule.Pattern, rule.Replacement, RegexOptions.IgnoreCase | RegexOptions.Multiline);
-                }
-            }
-        }
-        catch
-        {
-            // Bỏ qua lỗi trong quá trình redact
-        }
-
-        return text;
-    }
-
-}
-
-public class DlpRule
-{
-    public string Name { get; set; } = string.Empty;
-    public string Pattern { get; set; } = string.Empty;
-    public string Replacement { get; set; } = string.Empty;
 }

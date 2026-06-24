@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Agent;
+using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Catalog.ActiveIngredients;
 using SupplyCoreERP.Catalog.BaseUnits;
 using SupplyCoreERP.Catalog.Categories;
@@ -147,6 +148,7 @@ public class SupplyCoreERPDbContext :
     // AI Chat MCP Sessions
     public DbSet<AgentSession> AgentSessions { get; set; }
     public DbSet<AgentTask> AgentTasks { get; set; }
+    public DbSet<AgentMessage> AgentMessages { get; set; }
 
     #endregion
 
@@ -177,7 +179,26 @@ public class SupplyCoreERPDbContext :
         {
             b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "AgentSessions", SupplyCoreERPConsts.DbSchema);
             b.ConfigureByConvention();
-            b.Property(x => x.ConversationHistoryJson).IsRequired();
+
+            b.HasMany(x => x.Messages)
+             .WithOne()
+             .HasForeignKey(x => x.SessionId)
+             .OnDelete(DeleteBehavior.Cascade);
+
+            b.HasMany(x => x.Tasks)
+             .WithOne()
+             .HasForeignKey(x => x.SessionId)
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        builder.Entity<AgentMessage>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "AgentMessages", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+            b.Property(x => x.SessionId).IsRequired();
+            b.Property(x => x.Role).IsRequired().HasMaxLength(50);
+            b.Property(x => x.ToolCallsJson).HasColumnType("jsonb");
+            b.Property(x => x.ToolResponsesJson).HasColumnType("jsonb");
         });
 
         builder.Entity<AgentTask>(b =>
@@ -282,6 +303,7 @@ public class SupplyCoreERPDbContext :
 
             // Cascade: Xóa Product -> Xóa luôn ProductUnits
             b.HasMany(x => x.Units).WithOne(x => x.Product).HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Cascade);
+            b.Property(x => x.BaseUnitVolume).HasColumnType("numeric(18,2)");
         });
 
         // Product Unit
@@ -291,6 +313,7 @@ public class SupplyCoreERPDbContext :
             b.ConfigureByConvention();
             // Link tới BaseUnit (Danh mục) -> RESTRICT
             b.HasOne(x => x.Unit).WithMany().HasForeignKey(x => x.UnitId).OnDelete(DeleteBehavior.Restrict);
+            b.Property(x => x.Volume).HasColumnType("numeric(18,2)");
         });
 
         // Medicine
@@ -323,6 +346,8 @@ public class SupplyCoreERPDbContext :
         {
             b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "MedicineIngredients", SupplyCoreERPConsts.DbSchema);
             b.ConfigureByConvention();
+
+            b.Property(x => x.Strength).HasMaxLength(50).IsRequired(false);
 
             // Link ActiveIngredient (Danh mục) -> RESTRICT
             b.HasOne(x => x.ActiveIngredient).WithMany().HasForeignKey(x => x.ActiveIngredientId).OnDelete(DeleteBehavior.Restrict);
@@ -531,6 +556,8 @@ public class SupplyCoreERPDbContext :
 
             // Quan hệ với Warehouse: Xóa Kho thì xóa Bin
             b.HasOne<Warehouse>().WithMany().HasForeignKey(x => x.WarehouseId).OnDelete(DeleteBehavior.Cascade);
+            b.Property(x => x.Height).IsRequired().HasDefaultValue(0);
+            b.Property(x => x.MaxVolume).HasColumnType("numeric(18,2)");
         });
 
         // InventoryTicket
@@ -593,10 +620,30 @@ public class SupplyCoreERPDbContext :
             b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.ProductBatch).WithMany().HasForeignKey(x => x.ProductBatchId).OnDelete(DeleteBehavior.Restrict);
+
+            // Index Unique: Kho - Sản phẩm - Lô
+            b.HasIndex(x => new { x.WarehouseId, x.ProductId, x.ProductBatchId }).IsUnique();
+
+            b.HasMany(x => x.BinBalances)
+             .WithOne()
+             .HasForeignKey(x => x.InventoryBalanceId)
+             .IsRequired()
+             .OnDelete(DeleteBehavior.Cascade);
+        });
+
+        // InventoryBinBalance
+        builder.Entity<InventoryBinBalance>(b =>
+        {
+            b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "InventoryBinBalances", SupplyCoreERPConsts.DbSchema);
+            b.ConfigureByConvention();
+
+            b.Property(x => x.Quantity).HasColumnType("decimal(18, 2)");
+            b.Property(x => x.LockedQuantity).HasColumnType("decimal(18, 2)");
+
             b.HasOne(x => x.Bin).WithMany().HasForeignKey(x => x.BinId).OnDelete(DeleteBehavior.Restrict);
 
-            // Index Unique: Kho - Bin - Sản phẩm - Lô
-            b.HasIndex(x => new { x.WarehouseId, x.BinId, x.ProductId, x.ProductBatchId }).IsUnique();
+            // Index Unique: BalanceId - BinId
+            b.HasIndex(x => new { x.InventoryBalanceId, x.BinId }).IsUnique();
         });
 
         // InventoryTransaction
@@ -608,6 +655,9 @@ public class SupplyCoreERPDbContext :
             b.Property(x => x.QuantityChanged).HasColumnType("decimal(18, 2)");
             b.Property(x => x.BalanceAfterTransaction).HasColumnType("decimal(18, 2)");
             b.Property(x => x.Note).HasMaxLength(1000);
+            b.Property(x => x.PartnerName).HasMaxLength(250);
+            b.Property(x => x.SourceDocumentNumber).HasMaxLength(50);
+            b.Property(x => x.ReferenceDocumentNumber).HasMaxLength(50);
 
             b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Restrict);
@@ -615,6 +665,7 @@ public class SupplyCoreERPDbContext :
             b.HasOne(x => x.Bin).WithMany().HasForeignKey(x => x.BinId).OnDelete(DeleteBehavior.Restrict);
 
             b.HasIndex(x => new { x.WarehouseId, x.ProductId, x.CreationTime });
+            b.HasIndex(x => x.CorrelationId);
         });
         // InventoryReservation
         builder.Entity<InventoryReservation>(b =>
@@ -624,6 +675,8 @@ public class SupplyCoreERPDbContext :
 
             b.Property(x => x.ReferenceDocumentNumber).HasMaxLength(50);
             b.Property(x => x.ReservedQuantity).HasColumnType("decimal(18, 4)");
+            b.Property(x => x.PartnerName).HasMaxLength(250);
+            b.Property(x => x.SourceDocumentNumber).HasMaxLength(50);
 
             b.HasIndex(x => new { x.ReferenceDocumentId, x.Status });
         });
@@ -748,6 +801,7 @@ public class SupplyCoreERPDbContext :
             b.ConfigureByConvention();
 
             b.Property(x => x.Code).IsRequired().HasMaxLength(50);
+            b.Property(x => x.ReturnType).HasDefaultValue(PurchaseReturnType.Commercial);
             b.Property(x => x.Note).HasMaxLength(1000);
 
             b.Property(x => x.SubTotal).HasPrecision(18, 4);
@@ -793,7 +847,6 @@ public class SupplyCoreERPDbContext :
             b.Property(x => x.TaxAmount).HasPrecision(18, 4);
             b.Property(x => x.TotalAmount).HasPrecision(18, 4);
 
-            b.HasOne(x => x.Supplier).WithMany().HasForeignKey(x => x.SupplierId).IsRequired().OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).IsRequired().OnDelete(DeleteBehavior.Restrict);
 
             b.HasMany(x => x.Lines)
@@ -809,6 +862,7 @@ public class SupplyCoreERPDbContext :
             b.ToTable(SupplyCoreERPConsts.DbTablePrefix + "PurchaseReturnRequestLines", SupplyCoreERPConsts.DbSchema);
             b.ConfigureByConvention();
 
+            b.Property(x => x.ReturnType).HasDefaultValue(PurchaseReturnType.Commercial);
             b.Property(x => x.Quantity).HasPrecision(18, 4);
             b.Property(x => x.BaseQuantity).HasPrecision(18, 4);
             b.Property(x => x.OriginalUnitPrice).HasPrecision(18, 4);

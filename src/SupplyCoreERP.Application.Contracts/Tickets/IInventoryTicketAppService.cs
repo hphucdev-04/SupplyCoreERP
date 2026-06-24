@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SupplyCoreERP.PurchaseOrders.Dtos;
+using SupplyCoreERP.PurchaseReturns.Dtos;
+using SupplyCoreERP.SalesRecalls.Dtos;
 using SupplyCoreERP.SalesOrders.Dtos;
 using SupplyCoreERP.Tickets.Dtos;
 using Volo.Abp.Application.Dtos;
@@ -23,6 +25,12 @@ public interface IInventoryTicketAppService : IApplicationService
 
     Task<List<SalesOrderLineDto>> GetLinesFromSalesOrderAsync(Guid soId);
     Task AddLineFromSalesOrderAsync(Guid id, Guid soLineId, decimal quantity);
+
+    Task<List<PurchaseReturnLineDto>> GetLinesFromPurchaseReturnAsync(Guid returnId);
+    Task AddLineFromPurchaseReturnAsync(Guid id, Guid prLineId, decimal quantity);
+
+    Task<List<SalesRecallLineDto>> GetLinesFromSalesRecallAsync(Guid recallId);
+    Task AddLineFromSalesRecallAsync(Guid id, Guid recallLineId, decimal quantity);
 
     Task DeleteLineAsync(Guid id);
 

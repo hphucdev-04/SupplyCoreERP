@@ -27,13 +27,13 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
         IQueryable<InventoryBalance> query = await _balanceRepo.GetQueryableAsync();
         query = query
             .Include(x => x.Warehouse)
-            .Include(x => x.Bin)
+            .Include(x => x.BinBalances).ThenInclude(bb => bb.Bin)
             .Include(x => x.Product).ThenInclude(p => p.BaseUnit)
             .Include(x => x.ProductBatch);
 
         query = query
             .WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
-            .WhereIf(input.BinId.HasValue, x => x.BinId == input.BinId)
+            .WhereIf(input.BinId.HasValue, x => x.BinBalances.Any(bb => bb.BinId == input.BinId))
             .WhereIf(input.ProductId.HasValue, x => x.ProductId == input.ProductId)
             .WhereIf(input.ProductBatchId.HasValue, x => x.ProductBatchId == input.ProductBatchId)
             .WhereIf(!string.IsNullOrWhiteSpace(input.BatchNumber), x => x.ProductBatch.BatchNumber.Contains(input.BatchNumber))
@@ -47,12 +47,30 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
 
         int totalCount = await AsyncExecuter.CountAsync(query);
         List<InventoryBalance> items = await AsyncExecuter.ToListAsync(
-            query.OrderBy(string.IsNullOrWhiteSpace(input.Sorting) ? "Warehouse.Name, Bin.Code" : input.Sorting)
+            query.OrderBy(string.IsNullOrWhiteSpace(input.Sorting) || input.Sorting.Contains("Bin.Code") ? "Warehouse.Name, Product.Name" : input.Sorting)
                  .Skip(input.SkipCount)
                  .Take(input.MaxResultCount)
         );
 
-        return new PagedResultDto<InventoryBalanceDto>(totalCount, ObjectMapper.Map<List<InventoryBalance>, List<InventoryBalanceDto>>(items));
+        var dtos = ObjectMapper.Map<List<InventoryBalance>, List<InventoryBalanceDto>>(items);
+        if (input.BinId.HasValue)
+        {
+            foreach (var dto in dtos)
+            {
+                var item = items.First(x => x.Id == dto.Id);
+                var binBalance = item.BinBalances.FirstOrDefault(bb => bb.BinId == input.BinId.Value);
+                if (binBalance != null)
+                {
+                    dto.BinId = binBalance.BinId;
+                    dto.BinCode = binBalance.Bin?.Code;
+                    dto.Quantity = binBalance.Quantity;
+                    dto.LockedQuantity = binBalance.LockedQuantity;
+                    dto.AvailableQuantity = binBalance.AvailableQuantity;
+                }
+            }
+        }
+
+        return new PagedResultDto<InventoryBalanceDto>(totalCount, dtos);
     }
 
     public async Task<InventoryBalanceDetailDto> GetAsync(Guid id)
@@ -62,7 +80,7 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
         query = query
             .Include(x => x.Warehouse).ThenInclude(w => w.City)
             .Include(x => x.Warehouse).ThenInclude(w => w.Area)
-            .Include(x => x.Bin)
+            .Include(x => x.BinBalances).ThenInclude(bb => bb.Bin)
             .Include(x => x.Product).ThenInclude(p => p.BaseUnit)
             .Include(x => x.ProductBatch).ThenInclude(b => b.Supplier);
 
@@ -72,7 +90,22 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
             throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(InventoryBalance), id);
         }
 
-        return ObjectMapper.Map<InventoryBalance, InventoryBalanceDetailDto>(entity);
+        IQueryable<InventoryReservation> resQuery = await _reservationRepo.GetQueryableAsync();
+        resQuery = resQuery
+            .Include(x => x.Warehouse)
+            .Include(x => x.Bin)
+            .Where(x =>
+                x.WarehouseId == entity.WarehouseId &&
+                x.ProductId == entity.ProductId &&
+                x.ProductBatchId == entity.ProductBatchId &&
+                x.Status == Enums.Balances.ReservationStatus.Active);
+
+        var reservations = await AsyncExecuter.ToListAsync(resQuery);
+
+        var dto = ObjectMapper.Map<InventoryBalance, InventoryBalanceDetailDto>(entity);
+        dto.Reservations = ObjectMapper.Map<List<InventoryReservation>, List<InventoryReservationDto>>(reservations);
+        
+        return dto;
     }
 
     public async Task<PagedResultDto<InventoryReservationDto>> GetReservationListAsync(GetInventoryReservationListDto input)

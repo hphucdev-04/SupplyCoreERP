@@ -1,0 +1,1863 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Properties/AssemblyInfo.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 2,
+      "nonEmptyLines": 2,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/SupplyCoreERP.EntityFrameworkCore.abppkg",
+      "language": "abppkg",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/SupplyCoreERP.EntityFrameworkCore.abppkg.analyze.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 220,
+      "nonEmptyLines": 220,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "hash",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "contents",
+          "level": 1,
+          "line": 4
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/SupplyCoreERP.EntityFrameworkCore.csproj",
+      "language": "csproj",
+      "fileCategory": "config",
+      "totalLines": 42,
+      "nonEmptyLines": 34,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.abppkg",
+      "language": "abppkg",
+      "fileCategory": "code",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.abppkg.analyze.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 118,
+      "nonEmptyLines": 118,
+      "sections": [
+        {
+          "heading": "name",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "hash",
+          "level": 1,
+          "line": 3
+        },
+        {
+          "heading": "contents",
+          "level": 1,
+          "line": 4
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 3
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.csproj",
+      "language": "csproj",
+      "fileCategory": "config",
+      "totalLines": 31,
+      "nonEmptyLines": 24,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERPHttpApiClientModule.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 32,
+      "functions": [
+        {
+          "name": "ConfigureServices",
+          "startLine": 24,
+          "endLine": 35,
+          "params": [
+            "context"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPHttpApiClientModule",
+          "startLine": 12,
+          "endLine": 36,
+          "methods": [
+            "ConfigureServices"
+          ],
+          "properties": [
+            "RemoteServiceName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RemoteServiceName",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "ConfigureServices",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPHttpApiClientModule",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ConfigureServices",
+          "callee": "context.Services.AddHttpClientProxies",
+          "lineNumber": 26
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "Configure<AbpVirtualFileSystemOptions>",
+          "lineNumber": 31
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.FileSets.AddEmbedded<SupplyCoreERPHttpApiClientModule>",
+          "lineNumber": 33
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/abp.resourcemapping.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 8,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/HealthChecks/HealthChecksBuilderExtensions.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 77,
+      "nonEmptyLines": 64,
+      "functions": [
+        {
+          "name": "AddSupplyCoreERPHealthChecks",
+          "startLine": 13,
+          "endLine": 42,
+          "params": [
+            "services"
+          ]
+        },
+        {
+          "name": "ConfigureHealthCheckEndpoint",
+          "startLine": 44,
+          "endLine": 62,
+          "params": [
+            "services",
+            "path"
+          ]
+        },
+        {
+          "name": "MapHealthChecksUiEndpoints",
+          "startLine": 64,
+          "endLine": 75,
+          "params": [
+            "services",
+            "setupOption"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "HealthChecksBuilderExtensions",
+          "startLine": 11,
+          "endLine": 76,
+          "methods": [
+            "AddSupplyCoreERPHealthChecks",
+            "ConfigureHealthCheckEndpoint",
+            "MapHealthChecksUiEndpoints"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AddSupplyCoreERPHealthChecks",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "HealthChecksBuilderExtensions",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "services.AddHealthChecks",
+          "lineNumber": 16
+        },
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "healthChecksBuilder.AddCheck<SupplyCoreERPDatabaseCheck>",
+          "lineNumber": 17
+        },
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "services.ConfigureHealthCheckEndpoint",
+          "lineNumber": 19
+        },
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "services.GetConfiguration",
+          "lineNumber": 21
+        },
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "string.IsNullOrEmpty",
+          "lineNumber": 24
+        },
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "services.AddHealthChecksUI",
+          "lineNumber": 29
+        },
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "settings.AddHealthCheckEndpoint",
+          "lineNumber": 31
+        },
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "healthChecksUiBuilder.AddInMemoryStorage",
+          "lineNumber": 35
+        },
+        {
+          "caller": "AddSupplyCoreERPHealthChecks",
+          "callee": "services.MapHealthChecksUiEndpoints",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ConfigureHealthCheckEndpoint",
+          "callee": "services.Configure<AbpEndpointRouterOptions>",
+          "lineNumber": 46
+        },
+        {
+          "caller": "ConfigureHealthCheckEndpoint",
+          "callee": "options.EndpointConfigureActions.Add",
+          "lineNumber": 48
+        },
+        {
+          "caller": "ConfigureHealthCheckEndpoint",
+          "callee": "endpointContext.Endpoints.MapHealthChecks",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ConfigureHealthCheckEndpoint",
+          "callee": "new PathString",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ConfigureHealthCheckEndpoint",
+          "callee": "path.EnsureStartsWith",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ConfigureHealthCheckEndpoint",
+          "callee": "new HealthCheckOptions",
+          "lineNumber": 52
+        },
+        {
+          "caller": "MapHealthChecksUiEndpoints",
+          "callee": "services.Configure<AbpEndpointRouterOptions>",
+          "lineNumber": 66
+        },
+        {
+          "caller": "MapHealthChecksUiEndpoints",
+          "callee": "routerOptions.EndpointConfigureActions.Add",
+          "lineNumber": 68
+        },
+        {
+          "caller": "MapHealthChecksUiEndpoints",
+          "callee": "endpointContext.Endpoints.MapHealthChecksUI",
+          "lineNumber": 70
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/HealthChecks/SupplyCoreERPDatabaseCheck.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 27,
+      "functions": [
+        {
+          "name": "SupplyCoreERPDatabaseCheck",
+          "startLine": 14,
+          "endLine": 17,
+          "params": [
+            "identityRoleRepository"
+          ]
+        },
+        {
+          "name": "CheckHealthAsync",
+          "startLine": 19,
+          "endLine": 31,
+          "params": [
+            "context",
+            "cancellationToken"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPDatabaseCheck",
+          "startLine": 10,
+          "endLine": 32,
+          "methods": [
+            "SupplyCoreERPDatabaseCheck",
+            "CheckHealthAsync"
+          ],
+          "properties": [
+            "IdentityRoleRepository"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SupplyCoreERPDatabaseCheck",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "CheckHealthAsync",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPDatabaseCheck",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "CheckHealthAsync",
+          "callee": "IdentityRoleRepository.GetListAsync",
+          "lineNumber": 23
+        },
+        {
+          "caller": "CheckHealthAsync",
+          "callee": "nameof",
+          "lineNumber": 23
+        },
+        {
+          "caller": "CheckHealthAsync",
+          "callee": "HealthCheckResult.Healthy",
+          "lineNumber": 25
+        },
+        {
+          "caller": "CheckHealthAsync",
+          "callee": "HealthCheckResult.Unhealthy",
+          "lineNumber": 29
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/_ViewImports.cshtml",
+      "language": "cshtml",
+      "fileCategory": "code",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Account/Login.cshtml",
+      "language": "cshtml",
+      "fileCategory": "code",
+      "totalLines": 255,
+      "nonEmptyLines": 222,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Account/Login.cshtml.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 34,
+      "nonEmptyLines": 28,
+      "functions": [
+        {
+          "name": "LoginModel",
+          "startLine": 15,
+          "endLine": 25,
+          "params": [
+            "schemeProvider",
+            "accountOptions",
+            "identityOptions",
+            "claimsPrincipalContributorCache",
+            "webHostEnvironment"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "LoginModel",
+          "startLine": 11,
+          "endLine": 26,
+          "methods": [
+            "LoginModel"
+          ],
+          "properties": [
+            "AvailableTenants"
+          ]
+        },
+        {
+          "name": "TenantDto",
+          "startLine": 28,
+          "endLine": 32,
+          "methods": [],
+          "properties": [
+            "Id",
+            "Name"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AvailableTenants",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "LoginModel",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "LoginModel",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Id",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "TenantDto",
+          "line": 28,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "LoginModel",
+          "callee": "new List<TenantDto>",
+          "lineNumber": 24
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 1,
+        "classCount": 2
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Index.cshtml",
+      "language": "cshtml",
+      "fileCategory": "code",
+      "totalLines": 127,
+      "nonEmptyLines": 113,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Index.cshtml.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 36,
+      "nonEmptyLines": 26,
+      "functions": [
+        {
+          "name": "IndexModel",
+          "startLine": 22,
+          "endLine": 26,
+          "params": [
+            "openIdApplicationmRepository",
+            "languageProvider"
+          ]
+        },
+        {
+          "name": "OnGetAsync",
+          "startLine": 28,
+          "endLine": 34,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "IndexModel",
+          "startLine": 10,
+          "endLine": 35,
+          "methods": [
+            "IndexModel",
+            "OnGetAsync"
+          ],
+          "properties": [
+            "Applications",
+            "Languages",
+            "CurrentLanguage",
+            "OpenIdApplicationRepository",
+            "LanguageProvider"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Applications",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "Languages",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "CurrentLanguage",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "IndexModel",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "OnGetAsync",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "IndexModel",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "OnGetAsync",
+          "callee": "OpenIdApplicationRepository.GetListAsync",
+          "lineNumber": 30
+        },
+        {
+          "caller": "OnGetAsync",
+          "callee": "LanguageProvider.GetLanguagesAsync",
+          "lineNumber": 32
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Shared/_AccountLayout.cshtml",
+      "language": "cshtml",
+      "fileCategory": "code",
+      "totalLines": 56,
+      "nonEmptyLines": 45,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Program.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 64,
+      "nonEmptyLines": 59,
+      "functions": [
+        {
+          "name": "Main",
+          "startLine": 13,
+          "endLine": 62,
+          "params": [
+            "args"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "Program",
+          "startLine": 11,
+          "endLine": 63,
+          "methods": [
+            "Main"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Main",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Program",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Main",
+          "callee": "new LoggerConfiguration()\r\n            .WriteTo.Async(c => c.File(\"Logs/logs.txt\"))\r\n            .WriteTo.Async(c => c.Console())\r\n            .CreateBootstrapLogger",
+          "lineNumber": 15
+        },
+        {
+          "caller": "Main",
+          "callee": "new LoggerConfiguration()\r\n            .WriteTo.Async(c => c.File(\"Logs/logs.txt\"))\r\n            .WriteTo.Async",
+          "lineNumber": 15
+        },
+        {
+          "caller": "Main",
+          "callee": "new LoggerConfiguration()\r\n            .WriteTo.Async",
+          "lineNumber": 15
+        },
+        {
+          "caller": "Main",
+          "callee": "new LoggerConfiguration",
+          "lineNumber": 15
+        },
+        {
+          "caller": "Main",
+          "callee": "c.File",
+          "lineNumber": 16
+        },
+        {
+          "caller": "Main",
+          "callee": "c.Console",
+          "lineNumber": 17
+        },
+        {
+          "caller": "Main",
+          "callee": "Log.Information",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Main",
+          "callee": "WebApplication.CreateBuilder",
+          "lineNumber": 23
+        },
+        {
+          "caller": "Main",
+          "callee": "builder.Host\r\n                .AddAppSettingsSecretsJson()\r\n                .UseAutofac()\r\n                .UseSerilog",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Main",
+          "callee": "builder.Host\r\n                .AddAppSettingsSecretsJson()\r\n                .UseAutofac",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Main",
+          "callee": "builder.Host\r\n                .AddAppSettingsSecretsJson",
+          "lineNumber": 24
+        },
+        {
+          "caller": "Main",
+          "callee": "#if DEBUG\r\n                        .MinimumLevel.Debug()\r\n#else\r\n                        .MinimumLevel.Information()\r\n#endif\r\n                        .MinimumLevel.Override(\"Microsoft\", LogEventLevel.Information)\r\n                        .MinimumLevel.Override(\"Microsoft.EntityFrameworkCore\", LogEventLevel.Warning)\r\n                        .Enrich.FromLogContext()\r\n                        .WriteTo.Async(c => c.File(\"Logs/logs.txt\"))\r\n                        .WriteTo.Async(c => c.Console())\r\n                        .WriteTo.Async",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Main",
+          "callee": "#if DEBUG\r\n                        .MinimumLevel.Debug()\r\n#else\r\n                        .MinimumLevel.Information()\r\n#endif\r\n                        .MinimumLevel.Override(\"Microsoft\", LogEventLevel.Information)\r\n                        .MinimumLevel.Override(\"Microsoft.EntityFrameworkCore\", LogEventLevel.Warning)\r\n                        .Enrich.FromLogContext()\r\n                        .WriteTo.Async(c => c.File(\"Logs/logs.txt\"))\r\n                        .WriteTo.Async",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Main",
+          "callee": "#if DEBUG\r\n                        .MinimumLevel.Debug()\r\n#else\r\n                        .MinimumLevel.Information()\r\n#endif\r\n                        .MinimumLevel.Override(\"Microsoft\", LogEventLevel.Information)\r\n                        .MinimumLevel.Override(\"Microsoft.EntityFrameworkCore\", LogEventLevel.Warning)\r\n                        .Enrich.FromLogContext()\r\n                        .WriteTo.Async",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Main",
+          "callee": "#if DEBUG\r\n                        .MinimumLevel.Debug()\r\n#else\r\n                        .MinimumLevel.Information()\r\n#endif\r\n                        .MinimumLevel.Override(\"Microsoft\", LogEventLevel.Information)\r\n                        .MinimumLevel.Override(\"Microsoft.EntityFrameworkCore\", LogEventLevel.Warning)\r\n                        .Enrich.FromLogContext",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Main",
+          "callee": "#if DEBUG\r\n                        .MinimumLevel.Debug()\r\n#else\r\n                        .MinimumLevel.Information()\r\n#endif\r\n                        .MinimumLevel.Override(\"Microsoft\", LogEventLevel.Information)\r\n                        .MinimumLevel.Override",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Main",
+          "callee": "#if DEBUG\r\n                        .MinimumLevel.Debug()\r\n#else\r\n                        .MinimumLevel.Information()\r\n#endif\r\n                        .MinimumLevel.Override",
+          "lineNumber": 30
+        },
+        {
+          "caller": "Main",
+          "callee": "MinimumLevel.Debug",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Main",
+          "callee": "MinimumLevel.Information",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Main",
+          "callee": "c.File",
+          "lineNumber": 38
+        },
+        {
+          "caller": "Main",
+          "callee": "c.Console",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Main",
+          "callee": "c.AbpStudio",
+          "lineNumber": 40
+        },
+        {
+          "caller": "Main",
+          "callee": "builder.AddApplicationAsync<SupplyCoreERPHttpApiHostModule>",
+          "lineNumber": 42
+        },
+        {
+          "caller": "Main",
+          "callee": "builder.Build",
+          "lineNumber": 43
+        },
+        {
+          "caller": "Main",
+          "callee": "app.InitializeApplicationAsync",
+          "lineNumber": 44
+        },
+        {
+          "caller": "Main",
+          "callee": "app.RunAsync",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Main",
+          "callee": "Log.Fatal",
+          "lineNumber": 55
+        },
+        {
+          "caller": "Main",
+          "callee": "Log.CloseAndFlush",
+          "lineNumber": 60
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Properties/launchSettings.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 27,
+      "nonEmptyLines": 27,
+      "sections": [
+        {
+          "heading": "iisSettings",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "profiles",
+          "level": 1,
+          "line": 10
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SignalR/Notifications/NotificationHub.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 35,
+      "functions": [
+        {
+          "name": "NotificationHub",
+          "startLine": 14,
+          "endLine": 17,
+          "params": [
+            "permissionChecker"
+          ]
+        },
+        {
+          "name": "OnConnectedAsync",
+          "startLine": 19,
+          "endLine": 41,
+          "params": []
+        }
+      ],
+      "classes": [
+        {
+          "name": "NotificationHub",
+          "startLine": 9,
+          "endLine": 42,
+          "methods": [
+            "NotificationHub",
+            "OnConnectedAsync"
+          ],
+          "properties": [
+            "_permissionChecker"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationHub",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "OnConnectedAsync",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "NotificationHub",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "OnConnectedAsync",
+          "callee": "Groups.AddToGroupAsync",
+          "lineNumber": 22
+        },
+        {
+          "caller": "OnConnectedAsync",
+          "callee": "_permissionChecker.IsGrantedAsync",
+          "lineNumber": 34
+        },
+        {
+          "caller": "OnConnectedAsync",
+          "callee": "Groups.AddToGroupAsync",
+          "lineNumber": 36
+        },
+        {
+          "caller": "OnConnectedAsync",
+          "callee": "base.OnConnectedAsync",
+          "lineNumber": 40
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 2,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SignalR/Notifications/NotificationRealTime.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 31,
+      "functions": [
+        {
+          "name": "NotificationRealTime",
+          "startLine": 14,
+          "endLine": 17,
+          "params": [
+            "hubContext"
+          ]
+        },
+        {
+          "name": "SendToGlobalAsync",
+          "startLine": 19,
+          "endLine": 24,
+          "params": [
+            "dto"
+          ]
+        },
+        {
+          "name": "SendToPermissionGroupsAsync",
+          "startLine": 26,
+          "endLine": 35,
+          "params": [
+            "permissions",
+            "dto"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "NotificationRealTime",
+          "startLine": 10,
+          "endLine": 36,
+          "methods": [
+            "NotificationRealTime",
+            "SendToGlobalAsync",
+            "SendToPermissionGroupsAsync"
+          ],
+          "properties": [
+            "_hubContext"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationRealTime",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "SendToGlobalAsync",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "SendToPermissionGroupsAsync",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "NotificationRealTime",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "SendToGlobalAsync",
+          "callee": "_hubContext.Clients\r\n            .Group(\"Global\")\r\n            .SendAsync",
+          "lineNumber": 21
+        },
+        {
+          "caller": "SendToGlobalAsync",
+          "callee": "_hubContext.Clients\r\n            .Group",
+          "lineNumber": 21
+        },
+        {
+          "caller": "SendToPermissionGroupsAsync",
+          "callee": "_hubContext.Clients\r\n                .Group(perm)\r\n                .SendAsync",
+          "lineNumber": 31
+        },
+        {
+          "caller": "SendToPermissionGroupsAsync",
+          "callee": "_hubContext.Clients\r\n                .Group",
+          "lineNumber": 31
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.abppkg",
+      "language": "abppkg",
+      "fileCategory": "code",
+      "totalLines": 4,
+      "nonEmptyLines": 4,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERPBrandingProvider.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 15,
+      "functions": [
+        {
+          "name": "SupplyCoreERPBrandingProvider",
+          "startLine": 13,
+          "endLine": 16,
+          "params": [
+            "localizer"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPBrandingProvider",
+          "startLine": 8,
+          "endLine": 19,
+          "methods": [
+            "SupplyCoreERPBrandingProvider"
+          ],
+          "properties": [
+            "_localizer",
+            "AppName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "SupplyCoreERPBrandingProvider",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "AppName",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPBrandingProvider",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 1,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERPHttpApiHostModule.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 329,
+      "nonEmptyLines": 294,
+      "functions": [
+        {
+          "name": "PreConfigureServices",
+          "startLine": 63,
+          "endLine": 91,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "ConfigureServices",
+          "startLine": 93,
+          "endLine": 132,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "ConfigureAuthentication",
+          "startLine": 134,
+          "endLine": 141,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "ConfigureUrls",
+          "startLine": 143,
+          "endLine": 152,
+          "params": [
+            "configuration"
+          ]
+        },
+        {
+          "name": "ConfigureBundles",
+          "startLine": 154,
+          "endLine": 174,
+          "params": []
+        },
+        {
+          "name": "ConfigureVirtualFileSystem",
+          "startLine": 177,
+          "endLine": 191,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "ConfigureConventionalControllers",
+          "startLine": 193,
+          "endLine": 199,
+          "params": []
+        },
+        {
+          "name": "ConfigureSwagger",
+          "startLine": 201,
+          "endLine": 214,
+          "params": [
+            "context",
+            "configuration"
+          ]
+        },
+        {
+          "name": "ConfigureHangfire",
+          "startLine": 216,
+          "endLine": 235,
+          "params": [
+            "context",
+            "configuration"
+          ]
+        },
+        {
+          "name": "ConfigureSignalR",
+          "startLine": 236,
+          "endLine": 242,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "ConfigureCors",
+          "startLine": 244,
+          "endLine": 264,
+          "params": [
+            "context",
+            "configuration"
+          ]
+        },
+        {
+          "name": "ConfigureHealthChecks",
+          "startLine": 266,
+          "endLine": 269,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "OnApplicationInitialization",
+          "startLine": 272,
+          "endLine": 327,
+          "params": [
+            "context"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPHttpApiHostModule",
+          "startLine": 46,
+          "endLine": 328,
+          "methods": [
+            "PreConfigureServices",
+            "ConfigureServices",
+            "ConfigureAuthentication",
+            "ConfigureUrls",
+            "ConfigureBundles",
+            "ConfigureVirtualFileSystem",
+            "ConfigureConventionalControllers",
+            "ConfigureSwagger",
+            "ConfigureHangfire",
+            "ConfigureSignalR",
+            "ConfigureCors",
+            "ConfigureHealthChecks",
+            "OnApplicationInitialization"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "PreConfigureServices",
+          "line": 63,
+          "isDefault": false
+        },
+        {
+          "name": "ConfigureServices",
+          "line": 93,
+          "isDefault": false
+        },
+        {
+          "name": "OnApplicationInitialization",
+          "line": 272,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPHttpApiHostModule",
+          "line": 46,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "PreConfigureServices",
+          "callee": "context.Services.GetHostingEnvironment",
+          "lineNumber": 65
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "context.Services.GetConfiguration",
+          "lineNumber": 66
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "PreConfigure<OpenIddictBuilder>",
+          "lineNumber": 68
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "builder.AddValidation",
+          "lineNumber": 70
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "options.AddAudiences",
+          "lineNumber": 72
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "options.UseLocalServer",
+          "lineNumber": 73
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "options.UseAspNetCore",
+          "lineNumber": 74
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "hostingEnvironment.IsDevelopment",
+          "lineNumber": 78
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "PreConfigure<AbpOpenIddictAspNetCoreOptions>",
+          "lineNumber": 80
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "PreConfigure<OpenIddictServerBuilder>",
+          "lineNumber": 85
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "serverBuilder.AddProductionEncryptionAndSigningCertificate",
+          "lineNumber": 87
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "serverBuilder.SetIssuer",
+          "lineNumber": 88
+        },
+        {
+          "caller": "PreConfigureServices",
+          "callee": "new Uri",
+          "lineNumber": 88
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "context.Services.GetConfiguration",
+          "lineNumber": 95
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "context.Services.GetHostingEnvironment",
+          "lineNumber": 96
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "configuration.GetValue<bool>",
+          "lineNumber": 98
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "configuration.GetValue<bool>",
+          "lineNumber": 104
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "Configure<OpenIddictServerAspNetCoreOptions>",
+          "lineNumber": 106
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "Configure<ForwardedHeadersOptions>",
+          "lineNumber": 113
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.KnownIPNetworks.Clear",
+          "lineNumber": 116
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "options.KnownProxies.Clear",
+          "lineNumber": 117
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureAuthentication",
+          "lineNumber": 121
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureUrls",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureBundles",
+          "lineNumber": 123
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureConventionalControllers",
+          "lineNumber": 124
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureHealthChecks",
+          "lineNumber": 125
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureSwagger",
+          "lineNumber": 126
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureVirtualFileSystem",
+          "lineNumber": 127
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureCors",
+          "lineNumber": 128
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureHangfire",
+          "lineNumber": 129
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "ConfigureSignalR",
+          "lineNumber": 130
+        },
+        {
+          "caller": "ConfigureServices",
+          "callee": "context.Services.AddHttpClient",
+          "lineNumber": 131
+        },
+        {
+          "caller": "ConfigureAuthentication",
+          "callee": "context.Services.ForwardIdentityAuthenticationForBearer",
+          "lineNumber": 136
+        },
+        {
+          "caller": "ConfigureAuthentication",
+          "callee": "context.Services.Configure<AbpClaimsPrincipalFactoryOptions>",
+          "lineNumber": 137
+        },
+        {
+          "caller": "ConfigureUrls",
+          "callee": "Configure<AppUrlOptions>",
+          "lineNumber": 145
+        },
+        {
+          "caller": "ConfigureUrls",
+          "callee": "options.RedirectAllowedUrls.AddRange",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ConfigureUrls",
+          "callee": "configuration[\"App:RedirectAllowedUrls\"]?.Split",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ConfigureUrls",
+          "callee": "Array.Empty<string>",
+          "lineNumber": 150
+        },
+        {
+          "caller": "ConfigureBundles",
+          "callee": "Configure<AbpBundlingOptions>",
+          "lineNumber": 156
+        },
+        {
+          "caller": "ConfigureBundles",
+          "callee": "options.StyleBundles.Configure",
+          "lineNumber": 158
+        },
+        {
+          "caller": "ConfigureBundles",
+          "callee": "bundle.AddFiles",
+          "lineNumber": 162
+        },
+        {
+          "caller": "ConfigureBundles",
+          "callee": "options.ScriptBundles.Configure",
+          "lineNumber": 166
+        },
+        {
+          "caller": "ConfigureBundles",
+          "callee": "bundle.AddFiles",
+          "lineNumber": 170
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "context.Services.GetHostingEnvironment",
+          "lineNumber": 179
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "hostingEnvironment.IsDevelopment",
+          "lineNumber": 181
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "Configure<AbpVirtualFileSystemOptions>",
+          "lineNumber": 183
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "options.FileSets.ReplaceEmbeddedByPhysical<SupplyCoreERPDomainSharedModule>",
+          "lineNumber": 185
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "Path.Combine",
+          "lineNumber": 185
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "options.FileSets.ReplaceEmbeddedByPhysical<SupplyCoreERPDomainModule>",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "Path.Combine",
+          "lineNumber": 186
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "options.FileSets.ReplaceEmbeddedByPhysical<SupplyCoreERPApplicationContractsModule>",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "Path.Combine",
+          "lineNumber": 187
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "options.FileSets.ReplaceEmbeddedByPhysical<SupplyCoreERPApplicationModule>",
+          "lineNumber": 188
+        },
+        {
+          "caller": "ConfigureVirtualFileSystem",
+          "callee": "Path.Combine",
+          "lineNumber": 188
+        },
+        {
+          "caller": "ConfigureConventionalControllers",
+          "callee": "Configure<AbpAspNetCoreMvcOptions>",
+          "lineNumber": 195
+        },
+        {
+          "caller": "ConfigureConventionalControllers",
+          "callee": "options.ConventionalControllers.Create",
+          "lineNumber": 197
+        },
+        {
+          "caller": "ConfigureSwagger",
+          "callee": "context.Services.AddAbpSwaggerGenWithOidc",
+          "lineNumber": 203
+        },
+        {
+          "caller": "ConfigureSwagger",
+          "callee": "options.SwaggerDoc",
+          "lineNumber": 210
+        },
+        {
+          "caller": "ConfigureSwagger",
+          "callee": "new OpenApiInfo",
+          "lineNumber": 210
+        },
+        {
+          "caller": "ConfigureSwagger",
+          "callee": "options.DocInclusionPredicate",
+          "lineNumber": 211
+        },
+        {
+          "caller": "ConfigureSwagger",
+          "callee": "options.CustomSchemaIds",
+          "lineNumber": 212
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "context.Services.AddHangfire",
+          "lineNumber": 218
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "config\r\n                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)\r\n                .UseSimpleAssemblyNameTypeSerializer()\r\n                .UseRecommendedSerializerSettings()\r\n                .UsePostgreSqlStorage",
+          "lineNumber": 220
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "config\r\n                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)\r\n                .UseSimpleAssemblyNameTypeSerializer()\r\n                .UseRecommendedSerializerSettings",
+          "lineNumber": 220
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "config\r\n                .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)\r\n                .UseSimpleAssemblyNameTypeSerializer",
+          "lineNumber": 220
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "config\r\n                .SetDataCompatibilityLevel",
+          "lineNumber": 220
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "options.UseNpgsqlConnection",
+          "lineNumber": 226
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "configuration.GetConnectionString",
+          "lineNumber": 226
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "config.UseFilter",
+          "lineNumber": 229
+        },
+        {
+          "caller": "ConfigureHangfire",
+          "callee": "new AutomaticRetryAttribute",
+          "lineNumber": 229
+        },
+        {
+          "caller": "ConfigureSignalR",
+          "callee": "context.Services.AddSignalR",
+          "lineNumber": 238
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "context.Services.AddCors",
+          "lineNumber": 246
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "options.AddDefaultPolicy",
+          "lineNumber": 248
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "builder\r\n                    .WithOrigins(\r\n                        configuration[\"App:CorsOrigins\"]?\r\n                            .Split(\",\", StringSplitOptions.RemoveEmptyEntries)\r\n                            .Select(o => o.Trim().RemovePostFix(\"/\"))\r\n                            .ToArray() ?? Array.Empty<string>()\r\n                    )\r\n                    .WithAbpExposedHeaders()\r\n                    .SetIsOriginAllowedToAllowWildcardSubdomains()\r\n                    .AllowAnyHeader()\r\n                    .AllowAnyMethod()\r\n                    .AllowCredentials",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "builder\r\n                    .WithOrigins(\r\n                        configuration[\"App:CorsOrigins\"]?\r\n                            .Split(\",\", StringSplitOptions.RemoveEmptyEntries)\r\n                            .Select(o => o.Trim().RemovePostFix(\"/\"))\r\n                            .ToArray() ?? Array.Empty<string>()\r\n                    )\r\n                    .WithAbpExposedHeaders()\r\n                    .SetIsOriginAllowedToAllowWildcardSubdomains()\r\n                    .AllowAnyHeader()\r\n                    .AllowAnyMethod",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "builder\r\n                    .WithOrigins(\r\n                        configuration[\"App:CorsOrigins\"]?\r\n                            .Split(\",\", StringSplitOptions.RemoveEmptyEntries)\r\n                            .Select(o => o.Trim().RemovePostFix(\"/\"))\r\n                            .ToArray() ?? Array.Empty<string>()\r\n                    )\r\n                    .WithAbpExposedHeaders()\r\n                    .SetIsOriginAllowedToAllowWildcardSubdomains()\r\n                    .AllowAnyHeader",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "builder\r\n                    .WithOrigins(\r\n                        configuration[\"App:CorsOrigins\"]?\r\n                            .Split(\",\", StringSplitOptions.RemoveEmptyEntries)\r\n                            .Select(o => o.Trim().RemovePostFix(\"/\"))\r\n                            .ToArray() ?? Array.Empty<string>()\r\n                    )\r\n                    .WithAbpExposedHeaders()\r\n                    .SetIsOriginAllowedToAllowWildcardSubdomains",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "builder\r\n                    .WithOrigins(\r\n                        configuration[\"App:CorsOrigins\"]?\r\n                            .Split(\",\", StringSplitOptions.RemoveEmptyEntries)\r\n                            .Select(o => o.Trim().RemovePostFix(\"/\"))\r\n                            .ToArray() ?? Array.Empty<string>()\r\n                    )\r\n                    .WithAbpExposedHeaders",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "builder\r\n                    .WithOrigins",
+          "lineNumber": 250
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "configuration[\"App:CorsOrigins\"]?\r\n                            .Split(\",\", StringSplitOptions.RemoveEmptyEntries)\r\n                            .Select(o => o.Trim().RemovePostFix(\"/\"))\r\n                            .ToArray",
+          "lineNumber": 252
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "configuration[\"App:CorsOrigins\"]?\r\n                            .Split(\",\", StringSplitOptions.RemoveEmptyEntries)\r\n                            .Select",
+          "lineNumber": 252
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "configuration[\"App:CorsOrigins\"]?\r\n                            .Split",
+          "lineNumber": 252
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "o.Trim().RemovePostFix",
+          "lineNumber": 254
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "o.Trim",
+          "lineNumber": 254
+        },
+        {
+          "caller": "ConfigureCors",
+          "callee": "Array.Empty<string>",
+          "lineNumber": 255
+        },
+        {
+          "caller": "ConfigureHealthChecks",
+          "callee": "context.Services.AddSupplyCoreERPHealthChecks",
+          "lineNumber": 268
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "context.GetApplicationBuilder",
+          "lineNumber": 274
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "context.GetEnvironment",
+          "lineNumber": 275
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseForwardedHeaders",
+          "lineNumber": 277
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "env.IsDevelopment",
+          "lineNumber": 279
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseDeveloperExceptionPage",
+          "lineNumber": 281
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAbpRequestLocalization",
+          "lineNumber": 284
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "env.IsDevelopment",
+          "lineNumber": 286
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseErrorPage",
+          "lineNumber": 288
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseRouting",
+          "lineNumber": 291
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.MapAbpStaticAssets",
+          "lineNumber": 292
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAbpStudioLink",
+          "lineNumber": 293
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAbpSecurityHeaders",
+          "lineNumber": 294
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseCors",
+          "lineNumber": 295
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAuthentication",
+          "lineNumber": 296
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAbpOpenIddictValidation",
+          "lineNumber": 297
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseMultiTenancy",
+          "lineNumber": 301
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseUnitOfWork",
+          "lineNumber": 304
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseDynamicClaims",
+          "lineNumber": 305
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAuthorization",
+          "lineNumber": 306
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseSwagger",
+          "lineNumber": 308
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAbpSwaggerUI",
+          "lineNumber": 309
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "options.SwaggerEndpoint",
+          "lineNumber": 311
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "context.ServiceProvider.GetRequiredService<IConfiguration>",
+          "lineNumber": 313
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "options.OAuthClientId",
+          "lineNumber": 314
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAbpHangfireDashboard",
+          "lineNumber": 316
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "new AbpHangfireAuthorizationFilter",
+          "lineNumber": 318
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAuditing",
+          "lineNumber": 321
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseAbpSerilogEnrichers",
+          "lineNumber": 322
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "app.UseConfiguredEndpoints",
+          "lineNumber": 323
+        },
+        {
+          "caller": "OnApplicationInitialization",
+          "callee": "endpoints.MapHub<NotificationHub>",
+          "lineNumber": 325
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 13,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/web.config",
+      "language": "config",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 18,
+      "metrics": {}
+    }
+  ]
+}

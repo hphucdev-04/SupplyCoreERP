@@ -1,0 +1,103 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 4,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-return-request-status.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "exports": [
+        {
+          "name": "purchaseReturnRequestStatusOptions",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-return-type.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 6,
+      "exports": [
+        {
+          "name": "purchaseReturnTypeOptions",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 91,
+      "nonEmptyLines": 83,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/purchase-return-request.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 107,
+      "nonEmptyLines": 84,
+      "classes": [
+        {
+          "name": "PurchaseReturnRequestService",
+          "startLine": 9,
+          "endLine": 107,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "addLine",
+            "approveAndSplit",
+            "create",
+            "delete",
+            "get",
+            "getList",
+            "reject",
+            "removeLine",
+            "sendToApprove",
+            "update",
+            "updateLine"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PurchaseReturnRequestService",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

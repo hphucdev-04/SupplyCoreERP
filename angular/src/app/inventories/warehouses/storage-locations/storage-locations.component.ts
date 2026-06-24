@@ -19,6 +19,9 @@ import { takeUntil } from 'rxjs/operators';
 import { DragDropModule, CdkDragEnd } from '@angular/cdk/drag-drop';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
+import { InventoryBalanceService } from 'src/app/proxy/balances';
+import { InventoryBalanceDto } from 'src/app/proxy/balances/dtos/models';
 
 type ResizeHandle = 'n' | 's' | 'e' | 'w' | 'nw' | 'ne' | 'sw' | 'se';
 
@@ -30,12 +33,14 @@ export interface CanvasZone extends ZoneDto {
 export interface CanvasBin extends BinDto {
   _isDirty?: boolean;
   _hasCollision?: boolean;
+  height?: number;
+  maxVolume?: number;
 }
 
 @Component({
   selector: 'app-storage-locations',
   standalone: true,
-  imports: [DragDropModule, SharedModule, DrawerComponent],
+  imports: [DragDropModule, SharedModule, DrawerComponent, DropdownSearchComponent],
   templateUrl: './storage-locations.component.html',
   styleUrls: ['./storage-locations.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -48,6 +53,15 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
 
   zones: CanvasZone[] = [];
   bins: CanvasBin[] = [];
+
+  public binDrawerTab: 'config' | 'inventory' = 'config';
+  public binBalances: InventoryBalanceDto[] = [];
+  public isLoadingBalances = false;
+
+  public selectedBalance: InventoryBalanceDto | null = null;
+  public transferQuantity = 0;
+  public targetBinId = '';
+  public isTransferring = false;
 
   // ═══════════════════════════════════════════════════════════════════
   // ROOT-CAUSE FIX: Tách drag positions ra Map riêng.
@@ -88,8 +102,12 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
 
   activeTab: 'zones' | 'bins' = 'zones';
 
-  readonly ZOOM_LEVELS = [0.15, 0.25, 0.33, 0.5, 0.67, 0.75, 1.0, 1.25, 1.5, 2.0];
+  readonly ZOOM_LEVELS = [0.15, 0.25, 0.33, 0.5, 0.67, 0.75, 1.0, 1.25, 1.5, 2.0, 3.0, 4.0, 5.0, 7.5, 10.0];
   readonly PX_PER_M = 20;
+  // Sàn scale khi "zoom fit" lúc load trang: kho càng lớn so với bin càng cần
+  // sàn này cao, nếu không bin (vd 40x25cm) sẽ co lại còn vài px và không đọc được.
+  // Chấp nhận đánh đổi: kho có thể không vừa 100% khung hình, người dùng scroll/pan thêm.
+  readonly MIN_FIT_SCALE = 0.5;
   private readonly SNAP_THRESHOLD = 12;
   private readonly SNAP_GRID = 5;
 
@@ -125,6 +143,7 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     private router: Router,
     private routesService: RoutesService,
     private warehouseService: WarehouseService,
+    private balanceService: InventoryBalanceService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
@@ -215,8 +234,6 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
         for (const sv of svZones) {
           const ex = exMap.get(sv.id);
           if (ex) {
-            // Existing zone: update display fields only, KEEP position/size intact
-            // so CDK drag positions are untouched
             ex.name = sv.name;
             ex.code = sv.code;
             ex.type = sv.type;
@@ -224,7 +241,6 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
             ex.color = sv.color;
             ex.rotation = sv.rotation;
             if (!ex._isDirty) {
-              // Safe to sync layout from server if no local unsaved changes
               const posChanged =
                 ex.positionX !== sv.positionX ||
                 ex.positionY !== sv.positionY ||
@@ -235,17 +251,14 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
               ex.width = sv.width;
               ex.length = sv.length;
               if (posChanged) {
-                // Only update drag pos Map when server data actually changed
                 this.zoneDragPos.set(ex.id, {
                   x: ex.positionX * this.scale,
                   y: ex.positionY * this.scale,
                 });
               }
             }
-            // Reset dirty flag after sync
             ex._isDirty = false;
           } else {
-            // New zone from server → push + init drag pos
             const nz: CanvasZone = { ...sv, _isDirty: false, _hasCollision: false };
             this.zones.push(nz);
             this.zoneDragPos.set(nz.id, {
@@ -272,13 +285,15 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
             eb.code = sb.code;
             eb.zoneId = sb.zoneId;
             eb.maxSKU = sb.maxSKU;
+            eb.maxVolume = sb.maxVolume;
+            eb.height = (sb as any).height;
             eb.isBlocked = sb.isBlocked;
             eb.rotation = sb.rotation;
             if (!eb._isDirty) {
               eb.positionX = sb.positionX;
               eb.positionY = sb.positionY;
-              eb.width = sb.width;
-              eb.length = sb.length;
+              eb.width = sb.width * 1.0;
+              eb.length = sb.length * 1.0;
               this.binDragPos.set(eb.id, {
                 x: eb.positionX * this.scale,
                 y: eb.positionY * this.scale,
@@ -286,7 +301,13 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
             }
             eb._isDirty = false;
           } else {
-            const nb: CanvasBin = { ...sb, _isDirty: false, _hasCollision: false };
+            const nb: CanvasBin = {
+              ...sb,
+              width: sb.width * 1.0,
+              length: sb.length * 1.0,
+              _isDirty: false,
+              _hasCollision: false
+            };
             this.bins.push(nb);
             this.binDragPos.set(nb.id, {
               x: nb.positionX * this.scale,
@@ -318,7 +339,7 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     setTimeout(() => {
       if (!this.canvasContainer)
         this.canvasContainer = document.querySelector('.canvas-scroll-area') as HTMLElement;
-      this.zoomFit(false); // false = don't rebuild drag pos (done separately)
+      this.zoomFit(false);
       this.rebuildAllDragPositions();
       this._initialZoomDone = true;
       this.cdr.markForCheck();
@@ -363,6 +384,8 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
         return '#636E72';
       case ZoneType.Office:
         return '#A29BFE';
+      case ZoneType.QA:
+        return '#9B59B6';
       default:
         return '#B2BEC3';
     }
@@ -384,6 +407,8 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
         return 'fa-dolly';
       case ZoneType.Office:
         return 'fa-building';
+      case ZoneType.QA:
+        return 'fa-flask';
       default:
         return 'fa-square';
     }
@@ -417,6 +442,8 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
         return 'Parking';
       case ZoneType.Office:
         return 'Office';
+      case ZoneType.QA:
+        return 'QA Zone';
       default:
         return 'Zone';
     }
@@ -548,13 +575,14 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     if (!this.canvasContainer || !this.warehouse) return;
     const w = this.canvasContainer.clientWidth - 64;
     const h = this.canvasContainer.clientHeight - 64;
-    const s = Math.max(
-      0.15,
-      Math.min(
-        1.5,
-        Math.min(w / (this.warehouse.mapWidth || 2000), h / (this.warehouse.mapLength || 2000)),
-      ),
+    const fitScale = Math.min(
+      w / (this.warehouse.mapWidth || 2000),
+      h / (this.warehouse.mapLength || 2000),
     );
+    // Nếu kho quá lớn so với khung hình, fitScale sẽ rất nhỏ (bin biến mất).
+    // Ưu tiên MIN_FIT_SCALE để bin luôn đọc được — kho có thể tràn khung,
+    // canvas-scroll-area đã hỗ trợ scroll/pan để xem các phần còn lại.
+    const s = Math.max(this.MIN_FIT_SCALE, Math.min(1.5, fitScale));
     this.scale = +s.toFixed(3);
     if (doRebuild) this.rebuildAllDragPositions();
     setTimeout(() => {
@@ -575,7 +603,7 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
   onWheel(event: WheelEvent) {
     if (event.ctrlKey || event.metaKey) {
       event.preventDefault();
-      const ns = Math.max(0.15, Math.min(2.0, this.scale * (event.deltaY > 0 ? 0.9 : 1.1)));
+      const ns = Math.max(0.15, Math.min(10.0, this.scale * (event.deltaY > 0 ? 0.9 : 1.1)));
       this.scale = +ns.toFixed(3);
       this.rebuildAllDragPositions();
       this.cdr.markForCheck();
@@ -739,7 +767,7 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     const dx = (event.clientX - this.resizeStartMouse.x) / this.scale;
     const dy = (event.clientY - this.resizeStartMouse.y) / this.scale;
     const { x: ox, y: oy, w: ow, h: oh } = this.resizeStartRect;
-    const min = type === 'zone' ? this.toPx(1) : this.toPx(0.5);
+    const min = type === 'zone' ? this.toPx(1) : 10;
     const mapW = this.warehouse?.mapWidth || 2000,
       mapH = this.warehouse?.mapLength || 2000;
     let nx = ox,
@@ -854,6 +882,14 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     return Math.max(7, Math.min(12, Math.min(b.width * this.scale, b.length * this.scale) * 0.22));
   }
 
+  shouldShowBinControls(bin: CanvasBin): boolean {
+    return bin.width * this.scale >= 25 && bin.length * this.scale >= 25;
+  }
+
+  shouldShowBinLabel(bin: CanvasBin): boolean {
+    return bin.width * this.scale >= 15 && bin.length * this.scale >= 12;
+  }
+
   // ─── SAVE ────────────────────────────────────────────────────────
   async saveAllLayouts() {
     if (!this.hasUnsavedChanges || this.isSaving) return;
@@ -865,7 +901,12 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
         z._isDirty = false;
       }
       for (const b of this.bins.filter(b => b._isDirty)) {
-        await lastValueFrom(this.warehouseService.updateStorageBin(b.id, b as any));
+        const payload = {
+          ...b,
+          width: Math.round(b.width),
+          length: Math.round(b.length),
+        };
+        await lastValueFrom(this.warehouseService.updateStorageBin(b.id, payload as any));
         b._isDirty = false;
       }
       this.hasUnsavedChanges = false;
@@ -1032,7 +1073,21 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     if (this.activeZone) this.openBinDrawer();
   }
 
+  get calculatedVolume(): number {
+    if (!this.form) return 0;
+    const w = this.form.get('width')?.value || 0;
+    const l = this.form.get('length')?.value || 0;
+    const h = this.form.get('height')?.value || 0;
+    return Math.round(w * l * h);
+  }
+
   openBinDrawer(bin?: CanvasBin) {
+    this.binDrawerTab = 'config';
+    this.binBalances = [];
+    this.selectedBalance = null;
+    this.transferQuantity = 0;
+    this.targetBinId = '';
+
     const defaultZoneId = this.activeZone?.id || this.zones[0]?.id || null;
     const tz = this.zones.find(z => z.id === (bin?.zoneId || defaultZoneId));
     const dx = bin ? 0 : tz ? tz.positionX + (tz.width - this.toPx(2)) / 2 : 0;
@@ -1045,10 +1100,11 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
       zoneId: [bin?.zoneId || defaultZoneId, Validators.required],
       positionX: [this.toM(bin?.positionX ?? dx), Validators.required],
       positionY: [this.toM(bin?.positionY ?? dy), Validators.required],
-      width: [this.toM(bin?.width ?? this.toPx(2)), [Validators.required, Validators.min(0.5)]],
-      length: [this.toM(bin?.length ?? this.toPx(2)), [Validators.required, Validators.min(0.5)]],
+      width: [bin ? Math.round(bin.width) : 40, [Validators.required, Validators.min(10)]],
+      length: [bin ? Math.round(bin.length) : 25, [Validators.required, Validators.min(10)]],
       rotation: [bin?.rotation ?? 0, [Validators.min(0), Validators.max(360)]],
       maxSKU: [bin?.maxSKU ?? 0, Validators.min(0)],
+      height: [bin?.height ?? 15, [Validators.required, Validators.min(0)]],
       isBlocked: [bin?.isBlocked ?? false],
     });
     this.form
@@ -1073,8 +1129,8 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
       if (!this.selectedBin || this.isSaving) return;
       this.selectedBin.positionX = this.toPx(val.positionX);
       this.selectedBin.positionY = this.toPx(val.positionY);
-      this.selectedBin.width = this.toPx(val.width);
-      this.selectedBin.length = this.toPx(val.length);
+      this.selectedBin.width = val.width * 1.0;
+      this.selectedBin.length = val.length * 1.0;
       this.selectedBin.rotation = parseFloat(val.rotation) || 0;
       this.checkAllCollisions();
       this.cdr.markForCheck();
@@ -1089,19 +1145,22 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
       ...v,
       positionX: this.toPx(v.positionX),
       positionY: this.toPx(v.positionY),
-      width: this.toPx(v.width),
-      length: this.toPx(v.length),
+      width: Math.round(v.width),
+      length: Math.round(v.length),
       rotation: parseFloat(v.rotation) || 0,
+      height: parseInt(v.height) || 0,
     };
     const tz = this.zones.find(z => z.id === p.zoneId);
     if (tz) {
+      const wPx = p.width * 1.0;
+      const lPx = p.length * 1.0;
       p.positionX = Math.max(
         tz.positionX,
-        Math.min(p.positionX, tz.positionX + tz.width - p.width),
+        Math.min(p.positionX, tz.positionX + tz.width - wPx),
       );
       p.positionY = Math.max(
         tz.positionY,
-        Math.min(p.positionY, tz.positionY + tz.length - p.length),
+        Math.min(p.positionY, tz.positionY + tz.length - lPx),
       );
     }
     (this.selectedBin?.id
@@ -1130,5 +1189,112 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     this.selectedZone = null;
     this.selectedBin = null;
     this.cdr.markForCheck();
+  }
+
+  loadBinBalances(binId: string) {
+    this.isLoadingBalances = true;
+    this.cdr.markForCheck();
+    this.balanceService.getList({
+      binId: binId,
+      maxResultCount: 100,
+      skipCount: 0
+    }).pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: (res) => {
+          this.binBalances = res.items || [];
+          this.isLoadingBalances = false;
+          this.cdr.markForCheck();
+        },
+        error: () => {
+          this.isLoadingBalances = false;
+          this.cdr.markForCheck();
+        }
+      });
+  }
+
+  getFilteredTargetBins(sourceBin: CanvasBin): (CanvasBin & { displayLabel: string })[] {
+    if (!sourceBin || !sourceBin.zoneId) return [];
+    
+    const sourceZone = this.zones.find(z => z.id === sourceBin.zoneId);
+    if (!sourceZone) return [];
+
+    return this.bins.filter(targetBin => {
+      if (targetBin.id === sourceBin.id) return false;
+      if (targetBin.isBlocked) return false;
+
+      const targetZone = this.zones.find(z => z.id === targetBin.zoneId);
+      if (!targetZone) return false;
+
+      if (sourceZone.type === targetZone.type) return true;
+
+      // QA -> Storage hoặc Quarantine
+      if (sourceZone.type === ZoneType.QA) {
+        return targetZone.type === ZoneType.Storage || targetZone.type === ZoneType.Quarantine;
+      }
+      // Storage -> Quarantine
+      if (sourceZone.type === ZoneType.Storage) {
+        return targetZone.type === ZoneType.Quarantine;
+      }
+
+      return false;
+    }).map(tb => ({
+      ...tb,
+      displayLabel: this.getBinDisplayLabel(tb)
+    }));
+  }
+
+  getBinDisplayLabel(bin: CanvasBin): string {
+    const zone = this.zones.find(z => z.id === bin.zoneId);
+    return zone ? `${zone.name} - ${bin.code}` : bin.code;
+  }
+
+  selectBalanceForTransfer(balance: InventoryBalanceDto) {
+    this.selectedBalance = balance;
+    this.transferQuantity = balance.availableQuantity || 0;
+    this.targetBinId = '';
+    this.cdr.markForCheck();
+  }
+
+  cancelTransfer() {
+    this.selectedBalance = null;
+    this.transferQuantity = 0;
+    this.targetBinId = '';
+    this.cdr.markForCheck();
+  }
+
+  confirmTransfer() {
+    if (!this.selectedBin || !this.selectedBalance || !this.targetBinId || this.transferQuantity <= 0) return;
+
+    if (this.transferQuantity > (this.selectedBalance.availableQuantity || 0)) {
+      this.confirmation.error('Số lượng chuyển vượt quá số lượng khả dụng!', 'Lỗi');
+      return;
+    }
+
+    this.isTransferring = true;
+    this.cdr.markForCheck();
+
+    this.warehouseService.transferBin({
+      warehouseId: this.warehouseId,
+      sourceBinId: this.selectedBin.id,
+      targetBinId: this.targetBinId,
+      productId: this.selectedBalance.productId!,
+      productBatchId: this.selectedBalance.productBatchId!,
+      quantity: this.transferQuantity,
+      unitId: '00000000-0000-0000-0000-000000000000',
+      conversionFactor: 1
+    }).subscribe({
+      next: () => {
+        this.isTransferring = false;
+        this.confirmation.success('Chuyển phân khu thành công!', 'Thành công');
+        this.cancelTransfer();
+        this.loadBinBalances(this.selectedBin!.id);
+        this.refreshMap();
+        this.cdr.markForCheck();
+      },
+      error: () => {
+        this.isTransferring = false;
+        this.cdr.markForCheck();
+      }
+    });
   }
 }

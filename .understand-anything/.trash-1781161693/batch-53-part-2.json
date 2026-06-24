@@ -1,0 +1,580 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "type": "file",
+      "name": "20260514160037_Medicine-Registration.Designer.cs",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "summary": "File mã nguồn `20260514160037_Medicine-Registration.Designer.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs:MedicineRegistration",
+      "type": "class",
+      "name": "MedicineRegistration",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "summary": "Lớp `MedicineRegistration` thực hiện nghiệp vụ liên quan đến thuốc đăng ký.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 5090
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs:BuildTargetModel",
+      "type": "function",
+      "name": "BuildTargetModel",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "summary": "Phương thức `BuildTargetModel` thực hiện nghiệp vụ build target model.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 21,
+      "endLine": 5089
+    },
+    {
+      "id": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "type": "file",
+      "name": "20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "summary": "File mã nguồn `20260515053214_AddSalesOrderLineIdToTicketLine.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:AddSalesOrderLineIdToTicketLine",
+      "type": "class",
+      "name": "AddSalesOrderLineIdToTicketLine",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "summary": "Lớp `AddSalesOrderLineIdToTicketLine` thực hiện nghiệp vụ liên quan đến add sales order dòng id to phiếu dòng.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 48
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:Up",
+      "type": "function",
+      "name": "Up",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "summary": "Phương thức `Up` thực hiện nghiệp vụ up.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 12,
+      "endLine": 31
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:Down",
+      "type": "function",
+      "name": "Down",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "summary": "Phương thức `Down` thực hiện nghiệp vụ down.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 34,
+      "endLine": 47
+    },
+    {
+      "id": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "type": "file",
+      "name": "20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "summary": "File mã nguồn `20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs:AddSalesOrderLineIdToTicketLine",
+      "type": "class",
+      "name": "AddSalesOrderLineIdToTicketLine",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "summary": "Lớp `AddSalesOrderLineIdToTicketLine` thực hiện nghiệp vụ liên quan đến add sales order dòng id to phiếu dòng.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 5101
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs:BuildTargetModel",
+      "type": "function",
+      "name": "BuildTargetModel",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "summary": "Phương thức `BuildTargetModel` thực hiện nghiệp vụ build target model.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 21,
+      "endLine": 5100
+    },
+    {
+      "id": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "type": "file",
+      "name": "20260516043244_Add-InventoryAdjustment.cs",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "summary": "File mã nguồn `20260516043244_Add-InventoryAdjustment.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:AddInventoryAdjustment",
+      "type": "class",
+      "name": "AddInventoryAdjustment",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "summary": "Lớp `AddInventoryAdjustment` thực hiện nghiệp vụ liên quan đến add tồn kho adjustment.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 176
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:Up",
+      "type": "function",
+      "name": "Up",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "summary": "Phương thức `Up` thực hiện nghiệp vụ up.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 12,
+      "endLine": 142
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:Down",
+      "type": "function",
+      "name": "Down",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "summary": "Phương thức `Down` thực hiện nghiệp vụ down.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 145,
+      "endLine": 175
+    },
+    {
+      "id": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "type": "file",
+      "name": "20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "summary": "File mã nguồn `20260516043244_Add-InventoryAdjustment.Designer.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs:AddInventoryAdjustment",
+      "type": "class",
+      "name": "AddInventoryAdjustment",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "summary": "Lớp `AddInventoryAdjustment` thực hiện nghiệp vụ liên quan đến add tồn kho adjustment.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 5295
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs:BuildTargetModel",
+      "type": "function",
+      "name": "BuildTargetModel",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "summary": "Phương thức `BuildTargetModel` thực hiện nghiệp vụ build target model.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 21,
+      "endLine": 5294
+    },
+    {
+      "id": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "type": "file",
+      "name": "20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "summary": "File mã nguồn `20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:RemoveSoftDeleteFromTicketSOPO",
+      "type": "class",
+      "name": "RemoveSoftDeleteFromTicketSOPO",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "summary": "Lớp `RemoveSoftDeleteFromTicketSOPO` thực hiện nghiệp vụ liên quan đến remove soft delete from phiếu s o p o.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 277
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:Up",
+      "type": "function",
+      "name": "Up",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "summary": "Phương thức `Up` thực hiện nghiệp vụ up.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 12,
+      "endLine": 79
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:Down",
+      "type": "function",
+      "name": "Down",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "summary": "Phương thức `Down` thực hiện nghiệp vụ down.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 82,
+      "endLine": 276
+    },
+    {
+      "id": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "type": "file",
+      "name": "20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "summary": "File mã nguồn `20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs:RemoveSoftDeleteFromTicketSOPO",
+      "type": "class",
+      "name": "RemoveSoftDeleteFromTicketSOPO",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "summary": "Lớp `RemoveSoftDeleteFromTicketSOPO` thực hiện nghiệp vụ liên quan đến remove soft delete from phiếu s o p o.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 5046
+    },
+    {
+      "id": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs:BuildTargetModel",
+      "type": "function",
+      "name": "BuildTargetModel",
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "summary": "Phương thức `BuildTargetModel` thực hiện nghiệp vụ build target model.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 21,
+      "endLine": 5045
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs:MedicineRegistration",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs:MedicineRegistration",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs:BuildTargetModel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs:BuildTargetModel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:AddSalesOrderLineIdToTicketLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:AddSalesOrderLineIdToTicketLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:Up",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:Up",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:Down",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs:Down",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs:AddSalesOrderLineIdToTicketLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs:AddSalesOrderLineIdToTicketLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs:BuildTargetModel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs:BuildTargetModel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:AddInventoryAdjustment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:AddInventoryAdjustment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:Up",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:Up",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:Down",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs:Down",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs:AddInventoryAdjustment",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs:AddInventoryAdjustment",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs:BuildTargetModel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs:BuildTargetModel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:RemoveSoftDeleteFromTicketSOPO",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:RemoveSoftDeleteFromTicketSOPO",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:Up",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:Up",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:Down",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs:Down",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs:RemoveSoftDeleteFromTicketSOPO",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "target": "class:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs:RemoveSoftDeleteFromTicketSOPO",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs:BuildTargetModel",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "target": "function:src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs:BuildTargetModel",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

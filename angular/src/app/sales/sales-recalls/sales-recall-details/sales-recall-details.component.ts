@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
 import { eLayoutType, RoutesService } from '@abp/ng.core';
-import { Subject, forkJoin } from 'rxjs';
+import { Subject, forkJoin, lastValueFrom } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
@@ -17,13 +17,15 @@ import { WarehouseService } from 'src/app/proxy/warehouses';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { SalesRecallStatus } from 'src/app/proxy/enums/orders/sales-recall-status.enum';
 import { RecallLevel } from 'src/app/proxy/enums/orders/recall-level.enum';
+import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
 interface SelectableTrace extends CustomerRecallTraceDto {
   selected: boolean;
   recallQuantity: number;
+  recallPrice: number;
   taxRate: number;
-  unitId: string; // Thực tế cần đơn vị tính để insert
+  unitId: string; 
 }
 
 @Component({
@@ -31,6 +33,7 @@ interface SelectableTrace extends CustomerRecallTraceDto {
   standalone: true,
   imports: [SharedModule, DrawerComponent],
   templateUrl: './sales-recall-details.component.html',
+  styleUrl: './sales-recall-details.component.scss',
 })
 export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
@@ -44,6 +47,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
 
   // Cần lưu tổng số lượng đã giao ra thị trường để tính % tiến độ
   totalDeliveredQty = 0;
+  totalRequiredQty = 0;
   totalRecalledQty = 0;
   progressPercent = 0;
 
@@ -58,6 +62,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
 
   SalesRecallStatus = SalesRecallStatus;
   RecallLevel = RecallLevel;
+  ApprovalStatus = ApprovalStatus;
   readonly enumName = enumName;
 
   constructor(
@@ -68,7 +73,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -91,7 +96,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     this.router.navigate(['/sales/sales-recalls']);
   }
 
-  // ── Data Loading ─────────────────────────────────────────
+  //Data Loading
   loadData() {
     this.loading = true;
     this.recallService
@@ -143,8 +148,9 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
               ...trace,
               selected: !!existingLine,
               recallQuantity: existingLine ? existingLine.quantity : trace.quantity,
-              taxRate: existingLine ? existingLine.taxRate : 0,
-              unitId: '00000000-0000-0000-0000-000000000000', // Đơn vị tính được lấy ngầm hoặc tự sinh
+              recallPrice: existingLine ? existingLine.originalUnitPrice : (trace.unitPrice || 0),
+              taxRate: existingLine ? existingLine.taxRate : (trace.taxRate || 0),
+              unitId: trace.unitId,
             } as SelectableTrace;
           });
           this.calculateProgress();
@@ -154,16 +160,20 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
 
   calculateProgress() {
     if (!this.recallDto) return;
-    // Tính tổng số lượng đã thu hồi thực tế
-    this.totalRecalledQty = this.recallDto.lines.reduce((acc, curr) => acc + curr.quantity, 0);
-    if (this.totalDeliveredQty > 0) {
-      this.progressPercent = Math.round((this.totalRecalledQty / this.totalDeliveredQty) * 100);
+    
+    // Tính tổng số lượng yêu cầu và thực tế thu hồi (theo đơn vị cơ bản)
+    this.totalRequiredQty = this.recallDto.lines.reduce((acc, curr) => acc + (curr.baseQuantity || 0), 0);
+    this.totalRecalledQty = this.recallDto.lines.reduce((acc, curr) => acc + (curr.recalledBaseQuantity || 0), 0);
+    
+    // Tính % tiến độ thực tế
+    if (this.totalRequiredQty > 0) {
+      this.progressPercent = Math.round((this.totalRecalledQty / this.totalRequiredQty) * 100);
     } else {
       this.progressPercent = 0;
     }
   }
 
-  // ── Forms ─────────────────────────────────────────────────
+  //Forms 
   buildForms() {
     this.editForm = this.fb.group({
       recallDecisionNumber: ['', [Validators.required, Validators.maxLength(256)]],
@@ -174,7 +184,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ── Edit Master ───────────────────────────────────────────
+  //Edit Master 
   openEditDrawer() {
     this.editForm.patchValue({
       recallDecisionNumber: this.recallDto.recallDecisionNumber,
@@ -207,7 +217,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
       });
   }
 
-  // ── Drawer Bottom: Trace & Suggest ────────────────────────
+  //Drawer Bottom: Trace & Suggest 
   openTraceDrawer() {
     this.loadData();
     this.isTraceOpen = true;
@@ -217,7 +227,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     this.isTraceOpen = false;
   }
 
-  saveTraceLines() {
+  async saveTraceLines() {
     const selectedLines = this.traceLines.filter(line => line.selected);
     if (selectedLines.length === 0) {
       this.toaster.warn('::PleaseSelectAtLeastOneLine', '::Warning');
@@ -238,30 +248,29 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
 
     this.isSavingLines = true;
 
-    // Gọi API addLine cho từng dòng được selected hàng loạt
-    const requests = selectedLines.map(line => {
-      return this.recallService.addLine(this.recallId, {
-        customerId: line.customerId,
-        salesOrderId: line.salesOrderId,
-        unitId: line.unitId === '00000000-0000-0000-0000-000000000000' ? null : line.unitId, // Sẽ tự động phân tích ở backend nếu rỗng
-        conversionFactor: 1,
-        quantity: line.recallQuantity,
-        originalUnitPrice: 0, // backend tự load đơn giá bán lịch sử
-        taxRate: line.taxRate,
-      });
-    });
+    try {
+      // Thực hiện gửi API addLine tuần tự để tránh lỗi ConcurrencyStamp của EF Core
+      for (const line of selectedLines) {
+        const request$ = this.recallService.addLine(this.recallId, {
+          customerId: line.customerId,
+          salesOrderId: line.salesOrderId,
+          unitId: line.unitId,
+          conversionFactor: line.conversionFactor || 1,
+          quantity: line.recallQuantity,
+          originalUnitPrice: line.recallPrice || 0,
+          taxRate: line.taxRate || 0,
+        });
+        await lastValueFrom(request$);
+      }
 
-    forkJoin(requests)
-      .pipe(takeUntil(this.destroy$))
-      .subscribe({
-        next: () => {
-          this.isSavingLines = false;
-          this.closeTraceDrawer();
-          this.loadData();
-          this.toaster.success('::TraceSaveSuccess', '::Success');
-        },
-        error: () => (this.isSavingLines = false),
-      });
+      this.isSavingLines = false;
+      this.closeTraceDrawer();
+      this.loadData();
+      this.toaster.success('::TraceSaveSuccess', '::Success');
+    } catch (error) {
+      this.isSavingLines = false;
+      console.error(error);
+    }
   }
 
   removeLine(lineId: string) {
@@ -278,7 +287,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
-  // ── Workflows Actions ─────────────────────────────────────
+  // Workflows Actions
   sendToApprove() {
     this.confirmation.info('::ConfirmSendToApprove', '::AreYouSure').subscribe(status => {
       if (status === Confirmation.Status.confirm) {
@@ -310,5 +319,47 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  statusClass(status: SalesRecallStatus): string {
+    const map: Record<number, string> = {
+      [SalesRecallStatus.Draft]: 'ph-badge--neutral',
+      [SalesRecallStatus.PendingApproval]: 'ph-badge--pending',
+      [SalesRecallStatus.Approved]: 'ph-badge--info',
+      [SalesRecallStatus.Recalling]: 'ph-badge--pending',
+      [SalesRecallStatus.Completed]: 'ph-badge--approved',
+      [SalesRecallStatus.Rejected]: 'ph-badge--rejected',
+    };
+    return map[status] ?? 'ph-badge--neutral';
+  }
+
+  statusIcon(status: SalesRecallStatus): string {
+    const map: Record<number, string> = {
+      [SalesRecallStatus.Draft]: 'fa-pencil',
+      [SalesRecallStatus.PendingApproval]: 'fa-clock-o',
+      [SalesRecallStatus.Approved]: 'fa-check',
+      [SalesRecallStatus.Recalling]: 'fa-refresh',
+      [SalesRecallStatus.Completed]: 'fa-check-circle',
+      [SalesRecallStatus.Rejected]: 'fa-times-circle',
+    };
+    return map[status] ?? 'fa-circle';
+  }
+
+  levelClass(level: RecallLevel): string {
+    const map: Record<number, string> = {
+      [RecallLevel.Level1]: 'ph-badge--rejected',
+      [RecallLevel.Level2]: 'ph-badge--pending',
+      [RecallLevel.Level3]: 'ph-badge--info',
+    };
+    return map[level] ?? 'ph-badge--neutral';
+  }
+
+  levelIcon(level: RecallLevel): string {
+    const map: Record<number, string> = {
+      [RecallLevel.Level1]: 'fa-radiation',
+      [RecallLevel.Level2]: 'fa-exclamation-triangle',
+      [RecallLevel.Level3]: 'fa-info-circle',
+    };
+    return map[level] ?? 'fa-circle';
   }
 }

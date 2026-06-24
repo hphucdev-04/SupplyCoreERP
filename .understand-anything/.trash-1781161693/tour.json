@@ -1,0 +1,89 @@
+[
+  {
+    "order": 1,
+    "title": "Tổng quan dự án SupplyCoreERP",
+    "description": "Bắt đầu chuyến tham quan bằng cách đọc tệp README.md ở thư mục gốc để nắm bắt tổng quan về mục tiêu dự án, công nghệ sử dụng (ABP Framework, .NET 10.0, Angular) và kiến trúc đa phân lớp (Layered Architecture) theo hướng hướng miền (DDD).",
+    "nodeIds": [
+      "document:README.md"
+    ]
+  },
+  {
+    "order": 2,
+    "title": "Khởi chạy và Gieo dữ liệu Backend",
+    "description": "Tìm hiểu cách hệ thống Backend được thiết lập và khởi chạy thông qua hai dự án cốt lõi: Program.cs của HttpApi.Host (cổng HTTP chạy ứng dụng thực tế) và Program.cs của DbMigrator (thực hiện chạy các tập lệnh Migration cơ sở dữ liệu và tự động gieo dữ liệu mẫu ban đầu).",
+    "nodeIds": [
+      "file:src/SupplyCoreERP.HttpApi.Host/Program.cs",
+      "file:src/SupplyCoreERP.DbMigrator/Program.cs"
+    ]
+  },
+  {
+    "order": 3,
+    "title": "Cấu hình EF Core & PostgreSQL DbContext",
+    "description": "Khảo sát lớp SupplyCoreERPDbContext trong phân lớp EntityFrameworkCore. Đây là nơi cấu hình cách các thực thể miền (Domain Entities) được ánh xạ trực tiếp sang các bảng tương ứng trong cơ sở dữ liệu PostgreSQL.",
+    "nodeIds": [
+      "file:src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPDbContext.cs"
+    ]
+  },
+  {
+    "order": 4,
+    "title": "Thực thể Miền cốt lõi (Domain Entities)",
+    "description": "Nghiên cứu cấu trúc của các thực thể cốt lõi đóng vai trò là Aggregate Roots trong Domain Layer. Cụ thể là Medicine (quản lý danh mục thuốc) và InventoryTicket (quản lý các phiếu kho chứa thông tin xuất, nhập và tồn kho).",
+    "nodeIds": [
+      "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs"
+    ]
+  },
+  {
+    "order": 5,
+    "title": "Quản lý nghiệp vụ phức tạp với Domain Services",
+    "description": "Tìm hiểu lớp TicketManager - một Domain Service phụ trách giải quyết các luồng xử lý phức tạp của phiếu kho (ví dụ như duyệt phiếu, thay đổi trạng thái tồn kho) đòi hỏi tương tác trên nhiều thực thể và không thuộc về riêng thực thể đơn lẻ nào.",
+    "nodeIds": [
+      "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs"
+    ]
+  },
+  {
+    "order": 6,
+    "title": "Tầng ứng dụng: Application Services & DTOs",
+    "description": "Xem xét các lớp Application Service (như InventoryTicketAppService và WarehouseAppService) chịu trách nhiệm nhận yêu cầu của Client, chuyển đổi dữ liệu qua các DTO (Data Transfer Objects) và điều phối công việc tới tầng Domain.",
+    "nodeIds": [
+      "file:src/SupplyCoreERP.Application/Tickets/InventoryTicketAppService.cs",
+      "file:src/SupplyCoreERP.Application/Warehouses/WarehouseAppService.cs"
+    ]
+  },
+  {
+    "order": 7,
+    "title": "Khởi chạy và Định tuyến Angular Frontend",
+    "description": "Đi tới phân lớp Giao diện Angular (Frontend) với điểm bắt đầu là main.ts và tệp cấu hình app.routes.ts để xem cách ứng dụng SPA khởi tạo, thiết lập định tuyến và quản lý giao diện người dùng.",
+    "nodeIds": [
+      "file:angular/src/main.ts",
+      "file:angular/src/app/app.routes.ts"
+    ]
+  },
+  {
+    "order": 8,
+    "title": "Đồng bộ API qua Proxy Services trên Angular",
+    "description": "Khám phá cách Angular liên kết với Backend. ABP Framework tự động sinh mã nguồn proxy trong Angular (ví dụ như SettingService) dựa trên các Application Services ở Backend, giúp lập trình viên thao tác với API một cách dễ dàng và an toàn về mặt kiểu dữ liệu.",
+    "nodeIds": [
+      "file:angular/src/app/proxy/settings/setting.service.ts"
+    ]
+  },
+  {
+    "order": 9,
+    "title": "Tích hợp AI thông qua Model Context Protocol (MCP)",
+    "description": "Tìm hiểu lớp server.ts trong mcp-server. Đây là máy chủ tuân thủ Model Context Protocol (MCP) cung cấp các APIs, tools và resources để các mô hình ngôn ngữ lớn (LLM/AI) có thể tương tác trực tiếp với dữ liệu và hệ thống một cách bảo mật.",
+    "nodeIds": [
+      "file:mcp-server/src/server.ts"
+    ]
+  },
+  {
+    "order": 10,
+    "title": "Đóng gói Container với Docker",
+    "description": "Cuối cùng, tìm hiểu cách triển khai và chạy thử ứng dụng trên môi trường ảo hóa thông qua hệ thống Dockerfile tại thư mục gốc, thư mục angular và thư mục mcp-server giúp đóng gói các thành phần một cách độc lập và nhất quán.",
+    "nodeIds": [
+      "service:Dockerfile",
+      "service:angular/Dockerfile",
+      "service:mcp-server/Dockerfile",
+      "service:src/SupplyCoreERP.HttpApi.Host/Dockerfile"
+    ]
+  }
+]

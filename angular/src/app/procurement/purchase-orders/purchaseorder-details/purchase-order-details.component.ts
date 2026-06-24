@@ -20,8 +20,10 @@ import { MedicineService } from 'src/app/proxy/medicines';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseOrderStatus } from 'src/app/proxy/enums/orders/purchase-order-status.enum';
+import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
+import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
 
 interface ProductUnitLookup {
   unitId: string;
@@ -34,7 +36,7 @@ interface ProductUnitLookup {
 @Component({
   selector: 'app-purchase-order-details',
   standalone: true,
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, CurrencyFormatDirective],
   templateUrl: './purchase-order-details.component.html',
 })
 export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
@@ -65,6 +67,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
   activeConditions: SupplierProductConditionDto[] = [];
 
   PurchaseOrderStatus = PurchaseOrderStatus;
+  ApprovalStatus = ApprovalStatus;
   readonly enumName = enumName;
 
   constructor(
@@ -77,7 +80,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
   ) {}
 
   ngOnInit(): void {

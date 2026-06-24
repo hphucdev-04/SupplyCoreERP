@@ -13,11 +13,14 @@ import { DrawerComponent } from 'src/app/shared/components/drawer-component/draw
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { BatchQAStatus, batchQAStatusOptions } from 'src/app/proxy/enums/warehouses';
+import { SupplierService } from 'src/app/proxy/suppliers';
+import { SupplierDto } from 'src/app/proxy/suppliers/dtos';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 
 @Component({
   selector: 'app-batches',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
   providers: [ListService],
   templateUrl: './batches.component.html',
   styleUrls: ['./batches.component.scss']
@@ -27,6 +30,7 @@ export class BatchesComponent implements OnInit, OnDestroy {
 
   data = { items: [], totalCount: 0 } as PagedResultDto<ProductBatchDto>;
   medicines: MedicineDto[] = [];
+  suppliers: SupplierDto[] = [];
 
   // Drawer state
   isDrawerOpen = false;
@@ -47,6 +51,7 @@ export class BatchesComponent implements OnInit, OnDestroy {
     public readonly list: ListService,
     private batchService: ProductBatchService,
     private medicineService: MedicineService,
+    private supplierService: SupplierService,
     private confirmation: ConfirmationService,
     private toaster: ToasterService,
     private fb: FormBuilder
@@ -55,6 +60,7 @@ export class BatchesComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.buildForm();
     this.loadMedicines();
+    this.loadSuppliers();
 
     const streamCreator = (query: any) => this.batchService.getList({
       ...query,
@@ -84,6 +90,14 @@ export class BatchesComponent implements OnInit, OnDestroy {
       });
   }
 
+  loadSuppliers() {
+    this.supplierService.getList({ maxResultCount: 1000 } as any)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.suppliers = res.items || [];
+      });
+  }
+
   // ==========================================
   // ACTIONS & FILTERS
   // ==========================================
@@ -104,7 +118,8 @@ export class BatchesComponent implements OnInit, OnDestroy {
       productId: [null, [Validators.required]],
       batchNumber: ['', [Validators.required, Validators.maxLength(50)]],
       manufacturingDate: [null, [Validators.required]],
-      expiryDate: [null, [Validators.required]]
+      expiryDate: [null, [Validators.required]],
+      supplierId: [null]
     });
   }
 

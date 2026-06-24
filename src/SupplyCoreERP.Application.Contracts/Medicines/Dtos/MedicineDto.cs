@@ -25,6 +25,7 @@ public class MedicineDto : EntityDto<Guid>
     public MedicineStatus Status { get; set; }
     public bool IsActive { get; set; }
     public bool HasTransactions { get; set; }
+    public decimal BaseUnitVolume { get; set; }
     public DateTime CreationTime { get; set; }
     public DateTime? LastModificationTime { get; set; }
 

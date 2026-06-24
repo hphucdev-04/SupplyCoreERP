@@ -114,7 +114,7 @@ public class MedicineManager_Unit_Tests
         Medicine medicine = await _medicineManager.CreateAsync(
             "Paracetamol 500mg", catId, manuId, unitId, dosageId,
             "SDK-001", UsageRoute.Oral, StorageCondition.Normal, false,
-            DateTime.Now, DateTime.Now.AddYears(5), "Initial Registration"
+            0.05m, DateTime.Now, DateTime.Now.AddYears(5), "Initial Registration"
         );
 
         // Assert
@@ -162,7 +162,7 @@ public class MedicineManager_Unit_Tests
             medicine,
             "Paracetamol Extra 500mg", catId, manuId, unitId, dosageId,
             "SDK-001", UsageRoute.Oral, StorageCondition.Cool, true,
-            null, null, "Updated validity and storage"
+            0.05m, null, null, "Updated validity and storage"
         );
 
         // Assert
@@ -202,7 +202,8 @@ public class MedicineManager_Unit_Tests
         await _medicineManager.UpdateAsync(
             medicine,
             "Paracetamol 500mg", catId, manuId, unitId, dosageId,
-            "SDK-002", UsageRoute.Oral, StorageCondition.Normal, false
+            "SDK-002", UsageRoute.Oral, StorageCondition.Normal, false,
+            0.05m
         );
 
         // Assert
@@ -269,6 +270,66 @@ public class MedicineManager_Unit_Tests
 
         // Assert
         medicine.Ingredients.Count.ShouldBe(0);
+    }
+
+    [QATest(scenario: "Thêm ingredient có hàm lượng thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
+    [Fact]
+    public async Task Should_Add_Ingredient_With_Strength_Successfully()
+    {
+        // Arrange
+        Medicine medicine = new(
+            Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "MED-001", "Paracetamol", Guid.NewGuid(), Guid.NewGuid(),
+            "SDK-001", UsageRoute.Oral, StorageCondition.Normal, false
+        );
+        Guid activeIngredientId = Guid.NewGuid();
+        _activeIngredientRepository.AnyAsync(Arg.Any<Expression<Func<ActiveIngredient, bool>>>()).Returns(true);
+
+        // Act
+        await _medicineManager.AddIngredientAsync(medicine, activeIngredientId, "500mg");
+
+        // Assert
+        medicine.Ingredients.Count.ShouldBe(1);
+        medicine.Ingredients.First().Strength.ShouldBe("500mg");
+    }
+
+    [QATest(scenario: "Cập nhật hàm lượng ingredient thành công.", feature: "Medicine", layer: "Domain", priority: "Medium")]
+    [Fact]
+    public async Task Should_Update_Ingredient_Strength_Successfully()
+    {
+        // Arrange
+        Medicine medicine = new(
+            Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "MED-001", "Paracetamol", Guid.NewGuid(), Guid.NewGuid(),
+            "SDK-001", UsageRoute.Oral, StorageCondition.Normal, false
+        );
+        Guid activeIngredientId = Guid.NewGuid();
+        _activeIngredientRepository.AnyAsync(Arg.Any<Expression<Func<ActiveIngredient, bool>>>()).Returns(true);
+        await _medicineManager.AddIngredientAsync(medicine, activeIngredientId, "250mg");
+
+        // Act
+        await _medicineManager.UpdateIngredientStrengthAsync(medicine, activeIngredientId, "500mg");
+
+        // Assert
+        medicine.Ingredients.First().Strength.ShouldBe("500mg");
+    }
+
+    [QATest(scenario: "Cập nhật hàm lượng ingredient không tồn tại phải ném exception.", feature: "Medicine", layer: "Domain", priority: "Medium")]
+    [Fact]
+    public async Task Should_Throw_When_Update_Strength_Of_NonExistent_Ingredient()
+    {
+        // Arrange
+        Medicine medicine = new(
+            Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "MED-001", "Paracetamol", Guid.NewGuid(), Guid.NewGuid(),
+            "SDK-001", UsageRoute.Oral, StorageCondition.Normal, false
+        );
+        Guid nonExistentIngredientId = Guid.NewGuid();
+        _activeIngredientRepository.AnyAsync(Arg.Any<Expression<Func<ActiveIngredient, bool>>>()).Returns(true);
+
+        // Act & Assert
+        BusinessException ex = await Assert.ThrowsAsync<BusinessException>(async () =>
+        {
+            await _medicineManager.UpdateIngredientStrengthAsync(medicine, nonExistentIngredientId, "500mg");
+        });
+        ex.Code.ShouldBe("SupplyCoreERP:IngredientNotFound");
     }
 
     [QATest(scenario: "Thêm đơn vị quy đổi thành công cho thuốc.", feature: "Medicine", layer: "Domain", priority: "High")]

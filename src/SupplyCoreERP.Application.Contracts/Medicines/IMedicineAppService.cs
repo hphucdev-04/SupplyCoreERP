@@ -29,6 +29,7 @@ public interface IMedicineAppService : IApplicationService
 
     //Ingredients
     Task AddIngredientAsync(Guid id, CreateUpdateMedicineIngredientDto input);
+    Task UpdateIngredientStrengthAsync(Guid id, Guid activeIngredientId, CreateUpdateMedicineIngredientDto input);
     Task RemoveIngredientAsync(Guid id, Guid activeIngredientId);
 
     //Units

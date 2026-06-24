@@ -10,6 +10,7 @@ public class PurchaseReturnAutoMapperProfile : Profile
     {
         // PurchaseReturn Mappings
         CreateMap<PurchaseReturn, PurchaseReturnDto>()
+            .ForMember(dest => dest.PurchaseOrderCode, opt => opt.MapFrom(src => src.PurchaseOrder != null ? src.PurchaseOrder.Code : null))
             .ForMember(dest => dest.SupplierName, opt => opt.MapFrom(src => src.Supplier != null ? src.Supplier.Name : null))
             .ForMember(dest => dest.SupplierCode, opt => opt.MapFrom(src => src.Supplier != null ? src.Supplier.Code : null))
             .ForMember(dest => dest.WarehouseName, opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Name : null))

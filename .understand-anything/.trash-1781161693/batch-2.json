@@ -1,0 +1,522 @@
+{
+  "nodes": [
+    {
+      "id": "file:angular/src/app/proxy/prices/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/prices/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/prices/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/prices/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/purchase-orders/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/purchase-orders/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/purchase-orders/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/purchase-orders/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/purchase-requisitions/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/purchase-requisitions/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/purchase-requisitions/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/purchase-requisitions/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/purchase-return-requests/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/purchase-return-requests/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/purchase-return-requests/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/purchase-return-requests/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/purchase-returns/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/purchase-returns/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/purchase-returns/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/purchase-returns/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/sales-orders/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/sales-orders/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/sales-orders/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/sales-orders/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/sales-recalls/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/sales-recalls/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/sales-recalls/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/sales-recalls/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/settings/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/settings/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/settings/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/settings/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/suppliers/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/suppliers/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/suppliers/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/suppliers/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/tickets/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/tickets/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/tickets/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/tickets/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/transactions/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/transactions/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/transactions/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/transactions/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/warehouses/dtos/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/warehouses/dtos/index.ts",
+        "summary": "File barrel xuất bản các đối tượng chuyển dữ liệu (DTO) cho phân hệ dtos để sử dụng ở Client Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/warehouses/index.ts",
+      "type": "file",
+      "metadata": {
+        "name": "index.ts",
+        "path": "angular/src/app/proxy/warehouses/index.ts",
+        "summary": "File barrel xuất bản phân hệ index.ts, kết nối các dịch vụ (services) và mô hình dữ liệu (DTOs) liên quan.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "barrel",
+          "exporter"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:angular/src/app/proxy/prices/index.ts",
+      "target": "file:angular/src/app/proxy/prices/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/purchase-orders/index.ts",
+      "target": "file:angular/src/app/proxy/purchase-orders/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/purchase-requisitions/index.ts",
+      "target": "file:angular/src/app/proxy/purchase-requisitions/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/purchase-return-requests/index.ts",
+      "target": "file:angular/src/app/proxy/purchase-return-requests/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/purchase-returns/index.ts",
+      "target": "file:angular/src/app/proxy/purchase-returns/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/sales-orders/index.ts",
+      "target": "file:angular/src/app/proxy/sales-orders/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/sales-recalls/index.ts",
+      "target": "file:angular/src/app/proxy/sales-recalls/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/settings/index.ts",
+      "target": "file:angular/src/app/proxy/settings/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/suppliers/index.ts",
+      "target": "file:angular/src/app/proxy/suppliers/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/tickets/index.ts",
+      "target": "file:angular/src/app/proxy/tickets/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/transactions/index.ts",
+      "target": "file:angular/src/app/proxy/transactions/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/warehouses/index.ts",
+      "target": "file:angular/src/app/proxy/warehouses/dtos/index.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

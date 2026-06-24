@@ -1,4 +1,5 @@
 using System;
+using SupplyCoreERP.Enums.Orders;
 using Volo.Abp.Application.Dtos;
 
 namespace SupplyCoreERP.PurchaseReturnRequests.Dtos;
@@ -15,6 +16,10 @@ public class PurchaseReturnRequestLineDto : AuditedEntityDto<Guid>
     public Guid PurchaseOrderId { get; set; }
     public string? PurchaseOrderCode { get; set; }
     public Guid PurchaseOrderLineId { get; set; }
+    public PurchaseReturnType ReturnType { get; set; }
+    public Guid SupplierId { get; set; }
+    public string? SupplierName { get; set; }
+    public string? SupplierCode { get; set; }
 
     public decimal Quantity { get; set; }
     public decimal BaseQuantity { get; set; }

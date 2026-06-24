@@ -1,0 +1,1744 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": ".gitattributes",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 1,
+      "nonEmptyLines": 1,
+      "metrics": {}
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "fileCategory": "code",
+      "totalLines": 329,
+      "nonEmptyLines": 270,
+      "metrics": {}
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 3,
+      "nonEmptyLines": 3,
+      "sections": [
+        {
+          "heading": "outputLanguage",
+          "level": 1,
+          "line": 2
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 1
+      }
+    },
+    {
+      "path": "angular/e2e/protractor.conf.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 30,
+      "callGraph": [
+        {
+          "caller": "onPrepare",
+          "callee": "require('ts-node').register",
+          "lineNumber": 27
+        },
+        {
+          "caller": "onPrepare",
+          "callee": "require",
+          "lineNumber": 27
+        },
+        {
+          "caller": "onPrepare",
+          "callee": "require('path').join",
+          "lineNumber": 28
+        },
+        {
+          "caller": "onPrepare",
+          "callee": "require",
+          "lineNumber": 28
+        },
+        {
+          "caller": "onPrepare",
+          "callee": "jasmine.getEnv().addReporter",
+          "lineNumber": 30
+        },
+        {
+          "caller": "onPrepare",
+          "callee": "jasmine.getEnv",
+          "lineNumber": 30
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/e2e/src/app.e2e-spec.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 28,
+      "nonEmptyLines": 24,
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/e2e/src/app.po.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 9,
+      "classes": [
+        {
+          "name": "AppPage",
+          "startLine": 3,
+          "endLine": 11,
+          "methods": [
+            "navigateTo",
+            "getTitleText"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "AppPage",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "navigateTo",
+          "callee": "browser.get",
+          "lineNumber": 5
+        },
+        {
+          "caller": "getTitleText",
+          "callee": "element(by.css('app-root .content span')).getText",
+          "lineNumber": 9
+        },
+        {
+          "caller": "getTitleText",
+          "callee": "element",
+          "lineNumber": 9
+        },
+        {
+          "caller": "getTitleText",
+          "callee": "by.css",
+          "lineNumber": 9
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/e2e/tsconfig.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 13,
+      "nonEmptyLines": 13,
+      "sections": [
+        {
+          "heading": "extends",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "compilerOptions",
+          "level": 1,
+          "line": 3
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": "angular/karma.conf.js",
+      "language": "javascript",
+      "fileCategory": "code",
+      "totalLines": 43,
+      "nonEmptyLines": 42,
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/nginx.conf",
+      "language": "conf",
+      "fileCategory": "code",
+      "totalLines": 30,
+      "nonEmptyLines": 25,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/catalogs.routes.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 31,
+      "exports": [
+        {
+          "name": "CATALOGS_ROUTES",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/catalogs/categories/categories.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 86,
+      "nonEmptyLines": 79,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/categories/categories.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 24,
+      "nonEmptyLines": 21,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/categories/categories.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 110,
+      "nonEmptyLines": 99,
+      "classes": [
+        {
+          "name": "CategoriesComponent",
+          "startLine": 19,
+          "endLine": 110,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "onSearch",
+            "createCategory",
+            "editCategory",
+            "buildForm",
+            "closeDrawer",
+            "save",
+            "deleteCategory"
+          ],
+          "properties": [
+            "destroy$",
+            "category",
+            "isDrawerOpen",
+            "form",
+            "selectedCategory",
+            "filterText"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CategoriesComponent",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "categoryStreamCreator",
+          "callee": "this.categoryService.getList",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(categoryStreamCreator).subscribe",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery",
+          "lineNumber": 37
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.buildForm",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 44
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 45
+        },
+        {
+          "caller": "onSearch",
+          "callee": "this.list.get",
+          "lineNumber": 50
+        },
+        {
+          "caller": "createCategory",
+          "callee": "this.form.reset",
+          "lineNumber": 55
+        },
+        {
+          "caller": "editCategory",
+          "callee": "this.categoryService.get(id)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 60
+        },
+        {
+          "caller": "editCategory",
+          "callee": "this.categoryService.get(id)\r\n      .pipe",
+          "lineNumber": 60
+        },
+        {
+          "caller": "editCategory",
+          "callee": "this.categoryService.get",
+          "lineNumber": 60
+        },
+        {
+          "caller": "editCategory",
+          "callee": "takeUntil",
+          "lineNumber": 61
+        },
+        {
+          "caller": "editCategory",
+          "callee": "this.form.patchValue",
+          "lineNumber": 64
+        },
+        {
+          "caller": "buildForm",
+          "callee": "this.fb.group",
+          "lineNumber": 70
+        },
+        {
+          "caller": "buildForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 71
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.reset",
+          "lineNumber": 77
+        },
+        {
+          "caller": "save",
+          "callee": "this.form.getRawValue",
+          "lineNumber": 84
+        },
+        {
+          "caller": "save",
+          "callee": "this.categoryService.update",
+          "lineNumber": 86
+        },
+        {
+          "caller": "save",
+          "callee": "this.categoryService.create",
+          "lineNumber": 87
+        },
+        {
+          "caller": "save",
+          "callee": "request.subscribe",
+          "lineNumber": 89
+        },
+        {
+          "caller": "save",
+          "callee": "this.closeDrawer",
+          "lineNumber": 90
+        },
+        {
+          "caller": "save",
+          "callee": "this.list.get",
+          "lineNumber": 91
+        },
+        {
+          "caller": "save",
+          "callee": "this.toaster.success",
+          "lineNumber": 92
+        },
+        {
+          "caller": "deleteCategory",
+          "callee": "this.confirmation\r\n      .warn('::AreYouSureToDelete', '::AreYouSure')\r\n      .subscribe",
+          "lineNumber": 99
+        },
+        {
+          "caller": "deleteCategory",
+          "callee": "this.confirmation\r\n      .warn",
+          "lineNumber": 99
+        },
+        {
+          "caller": "deleteCategory",
+          "callee": "this.categoryService.delete(id).subscribe",
+          "lineNumber": 103
+        },
+        {
+          "caller": "deleteCategory",
+          "callee": "this.categoryService.delete",
+          "lineNumber": 103
+        },
+        {
+          "caller": "deleteCategory",
+          "callee": "this.list.get",
+          "lineNumber": 104
+        },
+        {
+          "caller": "deleteCategory",
+          "callee": "this.toaster.success",
+          "lineNumber": 105
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/catalogs/dosageforms/dosageforms.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 89,
+      "nonEmptyLines": 79,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/dosageforms/dosageforms.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/dosageforms/dosageforms.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 112,
+      "nonEmptyLines": 96,
+      "classes": [
+        {
+          "name": "DosageformsComponent",
+          "startLine": 19,
+          "endLine": 112,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "onSearch",
+            "createDosage",
+            "editDosage",
+            "deleteDosage",
+            "buildForm",
+            "closeDrawer",
+            "save"
+          ],
+          "properties": [
+            "destroy$",
+            "dosage",
+            "isDrawerOpen",
+            "form",
+            "selectedDosage",
+            "filterText"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DosageformsComponent",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "dosageStreamCreator",
+          "callee": "this.dosageService.getList",
+          "lineNumber": 36
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(dosageStreamCreator).subscribe",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.buildForm",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 46
+        },
+        {
+          "caller": "onSearch",
+          "callee": "this.list.get",
+          "lineNumber": 51
+        },
+        {
+          "caller": "createDosage",
+          "callee": "this.form.reset",
+          "lineNumber": 56
+        },
+        {
+          "caller": "editDosage",
+          "callee": "this.dosageService.get(id)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 62
+        },
+        {
+          "caller": "editDosage",
+          "callee": "this.dosageService.get(id)\r\n      .pipe",
+          "lineNumber": 62
+        },
+        {
+          "caller": "editDosage",
+          "callee": "this.dosageService.get",
+          "lineNumber": 62
+        },
+        {
+          "caller": "editDosage",
+          "callee": "takeUntil",
+          "lineNumber": 63
+        },
+        {
+          "caller": "editDosage",
+          "callee": "this.form.patchValue",
+          "lineNumber": 66
+        },
+        {
+          "caller": "deleteDosage",
+          "callee": "this.confirmation\r\n      .warn('::AreYouSureToDelete', '::AreYouSure')\r\n      .subscribe",
+          "lineNumber": 72
+        },
+        {
+          "caller": "deleteDosage",
+          "callee": "this.confirmation\r\n      .warn",
+          "lineNumber": 72
+        },
+        {
+          "caller": "deleteDosage",
+          "callee": "this.dosageService.delete(id).subscribe",
+          "lineNumber": 76
+        },
+        {
+          "caller": "deleteDosage",
+          "callee": "this.dosageService.delete",
+          "lineNumber": 76
+        },
+        {
+          "caller": "deleteDosage",
+          "callee": "this.list.get",
+          "lineNumber": 77
+        },
+        {
+          "caller": "deleteDosage",
+          "callee": "this.toaster.success",
+          "lineNumber": 78
+        },
+        {
+          "caller": "buildForm",
+          "callee": "this.fb.group",
+          "lineNumber": 85
+        },
+        {
+          "caller": "buildForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 86
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.reset",
+          "lineNumber": 94
+        },
+        {
+          "caller": "save",
+          "callee": "this.dosageService.update",
+          "lineNumber": 101
+        },
+        {
+          "caller": "save",
+          "callee": "this.dosageService.create",
+          "lineNumber": 102
+        },
+        {
+          "caller": "save",
+          "callee": "request.subscribe",
+          "lineNumber": 104
+        },
+        {
+          "caller": "save",
+          "callee": "this.closeDrawer",
+          "lineNumber": 105
+        },
+        {
+          "caller": "save",
+          "callee": "this.list.get",
+          "lineNumber": 106
+        },
+        {
+          "caller": "save",
+          "callee": "this.toaster.success",
+          "lineNumber": 107
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/catalogs/ingredients/ingredients.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 93,
+      "nonEmptyLines": 83,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/ingredients/ingredients.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/ingredients/ingredients.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 108,
+      "nonEmptyLines": 96,
+      "classes": [
+        {
+          "name": "IngredientsComponent",
+          "startLine": 19,
+          "endLine": 108,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "onSearch",
+            "createIngredient",
+            "editIngredient",
+            "deleteIngredient",
+            "buildForm",
+            "closeDrawer",
+            "save"
+          ],
+          "properties": [
+            "destroy$",
+            "ingredient",
+            "isDrawerOpen",
+            "form",
+            "selectedIngredient",
+            "filterText"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IngredientsComponent",
+          "line": 12,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ingredientStreamCreator",
+          "callee": "this.ingredientService.getList",
+          "lineNumber": 36
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(ingredientStreamCreator).subscribe",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.buildForm",
+          "lineNumber": 41
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 46
+        },
+        {
+          "caller": "onSearch",
+          "callee": "this.list.get",
+          "lineNumber": 51
+        },
+        {
+          "caller": "createIngredient",
+          "callee": "this.form.reset",
+          "lineNumber": 56
+        },
+        {
+          "caller": "editIngredient",
+          "callee": "this.ingredientService.get(id)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 61
+        },
+        {
+          "caller": "editIngredient",
+          "callee": "this.ingredientService.get(id)\r\n      .pipe",
+          "lineNumber": 61
+        },
+        {
+          "caller": "editIngredient",
+          "callee": "this.ingredientService.get",
+          "lineNumber": 61
+        },
+        {
+          "caller": "editIngredient",
+          "callee": "takeUntil",
+          "lineNumber": 62
+        },
+        {
+          "caller": "editIngredient",
+          "callee": "this.form.patchValue",
+          "lineNumber": 65
+        },
+        {
+          "caller": "deleteIngredient",
+          "callee": "this.confirmation\r\n      .warn('::AreYouSureToDelete', '::AreYouSure')\r\n      .subscribe",
+          "lineNumber": 71
+        },
+        {
+          "caller": "deleteIngredient",
+          "callee": "this.confirmation\r\n      .warn",
+          "lineNumber": 71
+        },
+        {
+          "caller": "deleteIngredient",
+          "callee": "this.ingredientService.delete(id).subscribe",
+          "lineNumber": 75
+        },
+        {
+          "caller": "deleteIngredient",
+          "callee": "this.ingredientService.delete",
+          "lineNumber": 75
+        },
+        {
+          "caller": "deleteIngredient",
+          "callee": "this.list.get",
+          "lineNumber": 76
+        },
+        {
+          "caller": "deleteIngredient",
+          "callee": "this.toaster.success",
+          "lineNumber": 77
+        },
+        {
+          "caller": "buildForm",
+          "callee": "this.fb.group",
+          "lineNumber": 84
+        },
+        {
+          "caller": "buildForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 85
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.reset",
+          "lineNumber": 91
+        },
+        {
+          "caller": "save",
+          "callee": "this.ingredientService.update",
+          "lineNumber": 97
+        },
+        {
+          "caller": "save",
+          "callee": "this.ingredientService.create",
+          "lineNumber": 98
+        },
+        {
+          "caller": "save",
+          "callee": "request.subscribe",
+          "lineNumber": 100
+        },
+        {
+          "caller": "save",
+          "callee": "this.closeDrawer",
+          "lineNumber": 101
+        },
+        {
+          "caller": "save",
+          "callee": "this.list.get",
+          "lineNumber": 102
+        },
+        {
+          "caller": "save",
+          "callee": "this.toaster.success",
+          "lineNumber": 103
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/catalogs/manufacturers/manufacturers.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 122,
+      "nonEmptyLines": 108,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/manufacturers/manufacturers.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/manufacturers/manufacturers.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 164,
+      "nonEmptyLines": 140,
+      "classes": [
+        {
+          "name": "ManufacturersComponent",
+          "startLine": 21,
+          "endLine": 164,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "loadLookups",
+            "onSearch",
+            "createManufacturer",
+            "editManufacturer",
+            "deleteManufacturer",
+            "buildForm",
+            "onContinentChange",
+            "closeDrawer",
+            "save",
+            "setupContinentListener"
+          ],
+          "properties": [
+            "destroy$",
+            "data",
+            "isDrawerOpen",
+            "form",
+            "selectedManufacturer",
+            "filterText",
+            "continents",
+            "countries",
+            "filteredCountries"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ManufacturersComponent",
+          "line": 14,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "streamCreator",
+          "callee": "this.manufacturerService.getList",
+          "lineNumber": 45
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery(streamCreator).subscribe",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.list.hookToQuery",
+          "lineNumber": 47
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.buildForm",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadLookups",
+          "lineNumber": 51
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.setupContinentListener",
+          "lineNumber": 52
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 56
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 57
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.locationService.getContinents()\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 61
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.locationService.getContinents()\r\n      .pipe",
+          "lineNumber": 61
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.locationService.getContinents",
+          "lineNumber": 61
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "takeUntil",
+          "lineNumber": 62
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.locationService.getAllCountries()\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 65
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.locationService.getAllCountries()\r\n      .pipe",
+          "lineNumber": 65
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.locationService.getAllCountries",
+          "lineNumber": 65
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "takeUntil",
+          "lineNumber": 66
+        },
+        {
+          "caller": "onSearch",
+          "callee": "this.list.get",
+          "lineNumber": 72
+        },
+        {
+          "caller": "createManufacturer",
+          "callee": "this.form.reset",
+          "lineNumber": 78
+        },
+        {
+          "caller": "editManufacturer",
+          "callee": "this.manufacturerService.get(id)\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 83
+        },
+        {
+          "caller": "editManufacturer",
+          "callee": "this.manufacturerService.get(id)\r\n      .pipe",
+          "lineNumber": 83
+        },
+        {
+          "caller": "editManufacturer",
+          "callee": "this.manufacturerService.get",
+          "lineNumber": 83
+        },
+        {
+          "caller": "editManufacturer",
+          "callee": "takeUntil",
+          "lineNumber": 84
+        },
+        {
+          "caller": "editManufacturer",
+          "callee": "this.countries.filter",
+          "lineNumber": 89
+        },
+        {
+          "caller": "editManufacturer",
+          "callee": "this.form.patchValue",
+          "lineNumber": 90
+        },
+        {
+          "caller": "deleteManufacturer",
+          "callee": "this.confirmation\r\n      .warn('::AreYouSureToDelete', '::AreYouSure')\r\n      .subscribe",
+          "lineNumber": 97
+        },
+        {
+          "caller": "deleteManufacturer",
+          "callee": "this.confirmation\r\n      .warn",
+          "lineNumber": 97
+        },
+        {
+          "caller": "deleteManufacturer",
+          "callee": "this.manufacturerService.delete(id)\r\n            .pipe(takeUntil(this.destroy$))\r\n            .subscribe",
+          "lineNumber": 101
+        },
+        {
+          "caller": "deleteManufacturer",
+          "callee": "this.manufacturerService.delete(id)\r\n            .pipe",
+          "lineNumber": 101
+        },
+        {
+          "caller": "deleteManufacturer",
+          "callee": "this.manufacturerService.delete",
+          "lineNumber": 101
+        },
+        {
+          "caller": "deleteManufacturer",
+          "callee": "takeUntil",
+          "lineNumber": 102
+        },
+        {
+          "caller": "deleteManufacturer",
+          "callee": "this.list.get",
+          "lineNumber": 104
+        },
+        {
+          "caller": "deleteManufacturer",
+          "callee": "this.toaster.success",
+          "lineNumber": 105
+        },
+        {
+          "caller": "buildForm",
+          "callee": "this.fb.group",
+          "lineNumber": 112
+        },
+        {
+          "caller": "buildForm",
+          "callee": "Validators.maxLength",
+          "lineNumber": 113
+        },
+        {
+          "caller": "onContinentChange",
+          "callee": "this.countries.filter",
+          "lineNumber": 125
+        },
+        {
+          "caller": "onContinentChange",
+          "callee": "this.form.get",
+          "lineNumber": 128
+        },
+        {
+          "caller": "onContinentChange",
+          "callee": "this.filteredCountries.find",
+          "lineNumber": 129
+        },
+        {
+          "caller": "onContinentChange",
+          "callee": "this.form.get",
+          "lineNumber": 130
+        },
+        {
+          "caller": "onContinentChange",
+          "callee": "this.form.get('countryId')?.setValue",
+          "lineNumber": 131
+        },
+        {
+          "caller": "onContinentChange",
+          "callee": "this.form.get",
+          "lineNumber": 131
+        },
+        {
+          "caller": "closeDrawer",
+          "callee": "this.form.reset",
+          "lineNumber": 137
+        },
+        {
+          "caller": "save",
+          "callee": "this.manufacturerService.update",
+          "lineNumber": 144
+        },
+        {
+          "caller": "save",
+          "callee": "this.manufacturerService.create",
+          "lineNumber": 145
+        },
+        {
+          "caller": "save",
+          "callee": "request\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 147
+        },
+        {
+          "caller": "save",
+          "callee": "request\r\n      .pipe",
+          "lineNumber": 147
+        },
+        {
+          "caller": "save",
+          "callee": "takeUntil",
+          "lineNumber": 148
+        },
+        {
+          "caller": "save",
+          "callee": "this.closeDrawer",
+          "lineNumber": 150
+        },
+        {
+          "caller": "save",
+          "callee": "this.list.get",
+          "lineNumber": 151
+        },
+        {
+          "caller": "save",
+          "callee": "this.toaster.success",
+          "lineNumber": 152
+        },
+        {
+          "caller": "setupContinentListener",
+          "callee": "this.form.get('continentId')?.valueChanges\r\n      .pipe(takeUntil(this.destroy$))\r\n      .subscribe",
+          "lineNumber": 159
+        },
+        {
+          "caller": "setupContinentListener",
+          "callee": "this.form.get('continentId')?.valueChanges\r\n      .pipe",
+          "lineNumber": 159
+        },
+        {
+          "caller": "setupContinentListener",
+          "callee": "this.form.get",
+          "lineNumber": 159
+        },
+        {
+          "caller": "setupContinentListener",
+          "callee": "takeUntil",
+          "lineNumber": 160
+        },
+        {
+          "caller": "setupContinentListener",
+          "callee": "this.onContinentChange",
+          "lineNumber": 161
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicice-details/medicice-details.component.html",
+      "language": "html",
+      "fileCategory": "markup",
+      "totalLines": 738,
+      "nonEmptyLines": 716,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicice-details/medicice-details.component.scss",
+      "language": "css",
+      "fileCategory": "markup",
+      "totalLines": 1,
+      "nonEmptyLines": 0,
+      "metrics": {}
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicice-details/medicice-details.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 377,
+      "nonEmptyLines": 329,
+      "classes": [
+        {
+          "name": "MedicineDetailComponent",
+          "startLine": 49,
+          "endLine": 377,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnDestroy",
+            "goBack",
+            "open",
+            "close",
+            "loadData",
+            "prepareUnitsForPrice",
+            "loadPrices",
+            "loadSuppliers",
+            "onSupplierSearch",
+            "loadLookups",
+            "initForms",
+            "openIngrDrawer",
+            "saveIngr",
+            "removeIngr",
+            "openUnitDrawer",
+            "editUnit",
+            "saveUnit",
+            "removeUnit",
+            "openPriceDrawer",
+            "editPrice",
+            "savePrice",
+            "removePrice"
+          ],
+          "properties": [
+            "destroy$",
+            "ROUTE_NAME",
+            "isVisible",
+            "id",
+            "medicine",
+            "availableUnitsForPrice",
+            "productPrices",
+            "priceLists",
+            "suppliers",
+            "filterSupplierText",
+            "isIngrDrawerOpen",
+            "isUnitDrawerOpen",
+            "isPriceDrawerOpen",
+            "ingrForm",
+            "unitForm",
+            "priceForm",
+            "allIngredients",
+            "allUnits",
+            "isEditingUnit",
+            "editingUnitId",
+            "isEditingPrice",
+            "editingPriceId",
+            "UsageRoute",
+            "StorageCondition",
+            "CurrencyType",
+            "activeTab",
+            "enumName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MedicineDetailComponent",
+          "line": 34,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "this.initForms",
+          "lineNumber": 112
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.route.snapshot.paramMap.get",
+          "lineNumber": 115
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.open",
+          "lineNumber": 117
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.routesService.remove",
+          "lineNumber": 122
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.next",
+          "lineNumber": 123
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.destroy$.complete",
+          "lineNumber": 124
+        },
+        {
+          "caller": "goBack",
+          "callee": "this.router.navigate",
+          "lineNumber": 128
+        },
+        {
+          "caller": "open",
+          "callee": "this.loadData",
+          "lineNumber": 137
+        },
+        {
+          "caller": "loadData",
+          "callee": "this.medicineService.get(this.id).subscribe",
+          "lineNumber": 145
+        },
+        {
+          "caller": "loadData",
+          "callee": "this.medicineService.get",
+          "lineNumber": 145
+        },
+        {
+          "caller": "loadData",
+          "callee": "this.routesService.add",
+          "lineNumber": 147
+        },
+        {
+          "caller": "loadData",
+          "callee": "this.prepareUnitsForPrice",
+          "lineNumber": 156
+        },
+        {
+          "caller": "loadData",
+          "callee": "this.loadLookups",
+          "lineNumber": 157
+        },
+        {
+          "caller": "loadData",
+          "callee": "this.loadPrices",
+          "lineNumber": 158
+        },
+        {
+          "caller": "prepareUnitsForPrice",
+          "callee": "this.medicine.units.map",
+          "lineNumber": 169
+        },
+        {
+          "caller": "loadPrices",
+          "callee": "this.priceService.getByProduct(this.id).subscribe",
+          "lineNumber": 174
+        },
+        {
+          "caller": "loadPrices",
+          "callee": "this.priceService.getByProduct",
+          "lineNumber": 174
+        },
+        {
+          "caller": "streamCreator",
+          "callee": "this.supplierService.getSupplierList",
+          "lineNumber": 181
+        },
+        {
+          "caller": "loadSuppliers",
+          "callee": "this.list.hookToQuery(streamCreator).subscribe",
+          "lineNumber": 186
+        },
+        {
+          "caller": "loadSuppliers",
+          "callee": "this.list.hookToQuery",
+          "lineNumber": 186
+        },
+        {
+          "caller": "onSupplierSearch",
+          "callee": "this.list.get",
+          "lineNumber": 193
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "forkJoin({\r\n      ingrs: this.ingredientService.getList({ maxResultCount: 1000 }),\r\n      units: this.unitService.getList({ maxResultCount: 1000 }),\r\n      priceLists: this.priceService.getPriceLists(),\r\n    }).subscribe",
+          "lineNumber": 197
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "forkJoin",
+          "lineNumber": 197
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.ingredientService.getList",
+          "lineNumber": 198
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.unitService.getList",
+          "lineNumber": 199
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.priceService.getPriceLists",
+          "lineNumber": 200
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "res.ingrs.items.filter",
+          "lineNumber": 203
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "medicineData.ingredients.some",
+          "lineNumber": 204
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "fullUnits.filter",
+          "lineNumber": 209
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "medicineData.units.some",
+          "lineNumber": 212
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "fullUnits.find",
+          "lineNumber": 216
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.allUnits.find",
+          "lineNumber": 217
+        },
+        {
+          "caller": "loadLookups",
+          "callee": "this.allUnits.push",
+          "lineNumber": 218
+        },
+        {
+          "caller": "initForms",
+          "callee": "this.fb.group",
+          "lineNumber": 229
+        },
+        {
+          "caller": "initForms",
+          "callee": "this.fb.group",
+          "lineNumber": 234
+        },
+        {
+          "caller": "initForms",
+          "callee": "Validators.min",
+          "lineNumber": 236
+        },
+        {
+          "caller": "initForms",
+          "callee": "Validators.min",
+          "lineNumber": 237
+        },
+        {
+          "caller": "initForms",
+          "callee": "this.fb.group",
+          "lineNumber": 241
+        },
+        {
+          "caller": "initForms",
+          "callee": "Validators.min",
+          "lineNumber": 244
+        },
+        {
+          "caller": "initForms",
+          "callee": "Validators.min",
+          "lineNumber": 245
+        },
+        {
+          "caller": "openIngrDrawer",
+          "callee": "this.ingrForm.reset",
+          "lineNumber": 251
+        },
+        {
+          "caller": "saveIngr",
+          "callee": "this.ingrForm.getRawValue",
+          "lineNumber": 257
+        },
+        {
+          "caller": "saveIngr",
+          "callee": "this.medicineService.addIngredient(this.id, payload).subscribe",
+          "lineNumber": 258
+        },
+        {
+          "caller": "saveIngr",
+          "callee": "this.medicineService.addIngredient",
+          "lineNumber": 258
+        },
+        {
+          "caller": "saveIngr",
+          "callee": "this.loadData",
+          "lineNumber": 260
+        },
+        {
+          "caller": "removeIngr",
+          "callee": "this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe",
+          "lineNumber": 265
+        },
+        {
+          "caller": "removeIngr",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 265
+        },
+        {
+          "caller": "removeIngr",
+          "callee": "this.medicineService.removeIngredient(this.id, id).subscribe",
+          "lineNumber": 267
+        },
+        {
+          "caller": "removeIngr",
+          "callee": "this.medicineService.removeIngredient",
+          "lineNumber": 267
+        },
+        {
+          "caller": "removeIngr",
+          "callee": "this.loadData",
+          "lineNumber": 267
+        },
+        {
+          "caller": "openUnitDrawer",
+          "callee": "Math.max",
+          "lineNumber": 277
+        },
+        {
+          "caller": "openUnitDrawer",
+          "callee": "this.medicine.units.map",
+          "lineNumber": 277
+        },
+        {
+          "caller": "openUnitDrawer",
+          "callee": "this.unitForm.reset",
+          "lineNumber": 279
+        },
+        {
+          "caller": "openUnitDrawer",
+          "callee": "this.unitForm.get('unitId')?.enable",
+          "lineNumber": 280
+        },
+        {
+          "caller": "openUnitDrawer",
+          "callee": "this.unitForm.get",
+          "lineNumber": 280
+        },
+        {
+          "caller": "editUnit",
+          "callee": "this.unitForm.patchValue",
+          "lineNumber": 287
+        },
+        {
+          "caller": "editUnit",
+          "callee": "this.unitForm.get('unitId')?.disable",
+          "lineNumber": 292
+        },
+        {
+          "caller": "editUnit",
+          "callee": "this.unitForm.get",
+          "lineNumber": 292
+        },
+        {
+          "caller": "saveUnit",
+          "callee": "this.unitForm.getRawValue",
+          "lineNumber": 298
+        },
+        {
+          "caller": "saveUnit",
+          "callee": "this.medicineService.updateUnit(this.id, this.editingUnitId!, payload).subscribe",
+          "lineNumber": 301
+        },
+        {
+          "caller": "saveUnit",
+          "callee": "this.medicineService.updateUnit",
+          "lineNumber": 301
+        },
+        {
+          "caller": "saveUnit",
+          "callee": "this.loadData",
+          "lineNumber": 303
+        },
+        {
+          "caller": "saveUnit",
+          "callee": "this.medicineService.addUnit(this.id, payload).subscribe",
+          "lineNumber": 306
+        },
+        {
+          "caller": "saveUnit",
+          "callee": "this.medicineService.addUnit",
+          "lineNumber": 306
+        },
+        {
+          "caller": "saveUnit",
+          "callee": "this.loadData",
+          "lineNumber": 308
+        },
+        {
+          "caller": "removeUnit",
+          "callee": "this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe",
+          "lineNumber": 314
+        },
+        {
+          "caller": "removeUnit",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 314
+        },
+        {
+          "caller": "removeUnit",
+          "callee": "this.medicineService.removeUnit(this.id, id).subscribe",
+          "lineNumber": 316
+        },
+        {
+          "caller": "removeUnit",
+          "callee": "this.medicineService.removeUnit",
+          "lineNumber": 316
+        },
+        {
+          "caller": "removeUnit",
+          "callee": "this.loadData",
+          "lineNumber": 316
+        },
+        {
+          "caller": "openPriceDrawer",
+          "callee": "this.priceForm.reset",
+          "lineNumber": 325
+        },
+        {
+          "caller": "openPriceDrawer",
+          "callee": "this.priceForm.get('priceListId')?.enable",
+          "lineNumber": 327
+        },
+        {
+          "caller": "openPriceDrawer",
+          "callee": "this.priceForm.get",
+          "lineNumber": 327
+        },
+        {
+          "caller": "openPriceDrawer",
+          "callee": "this.priceForm.get('unitId')?.enable",
+          "lineNumber": 328
+        },
+        {
+          "caller": "openPriceDrawer",
+          "callee": "this.priceForm.get",
+          "lineNumber": 328
+        },
+        {
+          "caller": "editPrice",
+          "callee": "this.priceForm.patchValue",
+          "lineNumber": 337
+        },
+        {
+          "caller": "editPrice",
+          "callee": "this.priceForm.get('priceListId')?.disable",
+          "lineNumber": 344
+        },
+        {
+          "caller": "editPrice",
+          "callee": "this.priceForm.get",
+          "lineNumber": 344
+        },
+        {
+          "caller": "editPrice",
+          "callee": "this.priceForm.get('unitId')?.disable",
+          "lineNumber": 345
+        },
+        {
+          "caller": "editPrice",
+          "callee": "this.priceForm.get",
+          "lineNumber": 345
+        },
+        {
+          "caller": "savePrice",
+          "callee": "this.priceForm.getRawValue",
+          "lineNumber": 352
+        },
+        {
+          "caller": "savePrice",
+          "callee": "this.priceService.update(this.editingPriceId!, payload).subscribe",
+          "lineNumber": 356
+        },
+        {
+          "caller": "savePrice",
+          "callee": "this.priceService.update",
+          "lineNumber": 356
+        },
+        {
+          "caller": "savePrice",
+          "callee": "this.loadPrices",
+          "lineNumber": 358
+        },
+        {
+          "caller": "savePrice",
+          "callee": "this.priceService.create(createDto).subscribe",
+          "lineNumber": 363
+        },
+        {
+          "caller": "savePrice",
+          "callee": "this.priceService.create",
+          "lineNumber": 363
+        },
+        {
+          "caller": "savePrice",
+          "callee": "this.loadPrices",
+          "lineNumber": 365
+        },
+        {
+          "caller": "removePrice",
+          "callee": "this.confirmation.warn('::AreYouSureToDelete', '::AreYouSure').subscribe",
+          "lineNumber": 371
+        },
+        {
+          "caller": "removePrice",
+          "callee": "this.confirmation.warn",
+          "lineNumber": 371
+        },
+        {
+          "caller": "removePrice",
+          "callee": "this.priceService.delete(id).subscribe",
+          "lineNumber": 373
+        },
+        {
+          "caller": "removePrice",
+          "callee": "this.priceService.delete",
+          "lineNumber": 373
+        },
+        {
+          "caller": "removePrice",
+          "callee": "this.loadPrices",
+          "lineNumber": 373
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

@@ -14,6 +14,9 @@ import { PurchaseOrderLineDto } from 'src/app/proxy/purchase-orders/dtos';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseReturnStatus } from 'src/app/proxy/enums/orders/purchase-return-status.enum';
+import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
+import { PurchaseReturnType, purchaseReturnTypeOptions } from 'src/app/proxy/enums/orders/purchase-return-type.enum';
+import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
 interface SelectablePOLine extends PurchaseOrderLineDto {
@@ -26,7 +29,7 @@ interface SelectablePOLine extends PurchaseOrderLineDto {
 @Component({
   selector: 'app-purchase-return-details',
   standalone: true,
-  imports: [SharedModule, DrawerComponent],
+  imports: [SharedModule, DrawerComponent, DropdownSearchComponent],
   templateUrl: './purchase-return-details.component.html',
 })
 export class PurchaseReturnDetailsComponent implements OnInit, OnDestroy {
@@ -49,6 +52,9 @@ export class PurchaseReturnDetailsComponent implements OnInit, OnDestroy {
   isSavingLines = false;
 
   PurchaseReturnStatus = PurchaseReturnStatus;
+  ApprovalStatus = ApprovalStatus;
+  PurchaseReturnType = PurchaseReturnType;
+  purchaseReturnTypeOptions = purchaseReturnTypeOptions;
   readonly enumName = enumName;
 
   constructor(
@@ -60,7 +66,7 @@ export class PurchaseReturnDetailsComponent implements OnInit, OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    public router: Router
   ) {}
 
   ngOnInit(): void {
@@ -141,6 +147,7 @@ export class PurchaseReturnDetailsComponent implements OnInit, OnDestroy {
   buildForms() {
     this.editForm = this.fb.group({
       warehouseId: [null, [Validators.required]],
+      returnType: [null, [Validators.required]],
       returnDate: [null, [Validators.required]],
       note: ['', [Validators.maxLength(1000)]],
     });
@@ -150,6 +157,7 @@ export class PurchaseReturnDetailsComponent implements OnInit, OnDestroy {
   openEditDrawer() {
     this.editForm.patchValue({
       warehouseId: this.returnDto.warehouseId,
+      returnType: this.returnDto.returnType,
       returnDate: this.returnDto.returnDate?.split('T')[0] ?? null,
       note: this.returnDto.note ?? '',
     });
@@ -293,5 +301,36 @@ export class PurchaseReturnDetailsComponent implements OnInit, OnDestroy {
           });
         }
       });
+  }
+
+  isEditable(): boolean {
+    return (
+      this.returnDto?.status === PurchaseReturnStatus.Draft ||
+      this.returnDto?.status === PurchaseReturnStatus.PendingApproval
+    );
+  }
+
+  statusClass(status: PurchaseReturnStatus): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnStatus.Draft]: 'ph-badge--neutral',
+      [PurchaseReturnStatus.PendingApproval]: 'ph-badge--pending',
+      [PurchaseReturnStatus.Approved]: 'ph-badge--info',
+      [PurchaseReturnStatus.Returning]: 'ph-badge--primary',
+      [PurchaseReturnStatus.Completed]: 'ph-badge--approved',
+      [PurchaseReturnStatus.Rejected]: 'ph-badge--rejected',
+    };
+    return map[status] ?? 'ph-badge--neutral';
+  }
+
+  statusIcon(status: PurchaseReturnStatus): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnStatus.Draft]: 'fa-pencil',
+      [PurchaseReturnStatus.PendingApproval]: 'fa-clock-o',
+      [PurchaseReturnStatus.Approved]: 'fa-check',
+      [PurchaseReturnStatus.Returning]: 'fa-truck',
+      [PurchaseReturnStatus.Completed]: 'fa-check-circle',
+      [PurchaseReturnStatus.Rejected]: 'fa-times-circle',
+    };
+    return map[status] ?? 'fa-circle';
   }
 }

@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/NotificationAppService.cs",
+      "language": "csharp",
+      "sizeLines": 154,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/NotificationAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Prices/PriceAppService.cs",
+      "language": "csharp",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Prices/PriceAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Properties/AssemblyInfo.cs",
+      "language": "csharp",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAppService.cs",
+      "language": "csharp",
+      "sizeLines": 211,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAppService.cs",
+      "language": "csharp",
+      "sizeLines": 216,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseReturnRequests/PurchaseReturnRequestAppService.cs",
+      "language": "csharp",
+      "sizeLines": 277,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseReturnRequests/PurchaseReturnRequestAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAppService.cs",
+      "language": "csharp",
+      "sizeLines": 255,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "language": "csharp",
+      "sizeLines": 193,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "language": "csharp",
+      "sizeLines": 314,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Settings/SettingAppService.cs",
+      "language": "csharp",
+      "sizeLines": 151,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Suppliers/SupplierAppService.cs",
+      "language": "csharp",
+      "sizeLines": 383,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Suppliers/SupplierAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERP.Application.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERP.Application.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 122,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERP.Application.csproj",
+      "language": "csproj",
+      "sizeLines": 29,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERPApplicationMappers.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERPApplicationModule.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.Application/Notifications/NotificationAppService.cs": [],
+    "src/SupplyCoreERP.Application/Notifications/NotificationAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Prices/PriceAppService.cs": [],
+    "src/SupplyCoreERP.Application/Prices/PriceAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Properties/AssemblyInfo.cs": [],
+    "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAppService.cs": [],
+    "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAppService.cs": [],
+    "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/PurchaseReturnRequests/PurchaseReturnRequestAppService.cs": [],
+    "src/SupplyCoreERP.Application/PurchaseReturnRequests/PurchaseReturnRequestAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAppService.cs": [],
+    "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs": [],
+    "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs": [],
+    "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Settings/SettingAppService.cs": [],
+    "src/SupplyCoreERP.Application/Suppliers/SupplierAppService.cs": [],
+    "src/SupplyCoreERP.Application/Suppliers/SupplierAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/SupplyCoreERP.Application.abppkg": [],
+    "src/SupplyCoreERP.Application/SupplyCoreERP.Application.abppkg.analyze.json": [],
+    "src/SupplyCoreERP.Application/SupplyCoreERP.Application.csproj": [],
+    "src/SupplyCoreERP.Application/SupplyCoreERPApplicationMappers.cs": [],
+    "src/SupplyCoreERP.Application/SupplyCoreERPApplicationModule.cs": []
+  }
+}

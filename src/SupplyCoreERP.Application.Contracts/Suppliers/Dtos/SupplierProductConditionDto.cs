@@ -16,7 +16,5 @@ public class SupplierProductConditionDto : EntityDto<Guid>
     public decimal LastPurchasePrice { get; set; }
 
     public decimal MinOrderQuantity { get; set; }
-    public decimal OverDeliveryTolerancePct { get; set; }
-    public decimal UnderDeliveryTolerancePct { get; set; }
 }
 

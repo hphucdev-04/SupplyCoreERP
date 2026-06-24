@@ -313,6 +313,7 @@
                   <thead>
                     <tr>
                       <th>{{ '::Name' | abpLocalization }}</th>
+                      <th>{{ '::Strength' | abpLocalization }}</th>
                       <th class="text-end">{{ '::Actions' | abpLocalization }}</th>
                     </tr>
                   </thead>
@@ -321,6 +322,10 @@
                       <td>
                         <div class="ph-field-value">{{ item.activeIngredientName }}</div>
                         <small class="ph-text-muted">{{ item.activeIngredientCode }}</small>
+                      </td>
+                      <td>
+                        <span *ngIf="item.strength" class="ph-badge ph-badge--info">{{ item.strength }}</span>
+                        <span *ngIf="!item.strength" class="ph-text-muted">—</span>
                       </td>
                       <td class="text-end pe-4">
                         <button
@@ -333,7 +338,7 @@
                       </td>
                     </tr>
                     <tr *ngIf="medicine.ingredients.length === 0">
-                      <td colspan="2" class="ph-empty-state">
+                      <td colspan="3" class="ph-empty-state">
                         {{ '::NoIngredients' | abpLocalization }}
                       </td>
                     </tr>
@@ -362,6 +367,7 @@
                     <tr>
                       <th>{{ '::Unit' | abpLocalization }}</th>
                       <th>{{ '::Factor' | abpLocalization }}</th>
+                      <th>Thể tích (cm³)</th>
                       <th class="text-end">{{ '::Actions' | abpLocalization }}</th>
                     </tr>
                   </thead>
@@ -372,6 +378,7 @@
                         <span class="ph-badge ph-badge--info ms-2">Base</span>
                       </td>
                       <td><span class="ph-field-value">x 1</span></td>
+                      <td><span class="ph-field-value">{{ medicine.baseUnitVolume || 0 | number:'1.0-2' }} cm³</span></td>
                       <td class="text-end pe-4"></td>
                     </tr>
                     <tr *ngFor="let u of medicine.units">
@@ -383,6 +390,9 @@
                         <span class="ph-field-value ph-text-primary"
                           >x {{ u.conversionFactor }}</span
                         >
+                      </td>
+                      <td>
+                        <span class="ph-field-value">{{ u.volume || 0 | number:'1.0-2' }} cm³</span>
                       </td>
                       <td class="text-end pe-4">
                         <button
@@ -634,6 +644,17 @@
       >
       </app-dropdown-search>
     </div>
+    <div class="mb-3">
+      <label class="ph-label">{{ '::Strength' | abpLocalization }}</label>
+      <input
+        id="ingredient-strength"
+        type="text"
+        class="form-control"
+        formControlName="strength"
+        placeholder="VD: 500mg, 250mg/5ml, 10%"
+        maxlength="50"
+      />
+    </div>
   </form>
 </app-drawer>
 <!-- #endregion -->
@@ -675,6 +696,17 @@
         <label class="ph-label ph-label--required">{{ '::Level' | abpLocalization }}</label>
         <input type="number" class="form-control" formControlName="level" placeholder="Ex: 1" />
       </div>
+    </div>
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">Thể tích Đơn vị (cm³)</label>
+      <input
+        type="number"
+        min="0"
+        step="0.01"
+        class="form-control"
+        formControlName="volume"
+        placeholder="Ví dụ: 18"
+      />
     </div>
   </form>
 </app-drawer>

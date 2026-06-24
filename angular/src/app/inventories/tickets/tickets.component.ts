@@ -26,6 +26,10 @@ import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearc
 import { SalesOrderService } from 'src/app/proxy/sales-orders';
 import { SalesOrderDto } from 'src/app/proxy/sales-orders/dtos';
 import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.enum';
+import { SalesRecallService } from 'src/app/proxy/sales-recalls/sales-recall.service';
+import { PurchaseReturnService } from 'src/app/proxy/purchase-returns/purchase-return.service';
+import { SalesRecallStatus } from 'src/app/proxy/enums/orders/sales-recall-status.enum';
+import { PurchaseReturnStatus } from 'src/app/proxy/enums/orders/purchase-return-status.enum';
 
 @Component({
   selector: 'app-inventory-tickets',
@@ -43,6 +47,8 @@ export class TicketsComponent implements OnInit, OnDestroy {
   warehouses: WarehouseDto[] = [];
   approvedPurchaseOrders: any[] = [];
   approvedSalesOrders: any[] = [];
+  activeSalesRecalls: any[] = [];
+  activePurchaseReturns: any[] = [];
   selectableReferences: any[] = [];
 
   // Drawer state
@@ -69,6 +75,8 @@ export class TicketsComponent implements OnInit, OnDestroy {
     private warehouseService: WarehouseService,
     private poService: PurchaseOrderService,
     private soService: SalesOrderService,
+    private recallService: SalesRecallService,
+    private returnService: PurchaseReturnService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
     private router: Router,
@@ -164,11 +172,54 @@ export class TicketsComponent implements OnInit, OnDestroy {
           this.selectableReferences = this.approvedSalesOrders;
         }
       });
+
+    // Load SalesRecalls
+    this.recallService
+      .getList({ maxResultCount: 1000, skipCount: 0 } as any)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.activeSalesRecalls = res.items
+          .filter(
+            r =>
+              r.status === SalesRecallStatus.Approved ||
+              r.status === SalesRecallStatus.Recalling,
+          )
+          .map(r => ({
+            id: r.id,
+            code: r.code,
+            displayName: `${r.code} (${r.productName})`,
+          }));
+
+        if (this.form.get('type').value === TicketType.RecallReceipt) {
+          this.selectableReferences = this.activeSalesRecalls;
+        }
+      });
+
+    // Load PurchaseReturns
+    this.returnService
+      .getList({ maxResultCount: 1000, skipCount: 0 } as any)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(res => {
+        this.activePurchaseReturns = res.items
+          .filter(
+            r =>
+              r.status === PurchaseReturnStatus.Approved ||
+              r.status === PurchaseReturnStatus.Returning,
+          )
+          .map(r => ({
+            id: r.id,
+            code: r.code,
+            displayName: `${r.code} (${r.supplierName})`,
+          }));
+
+        if (this.form.get('type').value === TicketType.ReturnOutward) {
+          this.selectableReferences = this.activePurchaseReturns;
+        }
+      });
   }
 
   onTypeChange() {
     const rawValue = this.form.get('type').value;
-    // Quan trọng: Không dùng Number(rawValue) ngay vì Number(null) = 0
     const type = rawValue !== null && rawValue !== undefined ? Number(rawValue) : null;
 
     this.form.get('referenceDocumentId').setValue(null);
@@ -177,6 +228,10 @@ export class TicketsComponent implements OnInit, OnDestroy {
       this.selectableReferences = this.approvedPurchaseOrders;
     } else if (type === TicketType.GoodsIssue) {
       this.selectableReferences = this.approvedSalesOrders;
+    } else if (type === TicketType.RecallReceipt) {
+      this.selectableReferences = this.activeSalesRecalls;
+    } else if (type === TicketType.ReturnOutward) {
+      this.selectableReferences = this.activePurchaseReturns;
     } else {
       this.selectableReferences = [];
     }

@@ -1,0 +1,971 @@
+<div class="dashboard-container" *ngIf="!loading">
+  <!-- Header -->
+  <div class="d-flex flex-wrap justify-content-between align-items-center mb-4 gap-3">
+    <div>
+      <h3 class="ph-page-title mb-1">{{ '::Dashboard.Title' | abpLocalization }}</h3>
+      <p class="text-muted small mb-0">{{ '::Dashboard.SubTitle' | abpLocalization }}</p>
+    </div>
+    <div class="realtime-status d-flex align-items-center gap-2 px-3 py-1.5 border border-success-subtle rounded-pill bg-success-subtle bg-opacity-10">
+      <span class="status-dot pulsing bg-success"></span>
+      <span class="status-text font-semibold text-success small">{{ '::Dashboard.RealtimeActive' | abpLocalization }}</span>
+    </div>
+  </div>
+
+  <!-- Navigation Tabs & Inline Filters -->
+  <div class="tabs-navigation d-flex flex-wrap justify-content-between align-items-center gap-3 mb-4 border-bottom border-light-subtle pb-3">
+    <!-- Left: Navigation Tab Buttons -->
+    <div class="d-flex flex-wrap gap-2">
+      <button (click)="switchTab('overview')" class="btn btn-sm" [class.ph-btn-new]="activeTab === 'overview'" [class.ph-btn-secondary]="activeTab !== 'overview'">
+        <i class="fa fa-chart-line me-1.5"></i>{{ '::Dashboard.Tab.Overview' | abpLocalization }}
+      </button>
+      <button (click)="switchTab('sales-procurement')" class="btn btn-sm" [class.ph-btn-new]="activeTab === 'sales-procurement'" [class.ph-btn-secondary]="activeTab !== 'sales-procurement'">
+        <i class="fa fa-tags me-1.5"></i>{{ '::Dashboard.Tab.SOPO' | abpLocalization }}
+      </button>
+      <button (click)="switchTab('inventory-balance')" class="btn btn-sm" [class.ph-btn-new]="activeTab === 'inventory-balance'" [class.ph-btn-secondary]="activeTab !== 'inventory-balance'">
+        <i class="fa fa-warehouse me-1.5"></i>{{ '::Dashboard.Tab.Inventory' | abpLocalization }}
+      </button>
+      <button (click)="switchTab('medicine-batch')" class="btn btn-sm" [class.ph-btn-new]="activeTab === 'medicine-batch'" [class.ph-btn-secondary]="activeTab !== 'medicine-batch'">
+        <i class="fa fa-pills me-1.5"></i>{{ '::Dashboard.Tab.MedicineBatch' | abpLocalization }}
+      </button>
+      <button (click)="switchTab('debt')" class="btn btn-sm" [class.ph-btn-new]="activeTab === 'debt'" [class.ph-btn-secondary]="activeTab !== 'debt'">
+        <i class="fa fa-scale-balanced me-1.5"></i>{{ '::Dashboard.Tab.Debt' | abpLocalization }}
+      </button>
+      <button (click)="switchTab('traceability')" class="btn btn-sm" [class.ph-btn-new]="activeTab === 'traceability'" [class.ph-btn-secondary]="activeTab !== 'traceability'">
+        <i class="fa fa-search me-1.5"></i>{{ '::Dashboard.Tab.Traceability' | abpLocalization }}
+      </button>
+    </div>
+
+    <!-- Right: Inline Filters (căn phải cuối) -->
+    <div class="d-flex align-items-center gap-2 flex-wrap">
+      <!-- Warehouse Filter (Hide on Traceability) -->
+      <div *ngIf="activeTab !== 'traceability'" style="width: 200px;">
+        <app-dropdown-search
+          [items]="warehouses"
+          [(ngModel)]="selectedWarehouseId"
+          (valueChange)="onFilterChange()"
+          [placeholder]="'::Dashboard.Filter.Warehouse' | abpLocalization"
+          [nullLabel]="'::Dashboard.Filter.AllWarehouses' | abpLocalization"
+          valueKey="id"
+          labelKey="name">
+        </app-dropdown-search>
+      </div>
+
+      <!-- Medicine Category Filter (Hide on Debt, Traceability) -->
+      <div *ngIf="activeTab !== 'debt' && activeTab !== 'traceability'" style="width: 200px;">
+        <app-dropdown-search
+          [items]="categories"
+          [(ngModel)]="selectedCategoryId"
+          (valueChange)="onFilterChange()"
+          [placeholder]="'::Dashboard.Filter.Category' | abpLocalization"
+          [nullLabel]="'::Dashboard.Filter.AllCategories' | abpLocalization"
+          valueKey="id"
+          labelKey="name">
+        </app-dropdown-search>
+      </div>
+
+      <!-- Days Filter (Hide on Traceability) -->
+      <div *ngIf="activeTab !== 'traceability'" style="width: 130px;">
+        <select [(ngModel)]="selectedDays" (change)="onFilterChange()" class="form-select form-select-sm border-light-subtle bg-white">
+          <option [value]="7">{{ '::Dashboard.Filter.Days7' | abpLocalization }}</option>
+          <option [value]="15">{{ '::Dashboard.Filter.Days15' | abpLocalization }}</option>
+          <option [value]="30">{{ '::Dashboard.Filter.Days30' | abpLocalization }}</option>
+          <option [value]="90">{{ '::Dashboard.Filter.Days90' | abpLocalization }}</option>
+        </select>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 1: TỔNG QUAN ERP -->
+  <div *ngIf="activeTab === 'overview'">
+    <!-- KPI Cards -->
+    <div class="row g-3 mb-4" *ngIf="overviewData">
+      <!-- Total Revenue SO -->
+      <div class="col-md-3">
+        <div class="ph-card p-4 relative overflow-hidden h-100">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-coins"></i></div>
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs">{{ '::Dashboard.KPI.SalesRevenue' | abpLocalization }}</span>
+            <div class="p-2 rounded bg-success-subtle text-success"><i class="fa fa-dollar-sign"></i></div>
+          </div>
+          <h3 class="ph-field-value font-mono mb-1 text-heading fs-4">{{ overviewData.totalRevenue | number }} đ</h3>
+          <p class="text-success small mb-0 d-flex align-items-center gap-1">
+            <i class="fa fa-arrow-trend-up"></i> {{ '::Dashboard.KPI.SalesRevenueHint' | abpLocalization }}
+          </p>
+        </div>
+      </div>
+
+      <!-- Total Cost PO -->
+      <div class="col-md-3">
+        <div class="ph-card p-4 relative overflow-hidden h-100">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-cart-shopping"></i></div>
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs">{{ '::Dashboard.KPI.ProcurementCost' | abpLocalization }}</span>
+            <div class="p-2 rounded bg-primary-subtle text-primary"><i class="fa fa-file-invoice"></i></div>
+          </div>
+          <h3 class="ph-field-value font-mono mb-1 text-heading fs-4">{{ overviewData.totalProcurement | number }} đ</h3>
+          <p class="text-primary small mb-0">{{ '::Dashboard.KPI.ProcurementCostHint' | abpLocalization }}</p>
+        </div>
+      </div>
+
+      <!-- Reserved Volume (Lock) -->
+      <div class="col-md-3">
+        <div class="ph-card p-4 relative overflow-hidden h-100 border-warning">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-lock"></i></div>
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs">{{ '::Dashboard.KPI.ReservedVolume' | abpLocalization }}</span>
+            <div class="p-2 rounded bg-warning-subtle text-warning"><i class="fa fa-lock"></i></div>
+          </div>
+          <h3 class="ph-field-value font-mono mb-1 text-warning fs-4">
+            {{ (overviewData.totalReservedVolume / 1000000) | number:'1.2-2' }} m³
+          </h3>
+          <p class="text-warning small mb-0">{{ '::Dashboard.KPI.ReservedVolumeHint' | abpLocalization }}</p>
+        </div>
+      </div>
+
+      <!-- Expired warnings -->
+      <div class="col-md-3">
+        <div class="ph-card p-4 relative overflow-hidden h-100" [class.border-danger]="overviewData.expiredAlertCount > 0" [class.ph-bg-danger]="overviewData.expiredAlertCount > 0">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-hourglass-half"></i></div>
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs">{{ '::Dashboard.KPI.ExpiredAlert' | abpLocalization }}</span>
+            <div class="p-2 rounded bg-danger-subtle text-danger"><i class="fa fa-exclamation-circle"></i></div>
+          </div>
+          <h3 class="ph-field-value font-mono mb-1 fs-4" [class.text-danger]="overviewData.expiredAlertCount > 0">
+            {{ overviewData.expiredAlertCount }}
+          </h3>
+          <p class="text-danger small mb-0">{{ '::Dashboard.KPI.ExpiredAlertHint' | abpLocalization }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row g-3">
+      <!-- Financial Balance SO vs PO Area Chart -->
+      <div class="col-lg-8">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-scale-balanced text-primary"></i>
+              {{ '::Dashboard.FinancialBalance.Title' | abpLocalization }}
+            </h6>
+            <span class="ph-badge ph-badge--neutral">
+              {{ '::Dashboard.FinancialBalance.SubTitle' | abpLocalization }}
+            </span>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper">
+              <apx-chart
+                *ngIf="financialChartOptions && financialChartOptions.series && financialChartOptions.series.length > 0"
+                [series]="financialChartOptions.series"
+                [chart]="financialChartOptions.chart"
+                [xaxis]="financialChartOptions.xaxis"
+                [yaxis]="financialChartOptions.yaxis"
+                [stroke]="financialChartOptions.stroke"
+                [fill]="financialChartOptions.fill"
+                [dataLabels]="financialChartOptions.dataLabels"
+                [colors]="financialChartOptions.colors"
+                [grid]="financialChartOptions.grid"
+                [theme]="financialChartOptions.theme"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Capacity Allocation Pie/Donut Chart -->
+      <div class="col-lg-4">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-warehouse text-primary"></i>
+              {{ '::Dashboard.CapacityAllocation.Title' | abpLocalization }}
+            </h6>
+            <span class="ph-badge ph-badge--neutral">{{ '::Dashboard.CapacityAllocation.SubTitle' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper d-flex justify-content-center align-items-center" style="min-height: 280px;">
+              <apx-chart
+                *ngIf="overviewCapacityChartOptions && overviewCapacityChartOptions.series && overviewCapacityChartOptions.series.length > 0"
+                [series]="overviewCapacityChartOptions.series"
+                [chart]="overviewCapacityChartOptions.chart"
+                [labels]="overviewCapacityChartOptions.labels"
+                [colors]="overviewCapacityChartOptions.colors"
+                [legend]="overviewCapacityChartOptions.legend"
+                [dataLabels]="overviewCapacityChartOptions.dataLabels"
+                [plotOptions]="overviewCapacityChartOptions.plotOptions"
+                [theme]="overviewCapacityChartOptions.theme"
+                [stroke]="overviewCapacityChartOptions.stroke"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 2: BÁN HÀNG & MUA HÀNG (SO/PO/RETURNS/RECALLS) -->
+  <div *ngIf="activeTab === 'sales-procurement'">
+    <!-- KPI Cards Nghiệp Vụ -->
+    <div class="row g-3 mb-4" *ngIf="overviewData">
+      <!-- SO -->
+      <div class="col-md-3">
+        <div class="ph-card p-4 relative overflow-hidden h-100 border-start border-3 border-success">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-coins"></i></div>
+          <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs d-block mb-1">{{ '::Dashboard.KPI.SalesRevenue' | abpLocalization }}</span>
+          <h3 class="ph-field-value font-mono mb-1 text-success fs-4">{{ overviewData.totalRevenue | number }} đ</h3>
+          <p class="text-muted small mb-0">{{ '::Dashboard.KPI.SalesRevenueHint' | abpLocalization }}</p>
+        </div>
+      </div>
+      <!-- Sales Recall -->
+      <div class="col-md-3">
+        <div class="ph-card p-4 relative overflow-hidden h-100 border-start border-3 border-warning">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-right-left"></i></div>
+          <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs d-block mb-1">{{ '::Dashboard.KPI.SalesRecall' | abpLocalization }}</span>
+          <h3 class="ph-field-value font-mono mb-1 text-warning fs-4">{{ overviewData.totalSalesRecall | number }} đ</h3>
+          <p class="text-muted small mb-0">{{ '::Dashboard.KPI.SalesRecallHint' | abpLocalization }}</p>
+        </div>
+      </div>
+      <!-- PO -->
+      <div class="col-md-3">
+        <div class="ph-card p-4 relative overflow-hidden h-100 border-start border-3 border-primary">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-cart-shopping"></i></div>
+          <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs d-block mb-1">{{ '::Dashboard.KPI.ProcurementCost' | abpLocalization }}</span>
+          <h3 class="ph-field-value font-mono mb-1 text-primary fs-4">{{ overviewData.totalProcurement | number }} đ</h3>
+          <p class="text-muted small mb-0">{{ '::Dashboard.KPI.ProcurementCostHint' | abpLocalization }}</p>
+        </div>
+      </div>
+      <!-- Purchase Return -->
+      <div class="col-md-3">
+        <div class="ph-card p-4 relative overflow-hidden h-100 border-start border-3 border-danger">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-rotate-left"></i></div>
+          <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs d-block mb-1">{{ '::Dashboard.KPI.PurchaseReturn' | abpLocalization }}</span>
+          <h3 class="ph-field-value font-mono mb-1 text-danger fs-4">{{ overviewData.totalPurchaseReturn | number }} đ</h3>
+          <p class="text-muted small mb-0">{{ '::Dashboard.KPI.PurchaseReturnHint' | abpLocalization }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Charts Row -->
+    <div class="row g-3">
+      <!-- Sales Order Status Pie Chart -->
+      <div class="col-lg-4">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-cart-shopping text-primary"></i>
+              {{ '::Dashboard.SOStatus.Title' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper d-flex justify-content-center align-items-center" style="min-height: 300px;">
+              <apx-chart
+                *ngIf="salesStatusChartOptions && salesStatusChartOptions.series && salesStatusChartOptions.series.length > 0"
+                [series]="salesStatusChartOptions.series"
+                [chart]="salesStatusChartOptions.chart"
+                [labels]="salesStatusChartOptions.labels"
+                [colors]="salesStatusChartOptions.colors"
+                [legend]="salesStatusChartOptions.legend"
+                [theme]="salesStatusChartOptions.theme"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Purchase Order Status Donut Chart -->
+      <div class="col-lg-4">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-truck-ramp-box text-primary"></i>
+              {{ '::Dashboard.POStatus.Title' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper d-flex justify-content-center align-items-center" style="min-height: 300px;">
+              <apx-chart
+                *ngIf="procurementStatusChartOptions && procurementStatusChartOptions.series && procurementStatusChartOptions.series.length > 0"
+                [series]="procurementStatusChartOptions.series"
+                [chart]="procurementStatusChartOptions.chart"
+                [labels]="procurementStatusChartOptions.labels"
+                [colors]="procurementStatusChartOptions.colors"
+                [legend]="procurementStatusChartOptions.legend"
+                [theme]="procurementStatusChartOptions.theme"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory transaction distribution donut chart (để thể hiện số lượng trả hàng & thu hồi) -->
+      <div class="col-lg-4">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-arrows-spin text-primary"></i>
+              {{ '::Dashboard.TransactionDistribution.Title' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper d-flex justify-content-center align-items-center" style="min-height: 300px;">
+              <apx-chart
+                *ngIf="transactionDistributionChartOptions && transactionDistributionChartOptions.series && transactionDistributionChartOptions.series.length > 0"
+                [series]="transactionDistributionChartOptions.series"
+                [chart]="transactionDistributionChartOptions.chart"
+                [labels]="transactionDistributionChartOptions.labels"
+                [colors]="transactionDistributionChartOptions.colors"
+                [legend]="transactionDistributionChartOptions.legend"
+                [theme]="transactionDistributionChartOptions.theme"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 3: KHO & TỒN (INVENTORY/BALANCE/RESERVATIONS) -->
+  <div *ngIf="activeTab === 'inventory-balance'">
+    <!-- KPI Cards Thể tích -->
+    <div class="row g-3 mb-4" *ngIf="overviewData">
+      <!-- Locked/Reserved Volume -->
+      <div class="col-md-6">
+        <div class="ph-card p-4 relative overflow-hidden h-100 border-start border-3 border-warning">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-lock"></i></div>
+          <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs d-block mb-1">{{ '::Dashboard.KPI.ReservedVolume' | abpLocalization }}</span>
+          <h3 class="ph-field-value font-mono mb-1 text-warning fs-4">
+            {{ (overviewData.totalReservedVolume / 1000000) | number:'1.2-2' }} m³
+          </h3>
+          <p class="text-muted small mb-0">{{ '::Dashboard.KPI.ReservedVolumeHint' | abpLocalization }}</p>
+        </div>
+      </div>
+      <!-- Available Stock Volume -->
+      <div class="col-md-6">
+        <div class="ph-card p-4 relative overflow-hidden h-100 border-start border-3 border-success">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-circle-check"></i></div>
+          <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs d-block mb-1">{{ '::Dashboard.KPI.AvailableVolume' | abpLocalization }}</span>
+          <h3 class="ph-field-value font-mono mb-1 text-success fs-4">
+            {{ (overviewData.totalAvailableVolume / 1000000) | number:'1.2-2' }} m³
+          </h3>
+          <p class="text-muted small mb-0">{{ '::Dashboard.KPI.AvailableVolumeHint' | abpLocalization }}</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="row g-3 mb-4">
+      <!-- Warehouse capacities horizontal stacked bar chart -->
+      <div class="col-lg-8">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-chart-bar text-primary"></i>
+              {{ '::Dashboard.WarehouseCapacity.Title' | abpLocalization }}
+            </h6>
+            <span class="ph-badge ph-badge--neutral">{{ '::Dashboard.WarehouseCapacity.SubTitle' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper">
+              <apx-chart
+                *ngIf="warehouseCapacityChartOptions && warehouseCapacityChartOptions.series && warehouseCapacityChartOptions.series.length > 0"
+                [series]="warehouseCapacityChartOptions.series"
+                [chart]="warehouseCapacityChartOptions.chart"
+                [xaxis]="warehouseCapacityChartOptions.xaxis"
+                [colors]="warehouseCapacityChartOptions.colors"
+                [dataLabels]="warehouseCapacityChartOptions.dataLabels"
+                [plotOptions]="warehouseCapacityChartOptions.plotOptions"
+                [grid]="warehouseCapacityChartOptions.grid"
+                [theme]="warehouseCapacityChartOptions.theme"
+                [legend]="warehouseCapacityChartOptions.legend"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Inventory Ticket Status Distribution Donut Chart -->
+      <div class="col-lg-4">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-clipboard-check text-primary"></i>
+              {{ '::Dashboard.TicketStatus.Title' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper d-flex justify-content-center align-items-center" style="min-height: 320px;">
+              <apx-chart
+                *ngIf="ticketStatusChartOptions && ticketStatusChartOptions.series && ticketStatusChartOptions.series.length > 0"
+                [series]="ticketStatusChartOptions.series"
+                [chart]="ticketStatusChartOptions.chart"
+                [labels]="ticketStatusChartOptions.labels"
+                [colors]="ticketStatusChartOptions.colors"
+                [legend]="ticketStatusChartOptions.legend"
+                [theme]="ticketStatusChartOptions.theme"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Hàng luân chuyển vật lý Nhập - Xuất hàng ngày -->
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-right-left text-primary"></i>
+              {{ '::Dashboard.PhysicalMovement.Title' | abpLocalization }}
+            </h6>
+            <span class="ph-badge ph-badge--neutral">{{ '::Dashboard.PhysicalMovement.SubTitle' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper">
+              <apx-chart
+                *ngIf="physicalMovementChartOptions && physicalMovementChartOptions.series && physicalMovementChartOptions.series.length > 0"
+                [series]="physicalMovementChartOptions.series"
+                [chart]="physicalMovementChartOptions.chart"
+                [xaxis]="physicalMovementChartOptions.xaxis"
+                [yaxis]="physicalMovementChartOptions.yaxis"
+                [stroke]="physicalMovementChartOptions.stroke"
+                [colors]="physicalMovementChartOptions.colors"
+                [grid]="physicalMovementChartOptions.grid"
+                [legend]="physicalMovementChartOptions.legend"
+                [plotOptions]="physicalMovementChartOptions.plotOptions"
+                [theme]="physicalMovementChartOptions.theme"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 4: THUỐC & LÔ (MEDICINE/BATCH/QA) -->
+  <div *ngIf="activeTab === 'medicine-batch'">
+    <div class="row g-3 mb-4">
+      <!-- Medicine Category Distribution donut chart -->
+      <div class="col-lg-6">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-pills text-primary"></i>
+              {{ '::Dashboard.CategoryDistribution.Title' | abpLocalization }}
+            </h6>
+            <span class="ph-badge ph-badge--neutral">{{ '::Dashboard.CategoryDistribution.SubTitle' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper d-flex justify-content-center align-items-center" style="min-height: 280px;">
+              <apx-chart
+                *ngIf="categoryDistributionChartOptions && categoryDistributionChartOptions.series && categoryDistributionChartOptions.series.length > 0"
+                [series]="categoryDistributionChartOptions.series"
+                [chart]="categoryDistributionChartOptions.chart"
+                [labels]="categoryDistributionChartOptions.labels"
+                [colors]="categoryDistributionChartOptions.colors"
+                [legend]="categoryDistributionChartOptions.legend"
+                [theme]="categoryDistributionChartOptions.theme"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product Batch QA Status Distribution Donut Chart -->
+      <div class="col-lg-6">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-shield-halved text-primary"></i>
+              {{ '::Dashboard.BatchQAStatus.Title' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper d-flex justify-content-center align-items-center" style="min-height: 280px;">
+              <apx-chart
+                *ngIf="batchQAStatusChartOptions && batchQAStatusChartOptions.series && batchQAStatusChartOptions.series.length > 0"
+                [series]="batchQAStatusChartOptions.series"
+                [chart]="batchQAStatusChartOptions.chart"
+                [labels]="batchQAStatusChartOptions.labels"
+                [colors]="batchQAStatusChartOptions.colors"
+                [legend]="batchQAStatusChartOptions.legend"
+                [theme]="batchQAStatusChartOptions.theme"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Expiry warnings and Already expired batches -->
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="ph-card mb-3 border-danger">
+          <div class="ph-card__header border-bottom border-danger-subtle bg-danger-subtle">
+            <h6 class="ph-card__header-title text-danger">
+              <i class="fa fa-triangle-exclamation"></i>
+              {{ '::Dashboard.ExpiredBatches.Title' | abpLocalization }}
+            </h6>
+            <span class="badge bg-danger text-white font-bold text-xs py-1.5 px-2.5">{{ '::Dashboard.ExpiredBatches.SubTitle' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body overflow-auto" style="max-height: 250px;">
+            <div class="space-y-3" *ngIf="alreadyExpiredBatches && alreadyExpiredBatches.length > 0">
+              <div class="expired-item d-flex justify-content-between align-items-center p-3 border border-danger-subtle rounded-3 mb-2 hover-border" *ngFor="let item of alreadyExpiredBatches">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="badge-days p-2 bg-danger text-white font-mono font-bold rounded text-xs">
+                    {{ '::Dashboard.ExpiredBatches.DaysRemainingLabel' | abpLocalization: Math.abs(item.daysRemaining).toString() }}
+                  </div>
+                  <div>
+                    <h6 class="item-name font-bold mb-1 text-heading">{{ item.medicineName }}</h6>
+                    <p class="text-muted small mb-0">
+                      Lô: <span class="font-mono text-dark font-semibold">{{ item.batchNumber }}</span> | Kho: {{ item.warehouseName }}
+                    </p>
+                  </div>
+                </div>
+                <div class="text-end font-mono">
+                  <span class="item-qty font-bold text-heading">{{ item.quantity | number }} đv</span>
+                  <p class="text-danger small mb-0">HSD: {{ item.expiryDate | date:'dd/MM/yyyy' }}</p>
+                </div>
+              </div>
+            </div>
+            <!-- Empty state -->
+            <div class="d-flex flex-column align-items-center justify-content-center text-center py-4" *ngIf="!alreadyExpiredBatches || alreadyExpiredBatches.length === 0">
+              <i class="fa fa-circle-check text-success fa-2x mb-2 opacity-75"></i>
+              <h6 class="text-heading small mb-0">{{ '::Dashboard.ExpiredBatches.Empty' | abpLocalization }}</h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="ph-card">
+          <div class="ph-card__header border-bottom border-warning-subtle bg-warning-subtle">
+            <h6 class="ph-card__header-title text-warning">
+              <i class="fa fa-hourglass-half"></i>
+              {{ '::Dashboard.NearExpiryBatches.Title' | abpLocalization }}
+            </h6>
+            <span class="badge bg-warning text-dark font-bold text-xs py-1.5 px-2.5">{{ '::Dashboard.NearExpiryBatches.SubTitle' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body overflow-auto" style="max-height: 250px;">
+            <div class="space-y-3" *ngIf="nearExpiryBatches && nearExpiryBatches.length > 0">
+              <div class="expired-item d-flex justify-content-between align-items-center p-3 border border-warning-subtle rounded-3 mb-2 hover-border" *ngFor="let item of nearExpiryBatches">
+                <div class="d-flex align-items-center gap-3">
+                  <div class="badge-days p-2 bg-warning text-dark font-mono font-bold rounded text-xs">
+                    {{ '::Dashboard.NearExpiryBatches.DaysRemainingLabel' | abpLocalization: item.daysRemaining }}
+                  </div>
+                  <div>
+                    <h6 class="item-name font-bold mb-1 text-heading">{{ item.medicineName }}</h6>
+                    <p class="text-muted small mb-0">
+                      Lô: <span class="font-mono text-dark font-semibold">{{ item.batchNumber }}</span> | Kho: {{ item.warehouseName }}
+                    </p>
+                  </div>
+                </div>
+                <div class="text-end font-mono">
+                  <span class="item-qty font-bold text-heading">{{ item.quantity | number }} đv</span>
+                  <p class="text-warning small mb-0">HSD: {{ item.expiryDate | date:'dd/MM/yyyy' }}</p>
+                </div>
+              </div>
+            </div>
+            <!-- Empty state -->
+            <div class="d-flex flex-column align-items-center justify-content-center text-center py-4" *ngIf="!nearExpiryBatches || nearExpiryBatches.length === 0">
+              <i class="fa fa-circle-check text-success fa-2x mb-2 opacity-75"></i>
+              <h6 class="text-heading small mb-0">{{ '::Dashboard.NearExpiryBatches.Empty' | abpLocalization }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 5: ĐỐI TÁC & CÔNG NỢ (PARTNERS & DEBT) -->
+  <div *ngIf="activeTab === 'debt'">
+    <!-- KPI Cards Công nợ -->
+    <div class="row g-3 mb-4" *ngIf="debtOverviewData">
+      <!-- Total Receivable Debt -->
+      <div class="col-md-6">
+        <div class="ph-card p-4 relative overflow-hidden">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-arrow-down-long"></i></div>
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs">{{ '::Dashboard.Debt.Receivable' | abpLocalization }}</span>
+            <div class="p-2 rounded bg-success-subtle text-success"><i class="fa fa-arrow-trend-up"></i></div>
+          </div>
+          <h3 class="ph-field-value font-mono mb-1 text-success fs-4">{{ debtOverviewData.totalReceivableDebt | number }} đ</h3>
+          <p class="text-muted small mb-0">{{ '::Dashboard.Debt.ReceivableHint' | abpLocalization }}</p>
+        </div>
+      </div>
+
+      <!-- Total Payable Debt -->
+      <div class="col-md-6">
+        <div class="ph-card p-4 relative overflow-hidden">
+          <div class="kpi-bg-icon opacity-5"><i class="fa fa-arrow-up-long"></i></div>
+          <div class="d-flex justify-content-between align-items-start mb-3">
+            <span class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs">{{ '::Dashboard.Debt.Payable' | abpLocalization }}</span>
+            <div class="p-2 rounded bg-danger-subtle text-danger"><i class="fa fa-arrow-trend-down"></i></div>
+          </div>
+          <h3 class="ph-field-value font-mono mb-1 text-danger fs-4">{{ debtOverviewData.totalPayableDebt | number }} đ</h3>
+          <p class="text-muted small mb-0">{{ '::Dashboard.Debt.PayableHint' | abpLocalization }}</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Debt Charts & Lists -->
+    <div class="row g-3">
+      <!-- Debt Comparison Column Chart -->
+      <div class="col-lg-6">
+        <div class="ph-card h-100">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-scale-balanced text-primary"></i>
+              {{ '::Dashboard.Debt.ComparisonTitle' | abpLocalization }}
+            </h6>
+            <span class="ph-badge ph-badge--neutral">{{ '::Dashboard.Debt.ComparisonSubTitle' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body">
+            <div class="chart-wrapper" style="min-height: 320px;">
+              <apx-chart
+                *ngIf="debtComparisonChartOptions && debtComparisonChartOptions.series && debtComparisonChartOptions.series.length > 0"
+                [series]="debtComparisonChartOptions.series"
+                [chart]="debtComparisonChartOptions.chart"
+                [xaxis]="debtComparisonChartOptions.xaxis"
+                [yaxis]="debtComparisonChartOptions.yaxis"
+                [colors]="debtComparisonChartOptions.colors"
+                [theme]="debtComparisonChartOptions.theme"
+                [stroke]="debtComparisonChartOptions.stroke"
+                [plotOptions]="debtComparisonChartOptions.plotOptions"
+                [dataLabels]="debtComparisonChartOptions.dataLabels"
+              ></apx-chart>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Top Debt lists -->
+      <div class="col-lg-6">
+        <div class="ph-card mb-3">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-users text-success"></i>
+              {{ '::Dashboard.Debt.TopCustomersTitle' | abpLocalization }}
+            </h6>
+            <span class="ph-badge ph-badge--neutral">{{ '::Dashboard.Debt.CurrentDebtLabel' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body overflow-auto" style="max-height: 200px; padding: 0.5rem 1.25rem;">
+            <div class="space-y-2" *ngIf="topCustomerDebts && topCustomerDebts.length > 0">
+              <div class="d-flex justify-content-between align-items-center border-bottom border-light pb-2 mb-2" *ngFor="let item of topCustomerDebts">
+                <div>
+                  <h6 class="font-bold text-heading mb-0 text-sm">{{ item.partnerName }}</h6>
+                  <span class="font-mono text-muted small">{{ item.partnerCode }}</span>
+                </div>
+                <span class="font-mono text-success font-bold">{{ item.currentDebt | number }} đ</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center text-center py-4" *ngIf="!topCustomerDebts || topCustomerDebts.length === 0">
+              <h6 class="text-muted small mb-0">{{ '::Dashboard.Debt.EmptyReceivables' | abpLocalization }}</h6>
+            </div>
+          </div>
+        </div>
+
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title text-danger">
+              <i class="fa fa-handshake"></i>
+              {{ '::Dashboard.Debt.TopSuppliersTitle' | abpLocalization }}
+            </h6>
+            <span class="ph-badge ph-badge--neutral">{{ '::Dashboard.Debt.CurrentDebtLabel' | abpLocalization }}</span>
+          </div>
+          <div class="ph-card__body overflow-auto" style="max-height: 200px; padding: 0.5rem 1.25rem;">
+            <div class="space-y-2" *ngIf="topSupplierDebts && topSupplierDebts.length > 0">
+              <div class="d-flex justify-content-between align-items-center border-bottom border-light pb-2 mb-2" *ngFor="let item of topSupplierDebts">
+                <div>
+                  <h6 class="font-bold text-heading mb-0 text-sm">{{ item.partnerName }}</h6>
+                  <span class="font-mono text-muted small">{{ item.partnerCode }}</span>
+                </div>
+                <span class="font-mono text-danger font-bold">{{ item.currentDebt | number }} đ</span>
+              </div>
+            </div>
+            <div class="d-flex flex-column align-items-center justify-content-center text-center py-4" *ngIf="!topSupplierDebts || topSupplierDebts.length === 0">
+              <h6 class="text-muted small mb-0">{{ '::Dashboard.Debt.EmptyPayables' | abpLocalization }}</h6>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TAB 6: TRACEABILITY -->
+  <div *ngIf="activeTab === 'traceability'">
+    <!-- Search Row -->
+    <div class="row mb-4">
+      <div class="col-md-6 mx-auto position-relative">
+        <div class="text-center mb-3">
+          <i class="fa fa-route text-primary fa-2x mb-2"></i>
+          <h5 class="ph-page-title text-sm mb-1">{{ '::Dashboard.Tab.Traceability' | abpLocalization }}</h5>
+          <p class="text-muted small mb-0">{{ '::Dashboard.Trace.SearchPlaceholder' | abpLocalization }}</p>
+        </div>
+        
+        <!-- Search Component -->
+        <app-search
+          [placeholder]="'::Dashboard.Trace.SearchPlaceholder' | abpLocalization"
+          [value]="batchSearchText"
+          (search)="onBatchSearch($event)">
+        </app-search>
+        
+        <!-- Search Loading -->
+        <div *ngIf="lookupLoading" class="text-center mt-2">
+          <i class="fa fa-spinner fa-spin text-primary me-2"></i>
+          <span class="small text-muted">Đang tìm kiếm...</span>
+        </div>
+
+        <!-- Search Results Dropdown List -->
+        <div *ngIf="batchLookupResults.length > 0" class="ph-card mt-2 p-2 shadow position-absolute z-3 bg-white border border-light-subtle" style="width: calc(100% - 24px); max-height: 250px; overflow-y: auto;">
+          <div *ngFor="let batch of batchLookupResults" (click)="selectBatch(batch)" class="p-2 cursor-pointer border-bottom border-light-subtle hover-bg-subtle d-flex justify-content-between align-items-center">
+            <div>
+              <strong class="text-primary font-mono">{{ batch.batchNumber }}</strong>
+              <span class="text-muted small ms-2">- {{ batch.medicineName }}</span>
+            </div>
+            <i class="fa fa-arrow-right text-muted small"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Trace details -->
+    <div *ngIf="traceLoading" class="text-center py-5">
+      <i class="fa fa-spinner fa-spin fa-2x text-primary mb-2"></i>
+      <p class="text-muted">{{ '::Dashboard.Loading' | abpLocalization }}</p>
+    </div>
+
+    <div *ngIf="!traceLoading && batchTraceData">
+      <!-- Batch Profile Card -->
+      <div class="row g-3 mb-4">
+        <div class="col-md-8">
+          <div class="ph-card p-4 h-100">
+            <div class="d-flex justify-content-between align-items-start mb-3">
+              <div>
+                <span class="ph-badge ph-badge--info mb-2">{{ batchTraceData.status }}</span>
+                <h4 class="ph-field-value font-mono mb-1 text-heading">{{ batchTraceData.batchNumber }}</h4>
+                <h5 class="text-primary mb-1">{{ batchTraceData.medicineName }}</h5>
+                <p class="text-muted small mb-0">Mã sản phẩm: <span class="font-mono">{{ batchTraceData.medicineCode }}</span></p>
+              </div>
+              <button class="btn btn-sm btn-outline-secondary" (click)="clearBatchSearch()">
+                <i class="fa fa-times me-1"></i>{{ '::Clear' | abpLocalization }}
+              </button>
+            </div>
+            
+            <div class="row mt-4 pt-3 border-top border-light-subtle g-3">
+              <div class="col-sm-6">
+                <p class="text-muted small mb-1">Nhà cung cấp:</p>
+                <strong class="text-heading">{{ batchTraceData.supplierName }}</strong>
+              </div>
+              <div class="col-sm-3">
+                <p class="text-muted small mb-1">Ngày sản xuất:</p>
+                <strong class="text-heading">{{ batchTraceData.manufacturingDate | date:'dd/MM/yyyy' }}</strong>
+              </div>
+              <div class="col-sm-3">
+                <p class="text-muted small mb-1">Ngày hết hạn:</p>
+                <strong class="text-heading">{{ batchTraceData.expiryDate | date:'dd/MM/yyyy' }}</strong>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Total Stocks & Reserved -->
+        <div class="col-md-4">
+          <div class="ph-card p-4 h-100 d-flex flex-column justify-content-between">
+            <div>
+              <h6 class="ph-field-meta uppercase tracking-wider text-muted font-bold fs-xs mb-3">
+                {{ '::Dashboard.Trace.InfoTitle' | abpLocalization }}
+              </h6>
+              
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <span class="text-muted"><i class="fa fa-cubes me-2"></i>{{ '::Dashboard.Trace.TotalOnHand' | abpLocalization }}</span>
+                <span class="h5 font-mono mb-0 text-success font-bold">{{ batchTraceData.totalOnHand | number }}</span>
+              </div>
+              
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted"><i class="fa fa-lock me-2"></i>{{ '::Dashboard.Trace.TotalReserved' | abpLocalization }}</span>
+                <span class="h5 font-mono mb-0 text-warning font-bold">{{ batchTraceData.totalReserved | number }}</span>
+              </div>
+            </div>
+            
+            <div class="pt-3 border-top border-light-subtle">
+              <div class="d-flex justify-content-between align-items-center">
+                <span class="text-muted font-semibold">Tồn khả dụng:</span>
+                <span class="h5 font-mono mb-0 text-heading font-bold">{{ (batchTraceData.totalOnHand - batchTraceData.totalReserved) | number }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-3">
+        <!-- Detailed Inventory Balances -->
+        <div class="col-lg-4">
+          <div class="ph-card h-100">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title">
+                <i class="fa fa-map-marker-alt text-primary"></i>
+                {{ '::Dashboard.Trace.BalancesTitle' | abpLocalization }}
+              </h6>
+            </div>
+            <div class="ph-card__body p-0">
+              <div class="table-responsive">
+                <table class="table ph-table align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>{{ '::Warehouse' | abpLocalization }}</th>
+                      <th>{{ '::Bin' | abpLocalization }}</th>
+                      <th class="text-end">SL</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let bal of batchTraceData.balances">
+                      <td>{{ bal.warehouseName }}</td>
+                      <td><span class="ph-badge ph-badge--neutral font-mono">{{ bal.binCode }}</span></td>
+                      <td class="text-end font-mono font-bold">{{ bal.quantity | number }}</td>
+                    </tr>
+                    <tr *ngIf="!batchTraceData.balances || batchTraceData.balances.length === 0">
+                      <td colspan="3" class="text-center py-4 text-muted small">Không có tồn kho vật lý tại kệ.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Receipts and Deliveries -->
+        <div class="col-lg-8">
+          <!-- Receipts -->
+          <div class="ph-card mb-4">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title text-success">
+                <i class="fa fa-arrow-down"></i>
+                {{ '::Dashboard.Trace.ReceiptsTitle' | abpLocalization }}
+              </h6>
+            </div>
+            <div class="ph-card__body p-0">
+              <div class="table-responsive">
+                <table class="table ph-table align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Số phiếu</th>
+                      <th>Số PO</th>
+                      <th>Nhà cung cấp</th>
+                      <th>Ngày nhập</th>
+                      <th class="text-end">Số lượng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let rec of batchTraceData.receipts">
+                      <td class="font-mono font-semibold">{{ rec.ticketNumber }}</td>
+                      <td class="font-mono small text-muted">{{ rec.poNumber }}</td>
+                      <td>{{ rec.supplierName }}</td>
+                      <td>{{ rec.date | date:'dd/MM/yyyy HH:mm' }}</td>
+                      <td class="text-end text-success font-mono font-bold">+{{ rec.quantity | number }}</td>
+                    </tr>
+                    <tr *ngIf="!batchTraceData.receipts || batchTraceData.receipts.length === 0">
+                      <td colspan="5" class="text-center py-4 text-muted small">Không có lịch sử nhập kho.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Deliveries -->
+          <div class="ph-card mb-4">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title text-danger">
+                <i class="fa fa-arrow-up"></i>
+                {{ '::Dashboard.Trace.DeliveriesTitle' | abpLocalization }}
+              </h6>
+            </div>
+            <div class="ph-card__body p-0">
+              <div class="table-responsive">
+                <table class="table ph-table align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Số phiếu</th>
+                      <th>Số SO</th>
+                      <th>Khách hàng</th>
+                      <th>Ngày xuất</th>
+                      <th class="text-end">Số lượng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let del of batchTraceData.deliveries">
+                      <td class="font-mono font-semibold">{{ del.ticketNumber }}</td>
+                      <td class="font-mono small text-muted">{{ del.soNumber }}</td>
+                      <td>{{ del.customerName }}</td>
+                      <td>{{ del.date | date:'dd/MM/yyyy HH:mm' }}</td>
+                      <td class="text-end text-danger font-mono font-bold">-{{ del.quantity | number }}</td>
+                    </tr>
+                    <tr *ngIf="!batchTraceData.deliveries || batchTraceData.deliveries.length === 0">
+                      <td colspan="5" class="text-center py-4 text-muted small">Không có lịch sử xuất bán.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+
+          <!-- Other Movements -->
+          <div class="ph-card">
+            <div class="ph-card__header">
+              <h6 class="ph-card__header-title text-warning">
+                <i class="fa fa-exchange-alt"></i>
+                {{ '::Dashboard.Trace.OthersTitle' | abpLocalization }}
+              </h6>
+            </div>
+            <div class="ph-card__body p-0">
+              <div class="table-responsive">
+                <table class="table ph-table align-middle mb-0">
+                  <thead>
+                    <tr>
+                      <th>Số phiếu</th>
+                      <th>Loại biến động</th>
+                      <th>Ngày biến động</th>
+                      <th>Ghi chú</th>
+                      <th class="text-end">Số lượng</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr *ngFor="let oth of batchTraceData.otherTransactions">
+                      <td class="font-mono font-semibold">{{ oth.ticketNumber }}</td>
+                      <td><span class="ph-badge ph-badge--neutral">{{ oth.transactionType }}</span></td>
+                      <td>{{ oth.date | date:'dd/MM/yyyy HH:mm' }}</td>
+                      <td class="small text-muted">{{ oth.note }}</td>
+                      <td class="text-end font-mono font-bold" [class.text-success]="oth.quantity > 0" [class.text-danger]="oth.quantity < 0">
+                        {{ oth.quantity > 0 ? '+' : '' }}{{ oth.quantity | number }}
+                      </td>
+                    </tr>
+                    <tr *ngIf="!batchTraceData.otherTransactions || batchTraceData.otherTransactions.length === 0">
+                      <td colspan="5" class="text-center py-4 text-muted small">Không ghi nhận biến động giao dịch khác.</td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!traceLoading && !batchTraceData" class="text-center py-5">
+      <div class="py-4">
+        <i class="fa fa-route text-muted opacity-50 fa-3x mb-3"></i>
+        <h6 class="text-muted">{{ '::Dashboard.Trace.Empty' | abpLocalization }}</h6>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Loading state -->
+<div class="d-flex justify-content-center align-items-center py-5 min-vh-50" *ngIf="loading">
+  <div class="text-center text-heading">
+    <div class="spinner-border text-primary mb-3" style="width: 3rem; height: 3rem;" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+    <h5>{{ '::Dashboard.Loading' | abpLocalization }}</h5>
+    <p class="text-muted small">{{ '::Dashboard.LoadingHint' | abpLocalization }}</p>
+  </div>
+</div>

@@ -1,0 +1,1372 @@
+{
+  "nodes": [
+    {
+      "id": "config:src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.csproj",
+      "type": "config",
+      "metadata": {
+        "name": "SupplyCoreERP.Domain.Shared.csproj",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.csproj",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "simple",
+        "language": "csproj"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPDomainErrorCodes.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpdomainerrorcodes.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs:SupplyCoreERPDomainErrorCodes",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPDomainErrorCodes",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs",
+        "summary": "Lớp SupplyCoreERPDomainErrorCodes thuộc thành phần SupplyCoreERPDomainErrorCodes.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpdomainerrorcodes.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPDomainSharedModule.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpdomainsharedmodule.cs"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:SupplyCoreERPDomainSharedModule",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPDomainSharedModule",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+        "summary": "Lớp SupplyCoreERPDomainSharedModule thuộc thành phần SupplyCoreERPDomainSharedModule.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpdomainsharedmodule.cs"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:PreConfigureServices",
+      "type": "function",
+      "metadata": {
+        "name": "PreConfigureServices",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+        "summary": "Phương thức PreConfigureServices thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPDomainSharedModule.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpdomainsharedmodule.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:ConfigureServices",
+      "type": "function",
+      "metadata": {
+        "name": "ConfigureServices",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+        "summary": "Phương thức ConfigureServices thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPDomainSharedModule.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpdomainsharedmodule.cs"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPGlobalFeatureConfigurator.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpglobalfeatureconfigurator.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs:SupplyCoreERPGlobalFeatureConfigurator",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPGlobalFeatureConfigurator",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+        "summary": "Lớp SupplyCoreERPGlobalFeatureConfigurator thuộc thành phần SupplyCoreERPGlobalFeatureConfigurator.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpglobalfeatureconfigurator.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs:Configure",
+      "type": "function",
+      "metadata": {
+        "name": "Configure",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+        "summary": "Phương thức Configure thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPGlobalFeatureConfigurator.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpglobalfeatureconfigurator.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPModuleExtensionConfigurator.cs",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpmoduleextensionconfigurator.cs"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:SupplyCoreERPModuleExtensionConfigurator",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPModuleExtensionConfigurator",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+        "summary": "Lớp SupplyCoreERPModuleExtensionConfigurator thuộc thành phần SupplyCoreERPModuleExtensionConfigurator.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpmoduleextensionconfigurator.cs"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:Configure",
+      "type": "function",
+      "metadata": {
+        "name": "Configure",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+        "summary": "Phương thức Configure thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPModuleExtensionConfigurator.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpmoduleextensionconfigurator.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:ConfigureExistingProperties",
+      "type": "function",
+      "metadata": {
+        "name": "ConfigureExistingProperties",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+        "summary": "Phương thức ConfigureExistingProperties thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPModuleExtensionConfigurator.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpmoduleextensionconfigurator.cs"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:ConfigureExtraProperties",
+      "type": "function",
+      "metadata": {
+        "name": "ConfigureExtraProperties",
+        "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+        "summary": "Phương thức ConfigureExtraProperties thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPModuleExtensionConfigurator.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-shared",
+          "supplycoreerpmoduleextensionconfigurator.cs"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "type": "file",
+      "metadata": {
+        "name": "AgentManager.cs",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể đại lý/tác nhân hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:AgentManager",
+      "type": "class",
+      "metadata": {
+        "name": "AgentManager",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Lớp AgentManager thuộc thành phần AgentManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:AgentManager",
+      "type": "function",
+      "metadata": {
+        "name": "AgentManager",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Phương thức AgentManager thực hiện xử lý nghiệp vụ liên quan đến AgentManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:GetOrCreateSessionAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetOrCreateSessionAsync",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Phương thức GetOrCreateSessionAsync thực hiện xử lý nghiệp vụ liên quan đến AgentManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:UpdateSessionHistoryAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateSessionHistoryAsync",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Phương thức UpdateSessionHistoryAsync thực hiện xử lý nghiệp vụ liên quan đến AgentManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CreateTaskAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateTaskAsync",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Phương thức CreateTaskAsync thực hiện xử lý nghiệp vụ liên quan đến AgentManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:FindPendingTaskAsync",
+      "type": "function",
+      "metadata": {
+        "name": "FindPendingTaskAsync",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Phương thức FindPendingTaskAsync thực hiện xử lý nghiệp vụ liên quan đến AgentManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CompleteTaskAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CompleteTaskAsync",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Phương thức CompleteTaskAsync thực hiện xử lý nghiệp vụ liên quan đến AgentManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CancelTaskAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CancelTaskAsync",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+        "summary": "Phương thức CancelTaskAsync thực hiện xử lý nghiệp vụ liên quan đến AgentManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "type": "file",
+      "metadata": {
+        "name": "AgentSession.cs",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho đại lý/tác nhân hệ thống trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "class",
+      "metadata": {
+        "name": "AgentSession",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+        "summary": "Lớp AgentSession thuộc thành phần AgentSession.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "function",
+      "metadata": {
+        "name": "AgentSession",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+        "summary": "Phương thức AgentSession thực hiện xử lý nghiệp vụ liên quan đến AgentSession.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "function",
+      "metadata": {
+        "name": "AgentSession",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+        "summary": "Phương thức AgentSession thực hiện xử lý nghiệp vụ liên quan đến AgentSession.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "type": "file",
+      "metadata": {
+        "name": "AgentTask.cs",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho đại lý/tác nhân hệ thống trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "class",
+      "metadata": {
+        "name": "AgentTask",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+        "summary": "Lớp AgentTask thuộc thành phần AgentTask.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "function",
+      "metadata": {
+        "name": "AgentTask",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+        "summary": "Phương thức AgentTask thực hiện xử lý nghiệp vụ liên quan đến AgentTask.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "function",
+      "metadata": {
+        "name": "AgentTask",
+        "path": "src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+        "summary": "Phương thức AgentTask thực hiện xử lý nghiệp vụ liên quan đến AgentTask.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ActiveIngredient.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "class",
+      "metadata": {
+        "name": "ActiveIngredient",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+        "summary": "Lớp ActiveIngredient thuộc thành phần ActiveIngredient.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "function",
+      "metadata": {
+        "name": "ActiveIngredient",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+        "summary": "Phương thức ActiveIngredient thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredient.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "function",
+      "metadata": {
+        "name": "ActiveIngredient",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+        "summary": "Phương thức ActiveIngredient thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredient.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:Update",
+      "type": "function",
+      "metadata": {
+        "name": "Update",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+        "summary": "Phương thức Update thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredient.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ActiveIngredientManager.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+        "summary": "Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể catalog.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:ActiveIngredientManager",
+      "type": "class",
+      "metadata": {
+        "name": "ActiveIngredientManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+        "summary": "Lớp ActiveIngredientManager thuộc thành phần ActiveIngredientManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:ActiveIngredientManager",
+      "type": "function",
+      "metadata": {
+        "name": "ActiveIngredientManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+        "summary": "Phương thức ActiveIngredientManager thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến ActiveIngredientManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "type": "file",
+      "metadata": {
+        "name": "BaseUnit.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "class",
+      "metadata": {
+        "name": "BaseUnit",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+        "summary": "Lớp BaseUnit thuộc thành phần BaseUnit.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "function",
+      "metadata": {
+        "name": "BaseUnit",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+        "summary": "Phương thức BaseUnit thực hiện xử lý nghiệp vụ liên quan đến BaseUnit.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "function",
+      "metadata": {
+        "name": "BaseUnit",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+        "summary": "Phương thức BaseUnit thực hiện xử lý nghiệp vụ liên quan đến BaseUnit.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:Update",
+      "type": "function",
+      "metadata": {
+        "name": "Update",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+        "summary": "Phương thức Update thực hiện xử lý nghiệp vụ liên quan đến BaseUnit.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs:SupplyCoreERPDomainErrorCodes",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs:SupplyCoreERPDomainErrorCodes",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:SupplyCoreERPDomainSharedModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:SupplyCoreERPDomainSharedModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:PreConfigureServices",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:PreConfigureServices",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:ConfigureServices",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs:ConfigureServices",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs:SupplyCoreERPGlobalFeatureConfigurator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs:SupplyCoreERPGlobalFeatureConfigurator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs:Configure",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs:Configure",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:SupplyCoreERPModuleExtensionConfigurator",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "target": "class:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:SupplyCoreERPModuleExtensionConfigurator",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:Configure",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:Configure",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:ConfigureExistingProperties",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "target": "function:src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs:ConfigureExtraProperties",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:AgentManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:AgentManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:AgentManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:AgentManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:GetOrCreateSessionAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:GetOrCreateSessionAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:UpdateSessionHistoryAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:UpdateSessionHistoryAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CreateTaskAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CreateTaskAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:FindPendingTaskAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:FindPendingTaskAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CompleteTaskAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CompleteTaskAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CancelTaskAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentManager.cs:CancelTaskAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentSession.cs:AgentSession",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Agent/AgentTask.cs:AgentTask",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:ActiveIngredient",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:Update",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs:Update",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:ActiveIngredientManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:ActiveIngredientManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:ActiveIngredientManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:ActiveIngredientManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:BaseUnit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:Update",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs:Update",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

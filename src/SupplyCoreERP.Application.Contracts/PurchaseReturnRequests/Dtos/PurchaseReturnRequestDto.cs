@@ -8,13 +8,9 @@ namespace SupplyCoreERP.PurchaseReturnRequests.Dtos;
 public class PurchaseReturnRequestDto : FullAuditedEntityDto<Guid>
 {
     public string Code { get; set; }
-    public Guid SupplierId { get; set; }
-    public string? SupplierName { get; set; }
-    public string? SupplierCode { get; set; }
     public Guid WarehouseId { get; set; }
     public string? WarehouseName { get; set; }
     public string? WarehouseCode { get; set; }
-    public PurchaseReturnType ReturnType { get; set; }
     public DateTime RequestDate { get; set; }
     public PurchaseReturnRequestStatus Status { get; set; }
     public decimal SubTotal { get; set; }

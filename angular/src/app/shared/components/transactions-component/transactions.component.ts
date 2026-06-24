@@ -24,7 +24,10 @@ export class TransactionsComponent implements OnInit, OnDestroy {
   @Input() isEmbedded: boolean = false;
   @Input() fixedProductId?: string;
   @Input() fixedBatchId?: string;
+  @Input() fixedWarehouseId?: string;
   @Input() fixedBinId?: string;
+  @Input() hideProduct: boolean = false;
+  @Input() hideLocation: boolean = false;
 
   data = { items: [], totalCount: 0 } as PagedResultDto<InventoryTransactionDto>;
 
@@ -55,6 +58,7 @@ export class TransactionsComponent implements OnInit, OnDestroy {
         filter: this.filterText,
         productId: this.fixedProductId || undefined,
         productBatchId: this.fixedBatchId || undefined,
+        warehouseId: this.fixedWarehouseId || undefined,
         binId: this.fixedBinId || undefined,
         fromDate: fromDateParsed,
         toDate: toDateParsed

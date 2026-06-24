@@ -17,6 +17,7 @@ public interface IMedicineManager : IDomainService
         UsageRoute usageRoute,
         StorageCondition storageCondition,
         bool isPrescriptionDrug,
+        decimal baseUnitVolume = 0,
         DateTime? regValidFrom = null,
         DateTime? regValidTo = null,
         string? regNote = null,
@@ -33,15 +34,17 @@ public interface IMedicineManager : IDomainService
         UsageRoute usageRoute,
         StorageCondition storageCondition,
         bool isPrescriptionDrug,
+        decimal baseUnitVolume,
         DateTime? regValidFrom = null,
         DateTime? regValidTo = null,
         string? regNote = null);
 
-    Task AddIngredientAsync(Medicine medicine, Guid activeIngredientId);
+    Task AddIngredientAsync(Medicine medicine, Guid activeIngredientId, string? strength = null);
+    Task UpdateIngredientStrengthAsync(Medicine medicine, Guid activeIngredientId, string? strength);
     Task RemoveIngredientAsync(Medicine medicine, Guid activeIngredientId);
 
-    Task AddUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level);
-    Task UpdateUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level);
+    Task AddUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level, decimal volume = 0);
+    Task UpdateUnitAsync(Medicine medicine, Guid unitId, int conversionFactor, int level, decimal volume = 0);
     Task RemoveUnitAsync(Medicine medicine, Guid unitId);
 
     Task AddRegistrationAsync(

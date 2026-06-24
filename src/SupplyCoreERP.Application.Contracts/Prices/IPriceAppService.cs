@@ -10,8 +10,8 @@ public interface IPriceAppService : IApplicationService
 {
     Task<List<PriceListDto>> GetPriceListsAsync();
     Task<List<ProductPriceDto>> GetByProductAsync(Guid productId);
-    Task CreateAsync(CreateUpdateProductPriceDto input);
-    Task UpdateAsync(Guid id, CreateUpdateProductPriceDto input);
+    Task<ProductPriceDto> CreateAsync(CreateUpdateProductPriceDto input);
+    Task<ProductPriceDto> UpdateAsync(Guid id, CreateUpdateProductPriceDto input);
     Task DeleteAsync(Guid id);
 }
 

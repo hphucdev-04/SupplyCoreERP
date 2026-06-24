@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { queryDb } from "../db.js";
-import { sanitizeRows } from "../utils/sanitize.js";
+import { sanitizeResponse } from "../utils/security.js";
 import crypto from "crypto";
 import { elicitInput } from "../utils/elicitation.js";
 export const registerSupplierTools = (server) => {
@@ -36,9 +36,13 @@ export const registerSupplierTools = (server) => {
             if (rows.length === 0) {
                 return { content: [{ type: "text", text: "No suppliers found matching the criteria." }] };
             }
-            const sanitizedRows = sanitizeRows(rows);
-            const text = sanitizedRows.map(r => `Code: ${r.Code} | Name: ${r.Name} | Phone: ${r.PhoneNumber || 'N/A'} | Email: ${r.Email || 'N/A'}`).join("\n");
-            return { content: [{ type: "text", text: `Supplier List:\n${text}` }] };
+            const sanitizedRows = sanitizeResponse(rows);
+            return {
+                content: [{
+                        type: "text",
+                        text: JSON.stringify(sanitizedRows)
+                    }]
+            };
         }
         catch (error) {
             return {
@@ -135,7 +139,19 @@ export const registerSupplierTools = (server) => {
             return {
                 content: [{
                         type: "text",
-                        text: `Đã tạo nhà cung cấp thành công:\n- Tên: ${name}\n- Mã: ${code}\n- Mã số thuế: ${taxCode || 'N/A'}\n- Số điện thoại: ${phoneNumber || 'N/A'}\n- Email: ${email || 'N/A'}\n- Địa chỉ: ${address || 'N/A'}`
+                        text: JSON.stringify({
+                            success: true,
+                            message: "Supplier created successfully",
+                            supplier: {
+                                id: newId,
+                                code: code,
+                                name: name,
+                                taxCode: taxCode || null,
+                                phoneNumber: phoneNumber || null,
+                                email: email || null,
+                                address: address || null
+                            }
+                        })
                     }]
             };
         }

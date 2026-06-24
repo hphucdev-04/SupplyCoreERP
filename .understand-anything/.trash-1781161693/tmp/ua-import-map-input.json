@@ -1,0 +1,5549 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "files": [
+    {
+      "path": ".dockerignore",
+      "language": "unknown",
+      "sizeLines": 15,
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".gitattributes",
+      "language": "unknown",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".github/workflows/ci-cd-dev.yml",
+      "language": "yaml",
+      "sizeLines": 150,
+      "fileCategory": "infra"
+    },
+    {
+      "path": ".understand-anything/.understandignore",
+      "language": "unknown",
+      "sizeLines": 329,
+      "fileCategory": "code"
+    },
+    {
+      "path": ".understand-anything/config.json",
+      "language": "json",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/.dockerignore",
+      "language": "unknown",
+      "sizeLines": 8,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "angular/angular.json",
+      "language": "json",
+      "sizeLines": 211,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 15,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "angular/Dockerfile.local",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "angular/dynamic-env.json",
+      "language": "json",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/e2e/protractor.conf.js",
+      "language": "javascript",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/e2e/src/app.e2e-spec.ts",
+      "language": "typescript",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/e2e/src/app.po.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/e2e/tsconfig.json",
+      "language": "json",
+      "sizeLines": 13,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/karma.conf.js",
+      "language": "javascript",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/nginx.conf",
+      "language": "conf",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/package.json",
+      "language": "json",
+      "sizeLines": 65,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/README.md",
+      "language": "markdown",
+      "sizeLines": 32,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "angular/scripts/README.md",
+      "language": "markdown",
+      "sizeLines": 199,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "angular/scripts/remove-symlinks.ps1",
+      "language": "powershell",
+      "sizeLines": 49,
+      "fileCategory": "script"
+    },
+    {
+      "path": "angular/scripts/setup-symlinks.ps1",
+      "language": "powershell",
+      "sizeLines": 105,
+      "fileCategory": "script"
+    },
+    {
+      "path": "angular/scripts/symlink-config.ps1",
+      "language": "powershell",
+      "sizeLines": 32,
+      "fileCategory": "script"
+    },
+    {
+      "path": "angular/src/app/app.component.ts",
+      "language": "typescript",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/app.config.ts",
+      "language": "typescript",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/app.routes.ts",
+      "language": "typescript",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/catalogs/catalogs.routes.ts",
+      "language": "typescript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/catalogs/categories/categories.component.html",
+      "language": "html",
+      "sizeLines": 85,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/categories/categories.component.scss",
+      "language": "css",
+      "sizeLines": 23,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/categories/categories.component.ts",
+      "language": "typescript",
+      "sizeLines": 110,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/catalogs/dosageforms/dosageforms.component.html",
+      "language": "html",
+      "sizeLines": 88,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/dosageforms/dosageforms.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/dosageforms/dosageforms.component.ts",
+      "language": "typescript",
+      "sizeLines": 112,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/catalogs/ingredients/ingredients.component.html",
+      "language": "html",
+      "sizeLines": 92,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/ingredients/ingredients.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/ingredients/ingredients.component.ts",
+      "language": "typescript",
+      "sizeLines": 108,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/catalogs/manufacturers/manufacturers.component.html",
+      "language": "html",
+      "sizeLines": 121,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/manufacturers/manufacturers.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/manufacturers/manufacturers.component.ts",
+      "language": "typescript",
+      "sizeLines": 163,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicice-details/medicice-details.component.html",
+      "language": "html",
+      "sizeLines": 738,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicice-details/medicice-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicice-details/medicice-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 377,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicines.component.html",
+      "language": "html",
+      "sizeLines": 492,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicines.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/medicines/medicines.component.ts",
+      "language": "typescript",
+      "sizeLines": 339,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/catalogs/units/units.component.html",
+      "language": "html",
+      "sizeLines": 87,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/units/units.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/catalogs/units/units.component.ts",
+      "language": "typescript",
+      "sizeLines": 109,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/common/locale.provider.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/common/menu.provider.ts",
+      "language": "typescript",
+      "sizeLines": 108,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/common/route.provider.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/common/settings-config.provider.ts",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/common/signalR.provider.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/home/home.component.html",
+      "language": "html",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/home/home.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/home/home.component.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balance-details/balance-details.component.html",
+      "language": "html",
+      "sizeLines": 176,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balance-details/balance-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balance-details/balance-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balances.component.html",
+      "language": "html",
+      "sizeLines": 172,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balances.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/balances/balances.component.ts",
+      "language": "typescript",
+      "sizeLines": 89,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batch-details/batch-details.component.html",
+      "language": "html",
+      "sizeLines": 207,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batch-details/batch-details.component.scss",
+      "language": "css",
+      "sizeLines": 54,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batch-details/batch-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 98,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batches.component.html",
+      "language": "html",
+      "sizeLines": 255,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batches.component.scss",
+      "language": "css",
+      "sizeLines": 74,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/batches/batches.component.ts",
+      "language": "typescript",
+      "sizeLines": 197,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/inventories.routes.ts",
+      "language": "typescript",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets-details/ticket-details.component.html",
+      "language": "html",
+      "sizeLines": 555,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets-details/ticket-details.component.scss",
+      "language": "css",
+      "sizeLines": 143,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets-details/ticket-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 749,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets.component.html",
+      "language": "html",
+      "sizeLines": 257,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/tickets/tickets.component.ts",
+      "language": "typescript",
+      "sizeLines": 272,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.html",
+      "language": "html",
+      "sizeLines": 678,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.scss",
+      "language": "css",
+      "sizeLines": 1249,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+      "language": "typescript",
+      "sizeLines": 1134,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/warehouses.component.html",
+      "language": "html",
+      "sizeLines": 265,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/warehouses.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/inventories/warehouses/warehouses.component.ts",
+      "language": "typescript",
+      "sizeLines": 287,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customer-details/customer-details.component.html",
+      "language": "html",
+      "sizeLines": 270,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customer-details/customer-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customers.component.html",
+      "language": "html",
+      "sizeLines": 332,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customers.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/customers/customers.component.ts",
+      "language": "typescript",
+      "sizeLines": 272,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/partner.routes.ts",
+      "language": "typescript",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.html",
+      "language": "html",
+      "sizeLines": 586,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 516,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/suppliers.component.html",
+      "language": "html",
+      "sizeLines": 304,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/suppliers.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/partners/suppliers/suppliers.component.ts",
+      "language": "typescript",
+      "sizeLines": 268,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/procurement.routes.ts",
+      "language": "typescript",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.html",
+      "language": "html",
+      "sizeLines": 249,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+      "language": "typescript",
+      "sizeLines": 241,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.html",
+      "language": "html",
+      "sizeLines": 552,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 556,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-requisitions/purchase-requisition.component.html",
+      "language": "html",
+      "sizeLines": 179,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-requisitions/purchase-requisition.component.ts",
+      "language": "typescript",
+      "sizeLines": 184,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-requisitions/purchaserequisition-details/purchase-requisition-details.component.html",
+      "language": "html",
+      "sizeLines": 484,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-requisitions/purchaserequisition-details/purchase-requisition-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 531,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-return-requests/details/purchase-return-request-details.component.html",
+      "language": "html",
+      "sizeLines": 357,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-return-requests/details/purchase-return-request-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 390,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-return-requests/purchase-return-requests.component.html",
+      "language": "html",
+      "sizeLines": 253,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-return-requests/purchase-return-requests.component.ts",
+      "language": "typescript",
+      "sizeLines": 169,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-returns/purchase-return-details/purchase-return-details.component.html",
+      "language": "html",
+      "sizeLines": 319,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-returns/purchase-return-details/purchase-return-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 297,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-returns/purchase-returns.component.html",
+      "language": "html",
+      "sizeLines": 257,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-returns/purchase-returns.component.ts",
+      "language": "typescript",
+      "sizeLines": 188,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/active-ingredients/active-ingredient.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/active-ingredients/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/active-ingredients/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/active-ingredients/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/agent/agent.service.ts",
+      "language": "typescript",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/agent/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/agent/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/agent/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/balances/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/balances/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/balances/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/balances/inventory-balance.service.ts",
+      "language": "typescript",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/base-units/base-unit.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/base-units/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/base-units/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/base-units/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/batches/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/batches/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/batches/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/batches/product-batch.service.ts",
+      "language": "typescript",
+      "sizeLines": 78,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/categories/category.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/categories/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/categories/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/categories/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/customers/customer.service.ts",
+      "language": "typescript",
+      "sizeLines": 70,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/customers/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/customers/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/customers/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/dosage-forms/dosage-form.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/dosage-forms/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/dosage-forms/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/dosage-forms/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/balances/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/balances/reservation-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/index.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/medicines/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/medicines/medicine-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/medicines/storage-condition.enum.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/medicines/usage-route.enum.ts",
+      "language": "typescript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/notificaitons/index.ts",
+      "language": "typescript",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/notificaitons/notification-level.enum.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/notificaitons/notification-severity.enum.ts",
+      "language": "typescript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/index.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-order-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-requisition-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-return-request-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-return-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-return-type.enum.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/recall-level.enum.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/sales-order-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/sales-recall-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/partner/customer-type.enum.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/partner/gender.enum.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/partner/index.ts",
+      "language": "typescript",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/price-list/currency-type.enum.ts",
+      "language": "typescript",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/price-list/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/approval-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/batch-qastatus.enum.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/index.ts",
+      "language": "typescript",
+      "sizeLines": 5,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/inventory-transaction-type.enum.ts",
+      "language": "typescript",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/ticket-type.enum.ts",
+      "language": "typescript",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/warehouses/zone-type.enum.ts",
+      "language": "typescript",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/generate-proxy.json",
+      "language": "json",
+      "sizeLines": 35997,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/src/app/proxy/index.ts",
+      "language": "typescript",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/locations/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/locations/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/locations/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/locations/location.service.ts",
+      "language": "typescript",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/manufacturers/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/manufacturers/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/manufacturers/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/manufacturers/manufacturer.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 111,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/index.ts",
+      "language": "typescript",
+      "sizeLines": 4,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/medicine-excel.service.ts",
+      "language": "typescript",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/medicines/medicine.service.ts",
+      "language": "typescript",
+      "sizeLines": 174,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/notifications/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/notifications/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/notifications/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/notifications/notification.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/prices/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/prices/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/prices/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/prices/price.service.ts",
+      "language": "typescript",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-orders/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-orders/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 90,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-orders/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-orders/purchase-order.service.ts",
+      "language": "typescript",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-requisitions/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-requisitions/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 77,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-requisitions/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-requisitions/purchase-requisition.service.ts",
+      "language": "typescript",
+      "sizeLines": 115,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 91,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/purchase-return-request.service.ts",
+      "language": "typescript",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-returns/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-returns/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 88,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-returns/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-returns/purchase-return.service.ts",
+      "language": "typescript",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/README.md",
+      "language": "markdown",
+      "sizeLines": 17,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-orders/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-orders/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 83,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-orders/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-orders/sales-order.service.ts",
+      "language": "typescript",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-recalls/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-recalls/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 105,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-recalls/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-recalls/sales-recall.service.ts",
+      "language": "typescript",
+      "sizeLines": 114,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/settings/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/settings/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/settings/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/settings/setting.service.ts",
+      "language": "typescript",
+      "sizeLines": 110,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/suppliers/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/suppliers/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 126,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/suppliers/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/suppliers/supplier.service.ts",
+      "language": "typescript",
+      "sizeLines": 126,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/system/index.ts",
+      "language": "typescript",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/system/text/index.ts",
+      "language": "typescript",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/system/text/json/index.ts",
+      "language": "typescript",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/system/text/json/nodes/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/system/text/json/nodes/models.ts",
+      "language": "typescript",
+      "sizeLines": 4,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/tickets/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/tickets/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 78,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/tickets/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/tickets/inventory-ticket.service.ts",
+      "language": "typescript",
+      "sizeLines": 155,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/transactions/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/transactions/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/transactions/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/transactions/inventory-transaction.service.ts",
+      "language": "typescript",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/warehouses/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/warehouses/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 90,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/warehouses/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/warehouses/warehouse.service.ts",
+      "language": "typescript",
+      "sizeLines": 178,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.html",
+      "language": "html",
+      "sizeLines": 593,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/sales/sales-orders/sales-order-details/sales-order-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 440,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/sales/sales-orders/sales-orders.component.html",
+      "language": "html",
+      "sizeLines": 177,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/sales/sales-orders/sales-orders.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/sales/sales-orders/sales-orders.component.ts",
+      "language": "typescript",
+      "sizeLines": 196,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.html",
+      "language": "html",
+      "sizeLines": 371,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/sales/sales-recalls/sales-recall-details/sales-recall-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 314,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/sales/sales-recalls/sales-recalls.component.html",
+      "language": "html",
+      "sizeLines": 233,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/sales/sales-recalls/sales-recalls.component.ts",
+      "language": "typescript",
+      "sizeLines": 191,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/sales/sales.routes.ts",
+      "language": "typescript",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/settings/dlp-settings/dlp-settings.component.html",
+      "language": "html",
+      "sizeLines": 68,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/settings/dlp-settings/dlp-settings.component.scss",
+      "language": "css",
+      "sizeLines": 1,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/settings/dlp-settings/dlp-settings.component.ts",
+      "language": "typescript",
+      "sizeLines": 141,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/settings/inventory-settings/inventory-settings.component.html",
+      "language": "html",
+      "sizeLines": 47,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/settings/inventory-settings/inventory-settings.component.scss",
+      "language": "css",
+      "sizeLines": 1,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/settings/inventory-settings/inventory-settings.component.ts",
+      "language": "typescript",
+      "sizeLines": 99,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/settings/llm-provider-settings/llm-provider-settings.component.html",
+      "language": "html",
+      "sizeLines": 62,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/settings/llm-provider-settings/llm-provider-settings.component.scss",
+      "language": "css",
+      "sizeLines": 1,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/settings/llm-provider-settings/llm-provider-settings.component.ts",
+      "language": "typescript",
+      "sizeLines": 101,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/settings/mcp-settings/mcp-settings.component.html",
+      "language": "html",
+      "sizeLines": 45,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/settings/mcp-settings/mcp-settings.component.scss",
+      "language": "css",
+      "sizeLines": 1,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/settings/mcp-settings/mcp-settings.component.ts",
+      "language": "typescript",
+      "sizeLines": 94,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/settings/settings-shared.scss",
+      "language": "css",
+      "sizeLines": 364,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/ai-chat.component/ai-chat.component.html",
+      "language": "html",
+      "sizeLines": 102,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/ai-chat.component/ai-chat.component.scss",
+      "language": "css",
+      "sizeLines": 366,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+      "language": "typescript",
+      "sizeLines": 464,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/components/drawer-component/drawer.component.html",
+      "language": "html",
+      "sizeLines": 33,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/drawer-component/drawer.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/drawer-component/drawer.component.ts",
+      "language": "typescript",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.html",
+      "language": "html",
+      "sizeLines": 75,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.scss",
+      "language": "css",
+      "sizeLines": 245,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts",
+      "language": "typescript",
+      "sizeLines": 165,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/components/filter-component/filter.component.html",
+      "language": "html",
+      "sizeLines": 72,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/filter-component/filter.component.scss",
+      "language": "css",
+      "sizeLines": 201,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/filter-component/filter.component.ts",
+      "language": "typescript",
+      "sizeLines": 87,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/components/import-compoent/import.component.html",
+      "language": "html",
+      "sizeLines": 59,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/import-compoent/import.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/import-compoent/import.component.ts",
+      "language": "typescript",
+      "sizeLines": 117,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/components/notification-component/notification.component.html",
+      "language": "html",
+      "sizeLines": 96,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/notification-component/notification.component.scss",
+      "language": "css",
+      "sizeLines": 260,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/notification-component/notification.component.ts",
+      "language": "typescript",
+      "sizeLines": 105,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/components/search-component/search.component.html",
+      "language": "html",
+      "sizeLines": 6,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/search-component/search.component.scss",
+      "language": "css",
+      "sizeLines": 29,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/search-component/search.component.ts",
+      "language": "typescript",
+      "sizeLines": 51,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/components/transactions-component/transactions.component.html",
+      "language": "html",
+      "sizeLines": 113,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/transactions-component/transactions.component.scss",
+      "language": "css",
+      "sizeLines": 23,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/shared/components/transactions-component/transactions.component.ts",
+      "language": "typescript",
+      "sizeLines": 99,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/directives/copy.directive.ts",
+      "language": "typescript",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/directives/currency-format.directive.ts",
+      "language": "typescript",
+      "sizeLines": 95,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/directives/enter-submit.directive.ts",
+      "language": "typescript",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/services/signalR/base-hub.service.ts",
+      "language": "typescript",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/services/signalR/notification.hub.service.ts",
+      "language": "typescript",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/services/signalR/signalr-manager.service.ts",
+      "language": "typescript",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/shared.module.ts",
+      "language": "typescript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/untils/code-generator.util.ts",
+      "language": "typescript",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/untils/enum.util.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/shared/untils/unit-conversion.helper.ts",
+      "language": "typescript",
+      "sizeLines": 89,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/assets/.gitkeep",
+      "language": "unknown",
+      "sizeLines": 0,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/environments/environment.prod.ts",
+      "language": "typescript",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/environments/environment.ts",
+      "language": "typescript",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/index.html",
+      "language": "html",
+      "sizeLines": 14,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/main.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/polyfills.ts",
+      "language": "typescript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/styles.scss",
+      "language": "css",
+      "sizeLines": 1538,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/test.ts",
+      "language": "typescript",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/start.ps1",
+      "language": "powershell",
+      "sizeLines": 2,
+      "fileCategory": "script"
+    },
+    {
+      "path": "angular/tsconfig.app.json",
+      "language": "json",
+      "sizeLines": 15,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/tsconfig.json",
+      "language": "json",
+      "sizeLines": 24,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/tsconfig.spec.json",
+      "language": "json",
+      "sizeLines": 18,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/vercel.json",
+      "language": "json",
+      "sizeLines": 2,
+      "fileCategory": "config"
+    },
+    {
+      "path": "angular/web.config",
+      "language": "config",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "common.props",
+      "language": "props",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Directory.DotSettings",
+      "language": "dotsettings",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 50,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "docs/testing/generate_excel.py",
+      "language": "python",
+      "sizeLines": 534,
+      "fileCategory": "code"
+    },
+    {
+      "path": "docs/testing/Partner_and_Catalog_Tests_Spec.xlsx",
+      "language": "xlsx",
+      "sizeLines": 87,
+      "fileCategory": "code"
+    },
+    {
+      "path": "docs/testing/QA_Test_Sync_Guide.md",
+      "language": "markdown",
+      "sizeLines": 116,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "docs/testing/test_result/test_results_domain.trx",
+      "language": "trx",
+      "sizeLines": 741,
+      "fileCategory": "code"
+    },
+    {
+      "path": "docs/testing/test_result/test_results_efcore.trx",
+      "language": "trx",
+      "sizeLines": 339,
+      "fileCategory": "code"
+    },
+    {
+      "path": "docs/testing/testcase_mapping.json",
+      "language": "json",
+      "sizeLines": 183,
+      "fileCategory": "config"
+    },
+    {
+      "path": "etc/abp-studio/run-profiles/Default.abprun.json",
+      "language": "json",
+      "sizeLines": 41,
+      "fileCategory": "config"
+    },
+    {
+      "path": "etc/scripts/initialize-solution.ps1",
+      "language": "powershell",
+      "sizeLines": 49,
+      "fileCategory": "script"
+    },
+    {
+      "path": "etc/scripts/migrate-database.ps1",
+      "language": "powershell",
+      "sizeLines": 29,
+      "fileCategory": "script"
+    },
+    {
+      "path": "GEMINI.md",
+      "language": "markdown",
+      "sizeLines": 92,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "mcp-server/.dockerignore",
+      "language": "unknown",
+      "sizeLines": 7,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "mcp-server/.env",
+      "language": "config",
+      "sizeLines": 5,
+      "fileCategory": "config"
+    },
+    {
+      "path": "mcp-server/.env.production",
+      "language": "config",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": "mcp-server/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 39,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "mcp-server/package.json",
+      "language": "json",
+      "sizeLines": 30,
+      "fileCategory": "config"
+    },
+    {
+      "path": "mcp-server/resources/db_schema.md",
+      "language": "markdown",
+      "sizeLines": 59,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "mcp-server/src/db.ts",
+      "language": "typescript",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/prompts/assistant.ts",
+      "language": "typescript",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/resources/db_schema.md",
+      "language": "markdown",
+      "sizeLines": 59,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "mcp-server/src/resources/dbSchema.ts",
+      "language": "typescript",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/server.ts",
+      "language": "typescript",
+      "sizeLines": 301,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/tools/balance.ts",
+      "language": "typescript",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/tools/batch.ts",
+      "language": "typescript",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/tools/customer.ts",
+      "language": "typescript",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/tools/product.ts",
+      "language": "typescript",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/tools/supplier.ts",
+      "language": "typescript",
+      "sizeLines": 171,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/tools/unit.ts",
+      "language": "typescript",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/tools/warehouse.ts",
+      "language": "typescript",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/utils/elicitation.ts",
+      "language": "typescript",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/src/utils/sanitize.ts",
+      "language": "typescript",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "mcp-server/tsconfig.json",
+      "language": "json",
+      "sizeLines": 14,
+      "fileCategory": "config"
+    },
+    {
+      "path": "NuGet.Config",
+      "language": "config",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "README.md",
+      "language": "markdown",
+      "sizeLines": 67,
+      "fileCategory": "docs"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/ActiveIngredientDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/CreateUpdateActiveIngredientDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/Dtos/GetActiveIngredientListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/ActiveIngredients/IActiveIngredientAppService.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentContext.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentElicitationInputDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentHistoryDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentMessageDto.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentRequestInputDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentResponseOutputDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentResultDto.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/Dtos/AgentSessionInputDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/IAgent.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Agent/IAgentAppService.cs",
+      "language": "csharp",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/GetInventoryBalanceListDto.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/GetInventoryReservationListDto.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/InventoryBalanceDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/InventoryBalanceDto.cs",
+      "language": "csharp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/Dtos/InventoryReservationDto.cs",
+      "language": "csharp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Balances/IInventoryBalanceAppService.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/BaseUnits/Dtos/BaseUnitDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/BaseUnits/Dtos/CreateUpdateBaseUnitDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/BaseUnits/Dtos/GetBaseUnitListDto.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/BaseUnits/IBaseUnitAppService.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/CreateUpdateProductBatchDto.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/GetProductBatchListDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs",
+      "language": "csharp",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs",
+      "language": "csharp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs",
+      "language": "csharp",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs",
+      "language": "csharp",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs",
+      "language": "csharp",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs",
+      "language": "csharp",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs",
+      "language": "csharp",
+      "sizeLines": 75,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs",
+      "language": "csharp",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs",
+      "language": "csharp",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs",
+      "language": "csharp",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs",
+      "language": "csharp",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "language": "csharp",
+      "sizeLines": 207,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs",
+      "language": "csharp",
+      "sizeLines": 207,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs",
+      "language": "csharp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Prices/Dtos/PriceListDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Prices/Dtos/ProductPriceDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Prices/IPriceAppService.cs",
+      "language": "csharp",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/Dtos/AddPurchaseOrderLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/Dtos/CreatePurchaseOrderDto.cs",
+      "language": "csharp",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/Dtos/GetPurchaseOrderListDto.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/Dtos/PurchaseOrderDto.cs",
+      "language": "csharp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/Dtos/PurchaseOrderLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/Dtos/RelatedTicketDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/Dtos/UpdatePurchaseOrderDto.cs",
+      "language": "csharp",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/Dtos/UpdatePurchaseOrderLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseOrders/IPurchaseOrderAppService.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/AddPurchaseRequisitionLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/ConvertToPurchaseOrderDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/CreatePurchaseRequisitionDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/GetPurchaseRequisitionListDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/PurchaseOrderAllocationDto.cs",
+      "language": "csharp",
+      "sizeLines": 17,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/PurchaseRequisitionDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/PurchaseRequisitionLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/RelatedPurchaseOrderDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/UpdatePurchaseRequisitionDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/Dtos/UpdatePurchaseRequisitionLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseRequisitions/IPurchaseRequisitionAppService.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturnRequests/Dtos/AddPurchaseReturnRequestLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturnRequests/Dtos/CreatePurchaseReturnRequestDto.cs",
+      "language": "csharp",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturnRequests/Dtos/GetPurchaseReturnRequestListDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturnRequests/Dtos/PurchaseReturnRequestDto.cs",
+      "language": "csharp",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturnRequests/Dtos/PurchaseReturnRequestLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturnRequests/Dtos/UpdatePurchaseReturnRequestDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturnRequests/Dtos/UpdatePurchaseReturnRequestLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturnRequests/IPurchaseReturnRequestAppService.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturns/Dtos/AddPurchaseReturnLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturns/Dtos/CreatePurchaseReturnDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturns/Dtos/GetPurchaseReturnListDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturns/Dtos/PurchaseReturnDto.cs",
+      "language": "csharp",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturns/Dtos/PurchaseReturnLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturns/Dtos/UpdatePurchaseReturnDto.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturns/Dtos/UpdatePurchaseReturnLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/PurchaseReturns/IPurchaseReturnAppService.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesOrders/Dtos/AddSalesOrderLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesOrders/Dtos/CreateSalesOrderDto.cs",
+      "language": "csharp",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesOrders/Dtos/GetSalesOrderListDto.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesOrders/Dtos/SalesOrderDto.cs",
+      "language": "csharp",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesOrders/Dtos/SalesOrderLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesOrders/Dtos/UpdateSalesOrderDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesOrders/Dtos/UpdateSalesOrderLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesOrders/ISalesOrderAppService.cs",
+      "language": "csharp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/AddSalesRecallLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/CreateSalesRecallDto.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/CustomerRecallTraceDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/GetSalesRecallListDto.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/SalesRecallDto.cs",
+      "language": "csharp",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/SalesRecallLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/UpdateSalesRecallDto.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/Dtos/UpdateSalesRecallLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SalesRecalls/ISalesRecallAppService.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/DlpSettingsDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/InventorySettingsDto.cs",
+      "language": "csharp",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/LlmProviderSettingsDto.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/Dtos/McpSettingsDto.cs",
+      "language": "csharp",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Settings/ISettingAppService.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierDto.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierProductConditionDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/CreateUpdateSupplierProductDto.cs",
+      "language": "csharp",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierListDto.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierMedicineListDto.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/GetSupplierProductListDto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierMedicineDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierProductConditionDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/Dtos/SupplierProductDto.cs",
+      "language": "csharp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Suppliers/ISupplierAppService.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 117,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.csproj",
+      "language": "csproj",
+      "sizeLines": 24,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs",
+      "language": "csharp",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs",
+      "language": "csharp",
+      "sizeLines": 22,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs",
+      "language": "csharp",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs",
+      "language": "csharp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs",
+      "language": "csharp",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs",
+      "language": "csharp",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAppService.cs",
+      "language": "csharp",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/ActiveIngredients/ActiveIngredientAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Agent/AgentAppService.cs",
+      "language": "csharp",
+      "sizeLines": 701,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "language": "csharp",
+      "sizeLines": 108,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "language": "csharp",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "language": "csharp",
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "language": "csharp",
+      "sizeLines": 96,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Customers/CustomerAppService.cs",
+      "language": "csharp",
+      "sizeLines": 138,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Customers/CustomerAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/DosageForms/DosageFormAppService.cs",
+      "language": "csharp",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/DosageForms/DosageFormAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Locations/LocationAppService.cs",
+      "language": "csharp",
+      "sizeLines": 100,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Locations/LocationAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Manufacturers/ManufacturerAppService.cs",
+      "language": "csharp",
+      "sizeLines": 114,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Manufacturers/ManufacturerAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Medicines/MedicineAppService.cs",
+      "language": "csharp",
+      "sizeLines": 350,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Medicines/MedicineAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Medicines/MedicineExcelService.cs",
+      "language": "csharp",
+      "sizeLines": 698,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineCreatedNotificationHandler.cs",
+      "language": "csharp",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineImportNotificationHandler.cs",
+      "language": "csharp",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "language": "csharp",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "language": "csharp",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "language": "csharp",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/NotificationAppService.cs",
+      "language": "csharp",
+      "sizeLines": 154,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/NotificationAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Prices/PriceAppService.cs",
+      "language": "csharp",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Prices/PriceAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Properties/AssemblyInfo.cs",
+      "language": "csharp",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAppService.cs",
+      "language": "csharp",
+      "sizeLines": 211,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseOrders/PurchaseOrderAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAppService.cs",
+      "language": "csharp",
+      "sizeLines": 216,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseRequisitions/PurchaseRequisitionAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseReturnRequests/PurchaseReturnRequestAppService.cs",
+      "language": "csharp",
+      "sizeLines": 277,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseReturnRequests/PurchaseReturnRequestAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAppService.cs",
+      "language": "csharp",
+      "sizeLines": 255,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/PurchaseReturns/PurchaseReturnAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAppService.cs",
+      "language": "csharp",
+      "sizeLines": 193,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SalesOrders/SalesOrderAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAppService.cs",
+      "language": "csharp",
+      "sizeLines": 314,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SalesRecalls/SalesRecallAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Settings/SettingAppService.cs",
+      "language": "csharp",
+      "sizeLines": 151,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Suppliers/SupplierAppService.cs",
+      "language": "csharp",
+      "sizeLines": 383,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Suppliers/SupplierAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERP.Application.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERP.Application.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 122,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERP.Application.csproj",
+      "language": "csproj",
+      "sizeLines": 29,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERPApplicationMappers.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERPApplicationModule.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/SupplyCoreERPAppService.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Tickets/InventoryTicketAppService.cs",
+      "language": "csharp",
+      "sizeLines": 369,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Tickets/InventoryTicketAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 57,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Transactions/InventoryTransactionAppService.cs",
+      "language": "csharp",
+      "sizeLines": 82,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Transactions/InventoryTransactionAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Warehouses/WarehouseAppService.cs",
+      "language": "csharp",
+      "sizeLines": 227,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Warehouses/WarehouseAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 26,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.Development.json",
+      "language": "json",
+      "sizeLines": 20,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.json",
+      "language": "json",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.Production.json",
+      "language": "json",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/DbMigratorHostedService.cs",
+      "language": "csharp",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/Dockerfile.local",
+      "language": "dockerfile",
+      "sizeLines": 5,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/Program.cs",
+      "language": "csharp",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/Properties/launchSettings.json",
+      "language": "json",
+      "sizeLines": 23,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.abppkg",
+      "language": "abppkg",
+      "sizeLines": 0,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+      "language": "csproj",
+      "sizeLines": 67,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/SupplyCoreERPDbMigratorModule.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Agent/AgentTaskStatus.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Agent/AgentTaskType.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Balances/ReservationStatus.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Medicines/MedicineStatus.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Medicines/StorageCondition.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Medicines/UsageRoute.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Notificaitons/NotificationLevel.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Notificaitons/NotificationSeverity.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Notificaitons/NotificationType.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/PurchaseOrderStatus.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/PurchaseRequisitionStatus.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/PurchaseReturnRequestStatus.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/PurchaseReturnStatus.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/PurchaseReturnType.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/RecallLevel.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/SalesOrderStatus.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Orders/SalesRecallStatus.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Partner/CustomerType.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Partner/Gender.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/PriceLists/CurrencyType.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Products/ProductType.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/ApprovalStatus.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/BatchQAStatus.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/InventoryTransactionType.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/TicketType.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Enums/Warehouses/ZoneType.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineApprovedEto.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Etos/Medicines/MedicineCreatedEto.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Localization/Permissions/en.json",
+      "language": "json",
+      "sizeLines": 32,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Localization/Permissions/vi.json",
+      "language": "json",
+      "sizeLines": 31,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Localization/Properties/en.json",
+      "language": "json",
+      "sizeLines": 364,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Localization/Properties/vi.json",
+      "language": "json",
+      "sizeLines": 378,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERP/en.json",
+      "language": "json",
+      "sizeLines": 57,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERP/vi.json",
+      "language": "json",
+      "sizeLines": 62,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/Localization/SupplyCoreERPResource.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/MultiTenancy/MultiTenancyConsts.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 117,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERP.Domain.Shared.csproj",
+      "language": "csproj",
+      "sizeLines": 44,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainErrorCodes.cs",
+      "language": "csharp",
+      "sizeLines": 6,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPDomainSharedModule.cs",
+      "language": "csharp",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPGlobalFeatureConfigurator.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain.Shared/SupplyCoreERPModuleExtensionConfigurator.cs",
+      "language": "csharp",
+      "sizeLines": 71,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Agent/AgentManager.cs",
+      "language": "csharp",
+      "sizeLines": 110,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Agent/AgentSession.cs",
+      "language": "csharp",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Agent/AgentTask.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredient.cs",
+      "language": "csharp",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/ActiveIngredients/ActiveIngredientManager.cs",
+      "language": "csharp",
+      "sizeLines": 67,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnit.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "language": "csharp",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "language": "csharp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "language": "csharp",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "language": "csharp",
+      "sizeLines": 87,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "language": "csharp",
+      "sizeLines": 49,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "language": "csharp",
+      "sizeLines": 126,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineCreatedDomainEvent.cs",
+      "language": "csharp",
+      "sizeLines": 16,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineImportDomainEvent.cs",
+      "language": "csharp",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineStatusChangedDomainEvent.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs",
+      "language": "csharp",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Medicine.cs",
+      "language": "csharp",
+      "sizeLines": 147,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineIngredient.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineManager.cs",
+      "language": "csharp",
+      "sizeLines": 240,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/MedicineRegistration.cs",
+      "language": "csharp",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/Product.cs",
+      "language": "csharp",
+      "sizeLines": 144,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductManager.cs",
+      "language": "csharp",
+      "sizeLines": 143,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/ProductUnit.cs",
+      "language": "csharp",
+      "sizeLines": 63,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Catalog/Products/UnitConversionManager.cs",
+      "language": "csharp",
+      "sizeLines": 120,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequence.cs",
+      "language": "csharp",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs",
+      "language": "csharp",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Common/DocumentSequences/IDocumentSequenceManager.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/Notification.cs",
+      "language": "csharp",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/NotificationManager.cs",
+      "language": "csharp",
+      "sizeLines": 147,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Common/Notifications/UserNotification.cs",
+      "language": "csharp",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Data/ISupplyCoreERPDbSchemaMigrator.cs",
+      "language": "csharp",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Data/NullSupplyCoreERPDbSchemaMigrator.cs",
+      "language": "csharp",
+      "sizeLines": 21,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Data/SupplyCoreERPDbMigrationService.cs",
+      "language": "csharp",
+      "sizeLines": 191,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Identity/ChangeIdentityPasswordPolicySettingDefinitionProvider.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs",
+      "language": "csharp",
+      "sizeLines": 73,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "language": "csharp",
+      "sizeLines": 255,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "language": "csharp",
+      "sizeLines": 81,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "language": "csharp",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "language": "csharp",
+      "sizeLines": 79,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/Events/InventoryTicketExecutedDomainEvent.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "language": "csharp",
+      "sizeLines": 89,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "language": "csharp",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "language": "csharp",
+      "sizeLines": 58,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs",
+      "language": "csharp",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "language": "csharp",
+      "sizeLines": 538,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "language": "csharp",
+      "sizeLines": 52,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "language": "csharp",
+      "sizeLines": 73,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "language": "csharp",
+      "sizeLines": 93,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "language": "csharp",
+      "sizeLines": 206,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "language": "csharp",
+      "sizeLines": 61,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "language": "csharp",
+      "sizeLines": 29,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/Area.cs",
+      "language": "csharp",
+      "sizeLines": 30,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "language": "csharp",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/City.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "language": "csharp",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs",
+      "language": "csharp",
+      "sizeLines": 24,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/Country.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "language": "csharp",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Locations/DataSeed/LocationDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 394,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/OpenIddict/OpenIddictDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 145,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Customer/Customer.cs",
+      "language": "csharp",
+      "sizeLines": 136,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Customer/CustomerManager.cs",
+      "language": "csharp",
+      "sizeLines": 181,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Customer/ICustomerManager.cs",
+      "language": "csharp",
+      "sizeLines": 25,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/ISupplierManager.cs",
+      "language": "csharp",
+      "sizeLines": 45,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/Supplier.cs",
+      "language": "csharp",
+      "sizeLines": 198,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/SupplierManager.cs",
+      "language": "csharp",
+      "sizeLines": 233,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/SupplierProduct.cs",
+      "language": "csharp",
+      "sizeLines": 128,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Partner/Suppliers/SupplierProductCondition.cs",
+      "language": "csharp",
+      "sizeLines": 86,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/Events/PurchaseOrderTicketExecutedEventHandler.cs",
+      "language": "csharp",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/IPurchaseOrderManager.cs",
+      "language": "csharp",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrder.cs",
+      "language": "csharp",
+      "sizeLines": 166,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrderLine.cs",
+      "language": "csharp",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrderManager.cs",
+      "language": "csharp",
+      "sizeLines": 429,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseRequisitions/IPurchaseRequisitionManager.cs",
+      "language": "csharp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseRequisitions/PurchaseRequisition.cs",
+      "language": "csharp",
+      "sizeLines": 167,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseRequisitions/PurchaseRequisitionLine.cs",
+      "language": "csharp",
+      "sizeLines": 62,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseRequisitions/PurchaseRequisitionManager.cs",
+      "language": "csharp",
+      "sizeLines": 141,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/IPurchaseReturnRequestManager.cs",
+      "language": "csharp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequest.cs",
+      "language": "csharp",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestLine.cs",
+      "language": "csharp",
+      "sizeLines": 84,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "language": "csharp",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "language": "csharp",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs",
+      "language": "csharp",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "language": "csharp",
+      "sizeLines": 189,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "language": "csharp",
+      "sizeLines": 76,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "language": "csharp",
+      "sizeLines": 226,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Properties/AssemblyInfo.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs",
+      "language": "csharp",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "language": "csharp",
+      "sizeLines": 105,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "language": "csharp",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "language": "csharp",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs",
+      "language": "csharp",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "language": "csharp",
+      "sizeLines": 160,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "language": "csharp",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "language": "csharp",
+      "sizeLines": 287,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "language": "csharp",
+      "sizeLines": 119,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs",
+      "language": "csharp",
+      "sizeLines": 53,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "language": "csharp",
+      "sizeLines": 200,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "language": "csharp",
+      "sizeLines": 68,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "language": "csharp",
+      "sizeLines": 247,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "language": "csharp",
+      "sizeLines": 47,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettings.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 137,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.csproj",
+      "language": "csproj",
+      "sizeLines": 33,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs",
+      "language": "csharp",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "language": "csharp",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/EntityFrameworkCoreSupplyCoreERPDbSchemaMigrator.cs",
+      "language": "csharp",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPDbContext.cs",
+      "language": "csharp",
+      "sizeLines": 901,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPDbContextFactory.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPEfCoreEntityExtensionMappings.cs",
+      "language": "csharp",
+      "sizeLines": 44,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreModule.cs",
+      "language": "csharp",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260416064025_Add_DocumentSequence_Table.cs",
+      "language": "csharp",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260416064025_Add_DocumentSequence_Table.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4688,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260417172129_Initial.cs",
+      "language": "csharp",
+      "sizeLines": 2722,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260417172129_Initial.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4688,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260421021917_Add-SequenceCode.cs",
+      "language": "csharp",
+      "sizeLines": 59,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260421021917_Add-SequenceCode.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4702,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260421042351_Add-CountryId-Warehouse.cs",
+      "language": "csharp",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260421042351_Add-CountryId-Warehouse.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4713,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260427033959_Add-Notification.cs",
+      "language": "csharp",
+      "sizeLines": 66,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260427033959_Add-Notification.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4795,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260429033727_Update-TargetPermission-Notification.cs",
+      "language": "csharp",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260429033727_Update-TargetPermission-Notification.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4796,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260501055611_Add-Flag-IsDelete-UserNotification.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260501055611_Add-Flag-IsDelete-UserNotification.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4799,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260504152215_Sync-Migration-Production.cs",
+      "language": "csharp",
+      "sizeLines": 83,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260504152215_Sync-Migration-Production.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4903,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260513033805_UpdatePOAndTicketStructure.cs",
+      "language": "csharp",
+      "sizeLines": 267,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260513033805_UpdatePOAndTicketStructure.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4992,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514053440_AddUnitToTicketLine.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514053440_AddUnitToTicketLine.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 4998,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514083711_UpdateSOLine.cs",
+      "language": "csharp",
+      "sizeLines": 165,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514083711_UpdateSOLine.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5008,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.cs",
+      "language": "csharp",
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260514160037_Medicine-Registration.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5091,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.cs",
+      "language": "csharp",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260515053214_AddSalesOrderLineIdToTicketLine.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5102,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.cs",
+      "language": "csharp",
+      "sizeLines": 176,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260516043244_Add-InventoryAdjustment.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5296,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.cs",
+      "language": "csharp",
+      "sizeLines": 277,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260518045432_RemoveSoftDeleteFromTicket-SO-PO.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5047,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260520022719_AddPurchaseRequisition.cs",
+      "language": "csharp",
+      "sizeLines": 187,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260520022719_AddPurchaseRequisition.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5247,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260520091520_AddWarehouseToPR.cs",
+      "language": "csharp",
+      "sizeLines": 50,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260520091520_AddWarehouseToPR.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5261,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260521025400_AddRequisitionTraceabilityToPO.cs",
+      "language": "csharp",
+      "sizeLines": 73,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260521025400_AddRequisitionTraceabilityToPO.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5271,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260522020837_AddSupplierProductCondition.cs",
+      "language": "csharp",
+      "sizeLines": 129,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260522020837_AddSupplierProductCondition.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5318,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260522081822_UpgradeToTieredPricing.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260522081822_UpgradeToTieredPricing.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5318,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260601035715_UpdateTicketLineToReferenceDocumentLine.cs",
+      "language": "csharp",
+      "sizeLines": 210,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260601035715_UpdateTicketLineToReferenceDocumentLine.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5275,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260602034315_Add_PurchaseReturn_And_SalesRecall.cs",
+      "language": "csharp",
+      "sizeLines": 281,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260602034315_Add_PurchaseReturn_And_SalesRecall.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5715,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260603025644_Add_PurchaseReturnRequest.cs",
+      "language": "csharp",
+      "sizeLines": 228,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260603025644_Add_PurchaseReturnRequest.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 6006,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260603041935_Fix_PurchaseReturnRequest.cs",
+      "language": "csharp",
+      "sizeLines": 114,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260603041935_Fix_PurchaseReturnRequest.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 5972,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260604133607_Add_AgentSession.cs",
+      "language": "csharp",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260604133607_Add_AgentSession.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 6005,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260607082807_Add_Elicitation_To_AgentSession.cs",
+      "language": "csharp",
+      "sizeLines": 48,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260607082807_Add_Elicitation_To_AgentSession.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 6014,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260609045811_Add_AgentTask_And_Clean_Session.cs",
+      "language": "csharp",
+      "sizeLines": 91,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/20260609045811_Add_AgentTask_And_Clean_Session.Designer.cs",
+      "language": "csharp",
+      "sizeLines": 6032,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Migrations/SupplyCoreERPDbContextModelSnapshot.cs",
+      "language": "csharp",
+      "sizeLines": 6029,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/Properties/AssemblyInfo.cs",
+      "language": "csharp",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/SupplyCoreERP.EntityFrameworkCore.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/SupplyCoreERP.EntityFrameworkCore.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 219,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.EntityFrameworkCore/SupplyCoreERP.EntityFrameworkCore.csproj",
+      "language": "csproj",
+      "sizeLines": 42,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 117,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERP.HttpApi.Client.csproj",
+      "language": "csproj",
+      "sizeLines": 31,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Client/SupplyCoreERPHttpApiClientModule.cs",
+      "language": "csharp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/abp.resourcemapping.js",
+      "language": "javascript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/appsettings.Development.json",
+      "language": "json",
+      "sizeLines": 23,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/appsettings.json",
+      "language": "json",
+      "sizeLines": 21,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/appsettings.Production.json",
+      "language": "json",
+      "sizeLines": 24,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Dockerfile.local",
+      "language": "dockerfile",
+      "sizeLines": 17,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/HealthChecks/HealthChecksBuilderExtensions.cs",
+      "language": "csharp",
+      "sizeLines": 77,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/HealthChecks/SupplyCoreERPDatabaseCheck.cs",
+      "language": "csharp",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/package.json",
+      "language": "json",
+      "sizeLines": 8,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/_ViewImports.cshtml",
+      "language": "cshtml",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Account/Login.cshtml",
+      "language": "cshtml",
+      "sizeLines": 254,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Account/Login.cshtml.cs",
+      "language": "csharp",
+      "sizeLines": 34,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Index.cshtml",
+      "language": "cshtml",
+      "sizeLines": 127,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Index.cshtml.cs",
+      "language": "csharp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Pages/Shared/_AccountLayout.cshtml",
+      "language": "cshtml",
+      "sizeLines": 56,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Program.cs",
+      "language": "csharp",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Properties/launchSettings.json",
+      "language": "json",
+      "sizeLines": 26,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SignalR/Notifications/NotificationHub.cs",
+      "language": "csharp",
+      "sizeLines": 43,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SignalR/Notifications/NotificationRealTime.cs",
+      "language": "csharp",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.abppkg",
+      "language": "abppkg",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERP.HttpApi.Host.csproj",
+      "language": "csproj",
+      "sizeLines": 67,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERPBrandingProvider.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/SupplyCoreERPHttpApiHostModule.cs",
+      "language": "csharp",
+      "sizeLines": 329,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/web.config",
+      "language": "config",
+      "sizeLines": 18,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/css/login-custom.css",
+      "language": "css",
+      "sizeLines": 495,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/global-scripts.js",
+      "language": "javascript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/wwwroot/global-styles.css",
+      "language": "css",
+      "sizeLines": 8,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/Controllers/SupplyCoreERPController.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/Models/Test/TestModel.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.abppkg.analyze.json",
+      "language": "json",
+      "sizeLines": 117,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERP.HttpApi.csproj",
+      "language": "csproj",
+      "sizeLines": 26,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.HttpApi/SupplyCoreERPHttpApiModule.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/Agent/McpAgent.cs",
+      "language": "csharp",
+      "sizeLines": 286,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentChatMessageDto.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentResponseDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentToolCallDto.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/Dtos/AgentToolResponseDto.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/GeminiProvider.cs",
+      "language": "csharp",
+      "sizeLines": 239,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/AgentProviders/IAgentProvider.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/SupplyCoreERP.Mcp.Client.csproj",
+      "language": "csproj",
+      "sizeLines": 19,
+      "fileCategory": "config"
+    },
+    {
+      "path": "src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "SupplyCoreERP.abpmdl",
+      "language": "abpmdl",
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "SupplyCoreERP.abpsln",
+      "language": "abpsln",
+      "sizeLines": 57,
+      "fileCategory": "code"
+    },
+    {
+      "path": "SupplyCoreERP.slnx",
+      "language": "slnx",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/Catalog/Medicines/MedicineAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 301,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Customers/CustomerAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 97,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/Partner/Suppliers/SupplierAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 92,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.csproj",
+      "language": "csproj",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERPApplicationTestBase.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERPApplicationTestModule.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/Medicine_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 260,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/MedicineManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 256,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/MedicineManager_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 383,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Products/ProductManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Products/ProductManager_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 113,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Customers/Customer_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 220,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Customers/CustomerManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 258,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Customers/CustomerManager_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 379,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 321,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 357,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 501,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierProduct_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierProductCondition_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 146,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SeedData/CustomerTestDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 77,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SeedData/MedicineTestDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 137,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SeedData/SupplierTestDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 100,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SeedData/TestDataConsts.cs",
+      "language": "csharp",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.csproj",
+      "language": "csproj",
+      "sizeLines": 21,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERPDomainTestBase.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERPDomainTestModule.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Catalog/MedicineAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Partner/CustomerAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Partner/SupplierAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Catalog/MedicineManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Catalog/ProductManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Partner/CustomerManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Partner/SupplierManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreCollection.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreCollectionFixtureBase.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreFixture.cs",
+      "language": "csharp",
+      "sizeLines": 12,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestBase.cs",
+      "language": "csharp",
+      "sizeLines": 9,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "language": "csharp",
+      "sizeLines": 80,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj",
+      "language": "csproj",
+      "sizeLines": 27,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/appsettings.json",
+      "language": "json",
+      "sizeLines": 17,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/appsettings.secrets.json",
+      "language": "json",
+      "sizeLines": 2,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "language": "csharp",
+      "sizeLines": 32,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERP.HttpApi.Client.ConsoleTestApp.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERP.HttpApi.Client.ConsoleTestApp.csproj",
+      "language": "csproj",
+      "sizeLines": 42,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "language": "csharp",
+      "sizeLines": 31,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/appsettings.json",
+      "language": "json",
+      "sizeLines": 3,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/appsettings.secrets.json",
+      "language": "json",
+      "sizeLines": 1,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERP.TestBase.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERP.TestBase.csproj",
+      "language": "csproj",
+      "sizeLines": 45,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "language": "csharp",
+      "sizeLines": 60,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "language": "csharp",
+      "sizeLines": 46,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestConsts.cs",
+      "language": "csharp",
+      "sizeLines": 7,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs",
+      "language": "csharp",
+      "sizeLines": 27,
+      "fileCategory": "code"
+    }
+  ]
+}

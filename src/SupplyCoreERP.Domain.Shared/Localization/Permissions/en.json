@@ -26,7 +26,7 @@
     "Permission:Catalog.Manufacturer": "Manufacturer management",
     "Permission:Catalog.Manufacturer.Create": "Create",
     "Permission:Catalog.Manufacturer.Update": "Update",
-    "Permission:Catalog.Manufacturer.Delete":  "Delete"
-
+    "Permission:Catalog.Manufacturer.Delete":  "Delete",
+    "Permission:Inventory.Warehouse.ZoneTransfer": "Zone Transfer"
   }
 }

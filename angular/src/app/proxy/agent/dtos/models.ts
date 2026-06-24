@@ -1,3 +1,4 @@
+import type { PagedResultRequestDto } from '@abp/ng.core';
 
 export interface AgentElicitationInputDto {
   sessionId?: string;
@@ -5,20 +6,12 @@ export interface AgentElicitationInputDto {
 }
 
 export interface AgentHistoryDto {
-  steps?: AgentMessageDto[];
+  steps?: AgentSessionMessageDto[];
   pendingTask?: object;
-}
-
-export interface AgentMessageDto {
-  role: string;
-  text?: string;
-  toolCalls?: AgentToolCallMessageDto[];
-  toolResponses?: AgentToolResponseMessageDto[];
 }
 
 export interface AgentRequestInputDto {
   text: string;
-  history?: AgentMessageDto[];
   sessionId?: string;
 }
 
@@ -26,9 +19,22 @@ export interface AgentSessionInputDto {
   sessionId: string;
 }
 
+export interface AgentSessionMessageDto {
+  role?: string;
+  text?: string;
+  toolCalls?: AgentToolCallMessageDto[];
+  toolResponses?: AgentToolResponseMessageDto[];
+  creationTime?: string;
+}
+
+export interface AgentSessionPagedInputDto extends PagedResultRequestDto {
+  sessionId?: string;
+}
+
 export interface AgentToolCallMessageDto {
   name?: string;
   arguments?: Record<string, any>;
+  thoughtSignature?: string;
 }
 
 export interface AgentToolResponseMessageDto {

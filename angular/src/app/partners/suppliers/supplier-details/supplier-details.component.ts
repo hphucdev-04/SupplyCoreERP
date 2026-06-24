@@ -184,14 +184,6 @@ export class SupplierDetailsComponent implements OnInit, OnDestroy {
         condition?.minOrderQuantity || 1,
         [Validators.required, Validators.min(0.0001)],
       ],
-      overDeliveryTolerancePct: [
-        condition?.overDeliveryTolerancePct || 0,
-        [Validators.min(0), Validators.max(100)],
-      ],
-      underDeliveryTolerancePct: [
-        condition?.underDeliveryTolerancePct || 0,
-        [Validators.min(0), Validators.max(100)],
-      ],
     });
   }
 

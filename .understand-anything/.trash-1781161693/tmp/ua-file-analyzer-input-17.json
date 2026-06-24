@@ -1,0 +1,21 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": ".dockerignore",
+      "language": "unknown",
+      "sizeLines": 15,
+      "fileCategory": "infra"
+    },
+    {
+      "path": "Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 50,
+      "fileCategory": "infra"
+    }
+  ],
+  "batchImportData": {
+    ".dockerignore": [],
+    "Dockerfile": []
+  }
+}

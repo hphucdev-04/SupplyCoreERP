@@ -1,0 +1,727 @@
+{
+  "nodes": [
+    {
+      "id": "file:angular/src/app/app.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "app.component.ts",
+        "path": "angular/src/app/app.component.ts",
+        "summary": "Component gốc (root component) của ứng dụng Angular, nơi thiết lập cấu trúc layout chính và nạp chat AI.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "angular-component",
+          "ui-component"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/home/home.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "home.component.ts",
+        "path": "angular/src/app/home/home.component.ts",
+        "summary": "Component trang chủ của ứng dụng Angular hiển thị thông tin tổng quan của hệ thống.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "angular-component",
+          "ui-component"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/enums/notificaitons/notification-level.enum.ts",
+      "type": "file",
+      "metadata": {
+        "name": "notification-level.enum.ts",
+        "path": "angular/src/app/proxy/enums/notificaitons/notification-level.enum.ts",
+        "summary": "File định nghĩa kiểu liệt kê (enum) đại diện cho các trạng thái hoặc phân loại của notification-level trong hệ thống.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "enum",
+          "data-model"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/enums/notificaitons/notification-severity.enum.ts",
+      "type": "file",
+      "metadata": {
+        "name": "notification-severity.enum.ts",
+        "path": "angular/src/app/proxy/enums/notificaitons/notification-severity.enum.ts",
+        "summary": "File định nghĩa kiểu liệt kê (enum) đại diện cho các trạng thái hoặc phân loại của notification-severity trong hệ thống.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "enum",
+          "data-model"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/notifications/dtos/models.ts",
+      "type": "file",
+      "metadata": {
+        "name": "models.ts",
+        "path": "angular/src/app/proxy/notifications/dtos/models.ts",
+        "summary": "File định nghĩa các interface và kiểu dữ liệu (DTO) cho phân hệ dtos dùng để trao đổi dữ liệu với backend API.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "dto",
+          "data-model"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/proxy/notifications/notification.service.ts",
+      "type": "file",
+      "metadata": {
+        "name": "notification.service.ts",
+        "path": "angular/src/app/proxy/notifications/notification.service.ts",
+        "summary": "Dịch vụ client Angular (notification) gọi các API backend ABP của phân hệ notification.service.ts để thao tác dữ liệu.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "abp-proxy",
+          "api-client",
+          "service"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "ai-chat.component.ts",
+        "path": "angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+        "summary": "Component giao diện dùng chung (ai-chat) cung cấp chức năng UI/UX cho người dùng.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "angular-component",
+          "ui-component",
+          "shared"
+        ],
+        "complexity": "complex",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/components/drawer-component/drawer.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "drawer.component.ts",
+        "path": "angular/src/app/shared/components/drawer-component/drawer.component.ts",
+        "summary": "Component giao diện dùng chung (drawer) cung cấp chức năng UI/UX cho người dùng.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "angular-component",
+          "ui-component",
+          "shared"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "dropdown-search.component.ts",
+        "path": "angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts",
+        "summary": "Component giao diện dùng chung (dropdown-search) cung cấp chức năng UI/UX cho người dùng.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "angular-component",
+          "ui-component",
+          "shared"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/components/filter-component/filter.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "filter.component.ts",
+        "path": "angular/src/app/shared/components/filter-component/filter.component.ts",
+        "summary": "Component giao diện dùng chung (filter) cung cấp chức năng UI/UX cho người dùng.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "angular-component",
+          "ui-component",
+          "shared"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/components/import-compoent/import.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "import.component.ts",
+        "path": "angular/src/app/shared/components/import-compoent/import.component.ts",
+        "summary": "Component giao diện dùng chung (import) cung cấp chức năng UI/UX cho người dùng.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "angular-component",
+          "ui-component",
+          "shared"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "notification.component.ts",
+        "path": "angular/src/app/shared/components/notification-component/notification.component.ts",
+        "summary": "Component giao diện dùng chung (notification) cung cấp chức năng UI/UX cho người dùng.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "angular-component",
+          "ui-component",
+          "shared"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/services/signalR/base-hub.service.ts",
+      "type": "file",
+      "metadata": {
+        "name": "base-hub.service.ts",
+        "path": "angular/src/app/shared/services/signalR/base-hub.service.ts",
+        "summary": "Dịch vụ client Angular (base-hub) gọi các API backend ABP của phân hệ shared để thao tác dữ liệu.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "signalr",
+          "realtime",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/services/signalR/notification.hub.service.ts",
+      "type": "file",
+      "metadata": {
+        "name": "notification.hub.service.ts",
+        "path": "angular/src/app/shared/services/signalR/notification.hub.service.ts",
+        "summary": "Dịch vụ client Angular (notification.hub) gọi các API backend ABP của phân hệ shared để thao tác dữ liệu.",
+        "tags": [
+          "typescript",
+          "supplycore-erp",
+          "signalr",
+          "realtime",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/shared/shared.module.ts",
+      "type": "file",
+      "metadata": {
+        "name": "shared.module.ts",
+        "path": "angular/src/app/shared/shared.module.ts",
+        "summary": "Module chia sẻ (SharedModule) khai báo và xuất bản các component, directive, pipe dùng chung của hệ thống Angular.",
+        "tags": [
+          "typescript",
+          "supplycore-erp"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/app.component.ts:AppComponent",
+      "type": "class",
+      "metadata": {
+        "name": "AppComponent",
+        "path": "angular/src/app/app.component.ts",
+        "summary": "Lớp AppComponent cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ general.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/home/home.component.ts:HomeComponent",
+      "type": "class",
+      "metadata": {
+        "name": "HomeComponent",
+        "path": "angular/src/app/home/home.component.ts",
+        "summary": "Lớp HomeComponent cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ general.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/proxy/notifications/notification.service.ts:NotificationService",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationService",
+        "path": "angular/src/app/proxy/notifications/notification.service.ts",
+        "summary": "Lớp NotificationService cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ notification.service.ts.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts:AiChatComponent",
+      "type": "class",
+      "metadata": {
+        "name": "AiChatComponent",
+        "path": "angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+        "summary": "Lớp AiChatComponent cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ shared.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "complex",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/components/drawer-component/drawer.component.ts:DrawerComponent",
+      "type": "class",
+      "metadata": {
+        "name": "DrawerComponent",
+        "path": "angular/src/app/shared/components/drawer-component/drawer.component.ts",
+        "summary": "Lớp DrawerComponent cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ shared.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts:DropdownSearchComponent",
+      "type": "class",
+      "metadata": {
+        "name": "DropdownSearchComponent",
+        "path": "angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts",
+        "summary": "Lớp DropdownSearchComponent cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ shared.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/components/filter-component/filter.component.ts:FilterComponent",
+      "type": "class",
+      "metadata": {
+        "name": "FilterComponent",
+        "path": "angular/src/app/shared/components/filter-component/filter.component.ts",
+        "summary": "Lớp FilterComponent cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ shared.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/components/import-compoent/import.component.ts:ImportModalComponent",
+      "type": "class",
+      "metadata": {
+        "name": "ImportModalComponent",
+        "path": "angular/src/app/shared/components/import-compoent/import.component.ts",
+        "summary": "Lớp ImportModalComponent cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ shared.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/components/notification-component/notification.component.ts:NotificationComponent",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationComponent",
+        "path": "angular/src/app/shared/components/notification-component/notification.component.ts",
+        "summary": "Lớp NotificationComponent cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ shared.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/services/signalR/notification.hub.service.ts:NotificationHubService",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationHubService",
+        "path": "angular/src/app/shared/services/signalR/notification.hub.service.ts",
+        "summary": "Lớp NotificationHubService cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ shared.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/shared/shared.module.ts:SharedModule",
+      "type": "class",
+      "metadata": {
+        "name": "SharedModule",
+        "path": "angular/src/app/shared/shared.module.ts",
+        "summary": "Lớp SharedModule cung cấp các phương thức và thuộc tính xử lý nghiệp vụ cho phân hệ shared.",
+        "tags": [
+          "class",
+          "oop",
+          "typescript"
+        ],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:angular/src/app/app.component.ts",
+      "target": "class:angular/src/app/app.component.ts:AppComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/app.component.ts",
+      "target": "class:angular/src/app/app.component.ts:AppComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/home/home.component.ts",
+      "target": "class:angular/src/app/home/home.component.ts:HomeComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/home/home.component.ts",
+      "target": "class:angular/src/app/home/home.component.ts:HomeComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/proxy/notifications/notification.service.ts",
+      "target": "class:angular/src/app/proxy/notifications/notification.service.ts:NotificationService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/proxy/notifications/notification.service.ts",
+      "target": "class:angular/src/app/proxy/notifications/notification.service.ts:NotificationService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+      "target": "class:angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts:AiChatComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+      "target": "class:angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts:AiChatComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/shared/components/drawer-component/drawer.component.ts",
+      "target": "class:angular/src/app/shared/components/drawer-component/drawer.component.ts:DrawerComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/shared/components/drawer-component/drawer.component.ts",
+      "target": "class:angular/src/app/shared/components/drawer-component/drawer.component.ts:DrawerComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts",
+      "target": "class:angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts:DropdownSearchComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts",
+      "target": "class:angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts:DropdownSearchComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/shared/components/filter-component/filter.component.ts",
+      "target": "class:angular/src/app/shared/components/filter-component/filter.component.ts:FilterComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/shared/components/filter-component/filter.component.ts",
+      "target": "class:angular/src/app/shared/components/filter-component/filter.component.ts:FilterComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/shared/components/import-compoent/import.component.ts",
+      "target": "class:angular/src/app/shared/components/import-compoent/import.component.ts:ImportModalComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/shared/components/import-compoent/import.component.ts",
+      "target": "class:angular/src/app/shared/components/import-compoent/import.component.ts:ImportModalComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "target": "class:angular/src/app/shared/components/notification-component/notification.component.ts:NotificationComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "target": "class:angular/src/app/shared/components/notification-component/notification.component.ts:NotificationComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/shared/services/signalR/notification.hub.service.ts",
+      "target": "class:angular/src/app/shared/services/signalR/notification.hub.service.ts:NotificationHubService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/shared/services/signalR/notification.hub.service.ts",
+      "target": "class:angular/src/app/shared/services/signalR/notification.hub.service.ts:NotificationHubService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/shared/shared.module.ts",
+      "target": "class:angular/src/app/shared/shared.module.ts:SharedModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:angular/src/app/shared/shared.module.ts",
+      "target": "class:angular/src/app/shared/shared.module.ts:SharedModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/app.component.ts",
+      "target": "file:angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/app.component.ts",
+      "target": "file:angular/src/app/shared/components/drawer-component/drawer.component.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/app.component.ts",
+      "target": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/home/home.component.ts",
+      "target": "file:angular/src/app/shared/shared.module.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/notifications/dtos/models.ts",
+      "target": "file:angular/src/app/proxy/enums/notificaitons/notification-level.enum.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/notifications/dtos/models.ts",
+      "target": "file:angular/src/app/proxy/enums/notificaitons/notification-severity.enum.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/proxy/notifications/notification.service.ts",
+      "target": "file:angular/src/app/proxy/notifications/dtos/models.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+      "target": "file:angular/src/app/shared/shared.module.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/filter-component/filter.component.ts",
+      "target": "file:angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/filter-component/filter.component.ts",
+      "target": "file:angular/src/app/shared/shared.module.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/import-compoent/import.component.ts",
+      "target": "file:angular/src/app/shared/shared.module.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "target": "file:angular/src/app/proxy/enums/notificaitons/notification-severity.enum.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "target": "file:angular/src/app/proxy/notifications/dtos/models.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "target": "file:angular/src/app/proxy/notifications/notification.service.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "target": "file:angular/src/app/shared/services/signalR/notification.hub.service.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/components/notification-component/notification.component.ts",
+      "target": "file:angular/src/app/shared/shared.module.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/services/signalR/notification.hub.service.ts",
+      "target": "file:angular/src/app/proxy/notifications/dtos/models.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    },
+    {
+      "source": "file:angular/src/app/shared/services/signalR/notification.hub.service.ts",
+      "target": "file:angular/src/app/shared/services/signalR/base-hub.service.ts",
+      "type": "imports",
+      "direction": "forward",
+      "weight": 0.7
+    }
+  ]
+}

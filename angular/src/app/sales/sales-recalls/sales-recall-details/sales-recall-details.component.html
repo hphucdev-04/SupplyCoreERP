@@ -1,47 +1,48 @@
-<div *ngIf="loading" class="d-flex justify-content-center align-items-center" style="height: 300px;">
+<div *ngIf="loading" class="d-flex justify-content-center my-5">
   <div class="spinner-border text-primary" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
 
 <div *ngIf="!loading && recallDto">
+  <!-- Back button -->
+  <button class="btn btn-sm ph-btn-secondary mb-3" (click)="goBack()">
+    <i class="fa fa-arrow-left me-1"></i> {{ '::Back' | abpLocalization }}
+  </button>
+
   <!-- Page Header -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-      <span class="ph-field-meta">{{ '::SalesRecall' | abpLocalization }}</span>
-      <h3 class="ph-page-title d-inline-block me-3">{{ recallDto.code }}</h3>
-      <span
-        class="badge me-2"
-        [class.bg-secondary]="recallDto.status === SalesRecallStatus.Draft"
-        [class.bg-warning]="recallDto.status === SalesRecallStatus.PendingApproval"
-        [class.bg-info]="recallDto.status === SalesRecallStatus.Approved"
-        [class.bg-primary]="recallDto.status === SalesRecallStatus.Recalling"
-        [class.bg-success]="recallDto.status === SalesRecallStatus.Completed"
-        [class.bg-danger]="recallDto.status === SalesRecallStatus.Rejected"
-      >
-        {{ '::Enum:SalesRecallStatus.' + enumName(SalesRecallStatus, recallDto.status) | abpLocalization }}
-      </span>
-
-      <!-- Compliance Check Badge -->
-      <span
-        *ngIf="recallDto.isOverdue && recallDto.status !== SalesRecallStatus.Completed"
-        class="badge bg-danger animate-pulse"
-        style="animation: pulse 1.5s infinite;"
-      >
-        ⚠️ {{ '::OverdueCompliance' | abpLocalization }}
-      </span>
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center gap-3">
+      <div class="ph-icon-avatar ph-icon-avatar--lg">
+        <i class="fa fa-reply-all fa-2x"></i>
+      </div>
+      <div>
+        <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
+          {{ recallDto.code }}
+          <span class="ph-badge" [ngClass]="statusClass(recallDto.status)">
+            <i class="fa me-1" [ngClass]="statusIcon(recallDto.status)"></i>
+            {{ '::Enum:SalesRecallStatus.' + enumName(SalesRecallStatus, recallDto.status) | abpLocalization }}
+          </span>
+          <!-- Compliance Check Badge -->
+          <span
+            *ngIf="recallDto.isOverdue && recallDto.status !== SalesRecallStatus.Completed"
+            class="ph-badge ph-badge--rejected animate-pulse"
+          >
+            {{ '::OverdueCompliance' | abpLocalization }}
+          </span>
+        </h3>
+        <div class="ph-text-muted d-flex gap-3">
+          <span><i class="fa fa-cube me-1"></i>{{ '::MedicineProduct' | abpLocalization }}: <strong>{{ recallDto.productName }}</strong></span>
+          <span>{{ '::DecisionDate' | abpLocalization }}: <strong>{{ recallDto.recallDate | date: 'dd/MM/yyyy' }}</strong></span>
+        </div>
+      </div>
     </div>
-
-    <!-- Actions -->
     <div class="d-flex gap-2">
-      <button class="btn btn-sm ph-btn-outline" (click)="goBack()">
-        <i class="fa fa-arrow-left me-1"></i>{{ '::BackToList' | abpLocalization }}
-      </button>
-
+      <!-- Actions -->
       <!-- Draft Actions -->
       <button
         *ngIf="recallDto.status === SalesRecallStatus.Draft && recallDto.lines.length > 0"
-        class="btn btn-sm ph-btn-primary"
+        class="btn btn-sm ph-btn-save"
         (click)="sendToApprove()"
       >
         <i class="fa fa-paper-plane me-1"></i>{{ '::SendToApprove' | abpLocalization }}
@@ -51,20 +52,20 @@
         class="btn btn-sm ph-btn-outline"
         (click)="openEditDrawer()"
       >
-        <i class="fa fa-edit me-1 text-primary"></i>{{ '::Edit' | abpLocalization }}
+        <i class="fa fa-pencil me-1"></i>{{ '::Edit' | abpLocalization }}
       </button>
 
       <!-- Pending Approval Actions -->
       <button
         *ngIf="recallDto.status === SalesRecallStatus.PendingApproval"
-        class="btn btn-sm ph-btn-primary"
+        class="btn btn-sm ph-btn-save"
         (click)="approve()"
       >
         <i class="fa fa-check me-1"></i>{{ '::Approve' | abpLocalization }}
       </button>
       <button
         *ngIf="recallDto.status === SalesRecallStatus.PendingApproval"
-        class="btn btn-sm ph-btn-danger"
+        class="btn btn-sm ph-btn-outline text-danger"
         (click)="reject()"
       >
         <i class="fa fa-times me-1"></i>{{ '::Reject' | abpLocalization }}
@@ -72,191 +73,238 @@
     </div>
   </div>
 
-  <div class="row">
-    <!-- Left Column: Master Info, Progress & Lines -->
-    <div class="col-lg-9">
-      <!-- Master Info Card -->
-      <div class="card ph-card mb-4 border-start border-4"
-           [class.border-danger]="recallDto.level === RecallLevel.Level1"
-           [class.border-warning]="recallDto.level === RecallLevel.Level2"
-           [class.border-info]="recallDto.level === RecallLevel.Level3">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::MedicineProduct' | abpLocalization }}</span>
-              <span class="ph-field-value d-block fw-bold">{{ recallDto.productName }}</span>
-              <span class="badge bg-light text-dark font-monospace small">{{ recallDto.productCode }}</span>
-            </div>
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::ProductBatch' | abpLocalization }}</span>
-              <span class="badge bg-secondary font-monospace d-inline-block px-2 py-1 mt-1">
-                {{ recallDto.batchNumber || 'N/A' }}
-              </span>
-            </div>
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::WarehouseToReceive' | abpLocalization }}</span>
-              <span class="ph-field-value d-block">{{ recallDto.warehouseName }}</span>
-            </div>
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::RecallLevel' | abpLocalization }}</span>
-              <span
-                class="badge text-white d-inline-block px-2 py-1 mt-1"
-                [class.bg-danger]="recallDto.level === RecallLevel.Level1"
-                [class.bg-warning]="recallDto.level === RecallLevel.Level2"
-                [style.background-color]="recallDto.level === RecallLevel.Level3 ? '#eab308' : null"
-              >
-                {{ '::Enum:RecallLevel.' + enumName(RecallLevel, recallDto.level) | abpLocalization }}
-              </span>
-            </div>
-          </div>
-
-          <div class="row mt-2">
-            <div class="col-md-3 mb-2">
-              <span class="ph-field-meta">{{ '::RecallDecisionNumber' | abpLocalization }}</span>
-              <span class="ph-field-value d-block font-monospace fw-bold">{{ recallDto.recallDecisionNumber }}</span>
-            </div>
-            <div class="col-md-3 mb-2">
-              <span class="ph-field-meta">{{ '::DecisionDate' | abpLocalization }}</span>
-              <span class="ph-field-value d-block">{{ recallDto.recallDate | date: 'dd/MM/yyyy' }}</span>
-            </div>
-            <div class="col-md-3 mb-2">
-              <span class="ph-field-meta">{{ '::Deadline' | abpLocalization }}</span>
-              <span class="ph-field-value d-block"
-                    [class.ph-text-danger]="recallDto.isOverdue && recallDto.status !== SalesRecallStatus.Completed">
-                {{ recallDto.deadline | date: 'dd/MM/yyyy HH:mm' }}
-              </span>
-            </div>
-            <div class="col-md-3 mb-2" *ngIf="recallDto.note">
-              <span class="ph-field-meta">{{ '::Note' | abpLocalization }}</span>
-              <span class="ph-text-muted">{{ recallDto.note }}</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <!-- Realtime Progress Widget -->
-      <div class="card ph-card mb-4 bg-light border-0">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-center mb-2">
-            <h6 class="ph-section-title text-success m-0">
-              <i class="fa fa-chart-line me-1"></i>{{ '::RecallExecutionProgress' | abpLocalization }}
+  <div class="container-fluid p-0">
+    <div class="row g-3 mb-3">
+      <!-- General Information -->
+      <div class="col-md-6">
+        <div class="ph-card card-level-border"
+             [class.level-1]="recallDto.level === RecallLevel.Level1"
+             [class.level-2]="recallDto.level === RecallLevel.Level2"
+             [class.level-3]="recallDto.level === RecallLevel.Level3">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}
             </h6>
-            <span class="fw-bold fs-5 text-success">{{ progressPercent }}%</span>
           </div>
-          <div class="progress mb-2" style="height: 12px; border-radius: 6px;">
-            <div
-              class="progress-bar bg-success progress-bar-striped progress-bar-animated"
-              role="progressbar"
-              [style.width.%]="progressPercent"
-              [attr.aria-valuenow]="progressPercent"
-              aria-valuemin="0"
-              aria-valuemax="100"
-            ></div>
-          </div>
-          <div class="d-flex justify-content-between text-muted small mt-1">
-            <span>{{ '::RecalledQuantity' | abpLocalization }}: <strong>{{ totalRecalledQty | number }}</strong></span>
-            <span>{{ '::TotalReleasedToMarket' | abpLocalization }}: <strong>{{ totalDeliveredQty | number }}</strong></span>
+          <div class="ph-card__body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::MedicineProduct' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="d-flex flex-column">
+                    {{ recallDto.productName }}
+                    <small class="ph-text-muted font-mono">{{ recallDto.productCode }}</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::ProductBatch' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="ph-badge ph-badge--info">
+                    {{ recallDto.batchNumber || 'N/A' }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::WarehouseToReceive' | abpLocalization }}</span>
+                <div class="ph-field-value">{{ recallDto.warehouseName }}</div>
+              </div>
+              <div class="col-md-3 mb-3">
+              <span class="ph-field-meta">{{ '::RecallLevel' | abpLocalization }}</span>
+              <div class="ph-field-value">
+                <span class="ph-badge" [ngClass]="levelClass(recallDto.level)">
+                  <i class="fa me-1" [ngClass]="levelIcon(recallDto.level)"></i>
+                  {{ '::Enum:RecallLevel.' + enumName(RecallLevel, recallDto.level) | abpLocalization }}
+                </span>
+              </div>
+            </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::RecallDecisionNumber' | abpLocalization }}</span>
+                <div class="ph-field-value font-mono fw-bold">{{ recallDto.recallDecisionNumber }}</div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::DecisionDate' | abpLocalization }}</span>
+                <div class="ph-field-value">{{ recallDto.recallDate | date: 'dd/MM/yyyy' }}</div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::Deadline' | abpLocalization }}</span>
+                <div class="ph-field-value" [class.ph-text-danger]="recallDto.isOverdue && recallDto.status !== SalesRecallStatus.Completed">
+                  {{ recallDto.deadline | date: 'dd/MM/yyyy HH:mm' }}
+                </div>
+              </div>
+              <div class="col-12" *ngIf="recallDto.note">
+                <span class="ph-field-meta">{{ '::Note' | abpLocalization }}</span>
+                <div class="ph-field-value small fst-italic">{{ recallDto.note }}</div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Lines Card -->
-      <div class="card ph-card mb-4">
-        <div class="ph-card__header d-flex justify-content-between align-items-center">
-          <h5 class="ph-card-title">
-            <i class="fa fa-users me-1 text-primary"></i>{{ '::RecallLines' | abpLocalization }}
-          </h5>
-          <button
-            *ngIf="recallDto.status === SalesRecallStatus.Draft"
-            class="btn btn-sm ph-btn-primary"
-            (click)="openTraceDrawer()"
-          >
-            <i class="fa fa-search me-1"></i>{{ '::TraceCustomers' | abpLocalization }}
-          </button>
+      <!-- Execution Progress and Related Tickets -->
+      <div class="col-md-6">
+        <!-- Realtime Progress Widget -->
+        <div class="ph-card mb-3">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title text-success">
+              <i class="fa fa-chart-line me-2"></i>{{ '::RecallExecutionProgress' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="d-flex justify-content-between align-items-center mb-2">
+              <span class="ph-text-muted">Tỷ lệ hoàn thành</span>
+              <span class="fw-bold fs-5 text-success">{{ progressPercent }}%</span>
+            </div>
+            <div class="progress mb-2 ph-progress">
+              <div
+                class="progress-bar bg-success"
+                role="progressbar"
+                [style.width.%]="progressPercent"
+                [attr.aria-valuenow]="progressPercent"
+                aria-valuemin="0"
+                aria-valuemax="100"
+              ></div>
+            </div>
+            <div class="d-flex justify-content-between text-muted small mt-2">
+              <span>Đã thu hồi: <strong>{{ totalRecalledQty | number }} {{ recallDto.baseUnitName }}</strong></span>
+              <span>Tổng yêu cầu: <strong>{{ totalRequiredQty | number }} {{ recallDto.baseUnitName }}</strong></span>
+            </div>
+          </div>
         </div>
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th *ngIf="recallDto.status === SalesRecallStatus.Draft" style="width: 80px;"></th>
-                  <th>{{ '::Customer' | abpLocalization }}</th>
-                  <th>{{ '::SalesOrder' | abpLocalization }}</th>
-                  <th class="text-end">{{ '::DeliveredQty' | abpLocalization }}</th>
-                  <th class="text-end">{{ '::RecalledQty' | abpLocalization }}</th>
-                  <th class="text-end">{{ '::ReturnPrice' | abpLocalization }}</th>
-                  <th class="text-end">{{ '::TotalAmount' | abpLocalization }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let line of recallDto.lines">
-                  <td *ngIf="recallDto.status === SalesRecallStatus.Draft" class="text-center">
-                    <button class="btn btn-sm ph-btn-ghost text-danger" (click)="removeLine(line.id)">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <div class="fw-bold">{{ line.customerName }}</div>
-                    <span class="badge bg-light text-dark font-monospace">{{ line.customerCode }}</span>
-                  </td>
-                  <td>
-                    <a
-                      class="ph-link"
-                      [routerLink]="['/order/saleorders/details', line.salesOrderId]"
+
+        <!-- Related Tickets Widget -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-link me-2"></i>{{ '::RelatedTickets' | abpLocalization }}
+              <span class="ph-badge ph-badge--info ms-2">
+                {{ recallDto.relatedTickets?.length || 0 }}
+              </span>
+            </h6>
+          </div>
+          <div class="ph-card__body--flush">
+            <div class="table-responsive">
+              <table class="ph-table">
+                <thead>
+                  <tr>
+                    <th>{{ '::TicketNumber' | abpLocalization }}</th>
+                    <th>{{ '::CreationTime' | abpLocalization }}</th>
+                    <th>{{ '::Status' | abpLocalization }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let t of recallDto.relatedTickets">
+                    <td
+                      class="ph-text-primary ph-link"
+                      (click)="router.navigate(['/inventory/tickets/details', t.id])"
                     >
-                      {{ line.salesOrderCode }}
-                    </a>
-                  </td>
-                  <td class="text-end text-muted">{{ line.baseQuantity | number }}</td>
-                  <td class="text-end fw-bold text-success">{{ line.quantity | number }}</td>
-                  <td class="text-end">{{ line.originalUnitPrice | number: '1.0-0' }} ₫</td>
-                  <td class="text-end fw-bold ph-text-primary">{{ line.finalPrice | number: '1.0-0' }} ₫</td>
-                </tr>
-                <tr *ngIf="recallDto.lines.length === 0">
-                  <td colspan="7" class="text-center py-5 text-muted">
-                    <i class="fa fa-exclamation-circle fa-3x d-block mb-3 text-warning"></i>
-                    {{ '::NoCustomersTracedToRecall' | abpLocalization }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+                      {{ t.ticketNumber }}
+                    </td>
+                    <td>{{ t.creationTime | date: 'dd/MM/yyyy HH:mm' }}</td>
+                    <td>
+                      <span class="ph-badge ph-badge--approved">Approved</span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!recallDto.relatedTickets?.length">
+                    <td colspan="3" class="ph-empty-state">
+                      {{ '::NoRelatedTickets' | abpLocalization }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Right Column: Related Tickets -->
-    <div class="col-lg-3">
-      <!-- Related Tickets Widget -->
-      <div class="card ph-card">
-        <div class="ph-card__header">
-          <h5 class="ph-card-title">
-            <i class="fa fa-link me-1 text-primary"></i>{{ '::RelatedTickets' | abpLocalization }}
-          </h5>
-        </div>
-        <div class="card-body p-0">
-          <ul class="list-group list-group-flush mb-0">
-            <li *ngFor="let t of recallDto.relatedTickets" class="list-group-item p-3">
-              <div class="d-flex justify-content-between align-items-center mb-1">
-                <span class="ph-link fw-bold">{{ t.ticketNumber }}</span>
-                <span class="badge bg-success small">Approved</span>
-              </div>
-              <span class="text-muted small d-block">
-                {{ '::Enum:TicketType.' + t.type | abpLocalization }}
-              </span>
-              <span class="text-muted small d-block">{{ t.creationTime | date: 'dd/MM/yyyy HH:mm' }}</span>
-            </li>
-            <li *ngIf="recallDto.relatedTickets.length === 0" class="text-center py-4 text-muted small">
-              {{ '::NoRelatedTickets' | abpLocalization }}
-            </li>
-          </ul>
+    <!-- Recall Lines -->
+    <div class="row g-3">
+      <div class="col-12">
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-users me-2"></i>{{ '::RecallLines' | abpLocalization }}
+              <span class="ph-badge ph-badge--info ms-2">{{ recallDto.lines?.length || 0 }}</span>
+            </h6>
+            <div class="ph-card__header-actions" *ngIf="recallDto.status === SalesRecallStatus.Draft">
+              <button
+                class="btn btn-sm ph-btn-outline"
+                (click)="openTraceDrawer()"
+              >
+                <i class="fa fa-search me-1"></i>{{ '::TraceCustomers' | abpLocalization }}
+              </button>
+            </div>
+          </div>
+          <div class="ph-card__body--flush">
+            <div class="table-responsive">
+              <table class="ph-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px" *ngIf="recallDto.status === SalesRecallStatus.Draft"></th>
+                    <th>{{ '::Customer' | abpLocalization }}</th>
+                    <th>{{ '::SalesOrder' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::DeliveredQty' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::RecallQuantity' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::ReturnPrice' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::TotalAmount' | abpLocalization }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let line of recallDto.lines">
+                    <td class="text-center" *ngIf="recallDto.status === SalesRecallStatus.Draft">
+                      <button class="ph-btn-ghost text-danger" (click)="removeLine(line.id)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <div class="fw-bold">{{ line.customerName }}</div>
+                      <small class="ph-text-muted font-mono">{{ line.customerCode }}</small>
+                    </td>
+                    <td>
+                      <a
+                        class="ph-link font-mono"
+                        [routerLink]="['/sales/sales-orders/details', line.salesOrderId]"
+                      >
+                        {{ line.salesOrderCode }}
+                      </a>
+                    </td>
+                    <td class="text-end text-muted">
+                      <div>{{ line.salesOrderQuantity | number }} {{ line.salesOrderUnitName }}</div>
+                      <small class="d-block ph-text-muted text-xs" *ngIf="line.salesOrderBaseQuantity !== line.salesOrderQuantity">
+                        ({{ line.salesOrderBaseQuantity | number }} {{ recallDto.baseUnitName }})
+                      </small>
+                    </td>
+                    <td class="text-end fw-bold text-success">
+                      <div>
+                        {{ line.recalledQuantity | number }} / {{ line.quantity | number }} {{ line.unitName }}
+                      </div>
+                      <small class="d-block ph-text-muted text-xs font-normal">
+                        Đã nhận: {{ line.recalledBaseQuantity | number }} / {{ line.baseQuantity | number }} {{ recallDto.baseUnitName }}
+                      </small>
+                    </td>
+                    <td class="text-end">
+                      <div>{{ line.originalUnitPrice | number: '1.0-0' }} ₫</div>
+                      <small class="d-block ph-text-muted text-xs">/ {{ line.unitName }}</small>
+                    </td>
+                    <td class="text-end fw-bold ph-text-primary">{{ line.finalPrice | number: '1.0-0' }} ₫</td>
+                  </tr>
+                  <tr *ngIf="!recallDto.lines?.length">
+                    <td colspan="7" class="ph-empty-state">
+                      {{ '::NoCustomersTracedToRecall' | abpLocalization }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- Master Edit Drawer -->
+<!-- Edit Master Drawer -->
 <app-drawer
   [isOpen]="isEditDrawerOpen"
   [title]="'::EditSalesRecall' | abpLocalization"
@@ -270,13 +318,13 @@
     <!-- Decision Number -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::RecallDecisionNumber' | abpLocalization }}</label>
-      <input type="text" class="form-control" formControlName="recallDecisionNumber" />
+      <input type="text" class="form-control form-control-sm" formControlName="recallDecisionNumber" />
     </div>
 
     <!-- Warehouse -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::WarehouseToReceive' | abpLocalization }}</label>
-      <select class="form-select" formControlName="warehouseId">
+      <select class="form-select form-select-sm" formControlName="warehouseId">
         <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
       </select>
     </div>
@@ -284,13 +332,13 @@
     <!-- Recall Date -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::DecisionDate' | abpLocalization }}</label>
-      <input type="date" class="form-control" formControlName="recallDate" />
+      <input type="date" class="form-control form-control-sm" formControlName="recallDate" />
     </div>
 
     <!-- Level -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::RecallLevel' | abpLocalization }}</label>
-      <select class="form-select" formControlName="level">
+      <select class="form-select form-select-sm" formControlName="level">
         <option [value]="RecallLevel.Level1">{{ '::Enum:RecallLevel.Level1' | abpLocalization }}</option>
         <option [value]="RecallLevel.Level2">{{ '::Enum:RecallLevel.Level2' | abpLocalization }}</option>
         <option [value]="RecallLevel.Level3">{{ '::Enum:RecallLevel.Level3' | abpLocalization }}</option>
@@ -300,7 +348,7 @@
     <!-- Note -->
     <div class="mb-3">
       <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
-      <textarea class="form-control" formControlName="note" rows="3"></textarea>
+      <textarea class="form-control form-control-sm" formControlName="note" rows="3"></textarea>
     </div>
   </form>
 </app-drawer>
@@ -317,43 +365,78 @@
   (close)="closeTraceDrawer()"
   (save)="saveTraceLines()"
 >
-  <div class="p-3 table-responsive" style="max-height: 50vh; overflow-y: auto;">
-    <table class="table table-hover align-middle">
-      <thead class="table-light sticky-top">
+  <div class="p-3 table-responsive drawer-table-wrapper">
+    <table class="ph-table">
+      <thead>
         <tr>
-          <th style="width: 50px;"></th>
+          <th class="col-select"></th>
           <th>{{ '::Customer' | abpLocalization }}</th>
           <th>{{ '::SalesOrder' | abpLocalization }}</th>
           <th class="text-end">{{ '::DeliveredQty' | abpLocalization }}</th>
-          <th class="text-end" style="width: 160px;">{{ '::RecalledQty' | abpLocalization }}</th>
-          <th class="text-end">{{ '::SalesPrice' | abpLocalization }}</th>
+          <th class="text-end col-qty">{{ '::RecallQuantity' | abpLocalization }}</th>
+          <th class="text-end" style="width: 190px;">{{ '::ReturnPrice' | abpLocalization }}</th>
+          <th class="text-end" style="width: 100px;">{{ '::TaxRate' | abpLocalization }} (%)</th>
         </tr>
       </thead>
       <tbody>
-        <tr *ngFor="let line of traceLines" [class.table-info]="line.selected">
+        <tr *ngFor="let line of traceLines" [class.is-selected]="line.selected">
           <td class="text-center">
             <input type="checkbox" class="form-check-input" [(ngModel)]="line.selected" />
           </td>
           <td>
             <div class="fw-bold">{{ line.customerName }}</div>
-            <span class="badge bg-light text-dark font-monospace">{{ line.customerCode }}</span>
+            <small class="ph-text-muted font-mono">{{ line.customerCode }}</small>
           </td>
           <td>{{ line.salesOrderCode }} ({{ line.salesOrderDate | date: 'dd/MM/yyyy' }})</td>
-          <td class="text-end fw-bold">{{ line.quantity | number }}</td>
+          <td class="text-end fw-bold">
+            <div>{{ line.quantity | number }} {{ line.unitName }}</div>
+            <small class="d-block ph-text-muted text-xs font-normal" *ngIf="line.conversionFactor > 1">
+              ({{ line.quantity * line.conversionFactor | number }} {{ recallDto.baseUnitName }})
+            </small>
+          </td>
+          <td class="text-end">
+            <div class="input-group input-group-sm justify-content-end">
+              <input
+                type="number"
+                class="form-control text-end text-success fw-bold"
+                [(ngModel)]="line.recallQuantity"
+                [disabled]="!line.selected"
+                min="0.0001"
+                [max]="line.quantity"
+                style="max-width: 90px;"
+              />
+              <span class="input-group-text bg-light text-muted">{{ line.unitName }}</span>
+            </div>
+            <small class="d-block ph-text-muted text-xs mt-1" *ngIf="line.conversionFactor > 1">
+              = {{ line.recallQuantity * line.conversionFactor | number }} {{ recallDto.baseUnitName }}
+            </small>
+          </td>
+          <td class="text-end">
+            <div class="input-group input-group-sm justify-content-end">
+              <input
+                type="number"
+                class="form-control text-end fw-bold"
+                [(ngModel)]="line.recallPrice"
+                [disabled]="!line.selected"
+                min="0"
+                style="max-width: 140px;"
+              />
+              <span class="input-group-text bg-light text-muted">₫/{{ line.unitName }}</span>
+            </div>
+          </td>
           <td class="text-end">
             <input
               type="number"
-              class="form-control form-control-sm text-end text-success fw-bold"
-              [(ngModel)]="line.recallQuantity"
+              class="form-control form-control-sm text-end"
+              [(ngModel)]="line.taxRate"
               [disabled]="!line.selected"
-              min="0.0001"
-              [max]="line.quantity"
+              min="0"
+              max="100"
             />
           </td>
-          <td class="text-end">{{ line.recallQuantity * 0 | number: '1.0-0' }} ₫</td> <!-- Tự động tính ở backend -->
         </tr>
         <tr *ngIf="traceLines.length === 0">
-          <td colspan="6" class="text-center py-5 text-muted">
+          <td colspan="5" class="ph-empty-state">
             {{ '::NoCustomersBoughtThisBatch' | abpLocalization }}
           </td>
         </tr>
@@ -361,11 +444,3 @@
     </table>
   </div>
 </app-drawer>
-
-<!-- CSS Keyframes for pulse effect -->
-<style>
-  @keyframes pulse {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.5; transform: scale(0.95); }
-  }
-</style>

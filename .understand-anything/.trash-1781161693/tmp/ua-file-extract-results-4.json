@@ -1,0 +1,1444 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 15,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "angular/src/app/app.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 41,
+      "classes": [
+        {
+          "name": "AppComponent",
+          "startLine": 42,
+          "endLine": 44,
+          "methods": [],
+          "properties": [
+            "isChatOpen"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AppComponent",
+          "line": 9,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 3,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/home/home.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 10,
+      "classes": [
+        {
+          "name": "HomeComponent",
+          "startLine": 10,
+          "endLine": 12,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "HomeComponent",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/notificaitons/notification-level.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 8,
+      "nonEmptyLines": 6,
+      "exports": [
+        {
+          "name": "notificationLevelOptions",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/enums/notificaitons/notification-severity.enum.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 10,
+      "nonEmptyLines": 8,
+      "exports": [
+        {
+          "name": "notificationSeverityOptions",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/notifications/dtos/models.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 16,
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/proxy/notifications/notification.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 55,
+      "nonEmptyLines": 44,
+      "classes": [
+        {
+          "name": "NotificationService",
+          "startLine": 9,
+          "endLine": 55,
+          "methods": [],
+          "properties": [
+            "restService",
+            "apiName",
+            "getList",
+            "markAllDelete",
+            "markAllRead",
+            "markDelete",
+            "markRead"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationService",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/shared/components/ai-chat.component/ai-chat.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 465,
+      "nonEmptyLines": 418,
+      "classes": [
+        {
+          "name": "AiChatComponent",
+          "startLine": 12,
+          "endLine": 465,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngAfterViewChecked",
+            "setSessionId",
+            "scrollToBottom",
+            "loadChatHistory",
+            "sendChatMessage",
+            "handleEnterKey",
+            "onApprove",
+            "onReject",
+            "onSubmitElicitation",
+            "onCancelElicitation",
+            "transformJsonSchemaToForm",
+            "renderMarkdown"
+          ],
+          "properties": [
+            "scrollContainer",
+            "currentSessionId",
+            "messages",
+            "userInput",
+            "isLoading",
+            "isExecutingTask",
+            "pendingApprovalInfo",
+            "pendingElicitationInfo",
+            "elicitationFormValues"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "AiChatComponent",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ngOnInit",
+          "callee": "localStorage.getItem",
+          "lineNumber": 50
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadChatHistory",
+          "lineNumber": 53
+        },
+        {
+          "caller": "ngAfterViewChecked",
+          "callee": "this.scrollToBottom",
+          "lineNumber": 63
+        },
+        {
+          "caller": "setSessionId",
+          "callee": "localStorage.setItem",
+          "lineNumber": 68
+        },
+        {
+          "caller": "loadChatHistory",
+          "callee": "this.agentService.getHistory({ sessionId: sessionId }).subscribe",
+          "lineNumber": 83
+        },
+        {
+          "caller": "loadChatHistory",
+          "callee": "this.agentService.getHistory",
+          "lineNumber": 83
+        },
+        {
+          "caller": "loadChatHistory",
+          "callee": "chatHistory.push",
+          "lineNumber": 92
+        },
+        {
+          "caller": "loadChatHistory",
+          "callee": "this.transformJsonSchemaToForm",
+          "lineNumber": 115
+        },
+        {
+          "caller": "loadChatHistory",
+          "callee": "transformedForm.fields.forEach",
+          "lineNumber": 122
+        },
+        {
+          "caller": "loadChatHistory",
+          "callee": "console.error",
+          "lineNumber": 131
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.userInput.trim",
+          "lineNumber": 137
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.messages.push",
+          "lineNumber": 141
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.messages.slice(0, this.messages.length - 1).map",
+          "lineNumber": 146
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.messages.slice",
+          "lineNumber": 146
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.agentService.sendMessage({\n      text: text,\n      history: history,\n      sessionId: this.currentSessionId || undefined\n    }).subscribe",
+          "lineNumber": 152
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.agentService.sendMessage",
+          "lineNumber": 152
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.setSessionId",
+          "lineNumber": 161
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.messages.push",
+          "lineNumber": 170
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.transformJsonSchemaToForm",
+          "lineNumber": 175
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "transformedForm.fields.forEach",
+          "lineNumber": 182
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.messages.push",
+          "lineNumber": 186
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.messages.push",
+          "lineNumber": 191
+        },
+        {
+          "caller": "sendChatMessage",
+          "callee": "this.messages.push",
+          "lineNumber": 199
+        },
+        {
+          "caller": "handleEnterKey",
+          "callee": "keyboardEvent.preventDefault",
+          "lineNumber": 210
+        },
+        {
+          "caller": "handleEnterKey",
+          "callee": "this.sendChatMessage",
+          "lineNumber": 211
+        },
+        {
+          "caller": "onApprove",
+          "callee": "this.agentService.approve({\n      sessionId: this.pendingApprovalInfo.sessionId\n    }).subscribe",
+          "lineNumber": 219
+        },
+        {
+          "caller": "onApprove",
+          "callee": "this.agentService.approve",
+          "lineNumber": 219
+        },
+        {
+          "caller": "onApprove",
+          "callee": "this.setSessionId",
+          "lineNumber": 226
+        },
+        {
+          "caller": "onApprove",
+          "callee": "this.messages.push",
+          "lineNumber": 236
+        },
+        {
+          "caller": "onApprove",
+          "callee": "this.transformJsonSchemaToForm",
+          "lineNumber": 241
+        },
+        {
+          "caller": "onApprove",
+          "callee": "transformedForm.fields.forEach",
+          "lineNumber": 248
+        },
+        {
+          "caller": "onApprove",
+          "callee": "this.messages.push",
+          "lineNumber": 252
+        },
+        {
+          "caller": "onApprove",
+          "callee": "this.messages.push",
+          "lineNumber": 257
+        },
+        {
+          "caller": "onApprove",
+          "callee": "this.messages.push",
+          "lineNumber": 266
+        },
+        {
+          "caller": "onReject",
+          "callee": "this.agentService.reject({\n      sessionId: this.pendingApprovalInfo.sessionId\n    }).subscribe",
+          "lineNumber": 278
+        },
+        {
+          "caller": "onReject",
+          "callee": "this.agentService.reject",
+          "lineNumber": 278
+        },
+        {
+          "caller": "onReject",
+          "callee": "this.setSessionId",
+          "lineNumber": 285
+        },
+        {
+          "caller": "onReject",
+          "callee": "this.messages.push",
+          "lineNumber": 295
+        },
+        {
+          "caller": "onReject",
+          "callee": "this.transformJsonSchemaToForm",
+          "lineNumber": 300
+        },
+        {
+          "caller": "onReject",
+          "callee": "transformedForm.fields.forEach",
+          "lineNumber": 307
+        },
+        {
+          "caller": "onReject",
+          "callee": "this.messages.push",
+          "lineNumber": 311
+        },
+        {
+          "caller": "onReject",
+          "callee": "this.messages.push",
+          "lineNumber": 316
+        },
+        {
+          "caller": "onReject",
+          "callee": "this.messages.push",
+          "lineNumber": 325
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "this.agentService.submitElicitation({\n      sessionId: this.pendingElicitationInfo.sessionId,\n      formValues: this.elicitationFormValues\n    }).subscribe",
+          "lineNumber": 337
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "this.agentService.submitElicitation",
+          "lineNumber": 337
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "this.setSessionId",
+          "lineNumber": 345
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "this.messages.push",
+          "lineNumber": 355
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "this.transformJsonSchemaToForm",
+          "lineNumber": 360
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "transformedForm.fields.forEach",
+          "lineNumber": 367
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "this.messages.push",
+          "lineNumber": 371
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "this.messages.push",
+          "lineNumber": 376
+        },
+        {
+          "caller": "onSubmitElicitation",
+          "callee": "this.messages.push",
+          "lineNumber": 385
+        },
+        {
+          "caller": "onCancelElicitation",
+          "callee": "this.messages.push",
+          "lineNumber": 396
+        },
+        {
+          "caller": "transformJsonSchemaToForm",
+          "callee": "Array.isArray",
+          "lineNumber": 405
+        },
+        {
+          "caller": "transformJsonSchemaToForm",
+          "callee": "schema.properties.hasOwnProperty",
+          "lineNumber": 413
+        },
+        {
+          "caller": "transformJsonSchemaToForm",
+          "callee": "fields.push",
+          "lineNumber": 415
+        },
+        {
+          "caller": "transformJsonSchemaToForm",
+          "callee": "requiredList.includes",
+          "lineNumber": 419
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "text\n      .replace(/&/g, '&amp;')\n      .replace(/</g, '&lt;')\n      .replace",
+          "lineNumber": 440
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "text\n      .replace(/&/g, '&amp;')\n      .replace",
+          "lineNumber": 440
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "text\n      .replace",
+          "lineNumber": 440
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "html.replace",
+          "lineNumber": 446
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "html.replace",
+          "lineNumber": 449
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "html.replace",
+          "lineNumber": 452
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "html.replace",
+          "lineNumber": 455
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "html.replace",
+          "lineNumber": 458
+        },
+        {
+          "caller": "renderMarkdown",
+          "callee": "html.replace",
+          "lineNumber": 461
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/shared/components/drawer-component/drawer.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 66,
+      "nonEmptyLines": 57,
+      "classes": [
+        {
+          "name": "DrawerComponent",
+          "startLine": 11,
+          "endLine": 66,
+          "methods": [
+            "drawerWidth",
+            "drawerHeight",
+            "ngAfterContentInit",
+            "onClose",
+            "onSave",
+            "onOverlayClick"
+          ],
+          "properties": [
+            "isOpen",
+            "title",
+            "width",
+            "height",
+            "showFooter",
+            "saveDisabled",
+            "saveButtonText",
+            "cancelButtonText",
+            "position",
+            "close",
+            "save",
+            "customFooter",
+            "hasCustomFooter"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DrawerComponent",
+          "line": 4,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "onClose",
+          "callee": "this.close.emit",
+          "lineNumber": 56
+        },
+        {
+          "caller": "onSave",
+          "callee": "this.save.emit",
+          "lineNumber": 60
+        },
+        {
+          "caller": "onOverlayClick",
+          "callee": "this.onClose",
+          "lineNumber": 64
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/shared/components/dropdownsearch-component/dropdown-search.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 166,
+      "nonEmptyLines": 146,
+      "classes": [
+        {
+          "name": "DropdownSearchComponent",
+          "startLine": 41,
+          "endLine": 166,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "ngOnChanges",
+            "ngOnDestroy",
+            "writeValue",
+            "registerOnChange",
+            "registerOnTouched",
+            "setDisabledState",
+            "filteredItems",
+            "displayLabel",
+            "hasValue",
+            "toggle",
+            "select",
+            "clear",
+            "isSelected",
+            "onDocumentClick"
+          ],
+          "properties": [
+            "items",
+            "placeholder",
+            "searchPlaceholder",
+            "labelKey",
+            "valueKey",
+            "disabled",
+            "clearable",
+            "nullLabel",
+            "valueChange",
+            "isOpen",
+            "searchText",
+            "selectedItem",
+            "onChange",
+            "onTouched"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "DropdownSearchComponent",
+          "line": 26,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ngOnChanges",
+          "callee": "this.items.find",
+          "lineNumber": 69
+        },
+        {
+          "caller": "ngOnChanges",
+          "callee": "this.cdr.markForCheck",
+          "lineNumber": 74
+        },
+        {
+          "caller": "writeValue",
+          "callee": "this.items.find",
+          "lineNumber": 87
+        },
+        {
+          "caller": "writeValue",
+          "callee": "this.cdr.markForCheck",
+          "lineNumber": 90
+        },
+        {
+          "caller": "setDisabledState",
+          "callee": "this.cdr.markForCheck",
+          "lineNumber": 103
+        },
+        {
+          "caller": "filteredItems",
+          "callee": "this.searchText.trim",
+          "lineNumber": 108
+        },
+        {
+          "caller": "filteredItems",
+          "callee": "this.searchText.toLowerCase",
+          "lineNumber": 109
+        },
+        {
+          "caller": "filteredItems",
+          "callee": "this.items.filter",
+          "lineNumber": 110
+        },
+        {
+          "caller": "filteredItems",
+          "callee": "String(i[this.labelKey]).toLowerCase().includes",
+          "lineNumber": 111
+        },
+        {
+          "caller": "filteredItems",
+          "callee": "String(i[this.labelKey]).toLowerCase",
+          "lineNumber": 111
+        },
+        {
+          "caller": "filteredItems",
+          "callee": "String",
+          "lineNumber": 111
+        },
+        {
+          "caller": "displayLabel",
+          "callee": "String",
+          "lineNumber": 119
+        },
+        {
+          "caller": "toggle",
+          "callee": "this.onTouched",
+          "lineNumber": 133
+        },
+        {
+          "caller": "toggle",
+          "callee": "this.cdr.markForCheck",
+          "lineNumber": 134
+        },
+        {
+          "caller": "select",
+          "callee": "this.onChange",
+          "lineNumber": 140
+        },
+        {
+          "caller": "select",
+          "callee": "this.valueChange.emit",
+          "lineNumber": 141
+        },
+        {
+          "caller": "select",
+          "callee": "this.cdr.markForCheck",
+          "lineNumber": 144
+        },
+        {
+          "caller": "clear",
+          "callee": "event.stopPropagation",
+          "lineNumber": 148
+        },
+        {
+          "caller": "clear",
+          "callee": "this.select",
+          "lineNumber": 149
+        },
+        {
+          "caller": "onDocumentClick",
+          "callee": "this.elRef.nativeElement.contains",
+          "lineNumber": 159
+        },
+        {
+          "caller": "onDocumentClick",
+          "callee": "this.cdr.markForCheck",
+          "lineNumber": 162
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/shared/components/filter-component/filter.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 88,
+      "nonEmptyLines": 73,
+      "classes": [
+        {
+          "name": "FilterComponent",
+          "startLine": 26,
+          "endLine": 88,
+          "methods": [
+            "slot1",
+            "slot2",
+            "slot3",
+            "slot4",
+            "slot5",
+            "_set",
+            "activeSlots",
+            "constructor",
+            "onDocumentClick",
+            "toggleOpen",
+            "close",
+            "applyAndClose",
+            "getActiveCount",
+            "clearAll",
+            "toDropdownItems",
+            "getColor"
+          ],
+          "properties": [
+            "applied",
+            "isOpen",
+            "slots"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "FilterComponent",
+          "line": 19,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "slot1",
+          "callee": "this._set",
+          "lineNumber": 29
+        },
+        {
+          "caller": "slot2",
+          "callee": "this._set",
+          "lineNumber": 30
+        },
+        {
+          "caller": "slot3",
+          "callee": "this._set",
+          "lineNumber": 31
+        },
+        {
+          "caller": "slot4",
+          "callee": "this._set",
+          "lineNumber": 32
+        },
+        {
+          "caller": "slot5",
+          "callee": "this._set",
+          "lineNumber": 33
+        },
+        {
+          "caller": "activeSlots",
+          "callee": "this.slots.filter",
+          "lineNumber": 48
+        },
+        {
+          "caller": "applyAndClose",
+          "callee": "this.activeSlots.forEach",
+          "lineNumber": 61
+        },
+        {
+          "caller": "applyAndClose",
+          "callee": "this.applied.emit",
+          "lineNumber": 62
+        },
+        {
+          "caller": "getActiveCount",
+          "callee": "this.activeSlots.filter",
+          "lineNumber": 67
+        },
+        {
+          "caller": "clearAll",
+          "callee": "this.activeSlots.forEach",
+          "lineNumber": 73
+        },
+        {
+          "caller": "clearAll",
+          "callee": "this.activeSlots.forEach",
+          "lineNumber": 75
+        },
+        {
+          "caller": "clearAll",
+          "callee": "this.applied.emit",
+          "lineNumber": 76
+        },
+        {
+          "caller": "toDropdownItems",
+          "callee": "(slot.items ?? []).map",
+          "lineNumber": 82
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/shared/components/import-compoent/import.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 118,
+      "nonEmptyLines": 99,
+      "classes": [
+        {
+          "name": "ImportModalComponent",
+          "startLine": 13,
+          "endLine": 118,
+          "methods": [
+            "constructor",
+            "close",
+            "reset",
+            "onFileSelected",
+            "onDragOver",
+            "onDragLeave",
+            "onDrop",
+            "downloadTemplate",
+            "upload",
+            "downloadBlob"
+          ],
+          "properties": [
+            "visible",
+            "title",
+            "templateName",
+            "importFn",
+            "templateFn",
+            "visibleChange",
+            "success",
+            "file",
+            "isImporting",
+            "dragOver"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ImportModalComponent",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "close",
+          "callee": "this.visibleChange.emit",
+          "lineNumber": 39
+        },
+        {
+          "caller": "close",
+          "callee": "this.reset",
+          "lineNumber": 40
+        },
+        {
+          "caller": "onDragOver",
+          "callee": "event.preventDefault",
+          "lineNumber": 58
+        },
+        {
+          "caller": "onDragOver",
+          "callee": "event.stopPropagation",
+          "lineNumber": 59
+        },
+        {
+          "caller": "onDragLeave",
+          "callee": "event.preventDefault",
+          "lineNumber": 64
+        },
+        {
+          "caller": "onDragLeave",
+          "callee": "event.stopPropagation",
+          "lineNumber": 65
+        },
+        {
+          "caller": "onDrop",
+          "callee": "event.preventDefault",
+          "lineNumber": 70
+        },
+        {
+          "caller": "onDrop",
+          "callee": "event.stopPropagation",
+          "lineNumber": 71
+        },
+        {
+          "caller": "downloadTemplate",
+          "callee": "this.templateFn().subscribe",
+          "lineNumber": 83
+        },
+        {
+          "caller": "downloadTemplate",
+          "callee": "this.templateFn",
+          "lineNumber": 83
+        },
+        {
+          "caller": "downloadTemplate",
+          "callee": "this.downloadBlob",
+          "lineNumber": 84
+        },
+        {
+          "caller": "upload",
+          "callee": "this.importFn(this.file)\r\n      .pipe(finalize(() => this.isImporting = false))\r\n      .subscribe",
+          "lineNumber": 93
+        },
+        {
+          "caller": "upload",
+          "callee": "this.importFn(this.file)\r\n      .pipe",
+          "lineNumber": 93
+        },
+        {
+          "caller": "upload",
+          "callee": "this.importFn",
+          "lineNumber": 93
+        },
+        {
+          "caller": "upload",
+          "callee": "finalize",
+          "lineNumber": 94
+        },
+        {
+          "caller": "upload",
+          "callee": "this.toaster.success",
+          "lineNumber": 97
+        },
+        {
+          "caller": "upload",
+          "callee": "this.success.emit",
+          "lineNumber": 98
+        },
+        {
+          "caller": "upload",
+          "callee": "this.close",
+          "lineNumber": 99
+        },
+        {
+          "caller": "upload",
+          "callee": "console.error",
+          "lineNumber": 103
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "window.URL.createObjectURL",
+          "lineNumber": 109
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "document.createElement",
+          "lineNumber": 110
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "document.body.appendChild",
+          "lineNumber": 113
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "a.click",
+          "lineNumber": 114
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "document.body.removeChild",
+          "lineNumber": 115
+        },
+        {
+          "caller": "downloadBlob",
+          "callee": "window.URL.revokeObjectURL",
+          "lineNumber": 116
+        }
+      ],
+      "metrics": {
+        "importCount": 1,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/shared/components/notification-component/notification.component.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 106,
+      "nonEmptyLines": 91,
+      "classes": [
+        {
+          "name": "NotificationComponent",
+          "startLine": 19,
+          "endLine": 106,
+          "methods": [
+            "constructor",
+            "ngOnInit",
+            "loadInitial",
+            "toggle",
+            "markRead",
+            "markAllRead",
+            "delete",
+            "deleteAll",
+            "sevClass",
+            "sevIcon",
+            "onOutsideClick",
+            "ngOnDestroy"
+          ],
+          "properties": [
+            "items",
+            "loading",
+            "open",
+            "unread",
+            "sub"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationComponent",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "ngOnInit",
+          "callee": "this.oauthService.hasValidAccessToken",
+          "lineNumber": 34
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.loadInitial",
+          "lineNumber": 35
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.sub.add",
+          "lineNumber": 38
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.hubService.received$.subscribe",
+          "lineNumber": 39
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "this.items.update",
+          "lineNumber": 40
+        },
+        {
+          "caller": "ngOnInit",
+          "callee": "list.some",
+          "lineNumber": 41
+        },
+        {
+          "caller": "loadInitial",
+          "callee": "this.loading.set",
+          "lineNumber": 49
+        },
+        {
+          "caller": "loadInitial",
+          "callee": "this.notificationService.getList({ maxResultCount: 20, skipCount: 0 }).subscribe",
+          "lineNumber": 50
+        },
+        {
+          "caller": "loadInitial",
+          "callee": "this.notificationService.getList",
+          "lineNumber": 50
+        },
+        {
+          "caller": "loadInitial",
+          "callee": "this.items.set",
+          "lineNumber": 51
+        },
+        {
+          "caller": "loadInitial",
+          "callee": "this.loading.set",
+          "lineNumber": 52
+        },
+        {
+          "caller": "toggle",
+          "callee": "this.open.update",
+          "lineNumber": 56
+        },
+        {
+          "caller": "markRead",
+          "callee": "this.notificationService.markRead(n.id).subscribe",
+          "lineNumber": 60
+        },
+        {
+          "caller": "markRead",
+          "callee": "this.notificationService.markRead",
+          "lineNumber": 60
+        },
+        {
+          "caller": "markRead",
+          "callee": "this.items.update",
+          "lineNumber": 61
+        },
+        {
+          "caller": "markRead",
+          "callee": "list.map",
+          "lineNumber": 61
+        },
+        {
+          "caller": "markAllRead",
+          "callee": "this.items().filter(n => !n.isRead).map",
+          "lineNumber": 66
+        },
+        {
+          "caller": "markAllRead",
+          "callee": "this.items().filter",
+          "lineNumber": 66
+        },
+        {
+          "caller": "markAllRead",
+          "callee": "this.items",
+          "lineNumber": 66
+        },
+        {
+          "caller": "markAllRead",
+          "callee": "this.notificationService.markAllRead(ids).subscribe",
+          "lineNumber": 68
+        },
+        {
+          "caller": "markAllRead",
+          "callee": "this.notificationService.markAllRead",
+          "lineNumber": 68
+        },
+        {
+          "caller": "markAllRead",
+          "callee": "this.items.update",
+          "lineNumber": 69
+        },
+        {
+          "caller": "markAllRead",
+          "callee": "list.map",
+          "lineNumber": 69
+        },
+        {
+          "caller": "delete",
+          "callee": "event.stopPropagation",
+          "lineNumber": 74
+        },
+        {
+          "caller": "delete",
+          "callee": "this.notificationService.markDelete(n.id).subscribe",
+          "lineNumber": 75
+        },
+        {
+          "caller": "delete",
+          "callee": "this.notificationService.markDelete",
+          "lineNumber": 75
+        },
+        {
+          "caller": "delete",
+          "callee": "this.items.update",
+          "lineNumber": 76
+        },
+        {
+          "caller": "delete",
+          "callee": "list.filter",
+          "lineNumber": 76
+        },
+        {
+          "caller": "deleteAll",
+          "callee": "this.items().map",
+          "lineNumber": 81
+        },
+        {
+          "caller": "deleteAll",
+          "callee": "this.items",
+          "lineNumber": 81
+        },
+        {
+          "caller": "deleteAll",
+          "callee": "this.notificationService.markAllDelete(ids).subscribe",
+          "lineNumber": 83
+        },
+        {
+          "caller": "deleteAll",
+          "callee": "this.notificationService.markAllDelete",
+          "lineNumber": 83
+        },
+        {
+          "caller": "deleteAll",
+          "callee": "this.items.set",
+          "lineNumber": 84
+        },
+        {
+          "caller": "onOutsideClick",
+          "callee": "this.open.set",
+          "lineNumber": 103
+        },
+        {
+          "caller": "ngOnDestroy",
+          "callee": "this.sub.unsubscribe",
+          "lineNumber": 105
+        }
+      ],
+      "metrics": {
+        "importCount": 5,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/shared/services/signalR/base-hub.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 35,
+      "nonEmptyLines": 27,
+      "callGraph": [
+        {
+          "caller": "connect",
+          "callee": "new HubConnectionBuilder()\r\n      .withUrl(this.hubUrl, {\r\n        accessTokenFactory: () => this.oauthService.getAccessToken(), // Gửi kèm accesstoken\r\n      })\r\n      .withAutomaticReconnect([0, 2000, 5000, 10000]) // Tự động kết nối lại \r\n      .configureLogging(LogLevel.Warning)\r\n      .build",
+          "lineNumber": 13
+        },
+        {
+          "caller": "connect",
+          "callee": "new HubConnectionBuilder()\r\n      .withUrl(this.hubUrl, {\r\n        accessTokenFactory: () => this.oauthService.getAccessToken(), // Gửi kèm accesstoken\r\n      })\r\n      .withAutomaticReconnect([0, 2000, 5000, 10000]) // Tự động kết nối lại \r\n      .configureLogging",
+          "lineNumber": 13
+        },
+        {
+          "caller": "connect",
+          "callee": "new HubConnectionBuilder()\r\n      .withUrl(this.hubUrl, {\r\n        accessTokenFactory: () => this.oauthService.getAccessToken(), // Gửi kèm accesstoken\r\n      })\r\n      .withAutomaticReconnect",
+          "lineNumber": 13
+        },
+        {
+          "caller": "connect",
+          "callee": "new HubConnectionBuilder()\r\n      .withUrl",
+          "lineNumber": 13
+        },
+        {
+          "caller": "connect",
+          "callee": "this.oauthService.getAccessToken",
+          "lineNumber": 15
+        },
+        {
+          "caller": "connect",
+          "callee": "this.registerEvents",
+          "lineNumber": 21
+        },
+        {
+          "caller": "connect",
+          "callee": "this.hub.start().catch",
+          "lineNumber": 23
+        },
+        {
+          "caller": "connect",
+          "callee": "this.hub.start",
+          "lineNumber": 23
+        },
+        {
+          "caller": "connect",
+          "callee": "console.error",
+          "lineNumber": 23
+        },
+        {
+          "caller": "disconnect",
+          "callee": "this.hub.stop",
+          "lineNumber": 28
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0
+      }
+    },
+    {
+      "path": "angular/src/app/shared/services/signalR/notification.hub.service.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 21,
+      "nonEmptyLines": 18,
+      "classes": [
+        {
+          "name": "NotificationHubService",
+          "startLine": 8,
+          "endLine": 21,
+          "methods": [
+            "constructor",
+            "registerEvents"
+          ],
+          "properties": [
+            "hubUrl",
+            "received$"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "NotificationHubService",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "constructor",
+          "callee": "super",
+          "lineNumber": 13
+        },
+        {
+          "caller": "registerEvents",
+          "callee": "this.hub?.on",
+          "lineNumber": 17
+        },
+        {
+          "caller": "registerEvents",
+          "callee": "this.received$.next",
+          "lineNumber": 18
+        }
+      ],
+      "metrics": {
+        "importCount": 2,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "angular/src/app/shared/shared.module.ts",
+      "language": "typescript",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 31,
+      "classes": [
+        {
+          "name": "SharedModule",
+          "startLine": 32,
+          "endLine": 32,
+          "methods": [],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "SharedModule",
+          "line": 10,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

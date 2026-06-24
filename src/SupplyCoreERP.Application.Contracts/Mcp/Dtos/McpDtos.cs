@@ -12,3 +12,14 @@ public class McpToolDto
 
     public bool RequiresApproval { get; set; }
 }
+
+public class McpResourceDto
+{
+    public string Uri { get; set; }
+
+    public string Name { get; set; }
+
+    public string Description { get; set; }
+
+    public string MimeType { get; set; }
+}

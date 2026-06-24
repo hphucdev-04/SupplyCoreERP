@@ -1,0 +1,1552 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "type": "file",
+      "name": "TicketManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "File mã nguồn `TicketManager.cs` thuộc quản lý phiếu kho (nhập, xuất, chuyển kho) và giao dịch kho.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:TicketManager",
+      "type": "class",
+      "name": "TicketManager",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Lớp `TicketManager` thực hiện nghiệp vụ liên quan đến quản lý phiếu.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 21,
+      "endLine": 532
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:TicketManager",
+      "type": "function",
+      "name": "TicketManager",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `TicketManager` thực hiện nghiệp vụ phiếu manager.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 43,
+      "endLine": 79
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBinForIncomingAsync",
+      "type": "function",
+      "name": "ValidateBinForIncomingAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `ValidateBinForIncomingAsync` kiểm tra tính hợp lệ của bin for incoming.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 88,
+      "endLine": 104
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBatchForIssueAsync",
+      "type": "function",
+      "name": "ValidateBatchForIssueAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `ValidateBatchForIssueAsync` kiểm tra tính hợp lệ của lô hàng for issue.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 106,
+      "endLine": 118
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:MapTicketToTransaction",
+      "type": "function",
+      "name": "MapTicketToTransaction",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `MapTicketToTransaction` thực hiện nghiệp vụ map phiếu to transaction.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 129,
+      "endLine": 141
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketAsync",
+      "type": "function",
+      "name": "CreateTicketAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `CreateTicketAsync` thực hiện nghiệp vụ create phiếu.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 151,
+      "endLine": 168
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBeforeDeleteAsync",
+      "type": "function",
+      "name": "ValidateBeforeDeleteAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `ValidateBeforeDeleteAsync` kiểm tra tính hợp lệ của before delete.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 180,
+      "endLine": 191
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketLineAsync",
+      "type": "function",
+      "name": "CreateTicketLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `CreateTicketLineAsync` thực hiện nghiệp vụ create phiếu dòng.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 195,
+      "endLine": 265
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketDetailAsync",
+      "type": "function",
+      "name": "CreateTicketDetailAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `CreateTicketDetailAsync` thực hiện nghiệp vụ create phiếu chi tiết.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 280,
+      "endLine": 358
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:UpdateDetailQuantityAsync",
+      "type": "function",
+      "name": "UpdateDetailQuantityAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `UpdateDetailQuantityAsync` cập nhật chi tiết quantity.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 360,
+      "endLine": 384
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:RemoveTicketDetailAsync",
+      "type": "function",
+      "name": "RemoveTicketDetailAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `RemoveTicketDetailAsync` xóa phiếu chi tiết.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 386,
+      "endLine": 397
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:SendToApproveAsync",
+      "type": "function",
+      "name": "SendToApproveAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `SendToApproveAsync` thực hiện nghiệp vụ send to approve.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 401,
+      "endLine": 438
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:RejectTicketAsync",
+      "type": "function",
+      "name": "RejectTicketAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `RejectTicketAsync` thực hiện nghiệp vụ reject phiếu.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 440,
+      "endLine": 454
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ExecuteTicketAsync",
+      "type": "function",
+      "name": "ExecuteTicketAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `ExecuteTicketAsync` thực hiện nghiệp vụ execute phiếu.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 456,
+      "endLine": 471
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:AllocateFEFOForLineAsync",
+      "type": "function",
+      "name": "AllocateFEFOForLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "summary": "Phương thức `AllocateFEFOForLineAsync` thực hiện nghiệp vụ allocate f e f o for dòng.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 475,
+      "endLine": 529
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "type": "file",
+      "name": "InventoryTransaction.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "summary": "File mã nguồn `InventoryTransaction.cs` thuộc quản lý tồn kho, số lô và phiếu kho.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs:InventoryTransaction",
+      "type": "class",
+      "name": "InventoryTransaction",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "summary": "Lớp `InventoryTransaction` thực hiện nghiệp vụ liên quan đến tồn kho transaction.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 12,
+      "endLine": 46
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs:InventoryTransaction",
+      "type": "function",
+      "name": "InventoryTransaction",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "summary": "Phương thức `InventoryTransaction` thực hiện nghiệp vụ tồn kho transaction.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 33,
+      "endLine": 45
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "type": "file",
+      "name": "Bin.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "summary": "File mã nguồn `Bin.cs` thuộc quản lý tồn kho, số lô và phiếu kho.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs:Bin",
+      "type": "class",
+      "name": "Bin",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "summary": "Lớp `Bin` thực hiện nghiệp vụ liên quan đến bin.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 7,
+      "endLine": 67
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs:ValidateSKUCapacity",
+      "type": "function",
+      "name": "ValidateSKUCapacity",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "summary": "Phương thức `ValidateSKUCapacity` kiểm tra tính hợp lệ của s k u capacity.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 49,
+      "endLine": 66
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "type": "file",
+      "name": "Warehouse.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "summary": "File mã nguồn `Warehouse.cs` thuộc quản lý tồn kho, số lô và phiếu kho.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs:Warehouse",
+      "type": "class",
+      "name": "Warehouse",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "summary": "Lớp `Warehouse` thực hiện nghiệp vụ liên quan đến warehouse.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 11,
+      "endLine": 87
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs:Warehouse",
+      "type": "function",
+      "name": "Warehouse",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "summary": "Phương thức `Warehouse` thực hiện nghiệp vụ warehouse.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 30,
+      "endLine": 42
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "type": "file",
+      "name": "WarehouseManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "File mã nguồn `WarehouseManager.cs` thuộc quản lý tồn kho, số lô và phiếu kho.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:WarehouseManager",
+      "type": "class",
+      "name": "WarehouseManager",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "Lớp `WarehouseManager` thực hiện nghiệp vụ liên quan đến quản lý warehouse.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 13,
+      "endLine": 200
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:WarehouseManager",
+      "type": "function",
+      "name": "WarehouseManager",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "Phương thức `WarehouseManager` thực hiện nghiệp vụ warehouse manager.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 23,
+      "endLine": 36
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 39,
+      "endLine": 49
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "type": "function",
+      "name": "DeleteAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "Phương thức `DeleteAsync` xóa.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 58,
+      "endLine": 68
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateZoneAsync",
+      "type": "function",
+      "name": "CreateZoneAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "Phương thức `CreateZoneAsync` thực hiện nghiệp vụ create zone.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 90,
+      "endLine": 100
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateBinAsync",
+      "type": "function",
+      "name": "CreateBinAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "Phương thức `CreateBinAsync` thực hiện nghiệp vụ create bin.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 121,
+      "endLine": 139
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:UpdateBinAsync",
+      "type": "function",
+      "name": "UpdateBinAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "Phương thức `UpdateBinAsync` cập nhật bin.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 141,
+      "endLine": 166
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:ValidateStorageCompatibility",
+      "type": "function",
+      "name": "ValidateStorageCompatibility",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "summary": "Phương thức `ValidateStorageCompatibility` kiểm tra tính hợp lệ của storage compatibility.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 180,
+      "endLine": 198
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "type": "file",
+      "name": "Zone.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "summary": "File mã nguồn `Zone.cs` thuộc quản lý tồn kho, số lô và phiếu kho.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs:Zone",
+      "type": "class",
+      "name": "Zone",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "summary": "Lớp `Zone` thực hiện nghiệp vụ liên quan đến zone.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 55
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs:Zone",
+      "type": "function",
+      "name": "Zone",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "summary": "Phương thức `Zone` thực hiện nghiệp vụ zone.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 30,
+      "endLine": 41
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "type": "file",
+      "name": "LocalizationSettingProvider.cs",
+      "path": "src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "summary": "File mã nguồn `LocalizationSettingProvider.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs:LocalizationSettingProvider",
+      "type": "class",
+      "name": "LocalizationSettingProvider",
+      "path": "src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "summary": "Lớp `LocalizationSettingProvider` thực hiện nghiệp vụ liên quan đến nhà cung cấp localization cài đặt.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 6,
+      "endLine": 23
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs:Define",
+      "type": "function",
+      "name": "Define",
+      "path": "src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "summary": "Phương thức `Define` thực hiện nghiệp vụ define.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 8,
+      "endLine": 17
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Locations/Areas/Area.cs",
+      "type": "file",
+      "name": "Area.cs",
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/Area.cs",
+      "summary": "File mã nguồn `Area.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Locations/Areas/Area.cs:Area",
+      "type": "class",
+      "name": "Area",
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/Area.cs",
+      "summary": "Lớp `Area` thực hiện nghiệp vụ liên quan đến area.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 10,
+      "endLine": 24
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "type": "file",
+      "name": "AreaManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "summary": "File mã nguồn `AreaManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs:AreaManager",
+      "type": "class",
+      "name": "AreaManager",
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "summary": "Lớp `AreaManager` thực hiện nghiệp vụ liên quan đến quản lý area.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 10,
+      "endLine": 41
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 25,
+      "endLine": 40
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Locations/Cities/City.cs",
+      "type": "file",
+      "name": "City.cs",
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/City.cs",
+      "summary": "File mã nguồn `City.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Locations/Cities/City.cs:City",
+      "type": "class",
+      "name": "City",
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/City.cs",
+      "summary": "Lớp `City` thực hiện nghiệp vụ liên quan đến city.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 10,
+      "endLine": 22
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "type": "file",
+      "name": "CityManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "summary": "File mã nguồn `CityManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs:CityManager",
+      "type": "class",
+      "name": "CityManager",
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "summary": "Lớp `CityManager` thực hiện nghiệp vụ liên quan đến quản lý city.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 10,
+      "endLine": 41
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 25,
+      "endLine": 40
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs",
+      "type": "file",
+      "name": "Continent.cs",
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs",
+      "summary": "File mã nguồn `Continent.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs:Continent",
+      "type": "class",
+      "name": "Continent",
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs",
+      "summary": "Lớp `Continent` thực hiện nghiệp vụ liên quan đến continent.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 18
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "type": "file",
+      "name": "ContinentManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "summary": "File mã nguồn `ContinentManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs:ContinentManager",
+      "type": "class",
+      "name": "ContinentManager",
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "summary": "Lớp `ContinentManager` thực hiện nghiệp vụ liên quan đến quản lý continent.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 9,
+      "endLine": 31
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 20,
+      "endLine": 30
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Locations/Countries/Country.cs",
+      "type": "file",
+      "name": "Country.cs",
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/Country.cs",
+      "summary": "File mã nguồn `Country.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Locations/Countries/Country.cs:Country",
+      "type": "class",
+      "name": "Country",
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/Country.cs",
+      "summary": "Lớp `Country` thực hiện nghiệp vụ liên quan đến country.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 10,
+      "endLine": 25
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "type": "file",
+      "name": "CountryManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "summary": "File mã nguồn `CountryManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs:CountryManager",
+      "type": "class",
+      "name": "CountryManager",
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "summary": "Lớp `CountryManager` thực hiện nghiệp vụ liên quan đến quản lý country.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 10,
+      "endLine": 42
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 25,
+      "endLine": 41
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:TicketManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:TicketManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:TicketManager",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs:ITicketManager",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:TicketManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:TicketManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBinForIncomingAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBinForIncomingAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBatchForIssueAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBatchForIssueAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:MapTicketToTransaction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:MapTicketToTransaction",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBeforeDeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBeforeDeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketDetailAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketDetailAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:UpdateDetailQuantityAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:UpdateDetailQuantityAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:RemoveTicketDetailAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:RemoveTicketDetailAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:SendToApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:SendToApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:RejectTicketAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:RejectTicketAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ExecuteTicketAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ExecuteTicketAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:AllocateFEFOForLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:AllocateFEFOForLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBinForIncomingAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:ValidateStorageCompatibility",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBinForIncomingAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs:ValidateSKUCapacity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketDetailAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBinForIncomingAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:CreateTicketDetailAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ValidateBatchForIssueAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:ExecuteTicketAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/TicketManager.cs:MapTicketToTransaction",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs:InventoryTransaction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs:InventoryTransaction",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs:InventoryTransaction",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Transactions/InventoryTransaction.cs:InventoryTransaction",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs:Bin",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs:Bin",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs:ValidateSKUCapacity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Bin.cs:ValidateSKUCapacity",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs:Warehouse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs:Warehouse",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs:Warehouse",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Warehouse.cs:Warehouse",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:WarehouseManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:WarehouseManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:WarehouseManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:WarehouseManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateZoneAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateZoneAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateBinAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:CreateBinAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:UpdateBinAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:UpdateBinAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:ValidateStorageCompatibility",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:ValidateStorageCompatibility",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:DeleteAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/WarehouseManager.cs:UpdateBinAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Partner/Customer/Customer.cs:UpdateInfo",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs:Zone",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs:Zone",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs:Zone",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Warehouses/Zone.cs:Zone",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs:LocalizationSettingProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs:LocalizationSettingProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs:Define",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Localization/LocalizationSettingProvider.cs:Define",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Areas/Area.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Areas/Area.cs:Area",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Areas/Area.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Areas/Area.cs:Area",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs:AreaManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs:AreaManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Locations/Areas/AreaManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Cities/City.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Cities/City.cs:City",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Cities/City.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Cities/City.cs:City",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs:CityManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs:CityManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Locations/Cities/CityManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs:Continent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Continents/Continent.cs:Continent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs:ContinentManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs:ContinentManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Locations/Continents/ContinentManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Countries/Country.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Countries/Country.cs:Country",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Countries/Country.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Countries/Country.cs:Country",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs:CountryManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs:CountryManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Locations/Countries/CountryManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.csproj",
+      "language": "csproj",
+      "sizeLines": 22,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERPApplicationTestBase.cs",
+      "language": "csharp",
+      "sizeLines": 10,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Application.Tests/SupplyCoreERPApplicationTestModule.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/Medicine_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 260,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/MedicineManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 256,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/MedicineManager_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 383,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Products/ProductManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Catalog/Products/ProductManager_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 113,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Customers/Customer_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 220,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Customers/CustomerManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 258,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Customers/CustomerManager_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 379,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 321,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 357,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 501,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierProduct_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 215,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierProductCondition_Unit_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 146,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SeedData/CustomerTestDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 77,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SeedData/MedicineTestDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 137,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SeedData/SupplierTestDataSeedContributor.cs",
+      "language": "csharp",
+      "sizeLines": 100,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SeedData/TestDataConsts.cs",
+      "language": "csharp",
+      "sizeLines": 33,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.abppkg",
+      "language": "abppkg",
+      "sizeLines": 2,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.csproj",
+      "language": "csproj",
+      "sizeLines": 21,
+      "fileCategory": "config"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERPDomainTestBase.cs",
+      "language": "csharp",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.Domain.Tests/SupplyCoreERPDomainTestModule.cs",
+      "language": "csharp",
+      "sizeLines": 13,
+      "fileCategory": "code"
+    },
+    {
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Catalog/MedicineAppService_Integration_Tests.cs",
+      "language": "csharp",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "test/SupplyCoreERP.Application.Tests/SupplyCoreERP.Application.Tests.csproj": [],
+    "test/SupplyCoreERP.Application.Tests/SupplyCoreERPApplicationTestBase.cs": [],
+    "test/SupplyCoreERP.Application.Tests/SupplyCoreERPApplicationTestModule.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/Medicine_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/MedicineManager_Integration_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Catalog/Medicines/MedicineManager_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Catalog/Products/ProductManager_Integration_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Catalog/Products/ProductManager_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Partner/Customers/Customer_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Partner/Customers/CustomerManager_Integration_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Partner/Customers/CustomerManager_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierProduct_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierProductCondition_Unit_Tests.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/SeedData/CustomerTestDataSeedContributor.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/SeedData/MedicineTestDataSeedContributor.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/SeedData/SupplierTestDataSeedContributor.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/SeedData/TestDataConsts.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.abppkg": [],
+    "test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.csproj": [],
+    "test/SupplyCoreERP.Domain.Tests/SupplyCoreERPDomainTestBase.cs": [],
+    "test/SupplyCoreERP.Domain.Tests/SupplyCoreERPDomainTestModule.cs": [],
+    "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Catalog/MedicineAppService_Integration_Tests.cs": []
+  }
+}

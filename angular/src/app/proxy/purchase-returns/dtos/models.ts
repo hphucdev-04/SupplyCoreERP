@@ -1,3 +1,4 @@
+import type { PurchaseReturnType } from '../../enums/orders/purchase-return-type.enum';
 import type { AuditedEntityDto, FullAuditedEntityDto, PagedAndSortedResultRequestDto } from '@abp/ng.core';
 import type { PurchaseReturnStatus } from '../../enums/orders/purchase-return-status.enum';
 import type { TicketType } from '../../enums/warehouses/ticket-type.enum';
@@ -18,6 +19,7 @@ export interface CreatePurchaseReturnDto {
   purchaseOrderId: string;
   supplierId: string;
   warehouseId: string;
+  returnType: PurchaseReturnType;
   returnDate: string;
   note?: string;
 }
@@ -40,6 +42,7 @@ export interface PurchaseReturnDto extends FullAuditedEntityDto<string> {
   warehouseName?: string;
   warehouseCode?: string;
   returnDate?: string;
+  returnType?: PurchaseReturnType;
   status?: PurchaseReturnStatus;
   subTotal?: number;
   taxAmount?: number;
@@ -78,6 +81,7 @@ export interface PurchaseReturnRelatedTicketDto {
 
 export interface UpdatePurchaseReturnDto {
   warehouseId: string;
+  returnType: PurchaseReturnType;
   returnDate: string;
   note?: string;
 }

@@ -9,8 +9,6 @@ public class PurchaseReturnRequestAutoMapperProfile : Profile
     public PurchaseReturnRequestAutoMapperProfile()
     {
         CreateMap<PurchaseReturnRequest, PurchaseReturnRequestDto>()
-            .ForMember(dest => dest.SupplierName, opt => opt.MapFrom(src => src.Supplier != null ? src.Supplier.Name : null))
-            .ForMember(dest => dest.SupplierCode, opt => opt.MapFrom(src => src.Supplier != null ? src.Supplier.Code : null))
             .ForMember(dest => dest.WarehouseName, opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Name : null))
             .ForMember(dest => dest.WarehouseCode, opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Code : null))
             .ForMember(dest => dest.RelatedTickets, opt => opt.Ignore());

@@ -1,0 +1,62 @@
+<div class="settings-tab-container">
+  <div class="settings-header">
+    <div class="header-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"/></svg>
+    </div>
+    <div class="header-text">
+      <h2>{{ '::Settings:LlmProviderSettings' | abpLocalization }}</h2>
+      <p>{{ '::Settings:LlmProviderDescription' | abpLocalization }}</p>
+    </div>
+  </div>
+
+  <div *ngIf="isLoading" class="loading-state">
+    <div class="spinner"></div>
+    <span>{{ '::Settings:Loading' | abpLocalization }}</span>
+  </div>
+
+  <div *ngIf="!isLoading" class="form-section">
+    <div class="form-group">
+      <label class="form-label" for="llm-model">Model Name</label>
+      <input 
+        id="llm-model"
+        type="text" 
+        class="form-control" 
+        [(ngModel)]="model" 
+        placeholder="Ví dụ: gemini-2.5-flash, gemini-1.5-pro..."
+      />
+      <small class="ph-hint-msg">
+        {{ '::Settings:LlmModelHelp' | abpLocalization }}
+      </small>
+    </div>
+
+    <div class="form-group">
+      <label class="form-label" for="llm-apikey">API Key</label>
+      <div class="input-password-wrapper">
+        <input 
+          id="llm-apikey"
+          type="password" 
+          class="form-control" 
+          [(ngModel)]="apiKey" 
+          placeholder="Nhập API Key tại đây..."
+        />
+      </div>
+      <small class="ph-hint-msg">
+        {{ '::Settings:LlmApiKeyHelp' | abpLocalization }}
+      </small>
+    </div>
+
+    <div class="actions-section">
+      <button 
+        class="btn ph-btn-save" 
+        (click)="saveSettings()">
+        <span *ngIf="isSaving" class="btn-spinner"></span>
+        {{ (isSaving ? '::Settings:Saving' : '::Settings:Save') | abpLocalization }}
+      </button>
+      <button 
+        class="btn ph-btn-cancel" 
+        (click)="resetSettings()">
+        {{ (isResetting ? '::Settings:Restoring' : '::Settings:RestoreDefault') | abpLocalization }}
+      </button>
+    </div>
+  </div>
+</div>

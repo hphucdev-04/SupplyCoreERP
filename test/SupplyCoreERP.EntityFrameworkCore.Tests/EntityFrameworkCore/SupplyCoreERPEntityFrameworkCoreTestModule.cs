@@ -73,7 +73,7 @@ public class SupplyCoreERPEntityFrameworkCoreTestModule : AbpModule
     public override void OnApplicationShutdown(ApplicationShutdownContext context)
     {
         // Dispose connection từ DI thay vì field
-        var connection = context.ServiceProvider
+        SqliteConnection? connection = context.ServiceProvider
             .GetService<SqliteConnection>();
         connection?.Dispose();
     }

@@ -1,47 +1,46 @@
-<div [class.card]="!isEmbedded" [class.border-0]="isEmbedded" [class.shadow-none]="isEmbedded"
-  class="h-100 d-flex flex-column">
+<div [class.ph-card]="!isEmbedded" [class.border-0]="isEmbedded" [class.shadow-none]="isEmbedded">
 
-  <div class="card-header py-2" *ngIf="!isEmbedded">
-    <div class="row align-items-center">
-      <div class="col-md-6">
-        <h6 class="card-title mb-0 fw-bold">
-          <i class="fa fa-history me-2 text-primary"></i>
-          {{ '::Menu:Transactions' | abpLocalization }}
-        </h6>
-      </div>
-      <div class="col-md-6 text-end">
-        <button class="btn btn-success btn-sm py-1" type="button" (click)="list.get()">
-          <i class="fa fa-refresh me-1"></i> {{ '::Refresh' | abpLocalization }}
-        </button>
-      </div>
+  <div class="ph-card__header" *ngIf="!isEmbedded">
+    <h5 class="ph-card-title mb-0">
+      <i class="fa fa-history me-2 text-primary"></i>
+      {{ '::Menu:Transactions' | abpLocalization }}
+    </h5>
+    <div class="ph-card__header-actions">
+      <button class="btn btn-sm ph-btn-secondary" type="button" (click)="list.get()">
+        <i class="fa fa-refresh me-1"></i> {{ '::Refresh' | abpLocalization }}
+      </button>
     </div>
   </div>
 
-  <div class="card-body d-flex flex-column flex-grow-1" [class.p-0]="isEmbedded" [class.p-2]="!isEmbedded">
+  <div [class.ph-card__body]="!isEmbedded">
 
-    <div class="d-flex flex-wrap justify-content-between align-items-center mb-2 gap-2">
-      <div style="min-width: 200px; max-width: 350px; flex: 1;">
+    <!-- Filter Bar -->
+    <div class="ph-filter-bar">
+      <div class="ph-filter-bar__search">
         <app-search [placeholder]="'::SearchTransaction' | abpLocalization" [(value)]="filterText" [debounceTime]="800"
           (search)="onSearch($event)">
         </app-search>
       </div>
 
-      <div class="d-flex align-items-center gap-2">
-        <span class="small fw-semibold text-muted">Từ:</span>
-        <input type="date" class="form-control form-control-sm w-auto" [(ngModel)]="fromDate"
-          (change)="onFilterChange()">
+      <div class="ph-filter-bar__controls">
+        <div class="d-flex align-items-center gap-2">
+          <span class="small fw-semibold text-muted">Từ:</span>
+          <input type="date" class="form-control form-control-sm w-auto" [(ngModel)]="fromDate"
+            (change)="onFilterChange()">
 
-        <span class="small fw-semibold text-muted ms-1">Đến:</span>
-        <input type="date" class="form-control form-control-sm w-auto" [(ngModel)]="toDate" (change)="onFilterChange()">
+          <span class="small fw-semibold text-muted ms-1">Đến:</span>
+          <input type="date" class="form-control form-control-sm w-auto" [(ngModel)]="toDate" (change)="onFilterChange()">
 
-        <button *ngIf="fromDate || toDate" class="btn btn-sm btn-outline-danger ms-1 py-1 px-2"
-          (click)="clearDateFilter()" title="Xóa bộ lọc ngày">
-          <i class="fa fa-times"></i>
-        </button>
+          <button *ngIf="fromDate || toDate" class="btn btn-sm btn-outline-danger ms-1 py-1 px-2"
+            (click)="clearDateFilter()" title="Xóa bộ lọc ngày">
+            <i class="fa fa-times"></i>
+          </button>
+        </div>
       </div>
     </div>
 
-    <ngx-datatable class="flex-grow-1" [rows]="data.items" [count]="data.totalCount" [list]="list" default>
+    <!-- Table ngx-datatable -->
+    <ngx-datatable [rows]="data.items" [count]="data.totalCount" [list]="list" default>
 
       <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime" [width]="130">
         <ng-template let-row="row" ngx-datatable-cell-template>
@@ -60,7 +59,19 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column *ngIf="!isEmbedded" [name]="'::Location' | abpLocalization" prop="warehouseName"
+      <ngx-datatable-column [name]="'::Partner' | abpLocalization" prop="partnerName" [width]="200">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{ value || '---' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::SourceDocument' | abpLocalization" prop="sourceDocumentNumber" [width]="180">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          {{ value || '---' }}
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column *ngIf="!hideLocation" [name]="'::Location' | abpLocalization" prop="warehouseName"
         [width]="160">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="lh-sm">
@@ -72,7 +83,7 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column *ngIf="!isEmbedded" [name]="'::Medicine' | abpLocalization" prop="productName"
+      <ngx-datatable-column *ngIf="!hideProduct" [name]="'::Medicine' | abpLocalization" prop="productName"
         [width]="250">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <div class="lh-sm">
@@ -88,10 +99,10 @@
 
       <ngx-datatable-column [name]="'::QuantityChanged' | abpLocalization" prop="quantity" [width]="130">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="badge px-2 py-1"
-            [ngClass]="isIncrease(row.transactionType) ? 'text-success bg-success bg-opacity-10' : 'text-danger bg-danger bg-opacity-10'">
-            <i class="fa" [ngClass]="isIncrease(row.transactionType) ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
-            {{ isIncrease(row.transactionType) ? '+' : '-' }}{{ row.quantity | number }}
+          <span class="ph-badge ph-badge px-2 py-1"
+            [ngClass]="row.quantity > 0 ? 'text-success bg-success bg-opacity-10' : 'text-danger bg-danger bg-opacity-10'">
+            <i class="fa" [ngClass]="row.quantity > 0 ? 'fa-arrow-up' : 'fa-arrow-down'"></i>
+            {{ row.quantity > 0 ? '+' : '' }}{{ row.quantity | number }}
           </span>
         </ng-template>
       </ngx-datatable-column>

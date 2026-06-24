@@ -26,6 +26,7 @@
     "Permission:Catalog.Manufacturer": "Quản lý nhà sản xuất",
     "Permission:Catalog.Manufacturer.Create": "Tạo",
     "Permission:Catalog.Manufacturer.Update": "Sửa",
-    "Permission:Catalog.Manufacturer.Delete": "Xóa"
+    "Permission:Catalog.Manufacturer.Delete": "Xóa",
+    "Permission:Inventory.Warehouse.ZoneTransfer": "Chuyển phân khu"
   }
 }

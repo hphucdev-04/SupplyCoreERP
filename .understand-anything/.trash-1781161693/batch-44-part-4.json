@@ -1,0 +1,430 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineStatusChangedNotificationHandler.cs",
+        "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:MedicineStatusChangedNotificationHandler",
+      "type": "class",
+      "metadata": {
+        "name": "MedicineStatusChangedNotificationHandler",
+        "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+        "summary": "Lớp MedicineStatusChangedNotificationHandler thuộc thành phần MedicineStatusChangedNotificationHandler.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:MedicineStatusChangedNotificationHandler",
+      "type": "function",
+      "metadata": {
+        "name": "MedicineStatusChangedNotificationHandler",
+        "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+        "summary": "Phương thức MedicineStatusChangedNotificationHandler thực hiện xử lý nghiệp vụ liên quan đến MedicineStatusChangedNotificationHandler.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:HandleEventAsync",
+      "type": "function",
+      "metadata": {
+        "name": "HandleEventAsync",
+        "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+        "summary": "Phương thức HandleEventAsync thực hiện xử lý nghiệp vụ liên quan đến MedicineStatusChangedNotificationHandler.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "type": "file",
+      "metadata": {
+        "name": "NotificationCleanupJob.cs",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:NotificationCleanupJob",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationCleanupJob",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+        "summary": "Lớp NotificationCleanupJob thuộc thành phần NotificationCleanupJob.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:NotificationCleanupJob",
+      "type": "function",
+      "metadata": {
+        "name": "NotificationCleanupJob",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+        "summary": "Phương thức NotificationCleanupJob thực hiện xử lý nghiệp vụ liên quan đến NotificationCleanupJob.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:ExecuteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "ExecuteAsync",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+        "summary": "Phương thức ExecuteAsync thực hiện xử lý nghiệp vụ liên quan đến NotificationCleanupJob.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+      "type": "file",
+      "metadata": {
+        "name": "NotificationCleanupWorker.cs",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs:NotificationCleanupWorker",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationCleanupWorker",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+        "summary": "Lớp NotificationCleanupWorker thuộc thành phần NotificationCleanupWorker.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs:NotificationCleanupWorker",
+      "type": "function",
+      "metadata": {
+        "name": "NotificationCleanupWorker",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+        "summary": "Phương thức NotificationCleanupWorker thực hiện xử lý nghiệp vụ liên quan đến NotificationCleanupWorker.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "type": "file",
+      "metadata": {
+        "name": "NotificationSentJob.cs",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:NotificationSentJob",
+      "type": "class",
+      "metadata": {
+        "name": "NotificationSentJob",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+        "summary": "Lớp NotificationSentJob thuộc thành phần NotificationSentJob.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:NotificationSentJob",
+      "type": "function",
+      "metadata": {
+        "name": "NotificationSentJob",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+        "summary": "Phương thức NotificationSentJob thực hiện xử lý nghiệp vụ liên quan đến NotificationSentJob.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:ExecuteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "ExecuteAsync",
+        "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+        "summary": "Phương thức ExecuteAsync thực hiện xử lý nghiệp vụ liên quan đến NotificationSentJob.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "notification"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "target": "class:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:MedicineStatusChangedNotificationHandler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "target": "class:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:MedicineStatusChangedNotificationHandler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:MedicineStatusChangedNotificationHandler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:MedicineStatusChangedNotificationHandler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:HandleEventAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs:HandleEventAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "target": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:NotificationCleanupJob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "target": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:NotificationCleanupJob",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:NotificationCleanupJob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:NotificationCleanupJob",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:ExecuteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs:ExecuteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+      "target": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs:NotificationCleanupWorker",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+      "target": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs:NotificationCleanupWorker",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs:NotificationCleanupWorker",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs:NotificationCleanupWorker",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "target": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:NotificationSentJob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "target": "class:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:NotificationSentJob",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:NotificationSentJob",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:NotificationSentJob",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:ExecuteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "target": "function:src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs:ExecuteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

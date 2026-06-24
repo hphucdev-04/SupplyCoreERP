@@ -2,6 +2,7 @@ using System;
 using SupplyCoreERP.Catalog.Medicines;
 using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Enums.Warehouses;
+using SupplyCoreERP.Inventory.Batches.Events;
 using SupplyCoreERP.Partner.Suppliers;
 using Volo.Abp;
 using Volo.Abp.Domain.Entities.Auditing;
@@ -66,10 +67,20 @@ public class ProductBatch : FullAuditedAggregateRoot<Guid>
         MedicineRegistrationId = medicineRegistrationId;
     }
 
-    public void ApproveQA() => Status = BatchQAStatus.Approved;
-    public void RejectQA() => Status = BatchQAStatus.Rejected;
-    public void Recall() => Status = BatchQAStatus.Recalled;
-    public void MarkExpired() => Status = BatchQAStatus.Expired;
+    public void ApproveQA() => SetStatus(BatchQAStatus.Approved);
+    public void RejectQA() => SetStatus(BatchQAStatus.Rejected);
+    public void Recall() => SetStatus(BatchQAStatus.Recalled);
+    public void MarkExpired() => SetStatus(BatchQAStatus.Expired);
+
+    private void SetStatus(BatchQAStatus newStatus)
+    {
+        if (Status != newStatus)
+        {
+            var oldStatus = Status;
+            Status = newStatus;
+            AddLocalEvent(new BatchQAStatusChangedDomainEvent(Id, BatchNumber, ProductId, oldStatus, Status));
+        }
+    }
 }
 
 

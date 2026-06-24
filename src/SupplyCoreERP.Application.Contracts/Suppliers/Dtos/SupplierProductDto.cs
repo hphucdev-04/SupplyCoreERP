@@ -9,11 +9,11 @@ public class SupplierProductDto : EntityDto<Guid>
     public Guid SupplierId { get; set; }
 
     public Guid ProductId { get; set; }
-    public string ProductName { get; set; } // Tá»± Ä‘á»™ng map tá»« Product.Name
-    public string ProductCode { get; set; } // Tá»± Ä‘á»™ng map tá»« Product.Code (náº¿u cÃ³)
+    public string ProductName { get; set; }
+    public string ProductCode { get; set; }
 
     public Guid DefaultUnitId { get; set; }
-    public string DefaultUnitName { get; set; } // Tá»± Ä‘á»™ng map tá»« DefaultUnit.Name
+    public string DefaultUnitName { get; set; }
 
     public int LeadTimeDays { get; set; }
 

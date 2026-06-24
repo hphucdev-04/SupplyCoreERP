@@ -1,0 +1,39 @@
+{
+  "nodes": [
+    {
+      "id": "resource:mcp-server/.dockerignore",
+      "type": "resource",
+      "label": ".dockerignore",
+      "properties": {
+        "summary": "Cấu hình tài nguyên hạ tầng trong .dockerignore.",
+        "tags": [
+          "infrastructure",
+          "iac",
+          "resource",
+          "unknown"
+        ],
+        "complexity": "simple",
+        "language": "unknown",
+        "sizeLines": 7
+      }
+    },
+    {
+      "id": "service:mcp-server/Dockerfile",
+      "type": "service",
+      "label": "Dockerfile",
+      "properties": {
+        "summary": "Cấu hình container hóa/dịch vụ Dockerfile sử dụng Docker.",
+        "tags": [
+          "docker",
+          "containerization",
+          "infrastructure",
+          "dockerfile"
+        ],
+        "complexity": "simple",
+        "language": "dockerfile",
+        "sizeLines": 39
+      }
+    }
+  ],
+  "edges": []
+}

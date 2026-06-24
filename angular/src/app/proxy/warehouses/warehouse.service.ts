@@ -1,4 +1,4 @@
-import type { BinDto, CreateUpdateBinDto, CreateUpdateWarehouseDto, CreateUpdateZoneDto, GetWarehouseListDto, WarehouseDto, ZoneDto } from './dtos/models';
+import type { BinDto, CreateUpdateBinDto, CreateUpdateWarehouseDto, CreateUpdateZoneDto, GetWarehouseListDto, TransferBinDto, WarehouseDto, ZoneDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import type { PagedResultDto } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
@@ -147,6 +147,15 @@ export class WarehouseService {
     this.restService.request<any, void>({
       method: 'POST',
       url: `/api/app/warehouse/${id}/toggle-bin-block`,
+    },
+    { apiName: this.apiName,...config });
+  
+
+  transferBin = (input: TransferBinDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'POST',
+      url: '/api/app/warehouse/transfer-bin',
+      body: input,
     },
     { apiName: this.apiName,...config });
   

@@ -154,7 +154,7 @@ public class SalesRecallManager : DomainService, ISalesRecallManager
         salesRecall.Approve();
         salesRecall.StartRecalling(); // Chuyển sang trạng thái Recalling
 
-        // 1. Tự động sinh Phiếu nhập kho liên kết (TicketType = RecallReceipt)
+        // 1. Tự động sinh Phiếu nhập kho liên kết (TicketType = RecallReceipt) trống
         InventoryTicket ticket = await _ticketManager.CreateTicketAsync(
             TicketType.RecallReceipt,
             salesRecall.WarehouseId,
@@ -165,20 +165,6 @@ public class SalesRecallManager : DomainService, ISalesRecallManager
 
         // Lưu ticket trước
         await _ticketRepo.InsertAsync(ticket);
-
-        // 2. Tự động tạo các dòng phiếu kho tương ứng
-        foreach (SalesRecallLine line in salesRecall.Lines)
-        {
-            InventoryTicketLine ticketLine = await _ticketManager.CreateTicketLineAsync(
-                ticket,
-                salesRecall.ProductId, // ID thuốc bị thu hồi
-                line.Id, // Link ReferenceDocumentLineId to SalesRecallLine.Id
-                line.Quantity,
-                line.UnitId,
-                line.ConversionFactor
-            );
-            await _ticketLineRepo.InsertAsync(ticketLine);
-        }
 
         return ticket;
     }

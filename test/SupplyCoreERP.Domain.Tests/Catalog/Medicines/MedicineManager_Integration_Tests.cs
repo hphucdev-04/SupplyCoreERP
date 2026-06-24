@@ -72,7 +72,8 @@ public abstract class MedicineManager_Integration_Tests<TStartupModule> : Supply
                 "SDK-PARA-NEW",
                 UsageRoute.Oral,
                 StorageCondition.Normal,
-                false
+                false,
+                0.05m
             );
 
             // Assert

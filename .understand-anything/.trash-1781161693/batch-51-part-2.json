@@ -1,0 +1,1342 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "type": "file",
+      "name": "PurchaseReturnRequestManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "summary": "File mã nguồn `PurchaseReturnRequestManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:PurchaseReturnRequestManager",
+      "type": "class",
+      "name": "PurchaseReturnRequestManager",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "summary": "Lớp `PurchaseReturnRequestManager` thực hiện nghiệp vụ liên quan đến quản lý purchase return request.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 16,
+      "endLine": 215
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:PurchaseReturnRequestManager",
+      "type": "function",
+      "name": "PurchaseReturnRequestManager",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "summary": "Phương thức `PurchaseReturnRequestManager` thực hiện nghiệp vụ purchase return request manager.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 27,
+      "endLine": 45
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 47,
+      "endLine": 73
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:AddLineAsync",
+      "type": "function",
+      "name": "AddLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "summary": "Phương thức `AddLineAsync` thêm mới dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 75,
+      "endLine": 101
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:UpdateLineAsync",
+      "type": "function",
+      "name": "UpdateLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "summary": "Phương thức `UpdateLineAsync` cập nhật dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 103,
+      "endLine": 118
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ApproveAndSplitAsync",
+      "type": "function",
+      "name": "ApproveAndSplitAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "summary": "Phương thức `ApproveAndSplitAsync` thực hiện nghiệp vụ approve and split.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 120,
+      "endLine": 166
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ValidateReturnQuantityAsync",
+      "type": "function",
+      "name": "ValidateReturnQuantityAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "summary": "Phương thức `ValidateReturnQuantityAsync` kiểm tra tính hợp lệ của return quantity.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 168,
+      "endLine": 214
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "type": "file",
+      "name": "PurchaseReturnTicketExecutedEventHandler.cs",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "summary": "File mã nguồn `PurchaseReturnTicketExecutedEventHandler.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs:PurchaseReturnTicketExecutedEventHandler",
+      "type": "class",
+      "name": "PurchaseReturnTicketExecutedEventHandler",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "summary": "Lớp `PurchaseReturnTicketExecutedEventHandler` thực hiện nghiệp vụ liên quan đến sự kiện purchase return phiếu đã thực thi handler.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 13,
+      "endLine": 54
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "function",
+      "name": "HandleEventAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "summary": "Phương thức `HandleEventAsync` thực hiện nghiệp vụ handle event.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 30,
+      "endLine": 53
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs",
+      "type": "file",
+      "name": "IPurchaseReturnManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs",
+      "summary": "File mã nguồn `IPurchaseReturnManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs:IPurchaseReturnManager",
+      "type": "class",
+      "name": "IPurchaseReturnManager",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs",
+      "summary": "Lớp `IPurchaseReturnManager` thực hiện nghiệp vụ liên quan đến giao diện quản lý purchase return.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 7,
+      "endLine": 50
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "type": "file",
+      "name": "PurchaseReturn.cs",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "summary": "File mã nguồn `PurchaseReturn.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:PurchaseReturn",
+      "type": "class",
+      "name": "PurchaseReturn",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "summary": "Lớp `PurchaseReturn` thực hiện nghiệp vụ liên quan đến purchase return.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 14,
+      "endLine": 189
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:PurchaseReturn",
+      "type": "function",
+      "name": "PurchaseReturn",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "summary": "Phương thức `PurchaseReturn` thực hiện nghiệp vụ purchase return.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 43,
+      "endLine": 63
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:UpdateInfo",
+      "type": "function",
+      "name": "UpdateInfo",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "summary": "Phương thức `UpdateInfo` cập nhật info.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 65,
+      "endLine": 75
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:AddLine",
+      "type": "function",
+      "name": "AddLine",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "summary": "Phương thức `AddLine` thêm mới dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 77,
+      "endLine": 92
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:RemoveLine",
+      "type": "function",
+      "name": "RemoveLine",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "summary": "Phương thức `RemoveLine` xóa dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 94,
+      "endLine": 109
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:UpdateLine",
+      "type": "function",
+      "name": "UpdateLine",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "summary": "Phương thức `UpdateLine` cập nhật dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 111,
+      "endLine": 126
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:SendToApprove",
+      "type": "function",
+      "name": "SendToApprove",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "summary": "Phương thức `SendToApprove` thực hiện nghiệp vụ send to approve.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 128,
+      "endLine": 141
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "type": "file",
+      "name": "PurchaseReturnLine.cs",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "summary": "File mã nguồn `PurchaseReturnLine.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs:PurchaseReturnLine",
+      "type": "class",
+      "name": "PurchaseReturnLine",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "summary": "Lớp `PurchaseReturnLine` thực hiện nghiệp vụ liên quan đến purchase return dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 76
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs:PurchaseReturnLine",
+      "type": "function",
+      "name": "PurchaseReturnLine",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "summary": "Phương thức `PurchaseReturnLine` thực hiện nghiệp vụ purchase return dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 37,
+      "endLine": 59
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "type": "file",
+      "name": "PurchaseReturnManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "summary": "File mã nguồn `PurchaseReturnManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:PurchaseReturnManager",
+      "type": "class",
+      "name": "PurchaseReturnManager",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "summary": "Lớp `PurchaseReturnManager` thực hiện nghiệp vụ liên quan đến quản lý purchase return.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 16,
+      "endLine": 226
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:PurchaseReturnManager",
+      "type": "function",
+      "name": "PurchaseReturnManager",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "summary": "Phương thức `PurchaseReturnManager` thực hiện nghiệp vụ purchase return manager.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 27,
+      "endLine": 45
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 47,
+      "endLine": 72
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:AddLineAsync",
+      "type": "function",
+      "name": "AddLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "summary": "Phương thức `AddLineAsync` thêm mới dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 93,
+      "endLine": 117
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:UpdateLineAsync",
+      "type": "function",
+      "name": "UpdateLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "summary": "Phương thức `UpdateLineAsync` cập nhật dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 119,
+      "endLine": 134
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:ApproveAsync",
+      "type": "function",
+      "name": "ApproveAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "summary": "Phương thức `ApproveAsync` thực hiện nghiệp vụ approve.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 148,
+      "endLine": 180
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:ValidateReturnQuantityAsync",
+      "type": "function",
+      "name": "ValidateReturnQuantityAsync",
+      "path": "src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "summary": "Phương thức `ValidateReturnQuantityAsync` kiểm tra tính hợp lệ của return quantity.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 194,
+      "endLine": 225
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Properties/AssemblyInfo.cs",
+      "type": "file",
+      "name": "AssemblyInfo.cs",
+      "path": "src/SupplyCoreERP.Domain/Properties/AssemblyInfo.cs",
+      "summary": "File mã nguồn `AssemblyInfo.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "type": "file",
+      "name": "PriceListDataSeedContributor.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "summary": "File mã nguồn `PriceListDataSeedContributor.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs:PriceListDataSeedContributor",
+      "type": "class",
+      "name": "PriceListDataSeedContributor",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "summary": "Lớp `PriceListDataSeedContributor` thực hiện nghiệp vụ liên quan đến price list data seed contributor.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 11,
+      "endLine": 97
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs:SeedAsync",
+      "type": "function",
+      "name": "SeedAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "summary": "Phương thức `SeedAsync` thực hiện nghiệp vụ seed.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 24,
+      "endLine": 96
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs",
+      "type": "file",
+      "name": "PriceList.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs",
+      "summary": "File mã nguồn `PriceList.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs:PriceList",
+      "type": "class",
+      "name": "PriceList",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs",
+      "summary": "Lớp `PriceList` thực hiện nghiệp vụ liên quan đến price list.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 7,
+      "endLine": 33
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "type": "file",
+      "name": "PriceManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "summary": "File mã nguồn `PriceManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:PriceManager",
+      "type": "class",
+      "name": "PriceManager",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "summary": "Lớp `PriceManager` thực hiện nghiệp vụ liên quan đến quản lý price.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 10,
+      "endLine": 99
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:CreatePriceAsync",
+      "type": "function",
+      "name": "CreatePriceAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "summary": "Phương thức `CreatePriceAsync` thực hiện nghiệp vụ create price.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 25,
+      "endLine": 58
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:GetOfficialPriceAsync",
+      "type": "function",
+      "name": "GetOfficialPriceAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "summary": "Phương thức `GetOfficialPriceAsync` lấy thông tin official price.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 59,
+      "endLine": 97
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "type": "file",
+      "name": "ProductPrices.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "summary": "File mã nguồn `ProductPrices.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs:ProductPrice",
+      "type": "class",
+      "name": "ProductPrice",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "summary": "Lớp `ProductPrice` thực hiện nghiệp vụ liên quan đến sản phẩm price.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 48
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs:ProductPrice",
+      "type": "function",
+      "name": "ProductPrice",
+      "path": "src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "summary": "Phương thức `ProductPrice` thực hiện nghiệp vụ sản phẩm price.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 23,
+      "endLine": 37
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "type": "file",
+      "name": "SalesOrderTicketExecutedEventHandler.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "summary": "File mã nguồn `SalesOrderTicketExecutedEventHandler.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs:SalesOrderTicketExecutedEventHandler",
+      "type": "class",
+      "name": "SalesOrderTicketExecutedEventHandler",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "summary": "Lớp `SalesOrderTicketExecutedEventHandler` thực hiện nghiệp vụ liên quan đến sự kiện sales order phiếu đã thực thi handler.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 16,
+      "endLine": 106
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "function",
+      "name": "HandleEventAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "summary": "Phương thức `HandleEventAsync` thực hiện nghiệp vụ handle event.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 33,
+      "endLine": 102
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs",
+      "type": "file",
+      "name": "ISalesOrderManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs",
+      "summary": "File mã nguồn `ISalesOrderManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs:ISalesOrderManager",
+      "type": "class",
+      "name": "ISalesOrderManager",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs",
+      "summary": "Lớp `ISalesOrderManager` thực hiện nghiệp vụ liên quan đến giao diện quản lý sales order.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 9,
+      "endLine": 43
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:PurchaseReturnRequestManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:PurchaseReturnRequestManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:PurchaseReturnRequestManager",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/IPurchaseReturnRequestManager.cs:IPurchaseReturnRequestManager",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:PurchaseReturnRequestManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:PurchaseReturnRequestManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:AddLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:AddLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:UpdateLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:UpdateLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ApproveAndSplitAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ApproveAndSplitAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ValidateReturnQuantityAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ValidateReturnQuantityAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:AddLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ValidateReturnQuantityAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:AddLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrder.cs:AddLine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:UpdateLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ValidateReturnQuantityAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:UpdateLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrder.cs:UpdateLine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ApproveAndSplitAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseRequisitions/PurchaseRequisitionManager.cs:CreateAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ApproveAndSplitAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrderManager.cs:AddLineAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs:PurchaseReturnTicketExecutedEventHandler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs:PurchaseReturnTicketExecutedEventHandler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs:PurchaseReturnTicketExecutedEventHandler",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/Events/PurchaseReturnTicketExecutedEventHandler.cs:HandleEventAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrderManager.cs:CompleteAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs:IPurchaseReturnManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs:IPurchaseReturnManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:PurchaseReturn",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:PurchaseReturn",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:PurchaseReturn",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:PurchaseReturn",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:UpdateInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:UpdateInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:AddLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:AddLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:RemoveLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:RemoveLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:UpdateLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:UpdateLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:SendToApprove",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:SendToApprove",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturn.cs:UpdateLine",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrder.cs:UpdateInfo",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs:PurchaseReturnLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs:PurchaseReturnLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs:PurchaseReturnLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnLine.cs:PurchaseReturnLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:PurchaseReturnManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:PurchaseReturnManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:PurchaseReturnManager",
+      "target": "class:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/IPurchaseReturnManager.cs:IPurchaseReturnManager",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:PurchaseReturnManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:PurchaseReturnManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:AddLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:AddLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:UpdateLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:UpdateLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:ApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:ApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:ValidateReturnQuantityAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:ValidateReturnQuantityAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:AddLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ValidateReturnQuantityAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:AddLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrder.cs:AddLine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:UpdateLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturnRequests/PurchaseReturnRequestManager.cs:ValidateReturnQuantityAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseReturns/PurchaseReturnManager.cs:UpdateLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Procurement/PurchaseOrders/PurchaseOrder.cs:UpdateLine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs:PriceListDataSeedContributor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs:PriceListDataSeedContributor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs:PriceListDataSeedContributor",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs:SeedAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/DataSeed/PriceListDataSeedContributor.cs:SeedAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs:PriceList",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceList.cs:PriceList",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:PriceManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:PriceManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:CreatePriceAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:CreatePriceAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:GetOfficialPriceAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/PriceManager.cs:GetOfficialPriceAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs:ProductPrice",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs:ProductPrice",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs:ProductPrice",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/PriceLists/ProductPrices.cs:ProductPrice",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs:SalesOrderTicketExecutedEventHandler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs:SalesOrderTicketExecutedEventHandler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs:SalesOrderTicketExecutedEventHandler",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/Events/SalesOrderTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs:ISalesOrderManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs:ISalesOrderManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

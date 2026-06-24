@@ -1,0 +1,182 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "language": "csharp",
+      "sizeLines": 108,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 36,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "language": "csharp",
+      "sizeLines": 65,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "language": "csharp",
+      "sizeLines": 103,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 19,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "language": "csharp",
+      "sizeLines": 96,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Customers/CustomerAppService.cs",
+      "language": "csharp",
+      "sizeLines": 138,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Customers/CustomerAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 23,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/DosageForms/DosageFormAppService.cs",
+      "language": "csharp",
+      "sizeLines": 64,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/DosageForms/DosageFormAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Locations/LocationAppService.cs",
+      "language": "csharp",
+      "sizeLines": 100,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Locations/LocationAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 20,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Manufacturers/ManufacturerAppService.cs",
+      "language": "csharp",
+      "sizeLines": 114,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Manufacturers/ManufacturerAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 15,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Medicines/MedicineAppService.cs",
+      "language": "csharp",
+      "sizeLines": 350,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Medicines/MedicineAutoMapperProfile.cs",
+      "language": "csharp",
+      "sizeLines": 40,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Medicines/MedicineExcelService.cs",
+      "language": "csharp",
+      "sizeLines": 698,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineCreatedNotificationHandler.cs",
+      "language": "csharp",
+      "sizeLines": 38,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineImportNotificationHandler.cs",
+      "language": "csharp",
+      "sizeLines": 39,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs",
+      "language": "csharp",
+      "sizeLines": 35,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs",
+      "language": "csharp",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs",
+      "language": "csharp",
+      "sizeLines": 28,
+      "fileCategory": "code"
+    },
+    {
+      "path": "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs",
+      "language": "csharp",
+      "sizeLines": 41,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs": [],
+    "src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs": [],
+    "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs": [],
+    "src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs": [],
+    "src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Customers/CustomerAppService.cs": [],
+    "src/SupplyCoreERP.Application/Customers/CustomerAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/DosageForms/DosageFormAppService.cs": [],
+    "src/SupplyCoreERP.Application/DosageForms/DosageFormAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Locations/LocationAppService.cs": [],
+    "src/SupplyCoreERP.Application/Locations/LocationAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Manufacturers/ManufacturerAppService.cs": [],
+    "src/SupplyCoreERP.Application/Manufacturers/ManufacturerAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Medicines/MedicineAppService.cs": [],
+    "src/SupplyCoreERP.Application/Medicines/MedicineAutoMapperProfile.cs": [],
+    "src/SupplyCoreERP.Application/Medicines/MedicineExcelService.cs": [],
+    "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineCreatedNotificationHandler.cs": [],
+    "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineImportNotificationHandler.cs": [],
+    "src/SupplyCoreERP.Application/Notifications/EventHandlers/MedicineStatusChangedNotificationHandler.cs": [],
+    "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupJob.cs": [],
+    "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationCleanupWorker.cs": [],
+    "src/SupplyCoreERP.Application/Notifications/Jobs/NotificationSentJob.cs": []
+  }
+}

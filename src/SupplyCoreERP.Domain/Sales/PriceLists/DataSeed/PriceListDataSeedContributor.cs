@@ -71,28 +71,6 @@ public class PriceListDataSeedContributor : IDataSeedContributor, ITransientDepe
            ),
            autoSave: true
        );
-
-        await _priceListRepository.InsertAsync(
-            new PriceList(
-                id: _guidGenerator.Create(),
-                code: "PRICE-USD",
-                name: "Bảng giá niêm yết USD",
-                isBase: false,
-                currency: CurrencyType.USD
-            ),
-            autoSave: true
-        );
-
-        await _priceListRepository.InsertAsync(
-            new PriceList(
-                id: _guidGenerator.Create(),
-                code: "PRICE-EUR",
-                name: "Bảng giá niêm yết EUR",
-                isBase: false,
-                currency: CurrencyType.EUR
-            ),
-            autoSave: true
-        );
     }
 }
 

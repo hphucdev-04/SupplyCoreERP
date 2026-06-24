@@ -66,7 +66,7 @@ public class Medicine_Unit_Tests
         Guid newBaseUnitId = Guid.NewGuid();
 
         // Act
-        medicine.UpdateInfo("Paracetamol Extra", newCategoryId, newManufacturerId, newBaseUnitId);
+        medicine.UpdateInfo("Paracetamol Extra", newCategoryId, newManufacturerId, newBaseUnitId, 0.05m);
 
         // Assert
         medicine.Name.ShouldBe("Paracetamol Extra");

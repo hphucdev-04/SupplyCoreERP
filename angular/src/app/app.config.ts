@@ -16,6 +16,7 @@ import { APP_ROUTES } from './app.routes';
 import { APP_ROUTE_PROVIDER } from './common/route.provider';
 import { registerLocales } from './common/locale.provider';
 import { APP_SIGNALR_PROVIDER } from './common/signalR.provider';
+import { provideSettingsConfig } from './common/settings-config.provider';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -38,5 +39,6 @@ export const appConfig: ApplicationConfig = {
     provideLogo(withEnvironmentOptions(environment)),
     provideAccountConfig(),
     provideAbpThemeShared(),
+    provideSettingsConfig(),
   ],
 };

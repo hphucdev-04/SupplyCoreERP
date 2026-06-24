@@ -109,6 +109,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             input.UsageRoute,
             input.StorageCondition,
             input.IsPrescriptionDrug,
+            input.BaseUnitVolume,
             input.RegistrationValidFrom,
             input.RegistrationValidTo,
             input.RegistrationNote
@@ -142,6 +143,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             input.UsageRoute,
             input.StorageCondition,
             input.IsPrescriptionDrug,
+            input.BaseUnitVolume,
             input.RegistrationValidFrom,
             input.RegistrationValidTo,
             input.RegistrationNote
@@ -217,7 +219,24 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        await _medicineManager.AddIngredientAsync(medicine, input.ActiveIngredientId);
+        await _medicineManager.AddIngredientAsync(medicine, input.ActiveIngredientId, input.Strength);
+
+        await _medicineRepo.UpdateAsync(medicine);
+    }
+
+    public async Task UpdateIngredientStrengthAsync(Guid id, Guid activeIngredientId, CreateUpdateMedicineIngredientDto input)
+    {
+        IQueryable<Medicine> query = await _medicineRepo.GetQueryableAsync();
+        Medicine? medicine = await query
+            .Include(x => x.Ingredients)
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (medicine == null)
+        {
+            throw new EntityNotFoundException(typeof(Medicine), id);
+        }
+
+        await _medicineManager.UpdateIngredientStrengthAsync(medicine, activeIngredientId, input.Strength);
 
         await _medicineRepo.UpdateAsync(medicine);
     }
@@ -253,7 +272,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        await _medicineManager.AddUnitAsync(medicine, input.UnitId, input.ConversionFactor, input.Level);
+        await _medicineManager.AddUnitAsync(medicine, input.UnitId, input.ConversionFactor, input.Level, input.Volume);
 
         await _medicineRepo.UpdateAsync(medicine);
     }
@@ -271,7 +290,7 @@ public class MedicineAppService : SupplyCore, IMedicineAppService
             throw new EntityNotFoundException(typeof(Medicine), id);
         }
 
-        await _medicineManager.UpdateUnitAsync(medicine, unitId, input.ConversionFactor, input.Level);
+        await _medicineManager.UpdateUnitAsync(medicine, unitId, input.ConversionFactor, input.Level, input.Volume);
 
         await _medicineRepo.UpdateAsync(medicine);
     }

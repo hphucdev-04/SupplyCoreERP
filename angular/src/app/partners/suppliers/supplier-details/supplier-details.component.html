@@ -475,8 +475,6 @@
             <th style="width: 15%">{{ '::ConversionFactor' | abpLocalization }}</th>
             <th style="width: 18%">{{ '::StandardPrice' | abpLocalization }}</th>
             <th style="width: 15%">{{ '::MinOrderQty' | abpLocalization }}</th>
-            <th style="width: 12%">{{ '::OverTolerance' | abpLocalization }} (%)</th>
-            <th style="width: 12%">{{ '::UnderTolerance' | abpLocalization }} (%)</th>
             <th style="width: 3%" class="text-center"></th>
           </tr>
         </thead>
@@ -539,24 +537,6 @@
               >
                 <i class="fa fa-exclamation-circle me-1"></i> Trùng mốc MOQ.
               </div>
-            </td>
-            <td>
-              <input
-                type="number"
-                class="form-control form-control-sm"
-                formControlName="overDeliveryTolerancePct"
-                min="0"
-                max="100"
-              />
-            </td>
-            <td>
-              <input
-                type="number"
-                class="form-control form-control-sm"
-                formControlName="underDeliveryTolerancePct"
-                min="0"
-                max="100"
-              />
             </td>
             <td class="text-center">
               <button

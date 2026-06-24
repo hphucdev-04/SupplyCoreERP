@@ -12,11 +12,8 @@ namespace SupplyCoreERP.Procurement.PurchaseReturnRequests;
 public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
 {
     public string Code { get; private set; }
-    public Guid SupplierId { get; private set; }
-    public virtual Supplier Supplier { get; private set; }
     public Guid WarehouseId { get; private set; }
     public virtual Warehouse Warehouse { get; private set; }
-    public PurchaseReturnType ReturnType { get; private set; }
     public DateTime RequestDate { get; private set; }
     public PurchaseReturnRequestStatus Status { get; private set; }
     public decimal SubTotal { get; private set; }
@@ -33,16 +30,12 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
     public PurchaseReturnRequest(
         Guid id,
         string code,
-        Guid supplierId,
         Guid warehouseId,
-        PurchaseReturnType returnType,
         DateTime requestDate,
         string? note) : base(id)
     {
         Code = Check.NotNullOrWhiteSpace(code, nameof(code));
-        SupplierId = supplierId;
         WarehouseId = warehouseId;
-        ReturnType = returnType;
         RequestDate = requestDate;
         Note = note;
         Status = PurchaseReturnRequestStatus.Draft;
@@ -52,7 +45,7 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
         Lines = new List<PurchaseReturnRequestLine>();
     }
 
-    public void UpdateInfo(Guid warehouseId, PurchaseReturnType returnType, DateTime requestDate, string? note)
+    public void UpdateInfo(Guid warehouseId, DateTime requestDate, string? note)
     {
         if (Status != PurchaseReturnRequestStatus.Draft && Status != PurchaseReturnRequestStatus.PendingApproval)
         {
@@ -60,18 +53,9 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
         }
 
         WarehouseId = warehouseId;
-        ReturnType = returnType;
         RequestDate = requestDate;
         Note = note;
 
-        // Nếu chuyển sang loại bể vỡ, tự động cập nhật khấu hao các dòng về 0
-        if (ReturnType == PurchaseReturnType.Defective)
-        {
-            foreach (PurchaseReturnRequestLine line in Lines)
-            {
-                line.UpdateInfo(line.Quantity, 0); // Khấu hao bắt buộc = 0
-            }
-        }
         RecalculateTotals();
     }
 
@@ -85,7 +69,8 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
         decimal quantity,
         decimal originalUnitPrice,
         decimal depreciationRate,
-        decimal taxRate)
+        decimal taxRate,
+        PurchaseReturnType returnType)
     {
         if (Status != PurchaseReturnRequestStatus.Draft && Status != PurchaseReturnRequestStatus.PendingApproval)
         {
@@ -98,7 +83,7 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
         }
 
         // Kiểm tra khấu hao theo loại hình trả hàng
-        if (ReturnType == PurchaseReturnType.Defective && depreciationRate != 0)
+        if (returnType == PurchaseReturnType.Defective && depreciationRate != 0)
         {
             throw new BusinessException("SupplyCoreERP:DefectiveCannotHaveDepreciation", "Hàng lỗi bể vỡ do nhà cung cấp không được phép tính khấu hao!");
         }
@@ -114,7 +99,8 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
             quantity,
             originalUnitPrice,
             depreciationRate,
-            taxRate
+            taxRate,
+            returnType
         );
 
         Lines.Add(line);
@@ -138,7 +124,7 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
         RecalculateTotals();
     }
 
-    public void UpdateLine(Guid lineId, decimal quantity, decimal depreciationRate)
+    public void UpdateLine(Guid lineId, decimal quantity, decimal depreciationRate, PurchaseReturnType returnType)
     {
         if (Status != PurchaseReturnRequestStatus.Draft && Status != PurchaseReturnRequestStatus.PendingApproval)
         {
@@ -152,12 +138,12 @@ public class PurchaseReturnRequest : FullAuditedAggregateRoot<Guid>
         }
 
         // Kiểm tra khấu hao theo loại hình trả hàng
-        if (ReturnType == PurchaseReturnType.Defective && depreciationRate != 0)
+        if (returnType == PurchaseReturnType.Defective && depreciationRate != 0)
         {
             throw new BusinessException("SupplyCoreERP:DefectiveCannotHaveDepreciation", "Hàng lỗi bể vỡ do nhà cung cấp không được phép tính khấu hao!");
         }
 
-        line.UpdateInfo(quantity, depreciationRate);
+        line.UpdateInfo(quantity, depreciationRate, returnType);
         RecalculateTotals();
     }
 

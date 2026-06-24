@@ -1,0 +1,1260 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "type": "file",
+      "metadata": {
+        "name": "BaseUnitManager.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+        "summary": "Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể catalog.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:BaseUnitManager",
+      "type": "class",
+      "metadata": {
+        "name": "BaseUnitManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+        "summary": "Lớp BaseUnitManager thuộc thành phần BaseUnitManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:BaseUnitManager",
+      "type": "function",
+      "metadata": {
+        "name": "BaseUnitManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+        "summary": "Phương thức BaseUnitManager thực hiện xử lý nghiệp vụ liên quan đến BaseUnitManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến BaseUnitManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến BaseUnitManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến BaseUnitManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "type": "file",
+      "metadata": {
+        "name": "Category.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "class",
+      "metadata": {
+        "name": "Category",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+        "summary": "Lớp Category thuộc thành phần Category.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "function",
+      "metadata": {
+        "name": "Category",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+        "summary": "Phương thức Category thực hiện xử lý nghiệp vụ liên quan đến Category.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "function",
+      "metadata": {
+        "name": "Category",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+        "summary": "Phương thức Category thực hiện xử lý nghiệp vụ liên quan đến Category.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:SetName",
+      "type": "function",
+      "metadata": {
+        "name": "SetName",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+        "summary": "Phương thức SetName thực hiện xử lý nghiệp vụ liên quan đến Category.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CategoryManager.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+        "summary": "Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể catalog.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CategoryManager",
+      "type": "class",
+      "metadata": {
+        "name": "CategoryManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+        "summary": "Lớp CategoryManager thuộc thành phần CategoryManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CategoryManager",
+      "type": "function",
+      "metadata": {
+        "name": "CategoryManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+        "summary": "Phương thức CategoryManager thực hiện xử lý nghiệp vụ liên quan đến CategoryManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến CategoryManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến CategoryManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến CategoryManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "type": "file",
+      "metadata": {
+        "name": "DosageForm.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "class",
+      "metadata": {
+        "name": "DosageForm",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+        "summary": "Lớp DosageForm thuộc thành phần DosageForm.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "function",
+      "metadata": {
+        "name": "DosageForm",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+        "summary": "Phương thức DosageForm thực hiện xử lý nghiệp vụ liên quan đến DosageForm.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "function",
+      "metadata": {
+        "name": "DosageForm",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+        "summary": "Phương thức DosageForm thực hiện xử lý nghiệp vụ liên quan đến DosageForm.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:Update",
+      "type": "function",
+      "metadata": {
+        "name": "Update",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+        "summary": "Phương thức Update thực hiện xử lý nghiệp vụ liên quan đến DosageForm.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "type": "file",
+      "metadata": {
+        "name": "DosageFormManager.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+        "summary": "Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể catalog.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DosageFormManager",
+      "type": "class",
+      "metadata": {
+        "name": "DosageFormManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+        "summary": "Lớp DosageFormManager thuộc thành phần DosageFormManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DosageFormManager",
+      "type": "function",
+      "metadata": {
+        "name": "DosageFormManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+        "summary": "Phương thức DosageFormManager thực hiện xử lý nghiệp vụ liên quan đến DosageFormManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến DosageFormManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến DosageFormManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến DosageFormManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "type": "file",
+      "metadata": {
+        "name": "Manufacturer.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "class",
+      "metadata": {
+        "name": "Manufacturer",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+        "summary": "Lớp Manufacturer thuộc thành phần Manufacturer.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "function",
+      "metadata": {
+        "name": "Manufacturer",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+        "summary": "Phương thức Manufacturer thực hiện xử lý nghiệp vụ liên quan đến Manufacturer.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "function",
+      "metadata": {
+        "name": "Manufacturer",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+        "summary": "Phương thức Manufacturer thực hiện xử lý nghiệp vụ liên quan đến Manufacturer.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Update",
+      "type": "function",
+      "metadata": {
+        "name": "Update",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+        "summary": "Phương thức Update thực hiện xử lý nghiệp vụ liên quan đến Manufacturer.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ManufacturerManager.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+        "summary": "Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể catalog.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:ManufacturerManager",
+      "type": "class",
+      "metadata": {
+        "name": "ManufacturerManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+        "summary": "Lớp ManufacturerManager thuộc thành phần ManufacturerManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:ManufacturerManager",
+      "type": "function",
+      "metadata": {
+        "name": "ManufacturerManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+        "summary": "Phương thức ManufacturerManager thực hiện xử lý nghiệp vụ liên quan đến ManufacturerManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến ManufacturerManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến ManufacturerManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến ManufacturerManager.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineCreatedDomainEvent.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineCreatedDomainEvent.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineCreatedDomainEvent.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineImportDomainEvent.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineImportDomainEvent.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineImportDomainEvent.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineStatusChangedDomainEvent.cs",
+      "type": "file",
+      "metadata": {
+        "name": "MedicineStatusChangedDomainEvent.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/Events/MedicineStatusChangedDomainEvent.cs",
+        "summary": "Thực thể miền (Domain Entity) đại diện cho catalog trong cơ sở dữ liệu.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "entity"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs",
+      "type": "file",
+      "metadata": {
+        "name": "IMedicineManager.cs",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs",
+        "summary": "Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể catalog.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs:IMedicineManager",
+      "type": "class",
+      "metadata": {
+        "name": "IMedicineManager",
+        "path": "src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs",
+        "summary": "Interface IMedicineManager định nghĩa các hợp đồng nghiệp vụ cho Domain Service quản lý các quy tắc nghiệp vụ cốt lõi và ràng buộc phức tạp của thực thể catalog..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "domain-layer",
+          "domain-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:BaseUnitManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:BaseUnitManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:BaseUnitManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:BaseUnitManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/BaseUnits/BaseUnitManager.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:Category",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:SetName",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/Category.cs:SetName",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CategoryManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CategoryManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CategoryManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CategoryManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Categories/CategoryManager.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:DosageForm",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:Update",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageForm.cs:Update",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DosageFormManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DosageFormManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DosageFormManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DosageFormManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/DosageForms/DosageFormManager.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Manufacturer",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Update",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/Manufacturer.cs:Update",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:ManufacturerManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:ManufacturerManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:ManufacturerManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:ManufacturerManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Manufacturers/ManufacturerManager.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs:IMedicineManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Catalog/Medicines/IMedicineManager.cs:IMedicineManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

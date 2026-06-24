@@ -26,7 +26,6 @@ import {
 import { DrawerComponent } from 'src/app/shared/components/drawer-component/drawer.component';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { MedicineDetailComponent } from './medicice-details/medicice-details.component';
 import { ImportModalComponent } from 'src/app/shared/components/import-compoent/import.component';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { Router } from '@angular/router';
@@ -219,6 +218,7 @@ export class MedicinesComponent implements OnInit, OnDestroy {
       categoryId: [null, Validators.required],
       manufacturerId: [null, Validators.required],
       baseUnitId: [null, Validators.required],
+      baseUnitVolume: [0, [Validators.required, Validators.min(0)]],
       dosageFormId: [null, Validators.required],
       registrationNumber: ['', Validators.maxLength(50)],
       registrationValidFrom: [null],

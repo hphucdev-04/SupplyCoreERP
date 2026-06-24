@@ -5,15 +5,11 @@ using System.Linq.Dynamic.Core;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
-using SupplyCoreERP.Enums.Orders;
-using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventory.Tickets;
-using SupplyCoreERP.Partner.Suppliers;
 using SupplyCoreERP.Permissions;
 using SupplyCoreERP.Procurement.PurchaseOrders;
 using SupplyCoreERP.Procurement.PurchaseReturns;
 using SupplyCoreERP.PurchaseReturns.Dtos;
-using Volo.Abp;
 using Volo.Abp.Application.Dtos;
 using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
@@ -46,7 +42,8 @@ public class PurchaseReturnAppService : SupplyCore, IPurchaseReturnAppService
 
         query = query
             .Include(x => x.Supplier)
-            .Include(x => x.Warehouse);
+            .Include(x => x.Warehouse)
+            .Include(x => x.PurchaseOrder);
 
         query = query
             .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Code.Contains(input.Filter) || x.Supplier.Name.Contains(input.Filter))
@@ -64,22 +61,6 @@ public class PurchaseReturnAppService : SupplyCore, IPurchaseReturnAppService
 
         List<PurchaseReturnDto> dtos = ObjectMapper.Map<List<PurchaseReturn>, List<PurchaseReturnDto>>(items);
 
-        // Map PurchaseOrderCode
-        if (dtos.Any())
-        {
-            var poIds = dtos.Select(d => d.PurchaseOrderId).Distinct().ToList();
-            List<PurchaseOrder> pos = await _purchaseOrderRepo.GetListAsync(x => poIds.Contains(x.Id));
-            var poDict = pos.ToDictionary(x => x.Id, x => x.Code);
-
-            foreach (PurchaseReturnDto dto in dtos)
-            {
-                if (poDict.TryGetValue(dto.PurchaseOrderId, out string? poCode))
-                {
-                    dto.PurchaseOrderCode = poCode;
-                }
-            }
-        }
-
         return new PagedResultDto<PurchaseReturnDto>(totalCount, dtos);
     }
 
@@ -90,6 +71,7 @@ public class PurchaseReturnAppService : SupplyCore, IPurchaseReturnAppService
         PurchaseReturn? entity = await query
             .Include(x => x.Supplier)
             .Include(x => x.Warehouse)
+            .Include(x => x.PurchaseOrder)
             .Include(x => x.Lines).ThenInclude(l => l.Product)
             .Include(x => x.Lines).ThenInclude(l => l.Unit)
             .FirstOrDefaultAsync(x => x.Id == id);
@@ -100,13 +82,6 @@ public class PurchaseReturnAppService : SupplyCore, IPurchaseReturnAppService
         }
 
         PurchaseReturnDto dto = ObjectMapper.Map<PurchaseReturn, PurchaseReturnDto>(entity);
-
-        // Map PurchaseOrderCode
-        PurchaseOrder? po = await _purchaseOrderRepo.FindAsync(entity.PurchaseOrderId);
-        if (po != null)
-        {
-            dto.PurchaseOrderCode = po.Code;
-        }
 
         // Traceability: PurchaseReturn -> Tickets
         List<InventoryTicket> tickets = await _ticketRepo.GetListAsync(x => x.ReferenceDocumentId == id);
@@ -129,6 +104,7 @@ public class PurchaseReturnAppService : SupplyCore, IPurchaseReturnAppService
             input.PurchaseOrderId,
             input.SupplierId,
             input.WarehouseId,
+            input.ReturnType,
             input.ReturnDate,
             input.Note
         );
@@ -146,6 +122,7 @@ public class PurchaseReturnAppService : SupplyCore, IPurchaseReturnAppService
         await _purchaseReturnManager.UpdateAsync(
             entity,
             input.WarehouseId,
+            input.ReturnType,
             input.ReturnDate,
             input.Note
         );

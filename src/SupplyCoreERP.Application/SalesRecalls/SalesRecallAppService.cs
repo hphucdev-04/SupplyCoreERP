@@ -81,11 +81,11 @@ public class SalesRecallAppService : SupplyCore, ISalesRecallAppService
         IQueryable<SalesRecall> query = await _salesRecallRepo.GetQueryableAsync();
 
         SalesRecall? entity = await query
-            .Include(x => x.Product)
+            .Include(x => x.Product).ThenInclude(p => p.BaseUnit)
             .Include(x => x.ProductBatch)
             .Include(x => x.Warehouse)
             .Include(x => x.Lines).ThenInclude(l => l.Customer)
-            .Include(x => x.Lines).ThenInclude(l => l.SalesOrder)
+            .Include(x => x.Lines).ThenInclude(l => l.SalesOrder).ThenInclude(o => o.Lines).ThenInclude(ol => ol.Unit)
             .Include(x => x.Lines).ThenInclude(l => l.Unit)
             .FirstOrDefaultAsync(x => x.Id == id);
 
@@ -95,6 +95,28 @@ public class SalesRecallAppService : SupplyCore, ISalesRecallAppService
         }
 
         SalesRecallDto dto = ObjectMapper.Map<SalesRecall, SalesRecallDto>(entity);
+        dto.BaseUnitName = entity.Product?.BaseUnit?.Name;
+
+        foreach (var lineDto in dto.Lines)
+        {
+            var lineEntity = entity.Lines.FirstOrDefault(x => x.Id == lineDto.Id);
+            if (lineEntity != null)
+            {
+                lineDto.RecalledQuantity = lineEntity.RecalledQuantity;
+                lineDto.RecalledBaseQuantity = lineEntity.RecalledQuantity * lineEntity.ConversionFactor;
+
+                if (lineEntity.SalesOrder != null)
+                {
+                    var soLine = lineEntity.SalesOrder.Lines.FirstOrDefault(l => l.ProductId == entity.ProductId);
+                    if (soLine != null)
+                    {
+                        lineDto.SalesOrderQuantity = soLine.Quantity;
+                        lineDto.SalesOrderUnitName = soLine.Unit?.Name;
+                        lineDto.SalesOrderBaseQuantity = soLine.BaseQuantity;
+                    }
+                }
+            }
+        }
 
         // Traceability: SalesRecall -> Tickets
         List<InventoryTicket> tickets = await _ticketRepo.GetListAsync(x => x.ReferenceDocumentId == id);
@@ -274,11 +296,12 @@ public class SalesRecallAppService : SupplyCore, ISalesRecallAppService
             return list;
         }
 
-        // 3. Query thông tin SalesOrders kèm theo Customer
+        // 3. Query thông tin SalesOrders kèm theo Customer và Lines
         IQueryable<SalesOrder> soQuery = await _salesOrderRepo.GetQueryableAsync();
         List<SalesOrder> salesOrders = await AsyncExecuter.ToListAsync(
             soQuery
                 .Include(x => x.Customer)
+                .Include(x => x.Lines).ThenInclude(l => l.Unit)
                 .Where(x => soIds.Contains(x.Id))
         );
 
@@ -292,6 +315,32 @@ public class SalesRecallAppService : SupplyCore, ISalesRecallAppService
                 Guid soId = detail.TicketLine.Ticket.ReferenceDocumentId.Value;
                 if (soDict.TryGetValue(soId, out SalesOrder? so))
                 {
+                    var soLine = so.Lines.FirstOrDefault(x => x.ProductId == detail.ProductId);
+                    decimal unitPrice = 0;
+                    decimal taxRate = 0;
+                    decimal traceQuantity = 0;
+                    Guid traceUnitId = Guid.Empty;
+                    string traceUnitName = string.Empty;
+                    int conversionFactor = 1;
+
+                    if (soLine != null)
+                    {
+                        // Đơn giá bán lịch sử sau chiết khấu
+                        unitPrice = soLine.UnitPrice * (1 - soLine.DiscountRate / 100);
+                        taxRate = soLine.TaxRate;
+                        conversionFactor = soLine.ConversionFactor;
+                        traceQuantity = detail.BaseQuantity / soLine.ConversionFactor;
+                        traceUnitId = soLine.UnitId;
+                        traceUnitName = soLine.Unit?.Name ?? string.Empty;
+                    }
+                    else
+                    {
+                        traceQuantity = detail.Quantity;
+                        traceUnitId = detail.UnitId;
+                        traceUnitName = detail.Unit?.Name ?? string.Empty;
+                        conversionFactor = detail.ConversionFactor;
+                    }
+
                     list.Add(new CustomerRecallTraceDto
                     {
                         CustomerId = so.CustomerId,
@@ -302,8 +351,12 @@ public class SalesRecallAppService : SupplyCore, ISalesRecallAppService
                         SalesOrderDate = so.OrderDate,
                         ProductBatchId = detail.ProductBatchId,
                         BatchNumber = detail.ProductBatch?.BatchNumber ?? string.Empty,
-                        Quantity = detail.Quantity,
-                        UnitName = detail.Unit?.Name ?? string.Empty
+                        Quantity = traceQuantity,
+                        UnitName = traceUnitName,
+                        UnitId = traceUnitId,
+                        UnitPrice = unitPrice,
+                        TaxRate = taxRate,
+                        ConversionFactor = conversionFactor
                     });
                 }
             }

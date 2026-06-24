@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ListService, PagedResultDto } from '@abp/ng.core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 import { InventoryBalanceService } from 'src/app/proxy/balances';
 import { InventoryBalanceDto } from 'src/app/proxy/balances/dtos';
@@ -10,13 +11,13 @@ import { MedicineService } from 'src/app/proxy/medicines';
 
 import { SharedModule } from 'src/app/shared/shared.module';
 import { SearchComponent } from 'src/app/shared/components/search-component/search.component';
-import { BalanceDetailsComponent } from './balance-details/balance-details.component';
+import { TransactionsComponent } from 'src/app/shared/components/transactions-component/transactions.component';
 
 
 @Component({
   selector: 'app-balances',
   standalone: true,
-  imports: [SharedModule, SearchComponent, BalanceDetailsComponent],
+  imports: [SharedModule, SearchComponent, TransactionsComponent],
   providers: [ListService],
   templateUrl: './balances.component.html',
   styleUrls: ['./balances.component.scss']
@@ -24,8 +25,7 @@ import { BalanceDetailsComponent } from './balance-details/balance-details.compo
 export class BalancesComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
 
-  // Gắn ViewChild để gọi hàm open() của Modal
-  @ViewChild('detailModal') detailModal!: BalanceDetailsComponent;
+  activeTab: 'balances' | 'transactions' = 'balances';
 
   data = { items: [], totalCount: 0 } as PagedResultDto<InventoryBalanceDto>;
 
@@ -35,13 +35,13 @@ export class BalancesComponent implements OnInit, OnDestroy {
   filterText = '';
   filterWarehouseId: string = null;
   filterMedicineId: string = null;
-  hideZeroBalance = true; // Mặc định ẩn Kệ hết hàng
 
   constructor(
     public readonly list: ListService,
     private balanceService: InventoryBalanceService,
     private warehouseService: WarehouseService,
-    private medicineService: MedicineService
+    private medicineService: MedicineService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -51,8 +51,7 @@ export class BalancesComponent implements OnInit, OnDestroy {
       ...query,
       filter: this.filterText,
       warehouseId: this.filterWarehouseId,
-      productId: this.filterMedicineId,
-      hideZeroQuantity: this.hideZeroBalance
+      productId: this.filterMedicineId
     });
 
     this.list.maxResultCount = 15;
@@ -83,8 +82,8 @@ export class BalancesComponent implements OnInit, OnDestroy {
     this.list.get();
   }
 
-  // GỌI MODAL CHI TIẾT
+  // ĐIỀU HƯỚNG SANG ROUTE CHI TIẾT
   openDetail(id: string) {
-    this.detailModal.open(id);
+    this.router.navigate(['/inventory/balances/details', id]);
   }
 }

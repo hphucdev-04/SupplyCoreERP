@@ -6,15 +6,12 @@ import dotenv from "dotenv";
 import path from "path";
 import { fileURLToPath } from "url";
 import rateLimit from "express-rate-limit";
-// Import các hàm đăng ký tools
-import { registerProductTools } from "./tools/product.js";
-import { registerWarehouseTools } from "./tools/warehouse.js";
+// Tool registrations
+import { registerQueryTools } from "./tools/read_query.js";
+import { registerDatetimeTools } from "./tools/get_current_datetime.js";
+import { registerReadResourceTool } from "./tools/read_resource.js";
 import { registerSupplierTools } from "./tools/supplier.js";
-import { registerCustomerTools } from "./tools/customer.js";
-import { registerBatchTools } from "./tools/batch.js";
-import { registerUnitTools } from "./tools/unit.js";
-import { registerBalanceTools } from "./tools/balance.js";
-// Import các hàm đăng ký resources và prompts
+// Resource and prompt registrations
 import { registerDatabaseResources } from "./resources/dbSchema.js";
 import { registerPrompts } from "./prompts/assistant.js";
 const __filename = fileURLToPath(import.meta.url);
@@ -56,14 +53,25 @@ const createMcpServer = () => {
     const server = new McpServer({
         name: "supplycore-mcp-server",
         version: "1.0.0"
+    }, {
+        capabilities: {
+            tools: {},
+            resources: {},
+            prompts: {},
+            logging: {}
+        },
+        instructions: "SupplyCore MCP Server — provides read-only access to a pharmaceutical supply chain ERP database.\n" +
+            "General rules:\n" +
+            "1. Use the provided tools and resources to look up information autonomously. Never ask the user for technical details.\n" +
+            "2. The database is PostgreSQL with PascalCase identifiers — always wrap table and column names in double quotes.\n" +
+            "3. Select ID columns in queries for internal tracking, but never display raw UUID/GUID values to the user.\n" +
+            "4. Always respond to the user in Vietnamese.\n" +
+            "5. When presenting lists of data retrieved from the database that are limited by a LIMIT clause, always explicitly notify the user in Vietnamese that the list is partial (e.g., 'đây chưa phải là tất cả dữ liệu') and suggest that they can ask to see more if needed."
     });
-    registerProductTools(server);
-    registerWarehouseTools(server);
+    registerQueryTools(server);
+    registerDatetimeTools(server);
+    registerReadResourceTool(server);
     registerSupplierTools(server);
-    registerCustomerTools(server);
-    registerBatchTools(server);
-    registerUnitTools(server);
-    registerBalanceTools(server);
     registerDatabaseResources(server);
     registerPrompts(server);
     return server;

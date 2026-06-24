@@ -126,11 +126,6 @@
 <app-drawer [isOpen]="isDrawerOpen" [title]="'::NewSalesOrder' | abpLocalization" [width]="'md'"
   [saveDisabled]="form.invalid || isSaving" (close)="closeDrawer()" (save)="save()">
   <form [formGroup]="form">
-    <div class="ph-callout ph-callout--info d-flex align-items-center p-2 mb-3">
-      <i class="fa fa-info-circle me-2"></i>
-      <div>{{ '::SOAutoGenerateCodeHint' | abpLocalization }}</div>
-    </div>
-
     <div class="mb-3">
       <div class="mb-3">
         <label class="ph-label ph-label--required">{{ '::Customer' | abpLocalization }}</label>
@@ -164,7 +159,7 @@
       </div>
       <div class="col-6 mb-3">
         <label class="ph-label">{{ '::DueDate' | abpLocalization }}</label>
-        <input type="date" class="form-control form-control-sm" formControlName="dueDate" />
+        <input type="date" class="form-control form-control-sm" formControlName="dueDate" readonly/>
         <div class="ph-hint-msg">{{ '::AutoCalcFromCustomerTerms' | abpLocalization }}</div>
       </div>
     </div>

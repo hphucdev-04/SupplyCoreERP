@@ -1,0 +1,199 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "angular/src/app/proxy/prices/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/prices/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-orders/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-orders/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-requisitions/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-requisitions/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-returns/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-returns/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-orders/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-orders/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-recalls/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/sales-recalls/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/settings/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/settings/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/suppliers/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/suppliers/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/tickets/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/tickets/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/transactions/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/transactions/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/warehouses/dtos/index.ts",
+      "language": "typescript",
+      "sizeLines": 1,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/warehouses/index.ts",
+      "language": "typescript",
+      "sizeLines": 3,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "angular/src/app/proxy/prices/dtos/index.ts": [],
+    "angular/src/app/proxy/prices/index.ts": [
+      "angular/src/app/proxy/prices/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/purchase-orders/dtos/index.ts": [],
+    "angular/src/app/proxy/purchase-orders/index.ts": [
+      "angular/src/app/proxy/purchase-orders/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/purchase-requisitions/dtos/index.ts": [],
+    "angular/src/app/proxy/purchase-requisitions/index.ts": [
+      "angular/src/app/proxy/purchase-requisitions/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/purchase-return-requests/dtos/index.ts": [],
+    "angular/src/app/proxy/purchase-return-requests/index.ts": [
+      "angular/src/app/proxy/purchase-return-requests/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/purchase-returns/dtos/index.ts": [],
+    "angular/src/app/proxy/purchase-returns/index.ts": [
+      "angular/src/app/proxy/purchase-returns/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/sales-orders/dtos/index.ts": [],
+    "angular/src/app/proxy/sales-orders/index.ts": [
+      "angular/src/app/proxy/sales-orders/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/sales-recalls/dtos/index.ts": [],
+    "angular/src/app/proxy/sales-recalls/index.ts": [
+      "angular/src/app/proxy/sales-recalls/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/settings/dtos/index.ts": [],
+    "angular/src/app/proxy/settings/index.ts": [
+      "angular/src/app/proxy/settings/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/suppliers/dtos/index.ts": [],
+    "angular/src/app/proxy/suppliers/index.ts": [
+      "angular/src/app/proxy/suppliers/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/tickets/dtos/index.ts": [],
+    "angular/src/app/proxy/tickets/index.ts": [
+      "angular/src/app/proxy/tickets/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/transactions/dtos/index.ts": [],
+    "angular/src/app/proxy/transactions/index.ts": [
+      "angular/src/app/proxy/transactions/dtos/index.ts"
+    ],
+    "angular/src/app/proxy/warehouses/dtos/index.ts": [],
+    "angular/src/app/proxy/warehouses/index.ts": [
+      "angular/src/app/proxy/warehouses/dtos/index.ts"
+    ]
+  }
+}

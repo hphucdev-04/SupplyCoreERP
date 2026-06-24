@@ -143,15 +143,8 @@
 
       <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="160">
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span
-            class="badge"
-            [class.bg-secondary]="row.status === PurchaseReturnStatus.Draft"
-            [class.bg-warning]="row.status === PurchaseReturnStatus.PendingApproval"
-            [class.bg-info]="row.status === PurchaseReturnStatus.Approved"
-            [class.bg-primary]="row.status === PurchaseReturnStatus.Returning"
-            [class.bg-success]="row.status === PurchaseReturnStatus.Completed"
-            [class.bg-danger]="row.status === PurchaseReturnStatus.Rejected"
-          >
+          <span class="ph-badge" [ngClass]="statusClass(row.status)">
+            <i class="fa me-1" [ngClass]="statusIcon(row.status)"></i>
             {{ '::Enum:PurchaseReturnStatus.' + enumName(PurchaseReturnStatus, row.status) | abpLocalization }}
           </span>
         </ng-template>
@@ -176,14 +169,14 @@
     <!-- Supplier -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Supplier' | abpLocalization }}</label>
-      <select
-        class="form-select"
+      <app-dropdown-search
         formControlName="supplierId"
-        (change)="onSupplierChange($event.target.value)"
-      >
-        <option [ngValue]="null" disabled>{{ '::SelectSupplier' | abpLocalization }}</option>
-        <option *ngFor="let s of suppliers" [value]="s.id">{{ s.name }}</option>
-      </select>
+        [items]="suppliers"
+        [placeholder]="'::SelectSupplier' | abpLocalization"
+        [labelKey]="'name'"
+        [valueKey]="'id'"
+        (valueChange)="onSupplierChange($event)"
+      ></app-dropdown-search>
       <div
         *ngIf="form.get('supplierId').invalid && form.get('supplierId').touched"
         class="ph-error-msg"
@@ -195,12 +188,13 @@
     <!-- Purchase Order -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::PurchaseOrder' | abpLocalization }}</label>
-      <select class="form-select" formControlName="purchaseOrderId">
-        <option [ngValue]="null" disabled>{{ '::SelectPurchaseOrder' | abpLocalization }}</option>
-        <option *ngFor="let po of purchaseOrders" [value]="po.id">
-          {{ po.code }} ({{ po.orderDate | date: 'dd/MM/yyyy' }})
-        </option>
-      </select>
+      <app-dropdown-search
+        formControlName="purchaseOrderId"
+        [items]="purchaseOrders"
+        [placeholder]="'::SelectPurchaseOrder' | abpLocalization"
+        [labelKey]="'displayName'"
+        [valueKey]="'id'"
+      ></app-dropdown-search>
       <div
         *ngIf="form.get('purchaseOrderId').invalid && form.get('purchaseOrderId').touched"
         class="ph-error-msg"
@@ -215,12 +209,31 @@
     <!-- Warehouse -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
-      <select class="form-select" formControlName="warehouseId">
-        <option [ngValue]="null" disabled>{{ '::SelectWarehouse' | abpLocalization }}</option>
-        <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
-      </select>
+      <app-dropdown-search
+        formControlName="warehouseId"
+        [items]="warehouses"
+        [placeholder]="'::SelectWarehouse' | abpLocalization"
+        [labelKey]="'name'"
+        [valueKey]="'id'"
+      ></app-dropdown-search>
       <div
         *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched"
+        class="ph-error-msg"
+      >
+        {{ '::FieldRequired' | abpLocalization }}
+      </div>
+    </div>
+
+    <!-- Return Type -->
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::ReturnType' | abpLocalization }}</label>
+      <select class="form-select" formControlName="returnType">
+        <option *ngFor="let option of purchaseReturnTypeOptions" [ngValue]="option.value">
+          {{ '::Enum:PurchaseReturnType.' + enumName(PurchaseReturnType, option.value) | abpLocalization }}
+        </option>
+      </select>
+      <div
+        *ngIf="form.get('returnType').invalid && form.get('returnType').touched"
         class="ph-error-msg"
       >
         {{ '::FieldRequired' | abpLocalization }}

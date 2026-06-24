@@ -20,6 +20,7 @@ public class PurchaseReturn : FullAuditedAggregateRoot<Guid>
     public virtual Supplier Supplier { get; private set; }
     public Guid WarehouseId { get; private set; }
     public virtual Warehouse Warehouse { get; private set; }
+    public PurchaseReturnType ReturnType { get; private set; }
     public DateTime ReturnDate { get; private set; }
     public PurchaseReturnStatus Status { get; private set; }
     public decimal SubTotal { get; private set; }
@@ -46,6 +47,7 @@ public class PurchaseReturn : FullAuditedAggregateRoot<Guid>
         Guid purchaseOrderId,
         Guid supplierId,
         Guid warehouseId,
+        PurchaseReturnType returnType,
         DateTime returnDate,
         string? note) : base(id)
     {
@@ -53,6 +55,7 @@ public class PurchaseReturn : FullAuditedAggregateRoot<Guid>
         PurchaseOrderId = purchaseOrderId;
         SupplierId = supplierId;
         WarehouseId = warehouseId;
+        ReturnType = returnType;
         ReturnDate = returnDate;
         Note = note;
         Status = PurchaseReturnStatus.Draft;
@@ -62,7 +65,7 @@ public class PurchaseReturn : FullAuditedAggregateRoot<Guid>
         Lines = new List<PurchaseReturnLine>();
     }
 
-    public void UpdateInfo(Guid warehouseId, DateTime returnDate, string? note)
+    public void UpdateInfo(Guid warehouseId, PurchaseReturnType returnType, DateTime returnDate, string? note)
     {
         if (Status != PurchaseReturnStatus.Draft && Status != PurchaseReturnStatus.PendingApproval)
         {
@@ -70,8 +73,19 @@ public class PurchaseReturn : FullAuditedAggregateRoot<Guid>
         }
 
         WarehouseId = warehouseId;
+        ReturnType = returnType;
         ReturnDate = returnDate;
         Note = note;
+
+        // Nếu chuyển sang loại bể vỡ, tự động cập nhật khấu hao các dòng về 0
+        if (ReturnType == PurchaseReturnType.Defective)
+        {
+            foreach (PurchaseReturnLine line in Lines)
+            {
+                line.UpdateInfo(line.Quantity, 0); // Khấu hao bắt buộc = 0
+            }
+        }
+        RecalculateTotals();
     }
 
     public void AddLine(Guid id, Guid purchaseOrderLineId, Guid productId, Guid unitId, int conversionFactor, decimal quantity, decimal originalUnitPrice, decimal depreciationRate, decimal taxRate)
@@ -84,6 +98,12 @@ public class PurchaseReturn : FullAuditedAggregateRoot<Guid>
         if (Lines.Any(x => x.PurchaseOrderLineId == purchaseOrderLineId))
         {
             throw new BusinessException("SupplyCoreERP:DuplicateLine", "Dòng đơn hàng này đã tồn tại trong phiếu xuất trả!");
+        }
+
+        // Kiểm tra khấu hao theo loại hình trả hàng
+        if (ReturnType == PurchaseReturnType.Defective && depreciationRate != 0)
+        {
+            throw new BusinessException("SupplyCoreERP:DefectiveCannotHaveDepreciation", "Hàng lỗi bể vỡ do nhà cung cấp không được phép tính khấu hao!");
         }
 
         PurchaseReturnLine line = new(id, Id, purchaseOrderLineId, productId, unitId, conversionFactor, quantity, originalUnitPrice, depreciationRate, taxRate);
@@ -119,6 +139,12 @@ public class PurchaseReturn : FullAuditedAggregateRoot<Guid>
         if (line == null)
         {
             throw new BusinessException("SupplyCoreERP:LineNotFound", "Không tìm thấy dòng chứng từ xuất trả!");
+        }
+
+        // Kiểm tra khấu hao theo loại hình trả hàng
+        if (ReturnType == PurchaseReturnType.Defective && depreciationRate != 0)
+        {
+            throw new BusinessException("SupplyCoreERP:DefectiveCannotHaveDepreciation", "Hàng lỗi bể vỡ do nhà cung cấp không được phép tính khấu hao!");
         }
 
         line.UpdateInfo(quantity, depreciationRate);

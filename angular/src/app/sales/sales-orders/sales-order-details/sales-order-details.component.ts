@@ -10,6 +10,7 @@ import { DrawerComponent } from 'src/app/shared/components/drawer-component/draw
 import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 import { SalesOrderDto, SalesOrderLineDto } from 'src/app/proxy/sales-orders/dtos';
 import { SalesOrderService } from 'src/app/proxy/sales-orders';
+import { CustomerService } from 'src/app/proxy/customers';
 import { InventoryTicketService } from 'src/app/proxy/tickets';
 import { InventoryTicketDto } from 'src/app/proxy/tickets/dtos';
 import { WarehouseService } from 'src/app/proxy/warehouses';
@@ -75,7 +76,8 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     private toaster: ToasterService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
+    private customerService: CustomerService,
   ) {}
 
   ngOnInit(): void {
@@ -162,6 +164,21 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     });
   }
 
+  calculateDueDate() {
+    if (!this.order?.customerId || !this.order?.orderDate) return;
+
+    this.customerService.get(this.order.customerId).subscribe(customer => {
+      const days = customer.paymentTermDays || 0;
+      const orderDate = new Date(this.order.orderDate);
+      if (days > 0) {
+        orderDate.setDate(orderDate.getDate() + days);
+        this.editForm.get('dueDate').setValue(orderDate.toISOString().split('T')[0]);
+      } else {
+        this.editForm.get('dueDate').setValue(this.order.orderDate.split('T')[0]);
+      }
+    });
+  }
+
   // ── Edit master ───────────────────────────────────────────
   openEditDrawer() {
     this.editForm.patchValue({
@@ -171,6 +188,9 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
       note: this.order.note ?? '',
     });
     this.isEditDrawerOpen = true;
+
+    // Tự động tính lại khi mở (để đảm bảo đồng bộ nếu cấu hình Khách hàng thay đổi)
+    this.calculateDueDate();
   }
 
   closeEditDrawer() {

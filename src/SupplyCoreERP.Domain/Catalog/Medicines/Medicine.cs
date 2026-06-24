@@ -44,8 +44,9 @@ public class Medicine : Product
         string initialRegNumber,
         UsageRoute usageRoute,
         StorageCondition storageCondition,
-        bool isPrescriptionDrug)
-        : base(id, categoryId, manufacturerId, code, name, baseUnitId, ProductType.Medicine)
+        bool isPrescriptionDrug,
+        decimal baseUnitVolume = 0)
+        : base(id, categoryId, manufacturerId, code, name, baseUnitId, ProductType.Medicine, baseUnitVolume)
     {
         IsActive = true;
         Status = MedicineStatus.Pending;
@@ -95,14 +96,25 @@ public class Medicine : Product
                ?? Registrations.OrderByDescending(r => r.CreationTime).FirstOrDefault();
     }
 
-    public void AddIngredient(Guid activeIngredientId)
+    public void AddIngredient(Guid activeIngredientId, string? strength = null)
     {
         if (Ingredients.Any(x => x.ActiveIngredientId == activeIngredientId))
         {
             throw new BusinessException("SupplyCoreERP:DuplicateIngredient", "Hoạt chất này đã có trong thuốc.");
         }
 
-        Ingredients.Add(new MedicineIngredient(Id, activeIngredientId));
+        Ingredients.Add(new MedicineIngredient(Id, activeIngredientId, strength));
+    }
+
+    public void UpdateIngredientStrength(Guid activeIngredientId, string? strength)
+    {
+        MedicineIngredient? item = Ingredients.FirstOrDefault(x => x.ActiveIngredientId == activeIngredientId);
+        if (item == null)
+        {
+            throw new BusinessException("SupplyCoreERP:IngredientNotFound", "Hoạt chất không tồn tại trong thuốc.");
+        }
+
+        item.UpdateStrength(strength);
     }
 
     public void RemoveIngredient(Guid activeIngredientId)

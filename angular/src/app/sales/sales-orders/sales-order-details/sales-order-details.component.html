@@ -167,7 +167,12 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let t of relatedTickets">
-                    <td class="font-mono fw-bold w-50">{{ t.ticketNumber }}</td>
+                    <td
+                      class="ph-text-primary ph-link"
+                      (click)="router.navigate(['/inventory/tickets/details', t.id])"
+                    >
+                      {{ t.ticketNumber }}
+                    </td>
                     <td>{{ t.creationTime | date: 'HH:mm dd/MM/yyyy' }}</td>
                     <td>
                       <span
@@ -289,7 +294,7 @@
                           [value]="row.quantity"
                           min="0.01"
                           step="1"
-                          (change)="onInlineLineChange(row, 'quantity', $event.target.value)"
+                          (change)="onInlineLineChange(row, 'quantity', $any($event.target).value)"
                         />
                       </div>
                       <div *ngIf="!isEditable()">
@@ -308,7 +313,7 @@
                           style="width: 100px"
                           [value]="row.unitPrice"
                           min="0"
-                          (change)="onInlineLineChange(row, 'unitPrice', $event.target.value)"
+                          (change)="onInlineLineChange(row, 'unitPrice', $any($event.target).value)"
                         />
                       </div>
                       <span *ngIf="!isEditable()">{{ row.unitPrice | number: '1.0-0' }} ₫</span>
@@ -322,7 +327,7 @@
                           [value]="row.discountRate ?? 0"
                           min="0"
                           max="100"
-                          (change)="onInlineLineChange(row, 'discountRate', $event.target.value)"
+                          (change)="onInlineLineChange(row, 'discountRate', $any($event.target).value)"
                         />
                       </div>
                       <div *ngIf="!isEditable()">
@@ -341,7 +346,7 @@
                           [value]="row.taxRate ?? 0"
                           min="0"
                           max="100"
-                          (change)="onInlineLineChange(row, 'taxRate', $event.target.value)"
+                          (change)="onInlineLineChange(row, 'taxRate', $any($event.target).value)"
                         />
                       </div>
                       <span *ngIf="!isEditable()" class="ph-text-muted"
@@ -487,11 +492,6 @@
     (save)="saveLine()"
   >
     <form *ngIf="lineForm" [formGroup]="lineForm">
-      <div class="ph-callout ph-callout--info mb-3">
-        <i class="fa fa-tag ph-callout__icon"></i>
-        <div>{{ '::PriceSelectionHint' | abpLocalization }}</div>
-      </div>
-
       <div class="mb-3">
         <label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label>
         <app-dropdown-search
@@ -510,7 +510,7 @@
             class="form-select form-select-sm"
             formControlName="unitId"
             [attr.disabled]="!units.length ? '' : null"
-            (change)="onUnitChange($event.target.value)"
+            (change)="onUnitChange($any($event.target).value)"
           >
             <option [ngValue]="null">-- {{ '::Select' | abpLocalization }} --</option>
             <option *ngFor="let u of units" [value]="u.unitId">

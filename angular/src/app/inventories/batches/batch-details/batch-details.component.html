@@ -155,21 +155,18 @@
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column [name]="'::Type' | abpLocalization" prop="transactionType">
-              <ng-template let-value="value" ngx-datatable-cell-template>
-                <span class="ph-badge" [ngClass]="{
-                  'ph-badge--approved': value === InventoryTransactionType.Incoming,
-                  'ph-badge--rejected': value === InventoryTransactionType.Outgoing
-                }">
-                   {{ '::Enum:InventoryTransactionType.' + value | abpLocalization }}
+              <ng-template let-row="row" ngx-datatable-cell-template>
+                <span class="ph-badge" [ngClass]="row.quantity > 0 ? 'ph-badge--approved' : 'ph-badge--rejected'">
+                   {{ '::Enum:InventoryTransactionType.' + row.transactionType | abpLocalization }}
                 </span>
               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column [name]="'::Reference' | abpLocalization" prop="referenceDocumentNumber"></ngx-datatable-column>
             <ngx-datatable-column [name]="'::Quantity' | abpLocalization" prop="quantity">
               <ng-template let-row="row" ngx-datatable-cell-template>
-                <span [class.ph-text-success]="row.transactionType === InventoryTransactionType.Incoming"
-                      [class.ph-text-danger]="row.transactionType === InventoryTransactionType.Outgoing">
-                  {{ row.transactionType === InventoryTransactionType.Incoming ? '+' : '-' }}{{ row.quantity | number }}
+                <span [class.ph-text-success]="row.quantity > 0"
+                      [class.ph-text-danger]="row.quantity <= 0">
+                  {{ row.quantity > 0 ? '+' : '' }}{{ row.quantity | number }}
                 </span>
               </ng-template>
             </ngx-datatable-column>
@@ -192,7 +189,7 @@
               <ng-template let-value="value" ngx-datatable-cell-template>
                 <span class="ph-badge" [ngClass]="{
                   'ph-badge--approved': value === ReservationStatus.Active,
-                  'ph-badge--pending': value === ReservationStatus.Released,
+                  'ph-badge--pending': value === ReservationStatus.Completed,
                   'ph-badge--rejected': value === ReservationStatus.Cancelled
                 }">
                    {{ '::Enum:ReservationStatus.' + value | abpLocalization }}

@@ -1,0 +1,14 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "src/SupplyCoreERP.HttpApi.Host/Dockerfile",
+      "language": "dockerfile",
+      "sizeLines": 4,
+      "fileCategory": "infra"
+    }
+  ],
+  "batchImportData": {
+    "src/SupplyCoreERP.HttpApi.Host/Dockerfile": []
+  }
+}

@@ -188,4 +188,46 @@ export class SalesRecallsComponent implements OnInit, OnDestroy {
       note: ['', [Validators.maxLength(1000)]],
     });
   }
+
+  statusClass(status: SalesRecallStatus): string {
+    const map: Record<number, string> = {
+      [SalesRecallStatus.Draft]: 'ph-badge--neutral',
+      [SalesRecallStatus.PendingApproval]: 'ph-badge--pending',
+      [SalesRecallStatus.Approved]: 'ph-badge--info',
+      [SalesRecallStatus.Recalling]: 'ph-badge--pending',
+      [SalesRecallStatus.Completed]: 'ph-badge--approved',
+      [SalesRecallStatus.Rejected]: 'ph-badge--rejected',
+    };
+    return map[status] ?? 'ph-badge--neutral';
+  }
+
+  statusIcon(status: SalesRecallStatus): string {
+    const map: Record<number, string> = {
+      [SalesRecallStatus.Draft]: 'fa-pencil',
+      [SalesRecallStatus.PendingApproval]: 'fa-clock-o',
+      [SalesRecallStatus.Approved]: 'fa-check',
+      [SalesRecallStatus.Recalling]: 'fa-refresh',
+      [SalesRecallStatus.Completed]: 'fa-check-circle',
+      [SalesRecallStatus.Rejected]: 'fa-times-circle',
+    };
+    return map[status] ?? 'fa-circle';
+  }
+
+  levelClass(level: RecallLevel): string {
+    const map: Record<number, string> = {
+      [RecallLevel.Level1]: 'ph-badge--rejected',
+      [RecallLevel.Level2]: 'ph-badge--pending',
+      [RecallLevel.Level3]: 'ph-badge--info',
+    };
+    return map[level] ?? 'ph-badge--neutral';
+  }
+
+  levelIcon(level: RecallLevel): string {
+    const map: Record<number, string> = {
+      [RecallLevel.Level1]: 'fa-radiation',
+      [RecallLevel.Level2]: 'fa-exclamation-triangle',
+      [RecallLevel.Level3]: 'fa-info-circle',
+    };
+    return map[level] ?? 'fa-circle';
+  }
 }

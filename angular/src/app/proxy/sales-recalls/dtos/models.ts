@@ -35,6 +35,10 @@ export interface CustomerRecallTraceDto {
   batchNumber?: string;
   quantity?: number;
   unitName?: string;
+  unitId?: string;
+  unitPrice?: number;
+  taxRate?: number;
+  conversionFactor?: number;
 }
 
 export interface GetSalesRecallListDto extends PagedAndSortedResultRequestDto {
@@ -62,6 +66,7 @@ export interface SalesRecallDto extends FullAuditedEntityDto<string> {
   totalAmount?: number;
   note?: string;
   isOverdue?: boolean;
+  baseUnitName?: string;
   lines?: SalesRecallLineDto[];
   relatedTickets?: SalesRecallRelatedTicketDto[];
 }
@@ -82,6 +87,11 @@ export interface SalesRecallLineDto extends AuditedEntityDto<string> {
   totalPrice?: number;
   taxAmount?: number;
   finalPrice?: number;
+  salesOrderQuantity?: number;
+  salesOrderUnitName?: string;
+  salesOrderBaseQuantity?: number;
+  recalledQuantity?: number;
+  recalledBaseQuantity?: number;
 }
 
 export interface SalesRecallRelatedTicketDto {

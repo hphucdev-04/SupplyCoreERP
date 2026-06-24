@@ -1,0 +1,194 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.html",
+      "language": "html",
+      "sizeLines": 552,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.scss",
+      "language": "css",
+      "sizeLines": 0,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 556,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-requisitions/purchase-requisition.component.html",
+      "language": "html",
+      "sizeLines": 179,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-requisitions/purchase-requisition.component.ts",
+      "language": "typescript",
+      "sizeLines": 184,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-requisitions/purchaserequisition-details/purchase-requisition-details.component.html",
+      "language": "html",
+      "sizeLines": 484,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-requisitions/purchaserequisition-details/purchase-requisition-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 531,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-return-requests/details/purchase-return-request-details.component.html",
+      "language": "html",
+      "sizeLines": 357,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-return-requests/details/purchase-return-request-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 390,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-return-requests/purchase-return-requests.component.html",
+      "language": "html",
+      "sizeLines": 253,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-return-requests/purchase-return-requests.component.ts",
+      "language": "typescript",
+      "sizeLines": 169,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-returns/purchase-return-details/purchase-return-details.component.html",
+      "language": "html",
+      "sizeLines": 319,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-returns/purchase-return-details/purchase-return-details.component.ts",
+      "language": "typescript",
+      "sizeLines": 297,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-returns/purchase-returns.component.html",
+      "language": "html",
+      "sizeLines": 257,
+      "fileCategory": "markup"
+    },
+    {
+      "path": "angular/src/app/procurement/purchase-returns/purchase-returns.component.ts",
+      "language": "typescript",
+      "sizeLines": 188,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/active-ingredients/active-ingredient.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/active-ingredients/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/agent/agent.service.ts",
+      "language": "typescript",
+      "sizeLines": 55,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/agent/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 37,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/base-units/base-unit.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/base-units/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/categories/category.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/categories/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/dosage-forms/dosage-form.service.ts",
+      "language": "typescript",
+      "sizeLines": 54,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/dosage-forms/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 14,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.html": [],
+    "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.scss": [],
+    "angular/src/app/procurement/purchase-orders/purchaseorder-details/purchase-order-details.component.ts": [],
+    "angular/src/app/procurement/purchase-requisitions/purchase-requisition.component.html": [],
+    "angular/src/app/procurement/purchase-requisitions/purchase-requisition.component.ts": [],
+    "angular/src/app/procurement/purchase-requisitions/purchaserequisition-details/purchase-requisition-details.component.html": [],
+    "angular/src/app/procurement/purchase-requisitions/purchaserequisition-details/purchase-requisition-details.component.ts": [],
+    "angular/src/app/procurement/purchase-return-requests/details/purchase-return-request-details.component.html": [],
+    "angular/src/app/procurement/purchase-return-requests/details/purchase-return-request-details.component.ts": [],
+    "angular/src/app/procurement/purchase-return-requests/purchase-return-requests.component.html": [],
+    "angular/src/app/procurement/purchase-return-requests/purchase-return-requests.component.ts": [],
+    "angular/src/app/procurement/purchase-returns/purchase-return-details/purchase-return-details.component.html": [],
+    "angular/src/app/procurement/purchase-returns/purchase-return-details/purchase-return-details.component.ts": [],
+    "angular/src/app/procurement/purchase-returns/purchase-returns.component.html": [],
+    "angular/src/app/procurement/purchase-returns/purchase-returns.component.ts": [
+      "angular/src/app/procurement/purchase-return-requests/purchase-return-requests.component.ts"
+    ],
+    "angular/src/app/proxy/active-ingredients/active-ingredient.service.ts": [
+      "angular/src/app/proxy/active-ingredients/dtos/models.ts"
+    ],
+    "angular/src/app/proxy/active-ingredients/dtos/models.ts": [],
+    "angular/src/app/proxy/agent/agent.service.ts": [
+      "angular/src/app/proxy/agent/dtos/models.ts"
+    ],
+    "angular/src/app/proxy/agent/dtos/models.ts": [],
+    "angular/src/app/proxy/base-units/base-unit.service.ts": [
+      "angular/src/app/proxy/base-units/dtos/models.ts"
+    ],
+    "angular/src/app/proxy/base-units/dtos/models.ts": [],
+    "angular/src/app/proxy/categories/category.service.ts": [
+      "angular/src/app/proxy/categories/dtos/models.ts"
+    ],
+    "angular/src/app/proxy/categories/dtos/models.ts": [],
+    "angular/src/app/proxy/dosage-forms/dosage-form.service.ts": [
+      "angular/src/app/proxy/dosage-forms/dtos/models.ts"
+    ],
+    "angular/src/app/proxy/dosage-forms/dtos/models.ts": []
+  }
+}

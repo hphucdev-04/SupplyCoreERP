@@ -1,0 +1,101 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 5,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/Dockerfile.local",
+      "language": "dockerfile",
+      "fileCategory": "infra",
+      "totalLines": 6,
+      "nonEmptyLines": 5,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj",
+      "language": "csproj",
+      "fileCategory": "config",
+      "totalLines": 67,
+      "nonEmptyLines": 57,
+      "metrics": {}
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.Development.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 21,
+      "nonEmptyLines": 21,
+      "sections": [
+        {
+          "heading": "ConnectionStrings",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "OpenIddict",
+          "level": 1,
+          "line": 5
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.Production.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 22,
+      "nonEmptyLines": 22,
+      "sections": [
+        {
+          "heading": "ConnectionStrings",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "OpenIddict",
+          "level": 1,
+          "line": 6
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.DbMigrator/appsettings.json",
+      "language": "json",
+      "fileCategory": "config",
+      "totalLines": 17,
+      "nonEmptyLines": 17,
+      "sections": [
+        {
+          "heading": "ConnectionStrings",
+          "level": 1,
+          "line": 2
+        },
+        {
+          "heading": "OpenIddict",
+          "level": 1,
+          "line": 5
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 0,
+        "functionCount": 0,
+        "classCount": 0,
+        "sectionCount": 2
+      }
+    }
+  ]
+}

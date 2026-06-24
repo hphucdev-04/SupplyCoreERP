@@ -29,4 +29,8 @@ export interface InventoryTransactionDto extends CreationAuditedEntityDto<string
   referenceDocumentId?: string;
   referenceDocumentNumber?: string;
   note?: string;
+  partnerId?: string;
+  partnerName?: string;
+  sourceDocumentId?: string;
+  sourceDocumentNumber?: string;
 }

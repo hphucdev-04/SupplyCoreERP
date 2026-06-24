@@ -1,0 +1,862 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs",
+      "type": "file",
+      "name": "InventoryBalance.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs",
+      "summary": "File mã nguồn `InventoryBalance.cs` thuộc quản lý số dư tồn kho và giữ chỗ (reservation) sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs:InventoryBalance",
+      "type": "class",
+      "name": "InventoryBalance",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs",
+      "summary": "Lớp `InventoryBalance` thực hiện nghiệp vụ liên quan đến tồn kho số dư.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 10,
+      "endLine": 67
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "type": "file",
+      "name": "InventoryBalanceManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "summary": "File mã nguồn `InventoryBalanceManager.cs` thuộc quản lý số dư tồn kho và giữ chỗ (reservation) sản phẩm.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:InventoryBalanceManager",
+      "type": "class",
+      "name": "InventoryBalanceManager",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "summary": "Lớp `InventoryBalanceManager` thực hiện nghiệp vụ liên quan đến quản lý tồn kho số dư.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 15,
+      "endLine": 249
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:GetBalancesAsync",
+      "type": "function",
+      "name": "GetBalancesAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "summary": "Phương thức `GetBalancesAsync` lấy thông tin balances.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 33,
+      "endLine": 43
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:LockStockAsync",
+      "type": "function",
+      "name": "LockStockAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "summary": "Phương thức `LockStockAsync` thực hiện nghiệp vụ lock stock.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 45,
+      "endLine": 68
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:UnlockStockAsync",
+      "type": "function",
+      "name": "UnlockStockAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "summary": "Phương thức `UnlockStockAsync` thực hiện nghiệp vụ unlock stock.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 70,
+      "endLine": 107
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:AdjustLockAsync",
+      "type": "function",
+      "name": "AdjustLockAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "summary": "Phương thức `AdjustLockAsync` thực hiện nghiệp vụ adjust lock.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 109,
+      "endLine": 168
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:ExecuteStockMovementAsync",
+      "type": "function",
+      "name": "ExecuteStockMovementAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "summary": "Phương thức `ExecuteStockMovementAsync` thực hiện nghiệp vụ execute stock movement.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 170,
+      "endLine": 248
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "type": "file",
+      "name": "InventoryReservation.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "summary": "File mã nguồn `InventoryReservation.cs` thuộc quản lý số dư tồn kho và giữ chỗ (reservation) sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:InventoryReservation",
+      "type": "class",
+      "name": "InventoryReservation",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "summary": "Lớp `InventoryReservation` thực hiện nghiệp vụ liên quan đến tồn kho giữ chỗ.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 10,
+      "endLine": 75
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:InventoryReservation",
+      "type": "function",
+      "name": "InventoryReservation",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "summary": "Phương thức `InventoryReservation` thực hiện nghiệp vụ tồn kho reservation.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 33,
+      "endLine": 46
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:IncreaseQuantity",
+      "type": "function",
+      "name": "IncreaseQuantity",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "summary": "Phương thức `IncreaseQuantity` thực hiện nghiệp vụ increase quantity.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 47,
+      "endLine": 61
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "type": "file",
+      "name": "BatchManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "summary": "File mã nguồn `BatchManager.cs` thuộc quản lý số lô và hạn sử dụng sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:BatchManager",
+      "type": "class",
+      "name": "BatchManager",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "summary": "Lớp `BatchManager` thực hiện nghiệp vụ liên quan đến quản lý lô hàng.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 12,
+      "endLine": 74
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 31,
+      "endLine": 47
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:UpdateBatch",
+      "type": "function",
+      "name": "UpdateBatch",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "summary": "Phương thức `UpdateBatch` cập nhật lô hàng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 49,
+      "endLine": 62
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "type": "file",
+      "name": "ProductBatch.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "summary": "File mã nguồn `ProductBatch.cs` thuộc quản lý số lô và hạn sử dụng sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:ProductBatch",
+      "type": "class",
+      "name": "ProductBatch",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "summary": "Lớp `ProductBatch` thực hiện nghiệp vụ liên quan đến sản phẩm lô hàng.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 11,
+      "endLine": 73
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:ProductBatch",
+      "type": "function",
+      "name": "ProductBatch",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "summary": "Phương thức `ProductBatch` thực hiện nghiệp vụ sản phẩm lô hàng.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 31,
+      "endLine": 54
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:UpdateInfo",
+      "type": "function",
+      "name": "UpdateInfo",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "summary": "Phương thức `UpdateInfo` cập nhật info.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 56,
+      "endLine": 67
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/Events/InventoryTicketExecutedDomainEvent.cs",
+      "type": "file",
+      "name": "InventoryTicketExecutedDomainEvent.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/Events/InventoryTicketExecutedDomainEvent.cs",
+      "summary": "File mã nguồn `InventoryTicketExecutedDomainEvent.cs` thuộc quản lý phiếu kho (nhập, xuất, chuyển kho) và giao dịch kho.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "type": "file",
+      "name": "InventoryTicket.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "summary": "File mã nguồn `InventoryTicket.cs` thuộc quản lý phiếu kho (nhập, xuất, chuyển kho) và giao dịch kho.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:InventoryTicket",
+      "type": "class",
+      "name": "InventoryTicket",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "summary": "Lớp `InventoryTicket` thực hiện nghiệp vụ liên quan đến tồn kho phiếu.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 11,
+      "endLine": 83
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:InventoryTicket",
+      "type": "function",
+      "name": "InventoryTicket",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "summary": "Phương thức `InventoryTicket` thực hiện nghiệp vụ tồn kho phiếu.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 28,
+      "endLine": 38
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:Execute",
+      "type": "function",
+      "name": "Execute",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "summary": "Phương thức `Execute` thực hiện nghiệp vụ execute.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 50,
+      "endLine": 72
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "type": "file",
+      "name": "InventoryTicketDetail.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "summary": "File mã nguồn `InventoryTicketDetail.cs` thuộc quản lý phiếu kho (nhập, xuất, chuyển kho) và giao dịch kho.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs:InventoryTicketDetail",
+      "type": "class",
+      "name": "InventoryTicketDetail",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "summary": "Lớp `InventoryTicketDetail` thực hiện nghiệp vụ liên quan đến tồn kho phiếu chi tiết.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 11,
+      "endLine": 58
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs:InventoryTicketDetail",
+      "type": "function",
+      "name": "InventoryTicketDetail",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "summary": "Phương thức `InventoryTicketDetail` thực hiện nghiệp vụ tồn kho phiếu chi tiết.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 32,
+      "endLine": 54
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "type": "file",
+      "name": "InventoryTicketLine.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "summary": "File mã nguồn `InventoryTicketLine.cs` thuộc quản lý phiếu kho (nhập, xuất, chuyển kho) và giao dịch kho.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs:InventoryTicketLine",
+      "type": "class",
+      "name": "InventoryTicketLine",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "summary": "Lớp `InventoryTicketLine` thực hiện nghiệp vụ liên quan đến tồn kho phiếu dòng.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 51
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs:InventoryTicketLine",
+      "type": "function",
+      "name": "InventoryTicketLine",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "summary": "Phương thức `InventoryTicketLine` thực hiện nghiệp vụ tồn kho phiếu dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 29,
+      "endLine": 45
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs",
+      "type": "file",
+      "name": "ITicketManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs",
+      "summary": "File mã nguồn `ITicketManager.cs` thuộc quản lý phiếu kho (nhập, xuất, chuyển kho) và giao dịch kho.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer",
+        "inventory"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs:ITicketManager",
+      "type": "class",
+      "name": "ITicketManager",
+      "path": "src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs",
+      "summary": "Lớp `ITicketManager` thực hiện nghiệp vụ liên quan đến giao diện quản lý phiếu.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 9,
+      "endLine": 64
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs:InventoryBalance",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalance.cs:InventoryBalance",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:InventoryBalanceManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:InventoryBalanceManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:GetBalancesAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:GetBalancesAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:LockStockAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:LockStockAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:UnlockStockAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:UnlockStockAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:AdjustLockAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:AdjustLockAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:ExecuteStockMovementAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:ExecuteStockMovementAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:LockStockAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:GetBalancesAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:AdjustLockAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:IncreaseQuantity",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:ExecuteStockMovementAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryBalanceManager.cs:GetBalancesAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:InventoryReservation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:InventoryReservation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:InventoryReservation",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:InventoryReservation",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:IncreaseQuantity",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Balances/InventoryReservation.cs:IncreaseQuantity",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:BatchManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:BatchManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:UpdateBatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:UpdateBatch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:CreateAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Common/DocumentSequences/DocumentSequenceManager.cs:GenerateAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Inventory/Batches/BatchManager.cs:UpdateBatch",
+      "target": "function:src/SupplyCoreERP.Domain/Catalog/Products/Product.cs:UpdateInfo",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:ProductBatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:ProductBatch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:ProductBatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:ProductBatch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:UpdateInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Batches/ProductBatch.cs:UpdateInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:InventoryTicket",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:InventoryTicket",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:InventoryTicket",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:InventoryTicket",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:Execute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicket.cs:Execute",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs:InventoryTicketDetail",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs:InventoryTicketDetail",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs:InventoryTicketDetail",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketDetail.cs:InventoryTicketDetail",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs:InventoryTicketLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs:InventoryTicketLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs:InventoryTicketLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Inventory/Tickets/InventoryTicketLine.cs:InventoryTicketLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs:ITicketManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Inventory/Tickets/ITicketManager.cs:ITicketManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

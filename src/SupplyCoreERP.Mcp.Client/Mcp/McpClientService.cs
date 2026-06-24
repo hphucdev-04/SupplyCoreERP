@@ -1,18 +1,21 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using SupplyCoreERP.Mcp.Dtos;
+using SupplyCoreERP.Settings;
 using Volo.Abp.DependencyInjection;
+using Volo.Abp.Settings;
 
 namespace SupplyCoreERP.Mcp.Client.Mcp;
 
 public class McpClientService : IMcpClientService, ISingletonDependency, IDisposable
 {
     private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
+    private readonly HttpClient _sseHttpClient; // HttpClient riêng cho SSE — không bị timeout
+    private readonly ISettingProvider _settingProvider;
     private readonly ILogger<McpClientService> _logger;
+    private string _mcpBaseUrl = string.Empty;
 
     // Quản lý trạng thái kết nối Streamable HTTP
     private string? _sessionId;
@@ -23,18 +26,27 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
     private static List<McpToolDto>? _cachedTools;
     private static readonly SemaphoreSlim _cacheLock = new(1, 1);
     private CancellationTokenSource? _sseCts;
+    private static List<McpResourceDto>? _cachedResources;
+    private static readonly SemaphoreSlim _resourceCacheLock = new(1, 1);
+    private string? _serverInstructions;
 
     public McpClientService(
         HttpClient httpClient,
-        IConfiguration configuration,
+        ISettingProvider settingProvider,
         ILogger<McpClientService> logger)
     {
         _httpClient = httpClient;
-        _configuration = configuration;
+        _settingProvider = settingProvider;
         _logger = logger;
 
-        // Thiết lập timeout mặc định cho HttpClient là 30 giây theo đặc tả
+        // HttpClient cho JSON-RPC request ngắn (timeout 30 giây)
         _httpClient.Timeout = TimeSpan.FromSeconds(30);
+
+        // HttpClient riêng cho SSE — cần long-lived connection, không được timeout
+        _sseHttpClient = new HttpClient
+        {
+            Timeout = Timeout.InfiniteTimeSpan
+        };
     }
 
     public async Task<List<McpToolDto>> GetToolsAsync()
@@ -72,12 +84,15 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
             {
                 foreach (JsonNode? node in toolsArray)
                 {
-                    if (node == null) continue;
+                    if (node == null)
+                    {
+                        continue;
+                    }
 
                     string name = node["name"]?.ToString() ?? "";
                     string desc = node["description"]?.ToString() ?? "";
                     JsonObject inputSchema = node["inputSchema"]?.AsObject() ?? new JsonObject();
-                    
+
                     // Xác định cờ duyệt thông qua readOnlyHint trong annotations (chuẩn MCP)
                     bool readOnly = node["annotations"]?["readOnlyHint"]?.GetValue<bool>() ?? true;
                     bool requiresApproval = !readOnly;
@@ -120,6 +135,62 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
 
         string responseContent = await SendMcpRequestAsync(payload, requestId);
         _logger.LogInformation("CallToolAsync: Nhận phản hồi cho tool '{ToolName}'.", toolName);
+
+        try
+        {
+            JsonNode? resultNode = JsonNode.Parse(responseContent);
+            JsonNode? resultObj = resultNode?["result"];
+            JsonNode? errorObj = resultNode?["error"];
+
+            // 1. Nếu là yêu cầu Elicitation (Form Mode) từ Server
+            if (resultObj != null && resultObj["elicitation"] != null)
+            {
+                return responseContent;
+            }
+
+            // 2. Nếu có lỗi giao thức JSON-RPC
+            if (errorObj != null)
+            {
+                if (errorObj["code"]?.GetValue<int>() == -32042)
+                {
+                    return responseContent;
+                }
+
+                return $"[PROTOCOL ERROR] {errorObj["message"]?.ToString() ?? "Unknown protocol error"}";
+            }
+
+            // 3. Nếu là kết quả thực thi công cụ bình thường
+            if (resultObj != null)
+            {
+                bool isToolError = resultObj["isError"]?.GetValue<bool>() ?? false;
+                JsonArray? contentArray = resultObj["content"]?.AsArray();
+                string processedResult;
+
+                if (contentArray != null && contentArray.Count > 0)
+                {
+                    IEnumerable<string?> texts = contentArray
+                        .Select(c => c?["text"]?.ToString())
+                        .Where(t => !string.IsNullOrEmpty(t));
+                    processedResult = string.Join("\n", texts);
+                }
+                else
+                {
+                    processedResult = resultObj.ToString();
+                }
+
+                if (isToolError)
+                {
+                    return $"[TOOL ERROR] {processedResult}";
+                }
+
+                return processedResult;
+            }
+        }
+        catch
+        {
+            // Bỏ qua lỗi parsing, trả về kết quả thô
+        }
+
         return responseContent;
     }
 
@@ -139,8 +210,9 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                 return;
             }
 
-            string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-            string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+            _mcpBaseUrl = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.McpServerBaseUrl)
+                ?? throw new InvalidOperationException("Chưa cấu hình MCP Server Base URL trong cài đặt hệ thống.");
+            string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
             // BƯỚC 1: Gửi request POST initialize để bắt đầu handshake
             var initPayload = new
@@ -150,7 +222,7 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                 method = "initialize",
                 @params = new
                 {
-                    protocolVersion = "2025-06-18", // Phiên bản giao thức MCP mới nhất
+                    protocolVersion = "2025-06-18",
                     capabilities = new
                     {
                         elicitation = new
@@ -195,6 +267,16 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
             // Đọc kết quả initialize trả về trực tiếp trong response body
             string initResponseContent = await initResponse.Content.ReadAsStringAsync();
             _logger.LogDebug("EnsureConnectedAsync: Kết quả initialize: {Content}.", initResponseContent);
+
+            try
+            {
+                JsonNode? initNode = JsonNode.Parse(initResponseContent);
+                _serverInstructions = initNode?["result"]?["instructions"]?.ToString();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogWarning(ex, "EnsureConnectedAsync: Lỗi trích xuất instructions từ initialize response.");
+            }
 
             // BƯỚC 2: Gửi thông báo initialized (notification) để hoàn tất bắt tay theo đặc tả MCP
             var initializedNotification = new
@@ -247,8 +329,7 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
 
         try
         {
-            string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-            string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+            string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
             using HttpRequestMessage request = new(HttpMethod.Post, mcpUrl);
             request.Content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
@@ -327,8 +408,7 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
 
     private async Task<string> RetrySendAsync(object payload, string requestId)
     {
-        string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-        string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+        string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
         using HttpRequestMessage request = new(HttpMethod.Post, mcpUrl);
         request.Content = new StringContent(JsonSerializer.Serialize(payload), Encoding.UTF8, "application/json");
@@ -381,19 +461,31 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
             {
                 try
                 {
-                    string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-                    string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+                    // Đọc _sessionId động: nếu session đã bị reset ở nơi khác thì dừng loop này
+                    string? currentSessionId = _sessionId;
+                    if (string.IsNullOrEmpty(currentSessionId))
+                    {
+                        _logger.LogInformation("StartSseListenerAsync: Session đã bị reset, dừng SSE listener.");
+                        break;
+                    }
+
+                    string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
                     using HttpRequestMessage request = new(HttpMethod.Get, mcpUrl);
-                    request.Headers.Add("mcp-session-id", sessionId);
+                    request.Headers.Add("mcp-session-id", currentSessionId);
                     request.Headers.Add("Accept", "text/event-stream");
 
-                    using HttpResponseMessage response = await _httpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token);
+                    using HttpResponseMessage response = await _sseHttpClient.SendAsync(request, HttpCompletionOption.ResponseHeadersRead, token);
                     if (!response.IsSuccessStatusCode)
                     {
-                        _logger.LogWarning("StartSseListenerAsync: Kết nối GET SSE thất bại ({StatusCode}). Thử lại sau 5s...", response.StatusCode);
-                        await Task.Delay(5000, token);
-                        continue;
+                        _logger.LogWarning("StartSseListenerAsync: Kết nối GET SSE thất bại ({StatusCode}). Reset connection state và dừng.", response.StatusCode);
+
+                        // Session không còn tồn tại trên server (ví dụ server vừa restart)
+                        // → Reset để EnsureConnectedAsync sẽ tạo session mới ở request tiếp theo
+                        _isConnected = false;
+                        _sessionId = null;
+                        _cachedTools = null;
+                        break;
                     }
 
                     using Stream stream = await response.Content.ReadAsStreamAsync(token);
@@ -402,8 +494,15 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                     while (!token.IsCancellationRequested)
                     {
                         string? line = await reader.ReadLineAsync(token);
-                        if (line == null) break;
-                        if (string.IsNullOrEmpty(line)) continue;
+                        if (line == null)
+                        {
+                            break;
+                        }
+
+                        if (string.IsNullOrEmpty(line))
+                        {
+                            continue;
+                        }
 
                         // Nếu nhận được sự kiện thay đổi danh sách tool
                         if (line.StartsWith("data:") && line.Contains("notifications/tools/list_changed"))
@@ -414,8 +513,8 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                         // Nếu nhận được sự kiện thay đổi danh sách resources
                         else if (line.StartsWith("data:") && line.Contains("notifications/resources/list_changed"))
                         {
-                            _logger.LogInformation("StartSseListenerAsync: Nhận sự kiện thay đổi resources từ Server!");
-                            // Nơi thực hiện reset cache resources khi client hỗ trợ caching resources
+                            _logger.LogInformation("StartSseListenerAsync: Nhận sự kiện thay đổi resources từ Server! Xóa cache resources...");
+                            _cachedResources = null;
                         }
                     }
                 }
@@ -433,12 +532,88 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
         }, token);
     }
 
+    public async Task<List<McpResourceDto>> GetResourcesAsync()
+    {
+        _logger.LogDebug("GetResourcesAsync: Bắt đầu lấy danh sách resources.");
+        if (_cachedResources != null)
+        {
+            _logger.LogDebug("GetResourcesAsync: Trả về resources từ Cache.");
+            return _cachedResources;
+        }
+
+        await _resourceCacheLock.WaitAsync();
+        try
+        {
+            if (_cachedResources != null)
+            {
+                return _cachedResources;
+            }
+
+            string requestId = Guid.NewGuid().ToString();
+            var payload = new
+            {
+                jsonrpc = "2.0",
+                id = requestId,
+                method = "resources/list"
+            };
+
+            string responseContent = await SendMcpRequestAsync(payload, requestId);
+
+            JsonNode? jsonNode = JsonNode.Parse(responseContent);
+            JsonArray? resourcesArray = jsonNode?["result"]?["resources"]?.AsArray();
+
+            List<McpResourceDto> mcpResources = new();
+            if (resourcesArray != null)
+            {
+                foreach (JsonNode? node in resourcesArray)
+                {
+                    if (node == null)
+                    {
+                        continue;
+                    }
+
+                    string uri = node["uri"]?.ToString() ?? "";
+                    string name = node["name"]?.ToString() ?? "";
+                    string desc = node["description"]?.ToString() ?? "";
+                    string mimeType = node["mimeType"]?.ToString() ?? "";
+
+                    mcpResources.Add(new McpResourceDto
+                    {
+                        Uri = uri,
+                        Name = name,
+                        Description = desc,
+                        MimeType = mimeType
+                    });
+                }
+            }
+
+            _cachedResources = mcpResources;
+            _logger.LogInformation("GetResourcesAsync: Lấy thành công {Count} resources và cập nhật Cache.", mcpResources.Count);
+            return mcpResources;
+        }
+        catch (Exception ex)
+        {
+            _logger.LogError(ex, "GetResourcesAsync: Lỗi khi lấy danh sách resources: {Message}", ex.Message);
+            return new List<McpResourceDto>();
+        }
+        finally
+        {
+            _resourceCacheLock.Release();
+        }
+    }
+
+    public Task<string> GetServerInstructionsAsync()
+    {
+        return Task.FromResult(_serverInstructions ?? string.Empty);
+    }
+
     public void Dispose()
     {
         _logger.LogInformation("McpClientService: Bắt đầu Dispose dọn dẹp tài nguyên.");
 
         _sseCts?.Cancel();
         _sseCts?.Dispose();
+        _sseHttpClient.Dispose();
         _connectionLock?.Dispose();
         _cacheLock?.Dispose();
 
@@ -446,8 +621,7 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
         {
             try
             {
-                string mcpBaseUrl = _configuration["McpServer:BaseUrl"] ?? "http://localhost:3000";
-                string mcpUrl = $"{mcpBaseUrl.TrimEnd('/')}/mcp";
+                string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
                 using HttpRequestMessage request = new(HttpMethod.Delete, mcpUrl);
                 request.Headers.Add("mcp-session-id", _sessionId);

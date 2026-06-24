@@ -22,5 +22,11 @@ public class InventoryReservationDto : CreationAuditedEntityDto<Guid>
 
     public decimal ReservedQuantity { get; set; }
     public ReservationStatus Status { get; set; }
+
+    public Guid? PartnerId { get; set; }
+    public string? PartnerName { get; set; }
+
+    public Guid? SourceDocumentId { get; set; }
+    public string? SourceDocumentNumber { get; set; }
 }
 

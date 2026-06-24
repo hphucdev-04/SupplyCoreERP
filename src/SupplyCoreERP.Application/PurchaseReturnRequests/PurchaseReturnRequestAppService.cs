@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Enums.Orders;
+using SupplyCoreERP.Partner.Suppliers;
 using SupplyCoreERP.Permissions;
 using SupplyCoreERP.Procurement.PurchaseOrders;
 using SupplyCoreERP.Procurement.PurchaseReturnRequests;
@@ -24,17 +25,20 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
     private readonly PurchaseReturnRequestManager _requestManager;
     private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo;
     private readonly IRepository<PurchaseReturn, Guid> _purchaseReturnRepo;
+    private readonly IRepository<Supplier, Guid> _supplierRepo;
 
     public PurchaseReturnRequestAppService(
         IRepository<PurchaseReturnRequest, Guid> requestRepo,
         PurchaseReturnRequestManager requestManager,
         IRepository<PurchaseOrder, Guid> purchaseOrderRepo,
-        IRepository<PurchaseReturn, Guid> purchaseReturnRepo)
+        IRepository<PurchaseReturn, Guid> purchaseReturnRepo,
+        IRepository<Supplier, Guid> supplierRepo)
     {
         _requestRepo = requestRepo;
         _requestManager = requestManager;
         _purchaseOrderRepo = purchaseOrderRepo;
         _purchaseReturnRepo = purchaseReturnRepo;
+        _supplierRepo = supplierRepo;
     }
 
     public async Task<PagedResultDto<PurchaseReturnRequestDto>> GetListAsync(GetPurchaseReturnRequestListDto input)
@@ -42,12 +46,10 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
         IQueryable<PurchaseReturnRequest> query = await _requestRepo.GetQueryableAsync();
 
         query = query
-            .Include(x => x.Supplier)
             .Include(x => x.Warehouse);
 
         query = query
-            .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Code.Contains(input.Filter) || x.Supplier.Name.Contains(input.Filter))
-            .WhereIf(input.SupplierId.HasValue, x => x.SupplierId == input.SupplierId)
+            .WhereIf(!string.IsNullOrWhiteSpace(input.Filter), x => x.Code.Contains(input.Filter))
             .WhereIf(input.WarehouseId.HasValue, x => x.WarehouseId == input.WarehouseId)
             .WhereIf(input.Status.HasValue, x => x.Status == input.Status);
 
@@ -69,7 +71,6 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
         IQueryable<PurchaseReturnRequest> query = await _requestRepo.GetQueryableAsync();
 
         PurchaseReturnRequest? entity = await query
-            .Include(x => x.Supplier)
             .Include(x => x.Warehouse)
             .Include(x => x.Lines).ThenInclude(l => l.Product)
             .Include(x => x.Lines).ThenInclude(l => l.Unit)
@@ -82,18 +83,29 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
 
         PurchaseReturnRequestDto dto = ObjectMapper.Map<PurchaseReturnRequest, PurchaseReturnRequestDto>(entity);
 
-        // Map PurchaseOrderCode cho các Lines
+        // Map PurchaseOrderCode và Supplier cho các Lines
         if (dto.Lines.Any())
         {
             List<Guid> poIds = dto.Lines.Select(l => l.PurchaseOrderId).Distinct().ToList();
             List<PurchaseOrder> pos = await _purchaseOrderRepo.GetListAsync(x => poIds.Contains(x.Id));
-            Dictionary<Guid, string> poDict = pos.ToDictionary(x => x.Id, x => x.Code);
+            
+            List<Guid> supplierIds = pos.Select(p => p.SupplierId).Distinct().ToList();
+            List<Supplier> suppliers = await _supplierRepo.GetListAsync(s => supplierIds.Contains(s.Id));
+            
+            Dictionary<Guid, PurchaseOrder> poDict = pos.ToDictionary(x => x.Id);
+            Dictionary<Guid, Supplier> supplierDict = suppliers.ToDictionary(x => x.Id);
 
             foreach (PurchaseReturnRequestLineDto line in dto.Lines)
             {
-                if (poDict.TryGetValue(line.PurchaseOrderId, out string? poCode))
+                if (poDict.TryGetValue(line.PurchaseOrderId, out PurchaseOrder? po))
                 {
-                    line.PurchaseOrderCode = poCode;
+                    line.PurchaseOrderCode = po.Code;
+                    line.SupplierId = po.SupplierId;
+                    if (supplierDict.TryGetValue(po.SupplierId, out Supplier? supplier))
+                    {
+                        line.SupplierName = supplier.Name;
+                        line.SupplierCode = supplier.Code;
+                    }
                 }
             }
         }
@@ -116,9 +128,7 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
     public async Task<PurchaseReturnRequestDto> CreateAsync(CreatePurchaseReturnRequestDto input)
     {
         PurchaseReturnRequest entity = await _requestManager.CreateAsync(
-            input.SupplierId,
             input.WarehouseId,
-            input.ReturnType,
             input.RequestDate,
             input.Note
         );
@@ -141,7 +151,6 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
 
         entity.UpdateInfo(
             input.WarehouseId,
-            input.ReturnType,
             input.RequestDate,
             input.Note
         );
@@ -185,7 +194,8 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
             input.Quantity,
             input.OriginalUnitPrice,
             input.DepreciationRate,
-            input.TaxRate
+            input.TaxRate,
+            input.ReturnType
         );
 
         await _requestRepo.UpdateAsync(entity);
@@ -206,7 +216,8 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
             entity,
             lineId,
             input.Quantity,
-            input.DepreciationRate
+            input.DepreciationRate,
+            input.ReturnType
         );
 
         await _requestRepo.UpdateAsync(entity);

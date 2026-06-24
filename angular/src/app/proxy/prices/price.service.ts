@@ -11,7 +11,7 @@ export class PriceService {
   
 
   create = (input: CreateUpdateProductPriceDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
+    this.restService.request<any, ProductPriceDto>({
       method: 'POST',
       url: '/api/app/price',
       body: input,
@@ -44,7 +44,7 @@ export class PriceService {
   
 
   update = (id: string, input: CreateUpdateProductPriceDto, config?: Partial<Rest.Config>) =>
-    this.restService.request<any, void>({
+    this.restService.request<any, ProductPriceDto>({
       method: 'PUT',
       url: `/api/app/price/${id}`,
       body: input,

@@ -5,6 +5,7 @@ using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventory.Tickets.Events;
+using SupplyCoreERP.Partner.Suppliers;
 using Volo.Abp.DependencyInjection;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
@@ -18,15 +19,21 @@ public class PurchaseOrderTicketExecutedEventHandler
     private readonly IRepository<PurchaseOrder, Guid> _purchaseOrderRepo;
     private readonly IRepository<Product, Guid> _productRepo;
     private readonly UnitConversionManager _unitConversionManager;
+    private readonly IPurchaseOrderManager _purchaseOrderManager;
+    private readonly IRepository<Supplier, Guid> _supplierRepo;
 
     public PurchaseOrderTicketExecutedEventHandler(
         IRepository<PurchaseOrder, Guid> purchaseOrderRepo,
         IRepository<Product, Guid> productRepo,
-        UnitConversionManager unitConversionManager)
+        UnitConversionManager unitConversionManager,
+        IPurchaseOrderManager purchaseOrderManager,
+        IRepository<Supplier, Guid> supplierRepo)
     {
         _purchaseOrderRepo = purchaseOrderRepo;
         _productRepo = productRepo;
         _unitConversionManager = unitConversionManager;
+        _purchaseOrderManager = purchaseOrderManager;
+        _supplierRepo = supplierRepo;
     }
 
     public async Task HandleEventAsync(InventoryTicketExecutedDomainEvent eventData)
@@ -67,7 +74,30 @@ public class PurchaseOrderTicketExecutedEventHandler
             }
         }
 
-        if (po.Lines.Any(x => x.ReceivedQuantity > 0))
+        bool allReceived = true;
+        foreach (PurchaseOrderLine x in po.Lines)
+        {
+            IQueryable<Product> productQuery = await _productRepo.WithDetailsAsync(p => p.Units);
+            Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == x.ProductId);
+            if (product == null)
+            {
+                throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(Product), x.ProductId);
+            }
+
+            decimal receivedBaseQty = _unitConversionManager.ConvertToBaseQuantity(product, x.UnitId, x.ReceivedQuantity);
+            if (receivedBaseQty < x.BaseQuantity - 0.0001m)
+            {
+                allReceived = false;
+                break;
+            }
+        }
+
+        if (allReceived)
+        {
+            Supplier supplier = await _purchaseOrderManager.CompleteAsync(po);
+            await _supplierRepo.UpdateAsync(supplier);
+        }
+        else if (po.Lines.Any(x => x.ReceivedQuantity > 0))
         {
             if (po.Status != PurchaseOrderStatus.Receiving && po.Status != PurchaseOrderStatus.Completed)
             {

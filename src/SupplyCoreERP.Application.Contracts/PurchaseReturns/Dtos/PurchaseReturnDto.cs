@@ -22,6 +22,7 @@ public class PurchaseReturnDto : FullAuditedEntityDto<Guid>
     public string? WarehouseCode { get; set; }
 
     public DateTime ReturnDate { get; set; }
+    public PurchaseReturnType ReturnType { get; set; }
     public PurchaseReturnStatus Status { get; set; }
 
     public decimal SubTotal { get; set; }

@@ -1,0 +1,1136 @@
+{
+  "nodes": [
+    {
+      "id": "config:src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.csproj",
+      "type": "config",
+      "metadata": {
+        "name": "SupplyCoreERP.Application.Contracts.csproj",
+        "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERP.Application.Contracts.csproj",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp"
+        ],
+        "complexity": "simple",
+        "language": "csproj"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPApplicationContractsModule.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "supplycoreerpapplicationcontractsmodule.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs:SupplyCoreERPApplicationContractsModule",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPApplicationContractsModule",
+        "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+        "summary": "Lớp SupplyCoreERPApplicationContractsModule thuộc thành phần SupplyCoreERPApplicationContractsModule.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "supplycoreerpapplicationcontractsmodule.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs:PreConfigureServices",
+      "type": "function",
+      "metadata": {
+        "name": "PreConfigureServices",
+        "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+        "summary": "Phương thức PreConfigureServices thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPApplicationContractsModule.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "supplycoreerpapplicationcontractsmodule.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+      "type": "file",
+      "metadata": {
+        "name": "SupplyCoreERPDtoExtensions.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "supplycoreerpdtoextensions.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs:SupplyCoreERPDtoExtensions",
+      "type": "class",
+      "metadata": {
+        "name": "SupplyCoreERPDtoExtensions",
+        "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+        "summary": "Lớp SupplyCoreERPDtoExtensions thuộc thành phần SupplyCoreERPDtoExtensions.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "supplycoreerpdtoextensions.cs"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs:Configure",
+      "type": "function",
+      "metadata": {
+        "name": "Configure",
+        "path": "src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+        "summary": "Phương thức Configure thực hiện xử lý nghiệp vụ liên quan đến SupplyCoreERPDtoExtensions.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "supplycoreerpdtoextensions.cs"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "AddTicketDetailDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs",
+        "summary": "DTO chứa thông tin chi tiết đầy đủ của tickets.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs:AddTicketDetailDto",
+      "type": "class",
+      "metadata": {
+        "name": "AddTicketDetailDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs",
+        "summary": "Lớp DTO AddTicketDetailDto hỗ trợ truyền tải dữ liệu DTO chứa thông tin chi tiết đầy đủ của tickets..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateInventoryTicketDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của tickets.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs:CreateInventoryTicketDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateInventoryTicketDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs",
+        "summary": "Lớp DTO CreateInventoryTicketDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của tickets..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetInventoryTicketListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách tickets.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs:GetInventoryTicketListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetInventoryTicketListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs",
+        "summary": "Lớp DTO GetInventoryTicketListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách tickets..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "InventoryTicketDetailDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs",
+        "summary": "DTO chứa thông tin chi tiết đầy đủ của tickets.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs:InventoryTicketDetailDto",
+      "type": "class",
+      "metadata": {
+        "name": "InventoryTicketDetailDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs",
+        "summary": "Lớp DTO InventoryTicketDetailDto hỗ trợ truyền tải dữ liệu DTO chứa thông tin chi tiết đầy đủ của tickets..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "InventoryTicketDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của tickets.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs:InventoryTicketDto",
+      "type": "class",
+      "metadata": {
+        "name": "InventoryTicketDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs",
+        "summary": "Lớp DTO InventoryTicketDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của tickets..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "InventoryTicketLineDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của tickets.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs:InventoryTicketLineDto",
+      "type": "class",
+      "metadata": {
+        "name": "InventoryTicketLineDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs",
+        "summary": "Lớp DTO InventoryTicketLineDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của tickets..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "UpdateInventoryTicketDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của tickets.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs:UpdateInventoryTicketDto",
+      "type": "class",
+      "metadata": {
+        "name": "UpdateInventoryTicketDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs",
+        "summary": "Lớp DTO UpdateInventoryTicketDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của tickets..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "IInventoryTicketAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý tickets.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs:IInventoryTicketAppService",
+      "type": "class",
+      "metadata": {
+        "name": "IInventoryTicketAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs",
+        "summary": "Interface IInventoryTicketAppService định nghĩa các hợp đồng nghiệp vụ cho tickets..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetInventoryTransactionListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách transactions.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs:GetInventoryTransactionListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetInventoryTransactionListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs",
+        "summary": "Lớp DTO GetInventoryTransactionListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách transactions..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "InventoryTransactionDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của transactions.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs:InventoryTransactionDto",
+      "type": "class",
+      "metadata": {
+        "name": "InventoryTransactionDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs",
+        "summary": "Lớp DTO InventoryTransactionDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của transactions..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "IInventoryTransactionAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý transactions.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs:IInventoryTransactionAppService",
+      "type": "class",
+      "metadata": {
+        "name": "IInventoryTransactionAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs",
+        "summary": "Interface IInventoryTransactionAppService định nghĩa các hợp đồng nghiệp vụ cho transactions..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "BinDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của nhà kho/kho bãi.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs:BinDto",
+      "type": "class",
+      "metadata": {
+        "name": "BinDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs",
+        "summary": "Lớp DTO BinDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của nhà kho/kho bãi..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateBinDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin nhà kho/kho bãi trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs:CreateUpdateBinDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateBinDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs",
+        "summary": "Lớp DTO CreateUpdateBinDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin nhà kho/kho bãi trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateWarehouseDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin nhà kho/kho bãi trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs:CreateUpdateWarehouseDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateWarehouseDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs",
+        "summary": "Lớp DTO CreateUpdateWarehouseDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin nhà kho/kho bãi trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateZoneDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin nhà kho/kho bãi trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs:CreateUpdateZoneDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateZoneDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs",
+        "summary": "Lớp DTO CreateUpdateZoneDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin nhà kho/kho bãi trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetWarehouseListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách nhà kho/kho bãi.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs:GetWarehouseListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetWarehouseListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs",
+        "summary": "Lớp DTO GetWarehouseListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách nhà kho/kho bãi..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "WarehouseDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của nhà kho/kho bãi.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs:WarehouseDto",
+      "type": "class",
+      "metadata": {
+        "name": "WarehouseDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs",
+        "summary": "Lớp DTO WarehouseDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của nhà kho/kho bãi..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ZoneDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của nhà kho/kho bãi.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs:ZoneDto",
+      "type": "class",
+      "metadata": {
+        "name": "ZoneDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs",
+        "summary": "Lớp DTO ZoneDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của nhà kho/kho bãi..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "IWarehouseAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý nhà kho/kho bãi.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs:IWarehouseAppService",
+      "type": "class",
+      "metadata": {
+        "name": "IWarehouseAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs",
+        "summary": "Interface IWarehouseAppService định nghĩa các hợp đồng nghiệp vụ cho nhà kho/kho bãi..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs:SupplyCoreERPApplicationContractsModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs:SupplyCoreERPApplicationContractsModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+      "target": "function:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs:PreConfigureServices",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs",
+      "target": "function:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPApplicationContractsModule.cs:PreConfigureServices",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs:SupplyCoreERPDtoExtensions",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs:SupplyCoreERPDtoExtensions",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+      "target": "function:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs:Configure",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs",
+      "target": "function:src/SupplyCoreERP.Application.Contracts/SupplyCoreERPDtoExtensions.cs:Configure",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs:AddTicketDetailDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/AddTicketDetailDto.cs:AddTicketDetailDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs:CreateInventoryTicketDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/CreateInventoryTicketDto.cs:CreateInventoryTicketDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs:GetInventoryTicketListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/GetInventoryTicketListDto.cs:GetInventoryTicketListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs:InventoryTicketDetailDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDetailDto.cs:InventoryTicketDetailDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs:InventoryTicketDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketDto.cs:InventoryTicketDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs:InventoryTicketLineDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/InventoryTicketLineDto.cs:InventoryTicketLineDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs:UpdateInventoryTicketDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/Dtos/UpdateInventoryTicketDto.cs:UpdateInventoryTicketDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs:IInventoryTicketAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Tickets/IInventoryTicketAppService.cs:IInventoryTicketAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs:GetInventoryTransactionListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/GetInventoryTransactionListDto.cs:GetInventoryTransactionListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs:InventoryTransactionDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Transactions/Dtos/InventoryTransactionDto.cs:InventoryTransactionDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs:IInventoryTransactionAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Transactions/IInventoryTransactionAppService.cs:IInventoryTransactionAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs:BinDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/BinDto.cs:BinDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs:CreateUpdateBinDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateBinDto.cs:CreateUpdateBinDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs:CreateUpdateWarehouseDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateWarehouseDto.cs:CreateUpdateWarehouseDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs:CreateUpdateZoneDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/CreateUpdateZoneDto.cs:CreateUpdateZoneDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs:GetWarehouseListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/GetWarehouseListDto.cs:GetWarehouseListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs:WarehouseDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/WarehouseDto.cs:WarehouseDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs:ZoneDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/Dtos/ZoneDto.cs:ZoneDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs:IWarehouseAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Warehouses/IWarehouseAppService.cs:IWarehouseAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

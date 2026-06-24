@@ -353,6 +353,10 @@ $sh-lg: 0 8px 32px rgba(0, 0, 0, .18);
   &.zone-office i {
     color: #A29BFE;
   }
+
+  &.zone-qa i {
+    color: #9B59B6;
+  }
 }
 
 .shapes-tip {
@@ -635,7 +639,7 @@ $sh-lg: 0 8px 32px rgba(0, 0, 0, .18);
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
+  overflow: visible;
   box-shadow: 0 1px 4px rgba(0, 0, 0, .10);
   transition: border-color .12s, box-shadow .12s;
   --zc: #2563EB;
@@ -1123,6 +1127,14 @@ $sh-lg: 0 8px 32px rgba(0, 0, 0, .18);
     border-radius: 3px;
   }
 
+  .br-vol {
+    font-size: 9px;
+    color: #8B5CF6;
+    background: rgba(#8B5CF6, .08);
+    padding: 1px 4px;
+    border-radius: 3px;
+  }
+
   .br-blocked {
     font-size: 9px;
     font-weight: 700;
@@ -1246,5 +1258,127 @@ $sh-lg: 0 8px 32px rgba(0, 0, 0, .18);
     background: $accent-light;
     border-color: $accent;
     color: $accent;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// NEW DRAWER TABS & INVENTORY TRANSFER STYLES
+// ═══════════════════════════════════════════════════════════════════
+
+.drawer-body-wrapper {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.drawer-tabs {
+  display: flex;
+  border-bottom: 2px solid #2d3748;
+  padding-bottom: 2px;
+  gap: 8px;
+
+  .tab-btn {
+    background: transparent;
+    border: none;
+    border-bottom: 2px solid transparent;
+    color: #000000;
+    padding: 8px 16px;
+    font-weight: 600;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    margin-bottom: -4px;
+    outline: none;
+
+    &:hover {
+      color: #b3e8d5;
+      border-bottom-color: #b3e8d5;
+    }
+
+    &.active {
+      color: #00B37E;
+      border-bottom-color: #00B37E;
+      font-weight: 700;
+    }
+  }
+}
+
+.bin-inventory-tab {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding-top: 8px;
+  color: #e2e8f0;
+
+  .bg-dark-card {
+    background: #1a202c;
+    border-color: #2d3748 !important;
+  }
+
+  .table-dark-header {
+    background: #1a202c;
+    color: #a0aec0;
+    
+    th {
+      border-bottom: 2px solid #2d3748;
+      font-weight: 600;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      padding: 8px 10px;
+    }
+  }
+
+  table {
+    td {
+      padding: 10px;
+      border-bottom: 1px solid #2d3748;
+      font-size: 12px;
+    }
+  }
+
+  .table-active-row {
+    background-color: rgba(#3182ce, 0.15) !important;
+    
+    td {
+      border-bottom-color: #3182ce !important;
+    }
+  }
+
+  .btn-xs {
+    padding: 2px 6px;
+    font-size: 10px;
+    border-radius: 4px;
+    
+    &.icon-only {
+      padding: 3px 6px;
+    }
+  }
+
+  .transfer-form-card {
+    background: #1a202c;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    border-color: #3182ce !important;
+    transition: all 0.3s ease;
+    animation: slide-up 0.25s ease-out;
+
+    .border-primary-light {
+      border-color: rgba(#3182ce, 0.3) !important;
+    }
+
+    .form-text {
+      font-size: 10px;
+    }
+  }
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

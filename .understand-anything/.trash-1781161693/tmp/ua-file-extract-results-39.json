@@ -1,0 +1,1983 @@
+{
+  "scriptCompleted": true,
+  "filesAnalyzed": 25,
+  "filesSkipped": [],
+  "results": [
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/AddMedicineRegistrationDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 12,
+      "classes": [
+        {
+          "name": "AddMedicineRegistrationDto",
+          "startLine": 6,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "RegistrationNumber",
+            "ValidFrom",
+            "ValidTo",
+            "Note"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RegistrationNumber",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "ValidFrom",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ValidTo",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "Note",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "AddMedicineRegistrationDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 33,
+      "nonEmptyLines": 26,
+      "classes": [
+        {
+          "name": "CreateUpdateMedicineDto",
+          "startLine": 7,
+          "endLine": 32,
+          "methods": [],
+          "properties": [
+            "Name",
+            "CategoryId",
+            "ManufacturerId",
+            "BaseUnitId",
+            "DosageFormId",
+            "RegistrationNumber",
+            "RegistrationValidFrom",
+            "RegistrationValidTo",
+            "RegistrationNote",
+            "UsageRoute",
+            "StorageCondition",
+            "IsPrescriptionDrug",
+            "IsActive"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Name",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "CategoryId",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "ManufacturerId",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnitId",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "DosageFormId",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationNumber",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationValidFrom",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationValidTo",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationNote",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "UsageRoute",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "StorageCondition",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "IsPrescriptionDrug",
+          "line": 30,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUpdateMedicineDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 14,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineIngredientDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 8,
+      "classes": [
+        {
+          "name": "CreateUpdateMedicineIngredientDto",
+          "startLine": 6,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "ActiveIngredientId"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ActiveIngredientId",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUpdateMedicineIngredientDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/CreateUpdateMedicineUnitDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 20,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "CreateUpdateMedicineUnitDto",
+          "startLine": 8,
+          "endLine": 19,
+          "methods": [],
+          "properties": [
+            "UnitId",
+            "ConversionFactor",
+            "Level"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UnitId",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ConversionFactor",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Level",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUpdateMedicineUnitDto",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/GetMedicineListDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 12,
+      "classes": [
+        {
+          "name": "GetMedicineListDto",
+          "startLine": 7,
+          "endLine": 14,
+          "methods": [],
+          "properties": [
+            "Filter",
+            "CategoryId",
+            "ManufacturerId",
+            "Status",
+            "IsActive"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Filter",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "CategoryId",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ManufacturerId",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "GetMedicineListDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDetailDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 17,
+      "classes": [
+        {
+          "name": "MedicineDetailDto",
+          "startLine": 7,
+          "endLine": 21,
+          "methods": [],
+          "properties": [
+            "CategoryId",
+            "ManufacturerId",
+            "BaseUnitId",
+            "DosageFormId",
+            "OriginCountryId",
+            "UsageRoute",
+            "IsPrescriptionDrug",
+            "Ingredients",
+            "Units",
+            "Registrations"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "CategoryId",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ManufacturerId",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnitId",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "DosageFormId",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "OriginCountryId",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "UsageRoute",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "IsPrescriptionDrug",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Ingredients",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "Units",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "Registrations",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineDetailDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 11,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 32,
+      "nonEmptyLines": 26,
+      "classes": [
+        {
+          "name": "MedicineDto",
+          "startLine": 7,
+          "endLine": 31,
+          "methods": [],
+          "properties": [
+            "Code",
+            "Name",
+            "BaseUnitId",
+            "CategoryName",
+            "ManufacturerName",
+            "BaseUnitName",
+            "DosageFormName",
+            "OriginCountryName",
+            "OriginCountryISO",
+            "RegistrationNumber",
+            "RegistrationValidFrom",
+            "RegistrationValidTo",
+            "RegistrationNote",
+            "StorageCondition",
+            "Status",
+            "IsActive",
+            "HasTransactions",
+            "CreationTime",
+            "LastModificationTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnitId",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "CategoryName",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "ManufacturerName",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnitName",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "DosageFormName",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "OriginCountryName",
+          "line": 17,
+          "isDefault": false
+        },
+        {
+          "name": "OriginCountryISO",
+          "line": 18,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationNumber",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationValidFrom",
+          "line": 21,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationValidTo",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationNote",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "StorageCondition",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 26,
+          "isDefault": false
+        },
+        {
+          "name": "HasTransactions",
+          "line": 27,
+          "isDefault": false
+        },
+        {
+          "name": "CreationTime",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "LastModificationTime",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 20,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineExportDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 75,
+      "nonEmptyLines": 57,
+      "classes": [
+        {
+          "name": "MedicineExportDto",
+          "startLine": 6,
+          "endLine": 74,
+          "methods": [],
+          "properties": [
+            "Code",
+            "Name",
+            "Category",
+            "Manufacturer",
+            "OriginCountry",
+            "BaseUnit",
+            "DosageForm",
+            "RegistrationNumber",
+            "UsageRoute",
+            "StorageCondition",
+            "IsPrescriptionDrug",
+            "Ingredients",
+            "Units",
+            "Status",
+            "IsActive",
+            "CreationTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Code",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "Category",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Manufacturer",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "OriginCountry",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnit",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "DosageForm",
+          "line": 32,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationNumber",
+          "line": 36,
+          "isDefault": false
+        },
+        {
+          "name": "UsageRoute",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "StorageCondition",
+          "line": 44,
+          "isDefault": false
+        },
+        {
+          "name": "IsPrescriptionDrug",
+          "line": 48,
+          "isDefault": false
+        },
+        {
+          "name": "Ingredients",
+          "line": 53,
+          "isDefault": false
+        },
+        {
+          "name": "Units",
+          "line": 57,
+          "isDefault": false
+        },
+        {
+          "name": "Status",
+          "line": 62,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 66,
+          "isDefault": false
+        },
+        {
+          "name": "CreationTime",
+          "line": 70,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineExportDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 17,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineImportDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 44,
+      "nonEmptyLines": 29,
+      "classes": [
+        {
+          "name": "MedicineImportDto",
+          "startLine": 5,
+          "endLine": 43,
+          "methods": [],
+          "properties": [
+            "TempCode",
+            "Name",
+            "Category",
+            "Manufacturer",
+            "BaseUnit",
+            "DosageForm",
+            "RegistrationNumber",
+            "UsageRoute",
+            "StorageCondition",
+            "IsPrescriptionDrug",
+            "Ingredients",
+            "Units"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TempCode",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "Name",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "Category",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Manufacturer",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "BaseUnit",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "DosageForm",
+          "line": 22,
+          "isDefault": false
+        },
+        {
+          "name": "RegistrationNumber",
+          "line": 25,
+          "isDefault": false
+        },
+        {
+          "name": "UsageRoute",
+          "line": 28,
+          "isDefault": false
+        },
+        {
+          "name": "StorageCondition",
+          "line": 31,
+          "isDefault": false
+        },
+        {
+          "name": "IsPrescriptionDrug",
+          "line": 34,
+          "isDefault": false
+        },
+        {
+          "name": "Ingredients",
+          "line": 37,
+          "isDefault": false
+        },
+        {
+          "name": "Units",
+          "line": 40,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineImportDto",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 13,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineIngredientDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 13,
+      "nonEmptyLines": 10,
+      "classes": [
+        {
+          "name": "MedicineIngredientDto",
+          "startLine": 7,
+          "endLine": 12,
+          "methods": [],
+          "properties": [
+            "ActiveIngredientId",
+            "ActiveIngredientName",
+            "ActiveIngredientCode"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "ActiveIngredientId",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ActiveIngredientName",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ActiveIngredientCode",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineIngredientDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 4,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceExportDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 37,
+      "nonEmptyLines": 28,
+      "classes": [
+        {
+          "name": "MedicinePriceExportDto",
+          "startLine": 6,
+          "endLine": 36,
+          "methods": [],
+          "properties": [
+            "MedicineCode",
+            "MedicineName",
+            "PriceListName",
+            "UnitName",
+            "Price",
+            "MinQuantity",
+            "Currency"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MedicineCode",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineName",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "PriceListName",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "UnitName",
+          "line": 20,
+          "isDefault": false
+        },
+        {
+          "name": "Price",
+          "line": 24,
+          "isDefault": false
+        },
+        {
+          "name": "MinQuantity",
+          "line": 29,
+          "isDefault": false
+        },
+        {
+          "name": "Currency",
+          "line": 33,
+          "isDefault": false
+        },
+        {
+          "name": "MedicinePriceExportDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicinePriceImportDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 22,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "MedicinePriceImportDto",
+          "startLine": 5,
+          "endLine": 21,
+          "methods": [],
+          "properties": [
+            "MedicineCode",
+            "PriceListName",
+            "UnitName",
+            "Price",
+            "MinQuantity"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "MedicineCode",
+          "line": 7,
+          "isDefault": false
+        },
+        {
+          "name": "PriceListName",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "UnitName",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "Price",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "MinQuantity",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "MedicinePriceImportDto",
+          "line": 5,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineRegistrationDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 15,
+      "nonEmptyLines": 12,
+      "classes": [
+        {
+          "name": "MedicineRegistrationDto",
+          "startLine": 6,
+          "endLine": 14,
+          "methods": [],
+          "properties": [
+            "RegistrationNumber",
+            "ValidFrom",
+            "ValidTo",
+            "IsActive",
+            "Note",
+            "CreationTime"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RegistrationNumber",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "ValidFrom",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "ValidTo",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "IsActive",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Note",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "CreationTime",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineRegistrationDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineSummaryDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 17,
+      "nonEmptyLines": 13,
+      "classes": [
+        {
+          "name": "MedicineSummaryDto",
+          "startLine": 7,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "TotalCount",
+            "TotalActive",
+            "TotalInactive",
+            "TotalApproved",
+            "TotalPending",
+            "TotalRejected"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "TotalCount",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "TotalActive",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "TotalInactive",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TotalApproved",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "TotalPending",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "TotalRejected",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineSummaryDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 7,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/Dtos/MedicineUnitDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 14,
+      "nonEmptyLines": 11,
+      "classes": [
+        {
+          "name": "MedicineUnitDto",
+          "startLine": 7,
+          "endLine": 13,
+          "methods": [],
+          "properties": [
+            "UnitId",
+            "UnitName",
+            "ConversionFactor",
+            "Level"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "UnitId",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "UnitName",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ConversionFactor",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Level",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "MedicineUnitDto",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 5,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Medicines/IMedicineAppService.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 46,
+      "nonEmptyLines": 37,
+      "classes": [
+        {
+          "name": "IMedicineAppService",
+          "startLine": 11,
+          "endLine": 45,
+          "methods": [
+            "GetListAsync",
+            "GetAsync",
+            "CreateAsync",
+            "UpdateAsync",
+            "DeleteAsync",
+            "GetSummaryAsync",
+            "ApproveAsync",
+            "RejectAsync",
+            "ToggleActiveAsync",
+            "GetRegistrationsAsync",
+            "AddRegistrationAsync",
+            "AddIngredientAsync",
+            "RemoveIngredientAsync",
+            "AddUnitAsync",
+            "UpdateUnitAsync",
+            "RemoveUnitAsync",
+            "GetListAsExcelFileAsync",
+            "ImportExcelAsync",
+            "GetImportTemplateAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "IMedicineAppService",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/GetNotificationListDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 11,
+      "nonEmptyLines": 8,
+      "classes": [
+        {
+          "name": "GetNotificationListDto",
+          "startLine": 6,
+          "endLine": 10,
+          "methods": [],
+          "properties": [
+            "IsRead",
+            "Level"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "IsRead",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "Level",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "GetNotificationListDto",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 3,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Dtos/NotificationDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 18,
+      "nonEmptyLines": 15,
+      "classes": [
+        {
+          "name": "NotificationDto",
+          "startLine": 8,
+          "endLine": 17,
+          "methods": [],
+          "properties": [
+            "Title",
+            "Content",
+            "Severity",
+            "Level",
+            "TargetPermissions",
+            "CreationTime",
+            "IsRead"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Title",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "Content",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "Severity",
+          "line": 12,
+          "isDefault": false
+        },
+        {
+          "name": "Level",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "TargetPermissions",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "CreationTime",
+          "line": 15,
+          "isDefault": false
+        },
+        {
+          "name": "IsRead",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "NotificationDto",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 8,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationAppService.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 27,
+      "nonEmptyLines": 22,
+      "classes": [
+        {
+          "name": "INotificationAppService",
+          "startLine": 11,
+          "endLine": 26,
+          "methods": [
+            "GetListAsync",
+            "MarkReadAsync",
+            "MarkAllReadAsync",
+            "MarkDeleteAsync",
+            "MarkAllDeleteAsync",
+            "CreateGlobalAsync",
+            "CreateForPermissionAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "INotificationAppService",
+          "line": 11,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/INotificationRealTime.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 12,
+      "nonEmptyLines": 9,
+      "classes": [
+        {
+          "name": "INotificationRealTime",
+          "startLine": 7,
+          "endLine": 11,
+          "methods": [
+            "SendToGlobalAsync",
+            "SendToPermissionGroupsAsync"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "INotificationRealTime",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 1,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationCleanupJobArgs.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 7,
+      "nonEmptyLines": 5,
+      "classes": [
+        {
+          "name": "NotificationCleanupJobArgs",
+          "startLine": 3,
+          "endLine": 6,
+          "methods": [],
+          "properties": [
+            "RetentionDays"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "RetentionDays",
+          "line": 5,
+          "isDefault": false
+        },
+        {
+          "name": "NotificationCleanupJobArgs",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Notifications/Jobs/NotificationSentJobArgs.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 16,
+      "nonEmptyLines": 12,
+      "classes": [
+        {
+          "name": "NotificationSentJobArgs",
+          "startLine": 6,
+          "endLine": 15,
+          "methods": [],
+          "properties": [
+            "Title",
+            "Content",
+            "Severity",
+            "Level",
+            "TargetPermissions"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "Title",
+          "line": 8,
+          "isDefault": false
+        },
+        {
+          "name": "Content",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "Severity",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "Level",
+          "line": 11,
+          "isDefault": false
+        },
+        {
+          "name": "TargetPermissions",
+          "line": 14,
+          "isDefault": false
+        },
+        {
+          "name": "NotificationSentJobArgs",
+          "line": 6,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissionDefinitionProvider.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 207,
+      "nonEmptyLines": 176,
+      "functions": [
+        {
+          "name": "Define",
+          "startLine": 9,
+          "endLine": 159,
+          "params": [
+            "context"
+          ]
+        },
+        {
+          "name": "AddCrudPermissions",
+          "startLine": 172,
+          "endLine": 199,
+          "params": [
+            "group",
+            "permissionName",
+            "localizationKey"
+          ]
+        },
+        {
+          "name": "L",
+          "startLine": 202,
+          "endLine": 205,
+          "params": [
+            "name"
+          ]
+        }
+      ],
+      "classes": [
+        {
+          "name": "SupplyCoreERPPermissionDefinitionProvider",
+          "startLine": 7,
+          "endLine": 206,
+          "methods": [
+            "Define",
+            "AddCrudPermissions",
+            "L"
+          ],
+          "properties": []
+        }
+      ],
+      "exports": [
+        {
+          "name": "Define",
+          "line": 9,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPPermissionDefinitionProvider",
+          "line": 7,
+          "isDefault": false
+        }
+      ],
+      "callGraph": [
+        {
+          "caller": "Define",
+          "callee": "context.AddGroup",
+          "lineNumber": 13
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 13
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 16
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 19
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 22
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 25
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 28
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 31
+        },
+        {
+          "caller": "Define",
+          "callee": "medicinePermision.AddChild",
+          "lineNumber": 33
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 35
+        },
+        {
+          "caller": "Define",
+          "callee": "medicinePermision.AddChild",
+          "lineNumber": 37
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 39
+        },
+        {
+          "caller": "Define",
+          "callee": "context.AddGroup",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 45
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 48
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 51
+        },
+        {
+          "caller": "Define",
+          "callee": "context.AddGroup",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 56
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 59
+        },
+        {
+          "caller": "Define",
+          "callee": "warehousePermission.AddChild",
+          "lineNumber": 61
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 63
+        },
+        {
+          "caller": "Define",
+          "callee": "warehousePermission.AddChild",
+          "lineNumber": 65
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 67
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 70
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 73
+        },
+        {
+          "caller": "Define",
+          "callee": "ticketPermission.AddChild",
+          "lineNumber": 75
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 77
+        },
+        {
+          "caller": "Define",
+          "callee": "ticketPermission.AddChild",
+          "lineNumber": 79
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 81
+        },
+        {
+          "caller": "Define",
+          "callee": "context.AddGroup",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 87
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 90
+        },
+        {
+          "caller": "Define",
+          "callee": "purchaseOrderPermission.AddChild",
+          "lineNumber": 92
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 94
+        },
+        {
+          "caller": "Define",
+          "callee": "purchaseOrderPermission.AddChild",
+          "lineNumber": 96
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 98
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 102
+        },
+        {
+          "caller": "Define",
+          "callee": "purchaseRequisitionPermission.AddChild",
+          "lineNumber": 103
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 105
+        },
+        {
+          "caller": "Define",
+          "callee": "purchaseRequisitionPermission.AddChild",
+          "lineNumber": 107
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 109
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 113
+        },
+        {
+          "caller": "Define",
+          "callee": "saleOrderPermisson.AddChild",
+          "lineNumber": 115
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 117
+        },
+        {
+          "caller": "Define",
+          "callee": "saleOrderPermisson.AddChild",
+          "lineNumber": 119
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 121
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 125
+        },
+        {
+          "caller": "Define",
+          "callee": "purchaseReturnPermission.AddChild",
+          "lineNumber": 126
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 128
+        },
+        {
+          "caller": "Define",
+          "callee": "purchaseReturnPermission.AddChild",
+          "lineNumber": 130
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 132
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 136
+        },
+        {
+          "caller": "Define",
+          "callee": "purchaseReturnRequestPermission.AddChild",
+          "lineNumber": 137
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 139
+        },
+        {
+          "caller": "Define",
+          "callee": "purchaseReturnRequestPermission.AddChild",
+          "lineNumber": 141
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 143
+        },
+        {
+          "caller": "Define",
+          "callee": "AddCrudPermissions",
+          "lineNumber": 147
+        },
+        {
+          "caller": "Define",
+          "callee": "salesRecallPermission.AddChild",
+          "lineNumber": 148
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 150
+        },
+        {
+          "caller": "Define",
+          "callee": "salesRecallPermission.AddChild",
+          "lineNumber": 152
+        },
+        {
+          "caller": "Define",
+          "callee": "L",
+          "lineNumber": 154
+        },
+        {
+          "caller": "AddCrudPermissions",
+          "callee": "group.AddPermission",
+          "lineNumber": 175
+        },
+        {
+          "caller": "AddCrudPermissions",
+          "callee": "L",
+          "lineNumber": 177
+        },
+        {
+          "caller": "AddCrudPermissions",
+          "callee": "parentPermission.AddChild",
+          "lineNumber": 181
+        },
+        {
+          "caller": "AddCrudPermissions",
+          "callee": "L",
+          "lineNumber": 183
+        },
+        {
+          "caller": "AddCrudPermissions",
+          "callee": "parentPermission.AddChild",
+          "lineNumber": 187
+        },
+        {
+          "caller": "AddCrudPermissions",
+          "callee": "L",
+          "lineNumber": 189
+        },
+        {
+          "caller": "AddCrudPermissions",
+          "callee": "parentPermission.AddChild",
+          "lineNumber": 193
+        },
+        {
+          "caller": "AddCrudPermissions",
+          "callee": "L",
+          "lineNumber": 195
+        },
+        {
+          "caller": "L",
+          "callee": "LocalizableString.Create<SupplyCoreERPResource>",
+          "lineNumber": 204
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 3,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Permissions/SupplyCoreERPPermissions.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 207,
+      "nonEmptyLines": 184,
+      "classes": [
+        {
+          "name": "SupplyCoreERPPermissions",
+          "startLine": 3,
+          "endLine": 206,
+          "methods": [],
+          "properties": [
+            "GroupName"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "GroupName",
+          "line": 6,
+          "isDefault": false
+        },
+        {
+          "name": "SupplyCoreERPPermissions",
+          "line": 3,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 2,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    },
+    {
+      "path": "src/SupplyCoreERP.Application.Contracts/Prices/Dtos/CreateUpdateProductPriceDto.cs",
+      "language": "csharp",
+      "fileCategory": "code",
+      "totalLines": 26,
+      "nonEmptyLines": 19,
+      "classes": [
+        {
+          "name": "CreateUpdateProductPriceDto",
+          "startLine": 8,
+          "endLine": 25,
+          "methods": [],
+          "properties": [
+            "PriceListId",
+            "ProductId",
+            "UnitId",
+            "Price",
+            "MinQuantity"
+          ]
+        }
+      ],
+      "exports": [
+        {
+          "name": "PriceListId",
+          "line": 10,
+          "isDefault": false
+        },
+        {
+          "name": "ProductId",
+          "line": 13,
+          "isDefault": false
+        },
+        {
+          "name": "UnitId",
+          "line": 16,
+          "isDefault": false
+        },
+        {
+          "name": "Price",
+          "line": 19,
+          "isDefault": false
+        },
+        {
+          "name": "MinQuantity",
+          "line": 23,
+          "isDefault": false
+        },
+        {
+          "name": "CreateUpdateProductPriceDto",
+          "line": 8,
+          "isDefault": false
+        }
+      ],
+      "metrics": {
+        "importCount": 0,
+        "exportCount": 6,
+        "functionCount": 0,
+        "classCount": 1
+      }
+    }
+  ]
+}

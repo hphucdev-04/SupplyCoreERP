@@ -49,6 +49,7 @@ export interface PurchaseRequisitionDto extends FullAuditedEntityDto<string> {
 export interface PurchaseRequisitionLineDto extends AuditedEntityDto<string> {
   productId?: string;
   productName?: string;
+  productCode?: string;
   unitId?: string;
   unitName?: string;
   quantity?: number;

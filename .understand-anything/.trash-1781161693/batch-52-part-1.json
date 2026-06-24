@@ -1,0 +1,1549 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "type": "file",
+      "name": "SalesOrder.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "summary": "File mã nguồn `SalesOrder.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:SalesOrder",
+      "type": "class",
+      "name": "SalesOrder",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "summary": "Lớp `SalesOrder` thực hiện nghiệp vụ liên quan đến sales order.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 12,
+      "endLine": 154
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:SalesOrder",
+      "type": "function",
+      "name": "SalesOrder",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "summary": "Phương thức `SalesOrder` thực hiện nghiệp vụ sales order.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 36,
+      "endLine": 51
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateInfo",
+      "type": "function",
+      "name": "UpdateInfo",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "summary": "Phương thức `UpdateInfo` cập nhật info.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 53,
+      "endLine": 64
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:AddLine",
+      "type": "function",
+      "name": "AddLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "summary": "Phương thức `AddLine` thêm mới dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 67,
+      "endLine": 79
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateLine",
+      "type": "function",
+      "name": "UpdateLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "summary": "Phương thức `UpdateLine` cập nhật dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 81,
+      "endLine": 96
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:RemoveLine",
+      "type": "function",
+      "name": "RemoveLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "summary": "Phương thức `RemoveLine` xóa dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 98,
+      "endLine": 113
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "type": "file",
+      "name": "SalesOrderLine.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "summary": "File mã nguồn `SalesOrderLine.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs:SalesOrderLine",
+      "type": "class",
+      "name": "SalesOrderLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "summary": "Lớp `SalesOrderLine` thực hiện nghiệp vụ liên quan đến sales order dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 62
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs:SalesOrderLine",
+      "type": "function",
+      "name": "SalesOrderLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "summary": "Phương thức `SalesOrderLine` thực hiện nghiệp vụ sales order dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 37,
+      "endLine": 51
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "type": "file",
+      "name": "SalesOrderManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "File mã nguồn `SalesOrderManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:SalesOrderManager",
+      "type": "class",
+      "name": "SalesOrderManager",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "Lớp `SalesOrderManager` thực hiện nghiệp vụ liên quan đến quản lý sales order.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 21,
+      "endLine": 287
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:SalesOrderManager",
+      "type": "function",
+      "name": "SalesOrderManager",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "Phương thức `SalesOrderManager` thực hiện nghiệp vụ sales order manager.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 35,
+      "endLine": 56
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:CreateOrderAsync",
+      "type": "function",
+      "name": "CreateOrderAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "Phương thức `CreateOrderAsync` thực hiện nghiệp vụ create order.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 59,
+      "endLine": 77
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:AddLineAsync",
+      "type": "function",
+      "name": "AddLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "Phương thức `AddLineAsync` thêm mới dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 99,
+      "endLine": 143
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:UpdateLineAsync",
+      "type": "function",
+      "name": "UpdateLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "Phương thức `UpdateLineAsync` cập nhật dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 145,
+      "endLine": 156
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:ApproveAsync",
+      "type": "function",
+      "name": "ApproveAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "Phương thức `ApproveAsync` thực hiện nghiệp vụ approve.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 176,
+      "endLine": 230
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:CompleteAsync",
+      "type": "function",
+      "name": "CompleteAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "Phương thức `CompleteAsync` thực hiện nghiệp vụ complete.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 236,
+      "endLine": 254
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:ValidateAsync",
+      "type": "function",
+      "name": "ValidateAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "summary": "Phương thức `ValidateAsync` kiểm tra tính hợp lệ của.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 258,
+      "endLine": 285
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "type": "file",
+      "name": "SalesRecallTicketExecutedEventHandler.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "summary": "File mã nguồn `SalesRecallTicketExecutedEventHandler.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:SalesRecallTicketExecutedEventHandler",
+      "type": "class",
+      "name": "SalesRecallTicketExecutedEventHandler",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "summary": "Lớp `SalesRecallTicketExecutedEventHandler` thực hiện nghiệp vụ liên quan đến sự kiện sales recall phiếu đã thực thi handler.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 19,
+      "endLine": 119
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:SalesRecallTicketExecutedEventHandler",
+      "type": "function",
+      "name": "SalesRecallTicketExecutedEventHandler",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "summary": "Phương thức `SalesRecallTicketExecutedEventHandler` thực hiện nghiệp vụ sales recall phiếu executed event handler.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 29,
+      "endLine": 43
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "function",
+      "name": "HandleEventAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "summary": "Phương thức `HandleEventAsync` thực hiện nghiệp vụ handle event.",
+      "complexity": "complex",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 45,
+      "endLine": 118
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs",
+      "type": "file",
+      "name": "ISalesRecallManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs",
+      "summary": "File mã nguồn `ISalesRecallManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs:ISalesRecallManager",
+      "type": "class",
+      "name": "ISalesRecallManager",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs",
+      "summary": "Lớp `ISalesRecallManager` thực hiện nghiệp vụ liên quan đến giao diện quản lý sales recall.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 8,
+      "endLine": 53
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "type": "file",
+      "name": "SalesRecall.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "File mã nguồn `SalesRecall.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SalesRecall",
+      "type": "class",
+      "name": "SalesRecall",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "Lớp `SalesRecall` thực hiện nghiệp vụ liên quan đến sales recall.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 13,
+      "endLine": 200
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SalesRecall",
+      "type": "function",
+      "name": "SalesRecall",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "Phương thức `SalesRecall` thực hiện nghiệp vụ sales recall.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 38,
+      "endLine": 61
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:UpdateInfo",
+      "type": "function",
+      "name": "UpdateInfo",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "Phương thức `UpdateInfo` cập nhật info.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 63,
+      "endLine": 76
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:AddLine",
+      "type": "function",
+      "name": "AddLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "Phương thức `AddLine` thêm mới dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 78,
+      "endLine": 93
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:RemoveLine",
+      "type": "function",
+      "name": "RemoveLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "Phương thức `RemoveLine` xóa dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 95,
+      "endLine": 110
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:UpdateLine",
+      "type": "function",
+      "name": "UpdateLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "Phương thức `UpdateLine` cập nhật dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 112,
+      "endLine": 127
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SendToApprove",
+      "type": "function",
+      "name": "SendToApprove",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "Phương thức `SendToApprove` thực hiện nghiệp vụ send to approve.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 129,
+      "endLine": 142
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SetLevelAndCalculateDeadline",
+      "type": "function",
+      "name": "SetLevelAndCalculateDeadline",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "summary": "Phương thức `SetLevelAndCalculateDeadline` thiết lập level and calculate deadline.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 184,
+      "endLine": 194
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "type": "file",
+      "name": "SalesRecallLine.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "summary": "File mã nguồn `SalesRecallLine.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs:SalesRecallLine",
+      "type": "class",
+      "name": "SalesRecallLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "summary": "Lớp `SalesRecallLine` thực hiện nghiệp vụ liên quan đến sales recall dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 10,
+      "endLine": 68
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs:SalesRecallLine",
+      "type": "function",
+      "name": "SalesRecallLine",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "summary": "Phương thức `SalesRecallLine` thực hiện nghiệp vụ sales recall dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 37,
+      "endLine": 57
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "type": "file",
+      "name": "SalesRecallManager.cs",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "File mã nguồn `SalesRecallManager.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:SalesRecallManager",
+      "type": "class",
+      "name": "SalesRecallManager",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "Lớp `SalesRecallManager` thực hiện nghiệp vụ liên quan đến quản lý sales recall.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "domain-service"
+      ],
+      "startLine": 17,
+      "endLine": 247
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:SalesRecallManager",
+      "type": "function",
+      "name": "SalesRecallManager",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "Phương thức `SalesRecallManager` thực hiện nghiệp vụ sales recall manager.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 28,
+      "endLine": 46
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:CreateAsync",
+      "type": "function",
+      "name": "CreateAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "Phương thức `CreateAsync` thực hiện nghiệp vụ create.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 48,
+      "endLine": 77
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateAsync",
+      "type": "function",
+      "name": "UpdateAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "Phương thức `UpdateAsync` cập nhật.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 79,
+      "endLine": 89
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:AddLineAsync",
+      "type": "function",
+      "name": "AddLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "Phương thức `AddLineAsync` thêm mới dòng.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 100,
+      "endLine": 122
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateLineAsync",
+      "type": "function",
+      "name": "UpdateLineAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "Phương thức `UpdateLineAsync` cập nhật dòng.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 124,
+      "endLine": 138
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:ApproveAsync",
+      "type": "function",
+      "name": "ApproveAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "Phương thức `ApproveAsync` thực hiện nghiệp vụ approve.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 152,
+      "endLine": 184
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:ValidateRecallQuantityAsync",
+      "type": "function",
+      "name": "ValidateRecallQuantityAsync",
+      "path": "src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "summary": "Phương thức `ValidateRecallQuantityAsync` kiểm tra tính hợp lệ của recall quantity.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 198,
+      "endLine": 246
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "type": "file",
+      "name": "SupplyCoreERPSettingDefinitionProvider.cs",
+      "path": "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "summary": "File mã nguồn `SupplyCoreERPSettingDefinitionProvider.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs:SupplyCoreERPSettingDefinitionProvider",
+      "type": "class",
+      "name": "SupplyCoreERPSettingDefinitionProvider",
+      "path": "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "summary": "Lớp `SupplyCoreERPSettingDefinitionProvider` thực hiện nghiệp vụ liên quan đến nhà cung cấp supply core e r p cài đặt định nghĩa.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 5,
+      "endLine": 41
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs:Define",
+      "type": "function",
+      "name": "Define",
+      "path": "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "summary": "Phương thức `Define` thực hiện nghiệp vụ define.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 7,
+      "endLine": 40
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettings.cs",
+      "type": "file",
+      "name": "SupplyCoreERPSettings.cs",
+      "path": "src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettings.cs",
+      "summary": "File mã nguồn `SupplyCoreERPSettings.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg",
+      "type": "file",
+      "name": "SupplyCoreERP.Domain.abppkg",
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg",
+      "summary": "File mã nguồn `SupplyCoreERP.Domain.abppkg` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg.analyze.json",
+      "type": "config",
+      "name": "SupplyCoreERP.Domain.abppkg.analyze.json",
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.abppkg.analyze.json",
+      "summary": "File mã nguồn `SupplyCoreERP.Domain.abppkg.analyze.json` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "config:src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.csproj",
+      "type": "config",
+      "name": "SupplyCoreERP.Domain.csproj",
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERP.Domain.csproj",
+      "summary": "File mã nguồn `SupplyCoreERP.Domain.csproj` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs",
+      "type": "file",
+      "name": "SupplyCoreERPConsts.cs",
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs",
+      "summary": "File mã nguồn `SupplyCoreERPConsts.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs:SupplyCoreERPConsts",
+      "type": "class",
+      "name": "SupplyCoreERPConsts",
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs",
+      "summary": "Lớp `SupplyCoreERPConsts` thực hiện nghiệp vụ liên quan đến supply core e r p consts.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 5,
+      "endLine": 32
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "type": "file",
+      "name": "SupplyCoreERPDomainModule.cs",
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "summary": "File mã nguồn `SupplyCoreERPDomainModule.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs:SupplyCoreERPDomainModule",
+      "type": "class",
+      "name": "SupplyCoreERPDomainModule",
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "summary": "Lớp `SupplyCoreERPDomainModule` thực hiện nghiệp vụ liên quan đến supply core e r p domain module.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 21,
+      "endLine": 50
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs:ConfigureServices",
+      "type": "function",
+      "name": "ConfigureServices",
+      "path": "src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "summary": "Phương thức `ConfigureServices` thực hiện nghiệp vụ configure services.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 37,
+      "endLine": 49
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:SalesOrder",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:SalesOrder",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:SalesOrder",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:SalesOrder",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:AddLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:AddLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:RemoveLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:RemoveLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateLine",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateInfo",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs:SalesOrderLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs:SalesOrderLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs:SalesOrderLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderLine.cs:SalesOrderLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:SalesOrderManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:SalesOrderManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:SalesOrderManager",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesOrders/ISalesOrderManager.cs:ISalesOrderManager",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:SalesOrderManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:SalesOrderManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:CreateOrderAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:CreateOrderAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:AddLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:AddLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:UpdateLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:UpdateLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:ApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:ApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:CompleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:CompleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:ValidateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:ValidateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:CreateOrderAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:ValidateAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:AddLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:AddLine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:UpdateLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateLine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:SalesRecallTicketExecutedEventHandler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:SalesRecallTicketExecutedEventHandler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:SalesRecallTicketExecutedEventHandler",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:SalesRecallTicketExecutedEventHandler",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:SalesRecallTicketExecutedEventHandler",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:HandleEventAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:HandleEventAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrderManager.cs:CompleteAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:HandleEventAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:HandleEventAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:HandleEventAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/Events/SalesRecallTicketExecutedEventHandler.cs:HandleEventAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs:ISalesRecallManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs:ISalesRecallManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SalesRecall",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SalesRecall",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SalesRecall",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SalesRecall",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:UpdateInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:UpdateInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:AddLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:AddLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:RemoveLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:RemoveLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:UpdateLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:UpdateLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SendToApprove",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SendToApprove",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SetLevelAndCalculateDeadline",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SetLevelAndCalculateDeadline",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SalesRecall",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SetLevelAndCalculateDeadline",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:UpdateInfo",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecall.cs:SetLevelAndCalculateDeadline",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs:SalesRecallLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs:SalesRecallLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs:SalesRecallLine",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallLine.cs:SalesRecallLine",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:SalesRecallManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:SalesRecallManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:SalesRecallManager",
+      "target": "class:src/SupplyCoreERP.Domain/Sales/SalesRecalls/ISalesRecallManager.cs:ISalesRecallManager",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:SalesRecallManager",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:SalesRecallManager",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:AddLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:AddLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateLineAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateLineAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:ApproveAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:ApproveAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:ValidateRecallQuantityAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:ValidateRecallQuantityAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateInfo",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:AddLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:ValidateRecallQuantityAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:AddLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:AddLine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:ValidateRecallQuantityAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:src/SupplyCoreERP.Domain/Sales/SalesRecalls/SalesRecallManager.cs:UpdateLineAsync",
+      "target": "function:src/SupplyCoreERP.Domain/Sales/SalesOrders/SalesOrder.cs:UpdateLine",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs:SupplyCoreERPSettingDefinitionProvider",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "target": "class:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs:SupplyCoreERPSettingDefinitionProvider",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs:Define",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs",
+      "target": "function:src/SupplyCoreERP.Domain/Settings/SupplyCoreERPSettingDefinitionProvider.cs:Define",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs",
+      "target": "class:src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs:SupplyCoreERPConsts",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs",
+      "target": "class:src/SupplyCoreERP.Domain/SupplyCoreERPConsts.cs:SupplyCoreERPConsts",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "target": "class:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs:SupplyCoreERPDomainModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "target": "class:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs:SupplyCoreERPDomainModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "target": "function:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs:ConfigureServices",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs",
+      "target": "function:src/SupplyCoreERP.Domain/SupplyCoreERPDomainModule.cs:ConfigureServices",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+// ─────────────────────────────────────────────
+// SALES RECALL DETAILS COMPONENT STYLES
+// ─────────────────────────────────────────────
+
+.loader-container {
+  height: 300px;
+}
+
+.animate-pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.5;
+    transform: scale(0.95);
+  }
+}
+
+.ph-progress {
+  height: 12px;
+  border-radius: var(--ph-radius-md);
+}
+
+.drawer-table-wrapper {
+  max-height: 50vh;
+  overflow-y: auto;
+
+  table.ph-table td {
+    vertical-align: top !important;
+    padding-top: 0.75rem !important;
+  }
+}
+
+.col-select {
+  width: 50px;
+}
+
+.col-qty {
+  width: 160px;
+}
+
+// Master Card Level Border
+.card-level-border {
+  border-left: 4px solid var(--ph-color-border-default) !important;
+
+  &.level-1 {
+    border-left-color: var(--ph-color-danger-icon) !important;
+  }
+  &.level-2 {
+    border-left-color: var(--ph-color-warning-icon) !important;
+  }
+  &.level-3 {
+    border-left-color: #eab308 !important;
+  }
+}
+
+tr.is-selected td {
+  background-color: var(--ph-color-brand-50) !important;
+}
+

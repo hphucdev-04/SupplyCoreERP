@@ -1,214 +1,313 @@
-<div *ngIf="loading" class="d-flex justify-content-center align-items-center" style="height: 300px;">
+<div *ngIf="loading" class="d-flex justify-content-center my-5">
   <div class="spinner-border text-primary" role="status">
     <span class="visually-hidden">Loading...</span>
   </div>
 </div>
 
 <div *ngIf="!loading && returnDto">
+  <!-- Back button -->
+  <button class="btn btn-sm ph-btn-secondary mb-3" (click)="goBack()">
+    <i class="fa fa-arrow-left me-1"></i> {{ '::Back' | abpLocalization }}
+  </button>
+
   <!-- Page Header -->
-  <div class="d-flex justify-content-between align-items-center mb-4">
-    <div>
-      <span class="ph-field-meta">{{ '::PurchaseReturn' | abpLocalization }}</span>
-      <h3 class="ph-page-title d-inline-block me-3">{{ returnDto.code }}</h3>
-      <span
-        class="badge"
-        [class.bg-secondary]="returnDto.status === PurchaseReturnStatus.Draft"
-        [class.bg-warning]="returnDto.status === PurchaseReturnStatus.PendingApproval"
-        [class.bg-info]="returnDto.status === PurchaseReturnStatus.Approved"
-        [class.bg-primary]="returnDto.status === PurchaseReturnStatus.Returning"
-        [class.bg-success]="returnDto.status === PurchaseReturnStatus.Completed"
-        [class.bg-danger]="returnDto.status === PurchaseReturnStatus.Rejected"
-      >
-        {{ '::Enum:PurchaseReturnStatus.' + enumName(PurchaseReturnStatus, returnDto.status) | abpLocalization }}
-      </span>
+  <div class="d-flex align-items-center justify-content-between mb-4">
+    <div class="d-flex align-items-center gap-3">
+      <div class="ph-icon-avatar ph-icon-avatar--lg">
+        <i class="fa fa-undo fa-2x"></i>
+      </div>
+      <div>
+        <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
+          {{ returnDto.code }}
+          <span class="ph-badge" [ngClass]="statusClass(returnDto.status)">
+            <i class="fa me-1" [ngClass]="statusIcon(returnDto.status)"></i>
+            {{
+              '::Enum:PurchaseReturnStatus.' + enumName(PurchaseReturnStatus, returnDto.status)
+                | abpLocalization
+            }}
+          </span>
+        </h3>
+        <div class="ph-text-muted d-flex gap-3">
+          <span>Supplier: <strong>{{ returnDto.supplierName }}</strong></span>
+          <span>Return Date: <strong>{{ returnDto.returnDate | date: 'dd/MM/yyyy' }}</strong></span>
+        </div>
+      </div>
     </div>
-
-    <!-- Actions -->
     <div class="d-flex gap-2">
-      <button class="btn btn-sm ph-btn-outline" (click)="goBack()">
-        <i class="fa fa-arrow-left me-1"></i>{{ '::BackToList' | abpLocalization }}
+      <button *ngIf="returnDto.status === PurchaseReturnStatus.Draft" class="btn ph-btn-outline" (click)="openEditDrawer()">
+        <i class="fa fa-pencil me-1"></i> {{ '::Edit' | abpLocalization }}
       </button>
-
-      <!-- Draft Actions -->
-      <button
-        *ngIf="returnDto.status === PurchaseReturnStatus.Draft && returnDto.lines.length > 0"
-        class="btn btn-sm ph-btn-primary"
-        (click)="sendToApprove()"
-      >
-        <i class="fa fa-paper-plane me-1"></i>{{ '::SendToApprove' | abpLocalization }}
-      </button>
-      <button
-        *ngIf="returnDto.status === PurchaseReturnStatus.Draft"
-        class="btn btn-sm ph-btn-outline"
-        (click)="openEditDrawer()"
-      >
-        <i class="fa fa-edit me-1 text-primary"></i>{{ '::Edit' | abpLocalization }}
-      </button>
-
-      <!-- Pending Approval Actions (QA / Procurement Manager) -->
-      <button
-        *ngIf="returnDto.status === PurchaseReturnStatus.PendingApproval"
-        class="btn btn-sm ph-btn-primary"
-        (click)="approve()"
-      >
-        <i class="fa fa-check me-1"></i>{{ '::Approve' | abpLocalization }}
-      </button>
-      <button
-        *ngIf="returnDto.status === PurchaseReturnStatus.PendingApproval"
-        class="btn btn-sm ph-btn-danger"
-        (click)="reject()"
-      >
-        <i class="fa fa-times me-1"></i>{{ '::Reject' | abpLocalization }}
+      <button class="btn ph-btn-secondary">
+        <i class="fa fa-print me-1"></i> {{ '::Print' | abpLocalization }}
       </button>
     </div>
   </div>
 
-  <div class="row">
-    <!-- Left Column: Master Info & Lines -->
-    <div class="col-lg-9">
-      <!-- Master Info Card -->
-      <div class="card ph-card mb-4">
-        <div class="card-body">
-          <div class="row">
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::Supplier' | abpLocalization }}</span>
-              <span class="ph-field-value d-block fw-bold">{{ returnDto.supplierName }}</span>
-              <span class="ph-text-muted">{{ returnDto.supplierCode }}</span>
-            </div>
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::PurchaseOrder' | abpLocalization }}</span>
-              <a
-                class="ph-link d-block fw-bold"
-                [routerLink]="['/order/purchaseorders/details', returnDto.purchaseOrderId]"
-              >
-                {{ returnDto.purchaseOrderCode }}
-              </a>
-            </div>
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::Warehouse' | abpLocalization }}</span>
-              <span class="ph-field-value d-block">{{ returnDto.warehouseName }}</span>
-            </div>
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::ReturnDate' | abpLocalization }}</span>
-              <span class="ph-field-value d-block">{{ returnDto.returnDate | date: 'dd/MM/yyyy' }}</span>
-            </div>
+  <div class="container-fluid p-0">
+    <!-- Row 1: General Information + System Data & Related Tickets -->
+    <div class="row g-3 mb-3">
+      <div class="col-md-6">
+        <!-- General Information Card -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}
+            </h6>
           </div>
-          <div class="row mt-2" *ngIf="returnDto.note">
-            <div class="col-12">
-              <span class="ph-field-meta">{{ '::Note' | abpLocalization }}</span>
-              <span class="ph-text-muted">{{ returnDto.note }}</span>
+          <div class="ph-card__body">
+            <div class="row g-3">
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::Warehouse' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="d-flex flex-column">
+                    {{ returnDto.warehouseName }}
+                    <small class="ph-text-muted font-mono">{{ returnDto.warehouseCode }}</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::Supplier' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="d-flex flex-column">
+                    {{ returnDto.supplierName }}
+                    <small class="ph-text-muted font-mono">{{ returnDto.supplierCode }}</small>
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::PurchaseOrder' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  <span class="ph-link" [routerLink]="['/procurement/purchase-orders/details', returnDto.purchaseOrderId]">
+                    {{ returnDto.purchaseOrderCode }}
+                  </span>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::ReturnDate' | abpLocalization }}</span>
+                <div class="ph-field-value">{{ returnDto.returnDate | date: 'dd/MM/yyyy' }}</div>
+              </div>
+              <div class="col-md-6">
+                <span class="ph-field-meta">{{ '::ReturnType' | abpLocalization }}</span>
+                <div class="ph-field-value">
+                  {{ '::Enum:PurchaseReturnType.' + enumName(PurchaseReturnType, returnDto.returnType) | abpLocalization }}
+                </div>
+              </div>
+              <div class="col-12" *ngIf="returnDto.note">
+                <span class="ph-field-meta">{{ '::Note' | abpLocalization }}</span>
+                <div class="ph-field-value small fst-italic">{{ returnDto.note }}</div>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Lines Card -->
-      <div class="card ph-card mb-4">
-        <div class="ph-card__header d-flex justify-content-between align-items-center">
-          <h5 class="ph-card-title">
-            <i class="fa fa-list me-1 text-primary"></i>{{ '::ReturnLines' | abpLocalization }}
-          </h5>
-          <button
-            *ngIf="returnDto.status === PurchaseReturnStatus.Draft"
-            class="btn btn-sm ph-btn-primary"
-            (click)="openAddLinesDrawer()"
-          >
-            <i class="fa fa-download me-1"></i>{{ '::SelectPurchaseLines' | abpLocalization }}
-          </button>
+      <div class="col-md-6">
+        <!-- System Data Card (tầng trên) -->
+        <div class="ph-card mb-3">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-clock-rotate-left"></i> {{ '::SystemData' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="ph-field-meta">{{ '::CreationTime' | abpLocalization }}</span>
+              <span class="ph-field-value">{{
+                returnDto.creationTime | date: 'HH:mm dd/MM/yyyy'
+              }}</span>
+            </div>
+            <hr class="ph-divider my-1" />
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="ph-field-meta">{{ '::LastModificationTime' | abpLocalization }}</span>
+              <span class="ph-field-value">
+                {{
+                  returnDto.lastModificationTime
+                    ? (returnDto.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
+                    : 'N/A'
+                }}
+              </span>
+            </div>
+          </div>
         </div>
-        <div class="card-body p-0">
-          <div class="table-responsive">
-            <table class="table table-hover align-middle mb-0">
-              <thead class="table-light">
-                <tr>
-                  <th *ngIf="returnDto.status === PurchaseReturnStatus.Draft" style="width: 80px;"></th>
-                  <th>{{ '::Product' | abpLocalization }}</th>
-                  <th>{{ '::Unit' | abpLocalization }}</th>
-                  <th class="text-end">{{ '::OriginalUnitPrice' | abpLocalization }}</th>
-                  <th class="text-end" style="width: 100px;">{{ '::DepreciationRate' | abpLocalization }} (%)</th>
-                  <th class="text-end">{{ '::ReturnPrice' | abpLocalization }}</th>
-                  <th class="text-end" style="width: 100px;">{{ '::Quantity' | abpLocalization }}</th>
-                  <th class="text-end">{{ '::Tax' | abpLocalization }} (%)</th>
-                  <th class="text-end">{{ '::Total' | abpLocalization }}</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr *ngFor="let line of returnDto.lines">
-                  <td *ngIf="returnDto.status === PurchaseReturnStatus.Draft" class="text-center">
-                    <button class="btn btn-sm ph-btn-ghost text-danger" (click)="removeLine(line.id)">
-                      <i class="fa fa-trash"></i>
-                    </button>
-                  </td>
-                  <td>
-                    <div class="fw-bold">{{ line.productName }}</div>
-                    <span class="badge bg-light text-dark font-monospace">{{ line.productCode }}</span>
-                  </td>
-                  <td>{{ line.unitName }}</td>
-                  <td class="text-end">{{ line.originalUnitPrice | number: '1.0-0' }} ₫</td>
-                  <td class="text-end text-danger">{{ line.depreciationRate }}%</td>
-                  <td class="text-end fw-bold">{{ line.returnUnitPrice | number: '1.0-0' }} ₫</td>
-                  <td class="text-end fw-bold text-primary">{{ line.quantity | number }}</td>
-                  <td class="text-end text-muted">{{ line.taxRate }}%</td>
-                  <td class="text-end fw-bold ph-text-primary">{{ line.finalPrice | number: '1.0-0' }} ₫</td>
-                </tr>
-                <tr *ngIf="returnDto.lines.length === 0">
-                  <td colspan="9" class="text-center py-5 text-muted">
-                    <i class="fa fa-inbox fa-3x d-block mb-3"></i>
-                    {{ '::NoReturnLinesFound' | abpLocalization }}
-                  </td>
-                </tr>
-              </tbody>
-            </table>
+
+        <!-- Related Inventory Tickets Card (tầng dưới) -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-history me-2"></i>{{ '::RelatedInventoryTickets' | abpLocalization }}
+              <span class="ph-badge ph-badge--info ms-2">
+                {{ returnDto.relatedTickets?.length || 0 }}
+              </span>
+            </h6>
+          </div>
+          <div class="ph-card__body--flush">
+            <div class="table-responsive">
+              <table class="ph-table">
+                <thead>
+                  <tr>
+                    <th>{{ '::TicketNumber' | abpLocalization }}</th>
+                    <th>{{ '::CreationTime' | abpLocalization }}</th>
+                    <th>{{ '::Status' | abpLocalization }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let t of returnDto.relatedTickets">
+                    <td
+                      class="ph-text-primary ph-link"
+                      (click)="router.navigate(['/inventory/tickets/details', t.id])"
+                    >
+                      {{ t.ticketNumber }}
+                    </td>
+                    <td>{{ t.creationTime | date: 'HH:mm dd/MM/yyyy' }}</td>
+                    <td>
+                      <span
+                        class="ph-badge"
+                        [ngClass]="{
+                          'ph-badge--neutral': t.status === 0,
+                          'ph-badge--pending': t.status === 1,
+                          'ph-badge--approved': t.status === 2,
+                          'ph-badge--rejected': t.status === 3,
+                        }"
+                        >{{ '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, t.status) | abpLocalization }}</span
+                      >
+                    </td>
+                  </tr>
+                  <tr *ngIf="!returnDto.relatedTickets?.length">
+                    <td colspan="3" class="ph-empty-state">
+                      {{ '::NoRelatedTickets' | abpLocalization }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
 
-    <!-- Right Column: Totals & Related Tickets -->
-    <div class="col-lg-3">
-      <!-- Totals Card -->
-      <div class="card ph-card mb-4">
-        <div class="card-body">
-          <h5 class="ph-card-title mb-3">{{ '::Summary' | abpLocalization }}</h5>
-          <div class="d-flex justify-content-between mb-2">
-            <span class="text-muted">{{ '::SubTotal' | abpLocalization }}:</span>
-            <span>{{ returnDto.subTotal | number: '1.0-0' }} ₫</span>
+    <!-- Row 2: Return Lines (8 cột) + Financial Summary (4 cột) -->
+    <div class="row g-3">
+      <div class="col-lg-8">
+        <!-- Return Lines Card -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-list me-2"></i>{{ '::ReturnLines' | abpLocalization }}
+              <span class="ph-badge ph-badge--info ms-2">{{ returnDto.lines?.length || 0 }}</span>
+            </h6>
+            <div class="ph-card__header-actions">
+              <!-- Draft actions -->
+              <ng-container *ngIf="returnDto.status === PurchaseReturnStatus.Draft">
+                <button class="btn btn-sm ph-btn-outline" (click)="openAddLinesDrawer()">
+                  <i class="fa fa-plus me-1"></i>{{ '::SelectPurchaseLines' | abpLocalization }}
+                </button>
+                <button *ngIf="returnDto.lines?.length" class="btn btn-sm ph-btn-save" (click)="sendToApprove()">
+                  <i class="fa fa-paper-plane me-1"></i>{{ '::SendToApprove' | abpLocalization }}
+                </button>
+              </ng-container>
+
+              <!-- PendingApproval actions -->
+              <ng-container *ngIf="returnDto.status === PurchaseReturnStatus.PendingApproval">
+                <button class="btn btn-sm ph-btn-save" (click)="approve()">
+                  <i class="fa fa-check me-1"></i>{{ '::Approve' | abpLocalization }}
+                </button>
+                <button class="btn btn-sm ph-btn-danger" (click)="reject()">
+                  <i class="fa fa-times me-1"></i>{{ '::Reject' | abpLocalization }}
+                </button>
+              </ng-container>
+            </div>
           </div>
-          <div class="d-flex justify-content-between mb-2">
-            <span class="text-muted">{{ '::TaxAmount' | abpLocalization }}:</span>
-            <span>{{ returnDto.taxAmount | number: '1.0-0' }} ₫</span>
-          </div>
-          <hr />
-          <div class="d-flex justify-content-between align-items-center mb-1">
-            <span class="fw-bold">{{ '::TotalAmount' | abpLocalization }}:</span>
-            <h4 class="fw-bold ph-text-primary m-0">{{ returnDto.totalAmount | number: '1.0-0' }} ₫</h4>
+          <div class="ph-card__body--flush">
+            <div class="table-responsive">
+              <table class="ph-table">
+                <thead>
+                  <tr>
+                    <th style="width: 44px" *ngIf="returnDto.status === PurchaseReturnStatus.Draft"></th>
+                    <th>{{ '::Product' | abpLocalization }}</th>
+                    <th>{{ '::Unit' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::OriginalUnitPrice' | abpLocalization }}</th>
+                    <th class="text-end" style="width: 80px;">{{ '::DepreciationRate' | abpLocalization }}%</th>
+                    <th class="text-end">{{ '::ReturnPrice' | abpLocalization }}</th>
+                    <th class="text-end" style="width: 80px;">{{ '::Quantity' | abpLocalization }}</th>
+                    <th class="text-end">{{ '::Tax' | abpLocalization }}%</th>
+                    <th class="text-end">{{ '::FinalPrice' | abpLocalization }}</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let row of returnDto.lines">
+                    <td class="text-center" *ngIf="returnDto.status === PurchaseReturnStatus.Draft">
+                      <button class="ph-btn-ghost text-danger" (click)="removeLine(row.id)">
+                        <i class="fa fa-trash"></i>
+                      </button>
+                    </td>
+                    <td>
+                      <div class="fw-bold ph-text-primary">{{ row.productName }}</div>
+                      <small class="ph-text-muted font-mono">{{ row.productCode }}</small>
+                    </td>
+                    <td>
+                      <span class="ph-field-value">{{ row.unitName }}</span>
+                      <div class="ph-text-muted small" *ngIf="row.conversionFactor > 1">
+                        ×{{ row.conversionFactor }}
+                      </div>
+                    </td>
+                    <td class="text-end">
+                      <span>{{ row.originalUnitPrice | number: '1.0-0' }} ₫</span>
+                    </td>
+                    <td class="text-end text-danger fw-bold">
+                      <span>{{ row.depreciationRate }}%</span>
+                    </td>
+                    <td class="text-end">
+                      <span class="fw-bold">{{ row.returnUnitPrice | number: '1.0-0' }} ₫</span>
+                    </td>
+                    <td class="text-end fw-bold text-primary">
+                      <span>{{ row.quantity | number }}</span>
+                    </td>
+                    <td class="text-end text-muted">
+                      <span>{{ row.taxRate }}%</span>
+                    </td>
+                    <td class="text-end">
+                      <span class="fw-bold ph-text-primary">{{ row.finalPrice | number: '1.0-0' }} ₫</span>
+                    </td>
+                  </tr>
+                  <tr *ngIf="!returnDto.lines?.length">
+                    <td [attr.colspan]="returnDto.status === PurchaseReturnStatus.Draft ? 9 : 8" class="ph-empty-state">
+                      {{ '::NoReturnLinesFound' | abpLocalization }}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Related Tickets Widget -->
-      <div class="card ph-card">
-        <div class="ph-card__header">
-          <h5 class="ph-card-title">
-            <i class="fa fa-link me-1 text-primary"></i>{{ '::RelatedTickets' | abpLocalization }}
-          </h5>
-        </div>
-        <div class="card-body p-0">
-          <ul class="list-group list-group-flush mb-0">
-            <li *ngFor="let t of returnDto.relatedTickets" class="list-group-item p-3">
-              <div class="d-flex justify-content-between align-items-center mb-1">
-                <span class="ph-link fw-bold">{{ t.ticketNumber }}</span>
-                <span class="badge bg-success small">Approved</span>
-              </div>
-              <span class="text-muted small d-block">
-                {{ '::Enum:TicketType.' + t.type | abpLocalization }}
-              </span>
-              <span class="text-muted small d-block">{{ t.creationTime | date: 'dd/MM/yyyy HH:mm' }}</span>
-            </li>
-            <li *ngIf="returnDto.relatedTickets.length === 0" class="text-center py-4 text-muted small">
-              {{ '::NoRelatedTickets' | abpLocalization }}
-            </li>
-          </ul>
+      <div class="col-lg-4">
+        <!-- Financial Summary Card -->
+        <div class="ph-card">
+          <div class="ph-card__header">
+            <h6 class="ph-card__header-title">
+              <i class="fa fa-credit-card me-2"></i>{{ '::FinancialSummary' | abpLocalization }}
+            </h6>
+          </div>
+          <div class="ph-card__body">
+            <div class="d-flex justify-content-between mb-2">
+              <span class="ph-text-muted">{{ '::SubTotal' | abpLocalization }}</span
+              ><span class="ph-field-value">{{ returnDto.subTotal | number: '1.0-0' }} ₫</span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="ph-text-muted">{{ '::TaxAmount' | abpLocalization }}</span
+              ><span class="ph-field-value ph-text-warning"
+                >+{{ returnDto.taxAmount | number: '1.0-0' }} ₫</span
+              >
+            </div>
+            <hr class="ph-divider" />
+            <div class="d-flex justify-content-between align-items-center">
+              <span class="fw-bold">{{ '::TotalAmount' | abpLocalization }}</span
+              ><span class="fw-bold h3 ph-text-primary mb-0"
+                >{{ returnDto.totalAmount | number: '1.0-0' }} ₫</span
+              >
+            </div>
+          </div>
         </div>
       </div>
     </div>
@@ -229,8 +328,22 @@
     <!-- Warehouse -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
-      <select class="form-select" formControlName="warehouseId">
-        <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
+      <app-dropdown-search
+        formControlName="warehouseId"
+        [items]="warehouses"
+        [placeholder]="'::SelectWarehouse' | abpLocalization"
+        [labelKey]="'name'"
+        [valueKey]="'id'"
+      ></app-dropdown-search>
+    </div>
+
+    <!-- Return Type -->
+    <div class="mb-3">
+      <label class="ph-label ph-label--required">{{ '::ReturnType' | abpLocalization }}</label>
+      <select class="form-select" formControlName="returnType">
+        <option *ngFor="let option of purchaseReturnTypeOptions" [ngValue]="option.value">
+          {{ '::Enum:PurchaseReturnType.' + enumName(PurchaseReturnType, option.value) | abpLocalization }}
+        </option>
       </select>
     </div>
 
@@ -300,8 +413,9 @@
             <input
               type="number"
               class="form-control form-control-sm text-end text-danger"
-              [(ngModel)]="line.depreciationRate"
-              [disabled]="!line.selected"
+              [ngModel]="returnDto.returnType === PurchaseReturnType.Defective ? 0 : line.depreciationRate"
+              (ngModelChange)="line.depreciationRate = $event"
+              [disabled]="!line.selected || returnDto.returnType === PurchaseReturnType.Defective"
               min="0"
               max="100"
             />

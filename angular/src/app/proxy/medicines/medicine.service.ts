@@ -165,6 +165,15 @@ export class MedicineService {
     { apiName: this.apiName,...config });
   
 
+  updateIngredientStrength = (id: string, activeIngredientId: string, input: CreateUpdateMedicineIngredientDto, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, void>({
+      method: 'PUT',
+      url: `/api/app/medicine/${id}/ingredient-strength/${activeIngredientId}`,
+      body: input,
+    },
+    { apiName: this.apiName,...config });
+  
+
   updateUnit = (id: string, unitId: string, input: CreateUpdateMedicineUnitDto, config?: Partial<Rest.Config>) =>
     this.restService.request<any, void>({
       method: 'PUT',

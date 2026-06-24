@@ -1,0 +1,23 @@
+{
+  "tables": [
+    "AbpUsers",
+    "AbpUserTokens",
+    "AbpSettings",
+    "AbpPermissionGrants",
+    "AbpRoles",
+    "AbpUserRoles",
+    "AbpOrganizationUnits",
+    "AuditLogs"
+  ],
+  "columns": [
+    "password",
+    "hash",
+    "salt",
+    "secret",
+    "token",
+    "key",
+    "credential",
+    "auth",
+    "private"
+  ]
+}

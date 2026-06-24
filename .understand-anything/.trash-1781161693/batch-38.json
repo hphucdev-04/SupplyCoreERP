@@ -1,0 +1,1256 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ProductBatchDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của lô sản phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs:ProductBatchDto",
+      "type": "class",
+      "metadata": {
+        "name": "ProductBatchDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs",
+        "summary": "Lớp DTO ProductBatchDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của lô sản phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "IProductBatchAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý lô sản phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs:IProductBatchAppService",
+      "type": "class",
+      "metadata": {
+        "name": "IProductBatchAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs",
+        "summary": "Interface IProductBatchAppService định nghĩa các hợp đồng nghiệp vụ cho lô sản phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CategoryDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của danh mục sản phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs:CategoryDto",
+      "type": "class",
+      "metadata": {
+        "name": "CategoryDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs",
+        "summary": "Lớp DTO CategoryDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của danh mục sản phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateCategoryDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin danh mục sản phẩm trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs:CreateUpdateCategoryDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateCategoryDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs",
+        "summary": "Lớp DTO CreateUpdateCategoryDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin danh mục sản phẩm trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetCategoryListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách danh mục sản phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs:GetCategoryListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetCategoryListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs",
+        "summary": "Lớp DTO GetCategoryListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách danh mục sản phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ICategoryAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý danh mục sản phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs:ICategoryAppService",
+      "type": "class",
+      "metadata": {
+        "name": "ICategoryAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs",
+        "summary": "Interface ICategoryAppService định nghĩa các hợp đồng nghiệp vụ cho danh mục sản phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateCustomerDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin khách hàng trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs:CreateUpdateCustomerDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateCustomerDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs",
+        "summary": "Lớp DTO CreateUpdateCustomerDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin khách hàng trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CustomerDetailDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs",
+        "summary": "DTO chứa thông tin chi tiết đầy đủ của khách hàng.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs:CustomerDetailDto",
+      "type": "class",
+      "metadata": {
+        "name": "CustomerDetailDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs",
+        "summary": "Lớp DTO CustomerDetailDto hỗ trợ truyền tải dữ liệu DTO chứa thông tin chi tiết đầy đủ của khách hàng..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CustomerDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của khách hàng.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs:CustomerDto",
+      "type": "class",
+      "metadata": {
+        "name": "CustomerDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs",
+        "summary": "Lớp DTO CustomerDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của khách hàng..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CustomerSummaryDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs",
+        "summary": "DTO chứa thông tin tóm tắt rút gọn của khách hàng.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs:CustomerSummaryDto",
+      "type": "class",
+      "metadata": {
+        "name": "CustomerSummaryDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs",
+        "summary": "Lớp DTO CustomerSummaryDto hỗ trợ truyền tải dữ liệu DTO chứa thông tin tóm tắt rút gọn của khách hàng..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetCustomerListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách khách hàng.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs:GetCustomerListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetCustomerListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs",
+        "summary": "Lớp DTO GetCustomerListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách khách hàng..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ICustomerAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý khách hàng.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs:ICustomerAppService",
+      "type": "class",
+      "metadata": {
+        "name": "ICustomerAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs",
+        "summary": "Interface ICustomerAppService định nghĩa các hợp đồng nghiệp vụ cho khách hàng..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateDosageFormDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin dạng bào chế trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs:CreateUpdateDosageFormDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateDosageFormDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs",
+        "summary": "Lớp DTO CreateUpdateDosageFormDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin dạng bào chế trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "DosageFormDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của dạng bào chế.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs:DosageFormDto",
+      "type": "class",
+      "metadata": {
+        "name": "DosageFormDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs",
+        "summary": "Lớp DTO DosageFormDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của dạng bào chế..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetDosageFormListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách dạng bào chế.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs:GetDosageFormListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetDosageFormListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs",
+        "summary": "Lớp DTO GetDosageFormListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách dạng bào chế..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "IDosageFormAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý dạng bào chế.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs:IDosageFormAppService",
+      "type": "class",
+      "metadata": {
+        "name": "IDosageFormAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs",
+        "summary": "Interface IDosageFormAppService định nghĩa các hợp đồng nghiệp vụ cho dạng bào chế..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "AreaDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của địa điểm/khu vực.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs:AreaDto",
+      "type": "class",
+      "metadata": {
+        "name": "AreaDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs",
+        "summary": "Lớp DTO AreaDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của địa điểm/khu vực..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CityDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của địa điểm/khu vực.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs:CityDto",
+      "type": "class",
+      "metadata": {
+        "name": "CityDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs",
+        "summary": "Lớp DTO CityDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của địa điểm/khu vực..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ContinentDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của địa điểm/khu vực.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs:ContinentDto",
+      "type": "class",
+      "metadata": {
+        "name": "ContinentDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs",
+        "summary": "Lớp DTO ContinentDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của địa điểm/khu vực..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CountryDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của địa điểm/khu vực.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs:CountryDto",
+      "type": "class",
+      "metadata": {
+        "name": "CountryDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs",
+        "summary": "Lớp DTO CountryDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của địa điểm/khu vực..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ILocationAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý địa điểm/khu vực.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs:ILocationAppService",
+      "type": "class",
+      "metadata": {
+        "name": "ILocationAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs",
+        "summary": "Interface ILocationAppService định nghĩa các hợp đồng nghiệp vụ cho địa điểm/khu vực..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CreateUpdateManufacturerDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs",
+        "summary": "DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin nhà sản xuất trong hệ thống.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs:CreateUpdateManufacturerDto",
+      "type": "class",
+      "metadata": {
+        "name": "CreateUpdateManufacturerDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs",
+        "summary": "Lớp DTO CreateUpdateManufacturerDto hỗ trợ truyền tải dữ liệu DTO (Data Transfer Object) dùng để chứa dữ liệu cho việc tạo mới hoặc cập nhật thông tin nhà sản xuất trong hệ thống..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "GetManufacturerListDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs",
+        "summary": "DTO chứa các tham số lọc và tìm kiếm dùng để truy vấn danh sách nhà sản xuất.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs:GetManufacturerListDto",
+      "type": "class",
+      "metadata": {
+        "name": "GetManufacturerListDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs",
+        "summary": "Lớp DTO GetManufacturerListDto hỗ trợ truyền tải dữ liệu truy vấn danh sách nhà sản xuất..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ManufacturerDto.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs",
+        "summary": "DTO đại diện cho dữ liệu truyền tải của nhà sản xuất.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs:ManufacturerDto",
+      "type": "class",
+      "metadata": {
+        "name": "ManufacturerDto",
+        "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs",
+        "summary": "Lớp DTO ManufacturerDto hỗ trợ truyền tải dữ liệu DTO đại diện cho dữ liệu truyền tải của nhà sản xuất..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "dto"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "IManufacturerAppService.cs",
+        "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs",
+        "summary": "Interface định nghĩa các dịch vụ ứng dụng (Application Service) cho quản lý nhà sản xuất.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs:IManufacturerAppService",
+      "type": "class",
+      "metadata": {
+        "name": "IManufacturerAppService",
+        "path": "src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs",
+        "summary": "Interface IManufacturerAppService định nghĩa các hợp đồng nghiệp vụ cho nhà sản xuất..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-contracts",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs:ProductBatchDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Batches/Dtos/ProductBatchDto.cs:ProductBatchDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs:IProductBatchAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Batches/IProductBatchAppService.cs:IProductBatchAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs:CategoryDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CategoryDto.cs:CategoryDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs:CreateUpdateCategoryDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/CreateUpdateCategoryDto.cs:CreateUpdateCategoryDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs:GetCategoryListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Categories/Dtos/GetCategoryListDto.cs:GetCategoryListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs:ICategoryAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Categories/ICategoryAppService.cs:ICategoryAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs:CreateUpdateCustomerDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CreateUpdateCustomerDto.cs:CreateUpdateCustomerDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs:CustomerDetailDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDetailDto.cs:CustomerDetailDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs:CustomerDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerDto.cs:CustomerDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs:CustomerSummaryDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/CustomerSummaryDto.cs:CustomerSummaryDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs:GetCustomerListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/Dtos/GetCustomerListDto.cs:GetCustomerListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs:ICustomerAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Customers/ICustomerAppService.cs:ICustomerAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs:CreateUpdateDosageFormDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/CreateUpdateDosageFormDto.cs:CreateUpdateDosageFormDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs:DosageFormDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/DosageFormDto.cs:DosageFormDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs:GetDosageFormListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/Dtos/GetDosageFormListDto.cs:GetDosageFormListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs:IDosageFormAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/DosageForms/IDosageFormAppService.cs:IDosageFormAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs:AreaDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/AreaDto.cs:AreaDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs:CityDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CityDto.cs:CityDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs:ContinentDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/ContinentDto.cs:ContinentDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs:CountryDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/Dtos/CountryDto.cs:CountryDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs:ILocationAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Locations/ILocationAppService.cs:ILocationAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs:CreateUpdateManufacturerDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/CreateUpdateManufacturerDto.cs:CreateUpdateManufacturerDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs:GetManufacturerListDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/GetManufacturerListDto.cs:GetManufacturerListDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs:ManufacturerDto",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/Dtos/ManufacturerDto.cs:ManufacturerDto",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs:IManufacturerAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application.Contracts/Manufacturers/IManufacturerAppService.cs:IManufacturerAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

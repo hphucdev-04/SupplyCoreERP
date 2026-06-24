@@ -1,0 +1,1588 @@
+{
+  "nodes": [
+    {
+      "id": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "type": "file",
+      "name": "Supplier_Unit_Tests.cs",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "File mã nguồn `Supplier_Unit_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Supplier_Unit_Tests",
+      "type": "class",
+      "name": "Supplier_Unit_Tests",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Lớp `Supplier_Unit_Tests` thực hiện nghiệp vụ liên quan đến supplier đơn vị tests.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 11,
+      "endLine": 321
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Create_Supplier_With_Valid_Parameters",
+      "type": "function",
+      "name": "Should_Create_Supplier_With_Valid_Parameters",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Create_Supplier_With_Valid_Parameters` thực hiện nghiệp vụ should create supplier with valid parameters.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 13,
+      "endLine": 39
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Update_Supplier_Info",
+      "type": "function",
+      "name": "Should_Update_Supplier_Info",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Update_Supplier_Info` thực hiện nghiệp vụ should update supplier info.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 40,
+      "endLine": 58
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_Location",
+      "type": "function",
+      "name": "Should_Set_Location",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Set_Location` thực hiện nghiệp vụ should set location.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 59,
+      "endLine": 77
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_DebtInfo",
+      "type": "function",
+      "name": "Should_Set_DebtInfo",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Set_DebtInfo` thực hiện nghiệp vụ should set debt info.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 78,
+      "endLine": 91
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Product_To_Supplier",
+      "type": "function",
+      "name": "Should_Add_Product_To_Supplier",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Add_Product_To_Supplier` thực hiện nghiệp vụ should add sản phẩm to supplier.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 92,
+      "endLine": 111
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_BusinessException_When_Product_Is_Duplicate",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Product_Is_Duplicate",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Product_Is_Duplicate` thực hiện nghiệp vụ should throw business exception when sản phẩm is duplicate.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 112,
+      "endLine": 126
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Update_SupplierProduct",
+      "type": "function",
+      "name": "Should_Update_SupplierProduct",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Update_SupplierProduct` thực hiện nghiệp vụ should update supplier sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 127,
+      "endLine": 147
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Remove_Product",
+      "type": "function",
+      "name": "Should_Remove_Product",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Remove_Product` thực hiện nghiệp vụ should remove sản phẩm.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 148,
+      "endLine": 162
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Toggle_Product_Active",
+      "type": "function",
+      "name": "Should_Toggle_Product_Active",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Toggle_Product_Active` thực hiện nghiệp vụ should toggle sản phẩm active.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 163,
+      "endLine": 180
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Debt_Successfully",
+      "type": "function",
+      "name": "Should_Add_Debt_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Add_Debt_Successfully` thực hiện nghiệp vụ should add debt successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 183,
+      "endLine": 193
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Debt_When_No_Limit",
+      "type": "function",
+      "name": "Should_Add_Debt_When_No_Limit",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Add_Debt_When_No_Limit` thực hiện nghiệp vụ should add debt when no limit.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 194,
+      "endLine": 204
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_AddDebt_With_Invalid_Amount",
+      "type": "function",
+      "name": "Should_Throw_When_AddDebt_With_Invalid_Amount",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_When_AddDebt_With_Invalid_Amount` thực hiện nghiệp vụ should throw when add debt with invalid amount.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 205,
+      "endLine": 216
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_AddDebt_Exceeds_Limit",
+      "type": "function",
+      "name": "Should_Throw_When_AddDebt_Exceeds_Limit",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_When_AddDebt_Exceeds_Limit` thực hiện nghiệp vụ should throw when add debt exceeds limit.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 217,
+      "endLine": 227
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Pay_Debt_Successfully",
+      "type": "function",
+      "name": "Should_Pay_Debt_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Pay_Debt_Successfully` thực hiện nghiệp vụ should pay debt successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 228,
+      "endLine": 238
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_PayDebt_With_Invalid_Amount",
+      "type": "function",
+      "name": "Should_Throw_When_PayDebt_With_Invalid_Amount",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_When_PayDebt_With_Invalid_Amount` thực hiện nghiệp vụ should throw when pay debt with invalid amount.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 239,
+      "endLine": 251
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_Active",
+      "type": "function",
+      "name": "Should_Set_Active",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Set_Active` thực hiện nghiệp vụ should set active.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 256,
+      "endLine": 268
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Clamp_Negative_DebtInfo_To_Zero",
+      "type": "function",
+      "name": "Should_Clamp_Negative_DebtInfo_To_Zero",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Clamp_Negative_DebtInfo_To_Zero` thực hiện nghiệp vụ should clamp negative debt info to zero.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 269,
+      "endLine": 279
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_UpdateProduct_Not_Found",
+      "type": "function",
+      "name": "Should_Throw_When_UpdateProduct_Not_Found",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_When_UpdateProduct_Not_Found` thực hiện nghiệp vụ should throw when update sản phẩm not found.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 284,
+      "endLine": 293
+    },
+    {
+      "id": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "type": "file",
+      "name": "SupplierManager_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "File mã nguồn `SupplierManager_Integration_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:SupplierManager_Integration_Tests",
+      "type": "class",
+      "name": "SupplierManager_Integration_Tests",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Lớp `SupplierManager_Integration_Tests` thực hiện nghiệp vụ liên quan đến quản lý supplier integration tests.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 18,
+      "endLine": 357
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Create_Supplier_And_Generate_Supplier_Code",
+      "type": "function",
+      "name": "Should_Create_Supplier_And_Generate_Supplier_Code",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Create_Supplier_And_Generate_Supplier_Code` thực hiện nghiệp vụ should create supplier and generate supplier mã.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 33,
+      "endLine": 63
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_BusinessException_When_Code_Or_Name_Exists",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Code_Or_Name_Exists",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Code_Or_Name_Exists` thực hiện nghiệp vụ should throw business exception when mã or name exists.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 64,
+      "endLine": 77
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Add_Product_Successfully",
+      "type": "function",
+      "name": "Should_Add_Product_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Add_Product_Successfully` thực hiện nghiệp vụ should add sản phẩm successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 78,
+      "endLine": 102
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Update_Product_Successfully",
+      "type": "function",
+      "name": "Should_Update_Product_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Update_Product_Successfully` thực hiện nghiệp vụ should update sản phẩm successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 103,
+      "endLine": 125
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Remove_Product_Successfully",
+      "type": "function",
+      "name": "Should_Remove_Product_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Remove_Product_Successfully` thực hiện nghiệp vụ should remove sản phẩm successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 126,
+      "endLine": 142
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Toggle_Product_Active_Successfully",
+      "type": "function",
+      "name": "Should_Toggle_Product_Active_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Toggle_Product_Active_Successfully` thực hiện nghiệp vụ should toggle sản phẩm active successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 143,
+      "endLine": 161
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_AddProduct_With_Unavailable_Product",
+      "type": "function",
+      "name": "Should_Throw_Exception_When_AddProduct_With_Unavailable_Product",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Throw_Exception_When_AddProduct_With_Unavailable_Product` thực hiện nghiệp vụ should throw exception when add sản phẩm with unavailable sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 162,
+      "endLine": 209
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_AddProduct_With_NonExistent_Unit",
+      "type": "function",
+      "name": "Should_Throw_Exception_When_AddProduct_With_NonExistent_Unit",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Throw_Exception_When_AddProduct_With_NonExistent_Unit` thực hiện nghiệp vụ should throw exception when add sản phẩm with non existent đơn vị.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 210,
+      "endLine": 231
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Delete_Supplier_Successfully",
+      "type": "function",
+      "name": "Should_Delete_Supplier_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Delete_Supplier_Successfully` thực hiện nghiệp vụ should delete supplier successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 232,
+      "endLine": 260
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_BusinessException_When_Deleting_Supplier_With_Outstanding_Debt",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Deleting_Supplier_With_Outstanding_Debt",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Deleting_Supplier_With_Outstanding_Debt` thực hiện nghiệp vụ should throw business exception when deleting supplier with outstanding debt.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 261,
+      "endLine": 287
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Update_Supplier_Successfully",
+      "type": "function",
+      "name": "Should_Update_Supplier_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Update_Supplier_Successfully` thực hiện nghiệp vụ should update supplier successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 288,
+      "endLine": 319
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_Adding_NonExistent_Product",
+      "type": "function",
+      "name": "Should_Throw_Exception_When_Adding_NonExistent_Product",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_Throw_Exception_When_Adding_NonExistent_Product` thực hiện nghiệp vụ should throw exception when adding non existent sản phẩm.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 320,
+      "endLine": 342
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_CheckCodeAndName_Throw_BusinessException_When_Name_Exists",
+      "type": "function",
+      "name": "Should_CheckCodeAndName_Throw_BusinessException_When_Name_Exists",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "summary": "Phương thức `Should_CheckCodeAndName_Throw_BusinessException_When_Name_Exists` thực hiện nghiệp vụ should check mã and name throw business exception when name exists.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 343,
+      "endLine": 356
+    },
+    {
+      "id": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "type": "file",
+      "name": "SupplierManager_Unit_Tests.cs",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "File mã nguồn `SupplierManager_Unit_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "complex",
+      "tags": [
+        "csharp",
+        "backend",
+        "domain-layer"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:SupplierManager_Unit_Tests",
+      "type": "class",
+      "name": "SupplierManager_Unit_Tests",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Lớp `SupplierManager_Unit_Tests` thực hiện nghiệp vụ liên quan đến quản lý supplier đơn vị tests.",
+      "complexity": "complex",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 24,
+      "endLine": 501
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:SupplierManager_Unit_Tests",
+      "type": "function",
+      "name": "SupplierManager_Unit_Tests",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `SupplierManager_Unit_Tests` thực hiện nghiệp vụ supplier manager đơn vị tests.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 35,
+      "endLine": 59
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Delete_Supplier_With_Outstanding_Debt",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Delete_Supplier_With_Outstanding_Debt",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Delete_Supplier_With_Outstanding_Debt` thực hiện nghiệp vụ should throw business exception when delete supplier with outstanding debt.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 60,
+      "endLine": 79
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Delete_Supplier_Successfully",
+      "type": "function",
+      "name": "Should_Delete_Supplier_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Delete_Supplier_Successfully` thực hiện nghiệp vụ should delete supplier successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 80,
+      "endLine": 96
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Country_City_Mismatch",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Location_Country_City_Mismatch",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Location_Country_City_Mismatch` thực hiện nghiệp vụ should throw business exception when location country city mismatch.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 97,
+      "endLine": 121
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Country_NotFound",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Location_Country_NotFound",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Location_Country_NotFound` thực hiện nghiệp vụ should throw business exception when location country not found.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 122,
+      "endLine": 141
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_City_NotFound",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Location_City_NotFound",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Location_City_NotFound` thực hiện nghiệp vụ should throw business exception when location city not found.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 142,
+      "endLine": 161
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Area_NotFound",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Location_Area_NotFound",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Location_Area_NotFound` thực hiện nghiệp vụ should throw business exception when location area not found.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 162,
+      "endLine": 181
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Area_City_Mismatch",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Location_Area_City_Mismatch",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Location_Area_City_Mismatch` thực hiện nghiệp vụ should throw business exception when location area city mismatch.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 182,
+      "endLine": 207
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Supplier_Code_Exists",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Supplier_Code_Exists",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Supplier_Code_Exists` thực hiện nghiệp vụ should throw business exception when supplier mã exists.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 208,
+      "endLine": 221
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Supplier_Name_Exists",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_Supplier_Name_Exists",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_Supplier_Name_Exists` thực hiện nghiệp vụ should throw business exception when supplier name exists.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 222,
+      "endLine": 250
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Create_Supplier_Successfully",
+      "type": "function",
+      "name": "Should_Create_Supplier_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Create_Supplier_Successfully` thực hiện nghiệp vụ should create supplier successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 251,
+      "endLine": 278
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Product_NotFound",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_AddProduct_Product_NotFound",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_AddProduct_Product_NotFound` thực hiện nghiệp vụ should throw business exception when add sản phẩm sản phẩm not found.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 279,
+      "endLine": 296
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Product_NotAvailable",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_AddProduct_Product_NotAvailable",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_AddProduct_Product_NotAvailable` thực hiện nghiệp vụ should throw business exception when add sản phẩm sản phẩm not available.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 297,
+      "endLine": 318
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Unit_NotFound",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_AddProduct_Unit_NotFound",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_AddProduct_Unit_NotFound` thực hiện nghiệp vụ should throw business exception when add sản phẩm đơn vị not found.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 319,
+      "endLine": 344
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_AddProduct_Successfully",
+      "type": "function",
+      "name": "Should_AddProduct_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_AddProduct_Successfully` thực hiện nghiệp vụ should add sản phẩm successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 345,
+      "endLine": 375
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_UpdateProduct_Unit_NotFound",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_UpdateProduct_Unit_NotFound",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_UpdateProduct_Unit_NotFound` thực hiện nghiệp vụ should throw business exception when update sản phẩm đơn vị not found.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 376,
+      "endLine": 393
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_UpdateProduct_Successfully",
+      "type": "function",
+      "name": "Should_UpdateProduct_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_UpdateProduct_Successfully` thực hiện nghiệp vụ should update sản phẩm successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 394,
+      "endLine": 423
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_RemoveProduct_Product_NotFound",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_RemoveProduct_Product_NotFound",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_RemoveProduct_Product_NotFound` thực hiện nghiệp vụ should throw business exception when remove sản phẩm sản phẩm not found.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 424,
+      "endLine": 441
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_RemoveProduct_Successfully",
+      "type": "function",
+      "name": "Should_RemoveProduct_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_RemoveProduct_Successfully` thực hiện nghiệp vụ should remove sản phẩm successfully.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 442,
+      "endLine": 461
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_ToggleProductActive_Product_NotFound",
+      "type": "function",
+      "name": "Should_Throw_BusinessException_When_ToggleProductActive_Product_NotFound",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_Throw_BusinessException_When_ToggleProductActive_Product_NotFound` thực hiện nghiệp vụ should throw business exception when toggle sản phẩm active sản phẩm not found.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 462,
+      "endLine": 477
+    },
+    {
+      "id": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_ToggleProductActive_Successfully",
+      "type": "function",
+      "name": "Should_ToggleProductActive_Successfully",
+      "path": "test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "summary": "Phương thức `Should_ToggleProductActive_Successfully` thực hiện nghiệp vụ should toggle sản phẩm active successfully.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 478,
+      "endLine": 500
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Supplier_Unit_Tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Supplier_Unit_Tests",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Create_Supplier_With_Valid_Parameters",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Create_Supplier_With_Valid_Parameters",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Update_Supplier_Info",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Update_Supplier_Info",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_Location",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_Location",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_DebtInfo",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_DebtInfo",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Product_To_Supplier",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Product_To_Supplier",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_BusinessException_When_Product_Is_Duplicate",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_BusinessException_When_Product_Is_Duplicate",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Update_SupplierProduct",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Update_SupplierProduct",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Remove_Product",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Remove_Product",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Toggle_Product_Active",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Toggle_Product_Active",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Debt_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Debt_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Debt_When_No_Limit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Add_Debt_When_No_Limit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_AddDebt_With_Invalid_Amount",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_AddDebt_With_Invalid_Amount",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_AddDebt_Exceeds_Limit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_AddDebt_Exceeds_Limit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Pay_Debt_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Pay_Debt_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_PayDebt_With_Invalid_Amount",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_PayDebt_With_Invalid_Amount",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_Active",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Set_Active",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Clamp_Negative_DebtInfo_To_Zero",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Clamp_Negative_DebtInfo_To_Zero",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_UpdateProduct_Not_Found",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/Supplier_Unit_Tests.cs:Should_Throw_When_UpdateProduct_Not_Found",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:SupplierManager_Integration_Tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:SupplierManager_Integration_Tests",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Create_Supplier_And_Generate_Supplier_Code",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Create_Supplier_And_Generate_Supplier_Code",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_BusinessException_When_Code_Or_Name_Exists",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_BusinessException_When_Code_Or_Name_Exists",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Add_Product_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Add_Product_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Update_Product_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Update_Product_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Remove_Product_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Remove_Product_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Toggle_Product_Active_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Toggle_Product_Active_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_AddProduct_With_Unavailable_Product",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_AddProduct_With_Unavailable_Product",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_AddProduct_With_NonExistent_Unit",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_AddProduct_With_NonExistent_Unit",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Delete_Supplier_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Delete_Supplier_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_BusinessException_When_Deleting_Supplier_With_Outstanding_Debt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_BusinessException_When_Deleting_Supplier_With_Outstanding_Debt",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Update_Supplier_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Update_Supplier_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_Adding_NonExistent_Product",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_Throw_Exception_When_Adding_NonExistent_Product",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_CheckCodeAndName_Throw_BusinessException_When_Name_Exists",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Integration_Tests.cs:Should_CheckCodeAndName_Throw_BusinessException_When_Name_Exists",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:SupplierManager_Unit_Tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "class:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:SupplierManager_Unit_Tests",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:SupplierManager_Unit_Tests",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:SupplierManager_Unit_Tests",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Delete_Supplier_With_Outstanding_Debt",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Delete_Supplier_With_Outstanding_Debt",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Delete_Supplier_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Delete_Supplier_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Country_City_Mismatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Country_City_Mismatch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Country_NotFound",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Country_NotFound",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_City_NotFound",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_City_NotFound",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Area_NotFound",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Area_NotFound",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Area_City_Mismatch",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Location_Area_City_Mismatch",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Supplier_Code_Exists",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Supplier_Code_Exists",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Supplier_Name_Exists",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_Supplier_Name_Exists",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Create_Supplier_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Create_Supplier_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Product_NotFound",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Product_NotFound",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Product_NotAvailable",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Product_NotAvailable",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Unit_NotFound",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_AddProduct_Unit_NotFound",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_AddProduct_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_AddProduct_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_UpdateProduct_Unit_NotFound",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_UpdateProduct_Unit_NotFound",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_UpdateProduct_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_UpdateProduct_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_RemoveProduct_Product_NotFound",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_RemoveProduct_Product_NotFound",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_RemoveProduct_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_RemoveProduct_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_ToggleProductActive_Product_NotFound",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_Throw_BusinessException_When_ToggleProductActive_Product_NotFound",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_ToggleProductActive_Successfully",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs",
+      "target": "function:test/SupplyCoreERP.Domain.Tests/Partner/Suppliers/SupplierManager_Unit_Tests.cs:Should_ToggleProductActive_Successfully",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

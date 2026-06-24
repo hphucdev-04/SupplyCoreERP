@@ -127,10 +127,17 @@ jobs:
       - name: Install Railway CLI
         run: npm install -g @railway/cli
 
-      - name: Deploy to Railway
+      - name: Deploy Backend to Railway
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         run: railway up --detach --service rxlogistics-backend
+
+      - name: Deploy MCP Server to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        run: |
+          cd mcp-server
+          railway up --detach --service rxlogistics-mcp-server
 
   deploy-frontend:
     name: Deploy to Vercel

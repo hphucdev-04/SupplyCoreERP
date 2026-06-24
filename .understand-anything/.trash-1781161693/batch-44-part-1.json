@@ -1,0 +1,1288 @@
+{
+  "nodes": [
+    {
+      "id": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "InventoryBalanceAppService.cs",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+        "summary": "Dịch vụ ứng dụng (Application Service) triển khai các quy trình nghiệp vụ và CRUD cho quản lý số dư tồn kho.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:InventoryBalanceAppService",
+      "type": "class",
+      "metadata": {
+        "name": "InventoryBalanceAppService",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+        "summary": "Lớp dịch vụ ứng dụng InventoryBalanceAppService xử lý luồng nghiệp vụ cho số dư tồn kho..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:InventoryBalanceAppService",
+      "type": "function",
+      "metadata": {
+        "name": "InventoryBalanceAppService",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+        "summary": "Phương thức InventoryBalanceAppService thực hiện xử lý nghiệp vụ liên quan đến InventoryBalanceAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetListAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetListAsync",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+        "summary": "Phương thức GetListAsync thực hiện xử lý nghiệp vụ liên quan đến InventoryBalanceAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "complex",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetAsync",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+        "summary": "Phương thức GetAsync thực hiện xử lý nghiệp vụ liên quan đến InventoryBalanceAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetReservationListAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetReservationListAsync",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+        "summary": "Phương thức GetReservationListAsync thực hiện xử lý nghiệp vụ liên quan đến InventoryBalanceAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+      "type": "file",
+      "metadata": {
+        "name": "InventoryBalanceAutoMapperProfile.cs",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "inventory-balance"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs:InventoryBalanceAutoMapperProfile",
+      "type": "class",
+      "metadata": {
+        "name": "InventoryBalanceAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+        "summary": "Lớp InventoryBalanceAutoMapperProfile thuộc thành phần InventoryBalanceAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "inventory-balance"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs:InventoryBalanceAutoMapperProfile",
+      "type": "function",
+      "metadata": {
+        "name": "InventoryBalanceAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+        "summary": "Phương thức InventoryBalanceAutoMapperProfile thực hiện xử lý nghiệp vụ liên quan đến InventoryBalanceAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "inventory-balance"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "BaseUnitAppService.cs",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+        "summary": "Dịch vụ ứng dụng (Application Service) triển khai các quy trình nghiệp vụ và CRUD cho quản lý đơn vị tính cơ bản.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:BaseUnitAppService",
+      "type": "class",
+      "metadata": {
+        "name": "BaseUnitAppService",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+        "summary": "Lớp dịch vụ ứng dụng BaseUnitAppService xử lý luồng nghiệp vụ cho đơn vị tính cơ bản..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:BaseUnitAppService",
+      "type": "function",
+      "metadata": {
+        "name": "BaseUnitAppService",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+        "summary": "Phương thức BaseUnitAppService thực hiện xử lý nghiệp vụ liên quan đến BaseUnitAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến BaseUnitAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến BaseUnitAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến BaseUnitAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:CreateFilteredQueryAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateFilteredQueryAsync",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+        "summary": "Phương thức CreateFilteredQueryAsync thực hiện xử lý nghiệp vụ liên quan đến BaseUnitAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+      "type": "file",
+      "metadata": {
+        "name": "BaseUnitAutoMapperProfile.cs",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "base-unit"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs:BaseUnitAutoMapperProfile",
+      "type": "class",
+      "metadata": {
+        "name": "BaseUnitAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+        "summary": "Lớp BaseUnitAutoMapperProfile thuộc thành phần BaseUnitAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "base-unit"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs:BaseUnitAutoMapperProfile",
+      "type": "function",
+      "metadata": {
+        "name": "BaseUnitAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+        "summary": "Phương thức BaseUnitAutoMapperProfile thực hiện xử lý nghiệp vụ liên quan đến BaseUnitAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "base-unit"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ProductBatchAppService.cs",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Dịch vụ ứng dụng (Application Service) triển khai các quy trình nghiệp vụ và CRUD cho quản lý lô sản phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ProductBatchAppService",
+      "type": "class",
+      "metadata": {
+        "name": "ProductBatchAppService",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Lớp dịch vụ ứng dụng ProductBatchAppService xử lý luồng nghiệp vụ cho lô sản phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ProductBatchAppService",
+      "type": "function",
+      "metadata": {
+        "name": "ProductBatchAppService",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức ProductBatchAppService thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:GetListAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetListAsync",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức GetListAsync thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:GetAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetAsync",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức GetAsync thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ApproveQAAsync",
+      "type": "function",
+      "metadata": {
+        "name": "ApproveQAAsync",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức ApproveQAAsync thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:RejectQAAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RejectQAAsync",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức RejectQAAsync thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:RecallAsync",
+      "type": "function",
+      "metadata": {
+        "name": "RecallAsync",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+        "summary": "Phương thức RecallAsync thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+      "type": "file",
+      "metadata": {
+        "name": "ProductBatchAutoMapperProfile.cs",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "product-batch"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs:ProductBatchAutoMapperProfile",
+      "type": "class",
+      "metadata": {
+        "name": "ProductBatchAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+        "summary": "Lớp ProductBatchAutoMapperProfile thuộc thành phần ProductBatchAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "product-batch"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs:ProductBatchAutoMapperProfile",
+      "type": "function",
+      "metadata": {
+        "name": "ProductBatchAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+        "summary": "Phương thức ProductBatchAutoMapperProfile thực hiện xử lý nghiệp vụ liên quan đến ProductBatchAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "product-batch"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CategoryAppService.cs",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+        "summary": "Dịch vụ ứng dụng (Application Service) triển khai các quy trình nghiệp vụ và CRUD cho quản lý danh mục sản phẩm.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CategoryAppService",
+      "type": "class",
+      "metadata": {
+        "name": "CategoryAppService",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+        "summary": "Lớp dịch vụ ứng dụng CategoryAppService xử lý luồng nghiệp vụ cho danh mục sản phẩm..",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CategoryAppService",
+      "type": "function",
+      "metadata": {
+        "name": "CategoryAppService",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+        "summary": "Phương thức CategoryAppService thực hiện xử lý nghiệp vụ liên quan đến CategoryAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CreateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateAsync",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+        "summary": "Phương thức CreateAsync thực hiện xử lý nghiệp vụ liên quan đến CategoryAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:UpdateAsync",
+      "type": "function",
+      "metadata": {
+        "name": "UpdateAsync",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+        "summary": "Phương thức UpdateAsync thực hiện xử lý nghiệp vụ liên quan đến CategoryAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:DeleteAsync",
+      "type": "function",
+      "metadata": {
+        "name": "DeleteAsync",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+        "summary": "Phương thức DeleteAsync thực hiện xử lý nghiệp vụ liên quan đến CategoryAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CreateFilteredQueryAsync",
+      "type": "function",
+      "metadata": {
+        "name": "CreateFilteredQueryAsync",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+        "summary": "Phương thức CreateFilteredQueryAsync thực hiện xử lý nghiệp vụ liên quan đến CategoryAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:GetListAsync",
+      "type": "function",
+      "metadata": {
+        "name": "GetListAsync",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+        "summary": "Phương thức GetListAsync thực hiện xử lý nghiệp vụ liên quan đến CategoryAppService.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "app-service"
+        ],
+        "complexity": "moderate",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "file:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+      "type": "file",
+      "metadata": {
+        "name": "CategoryAutoMapperProfile.cs",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+        "summary": "Tệp nguồn chứa mã nguồn của dự án SupplyCoreERP.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "category"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "class:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs:CategoryAutoMapperProfile",
+      "type": "class",
+      "metadata": {
+        "name": "CategoryAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+        "summary": "Lớp CategoryAutoMapperProfile thuộc thành phần CategoryAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "category"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    },
+    {
+      "id": "function:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs:CategoryAutoMapperProfile",
+      "type": "function",
+      "metadata": {
+        "name": "CategoryAutoMapperProfile",
+        "path": "src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+        "summary": "Phương thức CategoryAutoMapperProfile thực hiện xử lý nghiệp vụ liên quan đến CategoryAutoMapperProfile.cs.",
+        "tags": [
+          "csharp",
+          "backend",
+          "supply-core-erp",
+          "application-layer",
+          "category"
+        ],
+        "complexity": "simple",
+        "language": "csharp"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:InventoryBalanceAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:InventoryBalanceAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:InventoryBalanceAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:InventoryBalanceAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetListAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetListAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetReservationListAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAppService.cs:GetReservationListAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs:InventoryBalanceAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs:InventoryBalanceAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs:InventoryBalanceAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/Balances/InventoryBalanceAutoMapperProfile.cs:InventoryBalanceAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:BaseUnitAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:BaseUnitAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:BaseUnitAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:BaseUnitAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAppService.cs:CreateFilteredQueryAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs:BaseUnitAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs:BaseUnitAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs:BaseUnitAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/BaseUnits/BaseUnitAutoMapperProfile.cs:BaseUnitAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ProductBatchAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ProductBatchAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ProductBatchAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ProductBatchAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:GetListAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:GetListAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:GetAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:GetAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ApproveQAAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:ApproveQAAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:RejectQAAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:RejectQAAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:RecallAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAppService.cs:RecallAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs:ProductBatchAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs:ProductBatchAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs:ProductBatchAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/Batches/ProductBatchAutoMapperProfile.cs:ProductBatchAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CategoryAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "class:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CategoryAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CategoryAppService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CategoryAppService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CreateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CreateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:UpdateAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:UpdateAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:DeleteAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:DeleteAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:CreateFilteredQueryAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:GetListAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAppService.cs:GetListAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs:CategoryAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+      "target": "class:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs:CategoryAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs:CategoryAutoMapperProfile",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs",
+      "target": "function:src/SupplyCoreERP.Application/Categories/CategoryAutoMapperProfile.cs:CategoryAutoMapperProfile",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    }
+  ]
+}

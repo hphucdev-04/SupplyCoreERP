@@ -1310,6 +1310,23 @@
                   "parametersOnMethod": [
                     {
                       "name": "input",
+                      "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionPagedInputDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Agent.Dtos.AgentSessionPagedInputDto",
+                      "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionPagedInputDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto",
+                    "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto"
+                  }
+                },
+                {
+                  "name": "ResetSessionAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
                       "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
                       "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
                       "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
@@ -1318,8 +1335,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto",
-                    "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto"
+                    "type": "System.Object",
+                    "typeSimple": "object"
                   }
                 }
               ]
@@ -1446,9 +1463,9 @@
               "parametersOnMethod": [
                 {
                   "name": "input",
-                  "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
-                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
-                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionPagedInputDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionPagedInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionPagedInputDto",
                   "isOptional": false,
                   "defaultValue": null
                 }
@@ -1465,11 +1482,72 @@
                   "constraintTypes": null,
                   "bindingSourceId": "ModelBinding",
                   "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "SkipCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "MaxResultCount",
+                  "jsonName": null,
+                  "type": "System.Int32",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
                 }
               ],
               "returnValue": {
                 "type": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto",
                 "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentHistoryDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
+            },
+            "ResetSessionAsyncByInput": {
+              "uniqueName": "ResetSessionAsyncByInput",
+              "name": "ResetSessionAsync",
+              "httpMethod": "POST",
+              "url": "api/app/agent/reset-session",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "typeSimple": "SupplyCoreERP.Agent.Dtos.AgentSessionInputDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Object",
+                "typeSimple": "object"
               },
               "allowAnonymous": false,
               "implementFrom": "SupplyCoreERP.Agent.IAgentAppService"
@@ -3604,6 +3682,1302 @@
             }
           }
         },
+        "SupplyCoreERP.Dashboard.DashboardAppService": {
+          "controllerName": "Dashboard",
+          "controllerGroupName": "Dashboard",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "SupplyCoreERP.Dashboard.DashboardAppService",
+          "interfaces": [
+            {
+              "type": "SupplyCoreERP.Dashboard.IDashboardAppService",
+              "name": "IDashboardAppService",
+              "methods": [
+                {
+                  "name": "GetOverviewAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Dashboard.Dtos.DashboardOverviewDto",
+                    "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardOverviewDto"
+                  }
+                },
+                {
+                  "name": "GetFinancialTrendsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardFinancialTrendDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardFinancialTrendDto]"
+                  }
+                },
+                {
+                  "name": "GetSalesStatusDistributionAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardSalesStatusDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardSalesStatusDto]"
+                  }
+                },
+                {
+                  "name": "GetProcurementStatusDistributionAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardProcurementStatusDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardProcurementStatusDto]"
+                  }
+                },
+                {
+                  "name": "GetWarehouseCapacitiesAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardWarehouseCapacityDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardWarehouseCapacityDto]"
+                  }
+                },
+                {
+                  "name": "GetInventoryTransactionDistributionAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTransactionDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTransactionDto]"
+                  }
+                },
+                {
+                  "name": "GetMedicineCategoryDistributionAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardCategoryDistributionDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardCategoryDistributionDto]"
+                  }
+                },
+                {
+                  "name": "GetNearExpiryBatchesAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto]"
+                  }
+                },
+                {
+                  "name": "GetAlreadyExpiredBatchesAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto]"
+                  }
+                },
+                {
+                  "name": "GetDebtOverviewAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Dashboard.Dtos.DashboardDebtOverviewDto",
+                    "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardDebtOverviewDto"
+                  }
+                },
+                {
+                  "name": "GetTopCustomerDebtsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto]"
+                  }
+                },
+                {
+                  "name": "GetTopSupplierDebtsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto]"
+                  }
+                },
+                {
+                  "name": "GetInventoryTicketStatusDistributionAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTicketStatusDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTicketStatusDto]"
+                  }
+                },
+                {
+                  "name": "GetBatchQAStatusDistributionAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardBatchQAStatusDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchQAStatusDto]"
+                  }
+                },
+                {
+                  "name": "GetPhysicalMovementTrendsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardPhysicalMovementTrendDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardPhysicalMovementTrendDto]"
+                  }
+                },
+                {
+                  "name": "GetBatchLookupAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "filter",
+                      "typeAsString": "System.String, System.Private.CoreLib",
+                      "type": "System.String",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardBatchLookupDto>",
+                    "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchLookupDto]"
+                  }
+                },
+                {
+                  "name": "GetBatchTraceDetailsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "batchId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceDto",
+                    "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceDto"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "GetOverviewAsyncByInput": {
+              "uniqueName": "GetOverviewAsyncByInput",
+              "name": "GetOverviewAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/overview",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Dashboard.Dtos.DashboardOverviewDto",
+                "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardOverviewDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetFinancialTrendsAsyncByInput": {
+              "uniqueName": "GetFinancialTrendsAsyncByInput",
+              "name": "GetFinancialTrendsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/financial-trends",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardFinancialTrendDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardFinancialTrendDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetSalesStatusDistributionAsyncByInput": {
+              "uniqueName": "GetSalesStatusDistributionAsyncByInput",
+              "name": "GetSalesStatusDistributionAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/sales-status-distribution",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardSalesStatusDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardSalesStatusDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetProcurementStatusDistributionAsyncByInput": {
+              "uniqueName": "GetProcurementStatusDistributionAsyncByInput",
+              "name": "GetProcurementStatusDistributionAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/procurement-status-distribution",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardProcurementStatusDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardProcurementStatusDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetWarehouseCapacitiesAsyncByInput": {
+              "uniqueName": "GetWarehouseCapacitiesAsyncByInput",
+              "name": "GetWarehouseCapacitiesAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/warehouse-capacities",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardWarehouseCapacityDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardWarehouseCapacityDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetInventoryTransactionDistributionAsyncByInput": {
+              "uniqueName": "GetInventoryTransactionDistributionAsyncByInput",
+              "name": "GetInventoryTransactionDistributionAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/inventory-transaction-distribution",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTransactionDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTransactionDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetMedicineCategoryDistributionAsyncByInput": {
+              "uniqueName": "GetMedicineCategoryDistributionAsyncByInput",
+              "name": "GetMedicineCategoryDistributionAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/medicine-category-distribution",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardCategoryDistributionDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardCategoryDistributionDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetNearExpiryBatchesAsyncByInput": {
+              "uniqueName": "GetNearExpiryBatchesAsyncByInput",
+              "name": "GetNearExpiryBatchesAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/near-expiry-batches",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetAlreadyExpiredBatchesAsyncByInput": {
+              "uniqueName": "GetAlreadyExpiredBatchesAsyncByInput",
+              "name": "GetAlreadyExpiredBatchesAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/already-expired-batches",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetDebtOverviewAsyncByInput": {
+              "uniqueName": "GetDebtOverviewAsyncByInput",
+              "name": "GetDebtOverviewAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/debt-overview",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Dashboard.Dtos.DashboardDebtOverviewDto",
+                "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardDebtOverviewDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetTopCustomerDebtsAsyncByInput": {
+              "uniqueName": "GetTopCustomerDebtsAsyncByInput",
+              "name": "GetTopCustomerDebtsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/top-customer-debts",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetTopSupplierDebtsAsyncByInput": {
+              "uniqueName": "GetTopSupplierDebtsAsyncByInput",
+              "name": "GetTopSupplierDebtsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/top-supplier-debts",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetInventoryTicketStatusDistributionAsyncByInput": {
+              "uniqueName": "GetInventoryTicketStatusDistributionAsyncByInput",
+              "name": "GetInventoryTicketStatusDistributionAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/inventory-ticket-status-distribution",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTicketStatusDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTicketStatusDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetBatchQAStatusDistributionAsyncByInput": {
+              "uniqueName": "GetBatchQAStatusDistributionAsyncByInput",
+              "name": "GetBatchQAStatusDistributionAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/batch-qAStatus-distribution",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardBatchQAStatusDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchQAStatusDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetPhysicalMovementTrendsAsyncByInput": {
+              "uniqueName": "GetPhysicalMovementTrendsAsyncByInput",
+              "name": "GetPhysicalMovementTrendsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/physical-movement-trends",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "WarehouseId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "Days",
+                  "jsonName": null,
+                  "type": "System.Int32?",
+                  "typeSimple": "number?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "CategoryId",
+                  "jsonName": null,
+                  "type": "System.Guid?",
+                  "typeSimple": "string?",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": "input"
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardPhysicalMovementTrendDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardPhysicalMovementTrendDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetBatchLookupAsyncByFilter": {
+              "uniqueName": "GetBatchLookupAsyncByFilter",
+              "name": "GetBatchLookupAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/batch-lookup",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "filter",
+                  "typeAsString": "System.String, System.Private.CoreLib",
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "filter",
+                  "name": "filter",
+                  "jsonName": null,
+                  "type": "System.String",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.Dashboard.Dtos.DashboardBatchLookupDto>",
+                "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchLookupDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            },
+            "GetBatchTraceDetailsAsyncByBatchId": {
+              "uniqueName": "GetBatchTraceDetailsAsyncByBatchId",
+              "name": "GetBatchTraceDetailsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/dashboard/batch-trace-details/{batchId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "batchId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "batchId",
+                  "name": "batchId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceDto",
+                "typeSimple": "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceDto"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Dashboard.IDashboardAppService"
+            }
+          }
+        },
         "SupplyCoreERP.DosageForms.DosageFormAppService": {
           "controllerName": "DosageForm",
           "controllerGroupName": "DosageForm",
@@ -4789,6 +6163,39 @@
                   }
                 },
                 {
+                  "name": "UpdateIngredientStrengthAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "activeIngredientId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                      "typeSimple": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
                   "name": "RemoveIngredientAsync",
                   "parametersOnMethod": [
                     {
@@ -5385,6 +6792,83 @@
                 {
                   "nameOnMethod": "id",
                   "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                  "typeSimple": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Medicines.IMedicineAppService"
+            },
+            "UpdateIngredientStrengthAsyncByIdAndActiveIngredientIdAndInput": {
+              "uniqueName": "UpdateIngredientStrengthAsyncByIdAndActiveIngredientIdAndInput",
+              "name": "UpdateIngredientStrengthAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/medicine/{id}/ingredient-strength/{activeIngredientId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "activeIngredientId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                  "typeSimple": "SupplyCoreERP.Medicines.Dtos.CreateUpdateMedicineIngredientDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "activeIngredientId",
+                  "name": "activeIngredientId",
                   "jsonName": null,
                   "type": "System.Guid",
                   "typeSimple": "string",
@@ -6575,8 +8059,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "System.Void",
-                    "typeSimple": "System.Void"
+                    "type": "SupplyCoreERP.Prices.Dtos.ProductPriceDto",
+                    "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductPriceDto"
                   }
                 },
                 {
@@ -6600,8 +8084,8 @@
                     }
                   ],
                   "returnValue": {
-                    "type": "System.Void",
-                    "typeSimple": "System.Void"
+                    "type": "SupplyCoreERP.Prices.Dtos.ProductPriceDto",
+                    "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductPriceDto"
                   }
                 },
                 {
@@ -6708,8 +8192,8 @@
                 }
               ],
               "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
+                "type": "SupplyCoreERP.Prices.Dtos.ProductPriceDto",
+                "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductPriceDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Prices.IPriceAppService"
@@ -6765,8 +8249,8 @@
                 }
               ],
               "returnValue": {
-                "type": "System.Void",
-                "typeSimple": "System.Void"
+                "type": "SupplyCoreERP.Prices.Dtos.ProductPriceDto",
+                "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductPriceDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Prices.IPriceAppService"
@@ -11866,6 +13350,424 @@
             }
           }
         },
+        "SupplyCoreERP.Settings.SettingAppService": {
+          "controllerName": "Setting",
+          "controllerGroupName": "Setting",
+          "isRemoteService": true,
+          "isIntegrationService": false,
+          "apiVersion": null,
+          "type": "SupplyCoreERP.Settings.SettingAppService",
+          "interfaces": [
+            {
+              "type": "SupplyCoreERP.Settings.ISettingAppService",
+              "name": "ISettingAppService",
+              "methods": [
+                {
+                  "name": "GetDlpSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                    "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto"
+                  }
+                },
+                {
+                  "name": "UpdateDlpSettingsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                      "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "GetLlmProviderSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                    "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto"
+                  }
+                },
+                {
+                  "name": "UpdateLlmProviderSettingsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                      "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "GetMcpSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                    "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto"
+                  }
+                },
+                {
+                  "name": "UpdateMcpSettingsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Settings.Dtos.McpSettingsDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                      "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "GetInventorySettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                    "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto"
+                  }
+                },
+                {
+                  "name": "UpdateInventorySettingsAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                      "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ResetDlpSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ResetLlmProviderSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ResetMcpSettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "ResetInventorySettingsAsync",
+                  "parametersOnMethod": [],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                }
+              ]
+            }
+          ],
+          "actions": {
+            "GetDlpSettingsAsync": {
+              "uniqueName": "GetDlpSettingsAsync",
+              "name": "GetDlpSettingsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/setting/dlp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "UpdateDlpSettingsAsyncByInput": {
+              "uniqueName": "UpdateDlpSettingsAsyncByInput",
+              "name": "UpdateDlpSettingsAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/setting/dlp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.DlpSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "ResetDlpSettingsAsync": {
+              "uniqueName": "ResetDlpSettingsAsync",
+              "name": "ResetDlpSettingsAsync",
+              "httpMethod": "POST",
+              "url": "api/app/setting/reset-dlp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "GetLlmProviderSettingsAsync": {
+              "uniqueName": "GetLlmProviderSettingsAsync",
+              "name": "GetLlmProviderSettingsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/setting/llm-provider-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "UpdateLlmProviderSettingsAsyncByInput": {
+              "uniqueName": "UpdateLlmProviderSettingsAsyncByInput",
+              "name": "UpdateLlmProviderSettingsAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/setting/llm-provider-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "ResetLlmProviderSettingsAsync": {
+              "uniqueName": "ResetLlmProviderSettingsAsync",
+              "name": "ResetLlmProviderSettingsAsync",
+              "httpMethod": "POST",
+              "url": "api/app/setting/reset-llm-provider-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "GetMcpSettingsAsync": {
+              "uniqueName": "GetMcpSettingsAsync",
+              "name": "GetMcpSettingsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/setting/mcp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "UpdateMcpSettingsAsyncByInput": {
+              "uniqueName": "UpdateMcpSettingsAsyncByInput",
+              "name": "UpdateMcpSettingsAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/setting/mcp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Settings.Dtos.McpSettingsDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.McpSettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "ResetMcpSettingsAsync": {
+              "uniqueName": "ResetMcpSettingsAsync",
+              "name": "ResetMcpSettingsAsync",
+              "httpMethod": "POST",
+              "url": "api/app/setting/reset-mcp-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "GetInventorySettingsAsync": {
+              "uniqueName": "GetInventorySettingsAsync",
+              "name": "GetInventorySettingsAsync",
+              "httpMethod": "GET",
+              "url": "api/app/setting/inventory-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "UpdateInventorySettingsAsyncByInput": {
+              "uniqueName": "UpdateInventorySettingsAsyncByInput",
+              "name": "UpdateInventorySettingsAsync",
+              "httpMethod": "PUT",
+              "url": "api/app/setting/inventory-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                  "typeSimple": "SupplyCoreERP.Settings.Dtos.InventorySettingsDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            },
+            "ResetInventorySettingsAsync": {
+              "uniqueName": "ResetInventorySettingsAsync",
+              "name": "ResetInventorySettingsAsync",
+              "httpMethod": "POST",
+              "url": "api/app/setting/reset-inventory-settings",
+              "supportedVersions": [],
+              "parametersOnMethod": [],
+              "parameters": [],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
+              "implementFrom": "SupplyCoreERP.Settings.ISettingAppService"
+            }
+          }
+        },
         "SupplyCoreERP.Suppliers.SupplierAppService": {
           "controllerName": "Supplier",
           "controllerGroupName": "Supplier",
@@ -13184,6 +15086,106 @@
                   }
                 },
                 {
+                  "name": "GetLinesFromPurchaseReturnAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "returnId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.PurchaseReturns.Dtos.PurchaseReturnLineDto>",
+                    "typeSimple": "[SupplyCoreERP.PurchaseReturns.Dtos.PurchaseReturnLineDto]"
+                  }
+                },
+                {
+                  "name": "AddLineFromPurchaseReturnAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "prLineId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "quantity",
+                      "typeAsString": "System.Decimal, System.Private.CoreLib",
+                      "type": "System.Decimal",
+                      "typeSimple": "number",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
+                  "name": "GetLinesFromSalesRecallAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "recallId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Collections.Generic.List<SupplyCoreERP.SalesRecalls.Dtos.SalesRecallLineDto>",
+                    "typeSimple": "[SupplyCoreERP.SalesRecalls.Dtos.SalesRecallLineDto]"
+                  }
+                },
+                {
+                  "name": "AddLineFromSalesRecallAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "id",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "recallLineId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "quantity",
+                      "typeAsString": "System.Decimal, System.Private.CoreLib",
+                      "type": "System.Decimal",
+                      "typeSimple": "number",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
+                },
+                {
                   "name": "DeleteLineAsync",
                   "parametersOnMethod": [
                     {
@@ -13819,6 +15821,234 @@
                 {
                   "nameOnMethod": "soLineId",
                   "name": "soLineId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "quantity",
+                  "name": "quantity",
+                  "jsonName": null,
+                  "type": "System.Decimal",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
+            },
+            "GetLinesFromPurchaseReturnAsyncByReturnId": {
+              "uniqueName": "GetLinesFromPurchaseReturnAsyncByReturnId",
+              "name": "GetLinesFromPurchaseReturnAsync",
+              "httpMethod": "GET",
+              "url": "api/app/inventory-ticket/lines-from-purchase-return/{returnId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "returnId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "returnId",
+                  "name": "returnId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.PurchaseReturns.Dtos.PurchaseReturnLineDto>",
+                "typeSimple": "[SupplyCoreERP.PurchaseReturns.Dtos.PurchaseReturnLineDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
+            },
+            "AddLineFromPurchaseReturnAsyncByIdAndPrLineIdAndQuantity": {
+              "uniqueName": "AddLineFromPurchaseReturnAsyncByIdAndPrLineIdAndQuantity",
+              "name": "AddLineFromPurchaseReturnAsync",
+              "httpMethod": "POST",
+              "url": "api/app/inventory-ticket/{id}/line-from-purchase-return/{prLineId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "prLineId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "quantity",
+                  "typeAsString": "System.Decimal, System.Private.CoreLib",
+                  "type": "System.Decimal",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "prLineId",
+                  "name": "prLineId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "quantity",
+                  "name": "quantity",
+                  "jsonName": null,
+                  "type": "System.Decimal",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
+            },
+            "GetLinesFromSalesRecallAsyncByRecallId": {
+              "uniqueName": "GetLinesFromSalesRecallAsyncByRecallId",
+              "name": "GetLinesFromSalesRecallAsync",
+              "httpMethod": "GET",
+              "url": "api/app/inventory-ticket/lines-from-sales-recall/{recallId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "recallId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "recallId",
+                  "name": "recallId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Collections.Generic.List<SupplyCoreERP.SalesRecalls.Dtos.SalesRecallLineDto>",
+                "typeSimple": "[SupplyCoreERP.SalesRecalls.Dtos.SalesRecallLineDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Tickets.IInventoryTicketAppService"
+            },
+            "AddLineFromSalesRecallAsyncByIdAndRecallLineIdAndQuantity": {
+              "uniqueName": "AddLineFromSalesRecallAsyncByIdAndRecallLineIdAndQuantity",
+              "name": "AddLineFromSalesRecallAsync",
+              "httpMethod": "POST",
+              "url": "api/app/inventory-ticket/{id}/line-from-sales-recall/{recallLineId}",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "id",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "recallLineId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "quantity",
+                  "typeAsString": "System.Decimal, System.Private.CoreLib",
+                  "type": "System.Decimal",
+                  "typeSimple": "number",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "id",
+                  "name": "id",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": [],
+                  "bindingSourceId": "Path",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "recallLineId",
+                  "name": "recallLineId",
                   "jsonName": null,
                   "type": "System.Guid",
                   "typeSimple": "string",
@@ -14799,6 +17029,23 @@
                     "type": "System.Void",
                     "typeSimple": "System.Void"
                   }
+                },
+                {
+                  "name": "TransferBinAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "input",
+                      "typeAsString": "SupplyCoreERP.Warehouses.Dtos.TransferBinDto, SupplyCoreERP.Application.Contracts",
+                      "type": "SupplyCoreERP.Warehouses.Dtos.TransferBinDto",
+                      "typeSimple": "SupplyCoreERP.Warehouses.Dtos.TransferBinDto",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "System.Void",
+                    "typeSimple": "System.Void"
+                  }
                 }
               ]
             }
@@ -15662,6 +17909,43 @@
                 "typeSimple": "System.Void"
               },
               "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Warehouses.IWarehouseAppService"
+            },
+            "TransferBinAsyncByInput": {
+              "uniqueName": "TransferBinAsyncByInput",
+              "name": "TransferBinAsync",
+              "httpMethod": "POST",
+              "url": "api/app/warehouse/transfer-bin",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "input",
+                  "typeAsString": "SupplyCoreERP.Warehouses.Dtos.TransferBinDto, SupplyCoreERP.Application.Contracts",
+                  "type": "SupplyCoreERP.Warehouses.Dtos.TransferBinDto",
+                  "typeSimple": "SupplyCoreERP.Warehouses.Dtos.TransferBinDto",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "input",
+                  "name": "input",
+                  "jsonName": null,
+                  "type": "SupplyCoreERP.Warehouses.Dtos.TransferBinDto",
+                  "typeSimple": "SupplyCoreERP.Warehouses.Dtos.TransferBinDto",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "Body",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "System.Void",
+                "typeSimple": "System.Void"
+              },
+              "allowAnonymous": false,
               "implementFrom": "SupplyCoreERP.Warehouses.IWarehouseAppService"
             }
           }
@@ -17991,8 +20275,8 @@
         {
           "name": "Steps",
           "jsonName": null,
-          "type": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
-          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
+          "type": "[SupplyCoreERP.Agent.Dtos.AgentSessionMessageDto]",
+          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentSessionMessageDto]",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -18005,63 +20289,6 @@
           "jsonName": null,
           "type": "System.Object",
           "typeSimple": "object",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        }
-      ]
-    },
-    "SupplyCoreERP.Agent.Dtos.AgentMessageDto": {
-      "baseType": null,
-      "isEnum": false,
-      "enumNames": null,
-      "enumValues": null,
-      "genericArguments": null,
-      "properties": [
-        {
-          "name": "Role",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "Text",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ToolCalls",
-          "jsonName": null,
-          "type": "[SupplyCoreERP.Agent.Dtos.AgentToolCallMessageDto]",
-          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentToolCallMessageDto]",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ToolResponses",
-          "jsonName": null,
-          "type": "[SupplyCoreERP.Agent.Dtos.AgentToolResponseMessageDto]",
-          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentToolResponseMessageDto]",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -18084,18 +20311,6 @@
           "type": "System.String",
           "typeSimple": "string",
           "isRequired": true,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "History",
-          "jsonName": null,
-          "type": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
-          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentMessageDto]",
-          "isRequired": false,
           "minLength": null,
           "maxLength": null,
           "minimum": null,
@@ -18137,6 +20352,96 @@
         }
       ]
     },
+    "SupplyCoreERP.Agent.Dtos.AgentSessionMessageDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Role",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Text",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ToolCalls",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Agent.Dtos.AgentToolCallMessageDto]",
+          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentToolCallMessageDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ToolResponses",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Agent.Dtos.AgentToolResponseMessageDto]",
+          "typeSimple": "[SupplyCoreERP.Agent.Dtos.AgentToolResponseMessageDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "CreationTime",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Agent.Dtos.AgentSessionPagedInputDto": {
+      "baseType": "Volo.Abp.Application.Dtos.PagedResultRequestDto",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "SessionId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.Agent.Dtos.AgentToolCallMessageDto": {
       "baseType": null,
       "isEnum": false,
@@ -18161,6 +20466,18 @@
           "jsonName": null,
           "type": "{System.String:System.Text.Json.Nodes.JsonNode}",
           "typeSimple": "{string:System.Text.Json.Nodes.JsonNode}",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ThoughtSignature",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -18479,6 +20796,30 @@
           "minimum": null,
           "maximum": null,
           "regex": null
+        },
+        {
+          "name": "BinBalances",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Balances.Dtos.InventoryBinBalanceDto]",
+          "typeSimple": "[SupplyCoreERP.Balances.Dtos.InventoryBinBalanceDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Reservations",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Balances.Dtos.InventoryReservationDto]",
+          "typeSimple": "[SupplyCoreERP.Balances.Dtos.InventoryReservationDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
         }
       ]
     },
@@ -18516,8 +20857,8 @@
         {
           "name": "BinId",
           "jsonName": null,
-          "type": "System.Guid",
-          "typeSimple": "string",
+          "type": "System.Guid?",
+          "typeSimple": "string?",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -18587,6 +20928,75 @@
         },
         {
           "name": "BaseUnitName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "LockedQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "AvailableQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Balances.Dtos.InventoryBinBalanceDto": {
+      "baseType": "Volo.Abp.Application.Dtos.EntityDto<System.Guid>",
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "BinId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BinCode",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -18755,6 +21165,54 @@
           "jsonName": null,
           "type": "SupplyCoreERP.Enums.Balances.ReservationStatus",
           "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PartnerId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PartnerName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SourceDocumentId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SourceDocumentNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -19778,6 +22236,1290 @@
         }
       ]
     },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardBatchLookupDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Id",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BatchNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "MedicineName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardBatchQAStatusDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "StatusName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Count",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Percentage",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceBalanceDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "WarehouseName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BinCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceDeliveryDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "CustomerName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TicketNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SoNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Date",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "BatchId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BatchNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "MedicineCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "MedicineName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ManufacturingDate",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ExpiryDate",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Status",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SupplierName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalOnHand",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalReserved",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Balances",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceBalanceDto]",
+          "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceBalanceDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Receipts",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceReceiptDto]",
+          "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceReceiptDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Deliveries",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceDeliveryDto]",
+          "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceDeliveryDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "OtherTransactions",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceOtherDto]",
+          "typeSimple": "[SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceOtherDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceOtherDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "TransactionType",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TicketNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Date",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Note",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardBatchTraceReceiptDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "SupplierName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TicketNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PoNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Date",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardCategoryDistributionDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "CategoryName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Percentage",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardDebtOverviewDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "TotalReceivableDebt",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalPayableDebt",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalCustomers",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalSuppliers",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardExpiredBatchDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "MedicineName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BatchNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "WarehouseName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ExpiryDate",
+          "jsonName": null,
+          "type": "System.DateTime",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "DaysRemaining",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardFilterInput": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "WarehouseId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Days",
+          "jsonName": null,
+          "type": "System.Int32?",
+          "typeSimple": "number?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "CategoryId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardFinancialTrendDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Date",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SalesAmount",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProcurementAmount",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTicketStatusDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "StatusName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Count",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Percentage",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardInventoryTransactionDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "TransactionTypeName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Count",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Percentage",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardOverviewDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "TotalWarehouses",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalMedicines",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "AverageCapacityPercent",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ExpiredAlertCount",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalRevenue",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalProcurement",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalSalesRecall",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalPurchaseReturn",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalReservedVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TotalAvailableVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardPartnerDebtDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "PartnerCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PartnerName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "CurrentDebt",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardPhysicalMovementTrendDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Date",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "InboundVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "OutboundVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardProcurementStatusDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "StatusName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Count",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Percentage",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardSalesStatusDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "StatusName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Count",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Percentage",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Dashboard.Dtos.DashboardWarehouseCapacityDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "WarehouseId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "WarehouseName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "OccupiedVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReservedVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "AvailableVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SafeMaxVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "CapacityPercent",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.DosageForms.Dtos.CreateUpdateDosageFormDto": {
       "baseType": null,
       "isEnum": false,
@@ -20261,7 +24003,8 @@
         "Staging",
         "Quarantine",
         "ForkliftParking",
-        "Office"
+        "Office",
+        "QA"
       ],
       "enumValues": [
         0,
@@ -20270,7 +24013,8 @@
         3,
         4,
         5,
-        6
+        6,
+        7
       ],
       "genericArguments": null,
       "properties": null
@@ -20775,6 +24519,18 @@
           "regex": null
         },
         {
+          "name": "BaseUnitVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "IsActive",
           "jsonName": null,
           "type": "System.Boolean",
@@ -20803,6 +24559,18 @@
           "isRequired": true,
           "minLength": null,
           "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Strength",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": 50,
           "minimum": null,
           "maximum": null,
           "regex": null
@@ -20850,6 +24618,18 @@
           "maxLength": null,
           "minimum": "1",
           "maximum": "2147483647",
+          "regex": null
+        },
+        {
+          "name": "Volume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
           "regex": null
         }
       ]
@@ -21264,6 +25044,18 @@
           "regex": null
         },
         {
+          "name": "BaseUnitVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "CreationTime",
           "jsonName": null,
           "type": "System.DateTime",
@@ -21322,6 +25114,18 @@
         },
         {
           "name": "ActiveIngredientCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Strength",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
@@ -21543,6 +25347,18 @@
           "name": "Level",
           "jsonName": null,
           "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Volume",
+          "jsonName": null,
+          "type": "System.Decimal",
           "typeSimple": "number",
           "isRequired": false,
           "minLength": null,
@@ -21901,6 +25717,18 @@
           "jsonName": null,
           "type": "System.Int32",
           "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "BelowCostWarning",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -23124,6 +26952,18 @@
           "regex": null
         },
         {
+          "name": "ProductCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "UnitId",
           "jsonName": null,
           "type": "System.Guid",
@@ -23352,6 +27192,18 @@
       "genericArguments": null,
       "properties": [
         {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "ProductId",
           "jsonName": null,
           "type": "System.Guid",
@@ -23469,34 +27321,10 @@
       "genericArguments": null,
       "properties": [
         {
-          "name": "SupplierId",
-          "jsonName": null,
-          "type": "System.Guid",
-          "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "WarehouseId",
           "jsonName": null,
           "type": "System.Guid",
           "typeSimple": "string",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ReturnType",
-          "jsonName": null,
-          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
-          "typeSimple": "enum",
           "isRequired": true,
           "minLength": null,
           "maxLength": null,
@@ -23607,42 +27435,6 @@
           "regex": null
         },
         {
-          "name": "SupplierId",
-          "jsonName": null,
-          "type": "System.Guid",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "SupplierName",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "SupplierCode",
-          "jsonName": null,
-          "type": "System.String",
-          "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "WarehouseId",
           "jsonName": null,
           "type": "System.Guid",
@@ -23671,18 +27463,6 @@
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "ReturnType",
-          "jsonName": null,
-          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
-          "typeSimple": "enum",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -23916,6 +27696,54 @@
           "regex": null
         },
         {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SupplierId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SupplierName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SupplierCode",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "Quantity",
           "jsonName": null,
           "type": "System.Decimal",
@@ -24114,18 +27942,6 @@
           "regex": null
         },
         {
-          "name": "ReturnType",
-          "jsonName": null,
-          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
-          "typeSimple": "enum",
-          "isRequired": true,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
           "name": "RequestDate",
           "jsonName": null,
           "type": "System.DateTime",
@@ -24158,6 +27974,18 @@
       "enumValues": null,
       "genericArguments": null,
       "properties": [
+        {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
         {
           "name": "Quantity",
           "jsonName": null,
@@ -24325,6 +28153,18 @@
           "jsonName": null,
           "type": "System.Guid",
           "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
           "isRequired": true,
           "minLength": null,
           "maxLength": null,
@@ -24535,6 +28375,18 @@
           "jsonName": null,
           "type": "System.DateTime",
           "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -24910,6 +28762,18 @@
           "jsonName": null,
           "type": "System.Guid",
           "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ReturnType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Orders.PurchaseReturnType",
+          "typeSimple": "enum",
           "isRequired": true,
           "minLength": null,
           "maxLength": null,
@@ -26071,6 +29935,54 @@
           "minimum": null,
           "maximum": null,
           "regex": null
+        },
+        {
+          "name": "UnitId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "UnitPrice",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TaxRate",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ConversionFactor",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
         }
       ]
     },
@@ -26343,6 +30255,18 @@
           "regex": null
         },
         {
+          "name": "BaseUnitName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
           "name": "Lines",
           "jsonName": null,
           "type": "[SupplyCoreERP.SalesRecalls.Dtos.SalesRecallLineDto]",
@@ -26554,6 +30478,66 @@
           "minimum": null,
           "maximum": null,
           "regex": null
+        },
+        {
+          "name": "SalesOrderQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SalesOrderUnitName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SalesOrderBaseQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "RecalledQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "RecalledBaseQuantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
         }
       ]
     },
@@ -26712,6 +30696,147 @@
           "maxLength": null,
           "minimum": "0,0001",
           "maximum": "1,7976931348623157E+308",
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.DlpRuleDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Name",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Pattern",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Replacement",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.DlpSettingsDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Rules",
+          "jsonName": null,
+          "type": "[SupplyCoreERP.Settings.Dtos.DlpRuleDto]",
+          "typeSimple": "[SupplyCoreERP.Settings.Dtos.DlpRuleDto]",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.InventorySettingsDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "ExpirationAlertDays",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.LlmProviderSettingsDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "Model",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ApiKey",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Settings.Dtos.McpSettingsDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "BaseUrl",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
           "regex": null
         }
       ]
@@ -26958,30 +31083,6 @@
           "maxLength": null,
           "minimum": "0,0001",
           "maximum": "1,7976931348623157E+308",
-          "regex": null
-        },
-        {
-          "name": "OverDeliveryTolerancePct",
-          "jsonName": null,
-          "type": "System.Decimal",
-          "typeSimple": "number",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": "0",
-          "maximum": "100",
-          "regex": null
-        },
-        {
-          "name": "UnderDeliveryTolerancePct",
-          "jsonName": null,
-          "type": "System.Decimal",
-          "typeSimple": "number",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": "0",
-          "maximum": "100",
           "regex": null
         }
       ]
@@ -27703,30 +31804,6 @@
         },
         {
           "name": "MinOrderQuantity",
-          "jsonName": null,
-          "type": "System.Decimal",
-          "typeSimple": "number",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "OverDeliveryTolerancePct",
-          "jsonName": null,
-          "type": "System.Decimal",
-          "typeSimple": "number",
-          "isRequired": false,
-          "minLength": null,
-          "maxLength": null,
-          "minimum": null,
-          "maximum": null,
-          "regex": null
-        },
-        {
-          "name": "UnderDeliveryTolerancePct",
           "jsonName": null,
           "type": "System.Decimal",
           "typeSimple": "number",
@@ -28894,6 +32971,54 @@
           "minimum": null,
           "maximum": null,
           "regex": null
+        },
+        {
+          "name": "PartnerId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "PartnerName",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SourceDocumentId",
+          "jsonName": null,
+          "type": "System.Guid?",
+          "typeSimple": "string?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SourceDocumentNumber",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
         }
       ]
     },
@@ -28933,6 +33058,18 @@
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ZoneType",
+          "jsonName": null,
+          "type": "SupplyCoreERP.Enums.Warehouses.ZoneType",
+          "typeSimple": "enum",
           "isRequired": false,
           "minLength": null,
           "maxLength": null,
@@ -29028,6 +33165,30 @@
           "name": "MaxSKU",
           "jsonName": null,
           "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Height",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "MaxVolume",
+          "jsonName": null,
+          "type": "System.Decimal",
           "typeSimple": "number",
           "isRequired": false,
           "minLength": null,
@@ -29143,6 +33304,18 @@
         },
         {
           "name": "MaxSKU",
+          "jsonName": null,
+          "type": "System.Int32",
+          "typeSimple": "number",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Height",
           "jsonName": null,
           "type": "System.Int32",
           "typeSimple": "number",
@@ -29430,6 +33603,111 @@
           "maxLength": null,
           "minimum": null,
           "maximum": null,
+          "regex": null
+        }
+      ]
+    },
+    "SupplyCoreERP.Warehouses.Dtos.TransferBinDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "WarehouseId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "SourceBinId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "TargetBinId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ProductBatchId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "Quantity",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "1E-06",
+          "maximum": "1,7976931348623157E+308",
+          "regex": null
+        },
+        {
+          "name": "UnitId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ConversionFactor",
+          "jsonName": null,
+          "type": "System.Decimal",
+          "typeSimple": "number",
+          "isRequired": true,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": "1",
+          "maximum": "1,7976931348623157E+308",
           "regex": null
         }
       ]

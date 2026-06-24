@@ -1,0 +1,868 @@
+{
+  "nodes": [
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Partner/CustomerAppService_Integration_Tests.cs",
+      "type": "file",
+      "name": "CustomerAppService_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Partner/CustomerAppService_Integration_Tests.cs",
+      "summary": "File mã nguồn `CustomerAppService_Integration_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Partner/SupplierAppService_Integration_Tests.cs",
+      "type": "file",
+      "name": "SupplierAppService_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Applications/Partner/SupplierAppService_Integration_Tests.cs",
+      "summary": "File mã nguồn `SupplierAppService_Integration_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Catalog/MedicineManager_Integration_Tests.cs",
+      "type": "file",
+      "name": "MedicineManager_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Catalog/MedicineManager_Integration_Tests.cs",
+      "summary": "File mã nguồn `MedicineManager_Integration_Tests.cs` thuộc quản lý danh mục hàng hóa, thuốc và sản phẩm.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer",
+        "catalog"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Catalog/ProductManager_Integration_Tests.cs",
+      "type": "file",
+      "name": "ProductManager_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Catalog/ProductManager_Integration_Tests.cs",
+      "summary": "File mã nguồn `ProductManager_Integration_Tests.cs` thuộc quản lý danh mục hàng hóa, thuốc và sản phẩm.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer",
+        "catalog"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Partner/CustomerManager_Integration_Tests.cs",
+      "type": "file",
+      "name": "CustomerManager_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Partner/CustomerManager_Integration_Tests.cs",
+      "summary": "File mã nguồn `CustomerManager_Integration_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Partner/SupplierManager_Integration_Tests.cs",
+      "type": "file",
+      "name": "SupplierManager_Integration_Tests.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/Domains/Partner/SupplierManager_Integration_Tests.cs",
+      "summary": "File mã nguồn `SupplierManager_Integration_Tests.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreCollection.cs",
+      "type": "file",
+      "name": "SupplyCoreERPEntityFrameworkCoreCollection.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreCollection.cs",
+      "summary": "File mã nguồn `SupplyCoreERPEntityFrameworkCoreCollection.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreCollectionFixtureBase.cs",
+      "type": "file",
+      "name": "SupplyCoreERPEntityFrameworkCoreCollectionFixtureBase.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreCollectionFixtureBase.cs",
+      "summary": "File mã nguồn `SupplyCoreERPEntityFrameworkCoreCollectionFixtureBase.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreFixture.cs",
+      "type": "file",
+      "name": "SupplyCoreERPEntityFrameworkCoreFixture.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreFixture.cs",
+      "summary": "File mã nguồn `SupplyCoreERPEntityFrameworkCoreFixture.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestBase.cs",
+      "type": "file",
+      "name": "SupplyCoreERPEntityFrameworkCoreTestBase.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestBase.cs",
+      "summary": "File mã nguồn `SupplyCoreERPEntityFrameworkCoreTestBase.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "type": "file",
+      "name": "SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "summary": "File mã nguồn `SupplyCoreERPEntityFrameworkCoreTestModule.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:SupplyCoreERPEntityFrameworkCoreTestModule",
+      "type": "class",
+      "name": "SupplyCoreERPEntityFrameworkCoreTestModule",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "summary": "Lớp `SupplyCoreERPEntityFrameworkCoreTestModule` thực hiện nghiệp vụ liên quan đến supply core e r p entity framework core test module.",
+      "complexity": "moderate",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 17,
+      "endLine": 80
+    },
+    {
+      "id": "function:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:ConfigureServices",
+      "type": "function",
+      "name": "ConfigureServices",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "summary": "Phương thức `ConfigureServices` thực hiện nghiệp vụ configure services.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 24,
+      "endLine": 39
+    },
+    {
+      "id": "function:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:ConfigureInMemorySqlite",
+      "type": "function",
+      "name": "ConfigureInMemorySqlite",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "summary": "Phương thức `ConfigureInMemorySqlite` thực hiện nghiệp vụ configure in memory sqlite.",
+      "complexity": "moderate",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 41,
+      "endLine": 71
+    },
+    {
+      "id": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.abppkg",
+      "type": "file",
+      "name": "SupplyCoreERP.EntityFrameworkCore.Tests.abppkg",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.abppkg",
+      "summary": "File mã nguồn `SupplyCoreERP.EntityFrameworkCore.Tests.abppkg` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "config:test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj",
+      "type": "config",
+      "name": "SupplyCoreERP.EntityFrameworkCore.Tests.csproj",
+      "path": "test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj",
+      "summary": "File mã nguồn `SupplyCoreERP.EntityFrameworkCore.Tests.csproj` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "infrastructure-layer"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "type": "file",
+      "name": "ClientDemoService.cs",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "summary": "File mã nguồn `ClientDemoService.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs:ClientDemoService",
+      "type": "class",
+      "name": "ClientDemoService",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "summary": "Lớp `ClientDemoService` thực hiện nghiệp vụ liên quan đến dịch vụ client demo.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 10,
+      "endLine": 39
+    },
+    {
+      "id": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs:RunAsync",
+      "type": "function",
+      "name": "RunAsync",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "summary": "Phương thức `RunAsync` thực hiện nghiệp vụ run.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 23,
+      "endLine": 38
+    },
+    {
+      "id": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "type": "file",
+      "name": "Program.cs",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "summary": "File mã nguồn `Program.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs:Program",
+      "type": "class",
+      "name": "Program",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "summary": "Lớp `Program` thực hiện nghiệp vụ liên quan đến program.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 31
+    },
+    {
+      "id": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs:Main",
+      "type": "function",
+      "name": "Main",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "summary": "Phương thức `Main` thực hiện nghiệp vụ main.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 11,
+      "endLine": 30
+    },
+    {
+      "id": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERP.HttpApi.Client.ConsoleTestApp.abppkg",
+      "type": "file",
+      "name": "SupplyCoreERP.HttpApi.Client.ConsoleTestApp.abppkg",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERP.HttpApi.Client.ConsoleTestApp.abppkg",
+      "summary": "File mã nguồn `SupplyCoreERP.HttpApi.Client.ConsoleTestApp.abppkg` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "type": "file",
+      "name": "SupplyCoreERPConsoleApiClientModule.cs",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "summary": "File mã nguồn `SupplyCoreERPConsoleApiClientModule.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend",
+        "web-api"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs:SupplyCoreERPConsoleApiClientModule",
+      "type": "class",
+      "name": "SupplyCoreERPConsoleApiClientModule",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "summary": "Lớp `SupplyCoreERPConsoleApiClientModule` thực hiện nghiệp vụ liên quan đến supply core e r p console api client module.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 11,
+      "endLine": 30
+    },
+    {
+      "id": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs:PreConfigureServices",
+      "type": "function",
+      "name": "PreConfigureServices",
+      "path": "test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "summary": "Phương thức `PreConfigureServices` thực hiện nghiệp vụ pre configure services.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 18,
+      "endLine": 29
+    },
+    {
+      "id": "file:test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "type": "file",
+      "name": "QATestAttribute.cs",
+      "path": "test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "summary": "File mã nguồn `QATestAttribute.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.TestBase/QATestAttribute.cs:QATestAttribute",
+      "type": "class",
+      "name": "QATestAttribute",
+      "path": "test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "summary": "Lớp `QATestAttribute` thực hiện nghiệp vụ liên quan đến q a test attribute.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 5,
+      "endLine": 27
+    },
+    {
+      "id": "function:test/SupplyCoreERP.TestBase/QATestAttribute.cs:QATestAttribute",
+      "type": "function",
+      "name": "QATestAttribute",
+      "path": "test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "summary": "Phương thức `QATestAttribute` thực hiện nghiệp vụ q a test attribute.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 14,
+      "endLine": 26
+    },
+    {
+      "id": "file:test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs",
+      "type": "file",
+      "name": "FakeCurrentPrincipalAccessor.cs",
+      "path": "test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs",
+      "summary": "File mã nguồn `FakeCurrentPrincipalAccessor.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs:FakeCurrentPrincipalAccessor",
+      "type": "class",
+      "name": "FakeCurrentPrincipalAccessor",
+      "path": "test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs",
+      "summary": "Lớp `FakeCurrentPrincipalAccessor` thực hiện nghiệp vụ liên quan đến fake current principal accessor.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 9,
+      "endLine": 26
+    },
+    {
+      "id": "file:test/SupplyCoreERP.TestBase/SupplyCoreERP.TestBase.abppkg",
+      "type": "file",
+      "name": "SupplyCoreERP.TestBase.abppkg",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERP.TestBase.abppkg",
+      "summary": "File mã nguồn `SupplyCoreERP.TestBase.abppkg` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "type": "file",
+      "name": "SupplyCoreERPTestBase.cs",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "summary": "File mã nguồn `SupplyCoreERPTestBase.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "moderate",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:SupplyCoreERPTestBase",
+      "type": "class",
+      "name": "SupplyCoreERPTestBase",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "summary": "Lớp `SupplyCoreERPTestBase` thực hiện nghiệp vụ liên quan đến supply core e r p test base.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 12,
+      "endLine": 59
+    },
+    {
+      "id": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "type": "function",
+      "name": "WithUnitOfWorkAsync",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "summary": "Phương thức `WithUnitOfWorkAsync` thực hiện nghiệp vụ with đơn vị of work.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 33,
+      "endLine": 42
+    },
+    {
+      "id": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "type": "function",
+      "name": "WithUnitOfWorkAsync",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "summary": "Phương thức `WithUnitOfWorkAsync` thực hiện nghiệp vụ with đơn vị of work.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 49,
+      "endLine": 58
+    },
+    {
+      "id": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "type": "file",
+      "name": "SupplyCoreERPTestBaseModule.cs",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "summary": "File mã nguồn `SupplyCoreERPTestBaseModule.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs:SupplyCoreERPTestBaseModule",
+      "type": "class",
+      "name": "SupplyCoreERPTestBaseModule",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "summary": "Lớp `SupplyCoreERPTestBaseModule` thực hiện nghiệp vụ liên quan đến supply core e r p test base module.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 12,
+      "endLine": 45
+    },
+    {
+      "id": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs:SeedTestData",
+      "type": "function",
+      "name": "SeedTestData",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "summary": "Phương thức `SeedTestData` thực hiện nghiệp vụ seed test data.",
+      "complexity": "simple",
+      "tags": [
+        "method",
+        "logic"
+      ],
+      "startLine": 35,
+      "endLine": 44
+    },
+    {
+      "id": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestConsts.cs",
+      "type": "file",
+      "name": "SupplyCoreERPTestConsts.cs",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestConsts.cs",
+      "summary": "File mã nguồn `SupplyCoreERPTestConsts.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs",
+      "type": "file",
+      "name": "SupplyCoreERPTestDataBuilder.cs",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs",
+      "summary": "File mã nguồn `SupplyCoreERPTestDataBuilder.cs` thuộc quản lý các nghiệp vụ của hệ thống.",
+      "complexity": "simple",
+      "tags": [
+        "csharp",
+        "backend"
+      ]
+    },
+    {
+      "id": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs:SupplyCoreERPTestDataSeedContributor",
+      "type": "class",
+      "name": "SupplyCoreERPTestDataSeedContributor",
+      "path": "test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs",
+      "summary": "Lớp `SupplyCoreERPTestDataSeedContributor` thực hiện nghiệp vụ liên quan đến supply core e r p test data seed contributor.",
+      "complexity": "simple",
+      "tags": [
+        "class",
+        "oop",
+        "entity"
+      ],
+      "startLine": 8,
+      "endLine": 26
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "target": "class:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:SupplyCoreERPEntityFrameworkCoreTestModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "target": "class:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:SupplyCoreERPEntityFrameworkCoreTestModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "target": "function:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:ConfigureServices",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "target": "function:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:ConfigureServices",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "target": "function:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:ConfigureInMemorySqlite",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs",
+      "target": "function:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:ConfigureInMemorySqlite",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:ConfigureServices",
+      "target": "function:test/SupplyCoreERP.EntityFrameworkCore.Tests/EntityFrameworkCore/SupplyCoreERPEntityFrameworkCoreTestModule.cs:ConfigureInMemorySqlite",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "target": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs:ClientDemoService",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "target": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs:ClientDemoService",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs:ClientDemoService",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "target": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs:RunAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs",
+      "target": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs:RunAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "target": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs:Program",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "target": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs:Program",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "target": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs:Main",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs",
+      "target": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs:Main",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/Program.cs:Main",
+      "target": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/ClientDemoService.cs:RunAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "target": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs:SupplyCoreERPConsoleApiClientModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "target": "class:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs:SupplyCoreERPConsoleApiClientModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "target": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs:PreConfigureServices",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs",
+      "target": "function:test/SupplyCoreERP.HttpApi.Client.ConsoleTestApp/SupplyCoreERPConsoleApiClientModule.cs:PreConfigureServices",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/QATestAttribute.cs:QATestAttribute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/QATestAttribute.cs:QATestAttribute",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "target": "function:test/SupplyCoreERP.TestBase/QATestAttribute.cs:QATestAttribute",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/QATestAttribute.cs",
+      "target": "function:test/SupplyCoreERP.TestBase/QATestAttribute.cs:QATestAttribute",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs:FakeCurrentPrincipalAccessor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/Security/FakeCurrentPrincipalAccessor.cs:FakeCurrentPrincipalAccessor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:SupplyCoreERPTestBase",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:SupplyCoreERPTestBase",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "target": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "target": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "target": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs",
+      "target": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "target": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "target": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBase.cs:WithUnitOfWorkAsync",
+      "type": "calls",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs:SupplyCoreERPTestBaseModule",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs:SupplyCoreERPTestBaseModule",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "target": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs:SeedTestData",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs",
+      "target": "function:test/SupplyCoreERP.TestBase/SupplyCoreERPTestBaseModule.cs:SeedTestData",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs:SupplyCoreERPTestDataSeedContributor",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1
+    },
+    {
+      "source": "file:test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs",
+      "target": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs:SupplyCoreERPTestDataSeedContributor",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "class:test/SupplyCoreERP.TestBase/SupplyCoreERPTestDataBuilder.cs:SupplyCoreERPTestDataSeedContributor",
+      "target": "class:src/SupplyCoreERP.Mcp.Client/SupplyCoreERPMcpClientModule.cs:ITransientDependency",
+      "type": "implements",
+      "direction": "forward",
+      "weight": 0.9
+    }
+  ]
+}

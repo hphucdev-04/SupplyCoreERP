@@ -1,0 +1,612 @@
+{
+  "nodes": [
+    {
+      "id": "file:angular/src/app/inventories/tickets/tickets.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "tickets.component.scss",
+        "path": "angular/src/app/inventories/tickets/tickets.component.scss",
+        "summary": "Styles rỗng cho TicketsComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/inventories/tickets/tickets.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "tickets.component.ts",
+        "path": "angular/src/app/inventories/tickets/tickets.component.ts",
+        "summary": "Code logic của TicketsComponent để quản lý danh sách phiếu kho.",
+        "tags": ["angular-component", "typescript", "inventory"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/inventories/tickets/tickets.component.ts:TicketsComponent",
+      "type": "class",
+      "metadata": {
+        "name": "TicketsComponent",
+        "path": "angular/src/app/inventories/tickets/tickets.component.ts",
+        "summary": "Component Angular quản lý danh sách phiếu xuất/nhập kho (Tickets), hỗ trợ lọc nâng cao và thêm mới.",
+        "tags": ["angular-component", "inventory", "ticket"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "storage-locations.component.html",
+        "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.html",
+        "summary": "Giao diện bản đồ sơ đồ kho hiển thị canvas sơ đồ zones và bins và panel thuộc tính.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "complex",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "storage-locations.component.scss",
+        "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.scss",
+        "summary": "Styles định nghĩa chi tiết hiển thị cho bản đồ kho, canvas kéo thả và các hiệu ứng trực quan.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "complex",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "storage-locations.component.ts",
+        "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+        "summary": "Code logic phức tạp để quản lý bản đồ kho kéo thả trực quan 2D.",
+        "tags": ["angular-component", "typescript", "inventory"],
+        "complexity": "complex",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts:StorageLocationsComponent",
+      "type": "class",
+      "metadata": {
+        "name": "StorageLocationsComponent",
+        "path": "angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+        "summary": "Component Angular điều khiển giao diện bản đồ kho dạng 2D, cho phép kéo thả, thay đổi kích thước và xoay các vùng (Zones) và ô (Bins) chứa hàng.",
+        "tags": ["angular-component", "inventory", "warehouse-map", "drag-drop"],
+        "complexity": "complex",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/inventories/warehouses/warehouses.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "warehouses.component.html",
+        "path": "angular/src/app/inventories/warehouses/warehouses.component.html",
+        "summary": "Giao diện quản lý danh sách các kho hàng và Drawer để tạo mới/chỉnh sửa kho.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "moderate",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/inventories/warehouses/warehouses.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "warehouses.component.scss",
+        "path": "angular/src/app/inventories/warehouses/warehouses.component.scss",
+        "summary": "Styles rỗng cho WarehousesComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/inventories/warehouses/warehouses.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "warehouses.component.ts",
+        "path": "angular/src/app/inventories/warehouses/warehouses.component.ts",
+        "summary": "Code logic của WarehousesComponent quản trị các kho hàng.",
+        "tags": ["angular-component", "typescript", "inventory"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/inventories/warehouses/warehouses.component.ts:WarehousesComponent",
+      "type": "class",
+      "metadata": {
+        "name": "WarehousesComponent",
+        "path": "angular/src/app/inventories/warehouses/warehouses.component.ts",
+        "summary": "Component Angular quản lý danh sách các kho hàng (Warehouses), hỗ trợ tạo mới, chỉnh sửa thông tin kho và cấu hình sơ đồ kho.",
+        "tags": ["angular-component", "inventory", "warehouse"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/customers/customer-details/customer-details.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "customer-details.component.html",
+        "path": "angular/src/app/partners/customers/customer-details/customer-details.component.html",
+        "summary": "Giao diện hiển thị chi tiết khách hàng.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "moderate",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/customers/customer-details/customer-details.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "customer-details.component.scss",
+        "path": "angular/src/app/partners/customers/customer-details/customer-details.component.scss",
+        "summary": "Styles rỗng cho CustomerDetailsComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "customer-details.component.ts",
+        "path": "angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+        "summary": "Code logic hiển thị thông tin chi tiết một khách hàng.",
+        "tags": ["angular-component", "typescript", "partner"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/partners/customers/customer-details/customer-details.component.ts:CustomerDetailsComponent",
+      "type": "class",
+      "metadata": {
+        "name": "CustomerDetailsComponent",
+        "path": "angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+        "summary": "Component Angular hiển thị chi tiết thông tin của khách hàng (Customer details).",
+        "tags": ["angular-component", "partner", "customer-detail"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/customers/customers.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "customers.component.html",
+        "path": "angular/src/app/partners/customers/customers.component.html",
+        "summary": "Giao diện quản lý danh sách khách hàng và Drawer chỉnh sửa khách hàng.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "moderate",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/customers/customers.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "customers.component.scss",
+        "path": "angular/src/app/partners/customers/customers.component.scss",
+        "summary": "Styles rỗng cho CustomersComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/customers/customers.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "customers.component.ts",
+        "path": "angular/src/app/partners/customers/customers.component.ts",
+        "summary": "Code logic để quản trị danh sách khách hàng.",
+        "tags": ["angular-component", "typescript", "partner"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/partners/customers/customers.component.ts:CustomersComponent",
+      "type": "class",
+      "metadata": {
+        "name": "CustomersComponent",
+        "path": "angular/src/app/partners/customers/customers.component.ts",
+        "summary": "Component Angular quản lý danh sách khách hàng (Customers), tích hợp tìm kiếm, thêm mới, sửa và xóa.",
+        "tags": ["angular-component", "partner", "customer"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/partner.routes.ts",
+      "type": "file",
+      "metadata": {
+        "name": "partner.routes.ts",
+        "path": "angular/src/app/partners/partner.routes.ts",
+        "summary": "File định nghĩa các route cho khu vực quản trị đối tác (Partners) bao gồm Customers và Suppliers.",
+        "tags": ["angular-routes", "routing", "partner"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "supplier-details.component.html",
+        "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.html",
+        "summary": "Giao diện hiển thị chi tiết nhà cung cấp với các thông tin chứng chỉ QA/GPP, sản phẩm và lịch sử đơn hàng PO.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "complex",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "supplier-details.component.scss",
+        "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.scss",
+        "summary": "Styles rỗng cho SupplierDetailsComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "supplier-details.component.ts",
+        "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+        "summary": "Code logic của SupplierDetailsComponent quản lý thông tin chi tiết của một nhà cung cấp.",
+        "tags": ["angular-component", "typescript", "partner"],
+        "complexity": "complex",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts:SupplierDetailsComponent",
+      "type": "class",
+      "metadata": {
+        "name": "SupplierDetailsComponent",
+        "path": "angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+        "summary": "Component Angular chi tiết nhà cung cấp (Supplier Details), hiển thị thông tin liên hệ, giấy chứng nhận QA/GPP, danh mục sản phẩm cung cấp và lịch sử đơn mua hàng PO.",
+        "tags": ["angular-component", "partner", "supplier-detail"],
+        "complexity": "complex",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/suppliers/suppliers.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "suppliers.component.html",
+        "path": "angular/src/app/partners/suppliers/suppliers.component.html",
+        "summary": "Giao diện quản lý danh sách các nhà cung cấp và Drawer cập nhật thông tin.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "moderate",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/suppliers/suppliers.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "suppliers.component.scss",
+        "path": "angular/src/app/partners/suppliers/suppliers.component.scss",
+        "summary": "Styles rỗng cho SuppliersComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/partners/suppliers/suppliers.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "suppliers.component.ts",
+        "path": "angular/src/app/partners/suppliers/suppliers.component.ts",
+        "summary": "Code logic của SuppliersComponent để quản trị các nhà cung cấp.",
+        "tags": ["angular-component", "typescript", "partner"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/partners/suppliers/suppliers.component.ts:SuppliersComponent",
+      "type": "class",
+      "metadata": {
+        "name": "SuppliersComponent",
+        "path": "angular/src/app/partners/suppliers/suppliers.component.ts",
+        "summary": "Component Angular quản lý danh sách nhà cung cấp (Suppliers), hỗ trợ lọc, thêm mới, chỉnh sửa và quản lý chất lượng.",
+        "tags": ["angular-component", "partner", "supplier"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/procurement/procurement.routes.ts",
+      "type": "file",
+      "metadata": {
+        "name": "procurement.routes.ts",
+        "path": "angular/src/app/procurement/procurement.routes.ts",
+        "summary": "File định nghĩa các route cho phân hệ mua hàng (Procurement) bao gồm đơn mua hàng Purchase Orders và chi tiết đơn hàng.",
+        "tags": ["angular-routes", "routing", "procurement"],
+        "complexity": "simple",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.html",
+      "type": "file",
+      "metadata": {
+        "name": "purchase-orders.component.html",
+        "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.html",
+        "summary": "Giao diện hiển thị danh sách đơn mua hàng PO và Drawer để tạo mới/chỉnh sửa.",
+        "tags": ["angular-template", "html", "markup"],
+        "complexity": "moderate",
+        "language": "html"
+      }
+    },
+    {
+      "id": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.scss",
+      "type": "file",
+      "metadata": {
+        "name": "purchase-orders.component.scss",
+        "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.scss",
+        "summary": "Styles rỗng cho PurchaseOrdersComponent.",
+        "tags": ["angular-styles", "scss", "markup"],
+        "complexity": "simple",
+        "language": "css"
+      }
+    },
+    {
+      "id": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+      "type": "file",
+      "metadata": {
+        "name": "purchase-orders.component.ts",
+        "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+        "summary": "Code logic quản lý danh sách đơn mua hàng PurchaseOrdersComponent.",
+        "tags": ["angular-component", "typescript", "procurement"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    },
+    {
+      "id": "class:angular/src/app/procurement/purchase-orders/purchase-orders.component.ts:PurchaseOrdersComponent",
+      "type": "class",
+      "metadata": {
+        "name": "PurchaseOrdersComponent",
+        "path": "angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+        "summary": "Component Angular quản lý danh sách đơn mua hàng (Purchase Orders), lọc theo trạng thái duyệt và nhà cung cấp.",
+        "tags": ["angular-component", "procurement", "purchase-order"],
+        "complexity": "moderate",
+        "language": "typescript"
+      }
+    }
+  ],
+  "edges": [
+    {
+      "source": "file:angular/src/app/inventories/tickets/tickets.component.ts",
+      "target": "class:angular/src/app/inventories/tickets/tickets.component.ts:TicketsComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/inventories/tickets/tickets.component.ts",
+      "target": "class:angular/src/app/inventories/tickets/tickets.component.ts:TicketsComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+      "target": "class:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts:StorageLocationsComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+      "target": "class:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts:StorageLocationsComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/inventories/warehouses/warehouses.component.ts",
+      "target": "class:angular/src/app/inventories/warehouses/warehouses.component.ts:WarehousesComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/inventories/warehouses/warehouses.component.ts",
+      "target": "class:angular/src/app/inventories/warehouses/warehouses.component.ts:WarehousesComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+      "target": "class:angular/src/app/partners/customers/customer-details/customer-details.component.ts:CustomerDetailsComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+      "target": "class:angular/src/app/partners/customers/customer-details/customer-details.component.ts:CustomerDetailsComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/partners/customers/customers.component.ts",
+      "target": "class:angular/src/app/partners/customers/customers.component.ts:CustomersComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/partners/customers/customers.component.ts",
+      "target": "class:angular/src/app/partners/customers/customers.component.ts:CustomersComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+      "target": "class:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts:SupplierDetailsComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+      "target": "class:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts:SupplierDetailsComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/partners/suppliers/suppliers.component.ts",
+      "target": "class:angular/src/app/partners/suppliers/suppliers.component.ts:SuppliersComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/partners/suppliers/suppliers.component.ts",
+      "target": "class:angular/src/app/partners/suppliers/suppliers.component.ts:SuppliersComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+      "target": "class:angular/src/app/procurement/purchase-orders/purchase-orders.component.ts:PurchaseOrdersComponent",
+      "type": "contains",
+      "direction": "forward",
+      "weight": 1.0
+    },
+    {
+      "source": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+      "target": "class:angular/src/app/procurement/purchase-orders/purchase-orders.component.ts:PurchaseOrdersComponent",
+      "type": "exports",
+      "direction": "forward",
+      "weight": 0.8
+    },
+    {
+      "source": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.html",
+      "target": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.scss",
+      "target": "file:angular/src/app/inventories/warehouses/storage-locations/storage-locations.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/inventories/warehouses/warehouses.component.html",
+      "target": "file:angular/src/app/inventories/warehouses/warehouses.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/inventories/warehouses/warehouses.component.scss",
+      "target": "file:angular/src/app/inventories/warehouses/warehouses.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/partners/customers/customer-details/customer-details.component.html",
+      "target": "file:angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/partners/customers/customer-details/customer-details.component.scss",
+      "target": "file:angular/src/app/partners/customers/customer-details/customer-details.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/partners/customers/customers.component.html",
+      "target": "file:angular/src/app/partners/customers/customers.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/partners/customers/customers.component.scss",
+      "target": "file:angular/src/app/partners/customers/customers.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.html",
+      "target": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.scss",
+      "target": "file:angular/src/app/partners/suppliers/supplier-details/supplier-details.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/partners/suppliers/suppliers.component.html",
+      "target": "file:angular/src/app/partners/suppliers/suppliers.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/partners/suppliers/suppliers.component.scss",
+      "target": "file:angular/src/app/partners/suppliers/suppliers.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.html",
+      "target": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    },
+    {
+      "source": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.scss",
+      "target": "file:angular/src/app/procurement/purchase-orders/purchase-orders.component.ts",
+      "type": "related",
+      "direction": "forward",
+      "weight": 0.5
+    }
+  ]
+}

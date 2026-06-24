@@ -107,6 +107,7 @@ public static class SupplyCoreERPPermissions
             public const string Delete = Default + ".Delete";
             public const string Approve = Default + ".Approve";
             public const string Reject = Default + ".Reject";
+            public const string ZoneTransfer = Default + ".ZoneTransfer";
         }
 
         // Batch Permission
@@ -167,6 +168,7 @@ public static class SupplyCoreERPPermissions
             public const string Delete = Default + ".Delete";
             public const string Approve = Default + ".Approve";
             public const string Reject = Default + ".Reject";
+            public const string OverrideUnitPrice = Default + ".OverrideUnitPrice";
         }
 
         // PurchaseReturn Permission

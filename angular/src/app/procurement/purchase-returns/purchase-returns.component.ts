@@ -18,13 +18,13 @@ import { SupplierDto } from 'src/app/proxy/suppliers/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseOrderDto } from 'src/app/proxy/purchase-orders/dtos';
 import { PurchaseReturnStatus, purchaseReturnStatusOptions } from 'src/app/proxy/enums/orders/purchase-return-status.enum';
+import { PurchaseReturnType, purchaseReturnTypeOptions } from 'src/app/proxy/enums/orders/purchase-return-type.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
-import { PurchaseReturnRequestsComponent } from '../purchase-return-requests/purchase-return-requests.component';
 
 @Component({
   selector: 'app-purchase-returns',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, SearchComponent],
+  imports: [SharedModule, DrawerComponent, SearchComponent, DropdownSearchComponent],
   providers: [ListService],
   templateUrl: './purchase-returns.component.html',
 })
@@ -47,6 +47,8 @@ export class PurchaseReturnsComponent implements OnInit, OnDestroy {
 
   PurchaseReturnStatus = PurchaseReturnStatus;
   purchaseReturnStatusOptions = purchaseReturnStatusOptions;
+  PurchaseReturnType = PurchaseReturnType;
+  purchaseReturnTypeOptions = purchaseReturnTypeOptions;
   readonly enumName = enumName;
 
   constructor(
@@ -110,7 +112,14 @@ export class PurchaseReturnsComponent implements OnInit, OnDestroy {
       .pipe(takeUntil(this.destroy$))
       .subscribe(res => {
         // Chỉ cho phép trả những PO đã được Approved hoặc Complete (đã nhận hàng)
-        this.purchaseOrders = res.items.filter(po => po.status === 3 || po.status === 5);
+        const list = res.items.filter(po => po.status === 3 || po.status === 5);
+        this.purchaseOrders = list.map(po => {
+          const dateStr = po.orderDate ? new Date(po.orderDate).toLocaleDateString('vi-VN') : '';
+          return {
+            ...po,
+            displayName: dateStr ? `${po.code} (${dateStr})` : po.code
+          } as any;
+        });
       });
   }
 
@@ -130,6 +139,7 @@ export class PurchaseReturnsComponent implements OnInit, OnDestroy {
   openCreateDrawer() {
     this.form.reset({
       returnDate: new Date().toISOString().split('T')[0],
+      returnType: PurchaseReturnType.Commercial,
     });
     this.purchaseOrders = [];
     this.isDrawerOpen = true;
@@ -181,8 +191,33 @@ export class PurchaseReturnsComponent implements OnInit, OnDestroy {
       supplierId: [null, [Validators.required]],
       purchaseOrderId: [null, [Validators.required]],
       warehouseId: [null, [Validators.required]],
+      returnType: [PurchaseReturnType.Commercial, [Validators.required]],
       returnDate: [new Date().toISOString().split('T')[0], [Validators.required]],
       note: ['', [Validators.maxLength(1000)]],
     });
+  }
+
+  statusClass(status: PurchaseReturnStatus): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnStatus.Draft]: 'ph-badge--neutral',
+      [PurchaseReturnStatus.PendingApproval]: 'ph-badge--pending',
+      [PurchaseReturnStatus.Approved]: 'ph-badge--info',
+      [PurchaseReturnStatus.Returning]: 'ph-badge--primary',
+      [PurchaseReturnStatus.Completed]: 'ph-badge--approved',
+      [PurchaseReturnStatus.Rejected]: 'ph-badge--rejected',
+    };
+    return map[status] ?? 'ph-badge--neutral';
+  }
+
+  statusIcon(status: PurchaseReturnStatus): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnStatus.Draft]: 'fa-pencil',
+      [PurchaseReturnStatus.PendingApproval]: 'fa-clock-o',
+      [PurchaseReturnStatus.Approved]: 'fa-check',
+      [PurchaseReturnStatus.Returning]: 'fa-truck',
+      [PurchaseReturnStatus.Completed]: 'fa-check-circle',
+      [PurchaseReturnStatus.Rejected]: 'fa-times-circle',
+    };
+    return map[status] ?? 'fa-circle';
   }
 }

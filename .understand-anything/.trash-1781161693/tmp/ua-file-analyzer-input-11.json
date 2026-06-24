@@ -1,0 +1,40 @@
+{
+  "projectRoot": "D:\\ProjectOwner\\SupplyCoreERP",
+  "batchFiles": [
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-return-request-status.enum.ts",
+      "language": "typescript",
+      "sizeLines": 11,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/enums/orders/purchase-return-type.enum.ts",
+      "language": "typescript",
+      "sizeLines": 8,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/dtos/models.ts",
+      "language": "typescript",
+      "sizeLines": 91,
+      "fileCategory": "code"
+    },
+    {
+      "path": "angular/src/app/proxy/purchase-return-requests/purchase-return-request.service.ts",
+      "language": "typescript",
+      "sizeLines": 106,
+      "fileCategory": "code"
+    }
+  ],
+  "batchImportData": {
+    "angular/src/app/proxy/enums/orders/purchase-return-request-status.enum.ts": [],
+    "angular/src/app/proxy/enums/orders/purchase-return-type.enum.ts": [],
+    "angular/src/app/proxy/purchase-return-requests/dtos/models.ts": [
+      "angular/src/app/proxy/enums/orders/purchase-return-request-status.enum.ts",
+      "angular/src/app/proxy/enums/orders/purchase-return-type.enum.ts"
+    ],
+    "angular/src/app/proxy/purchase-return-requests/purchase-return-request.service.ts": [
+      "angular/src/app/proxy/purchase-return-requests/dtos/models.ts"
+    ]
+  }
+}

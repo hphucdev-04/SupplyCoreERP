@@ -69,28 +69,12 @@
       <div class="card ph-card mb-4">
         <div class="card-body">
           <div class="row">
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::Supplier' | abpLocalization }}</span>
-              <span class="ph-field-value d-block fw-bold">{{ requestDto.supplierName }}</span>
-              <span class="ph-text-muted">{{ requestDto.supplierCode }}</span>
-            </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-md-6 mb-3">
               <span class="ph-field-meta">{{ '::Warehouse' | abpLocalization }}</span>
               <span class="ph-field-value d-block fw-bold">{{ requestDto.warehouseName }}</span>
               <span class="ph-text-muted">{{ requestDto.warehouseCode }}</span>
             </div>
-            <div class="col-md-3 mb-3">
-              <span class="ph-field-meta">{{ '::ReturnType' | abpLocalization }}</span>
-              <span
-                class="badge d-block mt-1"
-                style="width: fit-content;"
-                [class.bg-danger]="requestDto.returnType === PurchaseReturnType.Defective"
-                [class.bg-primary]="requestDto.returnType === PurchaseReturnType.Commercial"
-              >
-                {{ '::Enum:PurchaseReturnType.' + enumName(PurchaseReturnType, requestDto.returnType) | abpLocalization }}
-              </span>
-            </div>
-            <div class="col-md-3 mb-3">
+            <div class="col-md-6 mb-3">
               <span class="ph-field-meta">{{ '::RequestDate' | abpLocalization }}</span>
               <span class="ph-field-value d-block fw-bold">{{ requestDto.requestDate | date: 'dd/MM/yyyy' }}</span>
             </div>
@@ -127,6 +111,8 @@
                   <th>{{ '::Product' | abpLocalization }}</th>
                   <th>{{ '::Unit' | abpLocalization }}</th>
                   <th>{{ '::PurchaseOrder' | abpLocalization }}</th>
+                  <th>{{ '::Supplier' | abpLocalization }}</th>
+                  <th>{{ '::ReturnType' | abpLocalization }}</th>
                   <th class="text-end">{{ '::OriginalUnitPrice' | abpLocalization }}</th>
                   <th class="text-end" style="width: 100px;">{{ '::DepreciationRate' | abpLocalization }} (%)</th>
                   <th class="text-end">{{ '::ReturnPrice' | abpLocalization }}</th>
@@ -149,6 +135,18 @@
                   <td>{{ line.unitName }}</td>
                   <td>
                     <span class="fw-bold">{{ line.purchaseOrderCode }}</span>
+                  </td>
+                  <td>
+                    <span class="ph-badge ph-badge--neutral">{{ line.supplierName }}</span>
+                  </td>
+                  <td>
+                    <span
+                      class="badge"
+                      [class.bg-danger]="line.returnType === PurchaseReturnType.Defective"
+                      [class.bg-primary]="line.returnType === PurchaseReturnType.Commercial"
+                    >
+                      {{ '::Enum:PurchaseReturnType.' + enumName(PurchaseReturnType, line.returnType) | abpLocalization }}
+                    </span>
                   </td>
                   <td class="text-end">{{ line.originalUnitPrice | number: '1.0-0' }} ₫</td>
                   <td class="text-end text-danger">{{ line.depreciationRate }}%</td>
@@ -245,20 +243,14 @@
     <!-- Warehouse -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
-      <select class="form-select" formControlName="warehouseId">
-        <option *ngFor="let w of warehouses" [value]="w.id">{{ w.name }}</option>
-      </select>
+      <app-dropdown-search
+        formControlName="warehouseId"
+        [items]="warehouses"
+        [placeholder]="'::SelectWarehouse' | abpLocalization"
+      ></app-dropdown-search>
     </div>
 
-    <!-- Return Type -->
-    <div class="mb-3">
-      <label class="ph-label ph-label--required">{{ '::ReturnType' | abpLocalization }}</label>
-      <select class="form-select" formControlName="returnType">
-        <option *ngFor="let t of purchaseReturnTypeOptions" [value]="t.value">
-          {{ '::Enum:PurchaseReturnType.' + enumName(PurchaseReturnType, t.value) | abpLocalization }}
-        </option>
-      </select>
-    </div>
+
 
     <!-- Request Date -->
     <div class="mb-3">
@@ -300,6 +292,8 @@
           <th>{{ '::Product' | abpLocalization }}</th>
           <th>{{ '::Unit' | abpLocalization }}</th>
           <th>{{ '::PurchaseOrder' | abpLocalization }}</th>
+          <th>{{ '::Supplier' | abpLocalization }}</th>
+          <th>{{ '::ReturnType' | abpLocalization }}</th>
           <th class="text-end">{{ '::ReceivedQty' | abpLocalization }}</th>
           <th class="text-end">{{ '::UnitPrice' | abpLocalization }}</th>
           <th class="text-end" style="width: 140px;">{{ '::ReturnQty' | abpLocalization }}</th>
@@ -320,6 +314,22 @@
           <td>
             <span class="fw-bold">{{ line.purchaseOrderCode }}</span>
           </td>
+          <td>
+            <span class="ph-badge ph-badge--neutral">{{ line.supplierName }}</span>
+          </td>
+          <td>
+            <select
+              class="form-select form-select-sm"
+              [(ngModel)]="line.returnType"
+              [disabled]="!line.selected"
+              (change)="line.returnType === PurchaseReturnType.Defective ? line.depreciationRate = 0 : null"
+              style="width: 140px;"
+            >
+              <option *ngFor="let t of purchaseReturnTypeOptions" [value]="t.value">
+                {{ '::Enum:PurchaseReturnType.' + enumName(PurchaseReturnType, t.value) | abpLocalization }}
+              </option>
+            </select>
+          </td>
           <td class="text-end fw-bold">{{ line.receivedQuantity | number }}</td>
           <td class="text-end">{{ line.unitPrice | number: '1.0-0' }} ₫</td>
           <td class="text-end">
@@ -333,13 +343,11 @@
             />
           </td>
           <td class="text-end">
-            <!-- Ràng buộc Khấu hao theo Loại trả hàng (ReturnType) -->
             <input
               type="number"
               class="form-control form-control-sm text-end text-danger"
               [(ngModel)]="line.depreciationRate"
-              [disabled]="!line.selected || requestDto.returnType === PurchaseReturnType.Defective"
-              [value]="requestDto.returnType === PurchaseReturnType.Defective ? 0 : line.depreciationRate"
+              [disabled]="!line.selected || line.returnType === PurchaseReturnType.Defective"
               min="0"
               max="100"
             />
