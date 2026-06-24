@@ -28,7 +28,7 @@ public class SupplyCoreERPTestBaseModule : AbpModule
 
         context.Services.AddAlwaysAllowAuthorization();
 
-        var mockNotificationRealTime = Substitute.For<INotificationRealTime>();
+        INotificationRealTime mockNotificationRealTime = Substitute.For<INotificationRealTime>();
         context.Services.AddSingleton(mockNotificationRealTime);
     }
 

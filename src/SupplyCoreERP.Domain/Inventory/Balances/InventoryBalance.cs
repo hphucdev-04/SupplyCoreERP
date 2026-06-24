@@ -13,10 +13,10 @@ public class InventoryBalance : AuditedAggregateRoot<Guid>
 {
     public Guid WarehouseId { get; private set; }
     public virtual Warehouse Warehouse { get; protected set; }
-    
+
     public Guid ProductId { get; private set; }
     public virtual Product Product { get; protected set; }
-    
+
     public Guid ProductBatchId { get; private set; }
     public virtual ProductBatch ProductBatch { get; protected set; }
 
@@ -43,7 +43,7 @@ public class InventoryBalance : AuditedAggregateRoot<Guid>
 
     public void AddStock(Guid binId, decimal amount, Guid newBinBalanceId)
     {
-        var binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId);
+        InventoryBinBalance? binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId);
         if (binBalance == null)
         {
             binBalance = new InventoryBinBalance(newBinBalanceId, Id, binId, amount);
@@ -58,7 +58,7 @@ public class InventoryBalance : AuditedAggregateRoot<Guid>
 
     public void RemoveStock(Guid binId, decimal amount)
     {
-        var binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId)
+        InventoryBinBalance binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId)
             ?? throw new BusinessException("SupplyCoreERP:BinBalanceNotFound", "Không tìm thấy tồn kho tại vị trí kệ này!");
 
         binBalance.RemoveStock(amount);
@@ -72,7 +72,7 @@ public class InventoryBalance : AuditedAggregateRoot<Guid>
 
     public void LockStock(Guid binId, decimal amount)
     {
-        var binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId)
+        InventoryBinBalance binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId)
             ?? throw new BusinessException("SupplyCoreERP:StockNotAvailable", "Không có tồn kho khả dụng tại vị trí kệ này để giữ hàng!");
 
         binBalance.LockStock(amount);
@@ -81,13 +81,13 @@ public class InventoryBalance : AuditedAggregateRoot<Guid>
 
     public void UnlockStock(Guid binId, decimal amount)
     {
-        var binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId);
+        InventoryBinBalance? binBalance = BinBalances.FirstOrDefault(x => x.BinId == binId);
         if (binBalance != null)
         {
             decimal oldLocked = binBalance.LockedQuantity;
             binBalance.UnlockStock(amount);
             decimal actualUnlocked = oldLocked - binBalance.LockedQuantity;
-            
+
             LockedQuantity -= actualUnlocked;
             if (LockedQuantity < 0)
             {

@@ -76,7 +76,7 @@ public class ProductBatch : FullAuditedAggregateRoot<Guid>
     {
         if (Status != newStatus)
         {
-            var oldStatus = Status;
+            BatchQAStatus oldStatus = Status;
             Status = newStatus;
             AddLocalEvent(new BatchQAStatusChangedDomainEvent(Id, BatchNumber, ProductId, oldStatus, Status));
         }

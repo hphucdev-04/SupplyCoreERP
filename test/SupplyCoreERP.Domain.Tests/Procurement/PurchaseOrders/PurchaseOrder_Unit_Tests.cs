@@ -163,28 +163,28 @@ public class PurchaseOrder_Unit_Tests
 
         // Act & Assert
         // Số lượng <= 0
-        var exQty = Assert.Throws<BusinessException>(() =>
+        BusinessException exQty = Assert.Throws<BusinessException>(() =>
         {
             order.AddLine(Guid.NewGuid(), _productId, _unitId, 1, 0m, 100000m, 10m);
         });
         exQty.Code.ShouldBe("SupplyCoreERP:InvalidQuantity");
 
         // Đơn giá âm
-        var exPrice = Assert.Throws<BusinessException>(() =>
+        BusinessException exPrice = Assert.Throws<BusinessException>(() =>
         {
             order.AddLine(Guid.NewGuid(), _productId, _unitId, 1, 10m, -1000m, 10m);
         });
         exPrice.Code.ShouldBe("SupplyCoreERP:InvalidUnitPrice");
 
         // Thuế suất âm
-        var exTax = Assert.Throws<BusinessException>(() =>
+        BusinessException exTax = Assert.Throws<BusinessException>(() =>
         {
             order.AddLine(Guid.NewGuid(), _productId, _unitId, 1, 10m, 100000m, -5m);
         });
         exTax.Code.ShouldBe("SupplyCoreERP:InvalidTaxRate");
 
         // Hệ số quy đổi <= 0
-        var exFactor = Assert.Throws<BusinessException>(() =>
+        BusinessException exFactor = Assert.Throws<BusinessException>(() =>
         {
             order.AddLine(Guid.NewGuid(), _productId, _unitId, 0, 10m, 100000m, 10m);
         });
@@ -221,7 +221,7 @@ public class PurchaseOrder_Unit_Tests
         PurchaseOrder order = CreateSampleOrder();
 
         // Act & Assert
-        var ex = Assert.Throws<BusinessException>(() =>
+        BusinessException ex = Assert.Throws<BusinessException>(() =>
         {
             order.SendToApprove();
         });

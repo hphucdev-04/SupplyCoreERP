@@ -116,7 +116,10 @@ public class PriceManager : DomainService
             c.UnitId == unitId);
 
         bool hasAny = await AsyncExecuter.AnyAsync(filtered);
-        if (!hasAny) return null;
+        if (!hasAny)
+        {
+            return null;
+        }
 
         return await AsyncExecuter.MinAsync(filtered, c => c.StandardPrice);
     }

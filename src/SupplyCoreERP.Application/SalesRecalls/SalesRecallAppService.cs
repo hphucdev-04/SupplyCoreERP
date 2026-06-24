@@ -97,9 +97,9 @@ public class SalesRecallAppService : SupplyCore, ISalesRecallAppService
         SalesRecallDto dto = ObjectMapper.Map<SalesRecall, SalesRecallDto>(entity);
         dto.BaseUnitName = entity.Product?.BaseUnit?.Name;
 
-        foreach (var lineDto in dto.Lines)
+        foreach (SalesRecallLineDto lineDto in dto.Lines)
         {
-            var lineEntity = entity.Lines.FirstOrDefault(x => x.Id == lineDto.Id);
+            SalesRecallLine? lineEntity = entity.Lines.FirstOrDefault(x => x.Id == lineDto.Id);
             if (lineEntity != null)
             {
                 lineDto.RecalledQuantity = lineEntity.RecalledQuantity;
@@ -107,7 +107,7 @@ public class SalesRecallAppService : SupplyCore, ISalesRecallAppService
 
                 if (lineEntity.SalesOrder != null)
                 {
-                    var soLine = lineEntity.SalesOrder.Lines.FirstOrDefault(l => l.ProductId == entity.ProductId);
+                    SalesOrderLine? soLine = lineEntity.SalesOrder.Lines.FirstOrDefault(l => l.ProductId == entity.ProductId);
                     if (soLine != null)
                     {
                         lineDto.SalesOrderQuantity = soLine.Quantity;
@@ -315,7 +315,7 @@ public class SalesRecallAppService : SupplyCore, ISalesRecallAppService
                 Guid soId = detail.TicketLine.Ticket.ReferenceDocumentId.Value;
                 if (soDict.TryGetValue(soId, out SalesOrder? so))
                 {
-                    var soLine = so.Lines.FirstOrDefault(x => x.ProductId == detail.ProductId);
+                    SalesOrderLine? soLine = so.Lines.FirstOrDefault(x => x.ProductId == detail.ProductId);
                     decimal unitPrice = 0;
                     decimal taxRate = 0;
                     decimal traceQuantity = 0;

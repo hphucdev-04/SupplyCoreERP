@@ -350,7 +350,11 @@ public class AgentAppService : SupplyCore, IAgentAppService
 
     private async Task SaveNewStepsAsync(AgentSession session, List<AgentSessionMessageDto> newSteps)
     {
-        if (newSteps == null) return;
+        if (newSteps == null)
+        {
+            return;
+        }
+
         foreach (AgentSessionMessageDto step in newSteps)
         {
             await _agentManager.AddMessageAsync(

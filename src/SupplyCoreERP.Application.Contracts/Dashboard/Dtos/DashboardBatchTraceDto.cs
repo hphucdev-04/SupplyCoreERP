@@ -15,7 +15,7 @@ public class DashboardBatchTraceDto
     public string SupplierName { get; set; } = string.Empty;
     public decimal TotalOnHand { get; set; }
     public decimal TotalReserved { get; set; }
-    
+
     public List<DashboardBatchTraceBalanceDto> Balances { get; set; } = new();
     public List<DashboardBatchTraceReceiptDto> Receipts { get; set; } = new();
     public List<DashboardBatchTraceDeliveryDto> Deliveries { get; set; } = new();

@@ -158,7 +158,10 @@ public class AgentManager : DomainService, IAgentManager
 
     private string SanitizeText(string text, List<DlpRule> rules)
     {
-        if (string.IsNullOrEmpty(text) || rules.Count == 0) return text;
+        if (string.IsNullOrEmpty(text) || rules.Count == 0)
+        {
+            return text;
+        }
 
         foreach (DlpRule rule in rules)
         {
@@ -180,7 +183,11 @@ public class AgentManager : DomainService, IAgentManager
 
     private string? SanitizeJsonString(string json, List<DlpRule> rules)
     {
-        if (string.IsNullOrEmpty(json)) return json;
+        if (string.IsNullOrEmpty(json))
+        {
+            return json;
+        }
+
         try
         {
             JsonNode? node = JsonNode.Parse(json);
@@ -195,7 +202,10 @@ public class AgentManager : DomainService, IAgentManager
 
     private void SanitizeJsonNode(JsonNode? node, List<DlpRule> rules)
     {
-        if (node == null) return;
+        if (node == null)
+        {
+            return;
+        }
 
         if (node is JsonObject obj)
         {

@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Volo.Abp;
 using Shouldly;
 using SupplyCoreERP.Catalog.Medicines;
 using SupplyCoreERP.Catalog.Products;
@@ -12,6 +11,7 @@ using SupplyCoreERP.Inventory.Balances;
 using SupplyCoreERP.Inventory.Batches;
 using SupplyCoreERP.Inventory.Warehouses;
 using SupplyCoreERP.SeedData;
+using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Modularity;
 using Xunit;
@@ -143,13 +143,13 @@ public abstract class TicketManager_Integration_Tests<TStartupModule> : SupplyCo
             details.Count.ShouldBe(2); // Phải phân bổ vào 2 lô
 
             // Lô C (hết hạn trước tiên) phải được lấy sạch 5 hộp
-            var detailC = details.FirstOrDefault(x => x.ProductBatchId == batchCId);
+            InventoryTicketDetail? detailC = details.FirstOrDefault(x => x.ProductBatchId == batchCId);
             detailC.ShouldNotBeNull();
             detailC.Quantity.ShouldBe(5m);
             detailC.BinId.ShouldBe(binId);
 
             // Lô B (cùng hạn với Lô A nhưng sản xuất trước) phải được lấy 7 hộp còn thiếu
-            var detailB = details.FirstOrDefault(x => x.ProductBatchId == batchBId);
+            InventoryTicketDetail? detailB = details.FirstOrDefault(x => x.ProductBatchId == batchBId);
             detailB.ShouldNotBeNull();
             detailB.Quantity.ShouldBe(7m);
             detailB.BinId.ShouldBe(binId);
@@ -194,7 +194,7 @@ public abstract class TicketManager_Integration_Tests<TStartupModule> : SupplyCo
             await _ticketLineRepository.InsertAsync(line, autoSave: true);
 
             // Thực thi và kiểm tra ném ngoại lệ
-            var exception = await Assert.ThrowsAsync<BusinessException>(async () =>
+            BusinessException exception = await Assert.ThrowsAsync<BusinessException>(async () =>
             {
                 await _ticketManager.AllocateFEFOForLineAsync(ticket, line);
             });
@@ -249,7 +249,7 @@ public abstract class TicketManager_Integration_Tests<TStartupModule> : SupplyCo
             await _ticketLineRepository.InsertAsync(line, autoSave: true);
 
             // Thực thi và kiểm tra ném ngoại lệ
-            var exception = await Assert.ThrowsAsync<BusinessException>(async () =>
+            BusinessException exception = await Assert.ThrowsAsync<BusinessException>(async () =>
             {
                 await _ticketManager.AllocateFEFOForLineAsync(ticket, line);
             });

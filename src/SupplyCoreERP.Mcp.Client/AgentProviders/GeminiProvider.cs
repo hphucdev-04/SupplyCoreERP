@@ -278,10 +278,13 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
 
         foreach (JsonNode? part in partsArray)
         {
-            if (part == null) continue;
+            if (part == null)
+            {
+                continue;
+            }
 
             // Kiểm tra và lấy thought_signature/thoughtSignature ở mọi biến thể cấu trúc
-            string? sig = part["thought_signature"]?.ToString() 
+            string? sig = part["thought_signature"]?.ToString()
                        ?? part["thoughtSignature"]?.ToString()
                        ?? part["thought"]?["thought_signature"]?.ToString()
                        ?? part["thought"]?["thoughtSignature"]?.ToString();
@@ -300,7 +303,11 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
                 string? textVal = part["text"]?.ToString();
                 if (!string.IsNullOrEmpty(textVal))
                 {
-                    if (textBuilder.Length > 0) textBuilder.AppendLine();
+                    if (textBuilder.Length > 0)
+                    {
+                        textBuilder.AppendLine();
+                    }
+
                     textBuilder.Append(textVal);
                 }
             }

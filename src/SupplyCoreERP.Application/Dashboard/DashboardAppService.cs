@@ -737,7 +737,11 @@ public class DashboardAppService : SupplyCore, IDashboardAppService
 
             // Doanh số bán hàng chưa thanh toán trong kỳ của kho (Đại diện cho nợ phải thu phát sinh trong kỳ)
             IQueryable<SalesOrder> salesQuery = await _salesOrderRepository.GetQueryableAsync();
-            if (input.WarehouseId.HasValue) salesQuery = salesQuery.Where(x => x.WarehouseId == input.WarehouseId.Value);
+            if (input.WarehouseId.HasValue)
+            {
+                salesQuery = salesQuery.Where(x => x.WarehouseId == input.WarehouseId.Value);
+            }
+
             salesQuery = salesQuery.Where(x => x.OrderDate >= startDate && x.Status != SalesOrderStatus.Draft && x.Status != SalesOrderStatus.Canceled);
             // Giả lập tính toán: sum các đơn đã duyệt/giao nhưng chưa hoàn tất
             dto.TotalReceivableDebt = await salesQuery
@@ -746,7 +750,11 @@ public class DashboardAppService : SupplyCore, IDashboardAppService
 
             // Chi phí mua hàng chưa thanh toán trong kỳ của kho (Đại diện cho nợ phải trả phát sinh trong kỳ)
             IQueryable<PurchaseOrder> purchaseQuery = await _purchaseOrderRepository.GetQueryableAsync();
-            if (input.WarehouseId.HasValue) purchaseQuery = purchaseQuery.Where(x => x.WarehouseId == input.WarehouseId.Value);
+            if (input.WarehouseId.HasValue)
+            {
+                purchaseQuery = purchaseQuery.Where(x => x.WarehouseId == input.WarehouseId.Value);
+            }
+
             purchaseQuery = purchaseQuery.Where(x => x.OrderDate >= startDate && x.Status != PurchaseOrderStatus.Draft && x.Status != PurchaseOrderStatus.Canceled);
             dto.TotalPayableDebt = await purchaseQuery
                 .Where(x => x.Status == PurchaseOrderStatus.Approved || x.Status == PurchaseOrderStatus.Receiving)
