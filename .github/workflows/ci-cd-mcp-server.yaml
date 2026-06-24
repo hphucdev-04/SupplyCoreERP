@@ -42,4 +42,4 @@ jobs:
         env:
           RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
         working-directory: ./mcp-server
-        run: railway up --detach --service rxlogistics-mcp-server
+        run: railway up --detach --service mcp-server
