@@ -4,13 +4,13 @@ FROM node:20-alpine AS builder
 WORKDIR /app
 
 # Copy package configuration files
-COPY package*.json ./
+COPY mcp-server/package*.json ./
 
 # Install ALL dependencies (including devDependencies for TypeScript compilation)
 RUN npm install
 
 # Copy source code
-COPY . .
+COPY mcp-server/ .
 
 # Compile TypeScript to JavaScript
 RUN npm run build
@@ -24,7 +24,7 @@ ENV NODE_ENV=production
 ENV PORT=3000
 
 # Copy package config files
-COPY package*.json ./
+COPY mcp-server/package*.json ./
 
 # Install only production dependencies
 RUN npm install --only=production
