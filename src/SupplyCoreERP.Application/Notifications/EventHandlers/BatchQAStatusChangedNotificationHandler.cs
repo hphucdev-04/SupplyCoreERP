@@ -23,7 +23,7 @@ public class BatchQAStatusChangedNotificationHandler
 
     public async Task HandleEventAsync(BatchQAStatusChangedDomainEvent eventData)
     {
-        var (title, content, severity) = eventData.NewStatus switch
+        (string? title, string? content, NotificationSeverity severity) = eventData.NewStatus switch
         {
             BatchQAStatus.Approved => (
                 "Lô hàng đạt QA - Cần chuyển phân khu",
@@ -44,7 +44,10 @@ public class BatchQAStatusChangedNotificationHandler
             _ => default
         };
 
-        if (title is null) return;
+        if (title is null)
+        {
+            return;
+        }
 
         await _backgroundJobManager.EnqueueAsync(new NotificationSentJobArgs
         {

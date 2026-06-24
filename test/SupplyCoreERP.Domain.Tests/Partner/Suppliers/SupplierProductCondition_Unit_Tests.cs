@@ -21,9 +21,7 @@ public class SupplierProductCondition_Unit_Tests
             id, SupplierProductId, UnitId,
             conversionFactor: 50,
             standardPrice: 100_000m,
-            minOrderQuantity: 10m,
-            overDeliveryTolerancePct: 5m,
-            underDeliveryTolerancePct: 3m);
+            minOrderQuantity: 10m);
 
         condition.Id.ShouldBe(id);
         condition.SupplierProductId.ShouldBe(SupplierProductId);
@@ -32,8 +30,6 @@ public class SupplierProductCondition_Unit_Tests
         condition.StandardPrice.ShouldBe(100_000m);
         condition.LastPurchasePrice.ShouldBe(100_000m); // initialized from StandardPrice
         condition.MinOrderQuantity.ShouldBe(10m);
-        condition.OverDeliveryTolerancePct.ShouldBe(5m);
-        condition.UnderDeliveryTolerancePct.ShouldBe(3m);
     }
     [QATest(scenario: "Ném ngoại lệ khi conversion factor không hợp lệ.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
@@ -86,12 +82,10 @@ public class SupplierProductCondition_Unit_Tests
     {
         SupplierProductCondition condition = CreateSampleCondition();
 
-        condition.UpdateCondition(80_000m, 50m, 10m, 8m);
+        condition.UpdateCondition(80_000m, 50m);
 
         condition.StandardPrice.ShouldBe(80_000m);
         condition.MinOrderQuantity.ShouldBe(50m);
-        condition.OverDeliveryTolerancePct.ShouldBe(10m);
-        condition.UnderDeliveryTolerancePct.ShouldBe(8m);
     }
     [QATest(scenario: "Ném ngoại lệ khi Cập nhật condition với không hợp lệ values.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
@@ -100,11 +94,11 @@ public class SupplierProductCondition_Unit_Tests
         SupplierProductCondition condition = CreateSampleCondition();
 
         Assert.Throws<BusinessException>(() =>
-            condition.UpdateCondition(-1m, 10m, 0m, 0m))
+            condition.UpdateCondition(-1m, 10m))
             .Code.ShouldBe("SupplyCoreERP:InvalidStandardPrice");
 
         Assert.Throws<BusinessException>(() =>
-            condition.UpdateCondition(100_000m, 0m, 0m, 0m))
+            condition.UpdateCondition(100_000m, 0m))
             .Code.ShouldBe("SupplyCoreERP:InvalidMinOrderQuantity");
     }
 

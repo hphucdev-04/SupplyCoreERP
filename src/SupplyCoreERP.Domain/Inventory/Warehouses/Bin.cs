@@ -88,7 +88,7 @@ public class Bin : FullAuditedEntity<Guid>
 
         if (currentVolume + newVolume > allowedVolume)
         {
-            throw new BusinessException("SupplyCoreERP:BinOverCapacity", 
+            throw new BusinessException("SupplyCoreERP:BinOverCapacity",
                 $"Vị trí '{Code}' không đủ sức chứa thực tế!\n" +
                 $"Thể tích hiện tại: {currentVolume:N2} cm³, Thể tích hàng mới: {newVolume:N2} cm³, Sức chứa tối đa: {MaxVolume:N2} cm³ (Chỉ được phép sử dụng tối đa 80% sức chứa: {allowedVolume:N2} cm³).");
         }

@@ -129,7 +129,7 @@ public class UnitConversionManager_Unit_Tests
         Medicine product = CreateSampleProduct();
 
         // Act & Assert
-        var ex = Assert.Throws<BusinessException>(() =>
+        BusinessException ex = Assert.Throws<BusinessException>(() =>
         {
             _unitConversionManager.ConvertToBaseQuantity(product, Guid.Empty, 10m);
         });
@@ -145,7 +145,7 @@ public class UnitConversionManager_Unit_Tests
         Medicine product = CreateSampleProduct();
 
         // Act & Assert
-        var ex = Assert.Throws<BusinessException>(() =>
+        BusinessException ex = Assert.Throws<BusinessException>(() =>
         {
             _unitConversionManager.ConvertFromBaseQuantity(product, Guid.Empty, 100m);
         });

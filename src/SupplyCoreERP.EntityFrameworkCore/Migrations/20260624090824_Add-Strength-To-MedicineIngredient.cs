@@ -1,29 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SupplyCoreERP.Migrations
+namespace SupplyCoreERP.Migrations;
+
+/// <inheritdoc />
+public partial class AddStrengthToMedicineIngredient : Migration
 {
     /// <inheritdoc />
-    public partial class AddStrengthToMedicineIngredient : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<string>(
-                name: "Strength",
-                table: "AppMedicineIngredients",
-                type: "character varying(50)",
-                maxLength: 50,
-                nullable: true);
-        }
+        migrationBuilder.AddColumn<string>(
+            name: "Strength",
+            table: "AppMedicineIngredients",
+            type: "character varying(50)",
+            maxLength: 50,
+            nullable: true);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "Strength",
-                table: "AppMedicineIngredients");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            name: "Strength",
+            table: "AppMedicineIngredients");
     }
 }

@@ -88,10 +88,10 @@ public class PurchaseReturnRequestAppService : SupplyCore, IPurchaseReturnReques
         {
             List<Guid> poIds = dto.Lines.Select(l => l.PurchaseOrderId).Distinct().ToList();
             List<PurchaseOrder> pos = await _purchaseOrderRepo.GetListAsync(x => poIds.Contains(x.Id));
-            
+
             List<Guid> supplierIds = pos.Select(p => p.SupplierId).Distinct().ToList();
             List<Supplier> suppliers = await _supplierRepo.GetListAsync(s => supplierIds.Contains(s.Id));
-            
+
             Dictionary<Guid, PurchaseOrder> poDict = pos.ToDictionary(x => x.Id);
             Dictionary<Guid, Supplier> supplierDict = suppliers.ToDictionary(x => x.Id);
 

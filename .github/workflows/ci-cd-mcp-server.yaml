@@ -1,0 +1,45 @@
+name: CI/CD Pipeline (MCP Server)
+
+on:
+  push:
+    branches:
+      - deploy/mcp-server
+  workflow_dispatch:
+
+jobs:
+  build:
+    name: Build (MCP Server)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: mcp-server/package-lock.json
+
+      - name: Install dependencies
+        working-directory: ./mcp-server
+        run: npm ci
+
+      - name: Build (tsc)
+        working-directory: ./mcp-server
+        run: npm run build
+
+  deploy-mcp-server:
+    name: Deploy MCP Server to Railway
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install Railway CLI
+        run: npm install -g @railway/cli
+
+      - name: Deploy MCP Server to Railway
+        env:
+          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+        working-directory: ./mcp-server
+        run: railway up --detach --service mcp-server

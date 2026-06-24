@@ -8,7 +8,7 @@ public class DashboardOverviewDto
     public int TotalMedicines { get; set; }
     public decimal AverageCapacityPercent { get; set; }
     public int ExpiredAlertCount { get; set; }
-    
+
     // KPI tài chính mới từ SO và PO
     public decimal TotalRevenue { get; set; }
     public decimal TotalProcurement { get; set; }

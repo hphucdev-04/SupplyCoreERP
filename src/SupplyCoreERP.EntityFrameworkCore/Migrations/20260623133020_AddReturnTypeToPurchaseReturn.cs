@@ -1,29 +1,28 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
+using Microsoft.EntityFrameworkCore.Migrations;
 
 #nullable disable
 
-namespace SupplyCoreERP.Migrations
+namespace SupplyCoreERP.Migrations;
+
+/// <inheritdoc />
+public partial class AddReturnTypeToPurchaseReturn : Migration
 {
     /// <inheritdoc />
-    public partial class AddReturnTypeToPurchaseReturn : Migration
+    protected override void Up(MigrationBuilder migrationBuilder)
     {
-        /// <inheritdoc />
-        protected override void Up(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.AddColumn<int>(
-                name: "ReturnType",
-                table: "AppPurchaseReturns",
-                type: "integer",
-                nullable: false,
-                defaultValue: 2);
-        }
+        migrationBuilder.AddColumn<int>(
+            name: "ReturnType",
+            table: "AppPurchaseReturns",
+            type: "integer",
+            nullable: false,
+            defaultValue: 2);
+    }
 
-        /// <inheritdoc />
-        protected override void Down(MigrationBuilder migrationBuilder)
-        {
-            migrationBuilder.DropColumn(
-                name: "ReturnType",
-                table: "AppPurchaseReturns");
-        }
+    /// <inheritdoc />
+    protected override void Down(MigrationBuilder migrationBuilder)
+    {
+        migrationBuilder.DropColumn(
+            name: "ReturnType",
+            table: "AppPurchaseReturns");
     }
 }

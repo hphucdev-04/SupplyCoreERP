@@ -230,7 +230,10 @@ public class McpAgent : IAgent, ITransientDependency
 
     private static string SanitizeText(string text, List<DlpRuleDto> rules)
     {
-        if (string.IsNullOrEmpty(text) || rules.Count == 0) return text;
+        if (string.IsNullOrEmpty(text) || rules.Count == 0)
+        {
+            return text;
+        }
 
         foreach (DlpRuleDto rule in rules)
         {
@@ -252,7 +255,10 @@ public class McpAgent : IAgent, ITransientDependency
 
     private static JsonObject? SanitizeArguments(JsonObject? arguments, List<DlpRuleDto> rules)
     {
-        if (arguments == null || rules.Count == 0) return arguments;
+        if (arguments == null || rules.Count == 0)
+        {
+            return arguments;
+        }
 
         try
         {

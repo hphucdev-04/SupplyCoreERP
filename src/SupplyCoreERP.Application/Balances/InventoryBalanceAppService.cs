@@ -52,13 +52,13 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
                  .Take(input.MaxResultCount)
         );
 
-        var dtos = ObjectMapper.Map<List<InventoryBalance>, List<InventoryBalanceDto>>(items);
+        List<InventoryBalanceDto> dtos = ObjectMapper.Map<List<InventoryBalance>, List<InventoryBalanceDto>>(items);
         if (input.BinId.HasValue)
         {
-            foreach (var dto in dtos)
+            foreach (InventoryBalanceDto dto in dtos)
             {
-                var item = items.First(x => x.Id == dto.Id);
-                var binBalance = item.BinBalances.FirstOrDefault(bb => bb.BinId == input.BinId.Value);
+                InventoryBalance item = items.First(x => x.Id == dto.Id);
+                InventoryBinBalance? binBalance = item.BinBalances.FirstOrDefault(bb => bb.BinId == input.BinId.Value);
                 if (binBalance != null)
                 {
                     dto.BinId = binBalance.BinId;
@@ -100,11 +100,11 @@ public class InventoryBalanceAppService : SupplyCore, IInventoryBalanceAppServic
                 x.ProductBatchId == entity.ProductBatchId &&
                 x.Status == Enums.Balances.ReservationStatus.Active);
 
-        var reservations = await AsyncExecuter.ToListAsync(resQuery);
+        List<InventoryReservation> reservations = await AsyncExecuter.ToListAsync(resQuery);
 
-        var dto = ObjectMapper.Map<InventoryBalance, InventoryBalanceDetailDto>(entity);
+        InventoryBalanceDetailDto dto = ObjectMapper.Map<InventoryBalance, InventoryBalanceDetailDto>(entity);
         dto.Reservations = ObjectMapper.Map<List<InventoryReservation>, List<InventoryReservationDto>>(reservations);
-        
+
         return dto;
     }
 

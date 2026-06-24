@@ -67,7 +67,7 @@ public class SalesRecallLine_Unit_Tests
         SalesRecallLine line = CreateSampleLine(100m);
 
         // Act & Assert
-        var ex = Assert.Throws<BusinessException>(() =>
+        BusinessException ex = Assert.Throws<BusinessException>(() =>
         {
             line.AddRecalledQuantity(-5m);
         });
@@ -84,7 +84,7 @@ public class SalesRecallLine_Unit_Tests
 
         // Act & Assert
         // Tiếp tục thu hồi thêm 30 (tổng 110 > 100) -> kỳ vọng ném lỗi
-        var ex = Assert.Throws<BusinessException>(() =>
+        BusinessException ex = Assert.Throws<BusinessException>(() =>
         {
             line.AddRecalledQuantity(30m);
         });

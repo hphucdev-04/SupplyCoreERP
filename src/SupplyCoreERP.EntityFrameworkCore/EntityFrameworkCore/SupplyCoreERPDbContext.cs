@@ -1,6 +1,5 @@
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Agent;
-using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Catalog.ActiveIngredients;
 using SupplyCoreERP.Catalog.BaseUnits;
 using SupplyCoreERP.Catalog.Categories;
@@ -11,6 +10,7 @@ using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Common.DocumentSequences;
 using SupplyCoreERP.Common.Notifications;
 using SupplyCoreERP.Enums.Agent;
+using SupplyCoreERP.Enums.Orders;
 using SupplyCoreERP.Inventory.Balances;
 using SupplyCoreERP.Inventory.Batches;
 using SupplyCoreERP.Inventory.Tickets;

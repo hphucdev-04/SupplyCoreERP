@@ -9,21 +9,21 @@ namespace SupplyCoreERP.Dashboard;
 public interface IDashboardAppService : IApplicationService
 {
     Task<DashboardOverviewDto> GetOverviewAsync(DashboardFilterInput input);
-    
+
     Task<List<DashboardFinancialTrendDto>> GetFinancialTrendsAsync(DashboardFilterInput input);
-    
+
     Task<List<DashboardSalesStatusDto>> GetSalesStatusDistributionAsync(DashboardFilterInput input);
-    
+
     Task<List<DashboardProcurementStatusDto>> GetProcurementStatusDistributionAsync(DashboardFilterInput input);
-    
+
     Task<List<DashboardWarehouseCapacityDto>> GetWarehouseCapacitiesAsync(DashboardFilterInput input);
-    
+
     Task<List<DashboardInventoryTransactionDto>> GetInventoryTransactionDistributionAsync(DashboardFilterInput input);
-    
+
     Task<List<DashboardCategoryDistributionDto>> GetMedicineCategoryDistributionAsync(DashboardFilterInput input);
-    
+
     Task<List<DashboardExpiredBatchDto>> GetNearExpiryBatchesAsync(DashboardFilterInput input);
-    
+
     Task<List<DashboardExpiredBatchDto>> GetAlreadyExpiredBatchesAsync(DashboardFilterInput input);
 
     Task<DashboardDebtOverviewDto> GetDebtOverviewAsync(DashboardFilterInput input);
