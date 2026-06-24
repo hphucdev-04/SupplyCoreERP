@@ -1,158 +1,151 @@
 name: CI/CD Pipeline (Production-Ready)
 
 on:
-  push:
-    branches:
-      - deploy/dev
-  pull_request:
-    branches:
-      - deploy/dev
-  workflow_dispatch:
+    push:
+        branches:
+            - deploy/dev
+    pull_request:
+        branches:
+            - deploy/dev
+    workflow_dispatch:
 
 jobs:
-  static-analysis:
-    name: Lint & Security Scan
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    static-analysis:
+        name: Lint & Security Scan
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: "10.0.x"
 
-      - name: Restore dependencies
-        run: dotnet restore
+            - name: Restore dependencies
+              run: dotnet restore
 
-      - name: Format Code
-        run: dotnet format 
+            - name: Format Code
+              run: dotnet format
 
-  build-and-test:
-    name: Build & Test (Full Stack)
-    needs: static-analysis
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    build-and-test:
+        name: Build & Test (Full Stack)
+        needs: static-analysis
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: "10.0.x"
 
-      - name: Restore .NET dependencies
-        run: dotnet restore
+            - name: Restore .NET dependencies
+              run: dotnet restore
 
-      - name: Build solution
-        run: dotnet build --no-restore --configuration Release
+            - name: Build solution
+              run: dotnet build --no-restore --configuration Release
 
-      - name: Run Domain Unit Tests
-        run: |
-          dotnet test test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.csproj \
-            --no-build \
-            --no-restore \
-            --configuration Release \
-            --verbosity normal \
-            --logger trx \
-            --blame-hang \
-            --blame-hang-timeout 60s
+            - name: Run Domain Unit Tests
+              run: |
+                  dotnet test test/SupplyCoreERP.Domain.Tests/SupplyCoreERP.Domain.Tests.csproj \
+                    --no-build \
+                    --no-restore \
+                    --configuration Release \
+                    --verbosity normal \
+                    --logger trx \
+                    --blame-hang \
+                    --blame-hang-timeout 60s
 
-      - name: Run EntityFramework Integration Tests
-        run: |
-          dotnet test test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj \
-            --no-build \
-            --no-restore \
-            --configuration Release \
-            --verbosity normal \
-            --logger trx \
-            --blame-hang \
-            --blame-hang-timeout 200s
+            - name: Run EntityFramework Integration Tests
+              run: |
+                  dotnet test test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj \
+                    --no-build \
+                    --no-restore \
+                    --configuration Release \
+                    --verbosity normal \
+                    --logger trx \
+                    --blame-hang \
+                    --blame-hang-timeout 200s
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: angular/package-lock.json
+            - name: Setup Node.js
+              uses: actions/setup-node@v4
+              with:
+                  node-version: "20"
+                  cache: "npm"
+                  cache-dependency-path: angular/package-lock.json
 
-      - name: Install Angular dependencies
-        working-directory: ./angular
-        run: npm ci --legacy-peer-deps
+            - name: Install Angular dependencies
+              working-directory: ./angular
+              run: npm ci --legacy-peer-deps
 
-      - name: Build Angular (Production Check)
-        working-directory: ./angular
-        run: npm run build:prod
+            - name: Build Angular (Production Check)
+              working-directory: ./angular
+              run: npm run build:prod
 
-      - name: Upload Test Results
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: test-results
-          path: "**/TestResults/*.trx"
+            - name: Upload Test Results
+              if: always()
+              uses: actions/upload-artifact@v4
+              with:
+                  name: test-results
+                  path: "**/TestResults/*.trx"
 
-  database-migration:
-    name: Database Migration (Neon)
-    needs: build-and-test
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    environment: production
-    steps:
-      - uses: actions/checkout@v4
+    database-migration:
+        name: Database Migration (Neon)
+        needs: build-and-test
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        runs-on: ubuntu-latest
+        environment: production
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '10.0.x'
+            - name: Setup .NET
+              uses: actions/setup-dotnet@v4
+              with:
+                  dotnet-version: "10.0.x"
 
-      - name: Restore dependencies
-        run: dotnet restore
+            - name: Restore dependencies
+              run: dotnet restore
 
-      - name: Execute Migrator
-        env:
-          ASPNETCORE_ENVIRONMENT: Production
-          ConnectionStrings__Default: ${{ secrets.DB_CONNECTION_STRING }}
-        run: |
-          dotnet run \
-            --project src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj \
-            --configuration Release \
-            --no-restore
+            - name: Execute Migrator
+              env:
+                  ASPNETCORE_ENVIRONMENT: Production
+                  ConnectionStrings__Default: ${{ secrets.DB_CONNECTION_STRING }}
+              run: |
+                  dotnet run \
+                    --project src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj \
+                    --configuration Release \
+                    --no-restore
 
-  deploy-backend:
-    name: Deploy to Railway
-    needs: database-migration
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
+    deploy-backend:
+        name: Deploy to Railway
+        needs: database-migration
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
 
-      - name: Install Railway CLI
-        run: npm install -g @railway/cli
+            - name: Install Railway CLI
+              run: npm install -g @railway/cli
 
-      - name: Deploy Backend to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: railway up --detach --service rxlogistics-backend
+            - name: Deploy Backend to Railway
+              env:
+                  RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
+              run: railway up --detach --service rxlogistics-backend
 
-      - name: Deploy MCP Server to Railway
-        env:
-          RAILWAY_TOKEN: ${{ secrets.RAILWAY_TOKEN }}
-        run: |
-          cd mcp-server
-          railway up --detach --service rxlogistics-mcp-server
+    deploy-frontend:
+        name: Deploy to Vercel
+        needs: database-migration
+        if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+        runs-on: ubuntu-latest
+        steps:
+            - uses: actions/checkout@v4
 
-  deploy-frontend:
-    name: Deploy to Vercel
-    needs: database-migration
-    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Deploy to Vercel
-        uses: amondnet/vercel-action@v25
-        with:
-          vercel-token: ${{ secrets.VERCEL_TOKEN }}
-          vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
-          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
-          vercel-args: '--prod'
-          vercel-version: latest
-          working-directory: .
+            - name: Deploy to Vercel
+              uses: amondnet/vercel-action@v25
+              with:
+                  vercel-token: ${{ secrets.VERCEL_TOKEN }}
+                  vercel-org-id: ${{ secrets.VERCEL_ORG_ID }}
+                  vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID }}
+                  vercel-args: "--prod"
+                  vercel-version: latest
+                  working-directory: .
