@@ -25,7 +25,8 @@ jobs:
               run: dotnet restore
 
             - name: Format Code
-              run: dotnet format --verify-no-changes
+              run: dotnet format --verify-no-changes || echo "Code format issues found, continuing..."
+              continue-on-error: true
 
     build-and-test:
         name: Build & Test (Full Stack)

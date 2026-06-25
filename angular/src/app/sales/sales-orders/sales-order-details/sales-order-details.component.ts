@@ -59,6 +59,7 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
   isSavingLine = false;
   units: ProductUnitLookup[] = [];
   availablePrices: ProductPriceDto[] = [];
+  referencePrices: ProductPriceDto[] = [];
   selectedConversionFactor = 1;
   baseUnitName = '';
   quantityPreview = 0;
@@ -219,9 +220,16 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
   openAddLineDrawer() {
     this.units = [];
     this.availablePrices = [];
+    this.referencePrices = [];
     this.selectedConversionFactor = 1;
     this.quantityPreview = 0;
-    this.lineForm.reset({ quantity: 1, conversionFactor: 1, discountRate: 0, taxRate: 0 });
+    this.lineForm.reset({
+      quantity: 1,
+      conversionFactor: 1,
+      unitPrice: null,
+      discountRate: 0,
+      taxRate: 0,
+    });
     this.isAddLineOpen = true;
   }
 
@@ -233,6 +241,7 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     this.lineForm.patchValue({ unitId: null, conversionFactor: 1, unitPrice: null });
     this.units = [];
     this.availablePrices = [];
+    this.referencePrices = [];
     this.selectedConversionFactor = 1;
     this.baseUnitName = '';
     this.quantityPreview = 0;
@@ -292,15 +301,9 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
   filterAvailablePrices() {
     const unitId = this.lineForm.get('unitId')?.value;
     const qty = this.lineForm.get('quantity')?.value || 0;
-    const filtered = this.availablePrices.filter(
+    this.referencePrices = this.availablePrices.filter(
       p => p.unitId === unitId && qty >= (p.minQuantity || 0),
     );
-    if (filtered.length > 0) {
-      const best = filtered.sort((a, b) => (b.minQuantity || 0) - (a.minQuantity || 0))[0];
-      this.lineForm.patchValue({ unitPrice: best.price });
-    } else {
-      this.lineForm.patchValue({ unitPrice: null });
-    }
   }
 
   updateQuantityPreview() {
@@ -320,8 +323,17 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
   saveLine() {
     if (this.lineForm.invalid) return;
     this.isSavingLine = true;
+    const rawUnitPrice = this.lineForm.get('unitPrice')?.value;
+    const payload = {
+      ...this.lineForm.getRawValue(),
+      unitPrice:
+        rawUnitPrice === '' || rawUnitPrice === null || rawUnitPrice === undefined
+          ? null
+          : Number(rawUnitPrice),
+    };
+
     this.soService
-      .addLine(this.orderId, this.lineForm.value)
+      .addLine(this.orderId, payload)
       .pipe(takeUntil(this.destroy$))
       .subscribe({
         next: () => {
