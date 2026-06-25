@@ -14,7 +14,9 @@ public class SupplyCoreERPApplicationAutoMapperProfile : Profile
             .ForMember(dest => dest.ProductCode, opt => opt.MapFrom(src => src.Product != null ? src.Product.Code : null))
             .ForMember(dest => dest.BatchNumber, opt => opt.MapFrom(src => src.ProductBatch != null ? src.ProductBatch.BatchNumber : null))
             .ForMember(dest => dest.BinCode, opt => opt.MapFrom(src => src.Bin != null ? src.Bin.Code : null))
-            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.QuantityChanged));
+            .ForMember(dest => dest.Quantity, opt => opt.MapFrom(src => src.QuantityChanged))
+            .ForMember(dest => dest.UnitId, opt => opt.MapFrom(src => src.UnitId))
+            .ForMember(dest => dest.UnitName, opt => opt.MapFrom(src => src.UnitName));
     }
 }
 

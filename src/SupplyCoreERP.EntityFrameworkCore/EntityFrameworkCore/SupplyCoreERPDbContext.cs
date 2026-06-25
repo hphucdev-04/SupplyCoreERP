@@ -658,11 +658,13 @@ public class SupplyCoreERPDbContext :
             b.Property(x => x.PartnerName).HasMaxLength(250);
             b.Property(x => x.SourceDocumentNumber).HasMaxLength(50);
             b.Property(x => x.ReferenceDocumentNumber).HasMaxLength(50);
+            b.Property(x => x.UnitName).HasMaxLength(100);
 
             b.HasOne(x => x.Warehouse).WithMany().HasForeignKey(x => x.WarehouseId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Product).WithMany().HasForeignKey(x => x.ProductId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.ProductBatch).WithMany().HasForeignKey(x => x.ProductBatchId).OnDelete(DeleteBehavior.Restrict);
             b.HasOne(x => x.Bin).WithMany().HasForeignKey(x => x.BinId).OnDelete(DeleteBehavior.Restrict);
+            b.HasOne<BaseUnit>().WithMany().HasForeignKey(x => x.UnitId).IsRequired(false).OnDelete(DeleteBehavior.SetNull);
 
             b.HasIndex(x => new { x.WarehouseId, x.ProductId, x.CreationTime });
             b.HasIndex(x => x.CorrelationId);
@@ -677,6 +679,9 @@ public class SupplyCoreERPDbContext :
             b.Property(x => x.ReservedQuantity).HasColumnType("decimal(18, 4)");
             b.Property(x => x.PartnerName).HasMaxLength(250);
             b.Property(x => x.SourceDocumentNumber).HasMaxLength(50);
+            b.Property(x => x.UnitName).HasMaxLength(100);
+
+            b.HasOne<BaseUnit>().WithMany().HasForeignKey(x => x.UnitId).IsRequired(false).OnDelete(DeleteBehavior.SetNull);
 
             b.HasIndex(x => new { x.ReferenceDocumentId, x.Status });
         });

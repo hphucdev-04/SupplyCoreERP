@@ -23,6 +23,9 @@ public class InventoryTransactionDto : CreationAuditedEntityDto<Guid>
 
     public InventoryTransactionType TransactionType { get; set; }
 
+    public Guid? UnitId { get; set; }
+    public string? UnitName { get; set; }
+
     public decimal Quantity { get; set; }
     public decimal BalanceAfterTransaction { get; set; }
 

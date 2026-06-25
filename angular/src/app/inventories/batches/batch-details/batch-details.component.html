@@ -28,7 +28,7 @@
               'ph-badge--rejected': batch.status === BatchQAStatus.Rejected
             }"
           >
-            {{ '::Enum:BatchQAStatus.' + batch.status | abpLocalization }}
+            {{ '::Enum:BatchQAStatus.' + enumName(BatchQAStatus, batch.status) | abpLocalization }}
           </span>
         </div>
 
@@ -36,6 +36,18 @@
           <div class="ph-info-item">
             <label>{{ '::Code' | abpLocalization }}</label>
             <span>{{ batch.code }}</span>
+          </div>
+          <div class="ph-info-item">
+            <label>{{ '::MedicineName' | abpLocalization }}</label>
+            <span class="fw-semibold text-primary text-truncate d-block" [title]="batch.productName">{{ batch.productName }}</span>
+          </div>
+          <div class="ph-info-item">
+            <label>{{ '::ProductCode' | abpLocalization }}</label>
+            <span>{{ batch.productCode }}</span>
+          </div>
+          <div class="ph-info-item" *ngIf="batch.registrationNumber">
+            <label>{{ '::RegistrationNumber' | abpLocalization }}</label>
+            <span>{{ batch.registrationNumber }}</span>
           </div>
           <div class="ph-info-item">
             <label>{{ '::ManufacturingDate' | abpLocalization }}</label>
@@ -47,7 +59,7 @@
           </div>
           <div class="ph-info-item">
             <label>{{ '::Supplier' | abpLocalization }}</label>
-            <span>{{ batch.supplierName || '---' }}</span>
+            <span class="text-truncate d-block" [title]="batch.supplierName">{{ batch.supplierName || '---' }}</span>
           </div>
         </div>
       </div>
@@ -60,11 +72,15 @@
       <div class="ph-card__body p-3">
         <div class="d-flex justify-content-between mb-2">
           <span class="small ph-text-muted">{{ '::Available' | abpLocalization }}</span>
-          <span class="ph-text-success fw-bold">{{ totalAvailable | number }}</span>
+          <span class="ph-text-success fw-bold">
+            {{ totalAvailable | number }}<small class="ms-1 text-muted fw-normal" *ngIf="balances[0]?.baseUnitName">{{ balances[0]?.baseUnitName }}</small>
+          </span>
         </div>
         <div class="d-flex justify-content-between">
           <span class="small ph-text-muted">{{ '::Locked' | abpLocalization }}</span>
-          <span class="ph-text-warning fw-bold">{{ totalLocked | number }}</span>
+          <span class="ph-text-warning fw-bold">
+            {{ totalLocked | number }}<small class="ms-1 text-muted fw-normal" *ngIf="balances[0]?.baseUnitName">{{ balances[0]?.baseUnitName }}</small>
+          </span>
         </div>
       </div>
     </div>
@@ -75,11 +91,6 @@
     <div class="ph-card h-100">
       <div class="ph-card__header p-0">
         <ul class="nav ph-nav-tabs">
-          <li class="nav-item">
-            <a class="nav-link" [class.active]="activeTab === 'info'" (click)="activeTab = 'info'">
-              {{ '::Information' | abpLocalization }}
-            </a>
-          </li>
           <li class="nav-item">
             <a class="nav-link" [class.active]="activeTab === 'balances'" (click)="activeTab = 'balances'">
               {{ '::CurrentBalances' | abpLocalization }}
@@ -100,29 +111,6 @@
       </div>
 
       <div class="ph-card__body p-0">
-        <!-- Tab: Information -->
-        <div *ngIf="activeTab === 'info'" class="p-4">
-           <div class="row">
-              <div class="col-md-6 mb-4">
-                 <h6 class="ph-section-title">{{ '::ProductInfo' | abpLocalization }}</h6>
-                 <table class="table table-sm table-borderless small">
-                    <tr>
-                       <td class="ph-text-muted" style="width: 140px">{{ '::MedicineName' | abpLocalization }}</td>
-                       <td class="fw-semibold">{{ batch.productName }}</td>
-                    </tr>
-                    <tr>
-                       <td class="ph-text-muted">{{ '::ProductCode' | abpLocalization }}</td>
-                       <td>{{ batch.productCode }}</td>
-                    </tr>
-                    <tr>
-                        <td class="ph-text-muted">{{ '::RegistrationNumber' | abpLocalization }}</td>
-                        <td>{{ batch.registrationNumber || '---' }}</td>
-                     </tr>
-                 </table>
-              </div>
-           </div>
-        </div>
-
         <!-- Tab: Balances -->
         <div *ngIf="activeTab === 'balances'" class="p-0">
           <ngx-datatable [rows]="balances" [count]="balances.length" default>
@@ -143,6 +131,11 @@
                   <span class="ph-text-warning">{{ value | number }}</span>
                </ng-template>
             </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Unit' | abpLocalization" prop="baseUnitName" [width]="80">
+               <ng-template let-value="value" ngx-datatable-cell-template>
+                  <span class="small text-muted">{{ value || '---' }}</span>
+               </ng-template>
+            </ngx-datatable-column>
           </ngx-datatable>
         </div>
 
@@ -157,7 +150,7 @@
             <ngx-datatable-column [name]="'::Type' | abpLocalization" prop="transactionType">
               <ng-template let-row="row" ngx-datatable-cell-template>
                 <span class="ph-badge" [ngClass]="row.quantity > 0 ? 'ph-badge--approved' : 'ph-badge--rejected'">
-                   {{ '::Enum:InventoryTransactionType.' + row.transactionType | abpLocalization }}
+                   {{ '::Enum:InventoryTransactionType.' + enumName(InventoryTransactionType, row.transactionType) | abpLocalization }}
                 </span>
               </ng-template>
             </ngx-datatable-column>
@@ -169,6 +162,11 @@
                   {{ row.quantity > 0 ? '+' : '' }}{{ row.quantity | number }}
                 </span>
               </ng-template>
+            </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Unit' | abpLocalization" prop="unitName" [width]="90">
+               <ng-template let-value="value" ngx-datatable-cell-template>
+                  <span class="small text-muted">{{ value || '---' }}</span>
+               </ng-template>
             </ngx-datatable-column>
             <ngx-datatable-column [name]="'::Bin' | abpLocalization" prop="binCode"></ngx-datatable-column>
           </ngx-datatable>
@@ -183,6 +181,11 @@
                   {{ value | number }}
                </ng-template>
             </ngx-datatable-column>
+            <ngx-datatable-column [name]="'::Unit' | abpLocalization" prop="unitName" [width]="90">
+               <ng-template let-value="value" ngx-datatable-cell-template>
+                  <span class="small text-muted">{{ value || '---' }}</span>
+               </ng-template>
+            </ngx-datatable-column>
             <ngx-datatable-column [name]="'::Warehouse' | abpLocalization" prop="warehouseName"></ngx-datatable-column>
             <ngx-datatable-column [name]="'::Bin' | abpLocalization" prop="binCode"></ngx-datatable-column>
             <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status">
@@ -192,7 +195,7 @@
                   'ph-badge--pending': value === ReservationStatus.Completed,
                   'ph-badge--rejected': value === ReservationStatus.Cancelled
                 }">
-                   {{ '::Enum:ReservationStatus.' + value | abpLocalization }}
+                   {{ '::Enum:ReservationStatus.' + enumName(ReservationStatus, value) | abpLocalization }}
                 </span>
               </ng-template>
             </ngx-datatable-column>

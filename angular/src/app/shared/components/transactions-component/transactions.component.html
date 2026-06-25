@@ -113,6 +113,12 @@
         </ng-template>
       </ngx-datatable-column>
 
+      <ngx-datatable-column [name]="'::Unit' | abpLocalization" prop="unitName" [width]="90">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <span class="small text-muted">{{ value || '---' }}</span>
+        </ng-template>
+      </ngx-datatable-column>
+
       <ngx-datatable-column [name]="'::Note' | abpLocalization" prop="note" [width]="180">
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span class="text-muted fst-italic text-truncate d-block" style="font-size: 0.75rem;" [title]="row.note">{{

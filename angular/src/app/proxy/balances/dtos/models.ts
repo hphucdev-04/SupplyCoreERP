@@ -71,4 +71,6 @@ export interface InventoryReservationDto extends CreationAuditedEntityDto<string
   partnerName?: string;
   sourceDocumentId?: string;
   sourceDocumentNumber?: string;
+  unitId?: string;
+  unitName?: string;
 }

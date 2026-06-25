@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, inject, OnInit, OnDestroy } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ListService, PagedResultDto } from '@abp/ng.core';
@@ -11,12 +11,12 @@ import { SearchComponent } from 'src/app/shared/components/search-component/sear
 import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 import { PurchaseReturnRequestDto } from 'src/app/proxy/purchase-return-requests/dtos/models';
 import { PurchaseReturnRequestService } from 'src/app/proxy/purchase-return-requests/purchase-return-request.service';
-import { SupplierService } from 'src/app/proxy/suppliers';
 import { WarehouseService } from 'src/app/proxy/warehouses';
-import { SupplierDto } from 'src/app/proxy/suppliers/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
-import { PurchaseReturnRequestStatus, purchaseReturnRequestStatusOptions } from 'src/app/proxy/enums/orders/purchase-return-request-status.enum';
-import { PurchaseReturnType, purchaseReturnTypeOptions } from 'src/app/proxy/enums/orders/purchase-return-type.enum';
+import {
+  PurchaseReturnRequestStatus,
+  purchaseReturnRequestStatusOptions,
+} from 'src/app/proxy/enums/orders/purchase-return-request-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
 @Component({
@@ -28,6 +28,13 @@ import { enumName } from 'src/app/shared/untils/enum.util';
 })
 export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
+  public readonly list = inject(ListService);
+  private readonly requestService = inject(PurchaseReturnRequestService);
+  private readonly warehouseService = inject(WarehouseService);
+  private readonly confirmation = inject(ConfirmationService);
+  private readonly toaster = inject(ToasterService);
+  private readonly fb = inject(FormBuilder);
+  private readonly router = inject(Router);
 
   data = { items: [], totalCount: 0 } as PagedResultDto<PurchaseReturnRequestDto>;
   warehouses: WarehouseDto[] = [];
@@ -42,19 +49,7 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
 
   PurchaseReturnRequestStatus = PurchaseReturnRequestStatus;
   purchaseReturnRequestStatusOptions = purchaseReturnRequestStatusOptions;
-  PurchaseReturnType = PurchaseReturnType;
-  purchaseReturnTypeOptions = purchaseReturnTypeOptions;
   readonly enumName = enumName;
-
-  constructor(
-    public readonly list: ListService,
-    private requestService: PurchaseReturnRequestService,
-    private warehouseService: WarehouseService,
-    private confirmation: ConfirmationService,
-    private toaster: ToasterService,
-    private fb: FormBuilder,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.buildForm();
@@ -153,5 +148,27 @@ export class PurchaseReturnRequestsComponent implements OnInit, OnDestroy {
       requestDate: [new Date().toISOString().split('T')[0], [Validators.required]],
       note: ['', [Validators.maxLength(1000)]],
     });
+  }
+
+  statusClass(status: PurchaseReturnRequestStatus): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnRequestStatus.Draft]: 'ph-badge--neutral',
+      [PurchaseReturnRequestStatus.PendingApproval]: 'ph-badge--pending',
+      [PurchaseReturnRequestStatus.Approved]: 'ph-badge--info',
+      [PurchaseReturnRequestStatus.Rejected]: 'ph-badge--rejected',
+      [PurchaseReturnRequestStatus.Processed]: 'ph-badge--approved',
+    };
+    return map[status] ?? 'ph-badge--neutral';
+  }
+
+  statusIcon(status: PurchaseReturnRequestStatus): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnRequestStatus.Draft]: 'fa-pencil',
+      [PurchaseReturnRequestStatus.PendingApproval]: 'fa-clock-o',
+      [PurchaseReturnRequestStatus.Approved]: 'fa-check',
+      [PurchaseReturnRequestStatus.Rejected]: 'fa-times-circle',
+      [PurchaseReturnRequestStatus.Processed]: 'fa-check-circle',
+    };
+    return map[status] ?? 'fa-circle';
   }
 }

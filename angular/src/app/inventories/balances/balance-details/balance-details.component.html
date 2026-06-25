@@ -24,225 +24,204 @@
     </div>
   </div>
 
-  <!-- Tabs -->
-  <ul class="nav nav-tabs mb-3">
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [class.active]="activeTab === 'info'"
-        (click)="activeTab = 'info'"
-        style="cursor: pointer"
-      >
-        <i class="fa fa-info-circle me-2"></i>{{ '::GeneralInformation' | abpLocalization }}
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [class.active]="activeTab === 'reservations'"
-        (click)="activeTab = 'reservations'"
-        style="cursor: pointer"
-      >
-        <i class="fa fa-lock me-2"></i>{{ '::Reservations' | abpLocalization }}
-        <span class="ph-badge ph-badge--info ms-2" *ngIf="detail.reservations">{{ detail.reservations.length }}</span>
-      </a>
-    </li>
-    <li class="nav-item">
-      <a
-        class="nav-link"
-        [class.active]="activeTab === 'history'"
-        (click)="activeTab = 'history'"
-        style="cursor: pointer"
-      >
-        <i class="fa fa-history me-2"></i>{{ '::Menu:Transactions' | abpLocalization }}
-      </a>
-    </li>
-  </ul>
-
-  <!-- Container -->
+  <!-- Layout Grid -->
   <div class="container-fluid p-0">
     <div *ngIf="isLoading" class="d-flex justify-content-center align-items-center py-5" style="min-height: 300px;">
       <div class="spinner-border text-primary" role="status"></div>
     </div>
 
-    <div *ngIf="!isLoading">
-      <!-- Tab 1: General Info -->
-      <div *ngIf="activeTab === 'info'">
-        <div class="row g-2">
-          <div class="col-lg-6">
-            <div class="ph-card h-100">
-              <div class="ph-card__header">
-                <h6 class="ph-card__header-title">
-                  <i class="fa fa-pills text-primary me-2"></i>{{ '::ProductAndBatchInfo' | abpLocalization }}
-                </h6>
+    <div *ngIf="!isLoading" class="row g-3">
+      <!-- Sidebar / Summary Info (Cột Trái) -->
+      <div class="col-md-4 col-lg-3">
+        <!-- Card 1: Product & Batch Info -->
+        <div class="ph-card mb-3">
+          <div class="ph-card__body p-3">
+            <div class="text-center mb-4">
+              <div class="ph-avatar ph-avatar--xl mx-auto mb-2 bg-light d-flex align-items-center justify-content-center rounded-circle" style="width: 64px; height: 64px;">
+                <i class="fa fa-pills fa-2x text-primary"></i>
               </div>
-              <div class="ph-card__body">
-                <div class="row g-3">
-                  <div class="col-md-12">
-                    <span class="ph-field-meta">Sản phẩm</span>
-                    <div class="ph-field-value ph-text-primary fw-bold">{{ detail.productName }}</div>
-                  </div>
-                  <div class="col-md-6">
-                    <span class="ph-field-meta">Mã thuốc</span>
-                    <div class="ph-field-value">{{ detail.productCode }}</div>
-                  </div>
-                  <div class="col-md-6">
-                    <span class="ph-field-meta">Số Lô (Batch)</span>
-                    <div class="ph-field-value">
-                      <span class="ph-badge ph-badge--neutral">{{ detail.batchNumber }}</span>
-                    </div>
-                  </div>
-                  <div class="col-md-6">
-                    <span class="ph-field-meta">Ngày sản xuất</span>
-                    <div class="ph-field-value">{{ detail.manufacturingDate | date:'dd/MM/yyyy' }}</div>
-                  </div>
-                  <div class="col-md-6">
-                    <span class="ph-field-meta">Hạn sử dụng</span>
-                    <div class="ph-field-value ph-text-danger fw-bold">{{ detail.expiryDate | date:'dd/MM/yyyy' }}</div>
-                  </div>
-                  <div class="col-md-12">
-                    <span class="ph-field-meta">Nhà cung cấp</span>
-                    <div class="ph-field-value">{{ detail.supplierName || '---' }}</div>
-                  </div>
-                </div>
+              <h6 class="mb-1 text-truncate fw-bold" [title]="detail.productName">{{ detail.productName }}</h6>
+              <span class="ph-badge ph-badge--neutral">{{ detail.batchNumber }}</span>
+            </div>
+
+            <div class="ph-info-list small">
+              <div class="ph-info-item d-flex justify-content-between border-bottom py-1">
+                <label class="ph-text-muted mb-0">Mã sản phẩm</label>
+                <span class="fw-semibold">{{ detail.productCode }}</span>
+              </div>
+              <div class="ph-info-item d-flex justify-content-between border-bottom py-1">
+                <label class="ph-text-muted mb-0">Ngày sản xuất</label>
+                <span>{{ detail.manufacturingDate | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <div class="ph-info-item d-flex justify-content-between border-bottom py-1">
+                <label class="ph-text-muted mb-0">Hạn sử dụng</label>
+                <span class="ph-text-danger fw-bold">{{ detail.expiryDate | date:'dd/MM/yyyy' }}</span>
+              </div>
+              <div class="ph-info-item d-flex flex-column py-1">
+                <label class="ph-text-muted mb-1">Nhà cung cấp</label>
+                <span class="text-truncate fw-semibold" [title]="detail.supplierName">{{ detail.supplierName || '---' }}</span>
               </div>
             </div>
           </div>
+        </div>
 
-          <div class="col-lg-6">
-            <div class="ph-card h-100">
-              <div class="ph-card__header">
-                <h6 class="ph-card__header-title">
-                  <i class="fa fa-warehouse text-primary me-2"></i>{{ '::LocationAndStock' | abpLocalization }}
-                </h6>
+        <!-- Card 2: Location & Stock Summary -->
+        <div class="ph-card mb-3">
+          <div class="ph-card__header py-2 bg-light border-bottom">
+            <h6 class="ph-card-title small mb-0 fw-bold"><i class="fa fa-warehouse me-1 text-primary"></i>{{ '::LocationAndStock' | abpLocalization }}</h6>
+          </div>
+          <div class="ph-card__body p-3 small">
+            <div class="ph-info-list mb-3">
+              <div class="ph-info-item d-flex flex-column mb-2">
+                <label class="ph-text-muted mb-0">Kho lưu trữ</label>
+                <span class="fw-semibold text-dark">{{ detail.warehouseName }}</span>
               </div>
-              <div class="ph-card__body">
-                <div class="row g-3">
-                  <div class="col-md-12">
-                    <span class="ph-field-meta">Kho lưu trữ</span>
-                    <div class="ph-field-value fw-bold">{{ detail.warehouseName }}</div>
-                    <small class="ph-text-muted d-block mt-1">
-                      <i class="fa fa-map-marker-alt me-1"></i>
-                      <span *ngIf="detail.warehouseAddress || detail.areaName || detail.cityName">
-                        <ng-container *ngIf="detail.warehouseAddress">{{ detail.warehouseAddress }}</ng-container>
-                        <ng-container *ngIf="detail.warehouseAddress && (detail.areaName || detail.cityName)">, </ng-container>
-                        <ng-container *ngIf="detail.areaName">{{ detail.areaName }}</ng-container>
-                        <ng-container *ngIf="detail.areaName && detail.cityName">, </ng-container>
-                        <ng-container *ngIf="detail.cityName">{{ detail.cityName }}</ng-container>
-                      </span>
-                      <span *ngIf="!detail.warehouseAddress && !detail.areaName && !detail.cityName" class="fst-italic">
-                        Chưa có thông tin khu vực
-                      </span>
-                    </small>
-                  </div>
-                  <div class="col-md-12">
-                    <span class="ph-field-meta">Danh sách vị trí kệ (Bins)</span>
-                    <div class="table-responsive mt-2">
-                      <table class="table table-sm table-bordered mb-0 align-middle">
-                        <thead class="table-light">
-                          <tr>
-                            <th>Kệ</th>
-                            <th class="text-end">Tồn thực tế</th>
-                            <th class="text-end">Đang khóa</th>
-                            <th class="text-end">Khả dụng</th>
-                          </tr>
-                        </thead>
-                        <tbody>
-                          <tr *ngFor="let bin of detail.binBalances">
-                            <td>
-                              <span class="ph-badge ph-badge--neutral">
-                                <i class="fa fa-box me-1 text-primary"></i>{{ bin.binCode }}
-                              </span>
-                            </td>
-                            <td class="text-end fw-semibold">{{ bin.quantity | number }}</td>
-                            <td class="text-end text-warning">{{ bin.lockedQuantity | number }}</td>
-                            <td class="text-end text-success fw-bold">{{ bin.availableQuantity | number }}</td>
-                          </tr>
-                          <tr *ngIf="!detail.binBalances || detail.binBalances.length === 0">
-                            <td colspan="4" class="text-center text-muted py-2 fst-italic">Không có vị trí kệ</td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                  
-                  <div class="col-12">
-                    <hr class="ph-divider my-2">
-                  </div>
+              <div class="ph-info-item d-flex flex-column" *ngIf="detail.warehouseAddress || detail.areaName || detail.cityName">
+                <label class="ph-text-muted mb-0">Địa chỉ</label>
+                <span class="text-muted" style="font-size: 0.75rem; line-height: 1.2;">
+                  <ng-container *ngIf="detail.warehouseAddress">{{ detail.warehouseAddress }}</ng-container>
+                  <ng-container *ngIf="detail.warehouseAddress && (detail.areaName || detail.cityName)">, </ng-container>
+                  <ng-container *ngIf="detail.areaName">{{ detail.areaName }}</ng-container>
+                  <ng-container *ngIf="detail.areaName && detail.cityName">, </ng-container>
+                  <ng-container *ngIf="detail.cityName">{{ detail.cityName }}</ng-container>
+                </span>
+              </div>
+            </div>
 
-                  <div class="col-md-4">
-                    <span class="ph-field-meta">Tổng tồn</span>
-                    <div class="ph-field-value fs-5 text-primary fw-bold">{{ detail.quantity | number }}</div>
-                  </div>
-                  <div class="col-md-4">
-                    <span class="ph-field-meta">Đang khóa</span>
-                    <div class="ph-field-value fs-5 text-warning fw-bold">
-                      <i class="fa fa-lock me-1"></i>{{ detail.lockedQuantity | number }}
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <span class="ph-field-meta">Khả dụng</span>
-                    <div class="ph-field-value fs-5 text-success fw-bold">{{ detail.availableQuantity | number }}</div>
-                  </div>
-                </div>
-              </div>
+            <div class="d-flex justify-content-between border-top pt-2 mb-2">
+              <span class="ph-text-muted">Tổng tồn</span>
+              <span class="ph-text-primary fw-bold">{{ detail.quantity | number }}<small class="ms-1 text-muted fw-normal" *ngIf="detail.baseUnitName">{{ detail.baseUnitName }}</small></span>
+            </div>
+            <div class="d-flex justify-content-between mb-2">
+              <span class="ph-text-muted">Đang khóa</span>
+              <span class="ph-text-warning fw-bold"><i class="fa fa-lock me-1"></i>{{ detail.lockedQuantity | number }}<small class="ms-1 text-muted fw-normal" *ngIf="detail.baseUnitName">{{ detail.baseUnitName }}</small></span>
+            </div>
+            <div class="d-flex justify-content-between border-top pt-2">
+              <span class="ph-text-muted">Khả dụng</span>
+              <span class="ph-text-success fw-bold">{{ detail.availableQuantity | number }}<small class="ms-1 text-muted fw-normal" *ngIf="detail.baseUnitName">{{ detail.baseUnitName }}</small></span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card 3: Bins Details -->
+        <div class="ph-card" *ngIf="detail.binBalances && detail.binBalances.length > 0">
+          <div class="ph-card__header py-2 bg-light border-bottom">
+            <h6 class="ph-card-title small mb-0 fw-bold"><i class="fa fa-box me-1 text-primary"></i>Vị trí kệ (Bins)</h6>
+          </div>
+          <div class="ph-card__body p-2 small">
+            <div class="table-responsive">
+              <table class="table table-sm table-borderless align-middle mb-0" style="font-size: 0.75rem;">
+                <thead>
+                  <tr class="border-bottom">
+                    <th>Kệ</th>
+                    <th class="text-end">Tồn</th>
+                    <th class="text-end">Khóa</th>
+                    <th class="text-end">Khả dụng</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let bin of detail.binBalances">
+                    <td class="fw-semibold"><i class="fa fa-box text-muted me-1"></i>{{ bin.binCode }}</td>
+                    <td class="text-end">{{ bin.quantity | number }}</td>
+                    <td class="text-end text-warning">{{ bin.lockedQuantity | number }}</td>
+                    <td class="text-end text-success fw-bold">{{ bin.availableQuantity | number }}</td>
+                  </tr>
+                </tbody>
+              </table>
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Tab 2: Reservations -->
-      <div *ngIf="activeTab === 'reservations'" class="ph-card">
-        <div class="ph-card__header">
-          <h6 class="ph-card__header-title">
-            <i class="fa fa-lock text-primary me-2"></i>{{ '::Reservations' | abpLocalization }}
-          </h6>
-        </div>
-        <div class="ph-card__body p-0">
-          <ngx-datatable [rows]="detail.reservations" [count]="detail.reservations.length" default>
-            <ngx-datatable-column [name]="'::Partner' | abpLocalization" prop="partnerName" [width]="250">
-              <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value || '---' }}
-              </ng-template>
-            </ngx-datatable-column>
-            
-            <ngx-datatable-column [name]="'::SourceDocument' | abpLocalization" prop="sourceDocumentNumber" [width]="200">
-              <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value || '---' }}
-              </ng-template>
-            </ngx-datatable-column>
+      <!-- Main Content Tabs (Cột Phải) -->
+      <div class="col-md-8 col-lg-9">
+        <div class="ph-card h-100">
+          <div class="ph-card__header p-0">
+            <ul class="nav ph-nav-tabs">
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  [class.active]="activeTab === 'reservations'"
+                  (click)="activeTab = 'reservations'"
+                  style="cursor: pointer"
+                >
+                  <i class="fa fa-lock me-2"></i>{{ '::Reservations' | abpLocalization }}
+                  <span class="badge bg-secondary ms-1" *ngIf="detail.reservations">{{ detail.reservations.length }}</span>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a
+                  class="nav-link"
+                  [class.active]="activeTab === 'history'"
+                  (click)="activeTab = 'history'"
+                  style="cursor: pointer"
+                >
+                  <i class="fa fa-history me-2"></i>{{ '::Menu:Transactions' | abpLocalization }}
+                </a>
+              </li>
+            </ul>
+          </div>
 
-            <ngx-datatable-column [name]="'::ReservedQuantity' | abpLocalization" prop="reservedQuantity" [width]="150">
-              <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value | number }}
-              </ng-template>
-            </ngx-datatable-column>
+          <div class="ph-card__body p-0">
+            <!-- Tab: Reservations -->
+            <div *ngIf="activeTab === 'reservations'">
+              <ngx-datatable [rows]="detail.reservations" [count]="detail.reservations.length" default>
+                <ngx-datatable-column [name]="'::Partner' | abpLocalization" prop="partnerName" [width]="200">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ value || '---' }}
+                  </ng-template>
+                </ngx-datatable-column>
+                
+                <ngx-datatable-column [name]="'::SourceDocument' | abpLocalization" prop="sourceDocumentNumber" [width]="150">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ value || '---' }}
+                  </ng-template>
+                </ngx-datatable-column>
+    
+                <ngx-datatable-column [name]="'::ReservedQuantity' | abpLocalization" prop="reservedQuantity" [width]="120">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ value | number }}
+                  </ng-template>
+                </ngx-datatable-column>
 
-            <ngx-datatable-column [name]="'::LockedDocument' | abpLocalization" prop="referenceDocumentNumber" [width]="200">
-              <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value || '---' }}
-              </ng-template>
-            </ngx-datatable-column>
+                <ngx-datatable-column [name]="'::Unit' | abpLocalization" prop="unitName" [width]="90">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    <span class="small text-muted">{{ value || '---' }}</span>
+                  </ng-template>
+                </ngx-datatable-column>
+    
+                <ngx-datatable-column [name]="'::LockedDocument' | abpLocalization" prop="referenceDocumentNumber" [width]="150">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    {{ value || '---' }}
+                  </ng-template>
+                </ngx-datatable-column>
 
-            <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime" [width]="180">
-              <ng-template let-value="value" ngx-datatable-cell-template>
-                {{ value | date: 'dd/MM/yyyy HH:mm' }}
-              </ng-template>
-            </ngx-datatable-column>
-          </ngx-datatable>
-        </div>
-      </div>
-
-      <!-- Tab 3: History -->
-      <div *ngIf="activeTab === 'history'" class="ph-card">
-        <div class="ph-card__header">
-          <h6 class="ph-card__header-title">
-            <i class="fa fa-history text-primary me-2"></i>{{ '::Menu:Transactions' | abpLocalization }}
-          </h6>
-        </div>
-        <div class="ph-card__body p-0">
-          <app-transactions [isEmbedded]="true" [fixedProductId]="detail.productId" [fixedBatchId]="detail.productBatchId" [fixedWarehouseId]="detail.warehouseId" [hideProduct]="true" [hideLocation]="true">
-          </app-transactions>
+                <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="120">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    <span class="ph-badge" [ngClass]="{
+                      'ph-badge--approved': value === ReservationStatus.Active,
+                      'ph-badge--pending': value === ReservationStatus.Completed,
+                      'ph-badge--rejected': value === ReservationStatus.Cancelled
+                    }">
+                       {{ '::Enum:ReservationStatus.' + enumName(ReservationStatus, value) | abpLocalization }}
+                    </span>
+                  </ng-template>
+                </ngx-datatable-column>
+    
+                <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime" [width]="150">
+                  <ng-template let-value="value" ngx-datatable-cell-template>
+                    <span class="small text-muted">{{ value | date: 'dd/MM/yyyy HH:mm' }}</span>
+                  </ng-template>
+                </ngx-datatable-column>
+              </ngx-datatable>
+            </div>
+    
+            <!-- Tab: History/Transactions -->
+            <div *ngIf="activeTab === 'history'">
+              <app-transactions [isEmbedded]="true" [fixedProductId]="detail.productId" [fixedBatchId]="detail.productBatchId" [fixedWarehouseId]="detail.warehouseId" [hideProduct]="true" [hideLocation]="true">
+              </app-transactions>
+            </div>
+          </div>
         </div>
       </div>
     </div>

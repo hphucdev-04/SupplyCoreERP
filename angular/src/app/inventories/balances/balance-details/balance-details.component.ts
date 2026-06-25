@@ -7,6 +7,8 @@ import { InventoryBalanceService } from 'src/app/proxy/balances';
 import { InventoryBalanceDetailDto } from 'src/app/proxy/balances/dtos';
 import { TransactionsComponent } from 'src/app/shared/components/transactions-component/transactions.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { ReservationStatus } from '../../../proxy/enums/balances/reservation-status.enum';
+import { enumName } from '../../../shared/untils/enum.util';
 
 
 @Component({
@@ -22,7 +24,10 @@ export class BalanceDetailsComponent implements OnInit, OnDestroy {
   balanceId = '';
   detail: InventoryBalanceDetailDto | null = null;
   isLoading = false;
-  activeTab: 'info' | 'history' | 'reservations' = 'info';
+  activeTab: 'history' | 'reservations' = 'reservations';
+
+  ReservationStatus = ReservationStatus;
+  enumName = enumName;
 
   constructor(
     private route: ActivatedRoute,

@@ -1,6 +1,7 @@
 <div class="ph-card">
   <div class="ph-card__header">
     <h5 class="ph-card-title">
+      <i class="fa fa-undo me-2 ph-text-primary"></i>
       {{ '::Menu:Purchase-Return-Requests' | abpLocalization }}
     </h5>
     <div class="ph-card__header-actions">
@@ -81,7 +82,7 @@
 
       <ngx-datatable-column [name]="'::Code' | abpLocalization" prop="code" [width]="200">
         <ng-template ngx-datatable-cell-template let-row="row" let-value="value">
-          <span class="ph-link" (click)="viewDetail(row.id)">{{ value }}</span>
+          <span class="ph-link fw-semibold font-mono" (click)="viewDetail(row.id)">{{ value }}</span>
         </ng-template>
       </ngx-datatable-column>
 
@@ -91,11 +92,15 @@
         [width]="160"
       >
         <ng-template let-row="row" ngx-datatable-cell-template>
-          <span class="ph-text-muted">{{ row.warehouseName }}</span>
+          <span class="ph-text-muted"><i class="fa fa-home me-1"></i>{{ row.warehouseName }}</span>
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::RequestDate' | abpLocalization" prop="requestDate" [width]="120">
+      <ngx-datatable-column
+        [name]="'::RequestDate' | abpLocalization"
+        prop="requestDate"
+        [width]="130"
+      >
         <ng-template let-row="row" ngx-datatable-cell-template>
           <span class="ph-text-muted">{{ row.requestDate | date: 'dd/MM/yyyy' }}</span>
         </ng-template>
@@ -111,18 +116,21 @@
         </ng-template>
       </ngx-datatable-column>
 
-      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="160">
-        <ng-template let-row="row" ngx-datatable-cell-template>
-          <span
-            class="badge"
-            [class.bg-secondary]="row.status === PurchaseReturnRequestStatus.Draft"
-            [class.bg-warning]="row.status === PurchaseReturnRequestStatus.PendingApproval"
-            [class.bg-info]="row.status === PurchaseReturnRequestStatus.Approved"
-            [class.bg-danger]="row.status === PurchaseReturnRequestStatus.Rejected"
-            [class.bg-success]="row.status === PurchaseReturnRequestStatus.Processed"
-          >
-            {{ '::Enum:PurchaseReturnRequestStatus.' + enumName(PurchaseReturnRequestStatus, row.status) | abpLocalization }}
+      <ngx-datatable-column [name]="'::Status' | abpLocalization" prop="status" [width]="170">
+        <ng-template let-value="value" ngx-datatable-cell-template>
+          <span class="ph-badge" [ngClass]="statusClass(value)">
+            <i class="fa me-1" [ngClass]="statusIcon(value)"></i>
+            {{
+              '::Enum:PurchaseReturnRequestStatus.' +
+                enumName(PurchaseReturnRequestStatus, value) | abpLocalization
+            }}
           </span>
+        </ng-template>
+      </ngx-datatable-column>
+
+      <ngx-datatable-column [name]="'::CreationTime' | abpLocalization" prop="creationTime">
+        <ng-template let-row="row" ngx-datatable-cell-template>
+          {{ row.creationTime | date: 'medium' }}
         </ng-template>
       </ngx-datatable-column>
     </ngx-datatable>
@@ -142,41 +150,39 @@
   (save)="save()"
 >
   <form [formGroup]="form">
-    <!-- Warehouse (Bắt buộc chọn đầu tiên theo Spec) -->
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Warehouse' | abpLocalization }}</label>
       <app-dropdown-search
         formControlName="warehouseId"
         [items]="warehouses"
         [placeholder]="'::SelectWarehouse' | abpLocalization"
+        [searchPlaceholder]="'::Search' | abpLocalization"
       ></app-dropdown-search>
       <div
         *ngIf="form.get('warehouseId').invalid && form.get('warehouseId').touched"
         class="ph-error-msg"
       >
-        {{ '::FieldRequired' | abpLocalization }}
+        {{ '::ThisFieldIsRequired' | abpLocalization }}
       </div>
     </div>
 
-
-
-    <!-- Request Date -->
-    <div class="mb-3">
-      <label class="ph-label ph-label--required">{{ '::RequestDate' | abpLocalization }}</label>
-      <input type="date" class="form-control" formControlName="requestDate" />
-      <div
-        *ngIf="form.get('requestDate').invalid && form.get('requestDate').touched"
-        class="ph-error-msg"
-      >
-        {{ '::FieldRequired' | abpLocalization }}
+    <div class="row">
+      <div class="col-12 mb-3">
+        <label class="ph-label ph-label--required">{{ '::RequestDate' | abpLocalization }}</label>
+        <input type="date" class="form-control form-control-sm" formControlName="requestDate" />
+        <div
+          *ngIf="form.get('requestDate').invalid && form.get('requestDate').touched"
+          class="ph-error-msg"
+        >
+          {{ '::ThisFieldIsRequired' | abpLocalization }}
+        </div>
       </div>
     </div>
 
-    <!-- Note -->
     <div class="mb-3">
       <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
       <textarea
-        class="form-control"
+        class="form-control form-control-sm"
         formControlName="note"
         rows="3"
         [placeholder]="'::EnterNote' | abpLocalization"
