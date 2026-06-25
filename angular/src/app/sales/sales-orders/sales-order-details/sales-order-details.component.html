@@ -534,15 +534,41 @@
         </div>
       </div>
 
-      <!-- Price Selection -->
-      <div class="mb-3" *ngIf="availablePrices.length > 0">
+      <div class="mb-3">
+        <label class="ph-label">{{ '::UnitPrice' | abpLocalization }}</label>
+        <div class="input-group">
+          <input
+            type="number"
+            class="form-control form-control-sm text-end"
+            formControlName="unitPrice"
+            min="0"
+            placeholder="De trong de tu lay bang gia"
+          />
+          <span class="input-group-text">₫</span>
+        </div>
+        <div class="ph-hint-msg mt-1">De trong de he thong tu lay gia tu bang gia.</div>
+      </div>
+
+      <div class="mb-3" *ngIf="referencePrices.length > 0">
         <label class="ph-label">{{ '::SelectPrice' | abpLocalization }}</label>
-        <select class="form-select form-select-sm font-mono" formControlName="unitPrice">
-          <option [ngValue]="null">{{ '::AutoSelectBestPrice' | abpLocalization }}</option>
-          <option *ngFor="let p of availablePrices" [ngValue]="p.price">
-            [{{ p.priceListName }}] {{ p.price | number }}₫ (Min: {{ p.minQuantity }})
-          </option>
-        </select>
+        <div class="table-responsive">
+          <table class="table table-sm align-middle mb-0">
+            <thead>
+              <tr>
+                <th>Bang gia</th>
+                <th class="text-end">Min Qty</th>
+                <th class="text-end">{{ '::UnitPrice' | abpLocalization }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let p of referencePrices">
+                <td class="fw-medium">{{ p.priceListName }}</td>
+                <td class="text-end">{{ (p.minQuantity || 0) | number }}</td>
+                <td class="text-end fw-bold ph-text-primary">{{ p.price | number: '1.0-0' }} ₫</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
 
       <div
@@ -551,6 +577,18 @@
       >
         <i class="fa fa-exclamation-triangle ph-callout__icon"></i>
         <div>{{ '::NoPriceFoundForThisProduct' | abpLocalization }}</div>
+      </div>
+
+      <div
+        class="ph-callout ph-callout--info mb-3"
+        *ngIf="
+          lineForm.get('productId').value &&
+          availablePrices.length > 0 &&
+          referencePrices.length === 0
+        "
+      >
+        <i class="fa fa-info-circle ph-callout__icon"></i>
+        <div>Khong co muc gia nao khop don vi va so luong hien tai.</div>
       </div>
 
       <div
