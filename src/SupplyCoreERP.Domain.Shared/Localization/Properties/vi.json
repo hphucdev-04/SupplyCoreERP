@@ -307,10 +307,19 @@
         "Enum:BatchQAStatus.Recalled": "Đã thu hồi",
         "Enum:BatchQAStatus.Expired": "Đã hết hạn",
 
-        "Enum:InventoryTransactionType.Incoming": "Nhập kho",
-        "Enum:InventoryTransactionType.Outgoing": "Xuất kho",
+        "Enum:InventoryTransactionType.PurchaseReceipt": "Nhập mua hàng",
+        "Enum:InventoryTransactionType.SaleDelivery": "Xuất bán hàng",
+        "Enum:InventoryTransactionType.ReturnInward": "Khách trả hàng",
+        "Enum:InventoryTransactionType.ReturnOutward": "Trả hàng NCC",
+        "Enum:InventoryTransactionType.RecallReceipt": "Nhập thu hồi",
+        "Enum:InventoryTransactionType.Disposal": "Xuất hủy",
+        "Enum:InventoryTransactionType.AdjustmentIn": "Điều chỉnh tăng",
+        "Enum:InventoryTransactionType.AdjustmentOut": "Điều chỉnh giảm",
+        "Enum:InventoryTransactionType.TransferIn": "Nhập chuyển kho",
+        "Enum:InventoryTransactionType.TransferOut": "Xuất chuyển kho",
 
         "Enum:ReservationStatus.Active": "Đang giữ",
+        "Enum:ReservationStatus.Completed": "Đã hoàn thành",
         "Enum:ReservationStatus.Released": "Đã giải phóng",
         "Enum:ReservationStatus.Cancelled": "Đã hủy",
 

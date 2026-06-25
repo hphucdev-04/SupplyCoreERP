@@ -183,7 +183,10 @@
                           'ph-badge--approved': t.status === 2,
                           'ph-badge--rejected': t.status === 3,
                         }"
-                        >{{ '::Enum:ApprovalStatus.' + t.status | abpLocalization }}</span
+                        >{{
+                          '::Enum:ApprovalStatus.' + enumName(ApprovalStatus, t.status)
+                            | abpLocalization
+                        }}</span
                       >
                     </td>
                   </tr>

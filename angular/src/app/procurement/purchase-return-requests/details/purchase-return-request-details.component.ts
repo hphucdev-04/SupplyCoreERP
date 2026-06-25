@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfirmationService, Confirmation, ToasterService } from '@abp/ng.theme.shared';
@@ -14,6 +14,7 @@ import { PurchaseOrderService } from 'src/app/proxy/purchase-orders';
 import { WarehouseService } from 'src/app/proxy/warehouses';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { PurchaseReturnRequestStatus } from 'src/app/proxy/enums/orders/purchase-return-request-status.enum';
+import { PurchaseReturnStatus } from 'src/app/proxy/enums/orders/purchase-return-status.enum';
 import { PurchaseReturnType, purchaseReturnTypeOptions } from 'src/app/proxy/enums/orders/purchase-return-type.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 
@@ -43,10 +44,20 @@ interface SelectablePOLine {
   standalone: true,
   imports: [SharedModule, DrawerComponent, DropdownSearchComponent],
   templateUrl: './purchase-return-request-details.component.html',
+  styleUrls: ['./purchase-return-request-details.component.scss'],
 })
 export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy {
   private destroy$ = new Subject<void>();
   private readonly ROUTE_NAME = '::Menu:PurchaseReturnRequestDetails';
+  private readonly requestService = inject(PurchaseReturnRequestService);
+  private readonly poService = inject(PurchaseOrderService);
+  private readonly warehouseService = inject(WarehouseService);
+  private readonly routesService = inject(RoutesService);
+  private readonly confirmation = inject(ConfirmationService);
+  private readonly toaster = inject(ToasterService);
+  private readonly fb = inject(FormBuilder);
+  private readonly route = inject(ActivatedRoute);
+  private readonly router = inject(Router);
 
   requestId: string;
   requestDto: PurchaseReturnRequestDto;
@@ -65,21 +76,10 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
   isSavingLines = false;
 
   PurchaseReturnRequestStatus = PurchaseReturnRequestStatus;
+  PurchaseReturnStatus = PurchaseReturnStatus;
   PurchaseReturnType = PurchaseReturnType;
   purchaseReturnTypeOptions = purchaseReturnTypeOptions;
   readonly enumName = enumName;
-
-  constructor(
-    private requestService: PurchaseReturnRequestService,
-    private poService: PurchaseOrderService,
-    private warehouseService: WarehouseService,
-    private routesService: RoutesService,
-    private confirmation: ConfirmationService,
-    private toaster: ToasterService,
-    private fb: FormBuilder,
-    private route: ActivatedRoute,
-    private router: Router
-  ) {}
 
   ngOnInit(): void {
     this.requestId = this.route.snapshot.params['id'];
@@ -392,5 +392,70 @@ export class PurchaseReturnRequestDetailsComponent implements OnInit, OnDestroy 
 
   viewRelatedTicket(ticketId: string) {
     this.router.navigate(['/procurement/purchase-returns/details', ticketId]);
+  }
+
+  isEditable(): boolean {
+    return (
+      this.requestDto?.status === PurchaseReturnRequestStatus.Draft ||
+      this.requestDto?.status === PurchaseReturnRequestStatus.PendingApproval
+    );
+  }
+
+  canSendToApprove(): boolean {
+    return this.requestDto?.status === PurchaseReturnRequestStatus.Draft && !!this.requestDto?.lines?.length;
+  }
+
+  statusClass(status: PurchaseReturnRequestStatus): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnRequestStatus.Draft]: 'ph-badge--neutral',
+      [PurchaseReturnRequestStatus.PendingApproval]: 'ph-badge--pending',
+      [PurchaseReturnRequestStatus.Approved]: 'ph-badge--info',
+      [PurchaseReturnRequestStatus.Rejected]: 'ph-badge--rejected',
+      [PurchaseReturnRequestStatus.Processed]: 'ph-badge--approved',
+    };
+    return map[status] ?? 'ph-badge--neutral';
+  }
+
+  statusIcon(status: PurchaseReturnRequestStatus): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnRequestStatus.Draft]: 'fa-pencil',
+      [PurchaseReturnRequestStatus.PendingApproval]: 'fa-clock-o',
+      [PurchaseReturnRequestStatus.Approved]: 'fa-check',
+      [PurchaseReturnRequestStatus.Rejected]: 'fa-times-circle',
+      [PurchaseReturnRequestStatus.Processed]: 'fa-check-circle',
+    };
+    return map[status] ?? 'fa-circle';
+  }
+
+  returnTypeClass(type: PurchaseReturnType): string {
+    const map: Record<number, string> = {
+      [PurchaseReturnType.Defective]: 'ph-badge--rejected',
+      [PurchaseReturnType.Commercial]: 'ph-badge--info',
+    };
+    return map[type] ?? 'ph-badge--neutral';
+  }
+
+  relatedTicketStatusClass(status: number): string {
+    const map: Record<number, string> = {
+      1: 'ph-badge--neutral',
+      2: 'ph-badge--pending',
+      3: 'ph-badge--info',
+      4: 'ph-badge--primary',
+      5: 'ph-badge--approved',
+      6: 'ph-badge--rejected',
+    };
+    return map[status] ?? 'ph-badge--neutral';
+  }
+
+  relatedTicketStatusIcon(status: number): string {
+    const map: Record<number, string> = {
+      1: 'fa-pencil',
+      2: 'fa-clock-o',
+      3: 'fa-check',
+      4: 'fa-truck',
+      5: 'fa-check-circle',
+      6: 'fa-times-circle',
+    };
+    return map[status] ?? 'fa-circle';
   }
 }

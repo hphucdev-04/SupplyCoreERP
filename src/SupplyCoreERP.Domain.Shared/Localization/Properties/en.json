@@ -302,6 +302,22 @@
         "Enum:ApprovalStatus.Approved": "Approved",
         "Enum:ApprovalStatus.Rejected": "Rejected",
 
+        "Enum:InventoryTransactionType.PurchaseReceipt": "Purchase Receipt",
+        "Enum:InventoryTransactionType.SaleDelivery": "Sale Delivery",
+        "Enum:InventoryTransactionType.ReturnInward": "Return Inward",
+        "Enum:InventoryTransactionType.ReturnOutward": "Return Outward",
+        "Enum:InventoryTransactionType.RecallReceipt": "Recall Receipt",
+        "Enum:InventoryTransactionType.Disposal": "Disposal",
+        "Enum:InventoryTransactionType.AdjustmentIn": "Adjustment In",
+        "Enum:InventoryTransactionType.AdjustmentOut": "Adjustment Out",
+        "Enum:InventoryTransactionType.TransferIn": "Transfer In",
+        "Enum:InventoryTransactionType.TransferOut": "Transfer Out",
+
+        "Enum:ReservationStatus.Active": "Active",
+        "Enum:ReservationStatus.Completed": "Completed",
+        "Enum:ReservationStatus.Released": "Released",
+        "Enum:ReservationStatus.Cancelled": "Cancelled",
+
         "Enum:StorageCondition.Normal": "Normal",
         "Enum:StorageCondition.Cool": "Cool",
         "Enum:StorageCondition.Cold": "Cold",

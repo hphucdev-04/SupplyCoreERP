@@ -12,6 +12,8 @@ import { BatchQAStatus } from "src/app/proxy/enums/warehouses/batch-qastatus.enu
 import { InventoryTransactionType } from "src/app/proxy/enums/warehouses/inventory-transaction-type.enum";
 import { ReservationStatus } from "src/app/proxy/enums/balances/reservation-status.enum";
 import { SharedModule } from "src/app/shared/shared.module";
+import { enumName } from "src/app/shared/untils/enum.util";
+
 
 @Component({
   selector: 'app-batch-details',
@@ -31,11 +33,12 @@ export class BatchDetailsComponent implements OnInit, OnDestroy {
   transactions: InventoryTransactionDto[] = [];
   reservations: InventoryReservationDto[] = [];
 
-  activeTab = 'info'; // 'info', 'balances', 'transactions', 'reservations'
+  activeTab = 'balances'; // 'balances', 'transactions', 'reservations'
   
   readonly BatchQAStatus = BatchQAStatus;
   readonly InventoryTransactionType = InventoryTransactionType;
   readonly ReservationStatus = ReservationStatus;
+  enumName = enumName;
 
   constructor(
     private route: ActivatedRoute,

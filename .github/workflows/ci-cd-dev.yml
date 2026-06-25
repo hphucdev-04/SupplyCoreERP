@@ -19,13 +19,13 @@ jobs:
             - name: Setup .NET
               uses: actions/setup-dotnet@v4
               with:
-                  dotnet-version: "10.0.x"
+                  dotnet-version: "8.0.x"
 
             - name: Restore dependencies
               run: dotnet restore
 
             - name: Format Code
-              run: dotnet format
+              run: dotnet format --verify-no-changes
 
     build-and-test:
         name: Build & Test (Full Stack)
@@ -37,7 +37,7 @@ jobs:
             - name: Setup .NET
               uses: actions/setup-dotnet@v4
               with:
-                  dotnet-version: "10.0.x"
+                  dotnet-version: "8.0.x"
 
             - name: Restore .NET dependencies
               run: dotnet restore
@@ -58,15 +58,14 @@ jobs:
 
             - name: Run EntityFramework Integration Tests
               run: |
-                   dotnet test test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj \
+                  dotnet test test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj \
                     --no-build \
                     --no-restore \
                     --configuration Release \
                     --verbosity normal \
                     --logger trx \
                     --blame-hang \
-                    --blame-hang-timeout 400s \
-                    --parallel 1
+                    --blame-hang-timeout 400s
 
             - name: Setup Node.js
               uses: actions/setup-node@v4
@@ -102,10 +101,13 @@ jobs:
             - name: Setup .NET
               uses: actions/setup-dotnet@v4
               with:
-                  dotnet-version: "10.0.x"
+                  dotnet-version: "8.0.x"
 
             - name: Restore dependencies
               run: dotnet restore
+
+            - name: Build Migrator
+              run: dotnet build src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj --no-restore --configuration Release
 
             - name: Execute Migrator
               env:
@@ -115,6 +117,7 @@ jobs:
                   dotnet run \
                     --project src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj \
                     --configuration Release \
+                    --no-build \
                     --no-restore
 
     deploy-backend:

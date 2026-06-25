@@ -20,6 +20,7 @@ import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
 import { ProductPriceDto } from 'src/app/proxy/prices/dtos';
 import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.enum';
+import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
 
@@ -63,6 +64,7 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
   quantityPreview = 0;
 
   SalesOrderStatus = SalesOrderStatus;
+  ApprovalStatus = ApprovalStatus;
   readonly enumName = enumName;
 
   constructor(

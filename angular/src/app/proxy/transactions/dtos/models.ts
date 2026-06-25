@@ -24,6 +24,8 @@ export interface InventoryTransactionDto extends CreationAuditedEntityDto<string
   binId?: string;
   binCode?: string;
   transactionType?: InventoryTransactionType;
+  unitId?: string;
+  unitName?: string;
   quantity?: number;
   balanceAfterTransaction?: number;
   referenceDocumentId?: string;

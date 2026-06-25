@@ -28,5 +28,8 @@ public class InventoryReservationDto : CreationAuditedEntityDto<Guid>
 
     public Guid? SourceDocumentId { get; set; }
     public string? SourceDocumentNumber { get; set; }
+
+    public Guid? UnitId { get; set; }
+    public string? UnitName { get; set; }
 }
 

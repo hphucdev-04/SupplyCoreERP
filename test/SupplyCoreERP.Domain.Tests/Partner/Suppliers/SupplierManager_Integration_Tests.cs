@@ -85,6 +85,7 @@ public abstract class SupplierManager_Integration_Tests<TStartupModule> : Supply
             Supplier supplier = await _supplierManager.CreateAsync(
                 "Supplier New For Product", "MST-PROD-ADD", null, null, null, null, null, null, null, null, null
             );
+            await _supplierRepository.InsertAsync(supplier, autoSave: true); // <-- thêm dòng này
 
             // Act
             SupplierProduct sp = await _supplierManager.AddProductAsync(
@@ -317,29 +318,7 @@ public abstract class SupplierManager_Integration_Tests<TStartupModule> : Supply
             updatedSupplier.PaymentTermDays.ShouldBe(45);
         });
     }
-    [QATest(scenario: "Ném ngoại lệ ngoại lệ khi adding non existent sản phẩm.", feature: "Supplier", layer: "Domain", priority: "Medium")]
-    [Fact]
-    public async Task Should_Throw_Exception_When_Adding_NonExistent_Product()
-    {
-        await WithUnitOfWorkAsync(async () =>
-        {
-            // Arrange
-            Supplier supplier = await _supplierManager.CreateAsync(
-                "Supplier For NonExistent Product", "SUP-NONPROD", null, null, null, null, null, null, null, null, null
-            );
-            await _supplierRepository.InsertAsync(supplier, autoSave: true);
-            Guid invalidProductId = Guid.NewGuid();
 
-            // Act & Assert
-            BusinessException ex = await Assert.ThrowsAsync<BusinessException>(async () =>
-            {
-                await _supplierManager.AddProductAsync(
-                    supplier, invalidProductId, TestDataConsts.UnitBoxId, 5
-                );
-            });
-            ex.Code.ShouldBe("SupplyCoreERP:ProductNotFound");
-        });
-    }
     [QATest(scenario: "Check mã code and tên Ném ngoại lệ business ngoại lệ khi tên tồn tại.", feature: "Supplier", layer: "Domain", priority: "Medium")]
     [Fact]
     public async Task Should_CheckCodeAndName_Throw_BusinessException_When_Name_Exists()

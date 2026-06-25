@@ -35,7 +35,9 @@ public class InventoryBalanceAutoMapperProfile : Profile
 
         CreateMap<InventoryReservation, InventoryReservationDto>()
             .ForMember(dest => dest.WarehouseName, opt => opt.MapFrom(src => src.Warehouse != null ? src.Warehouse.Name : null))
-            .ForMember(dest => dest.BinCode, opt => opt.MapFrom(src => src.Bin != null ? src.Bin.Code : null));
+            .ForMember(dest => dest.BinCode, opt => opt.MapFrom(src => src.Bin != null ? src.Bin.Code : null))
+            .ForMember(dest => dest.UnitId, opt => opt.MapFrom(src => src.UnitId))
+            .ForMember(dest => dest.UnitName, opt => opt.MapFrom(src => src.UnitName));
     }
 }
 
