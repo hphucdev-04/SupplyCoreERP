@@ -19,7 +19,7 @@ public abstract class SupplyCoreERPTestBase<TStartupModule> : AbpIntegratedTest<
 
     protected override void BeforeAddApplication(IServiceCollection services)
     {
-        var builder = new ConfigurationBuilder();
+        ConfigurationBuilder builder = new();
         builder.AddJsonFile("appsettings.json", false);
         builder.AddJsonFile("appsettings.secrets.json", true);
         services.ReplaceConfiguration(builder.Build());
@@ -36,14 +36,16 @@ public abstract class SupplyCoreERPTestBase<TStartupModule> : AbpIntegratedTest<
         IUnitOfWorkManager uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
 
         using IUnitOfWork uow = uowManager.Begin(options);
-        await action();
-
-        await uow.CompleteAsync();
-    }
-
-    protected virtual Task<TResult> WithUnitOfWorkAsync<TResult>(Func<Task<TResult>> func)
-    {
-        return WithUnitOfWorkAsync(new AbpUnitOfWorkOptions(), func);
+        try
+        {
+            await action();
+            await uow.CompleteAsync();
+        }
+        catch
+        {
+            await uow.RollbackAsync();
+            throw;
+        }
     }
 
     protected virtual async Task<TResult> WithUnitOfWorkAsync<TResult>(AbpUnitOfWorkOptions options, Func<Task<TResult>> func)
@@ -52,9 +54,17 @@ public abstract class SupplyCoreERPTestBase<TStartupModule> : AbpIntegratedTest<
         IUnitOfWorkManager uowManager = scope.ServiceProvider.GetRequiredService<IUnitOfWorkManager>();
 
         using IUnitOfWork uow = uowManager.Begin(options);
-        TResult? result = await func();
-        await uow.CompleteAsync();
-        return result;
+        try
+        {
+            TResult? result = await func();
+            await uow.CompleteAsync();
+            return result;
+        }
+        catch
+        {
+            await uow.RollbackAsync();
+            throw;
+        }
     }
 }
 
