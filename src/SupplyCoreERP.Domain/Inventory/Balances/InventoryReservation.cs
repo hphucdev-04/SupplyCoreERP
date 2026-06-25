@@ -23,6 +23,10 @@ public class InventoryReservation : CreationAuditedEntity<Guid>
     public Guid ProductBatchId { get; private set; }
     public virtual ProductBatch ProductBatch { get; private set; }
 
+    // Đơn vị giao dịch
+    public Guid? UnitId { get; private set; }
+    public string? UnitName { get; private set; }
+
     // Số lượng giữ chỗ?
     public decimal ReservedQuantity { get; private set; }
 
@@ -41,7 +45,8 @@ public class InventoryReservation : CreationAuditedEntity<Guid>
         Guid id, Guid refDocId, string refDocNumber,
         Guid warehouseId, Guid binId, Guid productId, Guid batchId,
         decimal reservedQty, Guid? partnerId = null, string? partnerName = null,
-        Guid? sourceDocId = null, string? sourceDocNumber = null) : base(id)
+        Guid? sourceDocId = null, string? sourceDocNumber = null,
+        Guid? unitId = null, string? unitName = null) : base(id)
     {
         ReferenceDocumentId = refDocId;
         ReferenceDocumentNumber = refDocNumber;
@@ -49,6 +54,8 @@ public class InventoryReservation : CreationAuditedEntity<Guid>
         BinId = binId;
         ProductId = productId;
         ProductBatchId = batchId;
+        UnitId = unitId;
+        UnitName = unitName;
         ReservedQuantity = reservedQty;
         Status = ReservationStatus.Active;
         PartnerId = partnerId;

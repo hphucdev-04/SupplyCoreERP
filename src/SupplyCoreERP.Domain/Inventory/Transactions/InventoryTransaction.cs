@@ -4,7 +4,6 @@ using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventory.Batches;
 using SupplyCoreERP.Inventory.Tickets;
 using SupplyCoreERP.Inventory.Warehouses;
-using SupplyCoreERP.Inventory.Warehouses;
 using Volo.Abp.Domain.Entities.Auditing;
 
 namespace SupplyCoreERP.Inventory.Transactions;
@@ -19,6 +18,10 @@ public class InventoryTransaction : CreationAuditedAggregateRoot<Guid>
     public virtual Product Product { get; protected set; }
     public Guid ProductBatchId { get; private set; }
     public virtual ProductBatch ProductBatch { get; protected set; }
+
+    // Đơn vị giao dịch
+    public Guid? UnitId { get; private set; }
+    public string? UnitName { get; private set; }
 
     public InventoryTransactionType TransactionType { get; private set; }
     public decimal QuantityChanged { get; private set; }
@@ -43,12 +46,15 @@ public class InventoryTransaction : CreationAuditedAggregateRoot<Guid>
         Guid? refDocId, string? refDocNumber, string? note,
         Guid? partnerId = null, string? partnerName = null,
         Guid? sourceDocId = null, string? sourceDocNumber = null,
-        Guid? correlationId = null) : base(id)
+        Guid? correlationId = null,
+        Guid? unitId = null, string? unitName = null) : base(id)
     {
         WarehouseId = warehouseId;
         BinId = binId;
         ProductId = prodId;
         ProductBatchId = batchId;
+        UnitId = unitId;
+        UnitName = unitName;
         TransactionType = type;
         QuantityChanged = qtyChanged;
         BalanceAfterTransaction = balanceAfter;

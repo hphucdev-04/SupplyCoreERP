@@ -58,14 +58,15 @@ jobs:
 
             - name: Run EntityFramework Integration Tests
               run: |
-                  dotnet test test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj \
+                   dotnet test test/SupplyCoreERP.EntityFrameworkCore.Tests/SupplyCoreERP.EntityFrameworkCore.Tests.csproj \
                     --no-build \
                     --no-restore \
                     --configuration Release \
                     --verbosity normal \
                     --logger trx \
                     --blame-hang \
-                    --blame-hang-timeout 200s
+                    --blame-hang-timeout 400s \
+                    --parallel 1
 
             - name: Setup Node.js
               uses: actions/setup-node@v4

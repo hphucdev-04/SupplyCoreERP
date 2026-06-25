@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using SupplyCoreERP.Catalog.BaseUnits;
 using SupplyCoreERP.Enums.Balances;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventory.Tickets;
@@ -29,6 +30,7 @@ public class InventoryBalanceManager : DomainService
     private readonly IRepository<PurchaseReturn, Guid> _purchaseReturnRepo;
     private readonly IRepository<SalesRecall, Guid> _salesRecallRepo;
     private readonly IRepository<Customer, Guid> _customerRepo;
+    private readonly IRepository<BaseUnit, Guid> _baseUnitRepo;
 
     // Constructor injection
     public InventoryBalanceManager(
@@ -40,7 +42,8 @@ public class InventoryBalanceManager : DomainService
         IRepository<SalesOrder, Guid> soRepo,
         IRepository<PurchaseReturn, Guid> purchaseReturnRepo,
         IRepository<SalesRecall, Guid> salesRecallRepo,
-        IRepository<Customer, Guid> customerRepo)
+        IRepository<Customer, Guid> customerRepo,
+        IRepository<BaseUnit, Guid> baseUnitRepo)
     {
         _balanceRepo = balanceRepo;
         _reservationRepo = reservationRepo;
@@ -51,6 +54,7 @@ public class InventoryBalanceManager : DomainService
         _purchaseReturnRepo = purchaseReturnRepo;
         _salesRecallRepo = salesRecallRepo;
         _customerRepo = customerRepo;
+        _baseUnitRepo = baseUnitRepo;
     }
 
     private async Task<List<InventoryBalance>> GetBalancesWithDetailsAsync(
@@ -153,6 +157,10 @@ public class InventoryBalanceManager : DomainService
         var lineIds = details.Select(d => d.TicketLineId).Distinct().ToList();
         List<InventoryTicketLine> ticketLines = await _ticketLineRepo.GetListAsync(x => lineIds.Contains(x.Id));
 
+        // Bulk load tên đơn vị
+        List<Guid> unitIds = details.Where(d => d.UnitId != Guid.Empty).Select(d => d.UnitId).Distinct().ToList();
+        List<BaseUnit> units = await _baseUnitRepo.GetListAsync(x => unitIds.Contains(x.Id));
+
         foreach (InventoryTicketDetail item in details)
         {
             InventoryBalance? balance = balances.FirstOrDefault(x => x.ProductId == item.ProductId && x.ProductBatchId == item.ProductBatchId);
@@ -173,10 +181,13 @@ public class InventoryBalanceManager : DomainService
             InventoryTicketLine? line = ticketLines.FirstOrDefault(l => l.Id == item.TicketLineId);
             (Guid? partnerId, string? partnerName, Guid? sourceDocId, string? sourceDocNumber) = await GetPartnerAndDocInfoAsync(ticket, line?.ReferenceDocumentLineId);
 
+            string? unitName = units.FirstOrDefault(u => u.Id == item.UnitId)?.Name;
+
             reservations.Add(new InventoryReservation(
                 GuidGenerator.Create(), ticket.Id, ticket.TicketNumber,
                 ticket.WarehouseId, item.BinId, item.ProductId, item.ProductBatchId, item.BaseQuantity,
-                partnerId, partnerName, sourceDocId, sourceDocNumber));
+                partnerId, partnerName, sourceDocId, sourceDocNumber,
+                unitId: item.UnitId, unitName: unitName));
         }
 
         await _balanceRepo.UpdateManyAsync(balancesToUpdate);
@@ -277,9 +288,15 @@ public class InventoryBalanceManager : DomainService
                 InventoryTicketLine? ticketLine = await _ticketLineRepo.FirstOrDefaultAsync(l => l.TicketId == ticket.Id && l.ProductId == productId);
                 (Guid? partnerId, string? partnerName, Guid? sourceDocId, string? sourceDocNumber) = await GetPartnerAndDocInfoAsync(ticket, ticketLine?.ReferenceDocumentLineId);
 
+                Guid? reservationUnitId = ticketLine?.UnitId;
+                string? reservationUnitName = reservationUnitId.HasValue
+                    ? (await _baseUnitRepo.FindAsync(reservationUnitId.Value))?.Name
+                    : null;
+
                 await _reservationRepo.InsertAsync(new InventoryReservation(
                     GuidGenerator.Create(), ticket.Id, ticket.TicketNumber, ticket.WarehouseId, binId, productId, productBatchId, baseQtyDiff,
-                    partnerId, partnerName, sourceDocId, sourceDocNumber));
+                    partnerId, partnerName, sourceDocId, sourceDocNumber,
+                    unitId: reservationUnitId, unitName: reservationUnitName));
             }
         }
         else // Nhả bớt lock
@@ -333,6 +350,10 @@ public class InventoryBalanceManager : DomainService
         // Load trước danh sách ticket lines
         var lineIds = details.Select(d => d.TicketLineId).Distinct().ToList();
         List<InventoryTicketLine> ticketLines = await _ticketLineRepo.GetListAsync(x => lineIds.Contains(x.Id));
+
+        // Bulk load tên đơn vị
+        List<Guid> unitIds = details.Where(d => d.UnitId != Guid.Empty).Select(d => d.UnitId).Distinct().ToList();
+        List<BaseUnit> units = await _baseUnitRepo.GetListAsync(x => unitIds.Contains(x.Id));
 
         foreach (InventoryTicketDetail item in details)
         {
@@ -394,10 +415,13 @@ public class InventoryBalanceManager : DomainService
             InventoryTicketLine? line = ticketLines.FirstOrDefault(l => l.Id == item.TicketLineId);
             (Guid? partnerId, string? partnerName, Guid? sourceDocId, string? sourceDocNumber) = await GetPartnerAndDocInfoAsync(ticket, line?.ReferenceDocumentLineId);
 
+            string? txUnitName = units.FirstOrDefault(u => u.Id == item.UnitId)?.Name;
+
             transactions.Add(new InventoryTransaction(
                 GuidGenerator.Create(), ticket.WarehouseId, item.BinId, item.ProductId, item.ProductBatchId,
                 transType, isIssue ? -item.BaseQuantity : item.BaseQuantity, balance.Quantity, ticket.Id, ticket.TicketNumber, ticket.Note,
-                partnerId, partnerName, sourceDocId, sourceDocNumber));
+                partnerId, partnerName, sourceDocId, sourceDocNumber,
+                unitId: item.UnitId, unitName: txUnitName));
         }
 
         if (activeReservations.Any())
