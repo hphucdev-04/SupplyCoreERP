@@ -22,7 +22,7 @@ public class SupplyCoreERPSettingDefinitionProvider : SettingDefinitionProvider
 
         context.Add(new SettingDefinition(
             SupplyCoreERPSettings.LlmProviderApiKey,
-            defaultValue: "AQ.Ab8RN6LtJZGdEXlfMP1ayfA_Ulh-G44_Iwjj5oysFN6WH3gc1g",
+            defaultValue: "",
             isVisibleToClients: false,
             isEncrypted: true
         ));
