@@ -40,11 +40,9 @@ public class SupplyCoreERPEntityFrameworkCoreTestModule : AbpModule
 
     private static void ConfigureInMemorySqlite(IServiceCollection services)
     {
-        // Mỗi lần DI container resolve DbContext sẽ tạo connection mới
-        // Dùng tên unique per-registration thay vì shared connection field
         string connectionString = $"Data Source=SupplyCoreERP_{Guid.NewGuid():N};Mode=Memory;Cache=Shared";
 
-        var connection = new SqliteConnection(connectionString);
+        SqliteConnection connection = new(connectionString);
         connection.Open();
 
         DbContextOptions<SupplyCoreERPDbContext> options =
@@ -52,13 +50,11 @@ public class SupplyCoreERPEntityFrameworkCoreTestModule : AbpModule
                 .UseSqlite(connection)
                 .Options;
 
-        using (var dbContext = new SupplyCoreERPDbContext(options))
+        using (SupplyCoreERPDbContext dbContext = new(options))
         {
             dbContext.GetService<IRelationalDatabaseCreator>().CreateTables();
         }
 
-        // Register connection như singleton trong DI
-        // Mỗi test class tạo DI scope riêng → connection riêng
         services.AddSingleton(connection);
 
         services.Configure<AbpDbContextOptions>(opts =>
@@ -72,9 +68,12 @@ public class SupplyCoreERPEntityFrameworkCoreTestModule : AbpModule
 
     public override void OnApplicationShutdown(ApplicationShutdownContext context)
     {
-        // Dispose connection từ DI thay vì field
-        SqliteConnection? connection = context.ServiceProvider
-            .GetService<SqliteConnection>();
-        connection?.Dispose();
+        SqliteConnection? connection = context.ServiceProvider.GetService<SqliteConnection>();
+        if (connection != null)
+        {
+            connection.Close();
+            SqliteConnection.ClearAllPools();
+            connection.Dispose();
+        }
     }
 }
