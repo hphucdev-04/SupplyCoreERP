@@ -125,11 +125,7 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
     {
         if (input.UnitPrice.HasValue)
         {
-            decimal? lowestPurchasePrice = await _priceManager.GetLowestPurchasePriceAsync(input.ProductId, input.UnitId);
-            if (lowestPurchasePrice.HasValue && input.UnitPrice.Value < lowestPurchasePrice.Value)
-            {
-                await AuthorizationService.CheckAsync(SupplyCoreERPPermissions.Order.SaleOrder.OverrideUnitPrice);
-            }
+            await AuthorizationService.CheckAsync(SupplyCoreERPPermissions.Order.SaleOrder.OverrideUnitPrice);
         }
 
         IQueryable<SalesOrder> query = await _orderRepo.GetQueryableAsync();
@@ -154,15 +150,7 @@ public class SalesOrderAppService : SupplyCore, ISalesOrderAppService
 
         if (input.UnitPrice.HasValue)
         {
-            SalesOrderLine? line = entity.Lines.FirstOrDefault(x => x.Id == lineId);
-            if (line != null)
-            {
-                decimal? lowestPurchasePrice = await _priceManager.GetLowestPurchasePriceAsync(line.ProductId, line.UnitId);
-                if (lowestPurchasePrice.HasValue && input.UnitPrice.Value < lowestPurchasePrice.Value)
-                {
-                    await AuthorizationService.CheckAsync(SupplyCoreERPPermissions.Order.SaleOrder.OverrideUnitPrice);
-                }
-            }
+            await AuthorizationService.CheckAsync(SupplyCoreERPPermissions.Order.SaleOrder.OverrideUnitPrice);
         }
 
         await _orderManager.UpdateLineAsync(entity, lineId, input.Quantity, input.UnitPrice, input.DiscountRate, input.TaxRate);

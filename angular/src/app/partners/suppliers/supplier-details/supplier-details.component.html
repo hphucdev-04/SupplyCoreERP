@@ -19,20 +19,13 @@
       <div>
         <h3 class="ph-page-title d-flex align-items-center gap-2 mb-1">
           {{ supplier.name }}
-          <span
-            class="ph-badge"
-            [ngClass]="supplier.isActive ? 'ph-badge--active' : 'ph-badge--inactive'"
-          >
+          <span class="ph-badge" [ngClass]="supplier.isActive ? 'ph-badge--active' : 'ph-badge--inactive'">
             {{ (supplier.isActive ? '::Active' : '::Inactive') | abpLocalization }}
           </span>
         </h3>
         <div class="ph-text-muted d-flex gap-3">
-          <span
-            >Code: <strong>{{ supplier.code }}</strong></span
-          >
-          <span *ngIf="supplier.taxCode"
-            >Tax: <strong>{{ supplier.taxCode }}</strong></span
-          >
+          <span>Code: <strong>{{ supplier.code }}</strong></span>
+          <span *ngIf="supplier.taxCode">Tax: <strong>{{ supplier.taxCode }}</strong></span>
         </div>
       </div>
     </div>
@@ -41,22 +34,14 @@
   <!-- Tabs Navigation -->
   <ul class="nav nav-tabs mb-3">
     <li class="nav-item">
-      <a
-        class="nav-link"
-        [class.active]="activeTab === 'overview'"
-        (click)="activeTab = 'overview'"
-        style="cursor: pointer"
-      >
+      <a class="nav-link" [class.active]="activeTab === 'overview'" (click)="activeTab = 'overview'"
+        style="cursor: pointer">
         <i class="fa fa-info-circle me-2"></i>{{ '::Overview' | abpLocalization }}
       </a>
     </li>
     <li class="nav-item">
-      <a
-        class="nav-link"
-        [class.active]="activeTab === 'products'"
-        (click)="activeTab = 'products'"
-        style="cursor: pointer"
-      >
+      <a class="nav-link" [class.active]="activeTab === 'products'" (click)="activeTab = 'products'"
+        style="cursor: pointer">
         <i class="fa fa-boxes-stacked me-2"></i>{{ '::SupplierProducts' | abpLocalization }}
       </a>
     </li>
@@ -85,13 +70,10 @@
                 <div class="text-muted text-uppercase small fw-semibold mb-2">
                   {{ '::OutstandingBalance' | abpLocalization }}
                 </div>
-                <h3
-                  class="fw-bold mb-2"
-                  [ngClass]="{
+                <h3 class="fw-bold mb-2" [ngClass]="{
                     'text-danger': supplier.currentDebt > 0,
                     'text-success': supplier.currentDebt === 0,
-                  }"
-                >
+                  }">
                   {{ supplier.currentDebt | number: '1.0-0' }} ₫
                 </h3>
                 <div class="small" *ngIf="supplier.paymentTermDays > 0">
@@ -207,13 +189,12 @@
               <div class="col-md-6">
                 <span class="ph-field-meta">{{ '::PaymentTerms' | abpLocalization }}</span>
                 <div class="ph-field-value">
-                  <span *ngIf="supplier.paymentTermDays > 0"
-                    >{{ '::Net' | abpLocalization }} {{ supplier.paymentTermDays }}
-                    {{ '::Days' | abpLocalization }}</span
-                  >
+                  <span *ngIf="supplier.paymentTermDays > 0">{{ '::Net' | abpLocalization }} {{ supplier.paymentTermDays
+                    }}
+                    {{ '::Days' | abpLocalization }}</span>
                   <span *ngIf="supplier.paymentTermDays === 0">{{
                     '::Immediate' | abpLocalization
-                  }}</span>
+                    }}</span>
                 </div>
               </div>
               <div class="col-md-6 text-end">
@@ -223,26 +204,17 @@
                 </div>
                 <div *ngIf="supplier.debtLimit > 0">
                   <div class="progress mb-2" style="height: 6px">
-                    <div
-                      class="progress-bar"
-                      [ngClass]="{
+                    <div class="progress-bar" [ngClass]="{
                         'bg-danger': (supplier.currentDebt / supplier.debtLimit) * 100 > 80,
                         'bg-warning': (supplier.currentDebt / supplier.debtLimit) * 100 > 50,
                         'bg-success': (supplier.currentDebt / supplier.debtLimit) * 100 <= 50,
-                      }"
-                      role="progressbar"
-                      [style.width.%]="(supplier.currentDebt / supplier.debtLimit) * 100"
-                    ></div>
+                      }" role="progressbar" [style.width.%]="(supplier.currentDebt / supplier.debtLimit) * 100"></div>
                   </div>
                   <div class="d-flex justify-content-between small">
-                    <span
-                      >{{ '::Used' | abpLocalization }}:
-                      {{ supplier.currentDebt | number: '1.0-0' }} ₫</span
-                    >
-                    <span
-                      >{{ '::Remaining' | abpLocalization }}:
-                      {{ supplier.debtLimit - supplier.currentDebt | number: '1.0-0' }} ₫</span
-                    >
+                    <span>{{ '::Used' | abpLocalization }}:
+                      {{ supplier.currentDebt | number: '1.0-0' }} ₫</span>
+                    <span>{{ '::Remaining' | abpLocalization }}:
+                      {{ supplier.debtLimit - supplier.currentDebt | number: '1.0-0' }} ₫</span>
                   </div>
                 </div>
               </div>
@@ -262,16 +234,16 @@
               <span class="ph-text-muted">{{ '::CreationTime' | abpLocalization }}</span>
               <span class="ph-field-value">{{
                 supplier.creationTime | date: 'HH:mm dd/MM/yyyy'
-              }}</span>
+                }}</span>
             </div>
             <hr class="ph-divider my-1" />
             <div class="d-flex justify-content-between align-items-center">
               <span class="ph-text-muted">{{ '::LastModificationTime' | abpLocalization }}</span>
               <span class="ph-field-value">{{
                 supplier.lastModificationTime
-                  ? (supplier.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
-                  : 'N/A'
-              }}</span>
+                ? (supplier.lastModificationTime | date: 'HH:mm dd/MM/yyyy')
+                : 'N/A'
+                }}</span>
             </div>
           </div>
         </div>
@@ -313,21 +285,14 @@
                     <td (click)="openConditionsDrawer(product)">{{ product.defaultUnitName }}</td>
                     <td>{{ product.leadTimeDays || 'N/A' }}</td>
                     <td>
-                      <i
-                        class="fa"
-                        [ngClass]="
+                      <i class="fa" [ngClass]="
                           product.isPreferred ? 'fa-star text-warning' : 'fa-star-o text-muted'
-                        "
-                      ></i>
+                        "></i>
                     </td>
                     <td>
                       <div class="form-check form-switch d-flex justify-content-start">
-                        <input
-                          class="form-check-input"
-                          type="checkbox"
-                          [checked]="product.isActive"
-                          (click)="toggleProductActive(product, $event)"
-                        />
+                        <input class="form-check-input" type="checkbox" [checked]="product.isActive"
+                          (click)="toggleProductActive(product, $event)" />
                       </div>
                     </td>
                     <td class="text-end">
@@ -337,16 +302,13 @@
                         </button>
                         <div ngbDropdownMenu class="dropdown-menu-end">
                           <button ngbDropdownItem (click)="openConditionsDrawer(product)">
-                            <i class="fa fa-tags me-2 text-info"></i
-                            >{{ '::ManageConditions' | abpLocalization }}
+                            <i class="fa fa-tags me-2 text-info"></i>{{ '::ManageConditions' | abpLocalization }}
                           </button>
                           <button ngbDropdownItem (click)="openEditProductDrawer(product)">
-                            <i class="fa fa-pencil me-2 text-primary"></i
-                            >{{ '::Edit' | abpLocalization }}
+                            <i class="fa fa-pencil me-2 text-primary"></i>{{ '::Edit' | abpLocalization }}
                           </button>
                           <button ngbDropdownItem (click)="deleteProduct(product.productId)">
-                            <i class="fa fa-trash me-2 text-danger"></i
-                            >{{ '::Delete' | abpLocalization }}
+                            <i class="fa fa-trash me-2 text-danger"></i>{{ '::Delete' | abpLocalization }}
                           </button>
                         </div>
                       </div>
@@ -368,24 +330,15 @@
 </div>
 
 <!-- Product Drawer -->
-<app-drawer
-  [isOpen]="isProductDrawerOpen"
-  [title]="(isEditingProduct ? '::EditProduct' : '::AddProduct') | abpLocalization"
-  [width]="'md'"
-  [saveDisabled]="productForm.invalid"
-  (close)="isProductDrawerOpen = false"
-  (save)="saveProduct()"
->
+<app-drawer [isOpen]="isProductDrawerOpen"
+  [title]="(isEditingProduct ? '::EditProduct' : '::AddProduct') | abpLocalization" [width]="'md'"
+  [saveDisabled]="productForm.invalid" (close)="isProductDrawerOpen = false" (save)="saveProduct()">
   <form [formGroup]="productForm">
     <div class="mb-3">
       <label class="ph-label ph-label--required">{{ '::Product' | abpLocalization }}</label>
-      <app-dropdown-search
-        formControlName="productId"
-        [items]="getAvailableMedicines()"
-        [placeholder]="'::Select' | abpLocalization"
-        [searchPlaceholder]="'::Search' | abpLocalization"
-        [disabled]="isEditingProduct"
-      >
+      <app-dropdown-search formControlName="productId" [items]="getAvailableMedicines()"
+        [placeholder]="'::Select' | abpLocalization" [searchPlaceholder]="'::Search' | abpLocalization"
+        [disabled]="isEditingProduct">
       </app-dropdown-search>
       <div *ngIf="isEditingProduct" class="ph-hint-warning mt-1">
         <i class="fa fa-lock me-1"></i> {{ '::CannotChangeProductAfterCreation' | abpLocalization }}
@@ -405,51 +358,39 @@
         <label class="ph-label">{{ '::LeadTimeDays' | abpLocalization }}</label>
         <input type="number" class="form-control" formControlName="leadTimeDays" />
       </div>
-      <div class="col-6">
-        <div
-          class="border rounded p-2 d-flex justify-content-between align-items-center h-100 bg-light-subtle"
-        >
-          <div>
-            <label class="fw-bold mb-0 text-dark" style="font-size: 0.85rem">{{
-              '::IsPreferred' | abpLocalization
-            }}</label>
-            <small class="d-block text-muted" style="font-size: 0.7rem">{{
-              '::PreferredSupplierHint' | abpLocalization
-            }}</small>
-          </div>
-          <div class="form-check form-switch m-0">
-            <input
-              class="form-check-input"
-              type="checkbox"
-              formControlName="isPreferred"
-              style="width: 2em; height: 1.2em"
-            />
-          </div>
-        </div>
-      </div>
     </div>
-
     <div class="mb-3">
       <label class="ph-label">{{ '::Note' | abpLocalization }}</label>
       <textarea class="form-control" formControlName="note" rows="2"></textarea>
+    </div>
+    <div class="row mb-3">
+      <div class="col-12">
+        <div class="border rounded p-2 d-flex justify-content-between align-items-center h-100 bg-light-subtle">
+          <div>
+            <label class="fw-bold mb-0 text-dark" style="font-size: 0.85rem">{{
+              '::IsPreferred' | abpLocalization
+              }}</label>
+            <small class="d-block text-muted" style="font-size: 0.7rem">{{
+              '::PreferredSupplierHint' | abpLocalization
+              }}</small>
+          </div>
+          <div class="form-check form-switch m-0">
+            <input class="form-check-input" type="checkbox" formControlName="isPreferred"
+              style="width: 2em; height: 1.2em" />
+          </div>
+        </div>
+      </div>
     </div>
   </form>
 </app-drawer>
 
 <!-- Conditions (Bottom) Drawer -->
-<app-drawer
-  [isOpen]="isConditionsDrawerOpen"
-  [title]="
+<app-drawer [isOpen]="isConditionsDrawerOpen" [title]="
     selectedProduct
       ? ('::ManageConditionsFor' | abpLocalization) + ' ' + selectedProduct.productName
       : ('::ManageConditions' | abpLocalization)
-  "
-  [position]="'bottom'"
-  [height]="'lg'"
-  [saveDisabled]="conditionsForm.invalid"
-  (close)="isConditionsDrawerOpen = false"
-  (save)="saveConditions()"
->
+  " [position]="'bottom'" [height]="'lg'" [saveDisabled]="conditionsForm.invalid"
+  (close)="isConditionsDrawerOpen = false" (save)="saveConditions()">
   <form [formGroup]="conditionsForm">
     <div class="d-flex justify-content-between align-items-center mb-3">
       <div>
@@ -481,11 +422,7 @@
         <tbody formArrayName="conditions">
           <tr *ngFor="let cond of conditionsFormArray.controls; let i = index" [formGroupName]="i">
             <td>
-              <select
-                class="form-select form-select-sm"
-                formControlName="unitId"
-                (change)="onUnitChange(i)"
-              >
+              <select class="form-select form-select-sm" formControlName="unitId" (change)="onUnitChange(i)">
                 <option [ngValue]="null">{{ '::Select' | abpLocalization }}</option>
                 <option *ngFor="let unit of allowedUnits" [ngValue]="unit.id">
                   {{ unit.name }}
@@ -494,62 +431,38 @@
               </select>
             </td>
             <td>
-              <input
-                type="number"
-                class="form-control form-control-sm"
-                formControlName="conversionFactor"
-                step="0.0001"
-                min="0.0001"
-              />
+              <input type="number" class="form-control form-control-sm" formControlName="conversionFactor" step="0.0001"
+                min="0.0001" />
             </td>
             <td>
               <div class="input-group input-group-sm">
-                <input
-                  type="text"
-                  class="form-control"
+                <input type="text" class="form-control"
                   [class.is-invalid]="cond.get('standardPrice')?.errors?.priceNotDescending"
-                  formControlName="standardPrice"
-                  appCurrencyFormat
-                />
+                  formControlName="standardPrice" appCurrencyFormat />
                 <span class="input-group-text">₫</span>
               </div>
-              <div
-                *ngIf="cond.get('standardPrice')?.errors?.priceNotDescending"
-                class="text-danger small mt-1"
-                style="font-size: 10px; line-height: 1.2"
-              >
+              <div *ngIf="cond.get('standardPrice')?.errors?.priceNotDescending" class="text-danger small mt-1"
+                style="font-size: 10px; line-height: 1.2">
                 <i class="fa fa-exclamation-circle me-1"></i> Giá thỏa thuận phải nhỏ hơn hoặc bằng
                 giá của mốc số lượng nhỏ hơn.
               </div>
             </td>
             <td>
-              <input
-                type="number"
-                class="form-control form-control-sm"
+              <input type="number" class="form-control form-control-sm"
                 [class.is-invalid]="cond.get('minOrderQuantity')?.errors?.duplicateMoq"
-                formControlName="minOrderQuantity"
-                min="0"
-              />
-              <div
-                *ngIf="cond.get('minOrderQuantity')?.errors?.duplicateMoq"
-                class="text-danger small mt-1"
-                style="font-size: 10px; line-height: 1.2"
-              >
+                formControlName="minOrderQuantity" min="0" />
+              <div *ngIf="cond.get('minOrderQuantity')?.errors?.duplicateMoq" class="text-danger small mt-1"
+                style="font-size: 10px; line-height: 1.2">
                 <i class="fa fa-exclamation-circle me-1"></i> Trùng mốc MOQ.
               </div>
             </td>
             <td class="text-center">
-              <button
-                type="button"
-                class="btn btn-sm btn-link text-danger p-0"
-                (click)="removeCondition(i)"
-                [disabled]="isDefaultUnit(cond.get('unitId')?.value)"
-                [title]="
+              <button type="button" class="btn btn-sm btn-link text-danger p-0" (click)="removeCondition(i)"
+                [disabled]="isDefaultUnit(cond.get('unitId')?.value)" [title]="
                   isDefaultUnit(cond.get('unitId')?.value)
                     ? ('::CannotDeleteDefaultUnitCondition' | abpLocalization)
                     : ''
-                "
-              >
+                ">
                 <i class="fa fa-trash"></i>
               </button>
             </td>

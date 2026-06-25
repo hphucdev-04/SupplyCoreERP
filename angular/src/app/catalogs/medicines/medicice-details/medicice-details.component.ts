@@ -88,6 +88,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
   //Edit price state
   isEditingPrice = false;
   editingPriceId: string | null = null;
+  priceBelowCostWarning: string | null = null;
 
   //Enum
   UsageRoute = UsageRoute;
@@ -328,6 +329,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
   openPriceDrawer() {
     this.isEditingPrice = false;
     this.editingPriceId = null;
+    this.priceBelowCostWarning = null;
     this.priceForm.reset({ price: 0, minQuantity: 1 });
 
     this.priceForm.get('priceListId')?.enable();
@@ -339,6 +341,7 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
   editPrice(price: ProductPriceDto) {
     this.isEditingPrice = true;
     this.editingPriceId = price.id;
+    this.priceBelowCostWarning = null;
 
     this.priceForm.patchValue({
       priceListId: price.priceListId,
@@ -353,22 +356,35 @@ export class MedicineDetailComponent implements OnInit, OnDestroy {
     this.isPriceDrawerOpen = true;
   }
 
+  closePriceDrawer() {
+    this.isPriceDrawerOpen = false;
+    this.priceBelowCostWarning = null;
+  }
+
   savePrice() {
     if (this.priceForm.invalid) return;
     const payload = this.priceForm.getRawValue() as CreateUpdateProductPriceDto;
 
     if (this.isEditingPrice) {
       // Update
-      this.priceService.update(this.editingPriceId!, payload).subscribe(() => {
-        this.isPriceDrawerOpen = false;
+      this.priceService.update(this.editingPriceId!, payload).subscribe(res => {
+        this.priceBelowCostWarning = res.belowCostWarning ?? null;
         this.loadPrices();
+
+        if (!this.priceBelowCostWarning) {
+          this.closePriceDrawer();
+        }
       });
     } else {
       // Create (Cần thêm ProductId vào DTO)
       const createDto = { ...payload, productId: this.id };
-      this.priceService.create(createDto).subscribe(() => {
-        this.isPriceDrawerOpen = false;
+      this.priceService.create(createDto).subscribe(res => {
+        this.priceBelowCostWarning = res.belowCostWarning ?? null;
         this.loadPrices();
+
+        if (!this.priceBelowCostWarning) {
+          this.closePriceDrawer();
+        }
       });
     }
   }

@@ -42,7 +42,7 @@
       <button *ngIf="isEditable()" class="btn ph-btn-outline" (click)="openEditDrawer()">
         <i class="fa fa-pencil me-1"></i> {{ '::Edit' | abpLocalization }}
       </button>
-      <button class="btn ph-btn-secondary">
+      <button class="btn ph-btn-secondary" (click)="printDocument()">
         <i class="fa fa-print me-1"></i> {{ '::Print' | abpLocalization }}
       </button>
     </div>
@@ -530,6 +530,7 @@
             class="form-control form-control-sm"
             formControlName="quantity"
             (input)="updateQuantityPreview()"
+            abpCurrencyFormat
           />
         </div>
       </div>
@@ -538,15 +539,24 @@
         <label class="ph-label">{{ '::UnitPrice' | abpLocalization }}</label>
         <div class="input-group">
           <input
-            type="number"
+            type="text"
             class="form-control form-control-sm text-end"
             formControlName="unitPrice"
             min="0"
-            placeholder="De trong de tu lay bang gia"
+            appCurrencyFormat 
           />
           <span class="input-group-text">₫</span>
         </div>
         <div class="ph-hint-msg mt-1">De trong de he thong tu lay gia tu bang gia.</div>
+        <div class="ph-hint-msg mt-1" *ngIf="costReference?.lowestPurchasePrice !== null && costReference?.lowestPurchasePrice !== undefined">
+          Gia nhap chuan thap nhat tham chieu:
+          <strong>{{ costReference?.lowestPurchasePrice | number: '1.0-0' }} ₫</strong>
+        </div>
+      </div>
+
+      <div class="ph-callout ph-callout--warning mb-3" *ngIf="belowCostWarning">
+        <i class="fa fa-exclamation-triangle ph-callout__icon"></i>
+        <div>{{ belowCostWarning }}</div>
       </div>
 
       <div class="mb-3" *ngIf="referencePrices.length > 0">

@@ -718,7 +718,7 @@
   [title]="(isEditingPrice ? '::EditPrice' : '::AddPrice') | abpLocalization"
   [width]="'md'"
   [saveDisabled]="priceForm.invalid"
-  (close)="isPriceDrawerOpen = false"
+  (close)="closePriceDrawer()"
   (save)="savePrice()"
 >
   <form [formGroup]="priceForm">
@@ -764,6 +764,11 @@
         <label class="ph-label ph-label--required">{{ '::MinQuantity' | abpLocalization }}</label>
         <input type="number" class="form-control" formControlName="minQuantity" placeholder="1" />
       </div>
+    </div>
+
+    <div *ngIf="priceBelowCostWarning" class="ph-hint-warning">
+      <i class="fa fa-triangle-exclamation me-1"></i>
+      {{ priceBelowCostWarning }}
     </div>
   </form>
 </app-drawer>

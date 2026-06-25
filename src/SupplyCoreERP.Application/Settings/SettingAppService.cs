@@ -3,6 +3,7 @@ using System.Text.Encodings.Web;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using SupplyCoreERP.Mcp;
 using SupplyCoreERP.Settings.Dtos;
 using Volo.Abp;
 using Volo.Abp.SettingManagement;
@@ -16,6 +17,7 @@ public class SettingAppService : SupplyCore, ISettingAppService
     // Dependencies
     private readonly ISettingProvider _settingProvider;
     private readonly ISettingManager _settingManager;
+    private readonly IMcpClientService _mcpClientService;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -26,10 +28,12 @@ public class SettingAppService : SupplyCore, ISettingAppService
     // Constructor injection
     public SettingAppService(
         ISettingProvider settingProvider,
-        ISettingManager settingManager)
+        ISettingManager settingManager,
+        IMcpClientService mcpClientService)
     {
         _settingProvider = settingProvider;
         _settingManager = settingManager;
+        _mcpClientService = mcpClientService;
     }
 
 
@@ -110,11 +114,13 @@ public class SettingAppService : SupplyCore, ISettingAppService
     public async Task UpdateMcpSettingsAsync(McpSettingsDto input)
     {
         await _settingManager.SetGlobalAsync(SupplyCoreERPSettings.McpServerBaseUrl, input.BaseUrl ?? string.Empty);
+        await _mcpClientService.ResetRuntimeStateAsync();
     }
 
     public async Task ResetMcpSettingsAsync()
     {
         await _settingManager.SetGlobalAsync(SupplyCoreERPSettings.McpServerBaseUrl, null);
+        await _mcpClientService.ResetRuntimeStateAsync();
     }
 
     #endregion

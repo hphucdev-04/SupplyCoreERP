@@ -19,6 +19,8 @@ import { SalesRecallStatus } from 'src/app/proxy/enums/orders/sales-recall-statu
 import { RecallLevel } from 'src/app/proxy/enums/orders/recall-level.enum';
 import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
+import { PrintDocumentService } from 'src/app/shared/services/print-document.service';
+import { DocumentPrintModel } from 'src/app/shared/models/document-print.model';
 
 interface SelectableTrace extends CustomerRecallTraceDto {
   selected: boolean;
@@ -74,6 +76,7 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     public router: Router,
+    private printDocumentService: PrintDocumentService,
   ) {}
 
   ngOnInit(): void {
@@ -94,6 +97,11 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.router.navigate(['/sales/sales-recalls']);
+  }
+
+  printDocument() {
+    if (!this.recallDto) return;
+    this.printDocumentService.print(this.buildPrintModel());
   }
 
   //Data Loading
@@ -361,5 +369,115 @@ export class SalesRecallDetailsComponent implements OnInit, OnDestroy {
       [RecallLevel.Level3]: 'fa-info-circle',
     };
     return map[level] ?? 'fa-circle';
+  }
+
+  private buildPrintModel(): DocumentPrintModel {
+    return {
+      title: 'Biên bản thu hồi hàng bán',
+      documentNumber: this.recallDto.code ?? '',
+      printedAt: this.formatPrintDateTime(new Date().toISOString()),
+      sections: [
+        {
+          title: 'Thông tin chung',
+          columns: 2,
+          fields: [
+            { label: 'Số quyết định', value: this.recallDto.recallDecisionNumber ?? '' },
+            { label: 'Trạng thái', value: this.getStatusLabel(this.recallDto.status) },
+            { label: 'Sản phẩm', value: this.recallDto.productName ?? '' },
+            { label: 'Mã sản phẩm', value: this.recallDto.productCode ?? '' },
+            { label: 'Lô hàng', value: this.recallDto.batchNumber ?? '' },
+            { label: 'Kho', value: this.recallDto.warehouseName ?? '' },
+            { label: 'Ngày thu hồi', value: this.formatPrintDate(this.recallDto.recallDate) },
+            { label: 'Hạn xử lý', value: this.formatPrintDate(this.recallDto.deadline) },
+            { label: 'Mức thu hồi', value: this.getLevelLabel(this.recallDto.level) },
+          ],
+        },
+      ],
+      columns: [
+        { key: 'index', header: 'STT', align: 'center', width: '44px' },
+        { key: 'customerCode', header: 'Mã KH', width: '90px' },
+        { key: 'customerName', header: 'Khách hàng' },
+        { key: 'salesOrderCode', header: 'Đơn bán', width: '92px' },
+        { key: 'unitName', header: 'ĐVT', align: 'center', width: '72px' },
+        { key: 'quantity', header: 'SL thu hồi', align: 'right', width: '84px' },
+        { key: 'originalUnitPrice', header: 'Đơn giá', align: 'right', width: '96px' },
+        { key: 'taxRate', header: 'Thuế %', align: 'right', width: '72px' },
+        { key: 'finalPrice', header: 'Thành tiền', align: 'right', width: '110px' },
+      ],
+      rows: (this.recallDto.lines ?? []).map((line, index) => ({
+        index: index + 1,
+        customerCode: line.customerCode ?? '',
+        customerName: line.customerName ?? '',
+        salesOrderCode: line.salesOrderCode ?? '',
+        unitName: line.unitName ?? '',
+        quantity: this.formatPrintNumber(line.quantity),
+        originalUnitPrice: this.formatPrintCurrency(line.originalUnitPrice),
+        taxRate: this.formatPrintPercent(line.taxRate),
+        finalPrice: this.formatPrintCurrency(line.finalPrice),
+      })),
+      summary: [{ label: 'Tổng giá trị thu hồi', value: this.formatPrintCurrency(this.recallDto.totalAmount) }],
+      note: this.recallDto.note ?? '',
+      signatures: [{ label: 'Người lập' }, { label: 'QA/RA' }, { label: 'Khách hàng' }],
+    };
+  }
+
+  private getStatusLabel(status?: SalesRecallStatus): string {
+    switch (status) {
+      case SalesRecallStatus.Draft:
+        return 'Nháp';
+      case SalesRecallStatus.PendingApproval:
+        return 'Chờ duyệt';
+      case SalesRecallStatus.Approved:
+        return 'Đã duyệt';
+      case SalesRecallStatus.Recalling:
+        return 'Đang thu hồi';
+      case SalesRecallStatus.Completed:
+        return 'Hoàn thành';
+      case SalesRecallStatus.Rejected:
+        return 'Từ chối';
+      default:
+        return '';
+    }
+  }
+
+  private getLevelLabel(level?: RecallLevel): string {
+    switch (level) {
+      case RecallLevel.Level1:
+        return 'Mức 1';
+      case RecallLevel.Level2:
+        return 'Mức 2';
+      case RecallLevel.Level3:
+        return 'Mức 3';
+      default:
+        return '';
+    }
+  }
+
+  private formatPrintDate(value?: string | null): string {
+    if (!value) return '';
+    return new Intl.DateTimeFormat('vi-VN').format(new Date(value));
+  }
+
+  private formatPrintDateTime(value?: string | null): string {
+    if (!value) return '';
+    return new Intl.DateTimeFormat('vi-VN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(value));
+  }
+
+  private formatPrintCurrency(value?: number | null): string {
+    return new Intl.NumberFormat('vi-VN').format(value ?? 0) + ' đ';
+  }
+
+  private formatPrintNumber(value?: number | null): string {
+    return new Intl.NumberFormat('vi-VN').format(value ?? 0);
+  }
+
+  private formatPrintPercent(value?: number | null): string {
+    return `${value ?? 0}%`;
   }
 }
