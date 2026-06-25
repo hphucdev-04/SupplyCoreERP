@@ -34,8 +34,10 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
         string geminiModel = llmSettings.Model ?? "gemini-2.5-flash";
 
         _logger.LogInformation(
-            "GeminiProvider: Bat dau goi Gemini. Model={Model}, HasApiKey={HasApiKey}, HistoryCount={HistoryCount}, ToolCount={ToolCount}, ResourceCount={ResourceCount}, HasSystemInstruction={HasSystemInstruction}.",
+            "GeminiProvider: Bat dau goi Gemini. Model={Model}, ModelSource={ModelSource}, ApiKeySource={ApiKeySource}, HasApiKey={HasApiKey}, HistoryCount={HistoryCount}, ToolCount={ToolCount}, ResourceCount={ResourceCount}, HasSystemInstruction={HasSystemInstruction}.",
             geminiModel,
+            llmSettings.ModelSource,
+            llmSettings.ApiKeySource,
             !string.IsNullOrWhiteSpace(geminiApiKey),
             chatHistory.Count,
             tools.Count,
@@ -44,7 +46,7 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
 
         if (string.IsNullOrEmpty(geminiApiKey))
         {
-            _logger.LogError("GeminiProvider: Thieu API key cho LLM provider trong system settings.");
+            _logger.LogError("GeminiProvider: Thieu API key cho LLM provider. ApiKeySource={ApiKeySource}.", llmSettings.ApiKeySource);
             throw new Exception("Chưa cấu hình API Key cho LLM Provider trong phần cài đặt hệ thống!");
         }
 

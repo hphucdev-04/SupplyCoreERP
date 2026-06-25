@@ -835,13 +835,20 @@
             <label class="form-label small fw-semibold text-white">Ô hàng đích <span class="text-danger">*</span></label>
             <app-dropdown-search
               [(ngModel)]="targetBinId"
-              [items]="getFilteredTargetBins(selectedBin)"
+              [items]="filteredTargetBins"
               [labelKey]="'displayLabel'"
               [placeholder]="'— Chọn ô hàng đích —'"
             >
             </app-dropdown-search>
             <div class="form-text small text-muted mt-1">
               Chỉ hiển thị các ô hàng thuộc phân khu hợp lệ
+            </div>
+            <div class="form-text small text-info mt-1" *ngIf="selectedBalanceStorageCondition === undefined">
+              Đang tải điều kiện bảo quản của thuốc...
+            </div>
+            <div class="form-text text-danger txt-sm mt-1" *ngIf="selectedBalanceStorageCondition !== undefined && filteredTargetBins.length === 0">
+              <strong class="text-uppercase">{{ '::NoBinAvailable' | abpLocalization }}</strong>:
+              {{ '::NoBinMatchConditionWarning' | abpLocalization }}
             </div>
           </div>
         </div>
@@ -853,7 +860,7 @@
           <button
             type="button"
             class="btn btn-sm btn-primary"
-            [disabled]="isTransferring || !targetBinId || transferQuantity <= 0 || transferQuantity > (selectedBalance.availableQuantity || 0)"
+            [disabled]="isTransferring || selectedBalanceStorageCondition === undefined || !targetBinId || transferQuantity <= 0 || transferQuantity > (selectedBalance.availableQuantity || 0)"
             (click)="confirmTransfer()"
           >
             <i class="fas fa-spinner fa-spin me-1" *ngIf="isTransferring"></i>

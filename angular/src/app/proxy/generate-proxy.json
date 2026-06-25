@@ -8047,6 +8047,31 @@
                   }
                 },
                 {
+                  "name": "GetCostReferenceAsync",
+                  "parametersOnMethod": [
+                    {
+                      "name": "productId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    },
+                    {
+                      "name": "unitId",
+                      "typeAsString": "System.Guid, System.Private.CoreLib",
+                      "type": "System.Guid",
+                      "typeSimple": "string",
+                      "isOptional": false,
+                      "defaultValue": null
+                    }
+                  ],
+                  "returnValue": {
+                    "type": "SupplyCoreERP.Prices.Dtos.ProductCostReferenceDto",
+                    "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductCostReferenceDto"
+                  }
+                },
+                {
                   "name": "CreateAsync",
                   "parametersOnMethod": [
                     {
@@ -8157,6 +8182,63 @@
               "returnValue": {
                 "type": "System.Collections.Generic.List<SupplyCoreERP.Prices.Dtos.ProductPriceDto>",
                 "typeSimple": "[SupplyCoreERP.Prices.Dtos.ProductPriceDto]"
+              },
+              "allowAnonymous": null,
+              "implementFrom": "SupplyCoreERP.Prices.IPriceAppService"
+            },
+            "GetCostReferenceAsyncByProductIdAndUnitId": {
+              "uniqueName": "GetCostReferenceAsyncByProductIdAndUnitId",
+              "name": "GetCostReferenceAsync",
+              "httpMethod": "GET",
+              "url": "api/app/price/cost-reference",
+              "supportedVersions": [],
+              "parametersOnMethod": [
+                {
+                  "name": "productId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                },
+                {
+                  "name": "unitId",
+                  "typeAsString": "System.Guid, System.Private.CoreLib",
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null
+                }
+              ],
+              "parameters": [
+                {
+                  "nameOnMethod": "productId",
+                  "name": "productId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                },
+                {
+                  "nameOnMethod": "unitId",
+                  "name": "unitId",
+                  "jsonName": null,
+                  "type": "System.Guid",
+                  "typeSimple": "string",
+                  "isOptional": false,
+                  "defaultValue": null,
+                  "constraintTypes": null,
+                  "bindingSourceId": "ModelBinding",
+                  "descriptorName": ""
+                }
+              ],
+              "returnValue": {
+                "type": "SupplyCoreERP.Prices.Dtos.ProductCostReferenceDto",
+                "typeSimple": "SupplyCoreERP.Prices.Dtos.ProductCostReferenceDto"
               },
               "allowAnonymous": null,
               "implementFrom": "SupplyCoreERP.Prices.IPriceAppService"
@@ -25645,6 +25727,51 @@
         }
       ]
     },
+    "SupplyCoreERP.Prices.Dtos.ProductCostReferenceDto": {
+      "baseType": null,
+      "isEnum": false,
+      "enumNames": null,
+      "enumValues": null,
+      "genericArguments": null,
+      "properties": [
+        {
+          "name": "ProductId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "UnitId",
+          "jsonName": null,
+          "type": "System.Guid",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "LowestPurchasePrice",
+          "jsonName": null,
+          "type": "System.Decimal?",
+          "typeSimple": "number?",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        }
+      ]
+    },
     "SupplyCoreERP.Prices.Dtos.ProductPriceDto": {
       "baseType": "Volo.Abp.Application.Dtos.EntityDto<System.Guid>",
       "isEnum": false,
@@ -30832,6 +30959,30 @@
         },
         {
           "name": "ApiKey",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ModelSource",
+          "jsonName": null,
+          "type": "System.String",
+          "typeSimple": "string",
+          "isRequired": false,
+          "minLength": null,
+          "maxLength": null,
+          "minimum": null,
+          "maximum": null,
+          "regex": null
+        },
+        {
+          "name": "ApiKeySource",
           "jsonName": null,
           "type": "System.String",
           "typeSimple": "string",

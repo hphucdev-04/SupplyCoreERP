@@ -249,6 +249,34 @@ public class WarehouseManager : DomainService
         }
     }
 
+    public void ValidateTransferStorageCompatibility(Bin bin, StorageCondition? productCondition)
+    {
+        ValidateStorageCompatibility(bin, productCondition);
+
+        if (!productCondition.HasValue)
+        {
+            return;
+        }
+
+        if (bin.Zone == null)
+        {
+            throw new BusinessException("SupplyCoreERP:InvalidBin", "Lỗi hệ thống: Không tải được thông tin Zone!");
+        }
+
+        if (bin.Zone.StorageCondition == StorageCondition.Other)
+        {
+            return;
+        }
+
+        if (bin.Zone.StorageCondition != productCondition.Value)
+        {
+            throw new BusinessException(
+                "SupplyCoreERP:InvalidBin",
+                "Sai điều kiện bảo quản: Không thể chuyển sản phẩm có điều kiện '" + productCondition.Value
+                + "' vào phân khu có điều kiện '" + bin.Zone.StorageCondition + "'!");
+        }
+    }
+
     public async Task TransferBinAsync(
         Guid warehouseId,
         Guid sourceBinId,
@@ -301,7 +329,7 @@ public class WarehouseManager : DomainService
         }
 
         Product product = await _productRepo.GetAsync(productId);
-        ValidateStorageCompatibility(targetBin, product.RequiredStorageCondition);
+        ValidateTransferStorageCompatibility(targetBin, product.RequiredStorageCondition);
 
         int usedSKUCount = await _balanceRepo.CountAsync(b => b.BinBalances.Any(bb => bb.BinId == targetBinId && bb.Quantity > 0));
         bool isNewSKU = !await _balanceRepo.AnyAsync(b => b.ProductId == productId && b.BinBalances.Any(bb => bb.BinId == targetBinId && bb.Quantity > 0));

@@ -9,17 +9,17 @@ export interface CreateUpdateProductPriceDto {
   minQuantity?: number;
 }
 
-export interface ProductCostReferenceDto {
-  productId?: string;
-  unitId?: string;
-  lowestPurchasePrice?: number;
-}
-
 export interface PriceListDto extends EntityDto<string> {
   code?: string;
   name?: string;
   currency?: CurrencyType;
   isBase?: boolean;
+}
+
+export interface ProductCostReferenceDto {
+  productId?: string;
+  unitId?: string;
+  lowestPurchasePrice?: number;
 }
 
 export interface ProductPriceDto extends EntityDto<string> {

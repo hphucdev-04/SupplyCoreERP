@@ -29,7 +29,7 @@ public class SupplyCoreERPSettingDefinitionProvider : SettingDefinitionProvider
 
         context.Add(new SettingDefinition(
             SupplyCoreERPSettings.McpServerBaseUrl,
-            defaultValue: "http://localhost:3000",
+            defaultValue: "https://rxlogistics-mcp.up.railway.app/",
             isVisibleToClients: false
         ));
 

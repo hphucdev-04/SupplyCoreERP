@@ -26,13 +26,13 @@ public class UnitConversionManager_Unit_Tests
         Medicine product = CreateSampleProduct();
 
         // Act & Assert
-        // Đơn vị gốc (PILL) -> 1
+        // Đơn vị gốc = 1
         _unitConversionManager.GetConversionFactor(product, _baseUnitId).ShouldBe(1);
 
-        // Đơn vị phụ cấp 1 (BLISTER: 1 vỉ = 10 viên) -> 10
+        // Đơn vị phụ cấp 1 = 10
         _unitConversionManager.GetConversionFactor(product, _blisterUnitId).ShouldBe(10);
 
-        // Đơn vị phụ cấp 2 (BOX: 1 hộp = 10 vỉ = 100 viên) -> 100
+        // Đơn vị phụ cấp 2 = 100
         _unitConversionManager.GetConversionFactor(product, _boxUnitId).ShouldBe(100);
     }
 
@@ -170,10 +170,10 @@ public class UnitConversionManager_Unit_Tests
             baseUnitVolume
         );
 
-        // Thêm đơn vị phụ cấp 1 (Vỉ): Level = 1, ConversionFactor = 10 (1 vỉ = 10 viên), Volume = 0 (tự động tính theo tỷ lệ)
+        // Thêm đơn vị phụ cấp 1 (Vỉ): Level = 1, ConversionFactor = 10 (1 vỉ = 10 viên), Volume = 0 
         product.AddUnit(Guid.NewGuid(), _blisterUnitId, 10, 1, 0);
 
-        // Thêm đơn vị phụ cấp 2 (Hộp): Level = 2, ConversionFactor = 10 (1 hộp = 10 vỉ = 100 viên), Volume = 8.0 (cấu hình thể tích riêng)
+        // Thêm đơn vị phụ cấp 2 (Hộp): Level = 2, ConversionFactor = 10 (1 hộp = 10 vỉ = 100 viên), Volume = 8.0 
         product.AddUnit(Guid.NewGuid(), _boxUnitId, 10, 2, 8.0m);
 
         return product;

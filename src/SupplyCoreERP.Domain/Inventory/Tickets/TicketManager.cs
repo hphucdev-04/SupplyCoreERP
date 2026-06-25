@@ -13,6 +13,7 @@ using SupplyCoreERP.Procurement.PurchaseReturns;
 using SupplyCoreERP.Sales.Orders;
 using SupplyCoreERP.Sales.SalesRecalls;
 using Volo.Abp;
+using Volo.Abp.Domain.Entities;
 using Volo.Abp.Domain.Repositories;
 using Volo.Abp.Domain.Services;
 
@@ -540,7 +541,7 @@ public class TicketManager : DomainService, ITicketManager
         Product product = await AsyncExecuter.FirstOrDefaultAsync(productQuery, p => p.Id == line.ProductId);
         if (product == null)
         {
-            throw new Volo.Abp.Domain.Entities.EntityNotFoundException(typeof(Product), line.ProductId);
+            throw new EntityNotFoundException(typeof(Product), line.ProductId);
         }
 
         decimal requiredBaseQuantity = _unitConversionManager.ConvertToBaseQuantity(product, line.UnitId, line.Quantity);

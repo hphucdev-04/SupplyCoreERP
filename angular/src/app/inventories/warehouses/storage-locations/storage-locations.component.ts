@@ -22,6 +22,7 @@ import { DrawerComponent } from 'src/app/shared/components/drawer-component/draw
 import { DropdownSearchComponent } from 'src/app/shared/components/dropdownsearch-component/dropdown-search.component';
 import { InventoryBalanceService } from 'src/app/proxy/balances';
 import { InventoryBalanceDto } from 'src/app/proxy/balances/dtos/models';
+import { MedicineService } from 'src/app/proxy/medicines';
 
 type ResizeHandle = 'n' | 's' | 'e' | 'w' | 'nw' | 'ne' | 'sw' | 'se';
 
@@ -59,9 +60,15 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
   public isLoadingBalances = false;
 
   public selectedBalance: InventoryBalanceDto | null = null;
+  public selectedBalanceStorageCondition: StorageCondition | null | undefined = null;
   public transferQuantity = 0;
   public targetBinId = '';
   public isTransferring = false;
+  private readonly productStorageConditionCache = new Map<string, StorageCondition | null>();
+
+  get filteredTargetBins(): (CanvasBin & { displayLabel: string })[] {
+    return this.selectedBin ? this.getFilteredTargetBins(this.selectedBin) : [];
+  }
 
   // ═══════════════════════════════════════════════════════════════════
   // ROOT-CAUSE FIX: Tách drag positions ra Map riêng.
@@ -144,6 +151,7 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     private routesService: RoutesService,
     private warehouseService: WarehouseService,
     private balanceService: InventoryBalanceService,
+    private medicineService: MedicineService,
     private confirmation: ConfirmationService,
     private fb: FormBuilder,
     private cdr: ChangeDetectorRef,
@@ -1237,6 +1245,24 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
       }
 
       return false;
+    }).filter(targetBin => {
+      if (!this.selectedBalance?.productId) {
+        return true;
+      }
+
+      if (this.selectedBalanceStorageCondition === undefined) {
+        return false;
+      }
+
+      if (this.selectedBalanceStorageCondition === null) {
+        return true;
+      }
+
+      const targetZone = this.zones.find(z => z.id === targetBin.zoneId);
+      if (!targetZone) return false;
+
+      return targetZone.storageCondition === StorageCondition.Other
+        || targetZone.storageCondition === this.selectedBalanceStorageCondition;
     }).map(tb => ({
       ...tb,
       displayLabel: this.getBinDisplayLabel(tb)
@@ -1252,14 +1278,50 @@ export class StorageLocationsComponent implements OnInit, OnDestroy, AfterViewIn
     this.selectedBalance = balance;
     this.transferQuantity = balance.availableQuantity || 0;
     this.targetBinId = '';
+    this.selectedBalanceStorageCondition = this.productStorageConditionCache.get(balance.productId || '') ?? undefined;
+    this.loadStorageConditionForTransfer(balance.productId);
     this.cdr.markForCheck();
   }
 
   cancelTransfer() {
     this.selectedBalance = null;
+    this.selectedBalanceStorageCondition = null;
     this.transferQuantity = 0;
     this.targetBinId = '';
     this.cdr.markForCheck();
+  }
+
+  private loadStorageConditionForTransfer(productId?: string) {
+    if (!productId) {
+      this.selectedBalanceStorageCondition = null;
+      return;
+    }
+
+    if (this.productStorageConditionCache.has(productId)) {
+      this.selectedBalanceStorageCondition = this.productStorageConditionCache.get(productId) ?? null;
+      return;
+    }
+
+    this.selectedBalanceStorageCondition = undefined;
+    this.medicineService.get(productId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: medicine => {
+          const condition = medicine?.storageCondition ?? null;
+          this.productStorageConditionCache.set(productId, condition);
+          if (this.selectedBalance?.productId === productId) {
+            this.selectedBalanceStorageCondition = condition;
+            this.cdr.markForCheck();
+          }
+        },
+        error: () => {
+          this.productStorageConditionCache.set(productId, null);
+          if (this.selectedBalance?.productId === productId) {
+            this.selectedBalanceStorageCondition = null;
+            this.cdr.markForCheck();
+          }
+        }
+      });
   }
 
   confirmTransfer() {
