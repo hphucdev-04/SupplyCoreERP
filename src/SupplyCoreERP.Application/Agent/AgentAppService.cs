@@ -7,6 +7,7 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using SupplyCoreERP.Agent.Dtos;
 using SupplyCoreERP.Enums.Agent;
 using SupplyCoreERP.Mcp;
@@ -22,6 +23,7 @@ public class AgentAppService : SupplyCore, IAgentAppService
     private readonly IMcpClientService _mcpClientService;
     private readonly IRepository<AgentSession, Guid> _sessionRepository;
     private readonly IAgentManager _agentManager;
+    private readonly ILogger<AgentAppService> _logger;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -33,18 +35,30 @@ public class AgentAppService : SupplyCore, IAgentAppService
         IAgent agent,
         IMcpClientService mcpClientService,
         IRepository<AgentSession, Guid> sessionRepository,
-        IAgentManager agentManager)
+        IAgentManager agentManager,
+        ILogger<AgentAppService> logger)
     {
         _agent = agent;
         _mcpClientService = mcpClientService;
         _sessionRepository = sessionRepository;
         _agentManager = agentManager;
+        _logger = logger;
     }
 
     public async Task<object> SendMessageAsync(AgentRequestInputDto input)
     {
+        _logger.LogInformation(
+            "AgentAppService: Nhan request send-message. InputSessionId={InputSessionId}, CurrentUserId={CurrentUserId}, TextLength={TextLength}.",
+            input.SessionId,
+            CurrentUser.Id,
+            input.Text?.Length ?? 0);
+
         // 1. Phục hồi hoặc khởi tạo phiên làm việc qua AgentManager
         AgentSession session = await _agentManager.GetOrCreateSessionAsync(input.SessionId, CurrentUser.Id ?? Guid.Empty);
+
+        _logger.LogInformation(
+            "AgentAppService: Da lay hoac tao session. SessionId={SessionId}.",
+            session.Id);
 
         IQueryable<AgentSession> queryable = await _sessionRepository.GetQueryableAsync();
         session = await queryable
@@ -53,6 +67,12 @@ public class AgentAppService : SupplyCore, IAgentAppService
             .FirstOrDefaultAsync(s => s.Id == session.Id)
             ?? throw new UserFriendlyException("Không thể khởi tạo phiên làm việc.");
 
+        _logger.LogInformation(
+            "AgentAppService: Da tai session tu database. SessionId={SessionId}, ExistingMessageCount={ExistingMessageCount}, ExistingTaskCount={ExistingTaskCount}.",
+            session.Id,
+            session.Messages.Count,
+            session.Tasks.Count);
+
         // Lưu tin nhắn mới của người dùng (tự động chạy DLP ở tầng Domain)
         await _agentManager.AddMessageAsync(session, "user", input.Text);
 
@@ -60,13 +80,38 @@ public class AgentAppService : SupplyCore, IAgentAppService
         List<AgentMessage> optimizedHistory = await _agentManager.GetOptimizedHistoryAsync(session.Id);
         List<AgentSessionMessageDto> steps = MapToSessionMessageDtos(optimizedHistory);
 
+        _logger.LogInformation(
+            "AgentAppService: Da nap optimized history. SessionId={SessionId}, OptimizedHistoryCount={OptimizedHistoryCount}, StepCount={StepCount}.",
+            session.Id,
+            optimizedHistory.Count,
+            steps.Count);
+
         // 3. Chạy Agent
+        _logger.LogInformation(
+            "AgentAppService: Bat dau goi _agent.RunAsync. SessionId={SessionId}.",
+            session.Id);
+
         AgentResultDto result = await _agent.RunAsync(new AgentContext { Steps = steps });
+
+        _logger.LogInformation(
+            "AgentAppService: _agent.RunAsync hoan tat. SessionId={SessionId}, NewStepCount={NewStepCount}, RequiresApproval={RequiresApproval}, FinalTextLength={FinalTextLength}.",
+            session.Id,
+            result.NewSteps?.Count ?? 0,
+            result.RequiresApproval,
+            result.FinalText?.Length ?? 0);
 
         // 4. Lưu các bước mới phát sinh xuống Database (tự động lọc DLP khi lưu)
         await SaveNewStepsAsync(session, result.NewSteps);
 
+        _logger.LogInformation(
+            "AgentAppService: Da luu new steps. SessionId={SessionId}.",
+            session.Id);
+
         // 5. Xử lý các tác vụ chờ (nếu có) và trả về kết quả
+        _logger.LogInformation(
+            "AgentAppService: Bat dau BuildResultResponseAsync. SessionId={SessionId}.",
+            session.Id);
+
         return await BuildResultResponseAsync(session, result);
     }
 

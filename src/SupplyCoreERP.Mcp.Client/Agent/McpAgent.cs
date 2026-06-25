@@ -1,6 +1,7 @@
 using System.Text.Json;
 using System.Text.Json.Nodes;
 using System.Text.RegularExpressions;
+using Microsoft.Extensions.Logging;
 using SupplyCoreERP.Agent;
 using SupplyCoreERP.Agent.Dtos;
 using SupplyCoreERP.Mcp.Client.AgentProviders;
@@ -18,6 +19,7 @@ public class McpAgent : IAgent, ITransientDependency
     private readonly IMcpClientService _mcpClientService;
     private readonly IAgentProvider _agentProvider;
     private readonly ISettingProvider _settingProvider;
+    private readonly ILogger<McpAgent> _logger;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -27,20 +29,31 @@ public class McpAgent : IAgent, ITransientDependency
     public McpAgent(
         IMcpClientService mcpClientService,
         IAgentProvider agentProvider,
-        ISettingProvider settingProvider)
+        ISettingProvider settingProvider,
+        ILogger<McpAgent> logger)
     {
         _mcpClientService = mcpClientService;
         _agentProvider = agentProvider;
         _settingProvider = settingProvider;
+        _logger = logger;
     }
 
     public async Task<AgentResultDto> RunAsync(AgentContext context)
     {
         List<AgentSessionMessageDto> newSteps = new();
 
+        _logger.LogInformation(
+            "McpAgent: Bat dau chay agent. ExistingStepCount={ExistingStepCount}.",
+            context.Steps?.Count ?? 0);
+
         // Lấy danh sách Tools và Resources hiện có từ MCP Server
         List<McpToolDto> tools = await _mcpClientService.GetToolsAsync();
         List<McpResourceDto> resources = await _mcpClientService.GetResourcesAsync();
+
+        _logger.LogInformation(
+            "McpAgent: Da nap MCP metadata. ToolCount={ToolCount}, ResourceCount={ResourceCount}.",
+            tools.Count,
+            resources.Count);
 
         // Định hình khung tư duy Agent (Chỉ dẫn hệ thống nạp động từ MCP Server)
         string systemInstruction = await _mcpClientService.GetServerInstructionsAsync();
@@ -50,6 +63,12 @@ public class McpAgent : IAgent, ITransientDependency
 
         // Chuyển đổi lịch sử hội thoại đã tối ưu (được nạp trực tiếp từ Domain) sang cấu trúc tin nhắn LLM nội bộ
         List<LlmMessageDto> llmHistory = MapHistoryToLlmFormat(context.Steps);
+
+        _logger.LogInformation(
+            "McpAgent: Da chuyen doi lich su cho LLM. LlmHistoryCount={LlmHistoryCount}, HasSystemInstruction={HasSystemInstruction}, DlpRuleCount={DlpRuleCount}.",
+            llmHistory.Count,
+            !string.IsNullOrWhiteSpace(systemInstruction),
+            dlpRules.Count);
 
         // Bắt đầu vòng lặp LLM điều phối Tool với chốt an toàn chống vòng lặp vô hạn
         const int MaxAgentIterations = 10;
@@ -65,9 +84,22 @@ public class McpAgent : IAgent, ITransientDependency
                 ? new List<McpToolDto>()
                 : tools;
 
+            _logger.LogInformation(
+                "McpAgent: Bat dau iteration {Iteration}/{MaxIterations}. ActiveToolCount={ActiveToolCount}, NewStepCount={NewStepCount}.",
+                iteration,
+                MaxAgentIterations,
+                activeTools.Count,
+                newSteps.Count);
+
             // Gọi LLM sinh nội dung tiếp theo
             AgentResponseDto llmResponse = await _agentProvider.GenerateContentAsync(llmHistory, activeTools, resources, systemInstruction);
             lastLlmResponse = llmResponse;
+
+            _logger.LogInformation(
+                "McpAgent: Nhan phan hoi tu LLM. IsToolCall={IsToolCall}, ToolCallCount={ToolCallCount}, TextLength={TextLength}.",
+                llmResponse.IsToolCall,
+                llmResponse.ToolCalls?.Count ?? 0,
+                llmResponse.Text?.Length ?? 0);
 
             if (llmResponse.IsToolCall)
             {
@@ -76,6 +108,11 @@ public class McpAgent : IAgent, ITransientDependency
                 // Tìm schema của Tool tương ứng để kiểm tra cờ requiresApproval
                 McpToolDto? toolSchema = tools.Find(t => t.Name == toolCall.Name);
                 bool requiresApproval = toolSchema != null && toolSchema.RequiresApproval;
+
+                _logger.LogInformation(
+                    "McpAgent: LLM yeu cau goi tool {ToolName}. RequiresApproval={RequiresApproval}.",
+                    toolCall.Name,
+                    requiresApproval);
 
                 if (requiresApproval)
                 {
@@ -100,6 +137,10 @@ public class McpAgent : IAgent, ITransientDependency
                 }
                 else
                 {
+                    _logger.LogInformation(
+                        "McpAgent: Thuc thi tool tu dong {ToolName}.",
+                        toolCall.Name);
+
                     // Chạy tự động và nhận kết quả đã được chuẩn hóa (Bắt lỗi, giới hạn nằm trong IMcpClientService)
                     string toolResult = await _mcpClientService.CallToolAsync(toolCall.Name, toolCall.Arguments ?? new JsonObject());
 
@@ -177,6 +218,12 @@ public class McpAgent : IAgent, ITransientDependency
                         CreationTime = DateTime.Now
                     });
 
+                    _logger.LogInformation(
+                        "McpAgent: Da xu ly xong tool {ToolName}. SanitizedResultLength={SanitizedResultLength}, NewStepCount={NewStepCount}.",
+                        toolCall.Name,
+                        sanitizedResult.Length,
+                        newSteps.Count);
+
                     continue;
                 }
             }
@@ -188,6 +235,11 @@ public class McpAgent : IAgent, ITransientDependency
                 Text = llmResponse.Text ?? "",
                 CreationTime = DateTime.Now
             });
+
+            _logger.LogInformation(
+                "McpAgent: Hoan tat voi final text. FinalTextLength={FinalTextLength}, TotalNewStepCount={TotalNewStepCount}.",
+                (llmResponse.Text ?? string.Empty).Length,
+                newSteps.Count);
 
             return new AgentResultDto
             {
