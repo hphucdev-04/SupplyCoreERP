@@ -33,7 +33,7 @@ export class PriceService {
       url: `/api/app/price/by-product/${productId}`,
     },
     { apiName: this.apiName,...config });
-
+  
 
   getCostReference = (productId: string, unitId: string, config?: Partial<Rest.Config>) =>
     this.restService.request<any, ProductCostReferenceDto>({
@@ -42,7 +42,7 @@ export class PriceService {
       params: { productId, unitId },
     },
     { apiName: this.apiName,...config });
-
+  
 
   getPriceLists = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, PriceListDto[]>({

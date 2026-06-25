@@ -3,8 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Shouldly;
-using SupplyCoreERP.Catalog.Medicines;
-using SupplyCoreERP.Catalog.Products;
 using SupplyCoreERP.Enums.Medicines;
 using SupplyCoreERP.Enums.Warehouses;
 using SupplyCoreERP.Inventory.Balances;
@@ -52,7 +50,7 @@ public abstract class TicketManager_Integration_Tests<TStartupModule> : SupplyCo
         Guid batchAId = Guid.NewGuid();
         Guid binId = Guid.NewGuid();
 
-        // UOW 1: Thiet lap du lieu, tao phieu xuat va phan bo FEFO
+        // Thiet lap du lieu, tao phieu xuat va phan bo FEFO
         await WithUnitOfWorkAsync(async () =>
         {
             // 1. Arrange: Thiết lập cấu trúc kho (Zone, Bin)
@@ -79,7 +77,7 @@ public abstract class TicketManager_Integration_Tests<TStartupModule> : SupplyCo
             );
             await _binRepository.InsertAsync(bin, autoSave: true);
 
-            // 2. Tạo 3 Lô hàng của Paracetamol
+            // Tạo 3 Lô hàng của Paracetamol
             // Lô C: Hết hạn trước tiên (2026-10-31)
             ProductBatch batchC = new(batchCId, "LOTC", TestDataConsts.MedicineParacetamolId, "LOT-C", DateTime.Parse("2023-07-24"), DateTime.Parse("2026-10-31"), TestDataConsts.SupplierAId);
             batchC.ApproveQA();
@@ -95,7 +93,7 @@ public abstract class TicketManager_Integration_Tests<TStartupModule> : SupplyCo
             batchA.ApproveQA();
             await _batchRepository.InsertAsync(batchA, autoSave: true);
 
-            // 3. Tạo số dư tồn kho (InventoryBalance) cho 3 lô hàng này
+            // Tạo số dư tồn kho (InventoryBalance) cho 3 lô hàng này
             // Lô C: 5 hộp trong kho
             InventoryBalance balC = new(Guid.NewGuid(), TestDataConsts.WarehouseMainId, TestDataConsts.MedicineParacetamolId, batchCId);
             balC.AddStock(binId, 5m, Guid.NewGuid());
@@ -132,11 +130,11 @@ public abstract class TicketManager_Integration_Tests<TStartupModule> : SupplyCo
             await _ticketLineRepository.InsertAsync(line, autoSave: true);
             lineId = line.Id;
 
-            // 5. Act: Thực thi thuật toán phân bổ FEFO
+            // Act: Thực thi thuật toán phân bổ FEFO
             await _ticketManager.AllocateFEFOForLineAsync(ticket, line);
         });
 
-        // UOW 2: Assert ket qua khi database da ghi nhan day du
+        // Assert ket qua khi database da ghi nhan day du
         await WithUnitOfWorkAsync(async () =>
         {
             List<InventoryTicketDetail> details = await _ticketDetailRepository.GetListAsync(x => x.TicketLineId == lineId);

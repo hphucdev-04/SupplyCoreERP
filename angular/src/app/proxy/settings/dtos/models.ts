@@ -16,6 +16,8 @@ export interface InventorySettingsDto {
 export interface LlmProviderSettingsDto {
   model?: string;
   apiKey?: string;
+  modelSource?: string;
+  apiKeySource?: string;
 }
 
 export interface McpSettingsDto {

@@ -18,6 +18,7 @@ public class SettingAppService : SupplyCore, ISettingAppService
     private readonly ISettingProvider _settingProvider;
     private readonly ISettingManager _settingManager;
     private readonly IMcpClientService _mcpClientService;
+    private readonly ILlmRuntimeSettingsReader _llmRuntimeSettingsReader;
 
     private static readonly JsonSerializerOptions _jsonOptions = new()
     {
@@ -29,11 +30,13 @@ public class SettingAppService : SupplyCore, ISettingAppService
     public SettingAppService(
         ISettingProvider settingProvider,
         ISettingManager settingManager,
-        IMcpClientService mcpClientService)
+        IMcpClientService mcpClientService,
+        ILlmRuntimeSettingsReader llmRuntimeSettingsReader)
     {
         _settingProvider = settingProvider;
         _settingManager = settingManager;
         _mcpClientService = mcpClientService;
+        _llmRuntimeSettingsReader = llmRuntimeSettingsReader;
     }
 
 
@@ -75,14 +78,7 @@ public class SettingAppService : SupplyCore, ISettingAppService
 
     public async Task<LlmProviderSettingsDto> GetLlmProviderSettingsAsync()
     {
-        string model = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.LlmProviderModel) ?? "gemini-2.5-flash";
-        string apiKey = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.LlmProviderApiKey) ?? string.Empty;
-
-        return new LlmProviderSettingsDto
-        {
-            Model = model,
-            ApiKey = apiKey
-        };
+        return await _llmRuntimeSettingsReader.GetCurrentAsync();
     }
 
     public async Task UpdateLlmProviderSettingsAsync(LlmProviderSettingsDto input)
