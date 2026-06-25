@@ -607,6 +607,32 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
         return Task.FromResult(_serverInstructions ?? string.Empty);
     }
 
+    public async Task ResetRuntimeStateAsync()
+    {
+        _logger.LogInformation("ResetRuntimeStateAsync: Bat dau reset runtime state cua MCP client.");
+
+        await _connectionLock.WaitAsync();
+        try
+        {
+            _sseCts?.Cancel();
+            _sseCts?.Dispose();
+            _sseCts = null;
+
+            _isConnected = false;
+            _sessionId = null;
+            _mcpBaseUrl = string.Empty;
+            _serverInstructions = null;
+            _cachedTools = null;
+            _cachedResources = null;
+
+            _logger.LogInformation("ResetRuntimeStateAsync: Da xoa session, base url, instructions va cache tools/resources.");
+        }
+        finally
+        {
+            _connectionLock.Release();
+        }
+    }
+
     public void Dispose()
     {
         _logger.LogInformation("McpClientService: Bắt đầu Dispose dọn dẹp tài nguyên.");

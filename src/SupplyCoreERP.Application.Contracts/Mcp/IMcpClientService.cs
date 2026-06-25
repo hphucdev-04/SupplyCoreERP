@@ -14,4 +14,6 @@ public interface IMcpClientService
     Task<List<McpResourceDto>> GetResourcesAsync();
 
     Task<string> GetServerInstructionsAsync();
+
+    Task ResetRuntimeStateAsync();
 }

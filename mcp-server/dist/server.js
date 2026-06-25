@@ -10,6 +10,12 @@ import rateLimit from "express-rate-limit";
 import { registerQueryTools } from "./tools/read_query.js";
 import { registerDatetimeTools } from "./tools/get_current_datetime.js";
 import { registerReadResourceTool } from "./tools/read_resource.js";
+import { registerProductTools } from "./tools/product.js";
+import { registerWarehouseTools } from "./tools/warehouse.js";
+import { registerInventoryTools } from "./tools/inventory.js";
+import { registerDemandTools } from "./tools/demand.js";
+import { registerPurchaseTools } from "./tools/purchase.js";
+import { registerPurchasePlanningTools } from "./tools/purchase_planning.js";
 import { registerSupplierTools } from "./tools/supplier.js";
 // Resource and prompt registrations
 import { registerDatabaseResources } from "./resources/dbSchema.js";
@@ -65,6 +71,12 @@ const createMcpServer = () => {
     registerQueryTools(server);
     registerDatetimeTools(server);
     registerReadResourceTool(server);
+    registerProductTools(server);
+    registerWarehouseTools(server);
+    registerInventoryTools(server);
+    registerDemandTools(server);
+    registerPurchaseTools(server);
+    registerPurchasePlanningTools(server);
     registerSupplierTools(server);
     registerDatabaseResources(server);
     registerPrompts(server);

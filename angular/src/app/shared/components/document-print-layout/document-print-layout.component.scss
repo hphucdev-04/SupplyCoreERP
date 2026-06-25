@@ -1,0 +1,179 @@
+:host {
+  display: block;
+}
+
+.print-page {
+  width: 100%;
+  color: #1f2937;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.document-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  border-bottom: 2px solid #1d4ed8;
+  padding-bottom: 12px;
+  margin-bottom: 16px;
+}
+
+.company-name {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0;
+  text-transform: uppercase;
+  color: #1d4ed8;
+  margin-bottom: 4px;
+}
+
+.document-title {
+  font-size: 22px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #111827;
+}
+
+.document-number,
+.document-printed-at {
+  margin-top: 4px;
+  color: #4b5563;
+}
+
+.document-section {
+  margin-bottom: 16px;
+}
+
+.section-title {
+  margin-bottom: 8px;
+  font-size: 13px;
+  font-weight: 700;
+  color: #111827;
+}
+
+.field-grid {
+  display: grid;
+  gap: 10px 16px;
+}
+
+.field-grid.columns-1 {
+  grid-template-columns: 1fr;
+}
+
+.field-grid.columns-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.field-grid.columns-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.field-item {
+  min-width: 0;
+}
+
+.field-label {
+  font-size: 11px;
+  color: #6b7280;
+  margin-bottom: 2px;
+}
+
+.field-value {
+  font-weight: 600;
+  color: #111827;
+  word-break: break-word;
+}
+
+.document-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.document-table th,
+.document-table td {
+  border: 1px solid #d1d5db;
+  padding: 8px 10px;
+  vertical-align: top;
+}
+
+.document-table th {
+  background: #eff6ff;
+  color: #1e3a8a;
+  font-weight: 700;
+}
+
+.empty-cell {
+  text-align: center;
+  color: #6b7280;
+  padding: 18px 10px;
+}
+
+.document-summary {
+  margin-left: auto;
+  width: min(320px, 100%);
+  border-top: 1px solid #d1d5db;
+  padding-top: 8px;
+}
+
+.summary-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 4px 0;
+}
+
+.summary-label {
+  color: #4b5563;
+}
+
+.summary-value {
+  font-weight: 700;
+  color: #111827;
+  text-align: right;
+}
+
+.document-note {
+  margin-top: 12px;
+}
+
+.note-content {
+  white-space: pre-wrap;
+}
+
+.signature-grid {
+  display: grid;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.signature-count-2 {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.signature-count-3 {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.signature-count-4 {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.signature-item {
+  text-align: center;
+}
+
+.signature-label {
+  font-weight: 700;
+  color: #111827;
+}
+
+.signature-space {
+  height: 72px;
+}
+
+.signature-name {
+  font-weight: 600;
+  color: #374151;
+}

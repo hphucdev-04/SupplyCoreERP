@@ -24,6 +24,8 @@ import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.e
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
 import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
+import { PrintDocumentService } from 'src/app/shared/services/print-document.service';
+import { DocumentPrintModel } from 'src/app/shared/models/document-print.model';
 
 interface ProductUnitLookup {
   unitId: string;
@@ -81,6 +83,7 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private route: ActivatedRoute,
     public router: Router,
+    private printDocumentService: PrintDocumentService,
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +105,11 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.router.navigate(['/procurement/purchase-orders']);
+  }
+
+  printDocument() {
+    if (!this.order) return;
+    this.printDocumentService.print(this.buildPrintModel());
   }
 
   // ── Data ─────────────────────────────────────────────────
@@ -555,5 +563,107 @@ export class PurchaseOrderDetailsComponent implements OnInit, OnDestroy {
       [PurchaseOrderStatus.Canceled]: 'fa-times-circle',
     };
     return map[status] ?? 'fa-circle';
+  }
+
+  private buildPrintModel(): DocumentPrintModel {
+    return {
+      title: 'Hóa đơn mua hàng',
+      documentNumber: this.order.code ?? '',
+      printedAt: this.formatPrintDateTime(new Date().toISOString()),
+      sections: [
+        {
+          title: 'Thông tin chung',
+          columns: 2,
+          fields: [
+            { label: 'Nhà cung cấp', value: this.order.supplierName ?? '' },
+            { label: 'Mã nhà cung cấp', value: this.order.supplierCode ?? '' },
+            { label: 'Kho', value: this.order.warehouseName ?? '' },
+            { label: 'Mã kho', value: this.order.warehouseCode ?? '' },
+            { label: 'Ngày đơn', value: this.formatPrintDate(this.order.orderDate) },
+            {
+              label: 'Ngày nhận dự kiến',
+              value: this.formatPrintDate(this.order.expectedDeliveryDate),
+            },
+            { label: 'Hạn thanh toán', value: this.formatPrintDate(this.order.dueDate) },
+            { label: 'Trạng thái', value: this.getStatusLabel(this.order.status) },
+            { label: 'Phiếu đề nghị mua', value: this.order.purchaseRequisitionCode ?? '' },
+          ],
+        },
+      ],
+      columns: [
+        { key: 'index', header: 'STT', align: 'center', width: '44px' },
+        { key: 'productCode', header: 'Mã hàng', width: '100px' },
+        { key: 'productName', header: 'Tên hàng' },
+        { key: 'unitName', header: 'ĐVT', align: 'center', width: '72px' },
+        { key: 'quantity', header: 'SL', align: 'right', width: '72px' },
+        { key: 'unitPrice', header: 'Đơn giá', align: 'right', width: '96px' },
+        { key: 'taxRate', header: 'Thuế %', align: 'right', width: '72px' },
+        { key: 'finalPrice', header: 'Thành tiền', align: 'right', width: '110px' },
+      ],
+      rows: (this.order.lines ?? []).map((line, index) => ({
+        index: index + 1,
+        productCode: line.productCode ?? '',
+        productName: line.productName ?? '',
+        unitName: line.unitName ?? '',
+        quantity: this.formatPrintNumber(line.quantity),
+        unitPrice: this.formatPrintCurrency(line.unitPrice),
+        taxRate: this.formatPrintPercent(line.taxRate),
+        finalPrice: this.formatPrintCurrency(line.finalPrice),
+      })),
+      summary: [
+        { label: 'Tạm tính', value: this.formatPrintCurrency(this.order.subTotal) },
+        { label: 'Thuế', value: this.formatPrintCurrency(this.order.taxAmount) },
+        { label: 'Tổng cộng', value: this.formatPrintCurrency(this.order.totalAmount) },
+      ],
+      note: this.order.note ?? '',
+      signatures: [{ label: 'Người lập' }, { label: 'Kế toán' }, { label: 'Nhà cung cấp' }],
+    };
+  }
+
+  private getStatusLabel(status?: PurchaseOrderStatus): string {
+    switch (status) {
+      case PurchaseOrderStatus.Draft:
+        return 'Nháp';
+      case PurchaseOrderStatus.PendingApproval:
+        return 'Chờ duyệt';
+      case PurchaseOrderStatus.Approved:
+        return 'Đã duyệt';
+      case PurchaseOrderStatus.Receiving:
+        return 'Đang nhập';
+      case PurchaseOrderStatus.Completed:
+        return 'Hoàn thành';
+      case PurchaseOrderStatus.Canceled:
+        return 'Đã hủy';
+      default:
+        return '';
+    }
+  }
+
+  private formatPrintDate(value?: string | null): string {
+    if (!value) return '';
+    return new Intl.DateTimeFormat('vi-VN').format(new Date(value));
+  }
+
+  private formatPrintDateTime(value?: string | null): string {
+    if (!value) return '';
+    return new Intl.DateTimeFormat('vi-VN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(value));
+  }
+
+  private formatPrintCurrency(value?: number | null): string {
+    return new Intl.NumberFormat('vi-VN').format(value ?? 0) + ' đ';
+  }
+
+  private formatPrintNumber(value?: number | null): string {
+    return new Intl.NumberFormat('vi-VN').format(value ?? 0);
+  }
+
+  private formatPrintPercent(value?: number | null): string {
+    return `${value ?? 0}%`;
   }
 }

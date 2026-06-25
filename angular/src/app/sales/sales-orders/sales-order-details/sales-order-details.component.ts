@@ -18,11 +18,14 @@ import { MedicineService } from 'src/app/proxy/medicines';
 import { PriceService } from 'src/app/proxy/prices';
 import { MedicineDto } from 'src/app/proxy/medicines/dtos';
 import { WarehouseDto } from 'src/app/proxy/warehouses/dtos';
-import { ProductPriceDto } from 'src/app/proxy/prices/dtos';
+import { ProductCostReferenceDto, ProductPriceDto } from 'src/app/proxy/prices/dtos';
 import { SalesOrderStatus } from 'src/app/proxy/enums/orders/sales-order-status.enum';
 import { ApprovalStatus } from 'src/app/proxy/enums/warehouses/approval-status.enum';
 import { enumName } from 'src/app/shared/untils/enum.util';
 import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
+import { CurrencyFormatDirective } from 'src/app/shared/directives/currency-format.directive';
+import { PrintDocumentService } from 'src/app/shared/services/print-document.service';
+import { DocumentPrintModel } from 'src/app/shared/models/document-print.model';
 
 interface ProductUnitLookup {
   unitId: string;
@@ -34,7 +37,7 @@ interface ProductUnitLookup {
 @Component({
   selector: 'app-sales-order-details',
   standalone: true,
-  imports: [SharedModule, DrawerComponent, DropdownSearchComponent],
+  imports: [SharedModule, DrawerComponent, DropdownSearchComponent, CurrencyFormatDirective],
   templateUrl: './sales-order-details.component.html',
 })
 export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
@@ -63,6 +66,8 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
   selectedConversionFactor = 1;
   baseUnitName = '';
   quantityPreview = 0;
+  costReference: ProductCostReferenceDto | null = null;
+  belowCostWarning: string | null = null;
 
   SalesOrderStatus = SalesOrderStatus;
   ApprovalStatus = ApprovalStatus;
@@ -81,6 +86,7 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public router: Router,
     private customerService: CustomerService,
+    private printDocumentService: PrintDocumentService,
   ) {}
 
   ngOnInit(): void {
@@ -102,6 +108,11 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
 
   goBack() {
     this.router.navigate(['/sales/sales-orders']);
+  }
+
+  printDocument() {
+    if (!this.order) return;
+    this.printDocumentService.print(this.buildPrintModel());
   }
 
   // ── Data ─────────────────────────────────────────────────
@@ -165,6 +176,11 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
       discountRate: [0, [Validators.min(0), Validators.max(100)]],
       taxRate: [0, [Validators.min(0)]],
     });
+
+    this.lineForm
+      .get('unitPrice')
+      ?.valueChanges.pipe(takeUntil(this.destroy$))
+      .subscribe(() => this.updateBelowCostWarning());
   }
 
   calculateDueDate() {
@@ -223,6 +239,8 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     this.referencePrices = [];
     this.selectedConversionFactor = 1;
     this.quantityPreview = 0;
+    this.costReference = null;
+    this.belowCostWarning = null;
     this.lineForm.reset({
       quantity: 1,
       conversionFactor: 1,
@@ -245,6 +263,8 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     this.selectedConversionFactor = 1;
     this.baseUnitName = '';
     this.quantityPreview = 0;
+    this.costReference = null;
+    this.belowCostWarning = null;
     if (!medicineId) return;
 
     this.medicineService
@@ -275,6 +295,7 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
         this.selectedConversionFactor = 1;
 
         this.loadPrices(medicineId);
+        this.loadCostReference(medicineId, baseUnit.unitId);
       });
   }
 
@@ -296,6 +317,14 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     }
     this.filterAvailablePrices();
     this.updateQuantityPreview();
+
+    const productId = this.lineForm.get('productId')?.value;
+    if (productId && unitId) {
+      this.loadCostReference(productId, unitId);
+    } else {
+      this.costReference = null;
+      this.belowCostWarning = null;
+    }
   }
 
   filterAvailablePrices() {
@@ -320,6 +349,52 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
     this.filterAvailablePrices();
   }
 
+  loadCostReference(productId: string, unitId: string) {
+    this.priceService
+      .getCostReference(productId, unitId)
+      .pipe(takeUntil(this.destroy$))
+      .subscribe({
+        next: res => {
+          this.costReference = res;
+          this.updateBelowCostWarning();
+        },
+        error: () => {
+          this.costReference = null;
+          this.belowCostWarning = null;
+        },
+      });
+  }
+
+  updateBelowCostWarning() {
+    const rawUnitPrice = this.lineForm?.get('unitPrice')?.value;
+    const lowestPurchasePrice = this.costReference?.lowestPurchasePrice;
+
+    if (
+      rawUnitPrice === '' ||
+      rawUnitPrice === null ||
+      rawUnitPrice === undefined ||
+      lowestPurchasePrice === null ||
+      lowestPurchasePrice === undefined
+    ) {
+      this.belowCostWarning = null;
+      return;
+    }
+
+    const unitPrice = Number(rawUnitPrice);
+    if (isNaN(unitPrice) || unitPrice >= lowestPurchasePrice) {
+      this.belowCostWarning = null;
+      return;
+    }
+
+    this.belowCostWarning =
+      `Giá bán (${this.formatCurrency(unitPrice)}) thấp hơn giá nhập chuẩn thấp nhất ` +
+      `(${this.formatCurrency(lowestPurchasePrice)}).`;
+  }
+
+  private formatCurrency(value: number): string {
+    return new Intl.NumberFormat('vi-VN').format(value);
+  }
+
   saveLine() {
     if (this.lineForm.invalid) return;
     this.isSavingLine = true;
@@ -341,7 +416,15 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
           this.closeAddLineDrawer();
           this.loadData();
         },
-        error: () => (this.isSavingLine = false),
+        error: err => {
+          this.isSavingLine = false;
+          const message =
+            err.status === 403 && payload.unitPrice !== null
+              ? 'Bạn không có quyền nhập giá bán thủ công.'
+              : err.error?.error?.message || '::Error';
+          const title = err.status === 403 ? 'Lỗi phân quyền' : '::Error';
+          this.toaster.error(message, title);
+        },
       });
   }
 
@@ -470,5 +553,109 @@ export class SalesOrderDetailsComponent implements OnInit, OnDestroy {
       [SalesOrderStatus.Canceled]: 'fa-times-circle',
     };
     return map[status] ?? 'fa-circle';
+  }
+
+  private buildPrintModel(): DocumentPrintModel {
+    return {
+      title: 'Hóa đơn bán hàng',
+      documentNumber: this.order.code ?? '',
+      printedAt: this.formatPrintDateTime(new Date().toISOString()),
+      sections: [
+        {
+          title: 'Thông tin chung',
+          columns: 2,
+          fields: [
+            { label: 'Khách hàng', value: this.order.customerName ?? '' },
+            { label: 'Mã khách hàng', value: this.order.customerCode ?? '' },
+            { label: 'Kho', value: this.order.warehouseName ?? '' },
+            { label: 'Mã kho', value: this.order.warehouseCode ?? '' },
+            { label: 'Ngày đơn', value: this.formatPrintDate(this.order.orderDate) },
+            {
+              label: 'Ngày giao dự kiến',
+              value: this.formatPrintDate(this.order.expectedDeliveryDate),
+            },
+            { label: 'Hạn thanh toán', value: this.formatPrintDate(this.order.dueDate) },
+            { label: 'Trạng thái', value: this.getStatusLabel(this.order.status) },
+          ],
+        },
+      ],
+      columns: [
+        { key: 'index', header: 'STT', align: 'center', width: '44px' },
+        { key: 'productCode', header: 'Mã hàng', width: '100px' },
+        { key: 'productName', header: 'Tên hàng' },
+        { key: 'unitName', header: 'ĐVT', align: 'center', width: '72px' },
+        { key: 'quantity', header: 'SL', align: 'right', width: '72px' },
+        { key: 'unitPrice', header: 'Đơn giá', align: 'right', width: '96px' },
+        { key: 'discountRate', header: 'CK %', align: 'right', width: '68px' },
+        { key: 'taxRate', header: 'Thuế %', align: 'right', width: '72px' },
+        { key: 'finalPrice', header: 'Thành tiền', align: 'right', width: '110px' },
+      ],
+      rows: (this.order.lines ?? []).map((line, index) => ({
+        index: index + 1,
+        productCode: line.productCode ?? '',
+        productName: line.productName ?? '',
+        unitName: line.unitName ?? '',
+        quantity: this.formatPrintNumber(line.quantity),
+        unitPrice: this.formatPrintCurrency(line.unitPrice),
+        discountRate: this.formatPrintPercent(line.discountRate),
+        taxRate: this.formatPrintPercent(line.taxRate),
+        finalPrice: this.formatPrintCurrency(line.finalPrice),
+      })),
+      summary: [
+        { label: 'Tạm tính', value: this.formatPrintCurrency(this.order.subTotal) },
+        { label: 'Chiết khấu', value: this.formatPrintCurrency(this.order.discountAmount) },
+        { label: 'Thuế', value: this.formatPrintCurrency(this.order.taxAmount) },
+        { label: 'Tổng cộng', value: this.formatPrintCurrency(this.order.totalAmount) },
+      ],
+      note: this.order.note ?? '',
+      signatures: [{ label: 'Người lập' }, { label: 'Kế toán' }, { label: 'Khách hàng' }],
+    };
+  }
+
+  private getStatusLabel(status?: SalesOrderStatus): string {
+    switch (status) {
+      case SalesOrderStatus.Draft:
+        return 'Nháp';
+      case SalesOrderStatus.PendingApproval:
+        return 'Chờ duyệt';
+      case SalesOrderStatus.Approved:
+        return 'Đã duyệt';
+      case SalesOrderStatus.Delivering:
+        return 'Đang giao';
+      case SalesOrderStatus.Completed:
+        return 'Hoàn thành';
+      case SalesOrderStatus.Canceled:
+        return 'Đã hủy';
+      default:
+        return '';
+    }
+  }
+
+  private formatPrintDate(value?: string | null): string {
+    if (!value) return '';
+    return new Intl.DateTimeFormat('vi-VN').format(new Date(value));
+  }
+
+  private formatPrintDateTime(value?: string | null): string {
+    if (!value) return '';
+    return new Intl.DateTimeFormat('vi-VN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(value));
+  }
+
+  private formatPrintCurrency(value?: number | null): string {
+    return new Intl.NumberFormat('vi-VN').format(value ?? 0) + ' đ';
+  }
+
+  private formatPrintNumber(value?: number | null): string {
+    return new Intl.NumberFormat('vi-VN').format(value ?? 0);
+  }
+
+  private formatPrintPercent(value?: number | null): string {
+    return `${value ?? 0}%`;
   }
 }

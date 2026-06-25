@@ -29,6 +29,8 @@ import { SalesOrderLineDto } from 'src/app/proxy/sales-orders/dtos';
 import { PurchaseReturnLineDto } from 'src/app/proxy/purchase-returns/dtos/models';
 import { SalesRecallLineDto } from 'src/app/proxy/sales-recalls/dtos/models';
 import { UnitConversionHelper } from 'src/app/shared/untils/unit-conversion.helper';
+import { PrintDocumentService } from 'src/app/shared/services/print-document.service';
+import { DocumentPrintModel } from 'src/app/shared/models/document-print.model';
 
 interface SelectablePOLineDto extends PurchaseOrderLineDto {
   importQuantity: number;
@@ -146,6 +148,7 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
     private routesService: RoutesService,
     private balanceService: InventoryBalanceService,
     private cdr: ChangeDetectorRef,
+    private printDocumentService: PrintDocumentService,
   ) {}
 
   ngOnInit(): void {
@@ -167,6 +170,11 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
 
   goBack(): void {
     this.router.navigate(['/inventory/tickets']);
+  }
+
+  printDocument() {
+    if (!this.ticket) return;
+    this.printDocumentService.print(this.buildPrintModel());
   }
 
   // Accordion Logic 
@@ -972,5 +980,115 @@ export class TicketDetailsComponent implements OnInit, OnDestroy {
         ),
       0,
     );
+  }
+
+  private buildPrintModel(): DocumentPrintModel {
+    return {
+      title: this.getTicketTitle(this.ticket.type),
+      documentNumber: this.ticket.ticketNumber ?? '',
+      printedAt: this.formatPrintDateTime(this.ticket.creationTime as string | undefined),
+      sections: [
+        {
+          title: 'Thông tin chung',
+          columns: 2,
+          fields: [
+            { label: 'Loại phiếu', value: this.getTicketTypeLabel(this.ticket.type) },
+            { label: 'Trạng thái', value: this.getApprovalStatusLabel(this.ticket.status) },
+            { label: 'Kho', value: this.ticket.warehouseName ?? '' },
+            { label: 'Chứng từ tham chiếu', value: this.ticket.referenceDocumentNumber ?? '' },
+            { label: 'Ngày in', value: this.formatPrintDateTime(new Date().toISOString()) },
+          ],
+        },
+      ],
+      columns: [
+        { key: 'index', header: 'STT', align: 'center', width: '44px' },
+        { key: 'productCode', header: 'Mã hàng', width: '92px' },
+        { key: 'productName', header: 'Tên hàng' },
+        { key: 'unitName', header: 'ĐVT', align: 'center', width: '72px' },
+        { key: 'quantity', header: 'SL chứng từ', align: 'right', width: '88px' },
+        { key: 'baseQuantity', header: 'SL quy đổi', align: 'right', width: '96px' },
+        { key: 'details', header: 'Lô / Bin', width: '220px' },
+      ],
+      rows: (this.ticket.lines ?? []).map((line, index) => ({
+        index: index + 1,
+        productCode: line.productCode ?? '',
+        productName: line.productName ?? '',
+        unitName: line.unitName ?? '',
+        quantity: this.formatPrintNumber(line.quantity),
+        baseQuantity: `${this.formatPrintNumber(line.baseQuantity)} ${line.baseUnitName ?? ''}`.trim(),
+        details: this.formatLineDetails(line),
+      })),
+      note: this.ticket.note ?? '',
+      signatures: [{ label: 'Người lập' }, { label: 'Thủ kho' }, { label: 'Kế toán kho' }],
+    };
+  }
+
+  private formatLineDetails(line: InventoryTicketLineDto): string {
+    if (!line.details?.length) {
+      return '';
+    }
+
+    return line.details
+      .map(detail => {
+        const quantityText = `${this.formatPrintNumber(detail.quantity)} ${detail.unitName ?? ''}`.trim();
+        const batchText = detail.batchNumber ? `Lô ${detail.batchNumber}` : '';
+        const binText = detail.binCode ? `Bin ${detail.binCode}` : '';
+        const locationText = [batchText, binText].filter(Boolean).join(' | ');
+        return locationText ? `${locationText}: ${quantityText}` : quantityText;
+      })
+      .join('\n');
+  }
+
+  private getTicketTitle(type?: TicketType): string {
+    switch (type) {
+      case TicketType.GoodsReceipt:
+        return 'Phiếu nhập kho';
+      case TicketType.GoodsIssue:
+        return 'Phiếu xuất kho';
+      case TicketType.ReturnInward:
+        return 'Phiếu nhập trả hàng';
+      case TicketType.ReturnOutward:
+        return 'Phiếu xuất trả hàng';
+      case TicketType.RecallReceipt:
+        return 'Phiếu nhập thu hồi';
+      case TicketType.DisposalIssue:
+        return 'Phiếu xuất hủy';
+      default:
+        return 'Phiếu kho';
+    }
+  }
+
+  private getTicketTypeLabel(type?: TicketType): string {
+    return this.getTicketTitle(type);
+  }
+
+  private getApprovalStatusLabel(status?: ApprovalStatus): string {
+    switch (status) {
+      case ApprovalStatus.Draft:
+        return 'Nháp';
+      case ApprovalStatus.Pending:
+        return 'Chờ duyệt';
+      case ApprovalStatus.Approved:
+        return 'Đã duyệt';
+      case ApprovalStatus.Rejected:
+        return 'Từ chối';
+      default:
+        return '';
+    }
+  }
+
+  private formatPrintDateTime(value?: string | null): string {
+    if (!value) return '';
+    return new Intl.DateTimeFormat('vi-VN', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+      hour: '2-digit',
+      minute: '2-digit',
+    }).format(new Date(value));
+  }
+
+  private formatPrintNumber(value?: number | null): string {
+    return new Intl.NumberFormat('vi-VN').format(value ?? 0);
   }
 }

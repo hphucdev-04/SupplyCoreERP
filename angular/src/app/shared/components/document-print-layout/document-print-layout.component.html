@@ -1,0 +1,70 @@
+<div class="print-page" *ngIf="model">
+  <header class="document-header">
+    <div>
+      <div class="company-name">RxLogistics</div>
+      <div class="document-title">{{ model.title }}</div>
+      <div class="document-number" *ngIf="model.documentNumber">{{ model.documentNumber }}</div>
+    </div>
+    <div class="document-printed-at" *ngIf="model.printedAt">In lúc: {{ model.printedAt }}</div>
+  </header>
+
+  <section class="document-section" *ngFor="let section of model.sections || []">
+    <div class="section-title" *ngIf="section.title">{{ section.title }}</div>
+    <div class="field-grid" [ngClass]="getColumnClass(section)">
+      <div class="field-item" *ngFor="let field of section.fields">
+        <div class="field-label">{{ field.label }}</div>
+        <div class="field-value">{{ field.value || '' }}</div>
+      </div>
+    </div>
+  </section>
+
+  <section class="document-section" *ngIf="model.columns?.length">
+    <table class="document-table">
+      <thead>
+        <tr>
+          <th
+            *ngFor="let column of model.columns"
+            [style.width]="column.width || null"
+            [style.text-align]="column.align || 'left'"
+          >
+            {{ column.header }}
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let row of model.rows || []">
+          <td *ngFor="let column of model.columns" [style.text-align]="column.align || 'left'">
+            {{ getCellValue(row, column) }}
+          </td>
+        </tr>
+        <tr *ngIf="!(model.rows?.length)">
+          <td class="empty-cell" [attr.colspan]="model.columns.length">Không có dữ liệu</td>
+        </tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section class="document-summary" *ngIf="model.summary?.length">
+    <div class="summary-row" *ngFor="let item of model.summary">
+      <span class="summary-label">{{ item.label }}</span>
+      <span class="summary-value">{{ item.value || '' }}</span>
+    </div>
+  </section>
+
+  <section class="document-note" *ngIf="model.note">
+    <div class="section-title">Ghi chú</div>
+    <div class="note-content">{{ model.note }}</div>
+  </section>
+
+  <section
+    class="signature-grid"
+    *ngIf="model.signatures?.length"
+    [ngClass]="getSignatureCountClass(model.signatures)"
+  >
+    <div class="signature-item" *ngFor="let signature of model.signatures">
+      <div class="signature-label">{{ signature.label }}</div>
+      <div class="signature-space"></div>
+      <div class="signature-name">{{ signature.name || '' }}</div>
+    </div>
+  </section>
+</div>

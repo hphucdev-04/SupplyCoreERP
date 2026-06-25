@@ -1,4 +1,4 @@
-import type { CreateUpdateProductPriceDto, PriceListDto, ProductPriceDto } from './dtos/models';
+import type { CreateUpdateProductPriceDto, PriceListDto, ProductCostReferenceDto, ProductPriceDto } from './dtos/models';
 import { RestService, Rest } from '@abp/ng.core';
 import { Injectable, inject } from '@angular/core';
 
@@ -33,7 +33,16 @@ export class PriceService {
       url: `/api/app/price/by-product/${productId}`,
     },
     { apiName: this.apiName,...config });
-  
+
+
+  getCostReference = (productId: string, unitId: string, config?: Partial<Rest.Config>) =>
+    this.restService.request<any, ProductCostReferenceDto>({
+      method: 'GET',
+      url: '/api/app/price/cost-reference',
+      params: { productId, unitId },
+    },
+    { apiName: this.apiName,...config });
+
 
   getPriceLists = (config?: Partial<Rest.Config>) =>
     this.restService.request<any, PriceListDto[]>({

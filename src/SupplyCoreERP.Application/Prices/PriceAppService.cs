@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
 using SupplyCoreERP.Prices.Dtos;
 using SupplyCoreERP.Sales.PriceLists;
+using Volo.Abp;
 using Volo.Abp.Domain.Repositories;
 
 namespace SupplyCoreERP.Prices;
@@ -49,6 +50,18 @@ public class PriceAppService : SupplyCore, IPriceAppService
         return ObjectMapper.Map<List<ProductPrice>, List<ProductPriceDto>>(prices);
     }
 
+    public async Task<ProductCostReferenceDto> GetCostReferenceAsync(Guid productId, Guid unitId)
+    {
+        decimal? lowestPurchasePrice = await _priceManager.GetLowestPurchasePriceAsync(productId, unitId);
+
+        return new ProductCostReferenceDto
+        {
+            ProductId = productId,
+            UnitId = unitId,
+            LowestPurchasePrice = lowestPurchasePrice
+        };
+    }
+
     public async Task<ProductPriceDto> CreateAsync(CreateUpdateProductPriceDto input)
     {
         ProductPrice entity = await _priceManager.CreatePriceAsync(
@@ -59,13 +72,18 @@ public class PriceAppService : SupplyCore, IPriceAppService
             input.MinQuantity
         );
 
-        await _productPriceRepo.InsertAsync(entity);
+        await _productPriceRepo.InsertAsync(entity, autoSave: true);
 
         IQueryable<ProductPrice> query = await _productPriceRepo.GetQueryableAsync();
-        ProductPrice saved = await query
+        ProductPrice? saved = await query
             .Include(x => x.PriceList)
             .Include(x => x.Unit)
-            .FirstAsync(x => x.Id == entity.Id);
+            .FirstOrDefaultAsync(x => x.Id == entity.Id);
+
+        if (saved == null)
+        {
+            throw new UserFriendlyException("Không thể tải lại bản ghi giá bán vừa tạo.");
+        }
 
         ProductPriceDto dto = ObjectMapper.Map<ProductPrice, ProductPriceDto>(saved);
 
@@ -86,10 +104,15 @@ public class PriceAppService : SupplyCore, IPriceAppService
 
         // Reload với navigation properties để map đầy đủ DTO
         IQueryable<ProductPrice> query = await _productPriceRepo.GetQueryableAsync();
-        ProductPrice saved = await query
+        ProductPrice? saved = await query
             .Include(x => x.PriceList)
             .Include(x => x.Unit)
-            .FirstAsync(x => x.Id == id);
+            .FirstOrDefaultAsync(x => x.Id == id);
+
+        if (saved == null)
+        {
+            throw new UserFriendlyException("Không thể tải lại bản ghi giá bán sau khi cập nhật.");
+        }
 
         ProductPriceDto dto = ObjectMapper.Map<ProductPrice, ProductPriceDto>(saved);
 

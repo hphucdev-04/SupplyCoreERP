@@ -32,7 +32,7 @@
         "Dashboard.KPI.AvailableVolumeHint": "Thể tích hàng sẵn sàng bán",
         
         "Dashboard.FinancialBalance.Title": "Cán cân tài chính: Bán hàng vs. Mua hàng",
-        "Dashboard.FinancialBalance.SubTitle": "Xuương hướng dòng tiền giao dịch",
+        "Dashboard.FinancialBalance.SubTitle": "Xu hướng dòng tiền giao dịch",
         "Dashboard.CapacityAllocation.Title": "Phân bổ thể tích chiếm dụng",
         "Dashboard.CapacityAllocation.SubTitle": "Tỷ lệ toàn hệ thống",
         "Dashboard.CapacityAllocation.Occupied": "Đã chiếm dụng",

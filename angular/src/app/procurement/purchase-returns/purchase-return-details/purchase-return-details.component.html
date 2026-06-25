@@ -37,7 +37,7 @@
       <button *ngIf="returnDto.status === PurchaseReturnStatus.Draft" class="btn ph-btn-outline" (click)="openEditDrawer()">
         <i class="fa fa-pencil me-1"></i> {{ '::Edit' | abpLocalization }}
       </button>
-      <button class="btn ph-btn-secondary">
+      <button class="btn ph-btn-secondary" (click)="printDocument()">
         <i class="fa fa-print me-1"></i> {{ '::Print' | abpLocalization }}
       </button>
     </div>

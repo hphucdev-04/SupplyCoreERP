@@ -5,8 +5,8 @@ using Microsoft.Extensions.Logging;
 using SupplyCoreERP.Mcp.Client.AgentProviders.Dtos;
 using SupplyCoreERP.Mcp.Dtos;
 using SupplyCoreERP.Settings;
+using SupplyCoreERP.Settings.Dtos;
 using Volo.Abp.DependencyInjection;
-using Volo.Abp.Settings;
 
 namespace SupplyCoreERP.Mcp.Client.AgentProviders;
 
@@ -14,24 +14,24 @@ namespace SupplyCoreERP.Mcp.Client.AgentProviders;
 public class GeminiProvider : IAgentProvider, ITransientDependency
 {
     private readonly HttpClient _httpClient;
-    private readonly ISettingProvider _settingProvider;
+    private readonly ILlmRuntimeSettingsReader _llmRuntimeSettingsReader;
     private readonly ILogger<GeminiProvider> _logger;
 
     public GeminiProvider(
         HttpClient httpClient,
-        ISettingProvider settingProvider,
+        ILlmRuntimeSettingsReader llmRuntimeSettingsReader,
         ILogger<GeminiProvider> logger)
     {
         _httpClient = httpClient;
-        _settingProvider = settingProvider;
+        _llmRuntimeSettingsReader = llmRuntimeSettingsReader;
         _logger = logger;
     }
 
     public async Task<AgentResponseDto> GenerateContentAsync(List<LlmMessageDto> chatHistory, List<McpToolDto> tools, List<McpResourceDto> resources, string? systemInstruction = null)
     {
-        string? geminiApiKey = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.LlmProviderApiKey);
-
-        string geminiModel = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.LlmProviderModel) ?? "gemini-2.5-flash";
+        LlmProviderSettingsDto llmSettings = await _llmRuntimeSettingsReader.GetCurrentAsync();
+        string? geminiApiKey = llmSettings.ApiKey;
+        string geminiModel = llmSettings.Model ?? "gemini-2.5-flash";
 
         _logger.LogInformation(
             "GeminiProvider: Bat dau goi Gemini. Model={Model}, HasApiKey={HasApiKey}, HistoryCount={HistoryCount}, ToolCount={ToolCount}, ResourceCount={ResourceCount}, HasSystemInstruction={HasSystemInstruction}.",
