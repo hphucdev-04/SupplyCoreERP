@@ -1,6 +1,7 @@
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Nodes;
+using Microsoft.Extensions.Logging;
 using SupplyCoreERP.Mcp.Client.AgentProviders.Dtos;
 using SupplyCoreERP.Mcp.Dtos;
 using SupplyCoreERP.Settings;
@@ -14,13 +15,16 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
 {
     private readonly HttpClient _httpClient;
     private readonly ISettingProvider _settingProvider;
+    private readonly ILogger<GeminiProvider> _logger;
 
     public GeminiProvider(
         HttpClient httpClient,
-        ISettingProvider settingProvider)
+        ISettingProvider settingProvider,
+        ILogger<GeminiProvider> logger)
     {
         _httpClient = httpClient;
         _settingProvider = settingProvider;
+        _logger = logger;
     }
 
     public async Task<AgentResponseDto> GenerateContentAsync(List<LlmMessageDto> chatHistory, List<McpToolDto> tools, List<McpResourceDto> resources, string? systemInstruction = null)
@@ -29,12 +33,23 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
 
         string geminiModel = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.LlmProviderModel) ?? "gemini-2.5-flash";
 
+        _logger.LogInformation(
+            "GeminiProvider: Bat dau goi Gemini. Model={Model}, HasApiKey={HasApiKey}, HistoryCount={HistoryCount}, ToolCount={ToolCount}, ResourceCount={ResourceCount}, HasSystemInstruction={HasSystemInstruction}.",
+            geminiModel,
+            !string.IsNullOrWhiteSpace(geminiApiKey),
+            chatHistory.Count,
+            tools.Count,
+            resources.Count,
+            !string.IsNullOrWhiteSpace(systemInstruction));
+
         if (string.IsNullOrEmpty(geminiApiKey))
         {
+            _logger.LogError("GeminiProvider: Thieu API key cho LLM provider trong system settings.");
             throw new Exception("Chưa cấu hình API Key cho LLM Provider trong phần cài đặt hệ thống!");
         }
 
         string geminiUrl = $"https://generativelanguage.googleapis.com/v1beta/models/{geminiModel}:generateContent?key={geminiApiKey}";
+        string maskedGeminiUrl = $"https://generativelanguage.googleapis.com/v1beta/models/{geminiModel}:generateContent?key=***";
 
         List<object> geminiContents = MapHistoryToGeminiFormat(chatHistory);
         List<object> geminiTools = MapMcpToolsToGemini(tools, resources);
@@ -67,7 +82,12 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
         });
 
         string payloadJson = JsonSerializer.Serialize(geminiPayload);
-        Console.WriteLine($"[Gemini-Payload] Gửi lên: {payloadJson}");
+        _logger.LogInformation(
+            "GeminiProvider: Gui request toi {GeminiUrl}. PayloadLength={PayloadLength}, ContentCount={ContentCount}, FunctionDeclarationCount={FunctionDeclarationCount}.",
+            maskedGeminiUrl,
+            payloadJson.Length,
+            geminiContents.Count,
+            geminiTools.Count);
 
         using StringContent requestContent = new(payloadJson, Encoding.UTF8, "application/json");
         using HttpResponseMessage response = await _httpClient.PostAsync(geminiUrl, requestContent);
@@ -75,8 +95,19 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
         string responseContent = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)
         {
+            _logger.LogError(
+                "GeminiProvider: Gemini tra loi khong thanh cong. StatusCode={StatusCode}, ReasonPhrase={ReasonPhrase}, ResponseLength={ResponseLength}, ResponsePreview={ResponsePreview}.",
+                response.StatusCode,
+                response.ReasonPhrase,
+                responseContent.Length,
+                Truncate(responseContent, 2000));
             throw new Exception($"Lỗi gọi Gemini API ({response.StatusCode}): {responseContent}");
         }
+
+        _logger.LogInformation(
+            "GeminiProvider: Nhan phan hoi thanh cong tu Gemini. StatusCode={StatusCode}, ResponseLength={ResponseLength}.",
+            response.StatusCode,
+            responseContent.Length);
 
         return ParseGeminiResponse(responseContent);
     }
@@ -256,9 +287,6 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
 
     private AgentResponseDto ParseGeminiResponse(string responseContent)
     {
-        // Ghi log chi tiết phản hồi từ Gemini để theo dõi cấu trúc thực tế
-        Console.WriteLine($"[Gemini-Response] Nhận phản hồi: {responseContent}");
-
         JsonNode? geminiJson = JsonNode.Parse(responseContent);
         JsonNode? candidate = geminiJson?["candidates"]?[0];
         JsonArray? partsArray = candidate?["content"]?["parts"]?.AsArray();
@@ -334,5 +362,15 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
         }
 
         return responseDto;
+    }
+
+    private static string Truncate(string? value, int maxLength)
+    {
+        if (string.IsNullOrEmpty(value) || value.Length <= maxLength)
+        {
+            return value ?? string.Empty;
+        }
+
+        return value[..maxLength];
     }
 }

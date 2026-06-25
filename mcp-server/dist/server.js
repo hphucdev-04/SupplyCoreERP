@@ -20,9 +20,7 @@ const __dirname = path.dirname(__filename);
 dotenv.config({ path: path.resolve(__dirname, "../.env") });
 // Map để quản lý transport của các phiên theo Session ID
 const transports = {};
-/**
- * Middleware kiểm tra Origin Header (DNS Rebinding Protection)
- */
+//Middleware kiểm tra Origin Header (DNS Rebinding Protection)
 const validateOrigin = (req, res, next) => {
     const origin = req.headers.origin;
     if (origin) {
@@ -34,9 +32,7 @@ const validateOrigin = (req, res, next) => {
     }
     next();
 };
-/**
- * Middleware Rate Limiting cho MCP
- */
+//Middleware Rate Limiting cho MCP
 const mcpLimiter = rateLimit({
     windowMs: 60 * 1000, // 1 phút
     max: 100,
@@ -46,9 +42,7 @@ const mcpLimiter = rateLimit({
     legacyHeaders: false,
     validate: false
 });
-/**
- * Khởi tạo và đăng ký toàn bộ nghiệp vụ cho một instance McpServer mới
- */
+//Khởi tạo và đăng ký toàn bộ nghiệp vụ cho một instance McpServer mới
 const createMcpServer = () => {
     const server = new McpServer({
         name: "supplycore-mcp-server",
@@ -76,9 +70,7 @@ const createMcpServer = () => {
     registerPrompts(server);
     return server;
 };
-/**
- * Xử lý yêu cầu HTTP POST (JSON-RPC)
- */
+//Xử lý yêu cầu HTTP POST (JSON-RPC)
 const handleMcpPost = async (req, res) => {
     const sessionId = req.headers["mcp-session-id"];
     console.log(`[MCP-Server] ==> POST /mcp | Session: ${sessionId || "Invalid"} | Method: ${req.body?.method || "N/A"}`);
@@ -143,9 +135,7 @@ const handleMcpPost = async (req, res) => {
         }
     }
 };
-/**
- * Xử lý yêu cầu HTTP GET (SSE Stream)
- */
+//Xử lý yêu cầu HTTP GET (SSE Stream)
 const handleMcpGet = async (req, res) => {
     const sessionId = (req.headers["mcp-session-id"] || req.query.sessionId);
     console.log(`[MCP-Server] ==> GET /mcp (Mo SSE Stream) | Session: ${sessionId || "N/A"}`);
@@ -168,9 +158,7 @@ const handleMcpGet = async (req, res) => {
         }
     }
 };
-/**
- * Xử lý yêu cầu HTTP DELETE (Đóng session)
- */
+//Xử lý yêu cầu HTTP DELETE (Đóng session)
 const handleMcpDelete = async (req, res) => {
     const sessionId = req.headers["mcp-session-id"];
     console.log(`[MCP-Server] ==> DELETE /mcp (Dong Session) | Session: ${sessionId || "N/A"}`);
@@ -193,9 +181,7 @@ const handleMcpDelete = async (req, res) => {
         }
     }
 };
-/**
- * Endpoint thông báo thay đổi Tools
- */
+//Endpoint thông báo thay đổi Tools
 const handleToolsChanged = async (req, res) => {
     try {
         console.log("[MCP-Server] Received tools change notification, broadcasting to all sessions...");
@@ -218,9 +204,7 @@ const handleToolsChanged = async (req, res) => {
         res.status(500).json({ success: false, error: String(err) });
     }
 };
-/**
- * Thiết lập dọn dẹp tài nguyên khi tắt server (SIGINT)
- */
+//Thiết lập dọn dẹp tài nguyên khi tắt server (SIGINT)
 const setupShutdownHandler = () => {
     process.on("SIGINT", async () => {
         console.log("[MCP-Server] Cleaning up active transports...");
@@ -255,7 +239,7 @@ const runHttpServer = async () => {
     app.delete("/mcp", handleMcpDelete);
     app.post("/mcp/tools/changed", handleToolsChanged);
     const port = process.env.PORT || 3000;
-    const host = process.env.HOST || "127.0.0.1";
+    const host = process.env.HOST || "0.0.0.0";
     return new Promise((resolve) => {
         app.listen(Number(port), host, () => {
             console.log("=============================================================");
@@ -267,9 +251,7 @@ const runHttpServer = async () => {
         });
     });
 };
-/**
- * Hàm khởi chạy chính
- */
+// Hàm khởi chạy chính
 async function main() {
     const isStdio = process.argv.includes("--stdio");
     if (isStdio) {

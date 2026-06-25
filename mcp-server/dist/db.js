@@ -13,6 +13,9 @@ const { Pool } = pg;
 // Khởi tạo connection pool từ connection string trong .env
 const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
+    max: parseInt(process.env.DB_POOL_MAX || '10'),
+    idleTimeoutMillis: parseInt(process.env.DB_IDLE_TIMEOUT || '30000'), // 30 giây
+    connectionTimeoutMillis: parseInt(process.env.DB_CONNECTION_TIMEOUT || '5000'), // 5 giây, 
 });
 /**
  * Thực thi câu lệnh SQL truy vấn Database PostgreSQL
