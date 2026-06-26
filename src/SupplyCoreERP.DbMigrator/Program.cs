@@ -33,6 +33,7 @@ class Program
         Host.CreateDefaultBuilder(args)
             .AddAppSettingsSecretsJson()
             //.UseEnvironment("Development")
+
             .ConfigureLogging((context, logging) =>
             {
                 Console.WriteLine($"CURRENT ENVIRONMENT: {context.HostingEnvironment.EnvironmentName}");
