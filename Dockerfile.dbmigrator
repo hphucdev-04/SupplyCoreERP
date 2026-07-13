@@ -1,0 +1,15 @@
+FROM mcr.microsoft.com/dotnet/sdk:10.0 AS build
+WORKDIR /src
+
+# Copy all source files and restore
+COPY . .
+RUN dotnet restore "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj"
+
+# Build and publish DbMigrator in Release mode
+RUN dotnet publish "src/SupplyCoreERP.DbMigrator/SupplyCoreERP.DbMigrator.csproj" -c Release -o /app/publish
+
+# Runtime image for .NET console app
+FROM mcr.microsoft.com/dotnet/runtime:10.0 AS final
+WORKDIR /app
+COPY --from=build /app/publish .
+ENTRYPOINT ["dotnet", "SupplyCoreERP.DbMigrator.dll"]

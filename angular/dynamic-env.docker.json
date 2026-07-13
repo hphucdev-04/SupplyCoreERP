@@ -1,0 +1,25 @@
+{
+  "production": true,
+  "application": {
+    "baseUrl": "http://localhost:4200",
+    "name": "SupplyCoreERP"
+  },
+  "oAuthConfig": {
+    "issuer": "http://localhost:8080/",
+    "redirectUri": "http://localhost:4200",
+    "clientId": "SupplyCoreERP_App",
+    "responseType": "code",
+    "scope": "offline_access SupplyCoreERP",
+    "requireHttps": false
+  },
+  "apis": {
+    "default": {
+      "url": "http://localhost:8080",
+      "rootNamespace": "SupplyCoreERP"
+    },
+    "AbpAccountPublic": {
+      "url": "http://localhost:8080/",
+      "rootNamespace": "AbpAccountPublic"
+    }
+  }
+}

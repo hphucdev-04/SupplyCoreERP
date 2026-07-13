@@ -1,67 +1,107 @@
-﻿# SupplyCoreERP
+# SupplyCoreERP
 
-## About this solution
+SupplyCoreERP is an ABP Framework layered monolith for supply, inventory, and
+business operation workflows. The solution combines an ASP.NET Core backend,
+Angular frontend, PostgreSQL database, and a TypeScript MCP server.
 
-This is a layered startup solution based on [Domain Driven Design (DDD)](https://abp.io/docs/latest/framework/architecture/domain-driven-design) practises. All the fundamental ABP modules are already installed. Check the [Application Startup Template](https://abp.io/docs/latest/solution-templates/layered-web-application) documentation for more info.
+This root README is intentionally high level. Detailed setup, development, and
+deployment instructions are kept in the linked documents below.
 
-### Pre-requirements
+## Architecture Overview
 
-* [.NET10.0+ SDK](https://dotnet.microsoft.com/download/dotnet)
-* [Node v18 or 20](https://nodejs.org/en)
+- Backend: ASP.NET Core / .NET 10 with ABP layered architecture.
+- Frontend: Angular 20 with ABP Angular modules and LeptonX theme.
+- Database: PostgreSQL with EF Core migrations.
+- Authentication: OpenIddict through ABP.
+- MCP: TypeScript MCP server connected to PostgreSQL.
+- Local orchestration: Docker Compose.
 
-### Configurations
+## Repository Layout
 
-The solution comes with a default configuration that works out of the box. However, you may consider to change the following configuration before running your solution:
+| Path | Purpose |
+| --- | --- |
+| `src/` | Backend source code, including Domain, Application, EF Core, HttpApi, Host, and DbMigrator projects. |
+| `test/` | Backend test projects split by ABP layer. |
+| `angular/` | Angular frontend application and generated API proxies. |
+| `mcp-server/` | TypeScript MCP server. |
 
-* Check the `ConnectionStrings` in `appsettings.json` files under the `SupplyCoreERP.HttpApi.Host` and `SupplyCoreERP.DbMigrator` projects and change it if you need.
+## Documentation
 
-### Before running the application
+- [Customer Handover and Deployment Guide](./CUSTOMER-HANDOVER-GUIDE.md)
+- [Backend Guide](./src/README.md)
+- [Frontend Guide](./angular/README.md)
+- [Git Workflow and CI/CD](./GIT_WORKFLOW_CICD.md)
+- [License](./LICENSE)
 
-* Run `abp install-libs` command on your solution folder to install client-side package dependencies. This step is automatically done when you create a new solution, if you didn't especially disabled it. However, you should run it yourself if you have first cloned this solution from your source control, or added a new client-side package dependency to your solution.
-* Run `SupplyCoreERP.DbMigrator` to create the initial database. This step is also automatically done when you create a new solution, if you didn't especially disabled it. This should be done in the first run. It is also needed if a new database migration is added to the solution later.
+## Common Commands
 
-#### Generating a Signing Certificate
-
-In the production environment, you need to use a production signing certificate. ABP Framework sets up signing and encryption certificates in your application and expects an `openiddict.pfx` file in your application.
-
-To generate a signing certificate, you can use the following command:
+Build and test backend:
 
 ```bash
-dotnet dev-certs https -v -ep openiddict.pfx -p 10869d7f-32a3-424d-903a-e5897e94dea5
+dotnet build SupplyCoreERP.slnx
+dotnet test SupplyCoreERP.slnx
 ```
 
-> `10869d7f-32a3-424d-903a-e5897e94dea5` is the password of the certificate, you can change it to any password you want.
+Run database migrations and seed data:
 
-It is recommended to use **two** RSA certificates, distinct from the certificate(s) used for HTTPS: one for encryption, one for signing.
+```bash
+dotnet run --project src/SupplyCoreERP.DbMigrator
+```
 
-For more information, please refer to: [OpenIddict Certificate Configuration](https://documentation.openiddict.com/configuration/encryption-and-signing-credentials.html#registering-a-certificate-recommended-for-production-ready-scenarios)
+Run backend API:
 
-> Also, see the [Configuring OpenIddict](https://abp.io/docs/latest/Deployment/Configuring-OpenIddict#production-environment) documentation for more information.
+```bash
+dotnet run --project src/SupplyCoreERP.HttpApi.Host
+```
 
-### Solution structure
+Run frontend:
 
-This is a layered monolith application that consists of the following applications:
+```bash
+cd angular
+npm install
+npm start
+```
 
-* `SupplyCoreERP.DbMigrator`: A console application which applies the migrations and also seeds the initial data. It is useful on development as well as on production environment.
-* `SupplyCoreERP.HttpApi.Host`: ASP.NET Core API application that is used to expose the APIs to the clients.
-* `angular`: Angular application.
+Build frontend:
 
+```bash
+cd angular
+npm run build:prod
+```
 
-## Deploying the application
+Build MCP server:
 
-Deploying an ABP application follows the same process as deploying any .NET or ASP.NET Core application. However, there are important considerations to keep in mind. For detailed guidance, refer to ABP's [deployment documentation](https://abp.io/docs/latest/Deployment/Index).
+```bash
+cd mcp-server
+npm install
+npm run build
+```
 
-### Additional resources
+Run the full local stack with Docker:
 
+```bash
+docker compose up --build
+```
 
-#### Internal Resources
+## Local Endpoints
 
-You can find detailed setup and configuration guide(s) for your solution below:
+- Frontend: `http://localhost:4200`
+- Backend Swagger: `http://localhost:8080/swagger`
+- MCP server: `http://localhost:3000`
+- PostgreSQL: `http://localhost:5432`
 
-* [Angular](./angular/README.md)
+## Production Endpoints
 
-#### External Resources
-You can see the following resources to learn more about your solution and the ABP Framework:
+- Frontend: `https://rxlogistics.vercel.app`
+- Backend: `https://rxlogistics.up.railway.app`
+- MCP server: `https://rxlogistics-mcp.up.railway.app/mcp`
 
-* [Web Application Development Tutorial](https://abp.io/docs/latest/tutorials/book-store/part-1)
-* [Application Startup Template](https://abp.io/docs/latest/startup-templates/application/index)
+## Security Notes
+
+Do not commit production secrets, database passwords, certificates, or
+environment-specific credentials. Before deployment, replace development
+connection strings, OpenIddict certificates, encryption passphrases, CORS
+origins, OAuth redirect URLs, and MCP allowed origins.
+
+See [Customer Handover and Deployment Guide](./CUSTOMER-HANDOVER-GUIDE.md) for
+the production checklist.
