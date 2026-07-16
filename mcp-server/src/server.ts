@@ -26,8 +26,11 @@ import { registerPrompts } from "./prompts/assistant.js";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// Load cấu hình biến môi trường bằng đường dẫn tuyệt đối
-dotenv.config({ path: path.resolve(__dirname, "../.env") });
+// Load cấu hình biến môi trường tương ứng (.env cho local dev và .env.production cho production)
+const nodeEnv = process.env.NODE_ENV || "development";
+dotenv.config({
+  path: path.resolve(__dirname, nodeEnv === "production" ? "../.env.production" : "../.env")
+});
 
 // Map để quản lý transport của các phiên theo Session ID
 const transports: { [sessionId: string]: NodeStreamableHTTPServerTransport } = {};
@@ -37,11 +40,19 @@ const transports: { [sessionId: string]: NodeStreamableHTTPServerTransport } = {
 const validateOrigin = (req: Request, res: Response, next: NextFunction) => {
   const origin = req.headers.origin;
   if (origin) {
-    const allowedOrigins = (process.env.ALLOWED_ORIGINS || "").split(",").map(o => o.trim());
-    if (!allowedOrigins.includes(origin)) {
-      res.status(403).json({ error: "Forbidden: Invalid Origin" });
+    const allowedOriginsStr = process.env.ALLOWED_ORIGINS;
+    if (!allowedOriginsStr) {
+      console.warn(`[MCP-Warning] ALLOWED_ORIGINS is not configured. Allowing origin: ${origin}`);
+      next();
       return;
     }
+    const allowedOrigins = allowedOriginsStr.split(",").map(o => o.trim());
+    if (allowedOrigins.includes("*") || allowedOrigins.includes(origin)) {
+      next();
+      return;
+    }
+    res.status(403).json({ error: "Forbidden: Invalid Origin" });
+    return;
   }
   next();
 };
