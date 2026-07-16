@@ -13,6 +13,11 @@ namespace SupplyCoreERP.Mcp.Client.AgentProviders;
 [ExposeServices(typeof(IAgentProvider))]
 public class GeminiProvider : IAgentProvider, ITransientDependency
 {
+    private static readonly HttpClient _cleanHttpClient = new()
+    {
+        Timeout = TimeSpan.FromSeconds(100)
+    };
+
     private readonly HttpClient _httpClient;
     private readonly ILlmRuntimeSettingsReader _llmRuntimeSettingsReader;
     private readonly ILogger<GeminiProvider> _logger;
@@ -92,7 +97,7 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
             geminiTools.Count);
 
         using StringContent requestContent = new(payloadJson, Encoding.UTF8, "application/json");
-        using HttpResponseMessage response = await _httpClient.PostAsync(geminiUrl, requestContent);
+        using HttpResponseMessage response = await _cleanHttpClient.PostAsync(geminiUrl, requestContent);
 
         string responseContent = await response.Content.ReadAsStringAsync();
         if (!response.IsSuccessStatusCode)

@@ -210,8 +210,21 @@ public class McpClientService : IMcpClientService, ISingletonDependency, IDispos
                 return;
             }
 
-            _mcpBaseUrl = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.McpServerBaseUrl)
-                ?? throw new InvalidOperationException("Chưa cấu hình MCP Server Base URL trong cài đặt hệ thống.");
+            string? mcpBaseUrlFromEnv = Environment.GetEnvironmentVariable("SUPPLYCOREERP_MCP_SERVER_BASE_URL")
+                                        ?? Environment.GetEnvironmentVariable("MCP_SERVER_BASE_URL");
+
+            if (!string.IsNullOrWhiteSpace(mcpBaseUrlFromEnv))
+            {
+                _mcpBaseUrl = mcpBaseUrlFromEnv.Trim();
+                _logger.LogInformation("EnsureConnectedAsync: Sử dụng MCP Server Base URL từ biến môi trường: '{Url}'", _mcpBaseUrl);
+            }
+            else
+            {
+                _mcpBaseUrl = await _settingProvider.GetOrNullAsync(SupplyCoreERPSettings.McpServerBaseUrl)
+                    ?? throw new InvalidOperationException("Chưa cấu hình MCP Server Base URL trong cài đặt hệ thống.");
+                _logger.LogInformation("EnsureConnectedAsync: Sử dụng MCP Server Base URL từ cấu hình hệ thống: '{Url}'", _mcpBaseUrl);
+            }
+
             string mcpUrl = $"{_mcpBaseUrl.TrimEnd('/')}/mcp";
 
             // BƯỚC 1: Gửi request POST initialize để bắt đầu handshake
