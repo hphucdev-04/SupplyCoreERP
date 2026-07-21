@@ -290,7 +290,7 @@ export const registerSupplierTools = (server: McpServer) => {
                 description: "true = hoạt động, false = ngừng hoạt động"
               }
             },
-            required: []
+            required: ["taxCode", "phoneNumber"]
           }
         },
         {

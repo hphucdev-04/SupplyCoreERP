@@ -218,7 +218,7 @@ export const registerSupplierTools = (server) => {
                         description: "true = hoạt động, false = ngừng hoạt động"
                     }
                 },
-                required: []
+                required: ["taxCode", "phoneNumber"]
             }
         }, {
             taxCode,
