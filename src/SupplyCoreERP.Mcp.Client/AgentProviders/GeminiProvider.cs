@@ -143,29 +143,19 @@ public class GeminiProvider : IAgentProvider, ITransientDependency
             {
                 foreach (LlmToolCallDto toolCall in msg.ToolCalls)
                 {
-                    if (!string.IsNullOrEmpty(toolCall.ThoughtSignature))
+                    string signature = !string.IsNullOrEmpty(toolCall.ThoughtSignature)
+                        ? toolCall.ThoughtSignature
+                        : "skip";
+
+                    parts.Add(new
                     {
-                        parts.Add(new
+                        functionCall = new
                         {
-                            functionCall = new
-                            {
-                                name = toolCall.Name,
-                                args = toolCall.Arguments
-                            },
-                            thought_signature = toolCall.ThoughtSignature
-                        });
-                    }
-                    else
-                    {
-                        parts.Add(new
-                        {
-                            functionCall = new
-                            {
-                                name = toolCall.Name,
-                                args = toolCall.Arguments
-                            }
-                        });
-                    }
+                            name = toolCall.Name,
+                            args = toolCall.Arguments
+                        },
+                        thought_signature = signature
+                    });
                 }
             }
 

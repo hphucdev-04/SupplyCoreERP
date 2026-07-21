@@ -6,7 +6,7 @@ import type { NotificationDto } from '../../../proxy/notifications/dtos/models';
 
 @Injectable({ providedIn: 'root' })
 export class NotificationHubService extends BaseHubService {
-  protected readonly hubUrl = `https://localhost:44367/hubs/notification`; // url hub
+  protected readonly hubUrl = ` https://rxlogistics.up.railway.app/hubs/notification`; // url hub
   readonly received$ = new Subject<NotificationDto>(); // Kênh phát sóng
 
   constructor(oauthService: OAuthService) {

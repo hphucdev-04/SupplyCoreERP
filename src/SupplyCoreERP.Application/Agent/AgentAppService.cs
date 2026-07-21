@@ -425,7 +425,8 @@ public class AgentAppService : SupplyCore, IAgentAppService
                 Name = result.PendingToolName!,
                 Arguments = result.PendingToolArguments != null
                     ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                    : new JsonObject()
+                    : new JsonObject(),
+                ThoughtSignature = result.NewSteps?.FirstOrDefault(s => s.ToolCalls != null && s.ToolCalls.Any())?.ToolCalls?.FirstOrDefault()?.ThoughtSignature
             };
 
             await _agentManager.CreateTaskAsync(
@@ -452,7 +453,8 @@ public class AgentAppService : SupplyCore, IAgentAppService
                 Name = result.PendingToolName!,
                 Arguments = result.PendingToolArguments != null
                     ? JsonSerializer.Deserialize<JsonObject>(result.PendingToolArguments)!
-                    : new JsonObject()
+                    : new JsonObject(),
+                ThoughtSignature = result.NewSteps?.FirstOrDefault(s => s.ToolCalls != null && s.ToolCalls.Any())?.ToolCalls?.FirstOrDefault()?.ThoughtSignature
             };
 
             await _agentManager.CreateTaskAsync(

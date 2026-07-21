@@ -122,7 +122,7 @@ public class McpAgent : IAgent, ITransientDependency
                         Role = "model",
                         ToolCalls = new List<AgentToolCallMessageDto>
                         {
-                            new() { Name = toolCall.Name, Arguments = toolCall.Arguments }
+                            new() { Name = toolCall.Name, Arguments = toolCall.Arguments, ThoughtSignature = toolCall.ThoughtSignature }
                         },
                         CreationTime = DateTime.Now
                     });
@@ -157,7 +157,7 @@ public class McpAgent : IAgent, ITransientDependency
                                 Role = "model",
                                 ToolCalls = new List<AgentToolCallMessageDto>
                                 {
-                                    new() { Name = toolCall.Name, Arguments = toolCall.Arguments }
+                                    new() { Name = toolCall.Name, Arguments = toolCall.Arguments, ThoughtSignature = toolCall.ThoughtSignature }
                                 },
                                 CreationTime = DateTime.Now
                             });
@@ -203,7 +203,7 @@ public class McpAgent : IAgent, ITransientDependency
                         Role = "model",
                         ToolCalls = new List<AgentToolCallMessageDto>
                         {
-                            new() { Name = toolCall.Name, Arguments = sanitizedArguments }
+                            new() { Name = toolCall.Name, Arguments = sanitizedArguments, ThoughtSignature = toolCall.ThoughtSignature }
                         },
                         CreationTime = DateTime.Now
                     });
@@ -357,7 +357,8 @@ public class McpAgent : IAgent, ITransientDependency
                     llmMsg.ToolCalls.Add(new LlmToolCallDto
                     {
                         Name = tc.Name,
-                        Arguments = tc.Arguments
+                        Arguments = tc.Arguments,
+                        ThoughtSignature = tc.ThoughtSignature
                     });
                 }
             }
